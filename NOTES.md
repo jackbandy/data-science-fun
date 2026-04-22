@@ -1,5 +1,8 @@
 # Notes
 
+Course description:
+Provides an in-depth overview of data science in engineering. Topics include modeling, storage, manipulation, integration, classification, analysis, visualization, information extraction, and big data in the engineering domain.
+
 Miscellaneous
 
 What is included in data science?
