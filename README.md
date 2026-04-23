@@ -1,4 +1,6 @@
 # Data Adventures
+or,
+# "Do Data Science the Fun Way"
 ## Materials for CS 418: Intro to Data Science
 ## University of Illinois Chicago (UIC)
 
