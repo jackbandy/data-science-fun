@@ -92,3 +92,52 @@ h1 {
   max-width: 540px;
   margin-bottom: 32px;
 }
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.sources {
+  padding-left: 1.4rem;
+  line-height: 2;
+}
+
+.sources a {
+  color: #F97316;
+  text-decoration: none;
+  border-bottom: 1px solid #F97316;
+}
+
+.sources a:hover {
+  color: #c2590e;
+  border-bottom-color: #c2590e;
+}
+
+footer {
+  border-top: 1px solid #e5e5e5;
+  padding: 24px;
+  text-align: center;
+}
+
+footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #444;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #F97316;
+}
+
+footer svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
