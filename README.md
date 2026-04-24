@@ -1,6 +1,6 @@
-# Data Science the Fun Way 🪩
+# 🪩 Data Science the Fun Way 🪩
 ## Materials for CS 418: Intro to Data Science
-## University of Illinois Chicago (UIC)
+### University of Illinois Chicago (UIC)
 
 I'm preparing to teach a section of CS 418 (Intro to Data Science), in Fall 2026. This repository is intended as the main container for materials, including slides, worksheets, references, etc. My goal is to create a library of practical learning activities, especially hand-written / hand-drawn exercises, inspired by [Tom Yeh's "AI by Hand" series](https://www.byhand.ai).
 
