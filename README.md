@@ -1,15 +1,29 @@
-# Data Adventures
-or,
-# "Do Data Science the Fun Way"
+# Data Science the Fun Way
 ## Materials for CS 418: Intro to Data Science
 ## University of Illinois Chicago (UIC)
 
-This repository is intended to be the main container for CS 418, including:
-* slides
-* worksheets
-* out-of-class exercises
-* textbook(s) / reference materials
+I'm preparing to teach a section of CS 418 (Intro to Data Science), in Fall 2026. This repository is intended as the main container for materials, including slides, worksheets, references, etc. My goal is to create a library of practical learning activities, especially hand-written / hand-drawn exercises, inspired by [Tom Yeh's "AI by Hand" series](https://www.byhand.ai).
 
-The `sandbox` folder is a quarantine for anything that was created or modified by an LLM.
+Materials are under active development during Summer 2026. The public-facing site lives at the `docs/` folder, deployed via GitHub Pages.
 
-Everything else made with 🩵 in Chicago, IL
+## Repository layout
+
+```
+data-adventures/
+├── docs/                        # GitHub Pages site (public-facing)
+│   ├── index.html               # Landing page
+│   └── css/index.css            # Stylesheet
+├── sandbox/                     # Quarantine for LLM-modified content
+│   └── book-outlines/           # Generated outlines of reference texts
+├── source-materials/            # Raw reference docs (syllabi, etc.)
+├── NOTES.md                     # Working notes and course planning
+└── README.md                    # This file
+```
+
+## Course topics
+
+Still working on this 🙂 there are too many possibilities...
+
+## Notes on LLM use
+
+The `sandbox/` folder is a quarantine zone for anything modified by an LLM. Everything else was hand-typed with 🩵 in Chicago, IL.
