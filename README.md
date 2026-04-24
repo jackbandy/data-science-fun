@@ -4,7 +4,7 @@
 
 I'm preparing to teach a section of CS 418 (Intro to Data Science), in Fall 2026. This repository is intended as the main container for materials, including slides, worksheets, references, etc. My goal is to create a library of practical learning activities, especially hand-written / hand-drawn exercises, inspired by [Tom Yeh's "AI by Hand" series](https://www.byhand.ai).
 
-Materials are under active development during Summer 2026. The public-facing site lives at the `docs/` folder, deployed via GitHub Pages.
+Materials are under active development during Summer 2026. The public-facing site, [DoDataScience.fun](https://dodatascience.fun/), lives at the `docs/` folder, deployed via GitHub Pages.
 
 ## Repository layout
 
