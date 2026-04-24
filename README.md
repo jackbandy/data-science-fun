@@ -24,6 +24,8 @@ data-adventures/
 
 Still working on this 🙂 there are too many possibilities...
 
-## Notes on LLM use
+## Note on LLM use
 
-The `sandbox/` folder is a quarantine zone for anything modified by an LLM. Everything else was hand-typed with 🩵 in Chicago, IL.
+The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html).
+
+Outside of `sandbox/`, everything was hand-typed with 🩵 in Chicago, IL.
