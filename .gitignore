@@ -1,1 +1,12 @@
 .DS_Store
+
+# PDFs
+*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+*.ipynb_checkpoints/
