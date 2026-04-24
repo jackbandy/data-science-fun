@@ -3,7 +3,9 @@
 Course description:
 Provides an in-depth overview of data science in engineering. Topics include modeling, storage, manipulation, integration, classification, analysis, visualization, information extraction, and big data in the engineering domain.
 
-Miscellaneous
+Miscellaneous topics:
+* Recommender systems
+* Evaluation metrics (e.g. https://www.byhand.ai/p/ai-eval-equations-you-must-know)
 
 What is included in data science?
 Learning DS Textbook:
