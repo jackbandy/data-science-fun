@@ -1,0 +1,7 @@
+# Marp CLI configuration
+# https://github.com/marp-team/marp-cli#configuration-file
+
+themeSet:
+  - css/marp-theme.css
+
+html: false
