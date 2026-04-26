@@ -1,5 +1,7 @@
 # Notes
 
+## Unstructured jots on what to include
+
 Course description:
 Provides an in-depth overview of data science in engineering. Topics include modeling, storage, manipulation, integration, classification, analysis, visualization, information extraction, and big data in the engineering domain.
 
@@ -33,3 +35,12 @@ Learning DS Textbook:
   * Binary formats, APIs, scraping, etc.
 * Linear Modeling
 * Classification
+
+
+[Data Scientist: The Sexiest Job of the 21st Century](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century)
+
+Study to reproduce: [Did Taylor Swift kill a bunch of people?](https://statmodeling.stat.columbia.edu/2026/04/21/did-taylor-swift-kill-a-bunch-of-people/)
+
+Data Science Origins? John Tukey's 1962 work, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
+
+"Is this data safe to release?"
