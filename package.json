@@ -1,0 +1,12 @@
+{
+  "name": "data-science-fun",
+  "private": true,
+  "scripts": {
+    "slides": "marp --config docs/.marprc.yml docs/slides/",
+    "slides:watch": "marp --config docs/.marprc.yml --watch docs/slides/",
+    "slides:pdf": "marp --config docs/.marprc.yml --pdf docs/slides/"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4"
+  }
+}
