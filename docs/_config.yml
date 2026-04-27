@@ -1,0 +1,14 @@
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+title: Data Science the Fun Way
+description: Materials for CS 418 - Intro to Data Science at UIC
+
+exclude:
+  - slides/**/*.md
+
+# Build settings
+future: false
+lsi: false
