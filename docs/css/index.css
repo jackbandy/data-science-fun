@@ -12,10 +12,14 @@ body {
   background: #fff;
 }
 
+/* CTA Rail Line Colors (Backup Reference) */
+/* Red Line: #C60C30 | Blue Line: #00A1DE | Brown Line: #62361B */
+/* Green Line: #009B3A | Orange Line: #F9461C | Purple Line: #522398 */
+/* Yellow Line (Skokie Swift): #F9E300 */
 .orange-line {
   border: none;
   height: 12px;
-  background-color: #F97316;
+  background-color: #E27EA6;
   display: block;
   width: 100%;
 }
@@ -106,15 +110,15 @@ h2 {
 
 .sign-detail a,
 .sources a {
-  color: #F97316;
+  color: #E27EA6;
   text-decoration: none;
-  border-bottom: 1px solid #F97316;
+  border-bottom: 1px solid #E27EA6;
 }
 
 .sign-detail a:hover,
 .sources a:hover {
-  color: #c2590e;
-  border-bottom-color: #c2590e;
+  color: #c2477a;
+  border-bottom-color: #c2477a;
 }
 
 footer {
@@ -134,7 +138,7 @@ footer a {
 }
 
 footer a:hover {
-  color: #F97316;
+  color: #E27EA6;
 }
 
 footer svg {

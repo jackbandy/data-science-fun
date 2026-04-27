@@ -50,8 +50,11 @@ code {
   font-size: 0.9em;
 }
 
+/* CTA Rail Line Colors (Backup Reference) */
+/* Red Line: #C60C30 | Blue Line: #00A1DE | Brown Line: #62361B */
+/* Green Line: #009B3A | Orange Line: #F9461C | Purple Line: #522398 | Yellow Line: #F9E300 */
 a, a:link, a:visited, a:hover, a:active {
-  color: #F97316;
+  color: #E27EA6;
   text-decoration: none;
 }
 
