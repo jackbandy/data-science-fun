@@ -49,5 +49,17 @@ A: This is a simple question without a simple answer. At least, I do not yet hav
 
 ---
 
-*Last updated: {{ site.time | date: "%B %d, %Y at %H:%M:%S %Z" }}*
-{: .last-updated }
+<p class="last-updated">Last updated: <a href="https://github.com/jackbandy/data-science-fun/commits/" id="last-updated-link">{{ site.time | date_to_xmlschema }}</a></p>
+<script>
+  (function () {
+    const t = new Date("{{ site.time | date_to_xmlschema }}");
+    const fmt = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    const chicago = t.toLocaleString('en-US', {
+      timeZone: 'America/Chicago',
+      year: 'numeric', month: 'long', day: 'numeric',
+      ...fmt, timeZoneName: 'short'
+    });
+    const utc = t.toLocaleString('en-US', { timeZone: 'UTC', ...fmt, timeZoneName: 'short' });
+    document.getElementById('last-updated-link').textContent = chicago + ' (' + utc + ')';
+  })();
+</script>
