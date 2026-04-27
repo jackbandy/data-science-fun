@@ -49,4 +49,5 @@ A: This is a simple question without a simple answer. At least, I do not yet hav
 
 ---
 
-*Last updated: {{ site.time | date: "%B %d, %Y" }}*
+*Last updated: {{ site.time | date: "%B %d, %Y at %H:%M:%S %Z" }}*
+{: .last-updated }
