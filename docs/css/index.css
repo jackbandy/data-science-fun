@@ -175,3 +175,12 @@ h1 a:hover {
   font-size: 0.9rem;
   color: #888;
 }
+
+.last-updated a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.last-updated a:hover {
+  text-decoration: underline;
+}
