@@ -11,7 +11,18 @@ These include questions that I "frequently ask" myself while making these materi
 
 ---
 
-## Paper
+
+## Programming Languages
+
+**Q: Which programming language will this class be using?**
+
+A: Good question. I'm planning a Python-forward course, mostly leaning on [Polars](https://pola.rs). Python still seems to be more widely-used for data science than R, and Polars is much more efficient than Pandas. Still, the course will provide some experience with R, Pandas, and some other common tooling. I happen to think that if you really understand data science, the programming language probably does not matter too much (especially if an LLM is writing your code, but that's another question).
+
+
+---
+
+
+## Paper? Really?
 
 **Q: Why make exercises handwritten? Shouldn't data science be on a computer?**
 
@@ -46,6 +57,20 @@ A: Various reasons, including: (1) making materials can be fun, (2) I think stud
 **Q: What is data science, exactly?**
 
 A: This is a simple question without a simple answer. At least, I do not yet have a simple answer, but I do appreciate that data science seems to be a "big tent" for many different genres of scholarship. Another version of this question might be, "what is _not_ data science?"
+
+---
+
+## Jobs
+
+**Q: Will data science be obsolete soon? Will anyone hire human data scientist? Won't AI take all the data science jobs?**
+
+A: Wow, three questions! From my point of view: **no**, data science will not be obsolete soon; **yes**, organizations will still hire human data scientists, and **no**, AI will not take over all the data science jobs. Some AI tools seem very useful for writing code, which can be helpful in the data science workflow. But LLMs on their own cannot make data useful and meaningful for humans -- much less for organizations. There are deeper discussions to be had here, more than I can fit into an FAQ page, but here are some high-level points.
+
+Any data "insights" shared by an AI will not have the same level of explainability as insights from a human. Humans can reason together about their intuitions, expectations, and surprises, discussing questions and building mutual understanding in real time. LLMs, on the other hand, say things like "you're absolutely right, thanks for catching my mistake," before flip-flopping on a major point with no further explanation. This is because LLMs have been trained for the purpose of generating plausible next words that make people feel good. The resulting system is not a great match for data science, where real insights and findings are often uncomfortable.
+
+ Also, in most cases, any "data science" outsourced to an AI/LLM system will be under the purview of a large technology company, which owns and operates the system that analyzed the data and generated "insights." The extent to which this alters the workflow may change, but it certainly opens the door for big tech to put their thumbs on the scale.
+ 
+I think if an organizations truly wants evidence-based, data-informed decisions, they will need human data scientists who can make sense of data *with other humans.* By themselves, code and the statistics have limited usefulness. Only with other humans can we construct real knowledge from data -- knowledge which is socially meaningful and relevant and useful. I have more to say on this, but I am not sure if this soapbox can hold me much longer...
 
 ---
 
