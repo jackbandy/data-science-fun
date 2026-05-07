@@ -19,7 +19,7 @@ body {
 .orange-line {
   border: none;
   height: 12px;
-  background-color: #E27EA6;
+  background-color: #f9461c;
   display: block;
   width: 100%;
 }
@@ -110,15 +110,15 @@ h2 {
 
 .sign-detail a,
 .sources a {
-  color: #E27EA6;
+  color: #f9461c;
   text-decoration: none;
-  border-bottom: 1px solid #E27EA6;
+  border-bottom: 1px solid #f9461c;
 }
 
 .sign-detail a:hover,
 .sources a:hover {
-  color: #c2477a;
-  border-bottom-color: #c2477a;
+  color: #c83214;
+  border-bottom-color: #c83214;
 }
 
 footer {
@@ -138,7 +138,7 @@ footer a {
 }
 
 footer a:hover {
-  color: #E27EA6;
+  color: #f9461c;
 }
 
 footer svg {
@@ -187,4 +187,19 @@ h1 a:hover {
 
 .last-updated a:hover {
   text-decoration: underline;
+}
+
+/* ── Orange Line schedule map embed ── */
+.schedule-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+}
+.schedule-frame {
+  display: block;
+  border: none;
+  width: 648px;
+  height: 220px;
 }

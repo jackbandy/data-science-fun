@@ -19,7 +19,7 @@ h1 {
   font-size: 2rem;
   font-weight: 900;
   color: #222;
-  border-bottom: 3px solid #d8d8d8;
+  border-bottom: 3px solid #565a5c;
   padding-bottom: 8px;
   margin-bottom: 24px;
 }
@@ -36,7 +36,7 @@ ul, ol { padding-left: 1.5em; line-height: 1.9; }
 strong { color: #333; }
 
 blockquote {
-  border-left: 4px solid #d0d0d0;
+  border-left: 4px solid #565a5c;
   padding-left: 1em;
   color: #888;
   font-style: italic;
@@ -54,7 +54,7 @@ code {
 /* Red Line: #C60C30 | Blue Line: #00A1DE | Brown Line: #62361B */
 /* Green Line: #009B3A | Orange Line: #F9461C | Purple Line: #522398 | Yellow Line: #F9E300 */
 a, a:link, a:visited, a:hover, a:active {
-  color: #E27EA6;
+  color: #f9461c;
   text-decoration: none;
 }
 
