@@ -1,0 +1,118 @@
+/* CTA Orange Line – Course Schedule Map styles */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#ol-map {
+  position: relative;
+  width: 648px;
+  height: 220px;
+  background: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── Straight track pieces (Midway branch, terminal cap) ── */
+.ol-track {
+  position: absolute;
+  background: #F9461C; /* official CTA Orange Line color */
+}
+
+/* ── Loop rectangle with rounded corners ─────────────────── */
+.ol-loop {
+  position: absolute;
+  border: 14px solid #F9461C;
+  border-radius: 16px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+/* ── Station dots ─────────────────────────────────────── */
+.ol-station {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #F9461C;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.12s ease;
+}
+.ol-station:hover { transform: translate(-50%, -50%) scale(1.5); }
+
+/* Roosevelt and other transfer stations: white fill, black outline */
+.ol-station.transfer {
+  background: #fff;
+  border: 3px solid #1a1a1a;
+}
+
+/* Closed station (State/Lake): grayed out */
+.ol-station.closed {
+  background: #d4d4d4;
+  border-color: #999;
+}
+.ol-station.closed:hover { transform: translate(-50%, -50%) scale(1.4); }
+
+/* ── Direction chevrons inside the loop ─────────────────── */
+.ol-arrow {
+  position: absolute;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+  z-index: 11;
+  font-weight: 900;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Parking "P" boxes ──────────────────────────────────── */
+.ol-parking {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid #666;
+  border-radius: 1px;
+  font-size: 8px;
+  font-weight: 700;
+  color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: #fff;
+  z-index: 6;
+}
+
+/* ── Airport icon ───────────────────────────────────────── */
+.ol-airport {
+  position: absolute;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 6;
+  color: #333;
+}
+
+/* ── "Closed until YYYY" tag — removed; tooltip is sufficient ── */
+
+/* ── Tooltip ────────────────────────────────────────────── */
+#ol-tooltip {
+  position: fixed;
+  display: none;
+  background: rgba(22, 22, 22, 0.95);
+  color: #fff;
+  padding: 6px 11px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  line-height: 1.5;
+}
+#ol-tooltip .tip-name   { font-weight: 700; color: #fff; }
+#ol-tooltip .tip-week   { font-weight: 400; color: #eee; }
+#ol-tooltip .tip-closed { font-size: 10px;  color: #ffaa88; }
