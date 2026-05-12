@@ -1,0 +1,20 @@
+project:
+  type: book
+  output-dir: book
+
+book:
+  title: "Ethics in Data Science"
+  subtitle: "Exploring the social implications of data science"
+  author: "Jack Bandy"
+  date: today
+  chapters:
+    - index.md
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 2
+    number-sections: true

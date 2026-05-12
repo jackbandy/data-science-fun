@@ -24,6 +24,7 @@ data-adventures/
 
 Still working on this 🙂 there are too many possibilities...
 
+
 ## Note on LLM use
 
 The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html).
