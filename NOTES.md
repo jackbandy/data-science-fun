@@ -11,6 +11,7 @@ Miscellaneous topics:
 * Moviepass projection flop
   * Mitch Lowe AMA on Reddit - https://www.reddit.com/r/movies/comments/8u00y3/im_mitch_lowe_ceo_of_moviepass_ama/
   * "A Platform for Burning Cash" - https://d3.harvard.edu/platform-digit/submission/moviepass-a-platform-for-burning-cash/
+  * Blog post - https://www.residualthoughts.com/2018/03/15/the-numbers-behind-moviepass-and-why-its-probably-doomed/
   * Slate article - https://archive.ph/IxKa9
 
 What is included in data science?
