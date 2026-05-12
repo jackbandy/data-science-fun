@@ -8,6 +8,10 @@ Provides an in-depth overview of data science in engineering. Topics include mod
 Miscellaneous topics:
 * Recommender systems
 * Evaluation metrics (e.g. https://www.byhand.ai/p/ai-eval-equations-you-must-know)
+* Moviepass projection flop
+  * Mitch Lowe AMA on Reddit - https://www.reddit.com/r/movies/comments/8u00y3/im_mitch_lowe_ceo_of_moviepass_ama/
+  * "A Platform for Burning Cash" - https://d3.harvard.edu/platform-digit/submission/moviepass-a-platform-for-burning-cash/
+  * Slate article - https://archive.ph/IxKa9
 
 What is included in data science?
 Learning DS Textbook:
