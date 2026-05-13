@@ -28,6 +28,16 @@ Testing content slide.
 
 ---
 
+# Incremental Bullets
+
+* display this first
+* display this second
+* display this third
+* display this fourth
+* display this fifth
+
+---
+
 <!-- _class: image-slide -->
 
 # Florence Nightingale's Mortality Diagram (1858)
