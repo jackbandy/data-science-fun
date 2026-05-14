@@ -40,5 +40,8 @@ Tentative topics list:
 * defining and handling sensitive information
 * risks from data triangulation (i.e. re-identification, de-anonymization)
 * prediction as influence 
+* what can and cannot (should/should not) be predicted
 * practices in data collection/generation
 	* incomplete data, non-consensually collected data
+ * too much / too invasive data
+* ad-hoc support of suspect decision-making
