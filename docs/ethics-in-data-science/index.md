@@ -36,6 +36,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 Tentative topics list:
 * what ethics means in data science
+  * does ethics ever really change?
 * tech debt and documentation debt
 * defining and handling sensitive information
 * risks from data triangulation (i.e. re-identification, de-anonymization)
