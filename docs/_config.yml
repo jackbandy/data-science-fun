@@ -8,6 +8,13 @@ description: Materials for CS 418 - Intro to Data Science at UIC
 
 exclude:
   - slides/**/*.md
+  # Quarto book sources (published HTML lives in `ethics-in-data-science/book/`)
+  - ethics-in-data-science/*.md
+  - ethics-in-data-science/_quarto.yml
+  - ethics-in-data-science/references.bib
+  - ethics-in-data-science/.quarto
+  - ethics-in-data-science/.venv
+  - ethics-in-data-science/assets
 
 # Build settings
 future: false

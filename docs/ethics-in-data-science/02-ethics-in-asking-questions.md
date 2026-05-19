@@ -8,5 +8,15 @@
 
 TK
 
+## Framing and rhetoric
+
+TK
+
+* Deirdre McCloskey - notes on "objective" analysis as rhetorical/persuasive; questions embed values/narratives.
+
+## Stakeholders and harms
+
+TK
+
 
 ## References
