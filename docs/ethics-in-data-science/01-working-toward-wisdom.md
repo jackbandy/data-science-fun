@@ -1,5 +1,6 @@
 # Working Toward Wisdom
 
+
 **[← Back to Course Homepage](../../../)**
 
 > "Those analysis droids you've got over there only focus on symbols. Hagh! I should think you Jedi would have more respect for the difference between knowledge and, hu-hu-hu... *wisdom*."
@@ -36,6 +37,26 @@ TK.
 These are some test citations for @ackoff_data_1989, @vance_information_1997, @bernstein_data-information-knowledge-wisdom_2011, @rowley_wisdom_2007, @fricke_knowledge_2009, and @zeleny_management_1987.
 
 The data-information-knowledge-wisdom (DIKW) framing is commonly discussed in the literature (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011).
+
+## Case study: statistics worldviews
+
+These statistical frameworks/paradigms are essentialy worldviews that entail specific commitments about uncertainty, evidence, and subjectivity [@sep-statistics].
+
+### Frequentist worldview (long-run behavior)
+
+* Probability as long-run frequency across repeated trials
+* Confidence intervals and p-values as procedures with guaranteed long-run error rates
+
+### Bayesian worldview (degrees of belief)
+
+* Probability as a measure of uncertainty (belief) given information
+* Parameters are treated as uncertain; data update beliefs via Bayes' rule
+
+### Causal inference worldview (effects of interventions)
+
+* Core question: what would happen if we intervened?
+* potential outcomes / counterfactuals, causal graphs (DAGs)
+
 
 
 ## References

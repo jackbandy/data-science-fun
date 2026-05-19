@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Ethics in Data Science",
     "section": "",
-    "text": "1 Introduction to Ethics in Data Science\nThis is a placeholder page.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "text": "1 Introduction to Ethics in Data Science\n← Back to Course Homepage\nThis is a placeholder page.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Ethics in Data Science</span>"
     ]
@@ -34,7 +34,7 @@
     "href": "index.html#section-3",
     "title": "Ethics in Data Science",
     "section": "1.3 Section 3",
-    "text": "1.3 Section 3\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "text": "1.3 Section 3\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\nTentative topics list: * what ethics means in data science * does ethics ever really change? * tech debt and documentation debt * defining and handling sensitive information * risks from data triangulation (i.e. re-identification, de-anonymization) * prediction as influence * what can and cannot (should/should not) be predicted * practices in data collection/generation * incomplete data, non-consensually collected data * too much / too invasive data * ad-hoc support of suspect decision-making",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Ethics in Data Science</span>"
     ]
@@ -177,6 +177,76 @@
     "text": "3.3 Stakeholders and harms\nTK",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ethics in Asking Questions</span>"
+    ]
+  },
+  {
+    "objectID": "01-working-toward-wisdom.html",
+    "href": "01-working-toward-wisdom.html",
+    "title": "2  Working Toward Wisdom",
+    "section": "",
+    "text": "2.1 What is data?\n← Back to Course Homepage\nThis chapter is in-progress.\nAs one works through the various stages of the data science lifecycle, it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom “hierarchy” or the “DIKW pyramid” for short. As argued by this chapter and other sources, the definitive logical hierarchy implied by the DIKW pyramid is somewhat misleading, however, the intuitions around the pyramid metaphor offer helpful framing for the work of data science.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Working Toward Wisdom</span>"
+    ]
+  },
+  {
+    "objectID": "01-working-toward-wisdom.html#what-is-information",
+    "href": "01-working-toward-wisdom.html#what-is-information",
+    "title": "2  Working Toward Wisdom",
+    "section": "2.2 What is information?",
+    "text": "2.2 What is information?",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Working Toward Wisdom</span>"
+    ]
+  },
+  {
+    "objectID": "01-working-toward-wisdom.html#what-is-knowledge",
+    "href": "01-working-toward-wisdom.html#what-is-knowledge",
+    "title": "2  Working Toward Wisdom",
+    "section": "2.3 What is knowledge?",
+    "text": "2.3 What is knowledge?\nKnowledge must be appreciated as more than a fixed and static set of facts. To know something is more than just to store some information. It is also more than merely processing information. Zeleny (1987) describes knowledge as a “network of relations through which [humans] coordinate their actions,” adding that “knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action.”\nFor example, consider what makes Wikipedia a source of knowledge..",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Working Toward Wisdom</span>"
+    ]
+  },
+  {
+    "objectID": "01-working-toward-wisdom.html#understanding",
+    "href": "01-working-toward-wisdom.html#understanding",
+    "title": "2  Working Toward Wisdom",
+    "section": "2.4 Understanding",
+    "text": "2.4 Understanding\nTK.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Working Toward Wisdom</span>"
+    ]
+  },
+  {
+    "objectID": "01-working-toward-wisdom.html#what-is-wisdom",
+    "href": "01-working-toward-wisdom.html#what-is-wisdom",
+    "title": "2  Working Toward Wisdom",
+    "section": "2.5 What is wisdom?",
+    "text": "2.5 What is wisdom?\nThese are some test citations for Ackoff (1989), Vance (1997), Bernstein (2011), Rowley (2007), Frické (2009), and Zeleny (1987).\nThe data-information-knowledge-wisdom (DIKW) framing is commonly discussed in the literature (e.g., Ackoff (1989); Vance (1997); Bernstein (2011)).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Working Toward Wisdom</span>"
+    ]
+  },
+  {
+    "objectID": "01-working-toward-wisdom.html#case-study-statistics-worldviews",
+    "href": "01-working-toward-wisdom.html#case-study-statistics-worldviews",
+    "title": "2  Working Toward Wisdom",
+    "section": "2.6 Case study: statistics worldviews",
+    "text": "2.6 Case study: statistics worldviews\nThese statistical frameworks/paradigms are essentialy worldviews that entail specific commitments about uncertainty, evidence, and subjectivity (Romeijn 2025).\n\n2.6.1 Frequentist worldview (long-run behavior)\n\nProbability as long-run frequency across repeated trials\nConfidence intervals and p-values as procedures with guaranteed long-run error rates\n\n\n\n2.6.2 Bayesian worldview (degrees of belief)\n\nProbability as a measure of uncertainty (belief) given information\nParameters are treated as uncertain; data update beliefs via Bayes’ rule\n\n\n\n2.6.3 Causal inference worldview (effects of interventions)\n\nCore question: what would happen if we intervened?\npotential outcomes / counterfactuals, causal graphs (DAGs)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Working Toward Wisdom</span>"
+    ]
+  },
+  {
+    "objectID": "01-working-toward-wisdom.html#references",
+    "href": "01-working-toward-wisdom.html#references",
+    "title": "2  Working Toward Wisdom",
+    "section": "2.7 References",
+    "text": "2.7 References\n\n\n\n\nAckoff, Russell. 1989. “From Data to Wisdom.” Journal of Applied Systems Analysis. https://faculty.ung.edu/kmelton/Documents/DataWisdom.pdf.\n\n\nBernstein, Jay H. 2011. “The Data-Information-Knowledge-Wisdom Hierarchy and Its Antithesis.” NASKO 2 (1): 68. https://doi.org/10.7152/nasko.v2i1.12806.\n\n\nEliot, T. S. 1934. The Rock: A Pageant Play. Faber; Faber. https://archive.org/details/in.ernet.dli.2015.501089/page/n9/mode/2up.\n\n\nFrické, Martin. 2009. “The Knowledge Pyramid: A Critique of the DIKW Hierarchy.” Journal of Information Science 35 (2): 131–42. https://doi.org/10.1177/0165551508094050.\n\n\nLucas, George, dir. 2002. Star Wars: Episode II – Attack of the Clones. https://assets.scriptslug.com/live/pdf/scripts/star-wars-episode-ii-attack-of-the-clones-2002.pdf?v=1729114998#page=35.\n\n\nRomeijn, Jan-Willem. 2025. “Philosophy of Statistics.” In The Stanford Encyclopedia of Philosophy, Winter 2025, edited by Edward N. Zalta and Uri Nodelman. Metaphysics Research Lab, Stanford University. https://plato.stanford.edu/archives/win2025/entries/statistics/.\n\n\nRowley, J. E. 2007. “The Wisdom Hierarchy: Representations of the DIKW Hierarchy.” Journal of Information Science 33 (2): 163–80. https://doi.org/10.1177/0165551506070706.\n\n\nVance, David. 1997. “Information, Knowledge and Wisdom: The Epistemic Hierarchy and Computer-Based Information Systems.” AMCIS 1997 Proceedings, August. https://aisel.aisnet.org/amcis1997/165.\n\n\nZeleny, Milan. 1987. “Management Support Systems: Towards Integrated Knowledge Management.” Human Systems Management 7 (1): 59–70. https://doi.org/10.3233/HSM-1987-7108.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Working Toward Wisdom</span>"
     ]
   }
 ]
