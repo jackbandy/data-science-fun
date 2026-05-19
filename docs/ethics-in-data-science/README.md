@@ -27,7 +27,7 @@ quarto render
 - `index.md` - Book home page
 - `_quarto.yml` - Book configuration
 - `references.bib` - Bibliography (BibTeX)
-- `book/` - Built HTML output (generated)
+- `book/` - Built HTML output (generated; not committed—let GitHub Actions handle rendering/publishing)
 
 
 ## Resources
