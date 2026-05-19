@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Jack Bandy">
-<meta name="dcterms.date" content="2026-05-19">
 
-<title>Ethics in Data Science</title>
+<title>5&nbsp; Ethics in Understanding – Ethics in Data Science</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -35,7 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-working-toward-wisdom.html" rel="next">
+<link href="./05-ethics-in-reporting-decisions-solutions.html" rel="next">
+<link href="./03-ethics-in-obtaining-data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -86,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Ethics in Data Science</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-ethics-in-understanding.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ethics in Understanding</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -113,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Ethics in Data Science</span></span></a>
   </div>
 </li>
@@ -137,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-ethics-in-understanding.html" class="sidebar-item-text sidebar-link">
+  <a href="./04-ethics-in-understanding.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ethics in Understanding</span></span></a>
   </div>
 </li>
@@ -163,12 +162,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#introduction-to-ethics-in-data-science" id="toc-introduction-to-ethics-in-data-science" class="nav-link active" data-scroll-target="#introduction-to-ethics-in-data-science"><span class="header-section-number">1</span> Introduction to Ethics in Data Science</a>
-  <ul class="collapse">
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">1.1</span> Section 1</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">1.2</span> Section 2</a></li>
-  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">1.3</span> Section 3</a></li>
-  </ul></li>
+  <li><a href="#what-understanding-includes" id="toc-what-understanding-includes" class="nav-link active" data-scroll-target="#what-understanding-includes"><span class="header-section-number">5.1</span> What “understanding” includes</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5.2</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -177,27 +172,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Ethics in Data Science</h1>
-<p class="subtitle lead">Exploring the social implications of data science</p>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ethics in Understanding</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Jack Bandy </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">May 19, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -207,41 +189,28 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction-to-ethics-in-data-science" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introduction to Ethics in Data Science</h1>
 <p><strong><a href="../../../">← Back to Course Homepage</a></strong></p>
-<p><em>This is a placeholder page.</em></p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<section id="section-1" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="section-1"><span class="header-section-number">1.1</span> Section 1</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-<ul>
-<li>Point 1: Lorem ipsum dolor sit amet</li>
-<li>Point 2: Consectetur adipiscing elit</li>
-<li>Point 3: Sed do eiusmod tempor incididunt</li>
-</ul>
+<p><em>This chapter is in-progress.</em></p>
+<section id="what-understanding-includes" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="what-understanding-includes"><span class="header-section-number">5.1</span> What “understanding” includes</h2>
+<p>TK</p>
+<section id="understanding-the-data" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="understanding-the-data"><span class="header-section-number">5.1.1</span> Understanding the data</h3>
 </section>
-<section id="section-2" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="section-2"><span class="header-section-number">1.2</span> Section 2</h2>
-<p>Ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-<section id="subsection-a" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="subsection-a"><span class="header-section-number">1.2.1</span> Subsection A</h3>
-<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<section id="understanding-the-world" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="understanding-the-world"><span class="header-section-number">5.1.2</span> Understanding the world</h3>
 </section>
-<section id="subsection-b" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="subsection-b"><span class="header-section-number">1.2.2</span> Subsection B</h3>
-<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<section id="uncertainty" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="uncertainty"><span class="header-section-number">5.1.3</span> Uncertainty</h3>
+</section>
+<section id="validity-overfitting-and-generalization" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="validity-overfitting-and-generalization"><span class="header-section-number">5.1.4</span> Validity, overfitting, and generalization</h3>
 </section>
 </section>
-<section id="section-3" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="section-3"><span class="header-section-number">1.3</span> Section 3</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-<hr>
-<p>Tentative topics list: * what ethics means in data science * does ethics ever really change? * tech debt and documentation debt * defining and handling sensitive information * risks from data triangulation (i.e.&nbsp;re-identification, de-anonymization) * prediction as influence * what can and cannot (should/should not) be predicted * practices in data collection/generation * incomplete data, non-consensually collected data * too much / too invasive data * ad-hoc support of suspect decision-making</p>
+<section id="references" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="references"><span class="header-section-number">5.2</span> References</h2>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -647,10 +616,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./03-ethics-in-obtaining-data.html" class="pagination-link" aria-label="Ethics in Obtaining Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Ethics in Obtaining Data</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-working-toward-wisdom.html" class="pagination-link" aria-label="Working Toward Wisdom">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Working Toward Wisdom</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05-ethics-in-reporting-decisions-solutions.html" class="pagination-link" aria-label="Ethics in Reporting Decisions &amp; Solutions">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Ethics in Reporting Decisions &amp; Solutions</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
