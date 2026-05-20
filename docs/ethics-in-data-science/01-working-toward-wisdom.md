@@ -1,4 +1,7 @@
-# Working Toward Wisdom
+---
+title: Working Toward Wisdom
+subtitle: Introduction to Ethics in Data Science
+---
 
 
 **[← Back to Course Homepage](../../../)**
@@ -19,7 +22,7 @@
 
 As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short. As argued by this chapter and other sources, the definitive logical hierarchy implied by the DIKW pyramid is somewhat misleading, however, the intuitions around the pyramid metaphor offer helpful framing for the work of data science.
 
-## What is data?
+## What are data?
 
 ## What is information?
 
