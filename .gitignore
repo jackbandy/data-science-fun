@@ -5,6 +5,7 @@ npm-debug.log*
 # PDFs
 *.pdf
 !docs/worksheet-pdfs/*.pdf
+!docs/slides/*.pdf
 
 # Python
 __pycache__/
