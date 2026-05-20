@@ -34,9 +34,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ---
 
+Chapters to align with from [learning data science textbook](https://learningds.org/ch/01/lifecycle_cycle.html):
+* Ethics in asking questions
+	* Eugenics example
+* Ethics in obtaining data
+* Ethics in understanding data
+* Ethics in understanding the world
+* Ethics in reports, decisions, and solutions
+	* Designing and testing interventions
+
 Tentative topics list:
 * what ethics means in data science
-  * does ethics ever really change?
+	* does ethics ever really change?
 * tech debt and documentation debt
 * defining and handling sensitive information
 * risks from data triangulation (i.e. re-identification, de-anonymization)
@@ -44,5 +53,5 @@ Tentative topics list:
 * what can and cannot (should/should not) be predicted
 * practices in data collection/generation
 	* incomplete data, non-consensually collected data
- * too much / too invasive data
+	* too much / too invasive data
 * ad-hoc support of suspect decision-making
