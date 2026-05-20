@@ -88,8 +88,11 @@ section > footer {
   box-sizing: border-box;
   font-family: 'Mulish', sans-serif;
   font-size: 16px;
+  line-height: 44px;
   font-weight: 400;
   color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 section > footer a {
@@ -100,9 +103,19 @@ section > footer a {
 }
 
 section > footer img {
-  height: 30px;
-  filter: invert(67%);
+  width: auto;
+  display: block;
   flex-shrink: 0;
+}
+
+section > footer img[alt="UIC logo"] {
+  height: 24px;
+  filter: invert(67%);
+}
+
+section > footer img[alt="CC BY-NC-SA"] {
+  height: 16px;
+  opacity: 0.33;
 }
 
 /* Title slide */
