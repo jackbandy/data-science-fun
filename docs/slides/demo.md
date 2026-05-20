@@ -2,7 +2,7 @@
 marp: true
 theme: data-science-fun
 paginate: true
-footer: "![UIC logo](../images/uic-black-logo.svg) CS 418, Intro to Data Science, Week 0 [dodatascience.fun/slides/demo](https://dodatascience.fun/slides/demo.html)"
+footer: "![UIC logo](../images/uic-black-logo.svg)  ![CC BY-NC-SA](../images/cc-by-nc-sa-small.svg) CS 418, Intro to Data Science, Week 0 [dodatascience.fun/slides/demo](https://dodatascience.fun/slides/demo.html)"
 ---
 
 <!-- _class: title -->
