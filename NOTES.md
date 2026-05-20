@@ -14,6 +14,11 @@ Miscellaneous topics:
   * Blog post - https://www.residualthoughts.com/2018/03/15/the-numbers-behind-moviepass-and-why-its-probably-doomed/
   * Slate article - https://archive.ph/IxKa9
 
+Miscellaneous exercise ideas:
+* data diorama
+* de-anonymization challenge
+* portfolio piece - interactive data explainer / data story
+
 What is included in data science?
 Learning DS Textbook:
 * Data science life cycle
