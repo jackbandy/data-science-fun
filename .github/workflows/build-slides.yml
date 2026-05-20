@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "docs/slides/**/*.md"
+      - "docs/slides/build_all_marp.sh"
       - "docs/css/marp-theme.css"
       - "docs/.marprc.yml"
       - "package.json"
@@ -25,14 +26,63 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - run: npm ci
+      - name: Check whether slide outputs are stale
+        id: stale
+        run: |
+          set -euo pipefail
+          stale=false
+          support_files=(
+            "docs/.marprc.yml"
+            "docs/css/marp-theme.css"
+            "docs/slides/build_all_marp.sh"
+            "package.json"
+            "package-lock.json"
+          )
 
-      - name: Compile slides to HTML
-        run: npx marp --config docs/.marprc.yml docs/slides/
+          while IFS= read -r -d '' md; do
+            if ! grep -Eq '^marp:[[:space:]]*true([[:space:]]|$)' "$md"; then
+              continue
+            fi
 
-      - name: Commit compiled HTML
+            base="${md%.md}"
+            html="${base}.html"
+            pdf="${base}.pdf"
+
+            if [[ ! -f "$html" || ! -f "$pdf" ]]; then
+              stale=true
+              break
+            fi
+
+            if [[ "$md" -nt "$html" || "$md" -nt "$pdf" ]]; then
+              stale=true
+              break
+            fi
+
+            for support in "${support_files[@]}"; do
+              if [[ "$support" -nt "$html" || "$support" -nt "$pdf" ]]; then
+                stale=true
+                break 2
+              fi
+            done
+          done < <(find docs/slides -type f -name "*.md" -print0)
+
+          echo "stale=$stale" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Install slide build dependencies
+        if: steps.stale.outputs.stale == 'true'
+        run: npm ci
+
+      - name: Compile slides to HTML and PDF
+        if: steps.stale.outputs.stale == 'true'
+        run: bash docs/slides/build_all_marp.sh
+
+      - name: Commit compiled slide outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/slides/*.html
+          git add docs/slides/*.pdf
           git diff --staged --quiet || (git commit -m "Build slides" && git push)

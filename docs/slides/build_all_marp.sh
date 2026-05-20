@@ -1,21 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# build_all_marp.sh — compile all .md files under this docs directory to HTML and PDF using Marp CLI
+# build_all_marp.sh — compile all slide .md files to HTML and PDF using Marp CLI
 # Usage: ./build_all_marp.sh [output-dir]
 # If MARP_CMD environment variable is set, it will be used as the marp CLI command.
 # Otherwise the script prefers a locally installed 'marp' binary, falling back to 'npx @marp-team/marp-cli'.
 
 OUTPUT_DIR=${1:-.}
 
-# Resolve theme file path relative to this script's location
+# Resolve paths relative to this script's location
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+CONFIG_FILE="$REPO_ROOT/docs/.marprc.yml"
 THEME_FILE="$SCRIPT_DIR/../css/marp-theme.css"
-if [[ -f "$THEME_FILE" ]]; then
-  THEME_ARG="--theme-set $THEME_FILE"
-else
-  THEME_ARG=""
-  echo "Warning: theme file not found at $THEME_FILE" >&2
+
+if [[ ! -f "$CONFIG_FILE" ]]; then
+  echo "Error: Marp config not found at $CONFIG_FILE" >&2
+  exit 1
+fi
+
+if [[ ! -f "$THEME_FILE" ]]; then
+  echo "Error: theme file not found at $THEME_FILE" >&2
+  exit 1
 fi
 
 # Find marp executable or fallback to npx
@@ -28,11 +34,21 @@ else
 fi
 
 echo "Using Marp command: $MARP_CMD"
+echo "Using Marp config: $CONFIG_FILE"
+echo "Using Marp theme: $THEME_FILE"
 
-# Gather all markdown files under current directory (recursive)
+# Gather all Marp slide markdown files under this slides directory (recursive)
 # Use find + read -d '' loop for macOS bash compatibility (no mapfile, no realpath)
 found=0
+cd "$SCRIPT_DIR"
+
 while IFS= read -r -d '' md; do
+  # Only build actual Marp slide sources, not notes like README.md.
+  if ! grep -Eq '^marp:[[:space:]]*true([[:space:]]|$)' "$md"; then
+    echo "[marp] Skipping non-slide markdown: $md"
+    continue
+  fi
+
   found=1
   # strip leading ./ from find output for relative path
   rel="${md#./}"
@@ -44,15 +60,28 @@ while IFS= read -r -d '' md; do
   pdf_out="$out_base.pdf"
 
   echo "[marp] Generating HTML: $html_out from $md"
-  $MARP_CMD "$md" -o "$html_out" --allow-local-files $THEME_ARG || { echo "HTML generation failed for $md" >&2; continue; }
+  $MARP_CMD \
+    --config "$CONFIG_FILE" \
+    --theme-set "$THEME_FILE" \
+    --allow-local-files \
+    "$md" \
+    -o "$html_out" \
+    </dev/null || { echo "HTML generation failed for $md" >&2; continue; }
 
   echo "[marp] Generating PDF: $pdf_out from $md"
-  $MARP_CMD "$md" --pdf -o "$pdf_out" --allow-local-files $THEME_ARG || { echo "PDF generation failed for $md" >&2; continue; }
+  $MARP_CMD \
+    --config "$CONFIG_FILE" \
+    --theme-set "$THEME_FILE" \
+    --allow-local-files \
+    --pdf \
+    "$md" \
+    -o "$pdf_out" \
+    </dev/null || { echo "PDF generation failed for $md" >&2; continue; }
 
 done < <(find . -type f -name "*.md" -not -path "./node_modules/*" -print0)
 
 if [[ $found -eq 0 ]]; then
-  echo "No markdown files found." >&2
+  echo "No Marp slide markdown files found." >&2
   exit 1
 fi
 
