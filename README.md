@@ -82,9 +82,11 @@ I'm trying to avoid google slides, and this is the current markdown-based slide 
 
 Still working on this 🙂 there are too many possibilities... But main units will probably include:
 * Basic prob/stats/sampling
+* Data frame fundamentals
 * Visualizations
+* Uncertainty
 * Linear modeling
-* Networks
+* Networks and network analysis
 * Machine-learning models
 
 ## Note on LLM use
