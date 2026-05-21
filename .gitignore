@@ -1,12 +1,7 @@
 .DS_Store
 node_modules/
 npm-debug.log*
-
-# PDFs
-*.pdf
-!docs/worksheet-pdfs/*.pdf
-!docs/slides/*.pdf
-!docs/ethics-in-data-science/assets/census/*.pdf
+sandbox/**/*.pdf
 
 # Python
 __pycache__/
