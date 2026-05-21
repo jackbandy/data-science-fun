@@ -15,12 +15,9 @@ Do you obtain it?
 
 TK
 
-## Case Study: Facebook Profile
-The first Facebook profile
-
 ## Case Study: Census Data
 
-Four original census artifacts:
+Four original census artifacts...
 
 ### Census form in 1790
 
@@ -67,7 +64,10 @@ Notes from [Wikipedia's "Race and ethnicity in the United States census," sectio
 * In `2000`, a large share of Hispanic/Latino respondents selected `Some other race`, showing a mismatch between official categories and how respondents describe themselves.
 * Since `2000`, respondents have been allowed to select more than one race, so race totals can exceed the total population (not directly comparable with older censuses).
 
-Source summary: .
+## Case Study: Facebook Profile
 
+Similar dynamics can be observed in the Facebook signup process. Until 2014, Facebook had essentially three options: male, female, or no answer. On February 13, 2014, Facebook substantially expanded its gender fields, with 58 different options, custom fields, and additional pronoun settings.
+
+Sources: [ABC News, "Here's a List of 58 Gender Options for Facebook Users" (February 13, 2014)](https://abcnews.com/blogs/headlines/2014/02/heres-a-list-of-58-gender-options-for-facebook-users), [CNN, "Facebook goes beyond 'male' and 'female' with new gender options" (February 13, 2014)](https://www.cnn.com/2014/02/13/tech/social-media/facebook-gender-custom/)
 
 ## References
