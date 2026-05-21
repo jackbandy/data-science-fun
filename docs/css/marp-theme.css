@@ -82,7 +82,7 @@ section > footer {
   padding: 0 72px 0 20px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 32px;
   border-top: 1px solid #eee;
   background: #fff;
   box-sizing: border-box;
@@ -109,7 +109,7 @@ section > footer img {
 }
 
 section > footer img[alt="UIC logo"] {
-  height: 24px;
+  height: 32px;
   filter: invert(67%);
 }
 
