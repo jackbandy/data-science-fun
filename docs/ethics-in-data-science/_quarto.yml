@@ -7,6 +7,10 @@ book:
   subtitle: "Exploring the social implications of data science"
   author: "Jack Bandy"
   date: today
+  repo-url: https://github.com/jackbandy/data-science-fun
+  repo-branch: main
+  repo-subdir: docs/ethics-in-data-science
+  repo-actions: [source]
   chapters:
     - index.md
     - 01-working-toward-wisdom.md
