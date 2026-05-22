@@ -61,9 +61,14 @@ TK
 
 * Deirdre McCloskey - notes on "objective" analysis as rhetorical/persuasive; questions embed values/narratives.
 
-## Stakeholders and harms
+## Questions for your questions
 
-TK
+* Who asked this question?
+	* What are their goals and incentives?
+* Who else may have asked this question?
+	* Have they shard results anywhere?
+* Are there existing data to addresses this question?
+* 
 
 
 ## References
