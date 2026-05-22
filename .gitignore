@@ -18,3 +18,13 @@ docs/ethics-in-data-science/*_files/
 
 # Prompt scratch files
 prompts.txt
+
+# Sandbox downloader outputs
+sandbox/stanford-109-questions/downloads/
+sandbox/stanford-109-questions/download_stanford_109.py
+sandbox/open-intro-materials/downloads/
+sandbox/open-intro-materials/pages/
+sandbox/open-intro-materials/download_open_intro_materials.py
+sandbox/data-science-box-questions/downloads/
+sandbox/data-science-box-questions/pages/
+sandbox/data-science-box-questions/download_data_science_box.py

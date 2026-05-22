@@ -41,6 +41,16 @@ These are some test citations for @ackoff_data_1989, @vance_information_1997, @b
 
 The data-information-knowledge-wisdom (DIKW) framing is commonly discussed in the literature (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011).
 
+https://www.cmu.edu/mcs/news-events/2019/0314_pi-day-perfect-circles.html
+
+There is no such thing as a perfect circle. To prove it, let's try to make one...
+
+*svg of perfect circle*
+*zoom in on edge*
+*zoom in further*
+*representation vs ideal*
+
+
 ## Case study: statistics worldviews
 
 These statistical frameworks/paradigms are essentialy worldviews that entail specific commitments about uncertainty, evidence, and subjectivity [@sep-statistics].
