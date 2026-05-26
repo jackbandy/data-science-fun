@@ -8,16 +8,19 @@ Materials are under active development during Summer 2026. The public-facing sit
 
 ## Repository layout
 
-```
-data-adventures/
+```text
+data-science-fun/
 ├── .github/workflows/           # GitHub Actions stuff
 ├── docs/                        # Public-facing site root
 │   ├── index.html               # Landing page
 │   ├── css/                     # Shared stylesheets
 │   ├── slides/                  # Marp slides (md, pdf, html)
-│   ├── ethics-in-data-science/  # Quarto mini-book source
-│   └── CNAME                    # Custom domain configuration
+│   ├── syllabus/                # Generated syllabus output (html, pdf)
+│   ├── ethics-in-data-science/  # Quarto mini-book
+│   └── CNAME                    # domain config
+├── syllabus/                    # Syllabus source and helpers
 ├── sandbox/                     # Quarantine for LLM-modified or experimental content
+├── source-materials/            # Reference and upstream source files
 ├── worksheets/                  # Worksheet source files
 ├── NOTES.md                     # Working notes and planning
 ├── package.json                 # Dependencies for slides
@@ -26,7 +29,7 @@ data-adventures/
 
 ## GitHub Actions
 
-Using two separate GitHub Actions workflows for publishing course materials.
+Using GitHub Actions workflows for some materials. The goal is to make things more portable, accessible, and easily editable. This usually means putting "raw content" in a markdown somewhere, which gets assembled and served automatically.
 
 ### Quarto mini-book deploy
 
@@ -78,6 +81,23 @@ I'm trying to avoid google slides, and this is the current markdown-based slide 
 - It commits the generated slide HTML and PDF files back into the repository under `docs/slides/`.
 - Those compiled slide files are then included in the Pages site because the site is deployed from the `docs/` artifact.
 
+### Syllabus build
+
+The syllabus uses a markdown workflow in `syllabus/`, and the generated files are published under `docs/syllabus/`.
+
+```text
+                    [syllabus/syllabus.md]
+                              |
+                   +----------+----------+
+                   |                     |
+                   v                     v
+      [docs/syllabus/index.html]   [docs/syllabus/syllabus.pdf]
+```
+
+- The upstream source is `syllabus/syllabus.md`.
+- Run `syllabus/build_syllabus_from_markdown.sh` to compile the markdown to both HTML and PDF (via latex).
+- The output in `docs/syllabus/` is served directly at `dodatascience.fun/syllabus/`.
+
 ## Course topics
 
 Still working on this 🙂 there are too many possibilities... But main units will probably include:
@@ -95,6 +115,6 @@ The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My p
 
 In some cases, I move things out of the sandbox after editing and  testing and verification. In practice, these means that LLMs are often adjusting or improving some workflows that would otherwise require lots of tedium, which in turn allows me to focus on writing and planning.
 
-Files that were substantially modified by LLMs will say so in the header.
+Files that were substantially modified by LLMs will say so in the header, e.g. `NOTICE: This file modified by an LLM coding system...`
 
 All other materials hand-typed with 🩵 in Chicago, IL.
