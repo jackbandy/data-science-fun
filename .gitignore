@@ -19,11 +19,9 @@ docs/ethics-in-data-science/*_files/
 # Quarto slides
 docs/slides/.quarto/
 docs/slides/**/*.quarto_ipynb
-docs/slides/*quarto.html
-docs/slides/*quarto.pdf
-docs/slides/*quarto_files/
 docs/slides/_quarto_internal_scss_error.scss
 docs/css/quarto-reveal-*.css
+docs/slides/*quarto_files/
 docs/slides/theme/fonts/aphont/
 docs/slides/theme/fonts/danh-da/
 docs/slides/theme/fonts/routed-gothic/
