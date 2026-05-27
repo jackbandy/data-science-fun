@@ -1,0 +1,190 @@
+/*-- scss:defaults --*/
+
+// Easy controls: edit these first.
+$theme-title-font: "Big Shoulders", "Arial Narrow", Arial, sans-serif;
+$theme-body-font: Arial, sans-serif;
+$theme-code-font: Courier, "Courier New", monospace;
+$body-size: 34px;
+$title-size: 4.35rem;
+$h1-size: 3.5rem;
+$h2-size: 2.5rem;
+$footer-size: 18px;
+$slide-number-size: 18px;
+$slide-padding: 48px 64px 92px;
+$footer-height: 44px;
+$footer-pad-x: 72px;
+$title-rule: 12px;
+$heading-rule: 6px;
+$orange: #f9461c;
+$orange-dark: #c83214;
+$ink: #1a1a1a;
+$text: #444;
+$steel: #565a5c;
+$muted: #777;
+$quiet: #aaa;
+$paper: #fff;
+$soft-gray: #f4f4f2;
+$border: #ddd;
+
+@font-face {
+  font-family: "Big Shoulders";
+  src: url("../../../../../theme/fonts/big-shoulders/BigShoulders.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+$body-bg: $paper !default;
+$body-color: $text !default;
+$link-color: $orange !default;
+$link-color-hover: $orange-dark !default;
+$selection-bg: rgba(249, 70, 28, 0.28) !default;
+$selection-color: $ink !default;
+$font-family-sans-serif: $theme-body-font !default;
+$font-family-monospace: $theme-code-font !default;
+$presentation-font-size-root: $body-size !default;
+$presentation-line-height: 1.35 !default;
+$presentation-slide-text-align: left !default;
+$presentation-heading-font: $theme-title-font !default;
+$presentation-heading-color: $ink !default;
+$presentation-heading-font-weight: 700 !default;
+$presentation-heading-line-height: 1 !default;
+$presentation-heading-text-transform: none !default;
+$presentation-h1-font-size: $h1-size !default;
+$presentation-h2-font-size: $h2-size !default;
+$code-block-bg: $soft-gray !default;
+$code-block-border-color: $border !default;
+$code-bg: #ececea !default;
+$code-color: $ink !default;
+
+/*-- scss:rules --*/
+
+:root {
+  --r-main-font: #{$theme-body-font};
+  --r-heading-font: #{$theme-title-font};
+  --r-code-font: #{$theme-code-font};
+  --r-main-color: #{$text};
+  --r-heading-color: #{$ink};
+  --r-link-color: #{$orange};
+  --r-link-color-hover: #{$orange-dark};
+  --r-background-color: #{$paper};
+}
+
+.reveal {
+  color: $text;
+  background: $paper;
+
+  .slides {
+    text-align: left;
+    section { box-sizing: border-box; padding: $slide-padding; background: $paper; }
+  }
+
+  h1 { border-bottom: $heading-rule solid $orange; padding-bottom: 9px; margin-bottom: 24px; }
+  h2, h3, h4, .panel-tabset [role="tab"] { font-family: $theme-body-font; font-weight: 720; }
+  h2 { color: $steel; }
+  h3, h4, strong, .panel-tabset [role="tab"][aria-selected="true"] { color: $ink; }
+  ul, ol { padding-left: 1.5em; line-height: 1.75; }
+
+  blockquote {
+    border-left: 8px solid $orange;
+    padding-left: 0.8em;
+    color: $muted;
+    font-style: italic;
+    box-shadow: none;
+  }
+
+  code {
+    font-family: $theme-code-font;
+    background: $code-bg;
+    color: $ink;
+    border-radius: 3px;
+    padding: 0 4px;
+    font-size: 0.86em;
+  }
+
+  a, a:link, a:visited, a:hover, a:active, .progress, .controls {
+    color: $orange;
+    text-decoration: none;
+  }
+
+  .panel-tabset [role="tablist"],
+  .panel-tabset [role="tab"][aria-selected="true"] { border-bottom-color: $border; }
+
+  .slide-number-delimiter, .slide-number-b, .image-only h1 { display: none; }
+
+  section.course-title {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    border-top: $title-rule solid $orange;
+    h1 { border-bottom: none; font-size: $title-size; max-width: 820px; }
+    h2 { font-size: 1.55rem; color: $steel; }
+    p { font-size: 1rem; color: $muted; margin-top: 32px; }
+  }
+
+  .image-slide {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 64px 76px;
+    h1 { border-bottom: none; margin: 0 0 16px; }
+    img { max-height: 520px; max-width: 100%; object-fit: contain; }
+  }
+
+  .image-slide p, .image-only p, .split-content p { margin: 0; }
+  .image-only { padding: 0; overflow: hidden; background: #000; }
+  .image-only p, .image-only img { width: 100%; height: 100%; }
+  .image-only img { object-fit: cover; object-position: center; margin: 0; }
+  .split { display: grid !important; grid-template-rows: auto 1fr; align-items: center; }
+  .split-content { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; align-items: center; }
+  .split-content p { display: flex; align-items: center; justify-content: center; }
+  .split-content img { max-width: 100%; max-height: 540px; object-fit: contain; }
+  .sources h1 { font-size: 1.6rem; }
+  .sources ol { font-size: 0.85rem; line-height: 2; color: $muted; }
+}
+
+.reveal.reveal {
+  .footer, .slide-number {
+    position: fixed;
+    bottom: 0 !important;
+    height: $footer-height;
+    line-height: $footer-height;
+    font-family: $theme-body-font;
+    color: $quiet;
+    background: transparent;
+  }
+
+  .footer {
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 $footer-pad-x;
+    border-top: 1px solid #e8e8e8;
+    background: $paper;
+    box-sizing: border-box;
+    font-size: $footer-size !important;
+    font-weight: 520;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 20;
+    width: auto !important;
+    margin: 0 !important;
+    text-align: left !important;
+    p { display: flex; align-items: center; gap: 32px; height: $footer-height; margin: 0; }
+    a { font: inherit; color: inherit !important; }
+    img { width: auto; display: block; flex-shrink: 0; margin: 0; border: 0; box-shadow: none; }
+    img[alt="UIC logo"] { height: 32px; filter: invert(67%); }
+    img[alt="CC BY-NC-SA"] { height: 16px; opacity: 0.33; }
+  }
+
+  .slide-number {
+    right: 0 !important;
+    width: $footer-pad-x;
+    padding: 0;
+    text-align: center;
+    font-size: $slide-number-size !important;
+    font-weight: 560;
+    z-index: 21;
+    a { font: inherit; color: inherit !important; }
+  }
+}
