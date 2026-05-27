@@ -15,6 +15,10 @@ Do you obtain it?
 
 TK
 
+## Ethics in Maintaining Data
+
+TK
+
 ## Case Study: Census Data
 
 Four original census artifacts...
