@@ -11,6 +11,7 @@ on:
       - "docs/slides/theme/**"
       - "docs/css/marp-theme.css"
       - "docs/.marprc.yml"
+      - ".gitignore"
       - "package.json"
       - "package-lock.json"
       - ".github/workflows/build-slides.yml"
