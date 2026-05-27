@@ -21,7 +21,7 @@ docs/slides/.quarto/
 docs/slides/**/*.quarto_ipynb
 docs/slides/_quarto_internal_scss_error.scss
 docs/css/quarto-reveal-*.css
-docs/slides/*quarto_files/
+docs/slides/.*-pdf-export.html
 docs/slides/theme/fonts/aphont/
 docs/slides/theme/fonts/danh-da/
 docs/slides/theme/fonts/routed-gothic/
