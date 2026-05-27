@@ -105,14 +105,14 @@ Still working on this 🙂 there are too many possibilities... But main units wi
 * Basic prob/stats/sampling
 * Data frame fundamentals
 * Visualizations
-* Uncertainty
+* Uncertainty (i.e. confidence intervals, errors, confidence levels, etc.)
 * Linear modeling
-* Networks and network analysis
+* Network analysis
 * Machine-learning models
 
 ## Note on LLM use
 
-The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html), but in short: I use them sparingly, with extreme caution, sort of like a credit card.
+The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html), but in short: I use them sparingly, with extreme caution, sort of like a credit card. If I do not have sufficient "money" (understanding) to "pay back" (explain, modify, rewrite, etc.) what I "buy" (generate), I probably should use a different tool.
 
 In some cases, I move things out of the sandbox after editing and  testing and verification. In practice, these means that LLMs are often adjusting or improving some workflows that would otherwise require lots of tedium, which in turn allows me to focus on writing and planning.
 
