@@ -67,7 +67,7 @@ The Quarto mini-book at `docs/ethics-in-data-science/` is published with `.githu
 I'm trying to avoid google slides, and this is the current markdown-based slide workflow, which lives in `.github/workflows/build-slides.yml`.
 
 ```text
-                 [docs/slides/*.md]
+         [docs/slides/*.md or *.qmd]
                         |
              +----------+----------+
              |                     |
@@ -75,10 +75,11 @@ I'm trying to avoid google slides, and this is the current markdown-based slide 
    [docs/slides/*.html]   [docs/slides/*.pdf]
 ```
 
-- E.g. week0.md will automatically be compiled to create week0.html and week0.pdf
-- On pushes that touch slide sources or Marp config, the workflow first checks whether the slide outputs are already up to date.
-- If a rebuild is needed, it installs Node dependencies and runs `docs/slides/build_all_marp.sh`.
-- It commits the generated slide HTML and PDF files back into the repository under `docs/slides/`.
+- Marp decks like `week0.md` automatically compile to `week0.html` and `week0.pdf`.
+- Quarto decks like `week0quarto.qmd` automatically compile to `week0quarto.html`, `week0quarto.pdf`, and supporting `_files/` assets.
+- On pushes that touch slide sources or slide build support files, the workflow first checks whether Marp and Quarto outputs are already up to date.
+- If a rebuild is needed, it runs the existing `docs/slides/build_all_marp.sh` and `docs/slides/build_all_quarto.sh` scripts as needed.
+- It commits the generated slide HTML, PDF, and Quarto support files back into the repository under `docs/slides/`.
 - Those compiled slide files are then included in the Pages site because the site is deployed from the `docs/` artifact.
 
 ### Syllabus build
