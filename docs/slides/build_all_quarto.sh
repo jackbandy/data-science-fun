@@ -241,23 +241,46 @@ async function waitForDebugger() {
 }
 
 function createClient(webSocketUrl) {
-  const socket = new WebSocket(webSocketUrl);
+  // Ensure a WebSocket implementation exists in Node (use 'ws' package if available)
+  const WebSocketClass = (typeof WebSocket !== "undefined") ? WebSocket : (() => {
+    try {
+      return require('ws');
+    } catch (err) {
+      throw new Error('WebSocket is not defined and the "ws" package could not be required. Install "ws" or run in an environment with a global WebSocket.');
+    }
+  })();
+
+  const socket = new WebSocketClass(webSocketUrl);
   let id = 0;
   const pending = new Map();
 
-  socket.onmessage = (event) => {
-    const message = JSON.parse(event.data);
-    if (message.id && pending.has(message.id)) {
-      const { resolve, reject } = pending.get(message.id);
-      pending.delete(message.id);
-      if (message.error) reject(new Error(JSON.stringify(message.error)));
-      else resolve(message.result);
-    }
-  };
-
-  const ready = new Promise((resolve) => {
-    socket.onopen = resolve;
-  });
+  // Support both browser-like and ws (Node) event APIs
+  let ready;
+  if (typeof socket.on === 'function') {
+    // ws module (Node)
+    socket.on('message', (data) => {
+      const message = JSON.parse(typeof data === 'string' ? data : data.toString());
+      if (message.id && pending.has(message.id)) {
+        const { resolve, reject } = pending.get(message.id);
+        pending.delete(message.id);
+        if (message.error) reject(new Error(JSON.stringify(message.error)));
+        else resolve(message.result);
+      }
+    });
+    ready = new Promise((resolve) => socket.on('open', resolve));
+  } else {
+    // browser-like WebSocket
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      if (message.id && pending.has(message.id)) {
+        const { resolve, reject } = pending.get(message.id);
+        pending.delete(message.id);
+        if (message.error) reject(new Error(JSON.stringify(message.error)));
+        else resolve(message.result);
+      }
+    };
+    ready = new Promise((resolve) => { socket.onopen = resolve; });
+  }
 
   function send(method, params = {}) {
     const messageId = ++id;
