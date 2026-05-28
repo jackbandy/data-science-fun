@@ -102,13 +102,25 @@ The syllabus uses a markdown workflow in `syllabus/`, and the generated files ar
 ## Course topics
 
 Still working on this 🙂 there are too many possibilities... But main units will probably include:
-* Basic prob/stats/sampling
+* Basic prob/stats/sampling/distributions
+	* Uncertainty (i.e. confidence intervals, errors, confidence levels, etc.)
+	* common distributions: Bernoulli, binomial, Poisson, normal, exponential
+	* Central Limit Theorem
 * Data frame fundamentals
+	* Data types
+	* Joining/merging datasets
+	* Wide data vs long data
 * Visualizations
-* Uncertainty (i.e. confidence intervals, errors, confidence levels, etc.)
 * Linear modeling
-* Network analysis
 * Machine-learning models
+	* Clustering
+	* Train/test splits
+	* Evaluation metrics
+	* Feature-based recommendation systems
+* Network analysis
+	* Matrices as networks
+	* Network-based recommendation systems
+
 
 ## Note on LLM use
 
