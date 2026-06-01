@@ -10,11 +10,11 @@
 
 There is a [meme template](https://knowyourmeme.com/memes/all-three-are-going-to-lie-to-you-never-ask-a-woman-her-age) that begins, "Never ask a woman her age, a man his salary..."
 
-The basic principle introduced here is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile for 
+The basic principle introduced here is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile to consider the appropriateness of a question as part of the data science lifecycle.
 
 In educational contexts, we appreciate all questions. The only bad question, as the saying goes, is the question that you do not ask.
 
-At the amenities time, as the aforementioned meme template suggests, some questions are more appropriate than others.
+At the amenities time, as the aforementioned meme template suggests, some questions are more responsible, worthwhile, and/or appropriate than other questions. How might we distinguish these questions?
 
 [@sep-questions]
 
@@ -66,7 +66,7 @@ TK
 * Who asked this question?
 	* What are their goals and incentives?
 * Who else may have asked this question?
-	* Have they shard results anywhere?
+	* Have they shared results anywhere?
 * Are there existing data to addresses this question?
 * 
 
