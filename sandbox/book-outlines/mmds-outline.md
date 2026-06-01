@@ -1,5 +1,5 @@
 # Mining of Massive Datasets (MMDS)
-Leskovec, Rajaraman, Ullman — http://www.mmds.org
+Leskovec, Rajaraman, Ullman — https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF
 
 * Data mining overview
   * finding patterns in large datasets
