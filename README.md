@@ -121,10 +121,28 @@ Still working on this 🙂 there are too many possibilities... But main units wi
 	* Matrices as networks
 	* Network-based recommendation systems
 
+| Week | Topic |
+| --- | --- |
+| Week 1 | Intro, stats review; Data Science lifecycle |
+| Week 2 | Python, dataframes, polars; obtaining data |
+| Week 3 | Wrangling, filtering; formats |
+| Week 4 | Exploratory analysis; descriptive stats |
+| Week 5 | Visualizations |
+| Week 6 | Visualizations |
+| Week 7 | Hypothesis testing; estimation/sampling/randomness |
+| Week 8 | Linear regression; intro to classification |
+| Week 9 | Decision trees; SVMS and kernels |
+| Week 10 | Clustering, PCA; model evaluation |
+| Week 11 | Recommendation systems; A/B testing |
+| Week 12 | Network analysis |
+| Week 13 | TBD |
+| Week 14 | Group presentations |
+| Week 15 | Group presentations |
+
 
 ## Note on LLM use
 
-The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html), but in short: I use them sparingly, with extreme caution, sort of like a credit card. If I do not have sufficient "money" (understanding) to "pay back" (explain, modify, rewrite, etc.) what I "buy" (generate), I probably should use a different tool.
+The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html), but in short: I use them sparingly, with extreme caution, sort of like a credit card. If I do not have sufficient "money" (understanding) to "pay back" (explain, modify, rewrite, etc.) what I "buy" (generate), I probably should use a different tool, or do some learning.
 
 In some cases, I move things out of the sandbox after editing and  testing and verification. In practice, these means that LLMs are often adjusting or improving some workflows that would otherwise require lots of tedium, which in turn allows me to focus on writing and planning.
 
