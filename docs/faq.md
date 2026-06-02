@@ -40,7 +40,7 @@ Handwritten exercises force the learner to really do the thing. Instead of just 
 
 A: The short answer is that I think Google sucks. This is not to say anything about the people at Google - they have made some amazing technology over the years! But they have pulled the rug out from under us a few too many times. Gmail, Google Photos, and Google Drive have all seen substantial decay, and unfortunately I cannot trust that Google Slides will be protected. It might be a few years down the road, but I expect the company will move forward with limited storage, proprietary formatting, restricted portability, etc.
 
-So, for now I am using a markdown-to-html pipeline via [marp](https://github.com/marp-team/marp), which is open source and free (as in freedom). I plan to keep content mostly in markdown text and svg images, so the slides should be easy to recreate or port over if the need ever arises. If you have other ideas or suggestions on this front, please let me know.
+So, for now I am using a markdown-to-html pipeline via [Quarto](https://quarto.org/), which is open source and free (as in freedom). I plan to keep content mostly in markdown text and svg images, so the slides should be easy to recreate or port over if the need ever arises. If you have other ideas or suggestions on this front, please let me know.
 
 ---
 

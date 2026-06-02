@@ -2,7 +2,8 @@
 
 // Easy controls: edit these first.
 $theme-title-font: "Big Shoulders", "Arial Narrow", Arial, sans-serif;
-$theme-body-font: Arial, sans-serif;
+// $theme-body-font: "Trade Gothic", "News Gothic", "NewsGothic", "News Gothic MT", "Arial Narrow", Arial, sans-serif;
+$theme-body-font: "ITC Franklin Gothic", "Franklin Gothic", "Franklin Gothic Medium", Arial, sans-serif;
 $theme-code-font: Courier, "Courier New", monospace;
 $body-size: 34px;
 $title-size: 4.35rem;
@@ -11,8 +12,10 @@ $h2-size: 2.5rem;
 $footer-size: 18px;
 $slide-number-size: 18px;
 $slide-padding: 48px 64px 92px;
-$footer-height: 44px;
-$footer-pad-x: 72px;
+$footer-height: 52px;
+$footer-pad-x: 96px;
+$slide-number-width: 104px;
+$slide-number-right: 20px;
 $title-rule: 12px;
 $heading-rule: 6px;
 $orange: #f9461c;
@@ -140,8 +143,8 @@ $code-color: $ink !default;
   .split-content { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; align-items: center; }
   .split-content p { display: flex; align-items: center; justify-content: center; }
   .split-content img { max-width: 100%; max-height: 540px; object-fit: contain; }
-  .sources h1 { font-size: 1.6rem; }
-  .sources ol { font-size: 0.85rem; line-height: 2; color: $muted; }
+  .sources h1 { font-size: 1.75rem; }
+  .sources ol { font-size: 0.95rem; line-height: 1.9; color: $muted; }
 }
 
 .reveal.reveal {
@@ -173,18 +176,19 @@ $code-color: $ink !default;
     p { display: flex; align-items: center; gap: 32px; height: $footer-height; margin: 0; }
     a { font: inherit; color: inherit !important; }
     img { width: auto; display: block; flex-shrink: 0; margin: 0; border: 0; box-shadow: none; }
-    img[alt="UIC logo"] { height: 32px; filter: invert(67%); }
+    img[alt="UIC logo"] { height: 28px; filter: invert(67%); }
     img[alt="CC BY-NC-SA"] { height: 16px; opacity: 0.33; }
   }
 
   .slide-number {
-    right: 0 !important;
-    width: $footer-pad-x;
+    right: $slide-number-right !important;
+    width: $slide-number-width;
     padding: 0;
     text-align: center;
     font-size: $slide-number-size !important;
-    font-weight: 560;
+    font-weight: 400;
     z-index: 21;
     a { font: inherit; color: inherit !important; }
+    .slide-number-current { font-weight: 700; }
   }
 }
