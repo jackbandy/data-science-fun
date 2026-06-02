@@ -1,5 +1,5 @@
 # Bayesian Data Analysis (BDA)
-Gelman, Carlin, Stern, Dunson, Vehtari, Rubin — http://www.stat.columbia.edu/~gelman/book/
+Gelman, Carlin, Stern, Dunson, Vehtari, Rubin — https://sites.stat.columbia.edu/gelman/book/
 
 * Fundamentals of Bayesian inference
   * probability and Bayes' theorem
