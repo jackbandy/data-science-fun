@@ -1,5 +1,5 @@
 # A Course in Machine Learning (CIML)
-Daume — http://ciml.info/
+Daume — https://github.com/hal3/ciml/
 
 * Decision trees
   * recursive partitioning
