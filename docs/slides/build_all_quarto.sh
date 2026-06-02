@@ -66,12 +66,14 @@ fi
 
 mkdir -p "$OUTPUT_DIR"
 
-QMD_FILES=()
-while IFS= read -r qmd; do
-  QMD_FILES+=("$qmd")
-done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f -name "*.qmd" | sort)
-if [[ "${#QMD_FILES[@]}" -eq 0 ]]; then
-  echo "[quarto] No .qmd slide files found in $SCRIPT_DIR"
+SLIDE_FILES=()
+while IFS= read -r candidate; do
+  if [[ "$candidate" == *.qmd ]] || grep -Eq '^[[:space:]]*revealjs:' "$candidate"; then
+    SLIDE_FILES+=("$candidate")
+  fi
+done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f \( -name "*.qmd" -o -name "*.md" \) | sort)
+if [[ "${#SLIDE_FILES[@]}" -eq 0 ]]; then
+  echo "[quarto] No Quarto slide files found in $SCRIPT_DIR"
   exit 0
 fi
 
@@ -105,11 +107,21 @@ cleanup() {
 trap cleanup EXIT
 
 echo "[quarto] Rendering HTML with $QUARTO_CMD"
-for qmd in "${QMD_FILES[@]}"; do
-  base="$(basename "$qmd" .qmd)"
+for slide in "${SLIDE_FILES[@]}"; do
+  base="$(basename "${slide%.*}")"
   html_out="$OUTPUT_DIR/$base.html"
-  echo "[quarto] Generating HTML: $html_out from $qmd"
-  "$QUARTO_CMD" render "$qmd" --to revealjs --output-dir "$OUTPUT_DIR" --output "$base.html"
+  echo "[quarto] Generating HTML: $html_out from $slide"
+  (
+    cd "$SCRIPT_DIR"
+    "$QUARTO_CMD" render "$(basename "$slide")" --to revealjs --output "$base.html"
+  )
+  if [[ "$OUTPUT_DIR" != "$SCRIPT_DIR" ]]; then
+    mv "$SCRIPT_DIR/$base.html" "$html_out"
+    if [[ -d "$SCRIPT_DIR/${base}_files" ]]; then
+      rm -rf "$OUTPUT_DIR/${base}_files"
+      mv "$SCRIPT_DIR/${base}_files" "$OUTPUT_DIR/${base}_files"
+    fi
+  fi
 done
 
 echo "[quarto] Starting local server on http://127.0.0.1:$PORT from $SERVER_ROOT"
@@ -135,8 +147,8 @@ PY
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/quarto-slides-pdf.XXXXXX")"
 
 echo "[quarto] Generating vector PDFs with $CHROME_CMD"
-for qmd in "${QMD_FILES[@]}"; do
-  base="$(basename "$qmd" .qmd)"
+for slide in "${SLIDE_FILES[@]}"; do
+  base="$(basename "${slide%.*}")"
   html_out="$OUTPUT_DIR/$base.html"
   html_export="$OUTPUT_DIR/.$base-pdf-export.html"
   pdf_out="$OUTPUT_DIR/$base.pdf"
