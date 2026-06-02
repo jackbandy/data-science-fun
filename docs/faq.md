@@ -42,6 +42,8 @@ A: The short answer is that I think Google sucks. This is not to say anything ab
 
 So, for now I am using a markdown-to-html pipeline via [Quarto](https://quarto.org/), which is open source and free (as in freedom). I plan to keep content mostly in markdown text and svg images, so the slides should be easy to recreate or port over if the need ever arises. If you have other ideas or suggestions on this front, please let me know.
 
+The slide theme uses Big Shoulders for title headings and an ITC Franklin Gothic stack for body and footer text. ITC Franklin Gothic is commercial, so the repository also includes Libre Franklin from the upstream `impallari/Libre-Franklin` project as a permissively licensed fallback.
+
 ---
 
 ## New Materials

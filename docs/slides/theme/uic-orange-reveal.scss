@@ -3,7 +3,7 @@
 // Easy controls: edit these first.
 $theme-title-font: "Big Shoulders", "Arial Narrow", Arial, sans-serif;
 // $theme-body-font: "Trade Gothic", "News Gothic", "NewsGothic", "News Gothic MT", "Arial Narrow", Arial, sans-serif;
-$theme-body-font: "ITC Franklin Gothic", "Franklin Gothic", "Franklin Gothic Medium", Arial, sans-serif;
+$theme-body-font: "ITC Franklin Gothic", "Libre Franklin", "Franklin Gothic", "Franklin Gothic Medium", Arial, sans-serif;
 $theme-code-font: Courier, "Courier New", monospace;
 $body-size: 34px;
 $title-size: 4.35rem;
@@ -32,6 +32,13 @@ $border: #ddd;
 @font-face {
   font-family: "Big Shoulders";
   src: url("../../../../../theme/fonts/big-shoulders/BigShoulders.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Libre Franklin";
+  src: url("../../../../../theme/fonts/libre-franklin/LibreFranklin.woff2") format("woff2-variations");
   font-weight: 100 900;
   font-display: swap;
 }
