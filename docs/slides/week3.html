@@ -30,6 +30,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="week3_files/libs/revealjs/dist/theme/quarto-edc10436c5b161121cb9e01f6df19c3f.css">
   <link href="week3_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -138,6 +204,88 @@
   .reveal .sources h1 {
     font-size: 3.5rem;
   }
+  .reveal .business-card-slide p {
+    margin: 0;
+    text-align: center;
+  }
+  .reveal .business-card-slide img {
+    display: block;
+    max-height: 470px;
+    max-width: 88%;
+    margin: 16px auto 0;
+    object-fit: contain;
+  }
+  .reveal .section-header {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  .reveal .section-header h1 {
+    border-bottom: 12px solid #f9461c;
+    display: inline-block;
+    font-size: 5.6rem;
+    margin: 0 auto;
+    padding: 0 0 18px;
+  }
+  .reveal .spreadsheet-demo table {
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.48em;
+    line-height: 1.2;
+  }
+  .reveal .spreadsheet-demo th,
+  .reveal .spreadsheet-demo td {
+    overflow-wrap: anywhere;
+    padding: 0.32em 0.42em;
+  }
+  .reveal .spreadsheet-demo th:first-child,
+  .reveal .spreadsheet-demo td:first-child {
+    width: 8%;
+    color: #777;
+    font-weight: 700;
+    text-align: center;
+  }
+  .reveal .format-summary th,
+  .reveal .format-summary td {
+    overflow-wrap: anywhere;
+    padding: 0.28em 0.4em;
+  }
+  .reveal .format-summary table {
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.5em;
+    line-height: 1.25;
+  }
+  .reveal .format-summary th:nth-child(1),
+  .reveal .format-summary td:nth-child(1) {
+    width: 9%;
+  }
+  .reveal .format-summary th:nth-child(2),
+  .reveal .format-summary td:nth-child(2) {
+    width: 34%;
+  }
+  .reveal .format-summary th:nth-child(3),
+  .reveal .format-summary td:nth-child(3) {
+    width: 57%;
+  }
+  .reveal .format-summary code {
+    white-space: normal;
+    font-size: 0.86em;
+  }
+  .reveal .columns ul {
+    font-size: 0.78em;
+    line-height: 1.45;
+  }
+  .reveal .columns div.sourceCode {
+    margin-top: 0;
+  }
+  .reveal .columns pre code {
+    font-size: 0.78em;
+    line-height: 1.15;
+  }
   </style>
 </head>
 <body class="quarto-light">
@@ -150,20 +298,248 @@
 <h2 id="wrangling-filtering-formats">Wrangling, Filtering; Formats</h2>
 <p>Jack Bandy 2026</p>
 </section>
-<section id="demo-content-slide" class="slide level1">
-<h1>Demo Content Slide</h1>
-<p>Placeholder content for Week 3.</p>
+<section id="data-formats" class="slide level1 section-header">
+<h1>Data Formats</h1>
+</section>
+<section id="how-do-we-store-this-data" class="slide level1 business-card-slide">
+<h1>How Do We Store This Data?</h1>
+
+<img data-src="../images/tyler-durden-business-card.png" class="r-stretch"></section>
+<section id="spreadsheet" class="slide level1">
+<h1>Spreadsheet??</h1>
+<div class="columns">
+<div class="column" style="width:42%;">
 <ul>
-<li>Wrangling</li>
-<li>Filtering</li>
-<li>Data formats</li>
+<li>You’ve probably seen this</li>
+<li>Grid with cells, rows, columns (and sheets/tabs)</li>
+<li>Excel, Google Sheets, Numbers, and LibreOffice Calc</li>
+<li>Convenient for manual entry, review, sharing</li>
+<li>But don’t keep your data in a spreadsheet…</li>
 </ul>
+</div><div class="column" style="width:58%;">
+<div class="spreadsheet-demo">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>name</td>
+<td>company</td>
+<td>street</td>
+<td>city</td>
+<td>phone</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Tyler Durden</td>
+<td>Paper Street Soap Co.</td>
+<td>537 Paper Street</td>
+<td>Bradford</td>
+<td>(288) 555-0153</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+</section>
+<section id="csv" class="slide level1">
+<h1>CSV</h1>
+<div class="columns">
+<div class="column" style="width:42%;">
+<ul>
+<li>Comma-separated values</li>
+<li>Plain-text table: one row per record, one delimiter between fields</li>
+<li>Often used for spreadsheets, exports, and simple datasets</li>
+<li>Easy to inspect</li>
+<li>types and hierarchy are usually implicit</li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource csv number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>name,company,product,street,city,postalCode,phone</span>
+<span id="cb1-2"><a href=""></a>Tyler Durden,Paper Street Soap Co.,All Natural Handmade,537 Paper Street,Bradford,19808,(288) 555-0153</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="tsv" class="slide level1">
+<h1>TSV</h1>
+<div class="columns">
+<div class="column" style="width:42%;">
+<ul>
+<li>Tab-separated values</li>
+<li>Plain-text table like CSV, but fields are separated by tabs</li>
+<li>Still flat: hierarchy and data types need outside context</li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource tsv number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href=""></a>name    company product street  city    postalCode  phone</span>
+<span id="cb2-2"><a href=""></a>Tyler Durden    Paper Street Soap Co.   All Natural Handmade    537 Paper Street    Bradford    19808   (288) 555-0153</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="json" class="slide level1">
+<h1>JSON</h1>
+<div class="columns">
+<div class="column" style="width:42%;">
+<ul>
+<li>JavaScript Object Notation</li>
+<li>Text format for data interchange</li>
+<li>Built from objects, arrays, strings, numbers, booleans, and null</li>
+<li>Common for web APIs and configuration files</li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href=""></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href=""></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Tyler Durden"</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href=""></a>  <span class="dt">"company"</span><span class="fu">:</span> <span class="st">"Paper Street Soap Co."</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href=""></a>  <span class="dt">"product"</span><span class="fu">:</span> <span class="st">"All Natural Handmade"</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href=""></a>  <span class="dt">"address"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-6"><a href=""></a>    <span class="dt">"street"</span><span class="fu">:</span> <span class="st">"537 Paper Street"</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href=""></a>    <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Bradford"</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href=""></a>    <span class="dt">"postalCode"</span><span class="fu">:</span> <span class="st">"19808"</span></span>
+<span id="cb3-9"><a href=""></a>  <span class="fu">},</span></span>
+<span id="cb3-10"><a href=""></a>  <span class="dt">"phone"</span><span class="fu">:</span> <span class="st">"(288) 555-0153"</span></span>
+<span id="cb3-11"><a href=""></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="xml" class="slide level1">
+<h1>XML</h1>
+<div class="columns">
+<div class="column" style="width:42%;">
+<ul>
+<li>Extensible Markup Language</li>
+<li>Nested tags represent elements and attributes</li>
+<li>Verbose, but widely used by older document systems</li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb4-1"><a href=""></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
+<span id="cb4-2"><a href=""></a>&lt;<span class="kw">person</span>&gt;</span>
+<span id="cb4-3"><a href=""></a>  &lt;<span class="kw">name</span>&gt;Tyler Durden&lt;/<span class="kw">name</span>&gt;</span>
+<span id="cb4-4"><a href=""></a>  &lt;<span class="kw">company</span>&gt;Paper Street Soap Co.&lt;/<span class="kw">company</span>&gt;</span>
+<span id="cb4-5"><a href=""></a>  &lt;<span class="kw">product</span>&gt;All Natural Handmade&lt;/<span class="kw">product</span>&gt;</span>
+<span id="cb4-6"><a href=""></a>  &lt;<span class="kw">address</span>&gt;</span>
+<span id="cb4-7"><a href=""></a>    &lt;<span class="kw">street</span>&gt;537 Paper Street&lt;/<span class="kw">street</span>&gt;</span>
+<span id="cb4-8"><a href=""></a>    &lt;<span class="kw">city</span>&gt;Bradford&lt;/<span class="kw">city</span>&gt;</span>
+<span id="cb4-9"><a href=""></a>    &lt;<span class="kw">postalCode</span>&gt;19808&lt;/<span class="kw">postalCode</span>&gt;</span>
+<span id="cb4-10"><a href=""></a>  &lt;/<span class="kw">address</span>&gt;</span>
+<span id="cb4-11"><a href=""></a>  &lt;<span class="kw">phone</span>&gt;(288) 555-0153&lt;/<span class="kw">phone</span>&gt;</span>
+<span id="cb4-12"><a href=""></a>&lt;/<span class="kw">person</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="yaml" class="slide level1">
+<h1>YAML</h1>
+<div class="columns">
+<div class="column" style="width:42%;">
+<ul>
+<li>YAML Ain’t Markup Language</li>
+<li>Human-readable format based on indentation</li>
+<li>Supports mappings, lists, scalars, and comments</li>
+<li>Common for configuration files and data pipelines</li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href=""></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Tyler Durden</span></span>
+<span id="cb5-2"><a href=""></a><span class="fu">company</span><span class="kw">:</span><span class="at"> Paper Street Soap Co.</span></span>
+<span id="cb5-3"><a href=""></a><span class="fu">product</span><span class="kw">:</span><span class="at"> All Natural Handmade</span></span>
+<span id="cb5-4"><a href=""></a><span class="fu">address</span><span class="kw">:</span></span>
+<span id="cb5-5"><a href=""></a><span class="at">  </span><span class="fu">street</span><span class="kw">:</span><span class="at"> 537 Paper Street</span></span>
+<span id="cb5-6"><a href=""></a><span class="at">  </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Bradford</span></span>
+<span id="cb5-7"><a href=""></a><span class="at">  </span><span class="fu">postalCode</span><span class="kw">:</span><span class="at"> </span><span class="dv">19808</span></span>
+<span id="cb5-8"><a href=""></a><span class="fu">phone</span><span class="kw">:</span><span class="at"> (288) 555-0153</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="parquet" class="slide level1">
+<h1>Parquet</h1>
+<div class="columns">
+<div class="column" style="width:42%;">
+<ul>
+<li>Binary columnar storage format</li>
+<li>Efficient for large datasets</li>
+<li>Stores schema and data types with the data</li>
+<li>Common in Spark, DuckDB, Polars, and “data lakes”</li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href=""></a>message business_card {</span>
+<span id="cb6-2"><a href=""></a>  required binary name (STRING);</span>
+<span id="cb6-3"><a href=""></a>  required binary company (STRING);</span>
+<span id="cb6-4"><a href=""></a>  required binary product (STRING);</span>
+<span id="cb6-5"><a href=""></a>  required binary street (STRING);</span>
+<span id="cb6-6"><a href=""></a>  required binary city (STRING);</span>
+<span id="cb6-7"><a href=""></a>  required binary postalCode (STRING);</span>
+<span id="cb6-8"><a href=""></a>  required binary phone (STRING);</span>
+<span id="cb6-9"><a href=""></a>}</span>
+<span id="cb6-10"><a href=""></a></span>
+<span id="cb6-11"><a href=""></a>row 1:</span>
+<span id="cb6-12"><a href=""></a>Tyler Durden | Paper Street Soap Co. | All Natural Handmade |</span>
+<span id="cb6-13"><a href=""></a>537 Paper Street | Bradford | 19808 | (288) 555-0153</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="format-summary" class="slide level1 format-summary">
+<h1>Format Summary</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Format</th>
+<th>Best fit</th>
+<th>Short example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CSV</td>
+<td>Flat tables, spreadsheet exports, simple datasets</td>
+<td><code>name,company,phone</code><br><code>Tyler Durden,Paper Street Soap Co.,(288) 555-0153</code></td>
+</tr>
+<tr class="even">
+<td>TSV</td>
+<td>Flat text tables where commas may appear in fields</td>
+<td><code>name  company phone</code></td>
+</tr>
+<tr class="odd">
+<td>JSON</td>
+<td>APIs, nested records, web data</td>
+<td><code>{"name":"Tyler Durden","city":"Bradford"}</code></td>
+</tr>
+<tr class="even">
+<td>XML</td>
+<td>Document-like data with tags and attributes</td>
+<td><code>&lt;name&gt;Tyler Durden&lt;/name&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>YAML</td>
+<td>Human-edited configuration and pipeline settings</td>
+<td><code>name: Tyler Durden</code><br><code>city: Bradford</code></td>
+</tr>
+<tr class="even">
+<td>Parquet</td>
+<td>Typed, compressed analytics data</td>
+<td><code>name: STRING</code><br><code>city: STRING</code></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="sources" class="slide level1 sources">
 <h1>Sources</h1>
 <ol type="1">
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.md</a>.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
+<li>Format examples adapted from Wikipedia and project documentation: <a href="https://en.wikipedia.org/wiki/JSON">JSON</a>, <a href="https://en.wikipedia.org/wiki/XML">XML</a>, <a href="https://en.wikipedia.org/wiki/Comma-separated_values">Comma-separated values</a>, <a href="https://en.wikipedia.org/wiki/YAML">YAML</a>, <a href="https://en.wikipedia.org/wiki/Tab-separated_values">Tab-separated values</a>, <a href="https://en.wikipedia.org/wiki/Spreadsheet">Spreadsheet</a>, and <a href="https://parquet.apache.org/">Apache Parquet</a>.</li>
+<li>Tyler Durden business card image: Wikimedia Commons remake by Michaelpreid, modified, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png" class="uri">https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png</a>.</li>
 </ol>
 
 </section>
