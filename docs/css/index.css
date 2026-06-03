@@ -217,6 +217,92 @@ h1 a:hover {
   height: 220px;
 }
 
+.schedule-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 20px;
+}
+
+.schedule-table {
+  width: 100%;
+  min-width: 648px;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid #e5e5e5;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.schedule-table thead th {
+  background: #2e2e2e;
+  color: #fff;
+  font-weight: 800;
+}
+
+.schedule-table tbody th {
+  width: 72px;
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 800;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.schedule-week-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 6px solid #f9461c;
+  border-radius: 50%;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: 0.85rem;
+  font-weight: 900;
+  line-height: 1;
+  cursor: help;
+}
+
+.schedule-week-dot::after {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 2;
+  display: none;
+  width: max-content;
+  max-width: 220px;
+  padding: 6px 8px;
+  border-radius: 3px;
+  background: #2e2e2e;
+  color: #fff;
+  content: attr(data-label);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+  transform: translateX(-50%);
+  white-space: normal;
+}
+
+.schedule-week-dot:hover::after,
+.schedule-week-dot:focus::after {
+  display: block;
+}
+
+.schedule-table td:first-of-type {
+  width: 150px;
+  color: #444;
+  font-weight: 700;
+}
+
 @media (max-width: 640px) {
   .container {
     margin: 40px auto;
