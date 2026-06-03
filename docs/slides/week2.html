@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="week0_files/libs/clipboard/clipboard.min.js"></script>
-<script src="week0_files/libs/quarto-html/tabby.min.js"></script>
-<script src="week0_files/libs/quarto-html/popper.min.js"></script>
-<script src="week0_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="week0_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="week0_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week0_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="week2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="week2_files/libs/quarto-html/tabby.min.js"></script>
+<script src="week2_files/libs/quarto-html/popper.min.js"></script>
+<script src="week2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="week2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="week2_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="week2_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
-  <title>week0</title>
+  <title>week2</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="week0_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="week0_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="week2_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="week2_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,78 +30,12 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week0_files/libs/revealjs/dist/theme/quarto-000e05b59e8149fdb82264cfe00daa11.css">
-  <link href="week0_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="week0_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="week0_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="week0_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="week2_files/libs/revealjs/dist/theme/quarto-edc10436c5b161121cb9e01f6df19c3f.css">
+  <link href="week2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="week2_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="week2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="week2_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -201,6 +135,9 @@
     font: inherit !important;
     color: inherit !important;
   }
+  .reveal .sources h1 {
+    font-size: 3.5rem;
+  }
   </style>
 </head>
 <body class="quarto-light">
@@ -208,171 +145,24 @@
     <div class="slides">
 
 
-<section id="week-0-slide-deck" class="slide level1 course-title">
-<h1>Week 0 Slide Deck</h1>
-<h2 id="an-experiment-with-quarto">An Experiment With Quarto</h2>
+<section id="week-2-slide-deck" class="slide level1 course-title">
+<h1>Week 2 Slide Deck</h1>
+<h2 id="python-dataframes-polars-obtaining-data">Python, Dataframes, Polars; Obtaining Data</h2>
 <p>Jack Bandy 2026</p>
-<p>This is a demo slide deck for reference and experimentation.</p>
 </section>
-<section id="content-slide" class="slide level1">
-<h1>Content Slide</h1>
-<p>Testing content slide.</p>
+<section id="demo-content-slide" class="slide level1">
+<h1>Demo Content Slide</h1>
+<p>Placeholder content for Week 2.</p>
 <ul>
-<li>Lorem ipsum dolor sit amet</li>
-<li>Consectetur adipiscing elit</li>
-<li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
-<li>Test quote</li>
+<li>Python basics</li>
+<li>Dataframes and Polars</li>
+<li>Obtaining data</li>
 </ul>
-<blockquote>
-<p>“The greatest value of a picture is when it forces us to notice what we never expected to see.” — John Tukey</p>
-</blockquote>
-</section>
-<section id="incremental-bullets" class="slide level1">
-<h1>Incremental Bullets</h1>
-<ul>
-<li class="fragment">display this first</li>
-<li class="fragment">display this second</li>
-<li class="fragment">display this third</li>
-<li class="fragment">display this fourth</li>
-<li class="fragment">display this fifth</li>
-</ul>
-</section>
-<section id="tabsets" class="slide level1">
-<h1>Tabsets</h1>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Tab A</a></li><li><a href="#tabset-1-2">Tab B</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
-<p>Content for <code>Tab A</code></p>
-</div>
-<div id="tabset-1-2">
-<p>Content for <code>Tab B</code></p>
-</div>
-</div>
-</div>
-</section>
-<section id="pretty-code" class="slide level1" data-auto-animate="true">
-<h1 data-id="quarto-animate-title">Pretty Code</h1>
-<ul>
-<li>Syntax highlighting works in revealjs slides</li>
-<li>Code uses the theme’s Courier stack</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode python hljs"><span id="cb1-1" class="hljs-ln-code"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb1-2" class="hljs-ln-code"><a href=""></a></span>
-<span id="cb1-3" class="hljs-ln-code"><a href=""></a></span>
-<span id="cb1-4" class="hljs-ln-code"><a href=""></a><span class="kw">def</span> summarize_ridership(stations: pl.DataFrame) <span class="op">-&gt;</span> pl.DataFrame:</span>
-<span id="cb1-5" class="hljs-ln-code"><a href=""></a>    <span class="cf">return</span> (</span>
-<span id="cb1-6" class="hljs-ln-code"><a href=""></a>        stations</span>
-<span id="cb1-7" class="hljs-ln-code"><a href=""></a>        .group_by(<span class="st">"line"</span>)</span>
-<span id="cb1-8" class="hljs-ln-code"><a href=""></a>        .<span class="bu">len</span>(name<span class="op">=</span><span class="st">"station_count"</span>)</span>
-<span id="cb1-9" class="hljs-ln-code"><a href=""></a>        .sort(<span class="st">"station_count"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-10" class="hljs-ln-code"><a href=""></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="line-highlighting" class="slide level1">
-<h1>Line Highlighting</h1>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="3-4|6|7-10|12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb2-3"><a href=""></a></span>
-<span id="cb2-4"><a href=""></a>stations <span class="op">=</span> pl.read_csv(<span class="st">"cta_stations.csv"</span>)</span>
-<span id="cb2-5"><a href=""></a>orange <span class="op">=</span> stations.<span class="bu">filter</span>(pl.col(<span class="st">"line"</span>) <span class="op">==</span> <span class="st">"Orange"</span>)</span>
-<span id="cb2-6"><a href=""></a></span>
-<span id="cb2-7"><a href=""></a>by_access <span class="op">=</span> orange.group_by(<span class="st">"accessible"</span>).<span class="bu">len</span>(name<span class="op">=</span><span class="st">"station_count"</span>)</span>
-<span id="cb2-8"><a href=""></a>share <span class="op">=</span> np.<span class="bu">round</span>(</span>
-<span id="cb2-9"><a href=""></a>    by_access[<span class="st">"station_count"</span>] <span class="op">/</span> by_access[<span class="st">"station_count"</span>].<span class="bu">sum</span>(),</span>
-<span id="cb2-10"><a href=""></a>    <span class="dv">2</span>,</span>
-<span id="cb2-11"><a href=""></a>)</span>
-<span id="cb2-12"><a href=""></a></span>
-<span id="cb2-13"><a href=""></a><span class="bu">print</span>(by_access.with_columns(accessible_share<span class="op">=</span>share))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="column-layout" class="slide level1 smaller">
-<h1>Column Layout</h1>
-<div class="columns">
-<div class="column" style="width:42%;">
-<h3 id="course-pattern">Course Pattern</h3>
-<ul>
-<li>Ask a data question</li>
-<li>Find the relevant table</li>
-<li>Check the units</li>
-<li>Make a readable view</li>
-</ul>
-</div><div class="column" style="width:58%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;">Week</th>
-<th>Focus</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0</td>
-<td>Setup and orientation</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td>Blah blah</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td>Blah blah blah</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td>Blah blah blah blah</td>
-</tr>
-</tbody>
-</table>
-</div></div>
-</section>
-<section id="auto-animate" class="slide level1" data-auto-animate="true" data-auto-animate-easing="ease-in-out">
-<h1 data-id="quarto-animate-title">Auto-Animate</h1>
-<div class="r-hstack">
-<div data-id="box1" style="background: #f9461c; width: 260px; height: 56px; margin: 10px;">
-
-</div>
-<div data-id="box2" style="background: #565a5c; width: 180px; height: 56px; margin: 10px;">
-
-</div>
-</div>
-</section>
-<section id="auto-animate-1" class="slide level1" data-auto-animate="true" data-auto-animate-easing="ease-in-out">
-<h1 data-id="quarto-animate-title">Auto-Animate</h1>
-<div class="r-stack">
-<div data-id="box1" style="background: #f9461c; width: 360px; height: 360px; border-radius: 220px;">
-
-</div>
-<div data-id="box2" style="background: #565a5c; width: 190px; height: 190px; border-radius: 120px;">
-
-</div>
-</div>
-</section>
-<section id="florence-nightingales-mortality-diagram-1858" class="slide level1 image-slide">
-<h1>Florence Nightingale’s Mortality Diagram (1858)</h1>
-
-<img src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)" class="r-stretch"></section>
-<section id="section" class="slide level1 image-only" data-footer="false">
-<h1></h1>
-
-<img src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)" class="r-stretch"></section>
-<section id="section-1" class="slide level1 split">
-<h1></h1>
-<div class="split-content">
-<div>
-<ul>
-<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-<li>Sed do eiusmod tempor incididunt ut labore et dolore magna</li>
-<li>Ut enim ad minim veniam, quis nostrud exercitation</li>
-<li>Duis aute irure dolor in reprehenderit in voluptate</li>
-<li>Excepteur sint occaecat cupidatat non proident</li>
-</ul>
-</div>
-<p><img src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)"></p>
-</div>
 </section>
 <section id="sources" class="slide level1 sources">
 <h1>Sources</h1>
 <ol type="1">
-<li>Nightingale, Florence. “Diagram of the causes of mortality in the army in the East.” <em>Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army</em>, 1858. Image via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg" class="uri">https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg</a>. Public domain.</li>
+<li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week2.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week2.md</a>.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 </ol>
 
@@ -380,24 +170,24 @@
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p><img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 0</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week0.html">dodatascience.fun/slides/week0</a></span></p>
+<p><img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 2</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week2.html">dodatascience.fun/slides/week2</a></span></p>
 </div>
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="week0_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="week2_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="week0_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="week0_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="week0_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="week0_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="week0_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="week0_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="week0_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="week0_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="week0_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="week2_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -760,61 +550,6 @@
         }
       });
       </script>
-    <script>
-    (() => {
-      let installed = false;
-      let observer = null;
-
-      function updateSlideNumber() {
-        if (!window.Reveal) return;
-        const slideNumber = document.querySelector(".reveal .slide-number");
-        if (!slideNumber) return;
-        const current = Reveal.getSlidePastCount() + 1;
-        const total = Reveal.getTotalSlides();
-        const expectedText = `${current} of ${total}`;
-        if (
-          slideNumber.textContent.trim() === expectedText &&
-          slideNumber.querySelector(".slide-number-current")
-        ) {
-          return;
-        }
-        slideNumber.innerHTML = `<span class="slide-number-current">${current}</span> <span class="slide-number-of">of</span> <span class="slide-number-total">${total}</span>`;
-      }
-
-      function scheduleSlideNumberUpdate() {
-        window.requestAnimationFrame(updateSlideNumber);
-        window.setTimeout(updateSlideNumber, 0);
-        window.setTimeout(updateSlideNumber, 80);
-      }
-
-      function observeSlideNumber() {
-        const slideNumber = document.querySelector(".reveal .slide-number");
-        if (!slideNumber || observer) return;
-        observer = new MutationObserver(scheduleSlideNumberUpdate);
-        observer.observe(slideNumber, { childList: true, subtree: true, characterData: true });
-      }
-
-      function installSlideNumberFormatter() {
-        if (!window.Reveal) {
-          window.setTimeout(installSlideNumberFormatter, 50);
-          return;
-        }
-        observeSlideNumber();
-        if (!installed) {
-          installed = true;
-          Reveal.on("ready", scheduleSlideNumberUpdate);
-          Reveal.on("slidechanged", scheduleSlideNumberUpdate);
-          Reveal.on("fragmentshown", scheduleSlideNumberUpdate);
-          Reveal.on("fragmenthidden", scheduleSlideNumberUpdate);
-          window.addEventListener("hashchange", scheduleSlideNumberUpdate);
-        }
-        scheduleSlideNumberUpdate();
-      }
-
-      document.addEventListener("DOMContentLoaded", installSlideNumberFormatter);
-      window.addEventListener("load", installSlideNumberFormatter);
-    })();
-    </script>
     
 
 </body></html>

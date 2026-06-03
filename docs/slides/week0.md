@@ -91,6 +91,8 @@ slide-level: 1
 Jack Bandy
 2026
 
+This is a demo slide deck for reference and experimentation.
+
 ---
 
 # Content Slide
