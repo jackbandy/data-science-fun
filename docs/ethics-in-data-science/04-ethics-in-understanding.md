@@ -9,16 +9,22 @@
 *This chapter is in-progress.*
 
 ## What "understanding" includes
-
 TK
 
 ### Understanding the data
+TK
 
 ### Understanding the world
+TK
 
 ### Uncertainty
+TK
 
-### Validity, overfitting, and generalization
+### Validity, overfitting, generalization
+TK
 
+## Test
+
+Test citations for understanding as situated, embodied interpretation: the Sierra Club John Muir Exhibit discussion of a common misquotation [@wood_john_muir_misquoted] and *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
 
 ## References
