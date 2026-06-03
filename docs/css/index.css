@@ -246,6 +246,7 @@ h1 a:hover {
 }
 
 .schedule-table tbody th {
+  position: relative;
   width: 72px;
   background: #fff;
   color: #1a1a1a;
@@ -254,14 +255,35 @@ h1 a:hover {
   vertical-align: middle;
 }
 
+.schedule-table tbody th::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 6px;
+  background: #f9461c;
+  content: "";
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.schedule-table tbody tr:first-child th::before {
+  top: 50%;
+}
+
+.schedule-table tbody tr:nth-last-child(2) th::before {
+  bottom: 50%;
+}
+
 .schedule-week-dot {
   position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: 6px solid #f9461c;
+  width: 30px;
+  height: 30px;
+  border: 4px solid #f9461c;
   border-radius: 50%;
   background: #fff;
   color: #1a1a1a;
@@ -271,31 +293,24 @@ h1 a:hover {
   cursor: help;
 }
 
-.schedule-week-dot::after {
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  z-index: 2;
+#schedule-tooltip {
+  position: fixed;
   display: none;
-  width: max-content;
-  max-width: 220px;
-  padding: 6px 8px;
-  border-radius: 3px;
-  background: #2e2e2e;
+  background: rgba(22, 22, 22, 0.95);
   color: #fff;
-  content: attr(data-label);
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1.25;
-  text-align: left;
-  transform: translateX(-50%);
-  white-space: normal;
+  padding: 6px 11px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  line-height: 1.5;
 }
 
-.schedule-week-dot:hover::after,
-.schedule-week-dot:focus::after {
-  display: block;
-}
+#schedule-tooltip .tip-name { font-weight: 700; color: #fff; }
+#schedule-tooltip .tip-week { font-weight: 400; color: #eee; }
 
 .schedule-table td:first-of-type {
   width: 150px;
