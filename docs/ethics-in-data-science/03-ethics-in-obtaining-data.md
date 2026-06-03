@@ -7,6 +7,10 @@
 
 ## Where do data come from?
 
+> "'Raw data' is an oxymoron."
+>
+> -- Lisa Gitelman and Virginia Jackson [@gitelman_jackson_introduction_2013]
+
 Do you generate it?
 Do you collect it?
 Do you obtain it?
@@ -25,45 +29,46 @@ Four original census artifacts...
 
 ### Census form in 1790
 
-[Massachusetts printed schedule used in the 1790 census](assets/census/1790-massachusetts-printed-schedule.pdf)
+[Massachusetts printed schedule used in the 1790 census](assets/census/1790-massachusetts-printed-schedule.pdf).
 
 Categories: free White males 16 and over, free White males under 16, free White females, all other free persons, and slaves.
 
-<embed src="assets/census/1790-massachusetts-printed-schedule.pdf" type="application/pdf" width="100%" height="700px">
+<img src="assets/census/1790-massachusetts-printed-schedule.png" alt="Massachusetts printed schedule used in the 1790 census." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-Source: [Census Bureau 1790 questionnaire page](https://www.census.gov/programs-surveys/decennial-census/technical-documentation/questionnaires.1790_Census.html), [National Archives scan hosted by Census.gov](https://s3.amazonaws.com/NARAprodstorage/lz/dc-metro/rg-029/5634994/5634994_01_01790.pdf).
+Source: Census Bureau questionnaire page [@census_1790_questionnaire] and National Archives scan hosted by Census.gov [@national_archives_1790_schedule].
 
 ### Census form in 1850
 
-[Free Inhabitants schedule](assets/census/1850-free-inhabitants-schedule.png)
+[Free Inhabitants schedule](assets/census/1850-free-inhabitants-schedule.png).
 
 Categories: name, age, sex, color, occupation, value of real estate, birthplace, married within the year, school attendance, literacy, deafness, dumbness, blindness, insanity, idiocy, pauper status, and conviction.
 
-![1850 Free Inhabitants schedule](assets/census/1850-free-inhabitants-schedule.png)
+<img src="assets/census/1850-free-inhabitants-schedule.png" alt="1850 Free Inhabitants schedule." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-Source: [Census Bureau 1850 questionnaire page](https://www.census.gov/programs-surveys/decennial-census/technical-documentation/questionnaires.1850_Census.html), [direct image file from Census Bureau](https://www2.census.gov/programs-surveys/decennial/technical-documentation/questionnaires/1850/1850-free-inhabitants-schedule.png).
+Source: Census Bureau questionnaire page [@census_1850_questionnaire] and direct image file from Census.gov [@census_1850_free_inhabitants_image].
 
 ### Census form in 1940
 
-[Population questionnaire](assets/census/1940-population-questionnaire.pdf)
+[Population questionnaire](assets/census/1940-population-questionnaire.pdf).
 
 Categories: name, relationship, personal description, residence, birthplace, citizenship, education, employment, occupation, income, veteran status, Social Security, and selected supplemental questions for sample respondents.
 
-<embed src="assets/census/1940-population-questionnaire.pdf" type="application/pdf" width="100%" height="700px">
+<img src="assets/census/1940-population-questionnaire.png" alt="1940 population questionnaire." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-Source: [Census Bureau 1940 questionnaire page](https://www.census.gov/programs-surveys/decennial-census/technical-documentation/questionnaires.1940_Census.html), [direct PDF from Census Bureau](https://www.census.gov/content/dam/Census/programs-surveys/decennial/technical-documentation/questionnaires/1940_population_questionnaire.pdf).
+Source: Census Bureau questionnaire page [@census_1940_questionnaire] and direct PDF from Census.gov [@census_1940_population_pdf].
 
 ### Census form in 2020
 
-[Informational bilingual questionnaire](assets/census/2020-informational-questionnaire.pdf)
+[Informational bilingual questionnaire](assets/census/2020-informational-questionnaire.pdf).
 
 Categories: household count, ownership or tenure, phone number, name, sex, age and date of birth, Hispanic/Latino/Spanish origin, race, relationship, and whether the person usually lives or stays elsewhere.
 
-<embed src="assets/census/2020-informational-questionnaire.pdf" type="application/pdf" width="100%" height="700px">
+<img src="assets/census/2020-informational-questionnaire.png" alt="2020 informational bilingual questionnaire." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color); padding: 10px;" />
 
-Source: [Census Bureau 2020 questionnaire page](https://www.census.gov/programs-surveys/decennial-census/technical-documentation/questionnaires.2020_Census.html), [direct PDF from Census Bureau](https://www2.census.gov/programs-surveys/decennial/2020/technical-documentation/questionnaires-and-instructions/questionnaires/2020-informational-questionnaire.pdf).
+Source: Census Bureau questionnaire page [@census_2020_questionnaire] and direct PDF from Census.gov [@census_2020_informational_pdf].
 
-Notes from [Wikipedia's "Race and ethnicity in the United States census," section "Relation between ethnicity and race in census results"](https://en.wikipedia.org/wiki/Race_and_ethnicity_in_the_United_States_census#Relation_between_ethnicity_and_race_in_census_results)
+Notes from Wikipedia's "Race and ethnicity in the United States census," section "Relation between ethnicity and race in census results" [@wikipedia_race_ethnicity_census]:
+
 * treats `Hispanic or Latino` as ethnicity, not race, so it asks as separate questions.
 * In `2000`, a large share of Hispanic/Latino respondents selected `Some other race`, showing a mismatch between official categories and how respondents describe themselves.
 * Since `2000`, respondents have been allowed to select more than one race, so race totals can exceed the total population (not directly comparable with older censuses).
@@ -72,6 +77,6 @@ Notes from [Wikipedia's "Race and ethnicity in the United States census," sectio
 
 Similar dynamics can be observed in the Facebook signup process. Until 2014, Facebook had essentially three options: male, female, or no answer. On February 13, 2014, Facebook substantially expanded its gender fields, with 58 different options, custom fields, and additional pronoun settings.
 
-Sources: [ABC News, "Here's a List of 58 Gender Options for Facebook Users" (February 13, 2014)](https://abcnews.com/blogs/headlines/2014/02/heres-a-list-of-58-gender-options-for-facebook-users), [CNN, "Facebook goes beyond 'male' and 'female' with new gender options" (February 13, 2014)](https://www.cnn.com/2014/02/13/tech/social-media/facebook-gender-custom/)
+Sources: ABC News [@abcn_news_facebook_gender_2014] and CNN [@kelly_facebook_gender_2014].
 
 ## References

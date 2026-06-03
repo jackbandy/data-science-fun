@@ -14,6 +14,8 @@ As another example, a data scientist may be asked to evaluate a specific change 
 
 This chapter explores some of the ethical considerations in the "reporting" phase of the data science lifecycle. When data scientists are making a specific decision, proposing a solution, or simply reporting about a previous decision/solution, there is vast potential for unintended consequences. In general, data scientists must take care at this phase of the lifecycle in order to avoid what Muller describes as a "tyranny of metrics" [@muller_tyranny_2018] - the overuse and/or misuse of measurement.
 
+This is especially important when predictive systems are used to shape what people see, how resources are allocated, or which options are made available. In that sense, every prediction is an intervention: a forecast does not merely describe the future, but can help bring about the future it predicts [@veliz2026prophecy].
+
 We will start exploring this with a concrete example of college rankings.
 
 ## Case Study: College Rankings
@@ -58,6 +60,13 @@ TK
 
 * (Another spot to draw on Deirdre McCloskey, i.e. statistical/economic arguments being rhetorical acts; obligations when persuading with models, metrics, etc.)
 
+
+## Test
+classic studies in dubious data science - Facebook's political mobilization experiment [@bond_social_influence_2012], emotional contagion study [@kramer_emotional_contagion_2014], Target's pregnancy prediction marketing [@duhigg_companies_secrets_2012], Google Flu Trends [@lazer_google_flu_2014]...
+
+test citations for ethical debriefs of the Facebook experiments - the PNAS editorial expression of concern [@verma_editorial_expression_2014], Grimmelmann's letter to the PNAS editor [@grimmelmann_letter_pnas_2014], and later research-ethics analyses [@kahn_learning_2014; @boyd_untangling_2016].
+
+test citations for communicating data with attention to emotion, embodiment, and audience - *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
 
 
 ## References
