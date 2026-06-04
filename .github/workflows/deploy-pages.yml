@@ -37,6 +37,11 @@ jobs:
       - name: Render Quarto book
         run: quarto render docs/ethics-in-data-science
 
+      - name: Render Quarto slides
+        env:
+          BUILD_PDFS: "false"
+        run: cd docs/slides && bash ./build_all_quarto.sh
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
