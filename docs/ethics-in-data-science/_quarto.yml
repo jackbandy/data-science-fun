@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: book
+  resources:
+    - assets/lifecycle/LibreFranklin.woff2
 
 book:
   title: "Ethics in Data Science"

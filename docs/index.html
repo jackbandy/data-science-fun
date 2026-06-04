@@ -45,7 +45,12 @@
         <h2>Materials in progress</h2>
     <ul class="sources">
       <li><a href="syllabus/">HTML syllabus</a></li>
-      <li><a href="slides/week0.html">Week 0 slide deck</a></li>
+      <li>
+        <a href="slides/">Slide decks</a>
+        <ul>
+          <li>Week 0 demo deck: <a href="slides/week0.html">HTML</a> | <a href="slides/week0.pdf">PDF</a></li>
+        </ul>
+      </li>
       <li><a href="faq.html">Frequently asked questions</a></li>
       <li><a href="ethics-in-data-science/book/">Ethics in Data Science Mini-book</a></li>
     </ul>
@@ -55,6 +60,7 @@
     </ul>
     <h2>Schedule</h2>
     <p><strong>Schedule is a draft/ work-in-progress.</strong></p>
+    <!-- Current embedded map, kept for reference while the Schedule section is in draft.
     <div class="schedule-scroll">
       <iframe
         src="orange-line-schedule.html"
@@ -63,220 +69,289 @@
         scrolling="no">
       </iframe>
     </div>
+    -->
+    <figure class="schedule-map-wrap" aria-label="CTA Orange Line course schedule map">
+      <div class="schedule-map" role="img" aria-label="Course weeks placed on CTA Orange Line stations">
+        <button class="schedule-map-station white" style="left:5.8981%;top:9.7535%;" data-name="Midway" data-week="Week 15" aria-label="Midway - Week 15"></button>
+        <button class="schedule-map-station white" style="left:14.0751%;top:15.8628%;" data-name="Pulaski" data-week="Week 14" aria-label="Pulaski - Week 14"></button>
+        <button class="schedule-map-station white" style="left:17.0241%;top:25.9378%;" data-name="Kedzie" data-week="Week 13" aria-label="Kedzie - Week 13"></button>
+        <button class="schedule-map-station white" style="left:17.0241%;top:35.3698%;" data-name="Western" data-week="Week 12" aria-label="Western - Week 12"></button>
+        <button class="schedule-map-station white" style="left:33.2761%;top:46.0879%;" data-name="35th/Archer" data-week="Week 11" aria-label="35th/Archer - Week 11"></button>
+        <button class="schedule-map-station white" style="left:40.6079%;top:54.0193%;" data-name="Ashland" data-week="Week 10" aria-label="Ashland - Week 10"></button>
+        <button class="schedule-map-station white" style="left:48.5550%;top:62.1651%;" data-name="Halsted" data-week="Week 9" aria-label="Halsted - Week 9"></button>
+        <button class="schedule-map-station transfer" style="left:55.9651%;top:65.1661%;" data-name="Roosevelt" data-week="Week 8" aria-label="Roosevelt - Week 8"></button>
+        <button class="schedule-map-station transfer tip-left" style="left:67.0241%;top:57.5563%;" data-name="Harold Washington Library" data-week="Week 1" aria-label="Harold Washington Library - Week 1"></button>
+        <button class="schedule-map-station white tip-left" style="left:67.0197%;top:43.1940%;" data-name="LaSalle/Van Buren" data-week="Week 2" aria-label="LaSalle/Van Buren - Week 2"></button>
+        <button class="schedule-map-station white tip-left" style="left:71.0456%;top:36.9775%;" data-name="Quincy" data-week="Week 3" aria-label="Quincy - Week 3"></button>
+        <button class="schedule-map-station transfer tip-left" style="left:80.7641%;top:36.9775%;" data-name="Washington/Wells" data-week="Week 4" aria-label="Washington/Wells - Week 4"></button>
+        <button class="schedule-map-station transfer tip-left" style="left:87.7346%;top:42.9796%;" data-name="Clark/Lake" data-week="Week 5" aria-label="Clark/Lake - Week 5"></button>
+        <button class="schedule-map-station transfer tip-left" style="left:87.7346%;top:57.6635%;" data-name="State/Lake" data-closed="true" data-closed-until="2029" aria-label="State/Lake - Closed until 2029"></button>
+        <button class="schedule-map-station transfer tip-left" style="left:72.1180%;top:65.0589%;" data-name="Adams/Wabash" data-week="Week 7" aria-label="Adams/Wabash - Week 7"></button>
+        <button class="schedule-map-station white tip-left" style="left:80.7641%;top:65.0589%;" data-name="Washington/Wabash" data-week="Week 6" aria-label="Washington/Wabash - Week 6"></button>
+        <span class="schedule-map-chevron left" style="left:66.98%;top:50.00%;" aria-hidden="true"></span>
+        <span class="schedule-map-chevron right" style="left:87.73%;top:50.00%;" aria-hidden="true"></span>
+      </div>
+    </figure>
     <div class="schedule-table-wrap">
-      <table class="schedule-table">
-        <thead>
-          <tr>
-            <th scope="col">Week</th>
-            <th scope="col">Class Day</th>
-            <th scope="col">Topic</th>
-            <th scope="col">Before Class</th>
-            <th scope="col">In Class</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 1, Harold Washington Library" aria-label="Week 1, Harold Washington Library" tabindex="0">1</span></th>
-            <td>Monday</td>
-            <td>Intro, stats review</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>Data Science lifecycle</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 2, LaSalle/Van Buren" aria-label="Week 2, LaSalle/Van Buren" tabindex="0">2</span></th>
-            <td>Monday</td>
-            <td>Python, dataframes, polars</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>Obtaining data</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 3, Quincy" aria-label="Week 3, Quincy" tabindex="0">3</span></th>
-            <td>Monday</td>
-            <td>Wrangling, filtering</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>Formats</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 4, Washington/Wells" aria-label="Week 4, Washington/Wells" tabindex="0">4</span></th>
-            <td>Monday</td>
-            <td>Exploratory analysis</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>Descriptive stats</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 5, Clark/Lake" aria-label="Week 5, Clark/Lake" tabindex="0">5</span></th>
-            <td>Monday</td>
-            <td>Visualizations</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 6, Washington/Wabash" aria-label="Week 6, Washington/Wabash" tabindex="0">6</span></th>
-            <td>Monday</td>
-            <td>Visualizations</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 7, Adams/Wabash" aria-label="Week 7, Adams/Wabash" tabindex="0">7</span></th>
-            <td>Monday</td>
-            <td>Hypothesis testing</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>Estimation/sampling/randomness</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 8, Roosevelt" aria-label="Week 8, Roosevelt" tabindex="0">8</span></th>
-            <td>Monday</td>
-            <td>Linear regression</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>Intro to classification</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 9, Halsted" aria-label="Week 9, Halsted" tabindex="0">9</span></th>
-            <td>Monday</td>
-            <td>Decision trees</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>SVMs and kernels</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 10, Ashland" aria-label="Week 10, Ashland" tabindex="0">10</span></th>
-            <td>Monday</td>
-            <td>Clustering, PCA</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>Model evaluation</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 11, 35th/Archer" aria-label="Week 11, 35th/Archer" tabindex="0">11</span></th>
-            <td>Monday</td>
-            <td>Recommendation systems</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>A/B testing</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 12, Western" aria-label="Week 12, Western" tabindex="0">12</span></th>
-            <td>Monday</td>
-            <td>Network analysis</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 13, Kedzie" aria-label="Week 13, Kedzie" tabindex="0">13</span></th>
-            <td>Monday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 14, Pulaski" aria-label="Week 14, Pulaski" tabindex="0">14</span></th>
-            <td>Monday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 15, Midway" aria-label="Week 15, Midway" tabindex="0">15</span></th>
-            <td>Monday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- SCHEDULE_TABLE_START -->
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th scope="col">Week</th>
+      <th scope="col">Class Day</th>
+      <th scope="col">Topic</th>
+      <th scope="col">Before Class</th>
+      <th scope="col">In Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 1, Harold Washington Library" aria-label="Week 1, Harold Washington Library" tabindex="0">1</span></th>
+      <td>Monday</td>
+      <td>Course introduction; statistics review</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Data science lifecycle</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 2, LaSalle/Van Buren" aria-label="Week 2, LaSalle/Van Buren" tabindex="0">2</span></th>
+      <td>Monday</td>
+      <td>Python foundations; dataframes and Polars</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Obtaining data</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 3, Quincy" aria-label="Week 3, Quincy" tabindex="0">3</span></th>
+      <td>Monday</td>
+      <td>Wrangling data; filtering data</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Data formats</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 4, Washington/Wells" aria-label="Week 4, Washington/Wells" tabindex="0">4</span></th>
+      <td>Monday</td>
+      <td>Exploratory analysis</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Descriptive statistics</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 5, Clark/Lake" aria-label="Week 5, Clark/Lake" tabindex="0">5</span></th>
+      <td>Monday</td>
+      <td>Visualization</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Visualization</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 6, Washington/Wabash" aria-label="Week 6, Washington/Wabash" tabindex="0">6</span></th>
+      <td>Monday</td>
+      <td>Visualization</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Visualization</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 7, Adams/Wabash" aria-label="Week 7, Adams/Wabash" tabindex="0">7</span></th>
+      <td>Monday</td>
+      <td>Hypothesis testing</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Estimation and sampling; randomness</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 8, Roosevelt" aria-label="Week 8, Roosevelt" tabindex="0">8</span></th>
+      <td>Monday</td>
+      <td>Linear regression</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Intro to classification</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 9, Halsted" aria-label="Week 9, Halsted" tabindex="0">9</span></th>
+      <td>Monday</td>
+      <td>Decision trees</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Support vector machines; kernels</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 10, Ashland" aria-label="Week 10, Ashland" tabindex="0">10</span></th>
+      <td>Monday</td>
+      <td>Clustering; principal component analysis</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Model evaluation</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 11, 35th/Archer" aria-label="Week 11, 35th/Archer" tabindex="0">11</span></th>
+      <td>Monday</td>
+      <td>Recommendation systems</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>A/B testing</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 12, Western" aria-label="Week 12, Western" tabindex="0">12</span></th>
+      <td>Monday</td>
+      <td>Network analysis</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Graphs and relationships; network measures</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 13, Kedzie" aria-label="Week 13, Kedzie" tabindex="0">13</span></th>
+      <td>Monday</td>
+      <td>TBD</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>TBD</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 14, Pulaski" aria-label="Week 14, Pulaski" tabindex="0">14</span></th>
+      <td>Monday</td>
+      <td>Presentations</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Presentations</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 15, Midway" aria-label="Week 15, Midway" tabindex="0">15</span></th>
+      <td>Monday</td>
+      <td>Presentations</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Presentations</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+<!-- SCHEDULE_TABLE_END -->
     </div>
     <div id="schedule-tooltip" aria-hidden="true"></div>
   </div>
   <script>
     const scheduleTip = document.getElementById('schedule-tooltip');
+
+    document.querySelectorAll('.schedule-map-station:not(.static)').forEach(dot => {
+      function showTip() {
+        if (dot.dataset.closed === 'true') {
+          scheduleTip.innerHTML =
+            `<span class="tip-name">${dot.dataset.name}</span><br>` +
+            `<span class="tip-closed">⚠ Closed — reopening ${dot.dataset.closedUntil}</span>`;
+        } else {
+          scheduleTip.innerHTML =
+            `<span class="tip-name">${dot.dataset.name}</span> ` +
+            `<span class="tip-week">— ${dot.dataset.week}</span>`;
+        }
+        scheduleTip.style.display = 'block';
+      }
+
+      function moveTip(event) {
+        if (dot.classList.contains('tip-left')) {
+          scheduleTip.style.left = (event.clientX - scheduleTip.offsetWidth - 14) + 'px';
+        } else {
+          scheduleTip.style.left = (event.clientX + 14) + 'px';
+        }
+        scheduleTip.style.top = (event.clientY - 40) + 'px';
+      }
+
+      dot.addEventListener('mouseover', showTip);
+      dot.addEventListener('mousemove', moveTip);
+
+      dot.addEventListener('mouseout', () => {
+        scheduleTip.style.display = 'none';
+      });
+
+      dot.addEventListener('focus', () => {
+        const rect = dot.getBoundingClientRect();
+        showTip();
+        scheduleTip.style.left = dot.classList.contains('tip-left')
+          ? (rect.left - scheduleTip.offsetWidth - 14) + 'px'
+          : (rect.right + 14) + 'px';
+        scheduleTip.style.top = (rect.top - 8) + 'px';
+      });
+
+      dot.addEventListener('blur', () => {
+        scheduleTip.style.display = 'none';
+      });
+    });
 
     document.querySelectorAll('.schedule-week-dot').forEach(dot => {
       const [week, stop] = dot.dataset.label.split(', ');
