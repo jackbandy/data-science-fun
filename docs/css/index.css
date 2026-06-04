@@ -217,6 +217,77 @@ h1 a:hover {
   height: 220px;
 }
 
+.schedule-map-wrap {
+  margin: 12px 0 0;
+  background: #fff;
+}
+
+.schedule-map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1492 / 933;
+  background-color: #fff;
+  background-image: url("../images/orange-line-trace-line-only.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.schedule-map-station {
+  position: absolute;
+  width: 1.475%;
+  height: 2.359%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: help;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.schedule-map-station.transfer {
+  width: 2.68%;
+  height: 4.286%;
+  background:
+    radial-gradient(circle, #fff 0 58%, #000 59% 93%, #fff 94% 100%);
+}
+
+.schedule-map-station.static {
+  pointer-events: none;
+}
+
+.schedule-map-station:not(.static):hover,
+.schedule-map-station:not(.static):focus-visible {
+  outline: none;
+  transform: translate(-50%, -50%) scale(1.35);
+}
+
+.schedule-map-chevron {
+  position: absolute;
+  width: 2.4%;
+  aspect-ratio: 1;
+  border-color: #fff;
+  border-style: solid;
+  border-width: clamp(2px, 0.24vw, 3px) clamp(2px, 0.24vw, 3px) 0 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.schedule-map-chevron.left {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.schedule-map-chevron.right {
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+
 .schedule-table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -311,6 +382,7 @@ h1 a:hover {
 
 #schedule-tooltip .tip-name { font-weight: 700; color: #fff; }
 #schedule-tooltip .tip-week { font-weight: 400; color: #eee; }
+#schedule-tooltip .tip-closed { font-size: 10px; color: #ffaa88; }
 
 .schedule-table td:first-of-type {
   width: 150px;
@@ -322,6 +394,12 @@ h1 a:hover {
   .container {
     margin: 40px auto;
     padding: 0 20px;
+  }
+
+  .schedule-map-wrap {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
   }
 
   .sign-top {

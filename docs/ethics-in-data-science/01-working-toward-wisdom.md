@@ -20,6 +20,11 @@ subtitle: Introduction to Ethics in Data Science
 
 As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short. As argued by this chapter and other sources, the definitive logical hierarchy implied by the DIKW pyramid is somewhat misleading, however, the intuitions around the pyramid metaphor offer helpful framing for the work of data science.
 
+The basic premise of the DIKW pyramid is as follows. To build a pyramid, start with a large, well-organized layer of bricks. Multiple datum give us data, upon which one can construct knowledge: the foundation of our DIKW pyramid.
+
+
+
+
 ## What are data?
 TK
 
@@ -87,7 +92,7 @@ Again, the red frame shows the area where we will zoom in.
 The left edge of the "perfect" triangle breaks down even further.
 :::
 
-Now, the flaws of the triangle are even closer and more apparent. We have laid bare its imperfections (or at least some of its imperfections). Then again, they have lain there all along: the pixels (picture elements) in the original, perfect-looking triangle were always there, they were just too small to see.
+Now, the flaws of the triangle are even closer and more apparent. We have laid bare its imperfections (or at least some of its imperfections). Then again, those imperfections have lain there all along: the pixels (picture elements) in the original, perfect-looking triangle were always there, they were just too small to see.
 
 Even now, this image of the black squares is not really showing you the pixels. This is what a pixel *actually* looks like up close:
 
@@ -97,7 +102,7 @@ Even now, this image of the black squares is not really showing you the pixels. 
 A microscopic image of an LCD display showing subpixels. Source: Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 :::
 
-Yet again, even this statement is somewhat inaccurate. There is no way to show a zoomed-in picture of *your* screen at this very moment, however, you could go get a magnifying glass if you are curious. If you looked through that magnifying glass and you zoomed in further, you might see "subpixels" in your screen. 
+Yet again, even this statement is somewhat inaccurate - this is not really what a pixel looks like. There is no way to show a zoomed-in picture of *your* screen at this very moment, however, you could go get a magnifying glass if you are curious. If you looked through that magnifying glass and you zoomed in further, you might see "subpixels" of red, blue, and green in your screen.
 
 ::: {#fig-lcd-pixel-macro-zoom}
 <img src="assets/lcd-pixel-macro-2023-golden-zoom-10x.jpg" alt="Ten-times zoomed view of the LCD subpixel pattern." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -113,19 +118,18 @@ But the subpixels on your screen might not be the same shape as the subpixels on
 Pixel geometries from CRT and LCD displays, center-cropped to a golden-ratio rectangle. Source: Peter Halasz (Pengo), [*Pixel geometry 02 Pengo.jpg*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 :::
 
-This chapter could go on for a long time. But what does all of this have to do with data science?
+This chapter could go on for a long time with this repeated zoom-in effect. But what does all of this have to do with data science?
 
-During the work of data science, you may find yourself (or your team) in an "infinite zoom" cycle. You may have been tasked with answering a deceptively simple question:
-* Is the new ad bringing in more customers?
+During the work of data science, you may find yourself (or your team) in an "repeated zoom-in" cycle. You may have been tasked with answering a deceptively simple question:
 * Do guests like the new cold brew recipe?
 * Is the running plan helping people run faster?
 * Do people sleep better with noise machines?
 
 But any real, live, curious human asking these questions will want more than "yes" or "no" as an answer. The task of a data scientist is not merely to deliver the answer up the chain, like a machine that takes data as input and gives knowledge as output.
 
-Instead, the real value of a wise and competent data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist must explore the many possible decisions that can move data to information and/or knowledge.
+Instead, the real value of a wise and competent data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist must explore the many possible decisions that can take data to construct information and/or knowledge.
 
-As glimpsed will be discussed throughout the chapters, these possible decisions are...
+As glimpsed here, and as will be discussed throughout the chapters, these possible decisions are...
 
 ## Case study: statistical worldviews
 
@@ -137,21 +141,37 @@ These statistical frameworks/paradigms are essentialy worldviews that entail spe
 
 * Probability as long-run frequency across repeated trials
 * Confidence intervals and p-values as procedures with guaranteed long-run error rates
+* The reference-class problem
+* Statistics links data to hypotheses by using probability distributions over possible data sets [@sep-statistics].
+* Classical statistics treats probabilities as chances attached to repeatable events, not as probabilities that hypotheses themselves are true [@sep-statistics].
+* Frequentist procedures provide long-run error guarantees, but they also face a reference-class problem when reasoning about individual cases [@sep-statistics].
 
 ### Bayesian worldview (degrees of belief)
 
 * Probability as a measure of uncertainty (belief) given information
 * Parameters are treated as uncertain
-* data update beliefs ( Bayes' rule )
+* Data update beliefs ( Bayes' rule )
+* Bayesian epistemology treats belief as coming in degrees, often called credences [@sep-epistemology-bayesian].
+* Bayesian norms ask both how credences should fit together and how they should change with new evidence [@sep-epistemology-bayesian].
+* Data update beliefs through conditionalization, but the result depends on the prior credences brought into the analysis [@sep-epistemology-bayesian].
+* The problem of the priors matters because coherent starting points can still support different inductive conclusions [@sep-epistemology-bayesian].
+* In Bayesian statistics, parameters are treated as uncertain, and posterior distributions support estimates and credibility intervals [@sep-statistics].
 
 ### Causal inference worldview (effects of interventions)
 
 * Core question: what would happen if we intervened?
-* potential outcomes / counterfactuals, causal graphs (DAGs)
+* Potential outcomes / counterfactuals, causal graphs (DAGs)
+* A causal model represents causal relationships within a system or population so that statistical data can support causal inference [@sep-causal-models].
+* Directed acyclic graphs make assumptions about dependence, independence, and causal direction explicit [@sep-causal-models].
+* Observed probabilities alone may identify only a Markov equivalence class, so causal claims often require background assumptions or interventions [@sep-causal-models].
+* The core causal question is interventionist: what would happen if we changed one part of the system? [@sep-causal-models]
+* Regularity theories begin from the idea that causes are regularly followed by effects, but accidental regularities are not enough [@sep-causation-regularity].
+* Millian regularity approaches treat causes as lawlike combinations of present positive factors and absent negative factors [@sep-causation-regularity].
+* Inferential theories analyze causation through what effects can be inferred from causes within an appropriate background theory [@sep-causation-regularity].
 
 
 ## Test
-These are some test citations for @ackoff_data_1989, @vance_information_1997, @bernstein_data-information-knowledge-wisdom_2011, @rowley_wisdom_2007, @fricke_knowledge_2009, @zeleny_management_1987, and @payne_perfect_circles_2019.
+These are test citations for @ackoff_data_1989, @vance_information_1997, @bernstein_data-information-knowledge-wisdom_2011, @rowley_wisdom_2007, @fricke_knowledge_2009, @zeleny_management_1987, and @payne_perfect_circles_2019.
 
 The data-information-knowledge-wisdom (DIKW) framing is commonly discussed in the literature (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011).
 

@@ -2,6 +2,12 @@
 
 **[← Back to Course Homepage](../../../)**
 
+::: {#fig-ds-lifecycle-obtain-data}
+<img src="assets/lifecycle/ds-lifecycle-v2.svg" alt="The data science lifecycle with Obtain data highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+The data science lifecycle, with obtaining data highlighted.
+:::
+
 *This chapter is in-progress.*
 
 

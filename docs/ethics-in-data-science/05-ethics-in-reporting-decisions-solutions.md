@@ -2,6 +2,12 @@
 
 **[← Back to Course Homepage](../../../)**
 
+::: {#fig-ds-lifecycle-reports-decisions-solutions}
+<img src="assets/lifecycle/ds-lifecycle-v5.svg" alt="The data science lifecycle with Reports, decisions, solutions highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+The data science lifecycle, with reports, decisions, and solutions highlighted.
+:::
+
 *This chapter is in-progress.*
 
 A data scientist may do a lot of work by themselves. Even a data science *team* may work within an organization for extended periods of time, and not interact with other teams.
