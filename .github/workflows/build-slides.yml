@@ -20,14 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Set up Chrome
-        id: setup-chrome
-        uses: browser-actions/setup-chrome@v2
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -37,18 +29,16 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Install slide build dependencies
-        run: |
-          npm ci
-          python3 -m pip install pymupdf
+        run: npm ci
 
-      - name: Compile Quarto slides to HTML and PDF
+      - name: Compile Quarto slides to HTML
         env:
-          CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          BUILD_PDFS: "false"
         run: cd docs/slides && bash ./build_all_quarto.sh
 
-      - name: Compile Marp slides to HTML and PDF
+      - name: Compile Marp slides to HTML
         env:
-          MARP_BROWSER_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          BUILD_PDFS: "false"
         run: cd docs/slides/marp_archive && bash ./build_all_marp.sh
 
       - name: Commit compiled slide outputs
@@ -56,7 +46,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           shopt -s nullglob
-          git add docs/slides/*.html docs/slides/*.pdf docs/slides/marp_archive/*.html docs/slides/marp_archive/*.pdf
+          git add docs/slides/*.html docs/slides/marp_archive/*.html
           for support_dir in docs/slides/*_files; do
             [[ -d "$support_dir" ]] && git add -A "$support_dir"
           done
