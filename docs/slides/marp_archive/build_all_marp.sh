@@ -10,9 +10,8 @@ OUTPUT_DIR=${1:-.}
 
 # Resolve paths relative to this script's location
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-CONFIG_FILE="$REPO_ROOT/docs/.marprc.yml"
-THEME_FILE="$SCRIPT_DIR/../css/marp-theme.css"
+CONFIG_FILE="$SCRIPT_DIR/.marprc.yml"
+THEME_FILE="$SCRIPT_DIR/marp-theme.css"
 
 if [[ ! -f "$CONFIG_FILE" ]]; then
   echo "Error: Marp config not found at $CONFIG_FILE" >&2
@@ -37,9 +36,16 @@ echo "Using Marp command: $MARP_CMD"
 echo "Using Marp config: $CONFIG_FILE"
 echo "Using Marp theme: $THEME_FILE"
 
+MARP_BROWSER_ARGS=()
+if [[ -n "${MARP_BROWSER_PATH:-}" ]]; then
+  MARP_BROWSER_ARGS=(--browser-path "$MARP_BROWSER_PATH")
+  echo "Using Marp browser: $MARP_BROWSER_PATH"
+fi
+
 # Gather all Marp slide markdown files under this slides directory (recursive)
 # Use find + read -d '' loop for macOS bash compatibility (no mapfile, no realpath)
 found=0
+failed=0
 cd "$SCRIPT_DIR"
 
 while IFS= read -r -d '' md; do
@@ -64,24 +70,31 @@ while IFS= read -r -d '' md; do
     --config "$CONFIG_FILE" \
     --theme-set "$THEME_FILE" \
     --allow-local-files \
+    "${MARP_BROWSER_ARGS[@]}" \
     "$md" \
     -o "$html_out" \
-    </dev/null || { echo "HTML generation failed for $md" >&2; continue; }
+    </dev/null || { echo "HTML generation failed for $md" >&2; failed=1; continue; }
 
   echo "[marp] Generating PDF: $pdf_out from $md"
   $MARP_CMD \
     --config "$CONFIG_FILE" \
     --theme-set "$THEME_FILE" \
     --allow-local-files \
+    "${MARP_BROWSER_ARGS[@]}" \
     --pdf \
     "$md" \
     -o "$pdf_out" \
-    </dev/null || { echo "PDF generation failed for $md" >&2; continue; }
+    </dev/null || { echo "PDF generation failed for $md" >&2; failed=1; continue; }
 
 done < <(find . -type f -name "*.md" -not -path "./node_modules/*" -print0)
 
 if [[ $found -eq 0 ]]; then
   echo "No Marp slide markdown files found." >&2
+  exit 1
+fi
+
+if [[ $failed -ne 0 ]]; then
+  echo "One or more Marp slide conversions failed." >&2
   exit 1
 fi
 

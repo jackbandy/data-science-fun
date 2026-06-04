@@ -4,13 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "docs/slides/**/*.md"
-      - "docs/slides/**/*.qmd"
-      - "docs/slides/build_all_marp.sh"
-      - "docs/slides/build_all_quarto.sh"
-      - "docs/slides/theme/**"
-      - "docs/css/marp-theme.css"
-      - "docs/.marprc.yml"
+      - "docs/slides/**"
       - ".gitignore"
       - "package.json"
       - "package-lock.json"
@@ -24,124 +18,45 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Check whether slide outputs are stale
-        id: stale
-        run: |
-          set -euo pipefail
-          marp_stale=false
-          quarto_stale=false
-          marp_support_files=(
-            "docs/.marprc.yml"
-            "docs/css/marp-theme.css"
-            "docs/slides/build_all_marp.sh"
-            "package.json"
-            "package-lock.json"
-          )
-
-          while IFS= read -r -d '' md; do
-            if ! grep -Eq '^marp:[[:space:]]*true([[:space:]]|$)' "$md"; then
-              continue
-            fi
-
-            base="${md%.md}"
-            html="${base}.html"
-            pdf="${base}.pdf"
-
-            if [[ ! -f "$html" || ! -f "$pdf" ]]; then
-              marp_stale=true
-              break
-            fi
-
-            if [[ "$md" -nt "$html" || "$md" -nt "$pdf" ]]; then
-              marp_stale=true
-              break
-            fi
-
-            for support in "${marp_support_files[@]}"; do
-              if [[ "$support" -nt "$html" || "$support" -nt "$pdf" ]]; then
-                marp_stale=true
-                break 2
-              fi
-            done
-          done < <(find docs/slides -type f -name "*.md" -print0)
-
-          quarto_support_files=(
-            "docs/slides/build_all_quarto.sh"
-          )
-
-          while IFS= read -r -d '' qmd; do
-            base="${qmd%.qmd}"
-            html="${base}.html"
-            pdf="${base}.pdf"
-            support_dir="${base}_files"
-
-            if [[ ! -f "$html" || ! -f "$pdf" || ! -d "$support_dir" ]]; then
-              quarto_stale=true
-              break
-            fi
-
-            if [[ "$qmd" -nt "$html" || "$qmd" -nt "$pdf" ]]; then
-              quarto_stale=true
-              break
-            fi
-
-            for support in "${quarto_support_files[@]}"; do
-              if [[ "$support" -nt "$html" || "$support" -nt "$pdf" ]]; then
-                quarto_stale=true
-                break 2
-              fi
-            done
-
-            if find docs/slides/theme -type f \( -newer "$html" -o -newer "$pdf" \) -print -quit | grep -q .; then
-              quarto_stale=true
-              break
-            fi
-          done < <(find docs/slides -type f -name "*.qmd" -print0)
-
-          echo "marp_stale=$marp_stale" >> "$GITHUB_OUTPUT"
-          echo "quarto_stale=$quarto_stale" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v6
 
       - name: Set up Chrome
-        uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2
 
       - uses: actions/setup-python@v5
-        if: steps.stale.outputs.quarto_stale == 'true'
         with:
           python-version: "3.x"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "npm"
 
       - name: Set up Quarto
-        if: steps.stale.outputs.quarto_stale == 'true'
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Install slide build dependencies
-        if: steps.stale.outputs.marp_stale == 'true'
-        run: npm ci
-
-      - name: Install Quarto PDF dependencies
-        if: steps.stale.outputs.quarto_stale == 'true'
-        run: python3 -m pip install pymupdf
-
-      - name: Compile Marp slides to HTML and PDF
-        if: steps.stale.outputs.marp_stale == 'true'
-        run: cd docs/slides && bash ./build_all_marp.sh
+        run: |
+          npm ci
+          python3 -m pip install pymupdf
 
       - name: Compile Quarto slides to HTML and PDF
-        if: steps.stale.outputs.quarto_stale == 'true'
+        env:
+          CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: cd docs/slides && bash ./build_all_quarto.sh
+
+      - name: Compile Marp slides to HTML and PDF
+        env:
+          MARP_BROWSER_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+        run: cd docs/slides/marp_archive && bash ./build_all_marp.sh
 
       - name: Commit compiled slide outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           shopt -s nullglob
-          git add docs/slides/*.html docs/slides/*.pdf
+          git add docs/slides/*.html docs/slides/*.pdf docs/slides/marp_archive/*.html docs/slides/marp_archive/*.pdf
           for support_dir in docs/slides/*_files; do
             [[ -d "$support_dir" ]] && git add -A "$support_dir"
           done
