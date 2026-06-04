@@ -78,7 +78,7 @@ I'm trying to avoid google slides, and this is the current markdown-based slide 
 - Marp decks like `week0.md` automatically compile to `week0.html` and `week0.pdf`.
 - Quarto decks like `week0quarto.qmd` automatically compile to `week0quarto.html`, `week0quarto.pdf`, and supporting `_files/` assets.
 - On pushes that touch slide sources or slide build support files, the workflow first checks whether Marp and Quarto outputs are already up to date.
-- If a rebuild is needed, it runs the existing `docs/slides/build_all_marp.sh` and `docs/slides/build_all_quarto.sh` scripts as needed.
+- It runs the existing `docs/slides/build_all_quarto.sh` and `docs/slides/marp_archive/build_all_marp.sh` scripts.
 - It commits the generated slide HTML, PDF, and Quarto support files back into the repository under `docs/slides/`.
 - Those compiled slide files are then included in the Pages site because the site is deployed from the `docs/` artifact.
 
