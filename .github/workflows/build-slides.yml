@@ -48,6 +48,6 @@ jobs:
           shopt -s nullglob
           git add docs/slides/*.html docs/slides/marp_archive/*.html
           for support_dir in docs/slides/*_files; do
-            [[ -d "$support_dir" ]] && git add -A "$support_dir"
+            [[ -d "$support_dir" ]] && git add -Af "$support_dir"
           done
           git diff --staged --quiet || (git commit -m "Build slides" && git push)
