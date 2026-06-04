@@ -4,12 +4,14 @@ set -euo pipefail
 # build_all_quarto.sh — compile all Quarto revealjs slide decks to HTML and PDF
 # Usage: ./build_all_quarto.sh [output-dir]
 # If CHROME is set, it will be used as the Chrome/Chromium executable for PDF export.
+# Set BUILD_PDFS=false to render HTML only.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTPUT_DIR="${1:-$SCRIPT_DIR}"
 SERVER_ROOT="${QUARTO_SERVER_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 QUARTO_CMD="${QUARTO_CMD:-quarto}"
 PORT="${QUARTO_PORT:-}"
+BUILD_PDFS="${BUILD_PDFS:-true}"
 HAD_GITIGNORE=0
 if [[ -e "$SCRIPT_DIR/.gitignore" ]]; then
   HAD_GITIGNORE=1
@@ -17,16 +19,6 @@ fi
 
 if ! command -v "$QUARTO_CMD" >/dev/null 2>&1; then
   echo "Error: quarto command not found. Set QUARTO_CMD or install Quarto." >&2
-  exit 1
-fi
-
-if ! command -v node >/dev/null 2>&1; then
-  echo "Error: node command not found. Node is required for Chrome PDF export." >&2
-  exit 1
-fi
-
-if ! python3 -c "import fitz" >/dev/null 2>&1; then
-  echo "Error: Python package PyMuPDF is required for merging PDF pages (import fitz failed)." >&2
   exit 1
 fi
 
@@ -58,12 +50,6 @@ find_chrome() {
   done
 }
 
-CHROME_CMD="$(find_chrome || true)"
-if [[ -z "$CHROME_CMD" ]]; then
-  echo "Error: Chrome/Chromium not found. Set CHROME to a browser executable." >&2
-  exit 1
-fi
-
 mkdir -p "$OUTPUT_DIR"
 
 SLIDE_FILES=()
@@ -75,16 +61,6 @@ done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f \( -name "*.qmd" -o -name "*.md"
 if [[ "${#SLIDE_FILES[@]}" -eq 0 ]]; then
   echo "[quarto] No Quarto slide files found in $SCRIPT_DIR"
   exit 0
-fi
-
-if [[ -z "$PORT" ]]; then
-  PORT="$(python3 - <<'PY'
-import socket
-with socket.socket() as s:
-    s.bind(("127.0.0.1", 0))
-    print(s.getsockname()[1])
-PY
-)"
 fi
 
 SERVER_PID=""
@@ -123,6 +99,37 @@ for slide in "${SLIDE_FILES[@]}"; do
     fi
   fi
 done
+
+if [[ "$BUILD_PDFS" == "false" ]]; then
+  echo "[quarto] Skipping PDF generation."
+  exit 0
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "Error: node command not found. Node is required for Chrome PDF export." >&2
+  exit 1
+fi
+
+if ! python3 -c "import fitz" >/dev/null 2>&1; then
+  echo "Error: Python package PyMuPDF is required for merging PDF pages (import fitz failed)." >&2
+  exit 1
+fi
+
+CHROME_CMD="$(find_chrome || true)"
+if [[ -z "$CHROME_CMD" ]]; then
+  echo "Error: Chrome/Chromium not found. Set CHROME to a browser executable." >&2
+  exit 1
+fi
+
+if [[ -z "$PORT" ]]; then
+  PORT="$(python3 - <<'PY'
+import socket
+with socket.socket() as s:
+    s.bind(("127.0.0.1", 0))
+    print(s.getsockname()[1])
+PY
+)"
+fi
 
 echo "[quarto] Starting local server on http://127.0.0.1:$PORT from $SERVER_ROOT"
 python3 -m http.server "$PORT" --bind 127.0.0.1 --directory "$SERVER_ROOT" >/tmp/quarto-slides-server.log 2>&1 &
@@ -217,18 +224,32 @@ const slideDir = process.env.QUARTO_PDF_SLIDE_DIR;
 const remotePort = 40000 + Math.floor(Math.random() * 20000);
 const userData = path.join(process.env.TMPDIR || "/tmp", `quarto-chrome-${Date.now()}`);
 const baseUrl = `http://127.0.0.1:${port}/${urlPath}?controls=false&progress=false`;
+let chromeStderr = "";
+let chromeExit = null;
 
 const browser = spawn(chrome, [
   "--headless=new",
   "--disable-gpu",
+  "--disable-dev-shm-usage",
   "--hide-scrollbars",
+  "--no-sandbox",
   "--no-first-run",
   "--no-default-browser-check",
   `--user-data-dir=${userData}`,
+  "--remote-debugging-address=127.0.0.1",
   `--remote-debugging-port=${remotePort}`,
   "--window-size=1280,720",
   `${baseUrl}#/0`
-], { stdio: ["ignore", "ignore", "ignore"] });
+], { stdio: ["ignore", "ignore", "pipe"] });
+
+browser.stderr.on("data", (chunk) => {
+  chromeStderr += chunk.toString();
+  if (chromeStderr.length > 8000) chromeStderr = chromeStderr.slice(-8000);
+});
+
+browser.on("exit", (code, signal) => {
+  chromeExit = { code, signal };
+});
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -241,7 +262,10 @@ async function getJson(resource) {
 }
 
 async function waitForDebugger() {
-  for (let attempt = 0; attempt < 100; attempt += 1) {
+  for (let attempt = 0; attempt < 300; attempt += 1) {
+    if (chromeExit) {
+      throw new Error(`Chrome exited before debugger was ready: ${JSON.stringify(chromeExit)}\n${chromeStderr}`);
+    }
     try {
       await getJson("/json/version");
       return;
@@ -249,7 +273,7 @@ async function waitForDebugger() {
       await sleep(100);
     }
   }
-  throw new Error("Timed out waiting for Chrome remote debugger");
+  throw new Error(`Timed out waiting for Chrome remote debugger\n${chromeStderr}`);
 }
 
 function createClient(webSocketUrl) {
