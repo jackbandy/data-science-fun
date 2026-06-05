@@ -1,0 +1,119 @@
+{
+  "generated_at": "2026-06-05T17:31:31.353599+00:00",
+  "bibliography": "/Users/jackb/GitHub/data-adventures/docs/ethics-in-data-science/references.bib",
+  "summary": {
+    "total": 2,
+    "scholarly": 2,
+    "with_doi": 0,
+    "with_url": 2,
+    "reachable_urls": 0,
+    "reachable_dois": 0,
+    "zotero_collected": 1,
+    "zotero_verified": 1,
+    "openalex_collected": 0,
+    "semantic_scholar_collected": 0,
+    "openalex_verified": 0,
+    "semantic_scholar_verified": 0,
+    "either_verified": 1,
+    "both_verified": 0,
+    "entries_with_issues": 0,
+    "entries_with_warnings": 2,
+    "parse_errors": 0,
+    "average_score": 90.0,
+    "offline": true
+  },
+  "parse_errors": [],
+  "references": [
+    {
+      "key": "sep-questions",
+      "type": "incollection",
+      "line": 4,
+      "fields": {
+        "author": "Cross, Charles and Roelofsen, Floris",
+        "title": "Questions",
+        "booktitle": "The {Stanford} Encyclopedia of Philosophy",
+        "editor": "Edward N. Zalta and Uri Nodelman",
+        "url": "https://plato.stanford.edu/archives/sum2024/entries/questions/",
+        "year": "2024",
+        "edition": "{S}ummer 2024",
+        "publisher": "Metaphysics Research Lab, Stanford University"
+      },
+      "issues": [],
+      "warnings": [
+        "No DOI"
+      ],
+      "url_check": null,
+      "doi_check": null,
+      "zotero": {
+        "provider": "Zotero",
+        "status": "not_found",
+        "matched_by": "title",
+        "record_id": null,
+        "record_url": null,
+        "title": null,
+        "year": null,
+        "authors": [],
+        "doi": null,
+        "title_similarity": null,
+        "author_overlap": null,
+        "year_match": null,
+        "verified": false,
+        "error": null
+      },
+      "openalex": null,
+      "semantic_scholar": null,
+      "score": 85,
+      "grade": "B"
+    },
+    {
+      "key": "sep-common-knowledge",
+      "type": "incollection",
+      "line": 15,
+      "fields": {
+        "author": "Vanderschraaf, Peter and Sillari, Giacomo",
+        "title": "Common Knowledge",
+        "booktitle": "The {Stanford} Encyclopedia of Philosophy",
+        "editor": "Edward N. Zalta and Uri Nodelman",
+        "url": "https://plato.stanford.edu/entries/common-knowledge/",
+        "year": "2022",
+        "edition": "{F}all 2022",
+        "publisher": "Metaphysics Research Lab, Stanford University"
+      },
+      "issues": [],
+      "warnings": [
+        "No DOI"
+      ],
+      "url_check": null,
+      "doi_check": null,
+      "zotero": {
+        "provider": "Zotero",
+        "status": "found",
+        "matched_by": "title",
+        "record_id": "7124",
+        "record_url": "zotero://select/library/items/6FDNAMU6",
+        "title": "Common Knowledge",
+        "year": null,
+        "authors": [
+          "Sillari, Giacomo",
+          "Vanderschraaf, Peter",
+          "Sillari, Giacomo",
+          "Vanderschraaf, Peter",
+          "Sillari, Giacomo",
+          "Vanderschraaf, Peter",
+          "Sillari, Giacomo",
+          "Vanderschraaf, Peter"
+        ],
+        "doi": null,
+        "title_similarity": 1.0,
+        "author_overlap": 1.0,
+        "year_match": true,
+        "verified": true,
+        "error": null
+      },
+      "openalex": null,
+      "semantic_scholar": null,
+      "score": 95,
+      "grade": "A"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 ## Materials for CS 418: Intro to Data Science
 ### University of Illinois Chicago (UIC)
 
-I'm preparing to teach a section of CS 418 (Intro to Data Science), in Fall 2026. This repository is intended as the main container for materials, including slides, worksheets, references, etc. My goal is to create a library of practical learning activities, especially hand-written / hand-drawn exercises, inspired by [Tom Yeh's "AI by Hand" series](https://www.byhand.ai).
+I'm preparing to teach a section of CS 418 (Intro to Data Science), in Fall 2026. This repository is intended as the main container for materials, including slides, worksheets, references, etc. My goal is to create a library of accessible, high-quality materials, including hand-written / hand-drawn exercises, inspired by [Tom Yeh's "AI by Hand" series](https://www.byhand.ai).
 
 Materials are under active development during Summer 2026. The public-facing site, [DoDataScience.fun](https://dodatascience.fun/), lives at the `docs/` folder, deployed via GitHub Pages.
 
@@ -14,14 +14,15 @@ data-science-fun/
 ├── docs/                        # Public-facing site root
 │   ├── index.html               # Landing page
 │   ├── css/                     # Shared stylesheets
-│   ├── slides/                  # Marp slides (md, pdf, html)
+│   ├── slides/                  # Quarto decks and archived Marp workflow
 │   ├── syllabus/                # Generated syllabus output (html, pdf)
+│   ├── worksheets/              # Generated worksheet PDFs
 │   ├── ethics-in-data-science/  # Quarto mini-book
 │   └── CNAME                    # domain config
-├── syllabus/                    # Syllabus source and helpers
+├── syllabus_source/             # Syllabus source and helpers
+├── worksheets_source/           # Worksheet source and build script
 ├── sandbox/                     # Quarantine for LLM-modified or experimental content
 ├── source-materials/            # Reference and upstream source files
-├── worksheets/                  # Worksheet source files
 ├── NOTES.md                     # Working notes and planning
 ├── package.json                 # Dependencies for slides
 └── README.md                    # This file
@@ -29,7 +30,54 @@ data-science-fun/
 
 ## GitHub Actions
 
-Using GitHub Actions workflows for some materials. The goal is to make things more portable, accessible, and easily editable. This usually means putting "raw content" in a markdown somewhere, which gets assembled and served automatically.
+Using GitHub Actions workflows for some materials. The goal is to keep things more portable, accessible, and easily editable. This usually means putting "raw content" in a markdown file somewhere, which gets assembled and served automatically any time there is a push.
+
+### Slide build
+
+I'm trying to avoid Google Slides, and the current markdown-based slide workflow lives in `.github/workflows/build-slides.yml`.
+
+```text
+ [docs/slides/week0.md ... week12.md]
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+ [Reveal.js HTML]          [PDF]
+```
+
+- The current decks are `docs/slides/week0.md` through `docs/slides/week12.md`. Each file contains Quarto Reveal.js configuration and compiles to a matching HTML file, PDF, and `_files/` support directory.
+- Run `docs/slides/build_all_quarto.sh` locally to build all current decks. It builds HTML and PDF by default; set `BUILD_PDFS=false` for HTML only.
+- The previous Marp experiment is retained in `docs/slides/marp_archive/`. Run `docs/slides/marp_archive/build_all_marp.sh` to rebuild its HTML and PDF outputs.
+- On pushes that touch slide sources or build support files, GitHub Actions builds HTML for both the current Quarto decks and archived Marp decks, then commits the generated HTML and Quarto support directories.
+- Those compiled slide files are then included in the Pages site because the site is deployed from the `docs/` artifact.
+
+### Syllabus build
+
+The syllabus uses a markdown workflow in `syllabus_source/`, and the generated files are published under `docs/syllabus/`.
+
+```text
+                [syllabus_source/syllabus.md]
+                              |
+                   +----------+----------+
+                   |                     |
+                   v                     v
+      [docs/syllabus/index.html]   [docs/syllabus/syllabus.pdf]
+```
+
+- The upstream source is `syllabus_source/syllabus.md`.
+- The shared course schedule is `syllabus_source/schedule.md`.
+- Run `python3 syllabus_source/sync_schedule.py` to sync the schedule into the homepage and syllabus, then rebuild both outputs.
+- Run `syllabus_source/build_syllabus_from_markdown.sh` to compile the markdown to both HTML and PDF (via latex).
+- Only `index.html` and `syllabus.pdf` are published under `docs/syllabus/`.
+- The output is served directly at `dodatascience.fun/syllabus/`.
+
+### Worksheet build
+
+Worksheet LaTeX sources and build support live in `worksheets_source/`.
+
+- Run `worksheets_source/build.sh` to compile every `worksheet.tex`.
+- Compiled PDFs are published under `docs/worksheets/`.
+- Source directories do not retain generated worksheet PDFs.
 
 ### Quarto mini-book deploy
 
@@ -62,41 +110,12 @@ The Quarto mini-book at `docs/ethics-in-data-science/` is published with `.githu
 - GitHub Pages serves that artifact directly, so the generated `docs/ethics-in-data-science/book/` output is no longer tracked in git.
 - This keeps Quarto output separate from version control
 
-### Slide build
+### FAQ build
 
-I'm trying to avoid google slides, and this is the current markdown-based slide workflow, which lives in `.github/workflows/build-slides.yml`.
+The FAQ source is `docs/faq.md`.
 
-```text
-         [docs/slides/*.md]
-                        |
-             +----------+----------+
-             |                     |
-             v                     v
-   [docs/slides/*.html]   [docs/slides/*.pdf]
-```
-
-- Quarto decks like `week0quarto.qmd` compile to `week0quarto.html` and supporting `_files/` assets.
-- On pushes that touch slide sources or slide build support files, the workflow runs the existing `docs/slides/build_all_quarto.sh` with `BUILD_PDFS=false`.
-- It commits the generated slide HTML and Quarto support files back into the repository under `docs/slides/`.
-- The local slide scripts still build PDF versions by default.
-- Those compiled slide files are then included in the Pages site because the site is deployed from the `docs/` artifact.
-
-### Syllabus build
-
-The syllabus uses a markdown workflow in `syllabus/`, and the generated files are published under `docs/syllabus/`.
-
-```text
-                    [syllabus/syllabus.md]
-                              |
-                   +----------+----------+
-                   |                     |
-                   v                     v
-      [docs/syllabus/index.html]   [docs/syllabus/syllabus.pdf]
-```
-
-- The upstream source is `syllabus/syllabus.md`.
-- Run `syllabus/build_syllabus_from_markdown.sh` to compile the markdown to both HTML and PDF (via latex).
-- The output in `docs/syllabus/` is served directly at `dodatascience.fun/syllabus/`.
+- Run `cd docs/scripts && ./build_faq.sh` to generate `docs/faq.html`.
+- The Pages deployment workflow rebuilds the FAQ before uploading `docs/`.
 
 ## Course topics
 

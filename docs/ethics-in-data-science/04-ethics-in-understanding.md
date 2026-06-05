@@ -14,9 +14,9 @@ TK
 ### Understanding the data
 
 ::: {#fig-ds-lifecycle-understand-data}
-<img src="assets/lifecycle/ds-lifecycle-v3.svg" alt="The data science lifecycle with Understand the data highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/lifecycle/ds-lifecycle-v3.svg" alt="The data science lifecycle with Understand the data highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-The data science lifecycle, with understanding the data highlighted.
+Understanding the data, in the context of the data science lifecycle.
 :::
 
 TK
@@ -24,9 +24,9 @@ TK
 ### Understanding the world
 
 ::: {#fig-ds-lifecycle-understand-world}
-<img src="assets/lifecycle/ds-lifecycle-v4.svg" alt="The data science lifecycle with Understand the world highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/lifecycle/ds-lifecycle-v4.svg" alt="The data science lifecycle with Understand the world highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-The data science lifecycle, with understanding the world highlighted.
+Understanding the world, in the context of the data science lifecycle.
 :::
 
 TK

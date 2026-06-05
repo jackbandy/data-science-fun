@@ -5,9 +5,9 @@
 *This is a placeholder page. The book is a work-in-progress.*
 
 ::: {#fig-ds-lifecycle}
-<img src="assets/lifecycle/ds-lifecycle-v0.svg" alt="The full data science lifecycle." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/lifecycle/ds-lifecycle-v0.svg" alt="The full data science lifecycle." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-The data science lifecycle.
+The data science lifecycle, modified from [*Learning Data Science*](https://learningds.org/ch/01/lifecycle_cycle.html).
 :::
 
 The purpose of this mini-book is to introduce data scientists to ethical considerations that arise throughout the data science lifecycle. The book is thus organized around the lifecycle described in *Learning Data Science*, which divides data work into four broad stages [@lau_learning_2023].

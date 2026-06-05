@@ -1,7 +1,5 @@
 ---
-layout: default
 title: FAQ
-permalink: /faq.html
 ---
 
 # FAQ
@@ -83,20 +81,3 @@ I think if an organizations truly wants evidence-based, data-informed decisions,
 A: I'm a nerd and I like public transit and I am teaching in Chicago. The CTA Orange line currently has fifteen open stations (State/Lake is closed), and the UIC semester is fifteen weeks long (plus finals week), so the organization works out well. The [CTA Trademark Guidelines](https://www.transitchicago.com/developers/branding/) encourages using proper CTA 'L' route colors, incoprorating CTA styles from the official style guide, and mentioning the project is inspired by Chicago's transit system (hence this blurb). This site uses the official CTA Orange Line color (#f9461c) and Sign Grey (#565a5c) from the [CTA Branding Guidelines for Developers](https://www.transitchicago.com/developers/branding/#branding).
 
 I do not claim that this project is official, authorized, or endorsed by CTA, and I do not intend to use logos, names, or marks in a way that suggests an official CTA affiliation. It might not always be the case, but for now, this site is an educational project and not a CTA product or service.
-
----
-
-<p class="last-updated">Last updated: <a href="https://github.com/jackbandy/data-science-fun/commits/" id="last-updated-link">{{ site.time | date_to_xmlschema }}</a></p>
-<script>
-  (function () {
-    const t = new Date("{{ site.time | date_to_xmlschema }}");
-    const fmt = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-    const chicago = t.toLocaleString('en-US', {
-      timeZone: 'America/Chicago',
-      year: 'numeric', month: 'long', day: 'numeric',
-      ...fmt, timeZoneName: 'short'
-    });
-    const utc = t.toLocaleString('en-US', { timeZone: 'UTC', ...fmt, timeZoneName: 'short' });
-    document.getElementById('last-updated-link').textContent = chicago + ' (' + utc + ')';
-  })();
-</script>

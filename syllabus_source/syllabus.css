@@ -1,0 +1,73 @@
+html, body {
+  font-family: "Theinhardt", Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.35;
+}
+
+body {
+  margin: 1in auto;
+  max-width: 8.5in;
+}
+
+h1, h2, h3 {
+  font-family: "Theinhardt", Arial, sans-serif;
+}
+
+h1 {
+  font-size: 18pt;
+  margin: 0 0 0.5em 0;
+  text-align: center;
+}
+
+/* Center the blurb immediately under the title (Markdown `h1` + paragraph). */
+h1 + p {
+  text-align: center;
+}
+
+h2 {
+  font-size: 14pt;
+  font-weight: 700;
+  padding: 10px 12px;
+  background: rgb(200, 200, 200);
+  border: 1px solid #000;
+  margin: 1.0em 0 0.7em 0;
+}
+
+h3 {
+  font-size: 12pt;
+  font-weight: 700;
+  margin: 0.9em 0 0.35em 0;
+}
+
+ul, ol {
+  padding-left: 1.25em;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+body::before {
+  content: "WORK IN PROGRESS";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-28deg);
+  font-size: 4.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+table th:nth-child(2),
+table td:nth-child(2) {
+  min-width: 6.6em;
+}
