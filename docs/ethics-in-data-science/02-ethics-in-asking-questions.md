@@ -3,7 +3,7 @@
 **[← Back to Course Homepage](../../../)**
 
 ::: {#fig-ds-lifecycle-ask-question}
-<img src="assets/lifecycle/ds-lifecycle-v1.svg" alt="The data science lifecycle with Ask a question highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/lifecycle/ds-lifecycle-v1.svg" alt="The data science lifecycle with Ask a question highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 Asking a question, in the context of the data science lifecycle.
 :::

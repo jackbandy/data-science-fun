@@ -53,7 +53,7 @@ Anyone who wants to answer the question "what is wisdom" would benefit from also
 Let's try to display a perfect triangle on your screen, or at least get as close as we can. Here is an attempt.
 
 ::: {#fig-triangle-ideal}
-<img src="assets/triangles/00-triangle-best.svg" alt="An equilateral triangle on a golden-ratio canvas." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/triangles/00-triangle-best.svg" alt="An equilateral triangle on a golden-ratio canvas." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 An attempt to display a perfect triangle.
 :::
@@ -63,7 +63,7 @@ Looks like a pretty good triangle! It uses scalable vector graphics (i.e. an svg
 But is there really a triangle in this image? Is it a perfect triangle? One way to find out is to zoom in on a portion of it.
 
 ::: {#fig-triangle-frame}
-<img src="assets/triangles/01-triangle-frame.svg" alt="An equilateral triangle with a highlighted rectangular frame around its left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/triangles/01-triangle-frame.svg" alt="An equilateral triangle with a highlighted rectangular frame around its left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 The red rectangular frame will be the outer frame for the next image.
 :::
@@ -71,7 +71,7 @@ The red rectangular frame will be the outer frame for the next image.
 The red rectangle represents another golden-ratio rectangle, this one being 1/10th the size of the original rectangle (160 pixels instead of the original 1600 pixels). Now, we will look at that frame up close.
 
 ::: {#fig-triangle-edge}
-<img src="assets/triangles/02-triangle-edge.svg" alt="A cropped and enlarged view of the triangle's left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/triangles/02-triangle-edge.svg" alt="A cropped and enlarged view of the triangle's left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 The left edge of the "perfect" triangle, which may not be perfect after all.
 :::
@@ -79,7 +79,7 @@ The left edge of the "perfect" triangle, which may not be perfect after all.
 Although the original picture may have looked like a perfect triangle at first, alas, closer inspection shows the left edge of the triangle is not even a straight line. Those edges are pretty jagged, and indeed, that is the only way to draw "lines" on a computer screen. We can look even closer to see how this works, zooming in by another factor of ten.
 
 ::: {#fig-triangle-edge-frame}
-<img src="assets/triangles/03-triangle-edge-frame.svg" alt="An enlarged edge view with a smaller frame marking the next crop." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/triangles/03-triangle-edge-frame.svg" alt="An enlarged edge view with a smaller frame marking the next crop." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 The red rectangular frame will be the outer frame for the next zoomed-in image.
 :::
@@ -87,7 +87,7 @@ The red rectangular frame will be the outer frame for the next zoomed-in image.
 Again, the red frame shows the area where we will zoom in.
 
 ::: {#fig-triangle-edge-zoom}
-<img src="assets/triangles/04-triangle-edge-zoom.svg" alt="An enlarged crop of the triangle's edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/triangles/04-triangle-edge-zoom.svg" alt="An enlarged crop of the triangle's edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 The left edge of the "perfect" triangle breaks down even further.
 :::
@@ -97,7 +97,7 @@ Now, the flaws of the triangle are even closer and more apparent. We have laid b
 Even now, this image of the black squares is not really showing you the pixels. This is what a pixel *actually* looks like up close:
 
 ::: {#fig-lcd-pixel-macro}
-<img src="assets/lcd-pixel-macro-2023-golden.jpg" alt="Microscopic close-up of an LCD display showing red, green, and blue subpixels." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/subpixels/lcd-pixel-macro-2023-golden.jpg" alt="Microscopic close-up of an LCD display showing red, green, and blue subpixels." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 A microscopic image of an LCD display showing subpixels. Source: Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 :::
@@ -105,7 +105,7 @@ A microscopic image of an LCD display showing subpixels. Source: Jacek Halicki, 
 Yet again, even this statement is somewhat inaccurate - this is not really what a pixel looks like. There is no way to show a zoomed-in picture of *your* screen at this very moment, however, you could go get a magnifying glass if you are curious. If you looked through that magnifying glass and you zoomed in further, you might see "subpixels" of red, blue, and green in your screen.
 
 ::: {#fig-lcd-pixel-macro-zoom}
-<img src="assets/lcd-pixel-macro-2023-golden-zoom-10x.jpg" alt="Ten-times zoomed view of the LCD subpixel pattern." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/subpixels/lcd-pixel-macro-2023-golden-zoom-10x.jpg" alt="Ten-times zoomed view of the LCD subpixel pattern." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 A 10x zoom into the center of the LCD subpixel image, showing rectangular subpixels. Source: Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 :::
@@ -113,7 +113,7 @@ A 10x zoom into the center of the LCD subpixel image, showing rectangular subpix
 But the subpixels on your screen might not be the same shape as the subpixels on someone else's screen. For example, subpixels look rather different on a standard definition CRT television, a CRT computer monitor, and LCD laptop screens, as shown below.
 
 ::: {#fig-pixel-geometries}
-<img src="assets/pixel-geometries.jpg" alt="Microscopic photos comparing pixel geometries from CRT and LCD displays." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/subpixels/pixel-geometries.jpg" alt="Microscopic photos comparing pixel geometries from CRT and LCD displays." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 Pixel geometries from CRT and LCD displays, center-cropped to a golden-ratio rectangle. Source: Peter Halasz (Pengo), [*Pixel geometry 02 Pengo.jpg*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 :::

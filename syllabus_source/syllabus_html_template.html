@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>$if(title)$$title$$else$Syllabus$endif$</title>
+  <style>
+$syllabus_css$
+
+    .syllabus-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 0 0 1.25rem 0;
+    }
+    .syllabus-logo img {
+      height: 22px;
+      width: auto;
+      display: block;
+    }
+    .syllabus-meta {
+      font-size: 0.75rem;
+      color: #999;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .syllabus-meta a { color: inherit; }
+  </style>
+</head>
+<body>
+
+<div class="syllabus-top">
+  <div class="syllabus-logo">
+    <img src="../images/uic-black-logo.svg" alt="UIC logo">
+  </div>
+  <div class="syllabus-meta">
+    This version created $created$ &nbsp;&nbsp; <a href="https://dodatascience.fun/syllabus/syllabus.pdf">Click here for PDF version</a>
+  </div>
+</div>
+
+<p style="margin:0 0 1rem 0; text-align:center; font-size:0.75rem; color:#999;"><strong>WORK IN PROGRESS</strong> - draft syllabus subject to revision</p>
+<p style="margin:0 0 1rem 0; text-align:center; font-size:0.85rem;"><a href="https://dodatascience.fun">Back to course website</a></p>
+
+$body$
+
+</body>
+</html>

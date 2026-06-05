@@ -3,9 +3,9 @@
 **[← Back to Course Homepage](../../../)**
 
 ::: {#fig-ds-lifecycle-reports-decisions-solutions}
-<img src="assets/lifecycle/ds-lifecycle-v5.svg" alt="The data science lifecycle with Reports, decisions, solutions highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/lifecycle/ds-lifecycle-v5.svg" alt="The data science lifecycle with Reports, decisions, solutions highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-The data science lifecycle, with reports, decisions, and solutions highlighted.
+Reports, decisions, and solutions, in the context of the data science lifecycle.
 :::
 
 *This chapter is in-progress.*

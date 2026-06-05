@@ -34,6 +34,9 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Build FAQ
+        run: cd docs/scripts && ./build_faq.sh
+
       - name: Render Quarto book
         run: quarto render docs/ethics-in-data-science
 

@@ -7,6 +7,8 @@
 ## Concluding Remarks
 A common question people ask about technology and ethics is something along these lines: "does ethics change? The world is so different with X, Y, and/or Z, do we not need different approaches compared to the old-school?"
 
+There has also been an analogous question in computer science education when it comes to programming languages. 
+
 ## Glossary {.appendix}
 
 Common knowledge
@@ -25,7 +27,7 @@ Datum
 : A single data point, such as a number or symbol.
 
 Data visceralization
-: Placeholder definition for Kelly Dobson's term for making data or intangible events sensory, bodily, or experientially felt rather than only visually represented [Source: @mit_media_lab_dobson_2014; @wernimont_pandemic_death_counts_2022].
+: attempts to make data sensory, bodily, or experientially felt in some way [Source: @mit_media_lab_dobson_2014; @wernimont_pandemic_death_counts_2022].
 
 Ethics
 : Acting well in the world [Source: @burton_computing_2023].
