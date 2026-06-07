@@ -4,7 +4,7 @@ subtitle: Introduction to Ethics in Data Science
 ---
 
 
-**[← Back to Course Homepage](../../../)**
+**[← Back to Course Homepage](../../index.html)**
 
 > "Those analysis droids you've got over there only focus on symbols. Hagh! I should think you Jedi would have more respect for the difference between knowledge and, hu-hu-hu... *wisdom*."
 >

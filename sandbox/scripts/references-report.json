@@ -1,25 +1,25 @@
 {
-  "generated_at": "2026-06-05T20:12:32.820083+00:00",
+  "generated_at": "2026-06-07T18:22:06.484773+00:00",
   "bibliography": "/Users/jackb/GitHub/data-adventures/docs/ethics-in-data-science/references.bib",
   "summary": {
     "total": 54,
     "scholarly": 31,
-    "with_doi": 17,
+    "with_doi": 18,
     "with_url": 54,
-    "reachable_urls": 45,
+    "reachable_urls": 51,
     "reachable_dois": 10,
-    "zotero_collected": 12,
+    "zotero_collected": 11,
     "zotero_verified": 10,
-    "openalex_collected": 51,
-    "semantic_scholar_collected": 22,
+    "openalex_collected": 50,
+    "semantic_scholar_collected": 24,
     "openalex_verified": 17,
-    "semantic_scholar_verified": 9,
+    "semantic_scholar_verified": 12,
     "either_verified": 22,
-    "both_verified": 11,
+    "both_verified": 13,
     "entries_with_issues": 0,
-    "entries_with_warnings": 14,
+    "entries_with_warnings": 13,
     "parse_errors": 0,
-    "average_score": 90.4,
+    "average_score": 91.9,
     "offline": false
   },
   "parse_errors": [],
@@ -180,21 +180,23 @@
       },
       "semantic_scholar": {
         "provider": "Semantic Scholar",
-        "status": "error",
+        "status": "found",
         "matched_by": "doi",
-        "record_id": null,
-        "record_url": null,
-        "title": null,
-        "year": null,
-        "authors": [],
-        "doi": null,
-        "title_similarity": null,
-        "author_overlap": null,
-        "year_match": null,
-        "verified": false,
-        "error": "HTTP Error 429: "
+        "record_id": "041b92d40000f6125cdac2eb1f0a026a56e06753",
+        "record_url": "https://www.semanticscholar.org/paper/041b92d40000f6125cdac2eb1f0a026a56e06753",
+        "title": "From religious studies to worldview studies",
+        "year": 2020,
+        "authors": [
+          "Ann Taves"
+        ],
+        "doi": "10.1080/0048721x.2019.1681124",
+        "title_similarity": 1.0,
+        "author_overlap": 1.0,
+        "year_match": false,
+        "verified": true,
+        "error": null
       },
-      "score": 70,
+      "score": 75,
       "grade": "C"
     },
     {
@@ -207,7 +209,7 @@
         "year": "2025",
         "url": "https://collections.mfa.org/objects/32558/where-do-we-come-from-what-are-we-where-are-we-going",
         "note": "Collection entry for Paul Gauguin's painting",
-        "urldate": "2026-06-05"
+        "urldate": "2026-06-07"
       },
       "issues": [],
       "warnings": [],
@@ -566,7 +568,7 @@
         "status": 200,
         "final_url": "https://journals.lib.washington.edu/index.php/nasko/article/view/12806",
         "error": null,
-        "elapsed_ms": 645
+        "elapsed_ms": 637
       },
       "doi_check": {
         "url": "https://doi.org/10.7152/nasko.v2i1.12806",
@@ -660,17 +662,18 @@
         "number": "2",
         "pages": "163--180",
         "doi": "10.1177/0165551506070706",
-        "url": "https://doi.org/10.1177/0165551506070706"
+        "url": "https://www.coengineers.com/wp-content/uploads/2020/06/DIKW.pdf",
+        "urldate": "2026-06-07"
       },
       "issues": [],
       "warnings": [],
       "url_check": {
-        "url": "https://doi.org/10.1177/0165551506070706",
-        "reachable": false,
-        "status": 403,
-        "final_url": "https://journals.sagepub.com/doi/10.1177/0165551506070706",
-        "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 445
+        "url": "https://www.coengineers.com/wp-content/uploads/2020/06/DIKW.pdf",
+        "reachable": true,
+        "status": 200,
+        "final_url": "https://www.coengineers.com/wp-content/uploads/2020/06/DIKW.pdf",
+        "error": null,
+        "elapsed_ms": 339
       },
       "doi_check": {
         "url": "https://doi.org/10.1177/0165551506070706",
@@ -748,13 +751,13 @@
         "verified": true,
         "error": null
       },
-      "score": 70,
-      "grade": "C"
+      "score": 85,
+      "grade": "B"
     },
     {
       "key": "fricke_knowledge_2009",
       "type": "article",
-      "line": 95,
+      "line": 96,
       "fields": {
         "title": "The knowledge pyramid: A critique of the {DIKW} hierarchy",
         "author": "Frick{\\'e}, Martin",
@@ -765,17 +768,18 @@
         "number": "2",
         "pages": "131--142",
         "doi": "10.1177/0165551508094050",
-        "url": "https://doi.org/10.1177/0165551508094050"
+        "url": "https://zhang.ist.psu.edu/teaching/504/readings/Fricke.pdf",
+        "urldate": "2026-06-07"
       },
       "issues": [],
       "warnings": [],
       "url_check": {
-        "url": "https://doi.org/10.1177/0165551508094050",
-        "reachable": false,
-        "status": 403,
-        "final_url": "https://journals.sagepub.com/doi/10.1177/0165551508094050",
-        "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 377
+        "url": "https://zhang.ist.psu.edu/teaching/504/readings/Fricke.pdf",
+        "reachable": true,
+        "status": 200,
+        "final_url": "https://zhang.ist.psu.edu/teaching/504/readings/Fricke.pdf",
+        "error": null,
+        "elapsed_ms": 245
       },
       "doi_check": {
         "url": "https://doi.org/10.1177/0165551508094050",
@@ -783,7 +787,7 @@
         "status": 403,
         "final_url": "https://journals.sagepub.com/doi/10.1177/0165551508094050",
         "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 343
+        "elapsed_ms": 377
       },
       "zotero": {
         "provider": "Zotero",
@@ -821,27 +825,29 @@
       },
       "semantic_scholar": {
         "provider": "Semantic Scholar",
-        "status": "error",
+        "status": "found",
         "matched_by": "doi",
-        "record_id": null,
-        "record_url": null,
-        "title": null,
-        "year": null,
-        "authors": [],
-        "doi": null,
-        "title_similarity": null,
-        "author_overlap": null,
-        "year_match": null,
-        "verified": false,
-        "error": "HTTP Error 429: "
+        "record_id": "8440f7d0811ada6c3f0a0025b27a8fc3e6675faa",
+        "record_url": "https://www.semanticscholar.org/paper/8440f7d0811ada6c3f0a0025b27a8fc3e6675faa",
+        "title": "The knowledge pyramid: a critique of the DIKW hierarchy",
+        "year": 2009,
+        "authors": [
+          "Martin Frické"
+        ],
+        "doi": "10.1177/0165551508094050",
+        "title_similarity": 1.0,
+        "author_overlap": 1.0,
+        "year_match": false,
+        "verified": true,
+        "error": null
       },
-      "score": 55,
-      "grade": "F"
+      "score": 75,
+      "grade": "C"
     },
     {
       "key": "zeleny_management_1987",
       "type": "article",
-      "line": 108,
+      "line": 110,
       "fields": {
         "title": "Management support systems: Towards integrated knowledge management",
         "author": "Zeleny, Milan",
@@ -851,7 +857,8 @@
         "number": "1",
         "pages": "59--70",
         "doi": "10.3233/HSM-1987-7108",
-        "url": "https://doi.org/10.3233/HSM-1987-7108"
+        "url": "https://doi.org/10.3233/HSM-1987-7108",
+        "urldate": "2026-06-07"
       },
       "issues": [],
       "warnings": [],
@@ -929,7 +936,7 @@
     {
       "key": "payne_perfect_circles_2019",
       "type": "online",
-      "line": 120,
+      "line": 123,
       "fields": {
         "title": "Do Perfect Circles Exist? Maybe.",
         "author": "Payne, Emily",
@@ -1005,7 +1012,7 @@
     {
       "key": "onions_picture_dorian_gray_2025",
       "type": "online",
-      "line": 131,
+      "line": 134,
       "fields": {
         "title": "Guide to 'The Picture of Dorian Gray' on Broadway starring Sarah Snook",
         "author": "Onions, Beatrice",
@@ -1081,7 +1088,7 @@
     {
       "key": "eliot_rock_1934",
       "type": "book",
-      "line": 142,
+      "line": 145,
       "fields": {
         "title": "The Rock: A Pageant Play",
         "author": "Eliot, T. S.",
@@ -1162,7 +1169,7 @@
     {
       "key": "lucas_hales_aotc_2000",
       "type": "movie",
-      "line": 151,
+      "line": 154,
       "fields": {
         "author": "Lucas, George and Hales, Jonathan",
         "title": "Star Wars: Episode {II} -- Attack of the Clones",
@@ -1240,7 +1247,7 @@
     {
       "key": "hitchcock_interview_1973",
       "type": "incollection",
-      "line": 160,
+      "line": 163,
       "fields": {
         "title": "Interview with {Alfred Hitchcock} (1973)",
         "author": "Hitchcock, Alfred",
@@ -1328,7 +1335,7 @@
     {
       "key": "sep-statistics",
       "type": "incollection",
-      "line": 174,
+      "line": 177,
       "fields": {
         "author": "Romeijn, Jan-Willem",
         "title": "Philosophy of Statistics",
@@ -1412,7 +1419,7 @@
     {
       "key": "sep-epistemology-bayesian",
       "type": "incollection",
-      "line": 185,
+      "line": 188,
       "fields": {
         "author": "Lin, Hanti",
         "title": "Bayesian Epistemology",
@@ -1495,7 +1502,7 @@
     {
       "key": "sep-causal-models",
       "type": "incollection",
-      "line": 196,
+      "line": 199,
       "fields": {
         "author": "Hitchcock, Christopher",
         "title": "Causal Models",
@@ -1578,7 +1585,7 @@
     {
       "key": "sep-causation-regularity",
       "type": "incollection",
-      "line": 207,
+      "line": 210,
       "fields": {
         "author": "Andreas, Holger and Guenther, Mario",
         "title": "Regularity and Inferential Theories of Causation",
@@ -1659,7 +1666,7 @@
     {
       "key": "sagan_demon-haunted_1995",
       "type": "book",
-      "line": 218,
+      "line": 221,
       "fields": {
         "title": "The Demon-Haunted World: Science as a Candle in the Dark",
         "author": "Sagan, Carl",
@@ -1740,7 +1747,7 @@
     {
       "key": "wood_john_muir_misquoted",
       "type": "online",
-      "line": 230,
+      "line": 233,
       "fields": {
         "title": "John Muir Misquoted",
         "author": "Wood, Harold",
@@ -1816,7 +1823,7 @@
     {
       "key": "lee_building_consentful_2017",
       "type": "online",
-      "line": 238,
+      "line": 241,
       "fields": {
         "title": "Building Consentful Tech",
         "author": "Lee, Una and Toliver, Dann",
@@ -1893,35 +1900,42 @@
     {
       "key": "burton_computing_2023",
       "type": "book",
-      "line": 247,
+      "line": 250,
       "fields": {
         "title": "Computing and Technology Ethics: Engaging through Science Fiction",
         "author": "Burton, Emanuelle and Goldsmith, Judy and Mattei, Nicholas and Siler, Cory and Swiatek, Sara-Jo",
         "year": "2023",
         "month": "feb",
         "day": "14",
-        "publisher": "The MIT Press",
+        "publisher": "MIT Press",
         "pages": "504",
         "isbn": "978-0-262-04806-4",
-        "url": "https://mitpress.mit.edu/9780262374279/computing-and-technology-ethics/"
+        "doi": "10.7551/mitpress/13098.001.0001",
+        "url": "https://openlibrary.org/books/OL39437562M/Computing_and_Technology_Ethics",
+        "urldate": "2026-06-07"
       },
       "issues": [],
-      "warnings": [
-        "No DOI"
-      ],
+      "warnings": [],
       "url_check": {
-        "url": "https://mitpress.mit.edu/9780262374279/computing-and-technology-ethics/",
-        "reachable": false,
-        "status": 403,
-        "final_url": "https://mitpress.mit.edu/9780262374279/computing-and-technology-ethics/",
-        "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 155
+        "url": "https://openlibrary.org/books/OL39437562M/Computing_and_Technology_Ethics",
+        "reachable": true,
+        "status": 200,
+        "final_url": "https://openlibrary.org/books/OL39437562M/Computing_and_Technology_Ethics",
+        "error": null,
+        "elapsed_ms": 3234
       },
-      "doi_check": null,
+      "doi_check": {
+        "url": "https://doi.org/10.7551/mitpress/13098.001.0001",
+        "reachable": false,
+        "status": 404,
+        "final_url": "https://doi.org/10.7551/mitpress/13098.001.0001",
+        "error": "HTTP Error 404: Not Found",
+        "elapsed_ms": 196
+      },
       "zotero": {
         "provider": "Zotero",
         "status": "not_found",
-        "matched_by": "title",
+        "matched_by": "doi",
         "record_id": null,
         "record_url": null,
         "title": null,
@@ -1936,37 +1950,33 @@
       },
       "openalex": {
         "provider": "OpenAlex",
-        "status": "found",
-        "matched_by": "title",
-        "record_id": "https://openalex.org/W4385486211",
-        "record_url": "https://openalex.org/W4385486211",
-        "title": "Computing and Technology Ethics: Engaging through Science Fiction, by Emanuelle Burton, Judy Goldsmith, Nicholas Mattei, Corey Siler and Sara-Jo Swiatek",
-        "year": 2023,
-        "authors": [
-          "Russell W. Askren"
-        ],
-        "doi": "10.5840/teachphil2023463189",
-        "title_similarity": 0.607,
-        "author_overlap": 0.0,
-        "year_match": true,
+        "status": "not_found",
+        "matched_by": "doi",
+        "record_id": null,
+        "record_url": null,
+        "title": null,
+        "year": null,
+        "authors": [],
+        "doi": null,
+        "title_similarity": null,
+        "author_overlap": null,
+        "year_match": null,
         "verified": false,
         "error": null
       },
       "semantic_scholar": {
         "provider": "Semantic Scholar",
-        "status": "found",
-        "matched_by": "title",
-        "record_id": "e27804fad7ddcae90946b83f737617bf105500eb",
-        "record_url": "https://www.semanticscholar.org/paper/e27804fad7ddcae90946b83f737617bf105500eb",
-        "title": "Computing and Technology Ethics: Engaging through Science Fiction, by Emanuelle Burton, Judy Goldsmith, Nicholas Mattei, Corey Siler and Sara-Jo Swiatek",
-        "year": 2023,
-        "authors": [
-          "Russell W. Askren"
-        ],
-        "doi": "10.5840/teachphil2023463189",
-        "title_similarity": 0.607,
-        "author_overlap": 0.0,
-        "year_match": true,
+        "status": "not_found",
+        "matched_by": "doi",
+        "record_id": null,
+        "record_url": null,
+        "title": null,
+        "year": null,
+        "authors": [],
+        "doi": null,
+        "title_similarity": null,
+        "author_overlap": null,
+        "year_match": null,
         "verified": false,
         "error": null
       },
@@ -1976,7 +1986,7 @@
     {
       "key": "mit_media_lab_dobson_2014",
       "type": "online",
-      "line": 259,
+      "line": 264,
       "fields": {
         "title": "Kelly Dobson: Body-Based Wellness Machines and the Essential Self",
         "author": "MIT Media Lab",
@@ -2056,7 +2066,7 @@
     {
       "key": "wernimont_pandemic_death_counts_2022",
       "type": "online",
-      "line": 269,
+      "line": 274,
       "fields": {
         "title": "Pandemic Death Counts Are Numbing. There's Another Way to Process",
         "author": "Wernimont, Jacqueline",
@@ -2136,7 +2146,7 @@
     {
       "key": "klein_dignazio_data_feminism_visualization",
       "type": "online",
-      "line": 280,
+      "line": 285,
       "fields": {
         "title": "Data Feminism for Data Visualization",
         "author": "Klein, Lauren and D'Ignazio, Catherine",
@@ -2214,7 +2224,7 @@
     {
       "key": "census_1790_questionnaire",
       "type": "online",
-      "line": 290,
+      "line": 295,
       "fields": {
         "title": "1790 Census: Instructions to Enumerators",
         "author": "U.S. Census Bureau",
@@ -2289,27 +2299,29 @@
     {
       "key": "gitelman_jackson_introduction_2013",
       "type": "incollection",
-      "line": 298,
+      "line": 303,
       "fields": {
-        "title": "Introduction",
-        "author": "Gitelman, Lisa and Jackson, Virginia",
+        "title": "Introduction: ``Raw Data'' Is an Oxymoron",
+        "author": "Gitelman, Lisa",
         "booktitle": "``Raw Data'' Is an Oxymoron",
         "editor": "Gitelman, Lisa",
         "year": "2013",
-        "publisher": "The MIT Press",
+        "publisher": "MIT Press",
         "address": "Cambridge, MA",
+        "isbn": "978-0-262-51828-4",
         "doi": "10.7551/mitpress/9302.003.0002",
-        "url": "https://direct.mit.edu/books/edited-volume/3992/chapter/166409/Introduction"
+        "url": "https://lisagitelman.org/raw-data-is-an-oxymoron/",
+        "urldate": "2026-06-07"
       },
       "issues": [],
       "warnings": [],
       "url_check": {
-        "url": "https://direct.mit.edu/books/edited-volume/3992/chapter/166409/Introduction",
-        "reachable": false,
-        "status": 403,
-        "final_url": "https://direct.mit.edu/books/edited-volume/3992/chapter/166409/Introduction",
-        "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 188
+        "url": "https://lisagitelman.org/raw-data-is-an-oxymoron/",
+        "reachable": true,
+        "status": 200,
+        "final_url": "https://lisagitelman.org/raw-data-is-an-oxymoron/",
+        "error": null,
+        "elapsed_ms": 423
       },
       "doi_check": {
         "url": "https://doi.org/10.7551/mitpress/9302.003.0002",
@@ -2321,23 +2333,17 @@
       },
       "zotero": {
         "provider": "Zotero",
-        "status": "found",
-        "matched_by": "title",
-        "record_id": "1551",
-        "record_url": "zotero://select/library/items/VQSDHVGQ",
-        "title": "Introduction",
+        "status": "not_found",
+        "matched_by": "doi",
+        "record_id": null,
+        "record_url": null,
+        "title": null,
         "year": null,
-        "authors": [
-          "Barabasi, Albert-Laszlo",
-          "Barabasi, Albert-Laszlo",
-          "Barabasi, Albert-Laszlo",
-          "Barabasi, Albert-Laszlo",
-          "Barabasi, Albert-Laszlo"
-        ],
-        "doi": "10.1017/cbo9781107415324.004",
-        "title_similarity": 1.0,
-        "author_overlap": 0.0,
-        "year_match": true,
+        "authors": [],
+        "doi": null,
+        "title_similarity": null,
+        "author_overlap": null,
+        "year_match": null,
         "verified": false,
         "error": null
       },
@@ -2354,7 +2360,7 @@
           "Virginia Jackson"
         ],
         "doi": "10.7551/mitpress/9302.003.0002",
-        "title_similarity": 1.0,
+        "title_similarity": 0.5,
         "author_overlap": 1.0,
         "year_match": true,
         "verified": true,
@@ -2362,7 +2368,7 @@
       },
       "semantic_scholar": {
         "provider": "Semantic Scholar",
-        "status": "error",
+        "status": "not_found",
         "matched_by": "doi",
         "record_id": null,
         "record_url": null,
@@ -2374,15 +2380,15 @@
         "author_overlap": null,
         "year_match": null,
         "verified": false,
-        "error": "HTTP Error 429: "
+        "error": null
       },
-      "score": 55,
-      "grade": "F"
+      "score": 70,
+      "grade": "C"
     },
     {
       "key": "national_archives_1790_schedule",
       "type": "online",
-      "line": 310,
+      "line": 317,
       "fields": {
         "title": "Massachusetts Printed Schedule Used in the 1790 Census",
         "author": "National Archives and Records Administration",
@@ -2458,7 +2464,7 @@
     {
       "key": "census_1850_questionnaire",
       "type": "online",
-      "line": 319,
+      "line": 326,
       "fields": {
         "title": "1850 Census: Instructions to Enumerators",
         "author": "U.S. Census Bureau",
@@ -2533,7 +2539,7 @@
     {
       "key": "census_1850_free_inhabitants_image",
       "type": "online",
-      "line": 327,
+      "line": 334,
       "fields": {
         "title": "1850 Free Inhabitants Schedule",
         "author": "U.S. Census Bureau",
@@ -2613,7 +2619,7 @@
     {
       "key": "census_1940_questionnaire",
       "type": "online",
-      "line": 335,
+      "line": 342,
       "fields": {
         "title": "1940 Census: Instructions to Enumerators",
         "author": "U.S. Census Bureau",
@@ -2689,7 +2695,7 @@
     {
       "key": "census_1940_population_pdf",
       "type": "online",
-      "line": 343,
+      "line": 350,
       "fields": {
         "title": "1940 Population Questionnaire",
         "author": "U.S. Census Bureau",
@@ -2765,7 +2771,7 @@
     {
       "key": "census_2020_questionnaire",
       "type": "online",
-      "line": 351,
+      "line": 358,
       "fields": {
         "title": "2020 Census: Instructions to Enumerators",
         "author": "U.S. Census Bureau",
@@ -2841,7 +2847,7 @@
     {
       "key": "census_2020_informational_pdf",
       "type": "online",
-      "line": 359,
+      "line": 366,
       "fields": {
         "title": "2020 Informational Questionnaire",
         "author": "U.S. Census Bureau",
@@ -2917,7 +2923,7 @@
     {
       "key": "wikipedia_race_ethnicity_census",
       "type": "online",
-      "line": 367,
+      "line": 374,
       "fields": {
         "title": "Race and Ethnicity in the United States Census",
         "author": "Wikipedia contributors",
@@ -2993,7 +2999,7 @@
     {
       "key": "abcn_news_facebook_gender_2014",
       "type": "online",
-      "line": 375,
+      "line": 382,
       "fields": {
         "title": "Here's a List of 58 Gender Options for Facebook Users",
         "author": "ABC News",
@@ -3072,7 +3078,7 @@
     {
       "key": "kelly_facebook_gender_2014",
       "type": "online",
-      "line": 385,
+      "line": 392,
       "fields": {
         "title": "Facebook Goes beyond 'Male' and 'Female' with New Gender Options",
         "author": "Kelly, Heather",
@@ -3151,7 +3157,7 @@
     {
       "key": "goodhart1984problems",
       "type": "incollection",
-      "line": 396,
+      "line": 403,
       "fields": {
         "title": "Problems of monetary management: the {UK} experience",
         "author": "Goodhart, Charles A. E.",
@@ -3168,9 +3174,9 @@
         "url": "https://doi.org/10.1007/978-1-349-17295-5_4",
         "reachable": true,
         "status": 200,
-        "final_url": "https://link.springer.com/chapter/10.1007/978-1-349-17295-5_4?error=cookies_not_supported&code=63712dd8-43f7-4b87-912c-ede1de5eb37b",
+        "final_url": "https://link.springer.com/chapter/10.1007/978-1-349-17295-5_4?error=cookies_not_supported&code=5b4ef6d9-87c9-44d0-9a34-d23d557dec9f",
         "error": null,
-        "elapsed_ms": 1543
+        "elapsed_ms": 1782
       },
       "doi_check": {
         "url": "https://doi.org/10.1007/978-1-349-17295-5_4",
@@ -3238,7 +3244,7 @@
     {
       "key": "campbell1979assessing",
       "type": "article",
-      "line": 407,
+      "line": 414,
       "fields": {
         "title": "Assessing the impact of planned social change",
         "author": "Campbell, Donald T.",
@@ -3327,7 +3333,7 @@
     {
       "key": "oneil_weapons_2017",
       "type": "book",
-      "line": 420,
+      "line": 427,
       "fields": {
         "title": "Weapons of Math Destruction: How Big Data Increases Inequality and Threatens Democracy",
         "author": "O'Neil, Cathy",
@@ -3413,7 +3419,7 @@
     {
       "key": "muller_tyranny_2018",
       "type": "book",
-      "line": 429,
+      "line": 436,
       "fields": {
         "title": "The Tyranny of Metrics",
         "author": "Muller, Jerry Z.",
@@ -3516,7 +3522,7 @@
     {
       "key": "veliz2026prophecy",
       "type": "book",
-      "line": 441,
+      "line": 448,
       "fields": {
         "title": "Prophecy: Prediction, Power, and the Fight for the Future, from Ancient Oracles to AI",
         "author": "V{\\'e}liz, Carissa",
@@ -3597,7 +3603,7 @@
     {
       "key": "bond_social_influence_2012",
       "type": "article",
-      "line": 453,
+      "line": 460,
       "fields": {
         "title": "A 61-million-person experiment in social influence and political mobilization",
         "author": "Bond, Robert M. and Fariss, Christopher J. and Jones, Jason J. and Kramer, Adam D. I. and Marlow, Cameron and Settle, Jaime E. and Fowler, James H.",
@@ -3615,9 +3621,9 @@
         "url": "https://doi.org/10.1038/nature11421",
         "reachable": true,
         "status": 200,
-        "final_url": "https://www.nature.com/articles/nature11421?error=cookies_not_supported&code=40ff2aac-d062-489b-84cb-35dc7edc9bee",
+        "final_url": "https://www.nature.com/articles/nature11421?error=cookies_not_supported&code=87e3caf8-1adc-4164-aab9-d46157d303b2",
         "error": null,
-        "elapsed_ms": 1317
+        "elapsed_ms": 1256
       },
       "doi_check": {
         "url": "https://doi.org/10.1038/nature11421",
@@ -3782,19 +3788,27 @@
       },
       "semantic_scholar": {
         "provider": "Semantic Scholar",
-        "status": "error",
+        "status": "found",
         "matched_by": "doi",
-        "record_id": null,
-        "record_url": null,
-        "title": null,
-        "year": null,
-        "authors": [],
-        "doi": null,
-        "title_similarity": null,
-        "author_overlap": null,
-        "year_match": null,
-        "verified": false,
-        "error": "HTTP Error 429: "
+        "record_id": "0ff9c0c8426fe8508f8356dfd4af3bfc6fde76c8",
+        "record_url": "https://www.semanticscholar.org/paper/0ff9c0c8426fe8508f8356dfd4af3bfc6fde76c8",
+        "title": "A 61-million-person experiment in social influence and political mobilization",
+        "year": 2012,
+        "authors": [
+          "Robert M. Bond",
+          "Christopher J. Fariss",
+          "Jason Jeffrey Jones",
+          "Adam D. I. Kramer",
+          "Cameron A. Marlow",
+          "Jaime E. Settle",
+          "J. Fowler"
+        ],
+        "doi": "10.1038/nature11421",
+        "title_similarity": 1.0,
+        "author_overlap": 1.0,
+        "year_match": true,
+        "verified": true,
+        "error": null
       },
       "score": 100,
       "grade": "A"
@@ -3802,7 +3816,7 @@
     {
       "key": "kramer_emotional_contagion_2014",
       "type": "article",
-      "line": 465,
+      "line": 472,
       "fields": {
         "title": "Experimental evidence of massive-scale emotional contagion through social networks",
         "author": "Kramer, Adam D. I. and Guillory, Jamie E. and Hancock, Jeffrey T.",
@@ -3926,7 +3940,7 @@
     {
       "key": "verma_editorial_expression_2014",
       "type": "article",
-      "line": 478,
+      "line": 485,
       "fields": {
         "title": "Editorial Expression of Concern: Experimental Evidence of Massive-Scale Emotional Contagion through Social Networks",
         "author": "Verma, Inder M.",
@@ -3948,7 +3962,7 @@
         "status": 200,
         "final_url": "https://www.pnas.org/action/cookieAbsent",
         "error": null,
-        "elapsed_ms": 637
+        "elapsed_ms": 648
       },
       "doi_check": {
         "url": "https://doi.org/10.1073/pnas.1412583111",
@@ -4012,7 +4026,7 @@
     {
       "key": "grimmelmann_letter_pnas_2014",
       "type": "online",
-      "line": 492,
+      "line": 499,
       "fields": {
         "title": "Letter to {PNAS} Regarding ``Experimental Evidence of Massive-Scale Emotional Contagion through Social Networks''",
         "author": "Grimmelmann, James and Asay, Clark D. and Chander, Anupam and Cheung, Anne S. Y. and Goldman, Eric and McGeveran, William and Ohm, Paul and Rothman, Jennifer E. and Tushnet, Rebecca",
@@ -4090,7 +4104,7 @@
     {
       "key": "kahn_learning_2014",
       "type": "article",
-      "line": 502,
+      "line": 509,
       "fields": {
         "title": "Opinion: Learning as We Go: Lessons from the Publication of {Facebook}'s Social-Computing Research",
         "author": "Kahn, Jeffrey P. and Vayena, Effy and Mastroianni, Anna C.",
@@ -4112,7 +4126,7 @@
         "status": 200,
         "final_url": "https://www.pnas.org/action/cookieAbsent",
         "error": null,
-        "elapsed_ms": 726
+        "elapsed_ms": 699
       },
       "doi_check": {
         "url": "https://doi.org/10.1073/pnas.1416405111",
@@ -4184,7 +4198,7 @@
     {
       "key": "boyd_untangling_2016",
       "type": "article",
-      "line": 516,
+      "line": 523,
       "fields": {
         "title": "Untangling Research and Practice: What {Facebook}'s ``Emotional Contagion'' Study Teaches Us",
         "author": "boyd, danah",
@@ -4195,17 +4209,18 @@
         "number": "1",
         "pages": "4--13",
         "doi": "10.1177/1747016115583379",
-        "url": "https://doi.org/10.1177/1747016115583379"
+        "url": "https://www.microsoft.com/en-us/research/publication/untangling-research-and-practice-what-facebooks-emotional-contagion-study-teaches-us/",
+        "urldate": "2026-06-07"
       },
       "issues": [],
       "warnings": [],
       "url_check": {
-        "url": "https://doi.org/10.1177/1747016115583379",
-        "reachable": false,
-        "status": 403,
-        "final_url": "https://journals.sagepub.com/doi/10.1177/1747016115583379",
-        "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 345
+        "url": "https://www.microsoft.com/en-us/research/publication/untangling-research-and-practice-what-facebooks-emotional-contagion-study-teaches-us/",
+        "reachable": true,
+        "status": 200,
+        "final_url": "https://www.microsoft.com/en-us/research/publication/untangling-research-and-practice-what-facebooks-emotional-contagion-study-teaches-us/",
+        "error": null,
+        "elapsed_ms": 398
       },
       "doi_check": {
         "url": "https://doi.org/10.1177/1747016115583379",
@@ -4265,31 +4280,32 @@
         "verified": false,
         "error": "HTTP Error 429: "
       },
-      "score": 55,
-      "grade": "F"
+      "score": 70,
+      "grade": "C"
     },
     {
       "key": "duhigg_companies_secrets_2012",
       "type": "online",
-      "line": 529,
+      "line": 537,
       "fields": {
         "title": "How Companies Learn Your Secrets",
         "author": "Duhigg, Charles",
         "year": "2012",
         "month": "feb",
         "day": "16",
-        "url": "https://www.nytimes.com/2012/02/19/magazine/shopping-habits.html",
-        "note": "The New York Times Magazine"
+        "url": "https://opencasebook.org/casebooks/521-internet-society-the-technologies-and-politics-of-control-spring-2019/resources/2.2.4-how-companies-learn-your-secrets-by-charles-duhigg-new-york-times-2012/",
+        "note": "The New York Times Magazine",
+        "urldate": "2026-06-07"
       },
       "issues": [],
       "warnings": [],
       "url_check": {
-        "url": "https://www.nytimes.com/2012/02/19/magazine/shopping-habits.html",
+        "url": "https://opencasebook.org/casebooks/521-internet-society-the-technologies-and-politics-of-control-spring-2019/resources/2.2.4-how-companies-learn-your-secrets-by-charles-duhigg-new-york-times-2012/",
         "reachable": false,
         "status": 403,
-        "final_url": "https://www.nytimes.com/2012/02/19/magazine/shopping-habits.html",
+        "final_url": "https://opencasebook.org/casebooks/521-internet-society-the-technologies-and-politics-of-control-spring-2019/resources/2.2.4-how-companies-learn-your-secrets-by-charles-duhigg-new-york-times-2012/",
         "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 306
+        "elapsed_ms": 244
       },
       "doi_check": null,
       "zotero": {
@@ -4351,7 +4367,7 @@
     {
       "key": "lazer_google_flu_2014",
       "type": "article",
-      "line": 539,
+      "line": 548,
       "fields": {
         "title": "The Parable of Google Flu: Traps in Big Data Analysis",
         "author": "Lazer, David and Kennedy, Ryan and King, Gary and Vespignani, Alessandro",
@@ -4379,8 +4395,8 @@
         "reachable": true,
         "status": 200,
         "final_url": "https://www.science.org/action/cookieAbsent",
-        "error": null,
-        "elapsed_ms": 553
+        "error": "HTTP Error 403: Forbidden",
+        "elapsed_ms": 1009
       },
       "zotero": {
         "provider": "Zotero",
@@ -4446,7 +4462,7 @@
     {
       "key": "angwin_machine_bias_2016",
       "type": "online",
-      "line": 552,
+      "line": 561,
       "fields": {
         "title": "Machine Bias",
         "author": "Angwin, Julia and Larson, Jeff and Mattu, Surya and Kirchner, Lauren",
@@ -4526,7 +4542,7 @@
     {
       "key": "sweeney_discrimination_2013",
       "type": "article",
-      "line": 562,
+      "line": 571,
       "fields": {
         "title": "Discrimination in Online Ad Delivery",
         "author": "Sweeney, Latanya",
@@ -4537,17 +4553,18 @@
         "number": "5",
         "pages": "44--54",
         "doi": "10.1145/2447976.2447990",
-        "url": "https://doi.org/10.1145/2447976.2447990"
+        "url": "https://privacytools.seas.harvard.edu/publications/discrimination-online-ad-delivery",
+        "urldate": "2026-06-07"
       },
       "issues": [],
       "warnings": [],
       "url_check": {
-        "url": "https://doi.org/10.1145/2447976.2447990",
-        "reachable": false,
-        "status": 403,
-        "final_url": "https://dl.acm.org/doi/10.1145/2447976.2447990",
-        "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 381
+        "url": "https://privacytools.seas.harvard.edu/publications/discrimination-online-ad-delivery",
+        "reachable": true,
+        "status": 200,
+        "final_url": "https://privacytools.seas.harvard.edu/publications/discrimination-online-ad-delivery",
+        "error": null,
+        "elapsed_ms": 154
       },
       "doi_check": {
         "url": "https://doi.org/10.1145/2447976.2447990",
@@ -4555,7 +4572,7 @@
         "status": 403,
         "final_url": "https://dl.acm.org/doi/10.1145/2447976.2447990",
         "error": "HTTP Error 403: Forbidden",
-        "elapsed_ms": 331
+        "elapsed_ms": 381
       },
       "zotero": {
         "provider": "Zotero",
@@ -4618,13 +4635,13 @@
         "verified": false,
         "error": "HTTP Error 429: "
       },
-      "score": 70,
-      "grade": "C"
+      "score": 85,
+      "grade": "B"
     },
     {
       "key": "lau_learning_2023",
       "type": "book",
-      "line": 575,
+      "line": 585,
       "fields": {
         "title": "Learning Data Science: Data Wrangling, Exploration, Visualization, and Modeling with Python",
         "author": "Lau, Sam and Gonzalez, Joseph and Nolan, Deborah",

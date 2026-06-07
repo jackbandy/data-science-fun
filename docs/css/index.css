@@ -109,6 +109,7 @@ h2 {
 }
 
 .sources {
+  max-width: var(--home-panel-width);
   padding-left: 1.4rem;
   line-height: 2;
 }
@@ -218,7 +219,10 @@ h1 a:hover {
 }
 
 .schedule-map-wrap {
+  max-width: 600px;
   margin: 12px 0 0;
+  margin-left: auto;
+  margin-right: auto;
   background: #fff;
 }
 
@@ -289,14 +293,16 @@ h1 a:hover {
 }
 
 .schedule-table-wrap {
+  max-width: 600px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .schedule-table {
   width: 100%;
-  min-width: 648px;
   border-collapse: collapse;
   font-size: 0.92rem;
   line-height: 1.45;
@@ -318,7 +324,7 @@ h1 a:hover {
 
 .schedule-table tbody th {
   position: relative;
-  width: 72px;
+  width: 58px;
   background: #fff;
   color: #1a1a1a;
   font-weight: 800;
@@ -385,9 +391,16 @@ h1 a:hover {
 #schedule-tooltip .tip-closed { font-size: 10px; color: #ffaa88; }
 
 .schedule-table td:first-of-type {
-  width: 150px;
+  width: 92px;
   color: #444;
   font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+}
+
+.schedule-table th:nth-child(3),
+.schedule-table td:nth-child(3) {
+  width: 22%;
 }
 
 @media (max-width: 640px) {

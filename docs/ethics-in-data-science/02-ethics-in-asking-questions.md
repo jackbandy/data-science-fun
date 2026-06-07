@@ -1,6 +1,6 @@
 # Ethics in Asking Questions
 
-**[← Back to Course Homepage](../../../)**
+**[← Back to Course Homepage](../../index.html)**
 
 ::: {#fig-ds-lifecycle-ask-question}
 <img src="../../assets/lifecycle/ds-lifecycle-v1.svg" alt="The data science lifecycle with Ask a question highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />

@@ -1,6 +1,6 @@
 # Introduction to Ethics in Data Science
 
-**[← Back to Course Homepage](../../../)**
+**[← Back to Course Homepage](../../index.html)**
 
 *This is a placeholder page. The book is a work-in-progress.*
 

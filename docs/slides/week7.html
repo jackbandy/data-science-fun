@@ -6,8 +6,8 @@
 <script src="week7_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week7_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week7_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week7_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="week7_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>week7</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,6 +32,7 @@
     }
   </style>
   <link rel="stylesheet" href="week7_files/libs/revealjs/dist/theme/quarto-edc10436c5b161121cb9e01f6df19c3f.css">
+  <link rel="stylesheet" href="theme/responsive-footer.css">
   <link href="week7_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="week7_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="week7_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -164,6 +165,7 @@
 <ol type="1">
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week7.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week7.md</a>.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
+<li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>
 </ol>
 
 </section>
@@ -381,6 +383,76 @@
           RevealZoom
         ]
       });
+    </script>
+    <script>
+    (() => {
+      let installed = false;
+      let observer = null;
+
+      function updateSlideNumber() {
+        if (!window.Reveal) return;
+
+        const slideNumber = document.querySelector(".reveal .slide-number");
+        if (!slideNumber) return;
+
+        const current = Reveal.getSlidePastCount() + 1;
+        const total = Reveal.getTotalSlides();
+        const expectedText = `${current} of ${total}`;
+
+        if (
+          slideNumber.textContent.trim() === expectedText &&
+          slideNumber.querySelector(".slide-number-current")
+        ) {
+          return;
+        }
+
+        slideNumber.innerHTML =
+          `<span class="slide-number-current">${current}</span> ` +
+          `<span class="slide-number-of">of</span> ` +
+          `<span class="slide-number-total">${total}</span>`;
+      }
+
+      function scheduleSlideNumberUpdate() {
+        window.requestAnimationFrame(updateSlideNumber);
+        window.setTimeout(updateSlideNumber, 0);
+        window.setTimeout(updateSlideNumber, 80);
+      }
+
+      function observeSlideNumber() {
+        const slideNumber = document.querySelector(".reveal .slide-number");
+        if (!slideNumber || observer) return;
+
+        observer = new MutationObserver(scheduleSlideNumberUpdate);
+        observer.observe(slideNumber, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+        });
+      }
+
+      function installSlideNumberFormatter() {
+        if (!window.Reveal) {
+          window.setTimeout(installSlideNumberFormatter, 50);
+          return;
+        }
+
+        observeSlideNumber();
+
+        if (!installed) {
+          installed = true;
+          Reveal.on("ready", scheduleSlideNumberUpdate);
+          Reveal.on("slidechanged", scheduleSlideNumberUpdate);
+          Reveal.on("fragmentshown", scheduleSlideNumberUpdate);
+          Reveal.on("fragmenthidden", scheduleSlideNumberUpdate);
+          window.addEventListener("hashchange", scheduleSlideNumberUpdate);
+        }
+
+        scheduleSlideNumberUpdate();
+      }
+
+      document.addEventListener("DOMContentLoaded", installSlideNumberFormatter);
+      window.addEventListener("load", installSlideNumberFormatter);
+    })();
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -274,6 +274,17 @@
       "url": "https://doi.org/10.7152/nasko.v2i1.12806"
     }
   },
+  "link:https://doi.org/10.7551/mitpress/13098.001.0001": {
+    "checked_at": "2026-06-07T18:21:32.487972+00:00",
+    "value": {
+      "elapsed_ms": 196,
+      "error": "HTTP Error 404: Not Found",
+      "final_url": "https://doi.org/10.7551/mitpress/13098.001.0001",
+      "reachable": false,
+      "status": 404,
+      "url": "https://doi.org/10.7551/mitpress/13098.001.0001"
+    }
+  },
   "link:https://doi.org/10.7551/mitpress/9302.003.0002": {
     "checked_at": "2026-06-05T20:10:45.699250+00:00",
     "value": {
@@ -340,6 +351,17 @@
       "url": "https://learningds.org/ch/01/lifecycle_intro.html"
     }
   },
+  "link:https://lisagitelman.org/raw-data-is-an-oxymoron/": {
+    "checked_at": "2026-06-07T18:21:32.714445+00:00",
+    "value": {
+      "elapsed_ms": 423,
+      "error": null,
+      "final_url": "https://lisagitelman.org/raw-data-is-an-oxymoron/",
+      "reachable": true,
+      "status": 200,
+      "url": "https://lisagitelman.org/raw-data-is-an-oxymoron/"
+    }
+  },
   "link:https://mitpress.mit.edu/9780262374279/computing-and-technology-ethics/": {
     "checked_at": "2026-06-05T20:10:45.068210+00:00",
     "value": {
@@ -349,6 +371,28 @@
       "reachable": false,
       "status": 403,
       "url": "https://mitpress.mit.edu/9780262374279/computing-and-technology-ethics/"
+    }
+  },
+  "link:https://opencasebook.org/casebooks/521-internet-society-the-technologies-and-politics-of-control-spring-2019/resources/2.2.4-how-companies-learn-your-secrets-by-charles-duhigg-new-york-times-2012/": {
+    "checked_at": "2026-06-07T18:21:32.732125+00:00",
+    "value": {
+      "elapsed_ms": 244,
+      "error": "HTTP Error 403: Forbidden",
+      "final_url": "https://opencasebook.org/casebooks/521-internet-society-the-technologies-and-politics-of-control-spring-2019/resources/2.2.4-how-companies-learn-your-secrets-by-charles-duhigg-new-york-times-2012/",
+      "reachable": false,
+      "status": 403,
+      "url": "https://opencasebook.org/casebooks/521-internet-society-the-technologies-and-politics-of-control-spring-2019/resources/2.2.4-how-companies-learn-your-secrets-by-charles-duhigg-new-york-times-2012/"
+    }
+  },
+  "link:https://openlibrary.org/books/OL39437562M/Computing_and_Technology_Ethics": {
+    "checked_at": "2026-06-07T18:21:35.525197+00:00",
+    "value": {
+      "elapsed_ms": 3234,
+      "error": null,
+      "final_url": "https://openlibrary.org/books/OL39437562M/Computing_and_Technology_Ethics",
+      "reachable": true,
+      "status": 200,
+      "url": "https://openlibrary.org/books/OL39437562M/Computing_and_Technology_Ethics"
     }
   },
   "link:https://openvisualizationacademy.org/courses/data-feminism-for-data-visualization/": {
@@ -437,6 +481,17 @@
       "reachable": true,
       "status": 200,
       "url": "https://press.princeton.edu/books/hardcover/9780691174952/the-tyranny-of-metrics"
+    }
+  },
+  "link:https://privacytools.seas.harvard.edu/publications/discrimination-online-ad-delivery": {
+    "checked_at": "2026-06-07T18:21:32.690018+00:00",
+    "value": {
+      "elapsed_ms": 154,
+      "error": null,
+      "final_url": "https://privacytools.seas.harvard.edu/publications/discrimination-online-ad-delivery",
+      "reachable": true,
+      "status": 200,
+      "url": "https://privacytools.seas.harvard.edu/publications/discrimination-online-ad-delivery"
     }
   },
   "link:https://s3.amazonaws.com/NARAprodstorage/lz/dc-metro/rg-029/5634994/5634994_01_01790.pdf": {
@@ -538,6 +593,17 @@
       "url": "https://www.cnn.com/2014/02/13/tech/social-media/facebook-gender-custom/"
     }
   },
+  "link:https://www.coengineers.com/wp-content/uploads/2020/06/DIKW.pdf": {
+    "checked_at": "2026-06-07T18:21:32.629639+00:00",
+    "value": {
+      "elapsed_ms": 339,
+      "error": null,
+      "final_url": "https://www.coengineers.com/wp-content/uploads/2020/06/DIKW.pdf",
+      "reachable": true,
+      "status": 200,
+      "url": "https://www.coengineers.com/wp-content/uploads/2020/06/DIKW.pdf"
+    }
+  },
   "link:https://www.consentfultech.io/wp-content/uploads/2019/10/Building-Consentful-Tech.pdf": {
     "checked_at": "2026-06-05T20:10:45.113766+00:00",
     "value": {
@@ -580,6 +646,17 @@
       "reachable": true,
       "status": 200,
       "url": "https://www.media.mit.edu/events/kelly-dobson-body-based-wellness-machines-and-essential-self/"
+    }
+  },
+  "link:https://www.microsoft.com/en-us/research/publication/untangling-research-and-practice-what-facebooks-emotional-contagion-study-teaches-us/": {
+    "checked_at": "2026-06-07T18:21:32.689863+00:00",
+    "value": {
+      "elapsed_ms": 398,
+      "error": null,
+      "final_url": "https://www.microsoft.com/en-us/research/publication/untangling-research-and-practice-what-facebooks-emotional-contagion-study-teaches-us/",
+      "reachable": true,
+      "status": 200,
+      "url": "https://www.microsoft.com/en-us/research/publication/untangling-research-and-practice-what-facebooks-emotional-contagion-study-teaches-us/"
     }
   },
   "link:https://www.newyorktheatreguide.com/theatre-news/news/guide-to-the-picture-of-dorian-gray-on-broadway-starring-sarah-snook": {
@@ -657,6 +734,17 @@
       "reachable": true,
       "status": 200,
       "url": "https://www2.census.gov/programs-surveys/decennial/technical-documentation/questionnaires/1850/1850-free-inhabitants-schedule.png"
+    }
+  },
+  "link:https://zhang.ist.psu.edu/teaching/504/readings/Fricke.pdf": {
+    "checked_at": "2026-06-07T18:21:32.536078+00:00",
+    "value": {
+      "elapsed_ms": 245,
+      "error": null,
+      "final_url": "https://zhang.ist.psu.edu/teaching/504/readings/Fricke.pdf",
+      "reachable": true,
+      "status": 200,
+      "url": "https://zhang.ist.psu.edu/teaching/504/readings/Fricke.pdf"
     }
   },
   "openalex:doi:10.1007/978-1-349-17295-5_4": {
@@ -12848,6 +12936,14 @@
       },
       "error": null,
       "status": 200
+    }
+  },
+  "openalex:doi:10.7551/mitpress/13098.001.0001": {
+    "checked_at": "2026-06-07T18:21:44.802402+00:00",
+    "value": {
+      "data": null,
+      "error": "HTTP Error 404: Not Found",
+      "status": 404
     }
   },
   "openalex:doi:10.7551/mitpress/9302.003.0002": {
@@ -214240,6 +214336,61 @@
       "status": 200
     }
   },
+  "semantic-scholar:doi:10.1038/nature11421": {
+    "checked_at": "2026-06-07T18:21:54.674110+00:00",
+    "value": {
+      "data": {
+        "authors": [
+          {
+            "authorId": "15280578",
+            "name": "Robert M. Bond"
+          },
+          {
+            "authorId": "2565792",
+            "name": "Christopher J. Fariss"
+          },
+          {
+            "authorId": "50667617",
+            "name": "Jason Jeffrey Jones"
+          },
+          {
+            "authorId": "1845400",
+            "name": "Adam D. I. Kramer"
+          },
+          {
+            "authorId": "144817346",
+            "name": "Cameron A. Marlow"
+          },
+          {
+            "authorId": "38868445",
+            "name": "Jaime E. Settle"
+          },
+          {
+            "authorId": "2016371",
+            "name": "J. Fowler"
+          }
+        ],
+        "externalIds": {
+          "CorpusId": 205230357,
+          "DBLP": "journals/nature/BondFJKMSF12",
+          "DOI": "10.1038/nature11421",
+          "MAG": "2033198212",
+          "PubMed": "22972300",
+          "PubMedCentral": "3834737"
+        },
+        "paperId": "0ff9c0c8426fe8508f8356dfd4af3bfc6fde76c8",
+        "publicationTypes": [
+          "JournalArticle"
+        ],
+        "title": "A 61-million-person experiment in social influence and political mobilization",
+        "url": "https://www.semanticscholar.org/paper/0ff9c0c8426fe8508f8356dfd4af3bfc6fde76c8",
+        "venue": "Nature",
+        "year": 2012
+      },
+      "error": null,
+      "status": 200
+    }
+  },
   "semantic-scholar:doi:10.1073/pnas.1320040111": {
     "checked_at": "2026-06-05T20:12:10.755653+00:00",
     "value": {
@@ -214309,6 +214460,32 @@
         "url": "https://www.semanticscholar.org/paper/1f31b4d675ed94be5f6df84f874de29592d95da5",
         "venue": "Proceedings of the National Academy of Sciences of the United States of America",
         "year": 2014
+      },
+      "error": null,
+      "status": 200
+    }
+  },
+  "semantic-scholar:doi:10.1080/0048721x.2019.1681124": {
+    "checked_at": "2026-06-07T18:21:37.105386+00:00",
+    "value": {
+      "data": {
+        "authors": [
+          {
+            "authorId": "14848475",
+            "name": "Ann Taves"
+          }
+        ],
+        "externalIds": {
+          "CorpusId": 210468228,
+          "DOI": "10.1080/0048721X.2019.1681124",
+          "MAG": "2982193324"
+        },
+        "paperId": "041b92d40000f6125cdac2eb1f0a026a56e06753",
+        "publicationTypes": null,
+        "title": "From religious studies to worldview studies",
+        "url": "https://www.semanticscholar.org/paper/041b92d40000f6125cdac2eb1f0a026a56e06753",
+        "venue": "Religion",
+        "year": 2020
       },
       "error": null,
       "status": 200
@@ -214385,6 +214562,35 @@
       "status": 200
     }
   },
+  "semantic-scholar:doi:10.1177/0165551508094050": {
+    "checked_at": "2026-06-07T18:21:39.533971+00:00",
+    "value": {
+      "data": {
+        "authors": [
+          {
+            "authorId": "144818955",
+            "name": "Martin Frické"
+          }
+        ],
+        "externalIds": {
+          "CorpusId": 2973966,
+          "DBLP": "journals/jis/Fricke09",
+          "DOI": "10.1177/0165551508094050",
+          "MAG": "2130387020"
+        },
+        "paperId": "8440f7d0811ada6c3f0a0025b27a8fc3e6675faa",
+        "publicationTypes": [
+          "JournalArticle"
+        ],
+        "title": "The knowledge pyramid: a critique of the DIKW hierarchy",
+        "url": "https://www.semanticscholar.org/paper/8440f7d0811ada6c3f0a0025b27a8fc3e6675faa",
+        "venue": "Journal of information science",
+        "year": 2009
+      },
+      "error": null,
+      "status": 200
+    }
+  },
   "semantic-scholar:doi:10.3233/hsm-1987-7108": {
     "checked_at": "2026-06-05T20:11:13.011968+00:00",
     "value": {
@@ -214437,6 +214643,22 @@
       },
       "error": null,
       "status": 200
+    }
+  },
+  "semantic-scholar:doi:10.7551/mitpress/13098.001.0001": {
+    "checked_at": "2026-06-07T18:21:46.126383+00:00",
+    "value": {
+      "data": null,
+      "error": "HTTP Error 404: Not Found",
+      "status": 404
+    }
+  },
+  "semantic-scholar:doi:10.7551/mitpress/9302.003.0002": {
+    "checked_at": "2026-06-07T18:21:48.063707+00:00",
+    "value": {
+      "data": null,
+      "error": "HTTP Error 404: Not Found",
+      "status": 404
     }
   },
   "semantic-scholar:title:1790 census instructions to enumerators": {

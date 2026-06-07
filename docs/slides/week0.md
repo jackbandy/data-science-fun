@@ -23,63 +23,6 @@ format:
           color: inherit !important;
         }
         </style>
-    include-after-body:
-      text: |
-        <script>
-        (() => {
-          let installed = false;
-          let observer = null;
-
-          function updateSlideNumber() {
-            if (!window.Reveal) return;
-            const slideNumber = document.querySelector(".reveal .slide-number");
-            if (!slideNumber) return;
-            const current = Reveal.getSlidePastCount() + 1;
-            const total = Reveal.getTotalSlides();
-            const expectedText = `${current} of ${total}`;
-            if (
-              slideNumber.textContent.trim() === expectedText &&
-              slideNumber.querySelector(".slide-number-current")
-            ) {
-              return;
-            }
-            slideNumber.innerHTML = `<span class="slide-number-current">${current}</span> <span class="slide-number-of">of</span> <span class="slide-number-total">${total}</span>`;
-          }
-
-          function scheduleSlideNumberUpdate() {
-            window.requestAnimationFrame(updateSlideNumber);
-            window.setTimeout(updateSlideNumber, 0);
-            window.setTimeout(updateSlideNumber, 80);
-          }
-
-          function observeSlideNumber() {
-            const slideNumber = document.querySelector(".reveal .slide-number");
-            if (!slideNumber || observer) return;
-            observer = new MutationObserver(scheduleSlideNumberUpdate);
-            observer.observe(slideNumber, { childList: true, subtree: true, characterData: true });
-          }
-
-          function installSlideNumberFormatter() {
-            if (!window.Reveal) {
-              window.setTimeout(installSlideNumberFormatter, 50);
-              return;
-            }
-            observeSlideNumber();
-            if (!installed) {
-              installed = true;
-              Reveal.on("ready", scheduleSlideNumberUpdate);
-              Reveal.on("slidechanged", scheduleSlideNumberUpdate);
-              Reveal.on("fragmentshown", scheduleSlideNumberUpdate);
-              Reveal.on("fragmenthidden", scheduleSlideNumberUpdate);
-              window.addEventListener("hashchange", scheduleSlideNumberUpdate);
-            }
-            scheduleSlideNumberUpdate();
-          }
-
-          document.addEventListener("DOMContentLoaded", installSlideNumberFormatter);
-          window.addEventListener("load", installSlideNumberFormatter);
-        })();
-        </script>
     footer: '<img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 0</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week0.html">dodatascience.fun/slides/week0</a></span>'
 slide-level: 1
 ---
@@ -257,3 +200,4 @@ print(by_access.with_columns(accessible_share=share))
 
 1. Nightingale, Florence. "Diagram of the causes of mortality in the army in the East." *Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army*, 1858. Image via Wikimedia Commons: <https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg>. Public domain.
 2. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+3. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

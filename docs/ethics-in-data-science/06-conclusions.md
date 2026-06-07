@@ -1,6 +1,6 @@
 # Conclusion and Glossary
 
-**[← Back to Course Homepage](../../../)**
+**[← Back to Course Homepage](../../index.html)**
 
 *This chapter is in-progress.*
 
