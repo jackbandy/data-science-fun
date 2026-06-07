@@ -1,6 +1,8 @@
 # Repository TODO
 
-LLM review performed June 5, 2026.
+note to self - check mobile version of slides
+
+LLM review performed June 5, 2026:
 
 ## Quick Tasks
 
