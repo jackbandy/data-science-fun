@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Sync schedule.md into the homepage and syllabus source, then render syllabus."""
+"""Sync schedule.csv into the homepage and syllabus source, then render syllabus."""
 
 from __future__ import annotations
 
 import argparse
+import csv
 import html
 import re
 import subprocess
@@ -14,7 +15,7 @@ from pathlib import Path
 SOURCE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SOURCE_DIR.parent
 DOCS_DIR = REPO_ROOT / "docs"
-SCHEDULE_MD = SOURCE_DIR / "schedule.md"
+SCHEDULE_CSV = SOURCE_DIR / "schedule.csv"
 INDEX_HTML = DOCS_DIR / "index.html"
 SYLLABUS_MD = SOURCE_DIR / "syllabus.md"
 BUILD_SCRIPT = SOURCE_DIR / "build_syllabus_from_markdown.sh"
@@ -23,6 +24,7 @@ HTML_START = "<!-- SCHEDULE_TABLE_START -->"
 HTML_END = "<!-- SCHEDULE_TABLE_END -->"
 MD_START = "<!-- SCHEDULE_MARKDOWN_START -->"
 MD_END = "<!-- SCHEDULE_MARKDOWN_END -->"
+EXPECTED_HEADERS = ["Week", "Class Day", "Topic", "Before Class", "In Class"]
 
 STATIONS = {
     "1": "Harold Washington Library",
@@ -52,29 +54,65 @@ class ScheduleRow:
     in_class: str
 
 
-def split_markdown_row(line: str) -> list[str]:
-    return [cell.strip() for cell in line.strip().strip("|").split("|")]
+def markdown_escape(value: str) -> str:
+    return value.replace("|", r"\|")
 
 
-def read_schedule() -> tuple[list[str], list[ScheduleRow]]:
-    lines = SCHEDULE_MD.read_text(encoding="utf-8").splitlines()
-    table = [line for line in lines if line.strip().startswith("|")]
-    if len(table) < 3:
-        raise SystemExit(f"No markdown table found in {SCHEDULE_MD}")
+def read_schedule() -> list[ScheduleRow]:
+    with SCHEDULE_CSV.open(newline="", encoding="utf-8-sig") as handle:
+        reader = csv.DictReader(handle)
+        if reader.fieldnames is None:
+            raise SystemExit(f"No header row found in {SCHEDULE_CSV}")
 
-    header = split_markdown_row(table[0])
-    expected = ["Week", "Class Day", "Topic", "Before Class", "In Class"]
-    if header != expected:
-        raise SystemExit(f"{SCHEDULE_MD} header must be: {' | '.join(expected)}")
+        fieldnames = [name.strip() for name in reader.fieldnames]
+        if fieldnames != EXPECTED_HEADERS:
+            raise SystemExit(
+                f"{SCHEDULE_CSV} header must be: {', '.join(EXPECTED_HEADERS)}"
+            )
 
-    rows: list[ScheduleRow] = []
-    for line in table[2:]:
-        cells = split_markdown_row(line)
-        if len(cells) != 5:
-            raise SystemExit(f"Expected 5 cells in schedule row: {line}")
-        rows.append(ScheduleRow(*cells))
+        rows: list[ScheduleRow] = []
+        for line_number, row in enumerate(reader, start=2):
+            values = []
+            for field in EXPECTED_HEADERS:
+                value = row.get(field, "")
+                values.append(value.strip() if value is not None else "")
 
-    return table, rows
+            if not any(values):
+                continue
+
+            week = values[0]
+            if not week:
+                raise SystemExit(f"Missing Week value in {SCHEDULE_CSV} at line {line_number}")
+
+            rows.append(ScheduleRow(*values))
+
+    if not rows:
+        raise SystemExit(f"No schedule rows found in {SCHEDULE_CSV}")
+
+    return rows
+
+
+def render_markdown_table(rows: list[ScheduleRow]) -> list[str]:
+    table = [
+        "| Week | Class Day | Topic | Before Class | In Class |",
+        "|:-----|:----------|:------|:-------------|:---------|",
+    ]
+    for row in rows:
+        table.append(
+            "| "
+            + " | ".join(
+                markdown_escape(value)
+                for value in [
+                    row.week,
+                    row.class_day,
+                    row.topic,
+                    row.before_class,
+                    row.in_class,
+                ]
+            )
+            + " |"
+        )
+    return table
 
 
 def render_homepage_table(rows: list[ScheduleRow]) -> str:
@@ -181,9 +219,10 @@ def main() -> None:
     parser.add_argument("--no-render", action="store_true", help="sync files without rendering syllabus outputs")
     args = parser.parse_args()
 
-    table, rows = read_schedule()
+    rows = read_schedule()
+    table_lines = render_markdown_table(rows)
     sync_homepage(rows)
-    sync_syllabus_source(table)
+    sync_syllabus_source(table_lines)
     if not args.no_render:
         render_syllabus()
 

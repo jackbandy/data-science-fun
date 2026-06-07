@@ -1,6 +1,6 @@
 # Ethics in Reporting, Decision-Making, and Problem-Solving
 
-**[← Back to Course Homepage](../../../)**
+**[← Back to Course Homepage](../../index.html)**
 
 ::: {#fig-ds-lifecycle-reports-decisions-solutions}
 <img src="../../assets/lifecycle/ds-lifecycle-v5.svg" alt="The data science lifecycle with Reports, decisions, solutions highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />

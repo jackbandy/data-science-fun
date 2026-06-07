@@ -53,3 +53,4 @@ Placeholder content for Week 1.
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week1.md>.
 2. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+3. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

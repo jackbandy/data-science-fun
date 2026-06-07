@@ -72,16 +72,7 @@
     </ul>
     <h2>Schedule</h2>
     <p><strong>Schedule is a draft/ work-in-progress.</strong></p>
-    <!-- Current embedded map, kept for reference while the Schedule section is in draft.
-    <div class="schedule-scroll">
-      <iframe
-        src="orange-line-schedule.html"
-        title="CTA Orange Line course schedule map"
-        class="schedule-frame"
-        scrolling="no">
-      </iframe>
-    </div>
-    -->
+    <!-- Archived v1 iframe prototype moved to sandbox/orange-line-v1/. -->
     <figure class="schedule-map-wrap" aria-label="CTA Orange Line course schedule map">
       <div class="schedule-map" role="img" aria-label="Course weeks placed on CTA Orange Line stations">
         <button class="schedule-map-station white" style="left:5.8981%;top:9.7535%;" data-name="Midway" data-week="Week 15" aria-label="Midway - Week 15"></button>
@@ -106,6 +97,7 @@
     </figure>
     <div class="schedule-table-wrap">
       <!-- SCHEDULE_TABLE_START -->
+      <!-- This table is synced from ../syllabus_source/schedule.csv by ../syllabus_source/sync_schedule.py. -->
 <table class="schedule-table">
   <thead>
     <tr>
@@ -318,92 +310,6 @@
     </div>
     <div id="schedule-tooltip" aria-hidden="true"></div>
   </div>
-  <script>
-    const scheduleTip = document.getElementById('schedule-tooltip');
-
-    document.querySelectorAll('.schedule-map-station:not(.static)').forEach(dot => {
-      function showTip() {
-        if (dot.dataset.closed === 'true') {
-          scheduleTip.innerHTML =
-            `<span class="tip-name">${dot.dataset.name}</span><br>` +
-            `<span class="tip-closed">⚠ Closed — reopening ${dot.dataset.closedUntil}</span>`;
-        } else {
-          scheduleTip.innerHTML =
-            `<span class="tip-name">${dot.dataset.name}</span> ` +
-            `<span class="tip-week">— ${dot.dataset.week}</span>`;
-        }
-        scheduleTip.style.display = 'block';
-      }
-
-      function moveTip(event) {
-        if (dot.classList.contains('tip-left')) {
-          scheduleTip.style.left = (event.clientX - scheduleTip.offsetWidth - 14) + 'px';
-        } else {
-          scheduleTip.style.left = (event.clientX + 14) + 'px';
-        }
-        scheduleTip.style.top = (event.clientY - 40) + 'px';
-      }
-
-      dot.addEventListener('mouseover', showTip);
-      dot.addEventListener('mousemove', moveTip);
-
-      dot.addEventListener('mouseout', () => {
-        scheduleTip.style.display = 'none';
-      });
-
-      dot.addEventListener('focus', () => {
-        const rect = dot.getBoundingClientRect();
-        showTip();
-        scheduleTip.style.left = dot.classList.contains('tip-left')
-          ? (rect.left - scheduleTip.offsetWidth - 14) + 'px'
-          : (rect.right + 14) + 'px';
-        scheduleTip.style.top = (rect.top - 8) + 'px';
-      });
-
-      dot.addEventListener('blur', () => {
-        scheduleTip.style.display = 'none';
-      });
-    });
-
-    document.querySelectorAll('.schedule-week-dot').forEach(dot => {
-      const [week, stop] = dot.dataset.label.split(', ');
-
-      function showTip(event) {
-        scheduleTip.innerHTML =
-          `<span class="tip-name">${week}</span> ` +
-          `<span class="tip-week">— ${stop}</span>`;
-        scheduleTip.style.left = (event.clientX + 14) + 'px';
-        scheduleTip.style.top = (event.clientY - 40) + 'px';
-        scheduleTip.style.display = 'block';
-      }
-
-      function moveTip(event) {
-        scheduleTip.style.left = (event.clientX + 14) + 'px';
-        scheduleTip.style.top = (event.clientY - 40) + 'px';
-      }
-
-      dot.addEventListener('mouseover', showTip);
-      dot.addEventListener('mousemove', moveTip);
-
-      dot.addEventListener('mouseout', () => {
-        scheduleTip.style.display = 'none';
-      });
-
-      dot.addEventListener('focus', () => {
-        const rect = dot.getBoundingClientRect();
-        scheduleTip.innerHTML =
-          `<span class="tip-name">${week}</span> ` +
-          `<span class="tip-week">— ${stop}</span>`;
-        scheduleTip.style.left = (rect.right + 14) + 'px';
-        scheduleTip.style.top = (rect.top - 8) + 'px';
-        scheduleTip.style.display = 'block';
-      });
-
-      dot.addEventListener('blur', () => {
-        scheduleTip.style.display = 'none';
-      });
-    });
-  </script>
   <footer>
     <a href="https://github.com/jackbandy/data-science-fun">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
@@ -422,5 +328,6 @@
       github.com/jackbandy/data-science-fun
     </a>
   </footer>
+  <script src="js/schedule-tooltip.js"></script>
 </body>
 </html>

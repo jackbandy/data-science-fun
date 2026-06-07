@@ -6,37 +6,37 @@ title: "CS 418 Syllabus"
 \newcounter{none}
 ```
 
-# COLLEGE OF ENGINEERING, UIC
+# Introduction to Data Science (CS 418)
 
 ```{=latex}
 \begin{center}
-\textbf{CS 418, Introduction to Data Science}, 3 Undergraduate Hours, 4 graduate hours
+\textbf{UIC College of Engineering}, 3 Undergraduate Hours, 4 graduate hours
 \end{center}
 ```
 
 ```{=html}
-<p style="text-align:center;"><strong>CS 418, Introduction to Data Science</strong>, 3 Undergraduate Hours, 4 graduate hours</p>
+<p style="text-align:center;"><strong>UIC College of Engineering</strong>, 3 Undergraduate Hours, 4 graduate hours</p>
 ```
 
 ## I. Instructor & Course Details
 
-**[Instructor Name]{.underline}**
+**[Jack Bandy]{.underline}**
 
 Email address: jxb@uic.edu
 
-Drop-In Office Hours (in-person or virtual):
+Drop-In Office Hours (in-person or virtual): TK
 
-Drop-In Hours location *(office number; link to Zoom, Google Hangouts, etc.)*:
+Drop-In Hours location *(office number; link to Zoom, Google Hangouts, etc.)*: CDRLC 3454
 
-**[Co-Instructor/TA name]{.underline}**
+**[TK]{.underline}**
 
-Email address:
+Email address: TK
 
-Section designation(s):
+Section designation(s): TK
 
-Drop-In Office Hours (in-person or virtual):
+Drop-In Office Hours (in-person or virtual): TK
 
-Drop-In Hours location:
+Drop-In Hours location: TK
 
 **Course Site:** [dodatascience.fun](https://dodatascience.fun/)
 
@@ -51,9 +51,20 @@ For technical questions about Canvas, email the Learning Technology Solutions te
 
 **[Course Modality and Schedule]{.underline}**
 
-Provide the term, class days and times, meeting location, and a detailed statement summarizing how your course content, including lectures, labs, discussion sections, etc., will be delivered to students.
+Meeting time:
+* Monday and Wednesday
+* 03:30 PM - 04:45 PM
 
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
+Location: 
+* Lecture Center Building C
+* Room C001
+
+CRN: 44033
+
+Schedule Type: Lecture
+
+Instructional Method: Meet on campus
+
 
 ## II. Course Information
 
@@ -118,7 +129,7 @@ Because active participation in the course is one of the most important ways to 
 
 <!-- SCHEDULE_MARKDOWN_START -->
 | Week | Class Day | Topic | Before Class | In Class |
-|:-----|:----------|:-----------------------------------------|:----------------------|:-----------------|
+|:-----|:----------|:------|:-------------|:---------|
 | 1 | Monday | Course introduction; statistics review |  |  |
 | 1 | Wednesday | Data science lifecycle |  |  |
 | 2 | Monday | Python foundations; dataframes and Polars |  |  |

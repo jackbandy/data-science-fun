@@ -1,31 +1,31 @@
 # Ethics References Report Card
 
-Generated: `2026-06-05T15:12:32-05:00`
+Generated: `2026-06-07T13:22:06-05:00`
 Bibliography: `/Users/jackb/GitHub/data-adventures/docs/ethics-in-data-science/references.bib`
 Mode: `live network verification`
 
 ## Overall
 
-**Average score: 90.4/100** across 54 references.
+**Average score: 91.9/100** across 54 references.
 
 | Measure | Count | Coverage |
 |---|---:|---:|
 | References | 54 | 100% |
 | Scholarly-type references | 31 | 57.4% |
-| References with a DOI | 17 | 31.5% |
+| References with a DOI | 18 | 33.3% |
 | References with a URL | 54 | 100.0% |
-| Reachable cited URLs | 45 | 83.3% of URLs |
-| Reachable DOI resolvers | 10 | 58.8% of DOIs |
-| Zotero records collected | 12 | 22.2% |
+| Reachable cited URLs | 51 | 94.4% of URLs |
+| Reachable DOI resolvers | 10 | 55.6% of DOIs |
+| Zotero records collected | 11 | 20.4% |
 | Zotero metadata verified | 10 | 18.5% |
-| OpenAlex records collected | 51 | 94.4% |
+| OpenAlex records collected | 50 | 92.6% |
 | OpenAlex metadata verified | 17 | 31.5% |
-| Semantic Scholar records collected | 22 | 40.7% |
-| Semantic Scholar metadata verified | 9 | 16.7% |
+| Semantic Scholar records collected | 24 | 44.4% |
+| Semantic Scholar metadata verified | 12 | 22.2% |
 | Metadata verified by at least one source | 22 | 40.7% |
-| Metadata verified by at least two sources | 11 | 20.4% |
+| Metadata verified by at least two sources | 13 | 24.1% |
 | Entries with local errors | 0 | 0.0% |
-| Entries with warnings | 14 | 25.9% |
+| Entries with warnings | 13 | 24.1% |
 
 ## Interpretation
 
@@ -39,24 +39,24 @@ Mode: `live network verification`
 
 ## Action Items
 
-- **boyd_untangling_2016** (F, 55/100): URL unreachable (403); DOI resolver unreachable (403)
-- **fricke_knowledge_2009** (F, 55/100): URL unreachable (403); DOI resolver unreachable (403)
-- **gitelman_jackson_introduction_2013** (F, 55/100): URL unreachable (403); DOI resolver unreachable (403)
 - **zeleny_management_1987** (D, 60/100): URL unreachable (403); DOI resolver unreachable (403)
-- **burton_computing_2023** (C, 70/100): No DOI; URL unreachable (403); Not verified by Zotero, OpenAlex, or Semantic Scholar
-- **rowley_wisdom_2007** (C, 70/100): URL unreachable (403); DOI resolver unreachable (403)
-- **sweeney_discrimination_2013** (C, 70/100): URL unreachable (403); DOI resolver unreachable (403)
-- **taves_worldview_studies_2019** (C, 70/100): DOI resolver unreachable (403)
+- **boyd_untangling_2016** (C, 70/100): DOI resolver unreachable (403)
+- **burton_computing_2023** (C, 70/100): DOI resolver unreachable (404); Not verified by Zotero, OpenAlex, or Semantic Scholar
+- **gitelman_jackson_introduction_2013** (C, 70/100): DOI resolver unreachable (403)
+- **fricke_knowledge_2009** (C, 75/100): DOI resolver unreachable (403)
+- **taves_worldview_studies_2019** (C, 75/100): DOI resolver unreachable (403)
 - **duhigg_companies_secrets_2012** (B, 85/100): URL unreachable (403)
 - **eliot_rock_1934** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
 - **lau_learning_2023** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
 - **mfa_gauguin_where_do_we_come_from_1897** (B, 85/100): URL unreachable (403)
+- **rowley_wisdom_2007** (B, 85/100): DOI resolver unreachable (403)
 - **sagan_demon-haunted_1995** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
 - **sep-causal-models** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
 - **sep-causation-regularity** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
 - **sep-epistemology-bayesian** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
 - **sep-questions** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
 - **sep-statistics** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
+- **sweeney_discrimination_2013** (B, 85/100): DOI resolver unreachable (403)
 - **veliz2026prophecy** (B, 85/100): No DOI; Not verified by Zotero, OpenAlex, or Semantic Scholar
 - **ackoff_data_1989** (A, 95/100): No DOI
 - **oneil_weapons_2017** (A, 95/100): No DOI
@@ -71,9 +71,9 @@ Mode: `live network verification`
 | ackoff_data_1989 | article | A (95) | Missing | Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected, not verified; title 100%, authors 0%, year No | Collected, not verified; title 100%, authors 100%, year No |
 | angwin_machine_bias_2016 | online | A (100) | Missing | Yes | No record collected | Collected, not verified; title 100%, authors 100%, year No | Collected, not verified; title 42%, authors 0%, year No |
 | bernstein_data-information-knowledge-wisdom_2011 | article | A (100) | Yes | Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes |
-| bond_social_influence_2012 | article | A (100) | Yes | Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
-| boyd_untangling_2016 | article | F (55) | No | No | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
-| burton_computing_2023 | book | C (70) | Missing | No | No record collected | Collected, not verified; title 61%, authors 0%, year Yes | Collected, not verified; title 61%, authors 0%, year Yes |
+| bond_social_influence_2012 | article | A (100) | Yes | Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes |
+| boyd_untangling_2016 | article | C (70) | No | Yes | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
+| burton_computing_2023 | book | C (70) | No | Yes | No record collected | No record collected | No record collected |
 | campbell1979assessing | article | A (95) | Yes | Yes | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year No |
 | census_1790_questionnaire | online | A (100) | Missing | Yes | No record collected | Collected, not verified; title 28%, authors 0%, year No | No record collected |
 | census_1850_free_inhabitants_image | online | A (100) | Missing | Yes | No record collected | Collected, not verified; title 29%, authors 0%, year No | No record collected |
@@ -84,8 +84,8 @@ Mode: `live network verification`
 | census_2020_questionnaire | online | A (100) | Missing | Yes | No record collected | Collected, not verified; title 36%, authors 0%, year No | No record collected |
 | duhigg_companies_secrets_2012 | online | B (85) | Missing | No | No record collected | Collected, not verified; title 96%, authors 100%, year No | Collected and verified; title 100%, authors 100%, year Yes |
 | eliot_rock_1934 | book | B (85) | Missing | Yes | No record collected | Collected, not verified; title 54%, authors 0%, year No | Collected, not verified; title 25%, authors 100%, year Yes |
-| fricke_knowledge_2009 | article | F (55) | No | No | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
-| gitelman_jackson_introduction_2013 | incollection | F (55) | No | No | Collected, not verified; title 100%, authors 0%, year Yes | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
+| fricke_knowledge_2009 | article | C (75) | No | Yes | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year No |
+| gitelman_jackson_introduction_2013 | incollection | C (70) | No | Yes | No record collected | Collected and verified; title 50%, authors 100%, year Yes | No record collected |
 | goodhart1984problems | incollection | A (95) | Yes | Yes | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes |
 | grimmelmann_letter_pnas_2014 | online | A (100) | Missing | Yes | No record collected | Collected, not verified; title 42%, authors 0%, year No | No record collected |
 | hitchcock_interview_1973 | incollection | A (90) | Yes | Yes | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
@@ -104,7 +104,7 @@ Mode: `live network verification`
 | oneil_weapons_2017 | book | A (95) | Missing | Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected, not verified; title 100%, authors 0%, year Yes | Collected, not verified; title 100%, authors 0%, year Yes |
 | onions_picture_dorian_gray_2025 | online | A (100) | Missing | Yes | No record collected | No record collected | No record collected |
 | payne_perfect_circles_2019 | online | A (100) | Missing | Yes | No record collected | Error: HTTP Error 400: Bad Request | No record collected |
-| rowley_wisdom_2007 | article | C (70) | No | No | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes |
+| rowley_wisdom_2007 | article | B (85) | No | Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes |
 | sagan_demon-haunted_1995 | book | B (85) | Missing | Yes | No record collected | Collected, not verified; title 100%, authors 0%, year No | Collected, not verified; title 100%, authors 0%, year No |
 | sep-causal-models | incollection | B (85) | Missing | Yes | No record collected | Collected, not verified; title 67%, authors 0%, year No | Collected, not verified; title 100%, authors 0%, year No |
 | sep-causation-regularity | incollection | B (85) | Missing | Yes | No record collected | Collected, not verified; title 100%, authors 100%, year No | No record collected |
@@ -112,8 +112,8 @@ Mode: `live network verification`
 | sep-epistemology-bayesian | incollection | B (85) | Missing | Yes | No record collected | Collected, not verified; title 100%, authors 0%, year No | Collected, not verified; title 78%, authors 0%, year Yes |
 | sep-questions | incollection | B (85) | Missing | Yes | No record collected | Collected, not verified; title 47%, authors 0%, year No | No record collected |
 | sep-statistics | incollection | B (85) | Missing | Yes | No record collected | Collected, not verified; title 100%, authors 0%, year No | Collected, not verified; title 92%, authors 0%, year No |
-| sweeney_discrimination_2013 | article | C (70) | No | No | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
-| taves_worldview_studies_2019 | article | C (70) | No | Yes | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
+| sweeney_discrimination_2013 | article | B (85) | No | Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year Yes | Error: HTTP Error 429:  |
+| taves_worldview_studies_2019 | article | C (75) | No | Yes | No record collected | Collected and verified; title 100%, authors 100%, year Yes | Collected and verified; title 100%, authors 100%, year No |
 | vance_information_1997 | article | A (95) | Missing | Yes | Collected and verified; title 100%, authors 100%, year Yes | Collected, not verified; title 32%, authors 0%, year No | Collected, not verified; title 76%, authors 100%, year No |
 | veliz2026prophecy | book | B (85) | Missing | Yes | No record collected | Collected, not verified; title 47%, authors 0%, year No | No record collected |
 | verma_editorial_expression_2014 | article | A (90) | Yes | Yes | No record collected | Collected and verified; title 85%, authors 0%, year Yes | Error: HTTP Error 429:  |
@@ -166,7 +166,7 @@ Mode: `live network verification`
 - Type/year: `article` / `2011`
 - Local checks: Pass
 - Warnings: None
-- URL: Yes (HTTP 200, 645 ms)
+- URL: Yes (HTTP 200, 637 ms)
 - DOI resolver: Yes (HTTP 200, 637 ms)
 - Zotero: Collected and verified; title 100%, authors 100%, year Yes
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
@@ -179,11 +179,11 @@ Mode: `live network verification`
 - Type/year: `article` / `2012`
 - Local checks: Pass
 - Warnings: None
-- URL: Yes (HTTP 200, 1317 ms)
+- URL: Yes (HTTP 200, 1256 ms)
 - DOI resolver: Yes (HTTP 200, 1256 ms)
 - Zotero: Collected and verified; title 100%, authors 100%, year Yes
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
-- Semantic Scholar: Error: HTTP Error 429: 
+- Semantic Scholar: Collected and verified; title 100%, authors 100%, year Yes
 - Score: **A (100/100)**
 
 ### `boyd_untangling_2016`
@@ -192,23 +192,24 @@ Mode: `live network verification`
 - Type/year: `article` / `2015`
 - Local checks: Pass
 - Warnings: None
-- URL: No (HTTP 403, 345 ms)
+- URL: Yes (HTTP 200, 398 ms)
 - DOI resolver: No (HTTP 403, 449 ms)
 - Zotero: No record collected
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
 - Semantic Scholar: Error: HTTP Error 429: 
-- Score: **F (55/100)**
+- Score: **C (70/100)**
 
 ### `burton_computing_2023`
 
 - Citation: Computing and Technology Ethics: Engaging through Science Fiction
 - Type/year: `book` / `2023`
 - Local checks: Pass
-- Warnings: No DOI
-- URL: No (HTTP 403, 155 ms)
+- Warnings: None
+- URL: Yes (HTTP 200, 3234 ms)
+- DOI resolver: No (HTTP 404, 196 ms)
 - Zotero: No record collected
-- OpenAlex: Collected, not verified; title 61%, authors 0%, year Yes
-- Semantic Scholar: Collected, not verified; title 61%, authors 0%, year Yes
+- OpenAlex: No record collected
+- Semantic Scholar: No record collected
 - Score: **C (70/100)**
 
 ### `campbell1979assessing`
@@ -314,7 +315,7 @@ Mode: `live network verification`
 - Type/year: `online` / `2012`
 - Local checks: Pass
 - Warnings: None
-- URL: No (HTTP 403, 306 ms)
+- URL: No (HTTP 403, 244 ms)
 - Zotero: No record collected
 - OpenAlex: Collected, not verified; title 96%, authors 100%, year No
 - Semantic Scholar: Collected and verified; title 100%, authors 100%, year Yes
@@ -338,25 +339,25 @@ Mode: `live network verification`
 - Type/year: `article` / `2008`
 - Local checks: Pass
 - Warnings: None
-- URL: No (HTTP 403, 377 ms)
-- DOI resolver: No (HTTP 403, 343 ms)
+- URL: Yes (HTTP 200, 245 ms)
+- DOI resolver: No (HTTP 403, 377 ms)
 - Zotero: No record collected
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
-- Semantic Scholar: Error: HTTP Error 429: 
-- Score: **F (55/100)**
+- Semantic Scholar: Collected and verified; title 100%, authors 100%, year No
+- Score: **C (75/100)**
 
 ### `gitelman_jackson_introduction_2013`
 
-- Citation: Introduction
+- Citation: Introduction: "Raw Data" Is an Oxymoron
 - Type/year: `incollection` / `2013`
 - Local checks: Pass
 - Warnings: None
-- URL: No (HTTP 403, 188 ms)
+- URL: Yes (HTTP 200, 423 ms)
 - DOI resolver: No (HTTP 403, 388 ms)
-- Zotero: Collected, not verified; title 100%, authors 0%, year Yes
-- OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
-- Semantic Scholar: Error: HTTP Error 429: 
-- Score: **F (55/100)**
+- Zotero: No record collected
+- OpenAlex: Collected and verified; title 50%, authors 100%, year Yes
+- Semantic Scholar: No record collected
+- Score: **C (70/100)**
 
 ### `goodhart1984problems`
 
@@ -364,7 +365,7 @@ Mode: `live network verification`
 - Type/year: `incollection` / `1984`
 - Local checks: Pass
 - Warnings: None
-- URL: Yes (HTTP 200, 1543 ms)
+- URL: Yes (HTTP 200, 1782 ms)
 - DOI resolver: Yes (HTTP 200, 1782 ms)
 - Zotero: No record collected
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
@@ -402,7 +403,7 @@ Mode: `live network verification`
 - Type/year: `article` / `2014`
 - Local checks: Pass
 - Warnings: None
-- URL: Yes (HTTP 200, 726 ms)
+- URL: Yes (HTTP 200, 699 ms)
 - DOI resolver: Yes (HTTP 200, 699 ms)
 - Zotero: No record collected
 - OpenAlex: Collected and verified; title 96%, authors 100%, year Yes
@@ -465,7 +466,7 @@ Mode: `live network verification`
 - Local checks: Pass
 - Warnings: None
 - URL: Yes (HTTP 200, 1009 ms)
-- DOI resolver: Yes (HTTP 200, 553 ms)
+- DOI resolver: Yes (HTTP 200, 1009 ms)
 - Zotero: No record collected
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
 - Semantic Scholar: Collected and verified; title 100%, authors 100%, year Yes
@@ -586,12 +587,12 @@ Mode: `live network verification`
 - Type/year: `article` / `2007`
 - Local checks: Pass
 - Warnings: None
-- URL: No (HTTP 403, 445 ms)
+- URL: Yes (HTTP 200, 339 ms)
 - DOI resolver: No (HTTP 403, 358 ms)
 - Zotero: Collected and verified; title 100%, authors 100%, year Yes
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
 - Semantic Scholar: Collected and verified; title 100%, authors 100%, year Yes
-- Score: **C (70/100)**
+- Score: **B (85/100)**
 
 ### `sagan_demon-haunted_1995`
 
@@ -683,12 +684,12 @@ Mode: `live network verification`
 - Type/year: `article` / `2013`
 - Local checks: Pass
 - Warnings: None
-- URL: No (HTTP 403, 381 ms)
-- DOI resolver: No (HTTP 403, 331 ms)
+- URL: Yes (HTTP 200, 154 ms)
+- DOI resolver: No (HTTP 403, 381 ms)
 - Zotero: Collected and verified; title 100%, authors 100%, year Yes
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
 - Semantic Scholar: Error: HTTP Error 429: 
-- Score: **C (70/100)**
+- Score: **B (85/100)**
 
 ### `taves_worldview_studies_2019`
 
@@ -700,8 +701,8 @@ Mode: `live network verification`
 - DOI resolver: No (HTTP 403, 831 ms)
 - Zotero: No record collected
 - OpenAlex: Collected and verified; title 100%, authors 100%, year Yes
-- Semantic Scholar: Error: HTTP Error 429: 
-- Score: **C (70/100)**
+- Semantic Scholar: Collected and verified; title 100%, authors 100%, year No
+- Score: **C (75/100)**
 
 ### `vance_information_1997`
 
@@ -733,7 +734,7 @@ Mode: `live network verification`
 - Type/year: `article` / `2014`
 - Local checks: Pass
 - Warnings: None
-- URL: Yes (HTTP 200, 637 ms)
+- URL: Yes (HTTP 200, 648 ms)
 - DOI resolver: Yes (HTTP 200, 648 ms)
 - Zotero: No record collected
 - OpenAlex: Collected and verified; title 85%, authors 0%, year Yes
