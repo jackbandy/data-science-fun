@@ -60,6 +60,18 @@ Social indicators become more vulnerable to corruption when used for high-stakes
 
 TK
 
+## Interventions
+
+TK
+
+## Tech debt and documentation debt
+
+TK
+
+## Prediction as Influence
+
+TK. Cite [@veliz2026prophecy].
+
 ## Communication and audience
 
 TK

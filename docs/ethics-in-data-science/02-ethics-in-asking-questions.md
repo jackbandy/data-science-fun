@@ -65,6 +65,11 @@ Below are some examples of presuppositions associated with example questions, as
 * "Are students doing better this year?" - which students, compared with when, and according to which measure of "better."
 * empirical question can be separate from judgment, to some extent (?)
 
+## Leading questions
+
+* usually implies a preferred answer
+* i.e. ad-hoc support of suspect decision-making
+
 ## Tedious questions
 
 * effort required to answer a question is disproportional to what the answer would teach us.
@@ -98,6 +103,7 @@ TK
 * Who might be harmed if this question is answered poorly?
 * What kind of answer would actually change a decision?
 * Could a less invasive or more precise question serve the same purpose?
+* what can and cannot (should/should not) be predicted
 
 
 ## Test
