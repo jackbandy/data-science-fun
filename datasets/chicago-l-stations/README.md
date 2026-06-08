@@ -4,7 +4,7 @@ derived CSV of CTA L stop records with station names, service flags, and locatio
 
 ## Files
 
-- `CTA_-_System_Information_-_List_of_'L'_Stops_20260527.csv`: L-stop records with the following columns:
+- `CTA_List_of_'L'_Stops_20260527.csv`: L-stop records with the following columns:
   - `STOP_ID`
   - `DIRECTION_ID`
   - `STOP_NAME`
