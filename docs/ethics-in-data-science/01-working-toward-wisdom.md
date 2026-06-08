@@ -22,30 +22,8 @@ As one works through the various stages of the [data science lifecycle](https://
 
 The basic premise of the DIKW pyramid is as follows. To build a pyramid, start with a large, well-organized layer of bricks. Multiple datum give us data, upon which one can construct knowledge: the foundation of our DIKW pyramid.
 
+One implication of this conceptual model is that the work of data (i.e. data science) generally aims toward wisdom.
 
-
-
-## What are data?
-TK
-
-## What is information?
-TK
-
-## What is knowledge?
-
-Knowledge must be appreciated as more than a fixed, static set of facts. To know something is more than just to store some information. Knowledge is also more than merely processing information. @zeleny_management_1987 describes knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
-
-For example, consider what makes Wikipedia a source of knowledge...
-
-### Common Knowledge
-Something profound happens when multiple people "read" (look at, watch, draw, view, etc.) something together. In brief, this is the phenomena of common knowledge: shared awareness about what other people know.
-
-It is a common method for creating suspense in film and television. Alfred Hitchcock described the distinction between "surprise" and "suspense" as a difference in common knowledge: in a surprise, the audience discovers an important fact at the same time as the characters. The information is withheld from everyone @hitchcock_interview_1973.
-
-But suspense depends on *partially* shared information. For example, if the audience knows that there is a bomb under the dining table, but they also know that Bob was gone when the bomb was placed under the table. In Hitchcock's framing, this scenario creates suspense because the audience anticipates danger from the bomb, and also knows that Bob does not anticipate the same danger...
-
-## Understanding
-TK.
 
 ## What is wisdom?
 Anyone who wants to answer the question "what is wisdom" would benefit from also being able to answer the question, "what is a triangle?"
@@ -60,7 +38,7 @@ An attempt to display a perfect triangle.
 
 Looks like a pretty good triangle! It uses scalable vector graphics (i.e. an svg file), to make the lines look as crisp as they possibly can on a computer screen. The image only uses a few pieces of information: the size of the frame (using the golden ratio, of course), the location of the three points for an equilateral triangle within that frame, and the color and width of the line to connect those dots. This particular image uses a black line with a width of six pixels (a multiple of three, of course).
 
-But is there really a triangle in this image? Is it a perfect triangle? One way to find out is to zoom in on a portion of it.
+But is there really a triangle in this image? Is it a perfect triangle? One way to find out is to zoom in on a portion of it. We will zoom in by a power of ten, inspired by the Eames films [@eames_powers_of_ten_1968; @eames_powers_of_ten_1977].
 
 ::: {#fig-triangle-frame}
 <img src="../../assets/triangles/01-triangle-frame.svg" alt="An equilateral triangle with a highlighted rectangular frame around its left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -131,6 +109,29 @@ Instead, the real value of a wise and competent data scientist is to understand,
 
 As glimpsed here, and as will be discussed throughout the chapters, these possible decisions are...
 
+
+## What are data?
+TK
+
+## What is information?
+TK
+
+## What is knowledge?
+
+Knowledge must be appreciated as more than a fixed, static set of facts. To know something is more than just to store some information. Knowledge is also more than merely processing information. @zeleny_management_1987 describes knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
+
+For example, consider what makes Wikipedia a source of knowledge...
+
+### Common Knowledge
+Something profound happens when multiple people "read" (look at, watch, draw, view, etc.) something together. In brief, this is the phenomena of common knowledge: shared awareness about what other people know.
+
+It is a common method for creating suspense in film and television. Alfred Hitchcock described the distinction between "surprise" and "suspense" as a difference in common knowledge: in a surprise, the audience discovers an important fact at the same time as the characters. The information is withheld from everyone @hitchcock_interview_1973.
+
+But suspense depends on *partially* shared information. For example, if the audience knows that there is a bomb under the dining table, but they also know that Bob was gone when the bomb was placed under the table. In Hitchcock's framing, this scenario creates suspense because the audience anticipates danger from the bomb, and also knows that Bob does not anticipate the same danger...
+
+## Understanding
+TK.
+
 ## Case study: statistical worldviews
 
 One facet of decision-making in the data science workflow involves...
@@ -174,5 +175,9 @@ These statistical frameworks/paradigms are essentialy worldviews that entail spe
 These are test citations for @ackoff_data_1989, @vance_information_1997, @bernstein_data-information-knowledge-wisdom_2011, @rowley_wisdom_2007, @fricke_knowledge_2009, @zeleny_management_1987, and @payne_perfect_circles_2019.
 
 The data-information-knowledge-wisdom (DIKW) framing is commonly discussed in the literature (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011).
+
+Premise.
+
+The central premise is that ethical judgment is not a separate task for data scientists to work on after "technical" work is finished. Ethical decision-making shapes how data scientists frame questions, define project scopes, collect and prepare data, interpret patterns, develop understanding, and communicate new understanding to audiences.
 
 ## References

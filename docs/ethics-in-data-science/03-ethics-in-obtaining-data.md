@@ -3,7 +3,7 @@
 **[← Back to Course Homepage](../../index.html)**
 
 ::: {#fig-ds-lifecycle-obtain-data}
-<img src="../../assets/lifecycle/ds-lifecycle-v2.svg" alt="The data science lifecycle with Obtain data highlighted." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/lifecycle/ds-lifecycle-v2.svg" alt="The step of obtaining data, in the context of the data science lifecycle." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 Obtaining data, in the context of the data science lifecycle.
 :::
@@ -25,13 +25,25 @@ Do you obtain it?
 
 TK
 
+## Sensitive information
+
+TK
+
+### Defining Sensitive Information
+
+### Handling Sensitive Information
+
+## Risks from data triangulation
+
+TK
+
 ## Ethics in Maintaining Data
 
 TK
 
 ## Case Study: Census Data
 
-Four original census artifacts...
+The U.S. census offers a helpful example of ethical decision-making in the data science lifecycle. It has been explored in Data Feminism, as well as X and Y and other materials. It is included here in brief as a canonical example of subjectivity in the process of obtaining data.
 
 ### Census form in 1790
 

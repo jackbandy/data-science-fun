@@ -9,9 +9,9 @@ A common question people ask about technology and ethics is something along thes
 
 There has also been an analogous question in computer science education when it comes to programming languages: "do we need to teach students this new programming language?"
 
-One goal of this mini-book is to defend the answer to such questions as "no, not really." Basic ethical principles (and ethical dilemmas) remain stable, regardless of new tools and technologies. To practice ethics in data science thus involves many of the same kinds of decisions required to practice ethics in any other profession: e.g., consider the potential consequences of your decisions, listen to concerns shared by others, make changes slowly and carefully, respect the dignity of each human being.
+One goal of this mini-book is to defend the answer to such questions as "no, not really." Basic ethical principles (and ethical dilemmas) remain stable, regardless of the new tools and technologies that surround them. To practice ethics in data science involves many of the same kinds of decisions required to practice ethics in any other profession: e.g., consider the potential consequences of your decisions, listen to concerns shared by others, make changes slowly and carefully, respect the dignity of each human being, and so on.
 
-One of my professors in grad school used to frame it this way: a play can be performed on multiple stages. The plays are often the enduring questions of humanity, related to our identity, our purpose, our origins, etc. Ann Taves has summarized these "enduring questions" as follows [@taves_worldview_studies_2019]:
+One of my professors in grad school, [Pablo Boczkowski](https://scholar.google.com/citations?user=Q4MLDisAAAAJ&hl=en), used to frame it this way: an old play can be performed on many new stages. In the context of technology, the old plays are often the enduring questions of humanity, related to our identity, our purpose, our origins, etc. Ann Taves has summarized these "enduring questions" as follows [@taves_worldview_studies_2019]:
 
 * REALITY (ontology): What is ultimate reality? What exists? What is real?
 * ORIGINS (cosmology): Where did it come from? How did we get here? (Where is "here"?) Where are we going?
@@ -29,7 +29,7 @@ Paul Gauguin offered an even shorter version in the title of his painting *Where
 
 Such questions are remarkably persistent across human history, and they overlap substantially with ethics.
 
-To use the theatrical metaphors, the question "what is good?" can be thought of as a play that has been performed (perhaps improvised) across many moments of history.
+To use the theatrical metaphors, the axiological question ("what is the good toward which we strive?") can be thought of as a play that has been performed, or perhaps improvised, across many moments of history. The person asking this question may be holding an iPhone 17 Pro, an iPhone 3G, a palm pilot, a rotary desk phone, a quill pen, a papyrus scroll, a clay tablet, or nothing at all. These are merely different stages upon which people act.
 
 In 2025, I watched Sarah Snook play 26 different characters in a rendition of *The Picture of Dorian Gray*. It was a decidedly modern translation, as the stage used multiple massive LCD screens and technologies that would not have been dreamed of when the 1890 novella was written [@onions_picture_dorian_gray_2025].
 
@@ -57,7 +57,13 @@ Datum
 Data visceralization
 : an attempt to make data sensory, bodily, or experientially felt in some way. [Source: @mit_media_lab_dobson_2014; @wernimont_pandemic_death_counts_2022]
 
+Documentation debt
+: TK
+
 Ethics
 : Acting well in the world. [Source: @burton_computing_2023]
+
+Tech Debt
+: TK
 
 ## References

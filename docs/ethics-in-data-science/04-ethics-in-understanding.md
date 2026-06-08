@@ -21,6 +21,11 @@ Understanding the data, in the context of the data science lifecycle.
 
 TK
 
+#### Proxies
+
+TK
+
+
 ### Understanding the world
 
 ::: {#fig-ds-lifecycle-understand-world}
