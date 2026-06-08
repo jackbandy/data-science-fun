@@ -4,7 +4,7 @@ filtered CSV of buildings with 10 or more stories, derived from public Chicago b
 
 ## Files
 
-- `tall_buildings_public.csv`: Buildings filtered to `stories >= 10` with the following columns:
+- `chicago_tall_buildings.csv`: Buildings filtered to `stories >= 10` with the following columns:
   - `building_id`
   - `building_name_1`
   - `building_name_2`

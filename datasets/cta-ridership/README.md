@@ -1,15 +1,17 @@
-# CTA Ridership Annual Boarding Totals
+# CTA Ridership
 
 derived CSV of CTA annual ridership totals, prepared from public Chicago Transit Authority data. For educational purposes only.
 
 ## Files
 
-- `CTA_-_Ridership_-_Annual_Boarding_Totals_20260527.csv`: Annual boarding totals with the following columns:
+- `Annual_Boarding_Totals_20260527.csv`: Annual boarding totals with the following columns:
   - `year`
   - `bus`
   - `paratransit`
   - `rail`
   - `total`
+
+- `Station_Entries_-_Daily_Totals_20260527.csv`: Daily station entry totals from the CTA ridership dataset.
 
 ## Sources
 

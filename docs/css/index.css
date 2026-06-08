@@ -1,4 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;900&family=Nunito:wght@900&display=swap');
+@font-face {
+  font-family: 'Libre Franklin';
+  src: url('../slides/theme/fonts/libre-franklin/LibreFranklin.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../assets/fonts/Nunito-wght.ttf') format('truetype');
+  font-weight: 200 1000;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --home-panel-width: 540px;
@@ -11,7 +25,7 @@
 }
 
 body {
-  font-family: 'Mulish', sans-serif;
+  font-family: 'ITC Franklin Gothic', 'Libre Franklin', 'Franklin Gothic', 'Franklin Gothic Medium', Arial, 'Mulish', sans-serif;
   color: #222;
   background: #fff;
 }
