@@ -199,5 +199,6 @@ print(by_access.with_columns(accessible_share=share))
 # Sources {.sources}
 
 1. Nightingale, Florence. "Diagram of the causes of mortality in the army in the East." *Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army*, 1858. Image via Wikimedia Commons: <https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg>. Public domain.
-2. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-3. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+2. Slide materials adapted from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/).
+3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
