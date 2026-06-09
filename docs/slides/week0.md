@@ -166,7 +166,7 @@ print(by_access.with_columns(accessible_share=share))
 
 ---
 
-# Florence Nightingale's Mortality Diagram (1858) {.image-slide}
+# Florence Nightingale's Mortality Diagram (1858) {.image-frame-slide}
 
 <img src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)">
 
@@ -199,6 +199,6 @@ print(by_access.with_columns(accessible_share=share))
 # Sources {.sources}
 
 1. Nightingale, Florence. "Diagram of the causes of mortality in the army in the East." *Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army*, 1858. Image via Wikimedia Commons: <https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg>. Public domain.
-2. Slide materials adapted from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/).
+2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
