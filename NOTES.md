@@ -44,6 +44,9 @@ Learning DS Textbook:
   * Binary formats
   * Binary formats, APIs, scraping, etc.
 * Linear Modeling
+* Time series modeling / analysis
+  * seasonality
+  * stationarity
 * Classification
 
 
