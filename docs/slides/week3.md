@@ -80,17 +80,26 @@ format:
           font-size: 0.5em;
           line-height: 1.25;
         }
+        .reveal .format-summary colgroup col:nth-child(1) {
+          width: 11.11% !important;
+        }
+        .reveal .format-summary colgroup col:nth-child(2) {
+          width: 44.44% !important;
+        }
+        .reveal .format-summary colgroup col:nth-child(3) {
+          width: 44.44% !important;
+        }
         .reveal .format-summary th:nth-child(1),
         .reveal .format-summary td:nth-child(1) {
-          width: 9%;
+          width: 11.11%;
         }
         .reveal .format-summary th:nth-child(2),
         .reveal .format-summary td:nth-child(2) {
-          width: 34%;
+          width: 44.44%;
         }
         .reveal .format-summary th:nth-child(3),
         .reveal .format-summary td:nth-child(3) {
-          width: 57%;
+          width: 44.44%;
         }
         .reveal .format-summary code {
           white-space: normal;
@@ -100,12 +109,25 @@ format:
           font-size: 0.78em;
           line-height: 1.45;
         }
-        .reveal .columns div.sourceCode {
-          margin-top: 0;
+        .reveal .columns .column > div.sourceCode,
+        .reveal .columns .column > .code-copy-outer-scaffold,
+        .reveal .columns .column > pre {
+          margin-top: 1em;
+        }
+        .reveal pre code {
+          font-size: 0.88em;
+          line-height: 1.2;
         }
         .reveal .columns pre code {
-          font-size: 0.78em;
-          line-height: 1.15;
+          font-size: 0.88em;
+          line-height: 1.2;
+        }
+        .reveal .code-caption {
+          margin: 0.35em 0 0;
+          text-align: center;
+          font-size: 0.68em;
+          font-style: italic;
+          color: #666;
         }
         </style>
     footer: '<img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 3</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week3.html">dodatascience.fun/slides/week3</a></span>'
@@ -330,6 +352,54 @@ Tyler Durden | Paper Street Soap Co. | All Natural Handmade |
 ---
 
 
+# What About More Complex Data? {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/three-dimensional-array/three-dimensional-array.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](three-dimensional-array.svg)
+:::
+
+---
+
+
+# NetCDF
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- Network Common Data Form
+- Binary, self-describing format for array-oriented scientific data
+- Stores dimensions, variables, and metadata together
+- Better than CSV or JSON for gridded data with coordinates
+- Common in scientific workflows (e.g. climate, ocean, weather)
+- Harder to quickly inspect than plain text formats
+	- (Data stored as binary)
+:::
+
+::: {.column width="58%"}
+```text
+dimensions:
+  time = unlimited
+  lat = 180
+  lon = 360
+
+variables:
+  float temperature(time, lat, lon)
+    temperature:units = "K"
+    temperature:long_name = "air temperature"
+  float lat(lat)
+  float lon(lon)
+```
+
+<p class="code-caption">A simplified example of what a NetCDF file can contain.</p>
+:::
+
+::::
+
+---
 
 # Format Summary {.format-summary}
 
@@ -340,6 +410,7 @@ Tyler Durden | Paper Street Soap Co. | All Natural Handmade |
 | JSON | APIs, nested records, web data | `{"name":"Tyler Durden","city":"Bradford"}` |
 | XML | Document-like data with tags and attributes | `<name>Tyler Durden</name>` |
 | YAML | Human-edited configuration and pipeline settings | `name: Tyler Durden`<br>`city: Bradford` |
+| NetCDF | Labeled multi-dimensional scientific arrays | `temperature(time, lat, lon)` |
 | Parquet | Typed, compressed analytics data | `name: STRING`<br>`city: STRING` |
 
 ---
@@ -347,8 +418,10 @@ Tyler Durden | Paper Street Soap Co. | All Natural Handmade |
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.md>.
-2. Slide materials adapted from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/).
-3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+2. NetCDF reference: Unidata netCDF documentation, <https://www.unidata.ucar.edu/software/netcdf/>.
+3. LearningDS chapter 14, "Web Data," netCDF discussion: <https://learningds.org/ch/14/web_netCDF.html>.
 4. Format examples adapted from Wikipedia and project documentation: [JSON](https://en.wikipedia.org/wiki/JSON), [XML](https://en.wikipedia.org/wiki/XML), [Comma-separated values](https://en.wikipedia.org/wiki/Comma-separated_values), [YAML](https://en.wikipedia.org/wiki/YAML), [Tab-separated values](https://en.wikipedia.org/wiki/Tab-separated_values), [Spreadsheet](https://en.wikipedia.org/wiki/Spreadsheet), and [Apache Parquet](https://parquet.apache.org/).
-4. Tyler Durden business card image: Wikimedia Commons remake by Michaelpreid, modified, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), <https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png>.
-5. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+5. Tyler Durden business card image: Wikimedia Commons remake by Michaelpreid, modified, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), <https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png>.
+6. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+7. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+8. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

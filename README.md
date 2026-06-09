@@ -34,7 +34,7 @@ Using GitHub Actions workflows for some materials. The goal is to keep things mo
 
 ### Slide build
 
-I'm trying to avoid Google Slides, and the current markdown-based slide workflow lives in `.github/workflows/build-slides.yml`.
+I'm trying to avoid Google Slides, and the current markdown-based slide workflow lives in `.github/workflows/build-slides.yml`. It uses quarto.
 
 ```text
  [docs/slides/week0.md ... week12.md]
@@ -45,11 +45,13 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
  [Reveal.js HTML]          [PDF]
 ```
 
-- The current decks are `docs/slides/week0.md` through `docs/slides/week12.md`. Each file contains Quarto Reveal.js configuration and compiles to a matching HTML file, PDF, and `_files/` support directory.
+- The decks are `docs/slides/week0.md` through `docs/slides/week12.md`. Each file contains Quarto Reveal.js configuration and compiles to a matching HTML file, PDF, and `_files/` support directory.
+- SVGs and other vector formats whenever possible!
 - Run `docs/slides/build_all_quarto.sh` locally to build all current decks. It builds HTML and PDF by default; set `BUILD_PDFS=false` for HTML only.
-- The previous Marp experiment is retained in `docs/slides/marp_archive/`. Run `docs/slides/marp_archive/build_all_marp.sh` to rebuild its HTML and PDF outputs.
 - On pushes that touch slide sources or build support files, GitHub Actions builds HTML for both the current Quarto decks and archived Marp decks, then commits the generated HTML and Quarto support directories.
-- Those compiled slide files are then included in the Pages site because the site is deployed from the `docs/` artifact.
+- Compiled slide files are included in the GitHub Pages site (deployed from the `docs/` artifact).
+- The previous Marp experiment is in `docs/slides/marp_archive/`. Run `docs/slides/marp_archive/build_all_marp.sh` to rebuild its HTML and PDF outputs.
+- More complicated than google slides? Maybe. Worth it for freedom, portability, accessibility, etc.? For now, yes.
 
 ### Syllabus build
 
@@ -65,7 +67,7 @@ The syllabus uses a markdown workflow in `syllabus_source/`, and the generated f
 ```
 
 - The upstream source is `syllabus_source/syllabus.md`.
-- The shared course schedule is `syllabus_source/schedule.md`.
+- The shared course schedule is `syllabus_source/schedule.csv`.
 - Run `python3 syllabus_source/sync_schedule.py` to sync the schedule into the homepage and syllabus, then rebuild both outputs.
 - Run `syllabus_source/build_syllabus_from_markdown.sh` to compile the markdown to both HTML and PDF (via latex).
 - Only `index.html` and `syllabus.pdf` are published under `docs/syllabus/`.

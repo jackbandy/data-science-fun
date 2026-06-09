@@ -6,8 +6,8 @@
 <script src="week3_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week3_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week3_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>week3</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -97,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week3_files/libs/revealjs/dist/theme/quarto-edc10436c5b161121cb9e01f6df19c3f.css">
+  <link rel="stylesheet" href="week3_files/libs/revealjs/dist/theme/quarto-20e6fc0040d593a07300958152bdb85a.css">
   <link rel="stylesheet" href="theme/responsive-footer.css">
   <link href="week3_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="week3_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -260,17 +260,26 @@
     font-size: 0.5em;
     line-height: 1.25;
   }
+  .reveal .format-summary colgroup col:nth-child(1) {
+    width: 11.11% !important;
+  }
+  .reveal .format-summary colgroup col:nth-child(2) {
+    width: 44.44% !important;
+  }
+  .reveal .format-summary colgroup col:nth-child(3) {
+    width: 44.44% !important;
+  }
   .reveal .format-summary th:nth-child(1),
   .reveal .format-summary td:nth-child(1) {
-    width: 9%;
+    width: 11.11%;
   }
   .reveal .format-summary th:nth-child(2),
   .reveal .format-summary td:nth-child(2) {
-    width: 34%;
+    width: 44.44%;
   }
   .reveal .format-summary th:nth-child(3),
   .reveal .format-summary td:nth-child(3) {
-    width: 57%;
+    width: 44.44%;
   }
   .reveal .format-summary code {
     white-space: normal;
@@ -280,12 +289,25 @@
     font-size: 0.78em;
     line-height: 1.45;
   }
-  .reveal .columns div.sourceCode {
-    margin-top: 0;
+  .reveal .columns .column > div.sourceCode,
+  .reveal .columns .column > .code-copy-outer-scaffold,
+  .reveal .columns .column > pre {
+    margin-top: 1em;
+  }
+  .reveal pre code {
+    font-size: 0.88em;
+    line-height: 1.2;
   }
   .reveal .columns pre code {
-    font-size: 0.78em;
-    line-height: 1.15;
+    font-size: 0.88em;
+    line-height: 1.2;
+  }
+  .reveal .code-caption {
+    margin: 0.35em 0 0;
+    text-align: center;
+    font-size: 0.68em;
+    font-style: italic;
+    color: #666;
   }
   </style>
 </head>
@@ -485,6 +507,42 @@
 <span id="cb6-13"><a href=""></a>537 Paper Street | Bradford | 19808 | (288) 555-0153</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 </section>
+<section id="what-about-more-complex-data" class="slide level1 image-frame-slide">
+<h1>What About More Complex Data?</h1>
+
+<img data-src="../assets/three-dimensional-array/three-dimensional-array.svg" class="r-stretch"></section>
+<section id="netcdf" class="slide level1">
+<h1>NetCDF</h1>
+<div class="columns">
+<div class="column" style="width:42%;">
+<ul>
+<li>Network Common Data Form</li>
+<li>Binary, self-describing format for array-oriented scientific data</li>
+<li>Stores dimensions, variables, and metadata together</li>
+<li>Better than CSV or JSON for gridded data with coordinates</li>
+<li>Common in scientific workflows (e.g.&nbsp;climate, ocean, weather)</li>
+<li>Harder to quickly inspect than plain text formats
+<ul>
+<li>(Data stored as binary)</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:58%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href=""></a>dimensions:</span>
+<span id="cb7-2"><a href=""></a>  time = unlimited</span>
+<span id="cb7-3"><a href=""></a>  lat = 180</span>
+<span id="cb7-4"><a href=""></a>  lon = 360</span>
+<span id="cb7-5"><a href=""></a></span>
+<span id="cb7-6"><a href=""></a>variables:</span>
+<span id="cb7-7"><a href=""></a>  float temperature(time, lat, lon)</span>
+<span id="cb7-8"><a href=""></a>    temperature:units = "K"</span>
+<span id="cb7-9"><a href=""></a>    temperature:long_name = "air temperature"</span>
+<span id="cb7-10"><a href=""></a>  float lat(lat)</span>
+<span id="cb7-11"><a href=""></a>  float lon(lon)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p class="code-caption">
+A simplified example of what a NetCDF file can contain.
+</p>
+</div></div>
+</section>
 <section id="format-summary" class="slide level1 format-summary">
 <h1>Format Summary</h1>
 <table class="caption-top">
@@ -527,6 +585,11 @@
 <td><code>name: Tyler Durden</code><br><code>city: Bradford</code></td>
 </tr>
 <tr class="even">
+<td>NetCDF</td>
+<td>Labeled multi-dimensional scientific arrays</td>
+<td><code>temperature(time, lat, lon)</code></td>
+</tr>
+<tr class="odd">
 <td>Parquet</td>
 <td>Typed, compressed analytics data</td>
 <td><code>name: STRING</code><br><code>city: STRING</code></td>
@@ -538,10 +601,12 @@
 <h1>Sources</h1>
 <ol type="1">
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.md</a>.</li>
-<li>Slide materials adapted from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>.</li>
-<li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
+<li>NetCDF reference: Unidata netCDF documentation, <a href="https://www.unidata.ucar.edu/software/netcdf/" class="uri">https://www.unidata.ucar.edu/software/netcdf/</a>.</li>
+<li>LearningDS chapter 14, “Web Data,” netCDF discussion: <a href="https://learningds.org/ch/14/web_netCDF.html" class="uri">https://learningds.org/ch/14/web_netCDF.html</a>.</li>
 <li>Format examples adapted from Wikipedia and project documentation: <a href="https://en.wikipedia.org/wiki/JSON">JSON</a>, <a href="https://en.wikipedia.org/wiki/XML">XML</a>, <a href="https://en.wikipedia.org/wiki/Comma-separated_values">Comma-separated values</a>, <a href="https://en.wikipedia.org/wiki/YAML">YAML</a>, <a href="https://en.wikipedia.org/wiki/Tab-separated_values">Tab-separated values</a>, <a href="https://en.wikipedia.org/wiki/Spreadsheet">Spreadsheet</a>, and <a href="https://parquet.apache.org/">Apache Parquet</a>.</li>
 <li>Tyler Durden business card image: Wikimedia Commons remake by Michaelpreid, modified, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png" class="uri">https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png</a>.</li>
+<li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.</li>
+<li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 <li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>
 </ol>
 
