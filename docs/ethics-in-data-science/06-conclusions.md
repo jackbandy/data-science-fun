@@ -42,20 +42,23 @@ More TK.
 Common knowledge
 : Shared awareness about what other people know. That is, not just knowing a proposition, but also awareness that others know that proposition too. Often conflated with mutual knowledge. [Source: @sep-common-knowledge]
 
-Mutual knowledge
-: A proposition is mutual knowledge among people when each person knows that proposition. [Source: @sep-common-knowledge]
-
 Consent
 : Permission that is freely given, reversible, informed, enthusiastic, and specific. [Source: @lee_building_consentful_2017]
 
 Data
 : Multiple datum.
 
-Datum
-: A single data point, such as a number or symbol.
+Data triangulation
+: TK
 
 Data visceralization
 : an attempt to make data sensory, bodily, or experientially felt in some way. [Source: @mit_media_lab_dobson_2014; @wernimont_pandemic_death_counts_2022]
+
+Datum
+: A single data point, such as a number or symbol.
+
+Disparate impact
+: TK [@barocas_selbst_big_data_disparate_impact_2016]
 
 Documentation debt
 : TK
@@ -63,7 +66,19 @@ Documentation debt
 Ethics
 : Acting well in the world. [Source: @burton_computing_2023]
 
+Mutual knowledge
+: A proposition is mutual knowledge among people when each person knows that proposition. [Source: @sep-common-knowledge]
+
+Proxy
+: TK [@barocas_selbst_big_data_disparate_impact_2016]
+
+Situated knowledge
+: TK [@dignazio_klein_data_feminism_2020]
+
 Tech Debt
 : TK
+
+Worldview
+: TK [@taves_worldview_studies_2019; @sep-statistics]
 
 ## References
