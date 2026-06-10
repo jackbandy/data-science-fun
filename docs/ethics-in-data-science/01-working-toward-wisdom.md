@@ -18,9 +18,15 @@ subtitle: Introduction to Ethics in Data Science
 
 *This chapter is in-progress.*
 
+> **Overview:** This chapter describes the DIKW pyramid — data, information, knowledge, wisdom — and its relevance to the data science lifecycle, especially as a way to consider the fundamental goals and purposes of data science work. The chapter also introduces concepts of *understanding* and *common knowledge*, and their relevance to data science. It closes with a brief discussion of statistical worldviews, where "just do the math" requires choosing particular beliefs about math and the world at large.
+
 As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short [@rowley_wisdom_2007]. The framing has a long history across systems thinking and information science (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011). As argued by this chapter and other sources, the definitive logical hierarchy implied by the DIKW pyramid is somewhat misleading [@fricke_knowledge_2009], however, the intuitions around the pyramid metaphor offer helpful framing for the work of data science.
 
+::: {#fig-dikw-pyramid}
 <img src="../../assets/pyramid/06-dikw-pyramid-full.svg" alt="The DIKW pyramid with four labeled layers: data, information, knowledge, and wisdom." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+A rendition of the DIKW pyramid, with data at the base supporting successive layers of information, knowledge, and wisdom.
+:::
 
 The basic premise of the DIKW pyramid is as follows. To build a pyramid with wisdom at the top, start with a brick: a datum. Use multiple bricks to create a large organized layer of bricks: data. Upon data, one can begin to construct information, and upon information, one can construct knowledge.
 
@@ -116,7 +122,7 @@ And this is the second point for which our triangle adventure is relevant. The r
 Wisdom involves the ability to say that the original figure was, in some sense, a triangle. And wisdom also involves being able to explain why the figure was not exactly the triangle. Wisdom shows us the process of going from subpixels to pixels to lines to triangles. In some contexts, a data scientist may need to simply say "yes, that is a triangle," while in other contexts the data scientist may need to explain why it is technically *not* a triangle. As will be discussed in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md), this requires an awareness of goals, audience knowledge, and other contextual factors which can improve communication.
 
 
-## What is understanding?
+## Understanding
 
 Notably missing from the DIKW pyramid is the word "understanding." This points to one limitation of the metaphor: we are not just working with fixed, static data that are automatically converted to information and/or knowledge and/or wisdom. The existence of the DIKW pyramid thus implies human understanding.
 
@@ -139,10 +145,15 @@ Perhaps the best way to explain common knowledge is to recognize its use in stor
 
 But suspense depends on *partially* shared information. For example, when the audience knows that there is a bomb under the dining table, but they also know that Bob was gone when the bomb was placed under the table. In Hitchcock's framing, this scenario creates suspense because the audience anticipates danger from the bomb, and also knows that Bob does not anticipate the same danger.
 
-A wise data scientist must be keenly aware of common knowledge. When communicating results, for example, it may not be sufficient just to know what the audience knows. You may also want to know what audience members know *about what other audience members know*. The intricacies of common knowledge are fascinating...
-* more TK
-* hat example
-* muddy children example
+A data scientist can benefit from understanding and leveraging common knowledge (or lack thereof). When communicating results, for example, it may not be sufficient just to know what the audience knows. You may also want to know what audience members know *about what other audience members know*. The intricacies of common knowledge are fascinating, and two classic puzzles show how it can coordinate action [@fagin_reasoning_about_knowledge_1995].
+
+In "the hat puzzle," row of people each wear a hat they cannot see, and no one is allowed to move until they deduce their own hat color. The line stays frozen. Then, a *public* announcement states "at least one of you wears a red hat." The announcement adds no new visible fact, yet it converts mutual knowledge into common knowledge — and that is what finally allows the line move.
+
+A related puzzle, **the muddy children puzzle**, is described by @sep-dynamic-epistemic as follows:
+
+> Three children are playing in the mud. Father calls the children to the house, arranging them in a semicircle so that each child can clearly see every other child. “At least one of you has mud on your forehead”, says Father. The children look around, each examining every other child’s forehead. Of course, no child can examine his or her own. Father continues, "If you know whether your forehead is dirty, then step forward now." No child steps forward. Father repeats himself a second time, "If you know whether your forehead is dirty, then step forward now." Some but not all of the children step forward. Father repeats himself a third time, "If you know whether your forehead is dirty, then step forward now." All of the remaining children step forward. How many children have muddy foreheads?
+
+The father's announcement adds no new *visible* fact — every child could already see the others' foreheads — yet it creates the common knowledge that enables the deductions. Each round of silence carries information, and counting those silences lets each muddy child infer their own state.
 
 
 ## Statistical worldviews
@@ -173,11 +184,11 @@ The rise of the causal inference paradigm does not imply a resolution to subject
 
 But causal modeling actually opens up another can of worms about what it actually means for one thing to cause another thing: 
 
-* **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that merely keep consistent company?
-* **Multiple necessary conditions**: When a fire needs heat, fuel, and oxygen, which one is "the cause?" 
-* **Causation without a pattern**: How do we make sense of (or prove) one-time "causes" and effects, like the meteor that killed the dinosaurs?
+* **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that just consistently show up at the same time?
+* **Multiple necessary conditions**: When a fire needs heat, fuel, and oxygen, which one is considered "the cause" of the fire? 
+* **Causation without pattern**: How do we make sense of (or prove) one-time "causes" and effects, like the meteor that killed the dinosaurs?
 * **Common causes**: Ice cream sales and drownings rise and fall together, but ice cream does not cause drowning (and drowning does not cause ice cream sales). How do we know when there is a lurking third factor (in this case summer weather) that drives multiple effects?
-* **The direction problem**: A train's speedometer needle turns as the train goes faster, and the train goes faster as the needle turns. Of course, flicking the needle will not speed up the train. How do we determine causal directionality in more complicated scenarios?
+* **Directionality**: A train's speedometer needle turns as the train goes faster, and the train goes faster as the speedometer needle turns. Of course, flicking the needle will not speed up the train. How do we determine causal directionality in more complicated scenarios?
 * **Overdetermination**: Two people each empty a full bucket of water onto a campfire at the same moment, and either bucket alone would have been enough to put out the fire. Which bucket "caused" the fire to go out?
 
 For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter.
