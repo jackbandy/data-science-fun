@@ -18,11 +18,15 @@ subtitle: Introduction to Ethics in Data Science
 
 *This chapter is in-progress.*
 
-As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short. As argued by this chapter and other sources, the definitive logical hierarchy implied by the DIKW pyramid is somewhat misleading, however, the intuitions around the pyramid metaphor offer helpful framing for the work of data science.
+As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short [@rowley_wisdom_2007]. As argued by this chapter and other sources, the definitive logical hierarchy implied by the DIKW pyramid is somewhat misleading, however, the intuitions around the pyramid metaphor offer helpful framing for the work of data science.
 
-The basic premise of the DIKW pyramid is as follows. To build a pyramid, start with a large, well-organized layer of bricks. Multiple datum give us data, upon which one can construct knowledge: the foundation of our DIKW pyramid.
+<img src="../../assets/pyramid/dikw-pyramid-fonts.svg" alt="The DIKW pyramid with four labeled layers: data, information, knowledge, and wisdom." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-One implication of this conceptual model is that the work of data (i.e. data science) generally aims toward wisdom.
+The basic premise of the DIKW pyramid is as follows. To build a pyramid with wisdom at the top, start with a brick: a datum. Use multiple bricks to create a large organized layer of bricks: data. Upon data, one can begin to construct information, and upon information, one can construct knowledge.
+
+Like all metaphors, the DIKW pyramid eventually breaks down. Although wisdom is not *literally* the top layer of a pyramid, the model does accurately suggest that the purpose of data (i.e. data science) generally aims toward wisdom. That may be a surprising word for a data science book.
+
+Sure, data scientists want information, and probably knowledge.
 
 
 ## What is wisdom?
@@ -96,45 +100,59 @@ But the subpixels on your screen might not be the same shape as the subpixels on
 Pixel geometries from CRT and LCD displays, center-cropped to a golden-ratio rectangle. Source: Peter Halasz (Pengo), [*Pixel geometry 02 Pengo.jpg*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 :::
 
-This chapter could go on for a long time with this repeated zoom-in effect. But what does all of this have to do with data science?
+We could go on for quite a while with this repeated zoom-in effect. But what does all of this have to do with data science?
 
-During the work of data science, you may find yourself (or your team) in an "repeated zoom-in" cycle. You may have been tasked with answering a deceptively simple question:
+For one, during the work of data science, you may find yourself (or your team) in an "repeated zoom-in" cycle, and it is useful to be able to recognize them. These loops can be useful to support exploration, but (as the saying goes, they make "helpful servants but terrible masters").
+
+You may have been tasked with answering a deceptively simple question:
 * Do guests like the new cold brew recipe?
 * Is the running plan helping people run faster?
 * Do people sleep better with noise machines?
 
-But any real, live, curious human asking these questions will want more than "yes" or "no" as an answer. The task of a data scientist is not merely to deliver the answer up the chain, like a machine that takes data as input and gives knowledge as output.
+But any real, living, curious human asking these questions will want more than "yes" or "no" as an answer. The task of a data scientist is not merely to deliver the answer up the chain, like a machine that takes data as input and gives knowledge as output.
 
-Instead, the real value of a wise and competent data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist must explore the many possible decisions that can take data to construct information and/or knowledge.
+And this is the second point for which our triangle adventure is relevant. The real value of a wise and competent data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist must explore the many possible decisions that can take data to construct information and/or knowledge.
 
-As glimpsed here, and as will be discussed throughout the chapters, these possible decisions are...
+Wisdom involves the ability to say that the original figure was, in some sense, a triangle. And wisdom also involves being able to explain why the figure was not exactly the triangle. Wisdom shows us the process of going from subpixels to pixels to lines to triangles. In some contexts, a data scientist may need to simply say "yes, that is a triangle," while in other contexts the data scientist may need to explain why it is technically *not* a triangle. As will be discussed in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md), this requires an awareness of goals, audience knowledge, and other contextual factors which can improve communication.
 
 
-## What are data?
-TK
+## What is understanding?
 
-## What is information?
-TK
+Notably missing from the DIKW pyramid is the word "understanding." This points to one limitation of the metaphor: we are not just working with fixed, static data that are automatically converted to information and/or knowledge and/or wisdom. The existence of the DIKW pyramid thus implies human understanding.
 
-## What is knowledge?
+To quote Ursula Le Guin, "What good are all the objects in the universe, if there is no subject?" [@leguin_mrs_brown_1979]. And to rephrase this sentiment in the context of the DIKW pyramid, "what good are all the data, if there is no data scientist?"
 
-Knowledge must be appreciated as more than a fixed, static set of facts. To know something is more than just to store some information. Knowledge is also more than merely processing information. @zeleny_management_1987 describes knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
+There must be some subject that turns data into information, information into knowledge, and knowledge into wisdom. If these transformations can happen, they happen through human understanding.
 
-For example, consider what makes Wikipedia a source of knowledge...
+Intuitively, knowing something is more than just storing some piece of information -- knowledge is more than compiled information. @zeleny_management_1987 describes knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
 
-### Common Knowledge
-Something profound happens when multiple people "read" (look at, watch, draw, view, etc.) something together. In brief, this is the phenomena of common knowledge: shared awareness about what other people know.
+What makes Wikipedia a source of knowledge is not merely the text on the page(s), but rather the coordination process of the Wikipedia editor network which iteratively writes, reviews, and updates the Wikipedia page(s). We trust the text on the page(s) because of the subjects who crafted and re-crafted the language, ensuring its coherence and alignment with existing human language.
 
-It is a common method for creating suspense in film and television. Alfred Hitchcock described the distinction between "surprise" and "suspense" as a difference in common knowledge: in a surprise, the audience discovers an important fact at the same time as the characters. The information is withheld from everyone @hitchcock_interview_1973.
+In short, the DIKW pyramid does not build itself.
 
-But suspense depends on *partially* shared information. For example, if the audience knows that there is a bomb under the dining table, but they also know that Bob was gone when the bomb was placed under the table. In Hitchcock's framing, this scenario creates suspense because the audience anticipates danger from the bomb, and also knows that Bob does not anticipate the same danger...
+## Common Knowledge
+Something profound happens when multiple people "read" (look at, watch, draw, view, etc.) information together. In brief, this is the phenomena of common knowledge: shared awareness about what other people know, and/or what others have contributed to the pyramid.
 
-## Understanding
-TK.
+Common knowledge is often confused with mutual knowledge. If we both know that there is only one more ice cream bar in the freezer, that is mutual knowledge. But if we both know *that the other person knows* that there is only one ice cream bar in the freezer, that is common knowledge, or awareness about what other people know.
 
-## Case study: statistical worldviews
+Perhaps the best way to explain common knowledge is to recognize its use in storytelling methods which create suspense in film and television. For example, Alfred Hitchcock described the distinction between "surprise" and "suspense" as a difference in common knowledge: in a surprise, the audience discovers an important fact at the same time as the characters. The information is withheld from everyone @hitchcock_interview_1973.
 
-One facet of decision-making in the data science workflow involves...
+But suspense depends on *partially* shared information. For example, when the audience knows that there is a bomb under the dining table, but they also know that Bob was gone when the bomb was placed under the table. In Hitchcock's framing, this scenario creates suspense because the audience anticipates danger from the bomb, and also knows that Bob does not anticipate the same danger.
+
+A wise data scientist must be keenly aware of common knowledge. When communicating results, for example, it may not be sufficient just to know what the audience knows. You may also want to know what audience members know *about what other audience members know*. The intricacies of common knowledge are fascinating...
+* more TK
+* hat example
+* muddy children example
+
+
+## Statistical worldviews
+
+One final component of wisdom for the data scientist is a keen awareness of subjectivity.
+
+One historical case study that demonstrates the importance of subjectivity in data scientist is the debate between frequentist and bayesian statistics. 
+
+To my understanding, this debate has mostly settled down. Efron's 1986 essay, "Why Isn't Everyone a Bayesian?" More recently, Richard McElreath suggests that the bayesian-versus-frequentist tension has been subsumed by the causal inference approach.
+
 
 These statistical frameworks/paradigms are essentialy worldviews that entail specific commitments about uncertainty, evidence, and subjectivity [@sep-statistics].
 

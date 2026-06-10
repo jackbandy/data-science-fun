@@ -10,6 +10,7 @@ Obtaining data, in the context of the data science lifecycle.
 
 *This chapter is in-progress.*
 
+The process of obtaining data is perhaps the aspect of data science with the most concrete and direct ethical implications.
 
 ## Where do data come from?
 
