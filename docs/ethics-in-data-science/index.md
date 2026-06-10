@@ -28,6 +28,7 @@ These broad stages correspond to the chapters in this book as follows:
 |  | [Concluding remarks](06-conclusions.md) |
 
 This is not the only book to discuss ethics in data science. Many of the topics discussed in the book have been described elsewhere, in books and articles and essays which often serve as the source material for this book, including:
+
 * Alberto Cairo, *How Charts Lie* [@cairo_how_charts_lie_2019]
 * Catherine D'Ignazio and Lauren Klein, *Data Feminism* [@dignazio_klein_data_feminism_2020]
 * Solon Barocas and Andrew Selbst, "Big Data's Disparate Impact" [@barocas_selbst_big_data_disparate_impact_2016]
