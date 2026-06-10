@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="989" viewBox="0 0 1600 989">
+  <defs>
+    <style>
+      .lbl-data   { font-family: 'BPdots', 'Courier New', monospace; font-size: 78px; letter-spacing: 2px; }
+      .lbl-info   { font-family: 'VT323', 'Courier New', monospace; font-size: 95px; }
+      .lbl-know   { font-family: 'Noteworthy', 'Chalkboard SE', cursive; font-size: 61px; }
+      .lbl-wisdom { font-family: 'Arial Black', Arial, sans-serif; font-size: 74px; font-weight: 900; font-style: italic; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" fill="white" />
+
+  <!-- Pyramid outline -->
+  <polygon points="364.84,871.36 800.00,117.64 1235.16,871.36" fill="none" stroke="black" stroke-width="6" stroke-linejoin="round" />
+  <polyline points="1235.16,871.36 1355.16,801.36 800.00,117.64" fill="none" stroke="black" stroke-width="6" stroke-linejoin="round" />
+
+</svg>

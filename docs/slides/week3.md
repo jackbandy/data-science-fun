@@ -1,30 +1,9 @@
 ---
 format:
   revealjs:
-    theme: theme/uic-orange-reveal.scss
-    width: 1280
-    height: 720
-    margin: 0
-    slide-number: c
-    controls: true
-    progress: true
     include-in-header:
       text: |
         <style>
-        .reveal .footer p {
-          gap: 40px;
-        }
-        .reveal .footer .footer-text {
-          font-size: 0.94em;
-          font-weight: 400;
-        }
-        .reveal .footer .footer-text a {
-          font: inherit !important;
-          color: inherit !important;
-        }
-        .reveal .sources h1 {
-          font-size: 3.5rem;
-        }
         .reveal .business-card-slide p {
           margin: 0;
           text-align: center;
@@ -35,19 +14,6 @@ format:
           max-width: 88%;
           margin: 16px auto 0;
           object-fit: contain;
-        }
-        .reveal .section-header {
-          display: flex !important;
-          flex-direction: column;
-          justify-content: center;
-          text-align: center;
-        }
-        .reveal .section-header h1 {
-          border-bottom: 12px solid #f9461c;
-          display: inline-block;
-          font-size: 5.6rem;
-          margin: 0 auto;
-          padding: 0 0 18px;
         }
         .reveal .spreadsheet-demo table {
           table-layout: fixed;
@@ -131,7 +97,6 @@ format:
         }
         </style>
     footer: '<img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 3</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week3.html">dodatascience.fun/slides/week3</a></span>'
-slide-level: 1
 ---
 
 # Week 3 Slide Deck {.course-title}
@@ -161,9 +126,9 @@ Jack Bandy
 :::: {.columns}
 
 ::: {.column width="42%"}
-- You've probably seen this
+- You've probably seen lots of spreadsheets
 - Grid with cells, rows, columns (and sheets/tabs)
-- Excel, Google Sheets, Numbers, and LibreOffice Calc
+- Excel, Google Sheets, Numbers, LibreOffice Calc, etc.
 - Convenient for manual entry, review, sharing
 - But don't keep your data in a spreadsheet...
 :::
@@ -359,7 +324,7 @@ Tyler Durden | Paper Street Soap Co. | All Natural Handmade |
 :::
 
 ::: {.content-visible when-format="pdf"}
-![](three-dimensional-array.svg)
+![](../assets/three-dimensional-array/three-dimensional-array.svg)
 :::
 
 ---
