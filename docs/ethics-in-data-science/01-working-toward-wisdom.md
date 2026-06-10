@@ -18,7 +18,7 @@ subtitle: Introduction to Ethics in Data Science
 
 *This chapter is in-progress.*
 
-As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short [@rowley_wisdom_2007]. As argued by this chapter and other sources, the definitive logical hierarchy implied by the DIKW pyramid is somewhat misleading, however, the intuitions around the pyramid metaphor offer helpful framing for the work of data science.
+As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short [@rowley_wisdom_2007]. The framing has a long history across systems thinking and information science (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011). As argued by this chapter and other sources, the definitive logical hierarchy implied by the DIKW pyramid is somewhat misleading [@fricke_knowledge_2009], however, the intuitions around the pyramid metaphor offer helpful framing for the work of data science.
 
 <img src="../../assets/pyramid/dikw-pyramid-fonts.svg" alt="The DIKW pyramid with four labeled layers: data, information, knowledge, and wisdom." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
@@ -42,7 +42,7 @@ An attempt to display a perfect triangle.
 
 Looks like a pretty good triangle! It uses scalable vector graphics (i.e. an svg file), to make the lines look as crisp as they possibly can on a computer screen. The image only uses a few pieces of information: the size of the frame (using the golden ratio, of course), the location of the three points for an equilateral triangle within that frame, and the color and width of the line to connect those dots. This particular image uses a black line with a width of six pixels (a multiple of three, of course).
 
-But is there really a triangle in this image? Is it a perfect triangle? One way to find out is to zoom in on a portion of it. We will zoom in by a power of ten, inspired by the Eames films [@eames_powers_of_ten_1968; @eames_powers_of_ten_1977].
+But is there really a triangle in this image? Is it a perfect triangle? (Mathematicians sometimes ask similar questions about perfect circles [@payne_perfect_circles_2019].) One way to find out if it's "perfect" is to zoom in on a portion of it. We will zoom in by a power of ten, inspired by the Eames films [@eames_powers_of_ten_1968; @eames_powers_of_ten_1977].
 
 ::: {#fig-triangle-frame}
 <img src="../../assets/triangles/01-triangle-frame.svg" alt="An equilateral triangle with a highlighted rectangular frame around its left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -102,7 +102,7 @@ Pixel geometries from CRT and LCD displays, center-cropped to a golden-ratio rec
 
 We could go on for quite a while with this repeated zoom-in effect. But what does all of this have to do with data science?
 
-For one, during the work of data science, you may find yourself (or your team) in an "repeated zoom-in" cycle, and it is useful to be able to recognize them. These loops can be useful to support exploration, but (as the saying goes, they make "helpful servants but terrible masters").
+For one, during the work of data science, you may find yourself (or your team) in a "repeated zoom-in" cycle, and it is useful to be able to recognize them. These repeated loops can be useful to support exploration, but infuriating when they seem to go on forever (as the saying goes, they make "helpful servants but terrible masters").
 
 You may have been tasked with answering a deceptively simple question:
 * Do guests like the new cold brew recipe?
@@ -131,11 +131,11 @@ What makes Wikipedia a source of knowledge is not merely the text on the page(s)
 In short, the DIKW pyramid does not build itself.
 
 ## Common Knowledge
-Something profound happens when multiple people "read" (look at, watch, draw, view, etc.) information together. In brief, this is the phenomena of common knowledge: shared awareness about what other people know, and/or what others have contributed to the pyramid.
+Something profound happens when multiple people "read" (look at, watch, draw, view, etc.) information together. In brief, this is the phenomenon of common knowledge: shared awareness about what other people know, and/or what others have contributed to the pyramid.
 
 Common knowledge is often confused with mutual knowledge. If we both know that there is only one more ice cream bar in the freezer, that is mutual knowledge. But if we both know *that the other person knows* that there is only one ice cream bar in the freezer, that is common knowledge, or awareness about what other people know.
 
-Perhaps the best way to explain common knowledge is to recognize its use in storytelling methods which create suspense in film and television. For example, Alfred Hitchcock described the distinction between "surprise" and "suspense" as a difference in common knowledge: in a surprise, the audience discovers an important fact at the same time as the characters. The information is withheld from everyone @hitchcock_interview_1973.
+Perhaps the best way to explain common knowledge is to recognize its use in storytelling methods which create suspense in film and television. For example, Alfred Hitchcock described the distinction between "surprise" and "suspense" as a difference in common knowledge: in a surprise, the audience discovers an important fact at the same time as the characters. The information is withheld from everyone [@hitchcock_interview_1973].
 
 But suspense depends on *partially* shared information. For example, when the audience knows that there is a bomb under the dining table, but they also know that Bob was gone when the bomb was placed under the table. In Hitchcock's framing, this scenario creates suspense because the audience anticipates danger from the bomb, and also knows that Bob does not anticipate the same danger.
 
@@ -147,55 +147,38 @@ A wise data scientist must be keenly aware of common knowledge. When communicati
 
 ## Statistical worldviews
 
-One final component of wisdom for the data scientist is a keen awareness of subjectivity.
+One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere," there are many "researcher degrees of freedom" exercised throughout the lifecycle. Making decisions within these degrees of freedom entails a degree of subjectivity.
 
-One historical case study that demonstrates the importance of subjectivity in data scientist is the debate between frequentist and bayesian statistics. 
+To demonstrate this and conclude the chapter, we will consider one historical example: frequentist versus Bayesian statistics. 
 
-To my understanding, this debate has mostly settled down. Efron's 1986 essay, "Why Isn't Everyone a Bayesian?" More recently, Richard McElreath suggests that the bayesian-versus-frequentist tension has been subsumed by the causal inference approach.
+Consider a simple scenario from [@ipeirotis_bayesian_frequentist_2008]:
+* You have a coin that, when flipped, ends up head with probability *p* and ends up tail with probability *1−p*
+* The value of *p* is unknown, but you want to know it
+* You flip the coin 14 times and get 10 heads
+* A stranger walks by and offers a bet as to whether the next two flips will both be heads
+* Do you take the bet?
 
+I will leave the mathematical details to the original source and focus on the relevant aspect for this book: the different conclusions reached through different statistical worldviews.
 
-These statistical frameworks/paradigms are essentialy worldviews that entail specific commitments about uncertainty, evidence, and subjectivity [@sep-statistics].
+In this particular example, a *frequentist* would estimate *p* from the 14 observations, estimating a 51% chance of two consecutive heads. A *Bayesian* reaches a different estimate, 48.5% (by treating *p* as a distribution, incorporating prior beliefs, and using Bayes' theorem to account for the observations).
 
-### Frequentist worldview (long-run behavior)
+There are some underlying beliefs behind these numbers: frequentists treat probability as long-run frequency and judge procedures by their error rates across repeated trials [@sep-statistics]. Bayesians, on the other hand, treat probability as a degree of belief (or "credence") that is updated as evidence arrives [@sep-epistemology-bayesian].
 
-* Probability as long-run frequency across repeated trials
-* Confidence intervals and p-values as procedures with guaranteed long-run error rates
-* The reference-class problem
-* Statistics links data to hypotheses by using probability distributions over possible data sets [@sep-statistics].
-* Classical statistics treats probabilities as chances attached to repeatable events, not as probabilities that hypotheses themselves are true [@sep-statistics].
-* Frequentist procedures provide long-run error guarantees, but they also face a reference-class problem when reasoning about individual cases [@sep-statistics].
+So, do you take the bet? One might expect there to be a single answer to the statistical question: "just do the math!" But "the math" was not given to us on a stone tablet, and we have multiple paradigms upon which we might base our statistical calculations. This is a case where one must choose which math to use, and to some extent, what to believe about the world.
 
-### Bayesian worldview (degrees of belief)
+To my understanding, this particular debate has largely settled down. In 1986, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as sort of a live contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020].
 
-* Probability as a measure of uncertainty (belief) given information
-* Parameters are treated as uncertain
-* Data update beliefs ( Bayes' rule )
-* Bayesian epistemology treats belief as coming in degrees, often called credences [@sep-epistemology-bayesian].
-* Bayesian norms ask both how credences should fit together and how they should change with new evidence [@sep-epistemology-bayesian].
-* Data update beliefs through conditionalization, but the result depends on the prior credences brought into the analysis [@sep-epistemology-bayesian].
-* The problem of the priors matters because coherent starting points can still support different inductive conclusions [@sep-epistemology-bayesian].
-* In Bayesian statistics, parameters are treated as uncertain, and posterior distributions support estimates and credibility intervals [@sep-statistics].
+The rise of the causal inference paradigm does not imply a resolution to subjectivity. Causal modeling may offer more regularity in asking questions, i.e., "what would happen under intervention?" This lends to causal graphs (DAGs - we'll talk about them in class) and more formal structures, rather than just loose associations [@sep-causal-models].
 
-### Causal inference worldview (effects of interventions)
+But causal modeling actually opens up another can of worms about what it actually means for one thing to cause another thing: 
+* **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that merely keep consistent company?
+* **Multiple necessary conditions**: When a fire needs heat, fuel, and oxygen, which one is "the cause?" 
+* **Causation without a pattern**: How do we make sense of (or prove) one-time "causes" and effects, like the meteor that killed the dinosaurs?
+* **Common causes**: Ice cream sales and drownings rise and fall together, but ice cream does not cause drowning (and drowning does not cause ice cream sales). How do we know when there is a lurking third factor (in this case summer weather) that drives multiple effects?
+* **The direction problem**: A train's speedometer needle turns as the train goes faster, and the train goes faster as the needle turns. Of course, flicking the needle will not speed up the train. How do we determine causal directionality in more complicated scenarios?
+* **Overdetermination**: Two people each empty a full bucket of water onto a campfire at the same moment, and either bucket alone would have been enough to put out the fire. Which bucket "caused" the fire to go out?
 
-* Core question: what would happen if we intervened?
-* Potential outcomes / counterfactuals, causal graphs (DAGs)
-* A causal model represents causal relationships within a system or population so that statistical data can support causal inference [@sep-causal-models].
-* Directed acyclic graphs make assumptions about dependence, independence, and causal direction explicit [@sep-causal-models].
-* Observed probabilities alone may identify only a Markov equivalence class, so causal claims often require background assumptions or interventions [@sep-causal-models].
-* The core causal question is interventionist: what would happen if we changed one part of the system? [@sep-causal-models]
-* Regularity theories begin from the idea that causes are regularly followed by effects, but accidental regularities are not enough [@sep-causation-regularity].
-* Millian regularity approaches treat causes as lawlike combinations of present positive factors and absent negative factors [@sep-causation-regularity].
-* Inferential theories analyze causation through what effects can be inferred from causes within an appropriate background theory [@sep-causation-regularity].
+For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter.
 
-
-## Test
-These are test citations for @ackoff_data_1989, @vance_information_1997, @bernstein_data-information-knowledge-wisdom_2011, @rowley_wisdom_2007, @fricke_knowledge_2009, @zeleny_management_1987, and @payne_perfect_circles_2019.
-
-The data-information-knowledge-wisdom (DIKW) framing is commonly discussed in the literature (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011).
-
-Premise.
-
-The central premise is that ethical judgment is not a separate task for data scientists to work on after "technical" work is finished. Ethical decision-making shapes how data scientists frame questions, define project scopes, collect and prepare data, interpret patterns, develop understanding, and communicate new understanding to audiences.
 
 ## References
