@@ -147,11 +147,12 @@ A wise data scientist must be keenly aware of common knowledge. When communicati
 
 ## Statistical worldviews
 
-One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere," there are many "researcher degrees of freedom" exercised throughout the lifecycle. Making decisions within these degrees of freedom entails a degree of subjectivity.
+One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere" [@dignazio_klein_data_feminism_2020], there are many "researcher degrees of freedom" exercised throughout the lifecycle. Making decisions within these degrees of freedom entails a degree of subjectivity.
 
 To demonstrate this and conclude the chapter, we will consider one historical example: frequentist versus Bayesian statistics. 
 
 Consider a simple scenario from [@ipeirotis_bayesian_frequentist_2008]:
+
 * You have a coin that, when flipped, ends up head with probability *p* and ends up tail with probability *1−p*
 * The value of *p* is unknown, but you want to know it
 * You flip the coin 14 times and get 10 heads
@@ -171,6 +172,7 @@ To my understanding, this particular debate has largely settled down. In 1986, B
 The rise of the causal inference paradigm does not imply a resolution to subjectivity. Causal modeling may offer more regularity in asking questions, i.e., "what would happen under intervention?" This lends to causal graphs (DAGs - we'll talk about them in class) and more formal structures, rather than just loose associations [@sep-causal-models].
 
 But causal modeling actually opens up another can of worms about what it actually means for one thing to cause another thing: 
+
 * **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that merely keep consistent company?
 * **Multiple necessary conditions**: When a fire needs heat, fuel, and oxygen, which one is "the cause?" 
 * **Causation without a pattern**: How do we make sense of (or prove) one-time "causes" and effects, like the meteor that killed the dinosaurs?
