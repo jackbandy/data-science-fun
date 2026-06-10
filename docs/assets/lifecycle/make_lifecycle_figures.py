@@ -24,7 +24,7 @@ TEXT_ON_DARK = "#FFFFFF"
 ARROW_SIZE = 5
 FONT_FAMILY = "Libre Franklin"
 FONT_FILE = "LibreFranklin.woff2"
-FONT_SOURCE = OUT_DIR / "../../../slides/theme/fonts/libre-franklin" / FONT_FILE
+FONT_SOURCE = OUT_DIR / "../fonts/libre-franklin" / FONT_FILE
 if not FONT_SOURCE.exists():
     FONT_SOURCE = OUT_DIR / FONT_FILE
 
@@ -52,6 +52,7 @@ EDGES = [
     ("understand_world", "ask_question", "lower", 245),
     ("understand_data", "reports", "upper", 165),
     ("understand_world", "reports", "straight", 0),
+    ("reports", "ask_question", "lower", 310),
 ]
 
 ENTRY_POINTS = ["ask_question", "obtain_data"]

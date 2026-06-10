@@ -1,0 +1,12 @@
+format:
+  revealjs:
+    theme: theme/uic-orange-reveal.scss
+    css: theme/revealjs-common.css
+    width: 1280
+    height: 720
+    margin: 0
+    slide-number: c
+    controls: true
+    progress: true
+
+slide-level: 1
