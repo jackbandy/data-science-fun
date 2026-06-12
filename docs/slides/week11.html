@@ -6,8 +6,8 @@
 <script src="week11_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week11_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week11_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week11_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="week11_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Week 11 (CS 418 @ UIC)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -253,7 +253,7 @@
 </section>
 <section id="the-premise-plotted-synthetic-data" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: Synthetic Data</h1>
-<div id="05025eb3" class="cell" data-execution_count="1">
+<div id="41315b50" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np, polars <span class="im">as</span> pl, seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> EngFormatter</span>
 <span id="cb1-3"><a href=""></a>views <span class="op">=</span> np.sort(np.random.default_rng(<span class="dv">418</span>).lognormal(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">100</span>))[::<span class="op">-</span><span class="dv">1</span>]</span>
@@ -272,7 +272,7 @@
 </section>
 <section id="the-premise-plotted-synthetic-data-1" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: Synthetic Data</h1>
-<div id="db46fd52" class="cell" data-execution_count="2">
+<div id="25ce2efb" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-code-line-numbers="7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np, polars <span class="im">as</span> pl, seaborn <span class="im">as</span> sns</span>
 <span id="cb2-2"><a href=""></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> EngFormatter</span>
 <span id="cb2-3"><a href=""></a>views <span class="op">=</span> np.sort(np.random.default_rng(<span class="dv">418</span>).lognormal(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">100</span>))[::<span class="op">-</span><span class="dv">1</span>]</span>
@@ -292,7 +292,7 @@
 </section>
 <section id="the-premise-plotted-100-random-movies" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: 100 Random Movies</h1>
-<div id="6330bc87" class="cell" data-execution_count="3">
+<div id="84087648" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/random.csv"</span>).sample(<span class="dv">100</span>, seed<span class="op">=</span><span class="dv">418</span>)</span>
 <span id="cb3-2"><a href=""></a>imdb <span class="op">=</span> imdb.sort(<span class="st">"numVotes"</span>, descending<span class="op">=</span><span class="va">True</span>).with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
 <span id="cb3-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
@@ -310,7 +310,7 @@
 </section>
 <section id="the-premise-plotted-100-most-popular-movies" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: 100 Most Popular Movies</h1>
-<div id="330daa0f" class="cell" data-execution_count="4">
+<div id="f6c5e758" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/popular.csv"</span>).head(<span class="dv">100</span>)</span>
 <span id="cb4-2"><a href=""></a>imdb <span class="op">=</span> imdb.with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
 <span id="cb4-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
@@ -327,7 +327,7 @@
 </section>
 <section id="the-premise-plotted-100-most-popular-movies-1" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: 100 Most Popular Movies</h1>
-<div id="178ed17b" class="cell" data-execution_count="5">
+<div id="a09dcee0" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-code-line-numbers="4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/popular.csv"</span>).head(<span class="dv">100</span>)</span>
 <span id="cb5-2"><a href=""></a>imdb <span class="op">=</span> imdb.with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
 <span id="cb5-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
