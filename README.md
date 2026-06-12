@@ -37,7 +37,7 @@ Using GitHub Actions workflows for some materials. The goal is to keep things mo
 I'm trying to avoid Google Slides, and the current markdown-based slide workflow lives in `.github/workflows/build-slides.yml`. It uses quarto.
 
 ```text
- [docs/slides/week0.md ... week12.md]
+ [docs/slides/week0.md ... week12.md(or .qmd)]
                     |
           +---------+---------+
           |                   |
@@ -45,7 +45,7 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
  [Reveal.js HTML]          [PDF]
 ```
 
-- The decks are `docs/slides/week0.md` through `docs/slides/week12.md`. Each file contains Quarto Reveal.js configuration and compiles to a matching HTML file, PDF, and `_files/` support directory.
+- The decks are `docs/slides/week0.md` through `docs/slides/week12.md`, with `docs/slides/week11.qmd` using Quarto's `.qmd` extension. Each file contains Quarto Reveal.js configuration and compiles to a matching HTML file, PDF, and `_files/` support directory.
 - SVGs and other vector formats whenever possible!
 - Run `docs/slides/build_all_quarto.sh` locally to build all current decks. It builds HTML and PDF by default; set `BUILD_PDFS=false` for HTML only.
 - On pushes that touch slide sources or build support files, GitHub Actions builds HTML for both the current Quarto decks and archived Marp decks, then commits the generated HTML and Quarto support directories.
@@ -166,6 +166,6 @@ The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My p
 
 In some cases, I move things out of the sandbox after editing and  testing and verification. In practice, these means that LLMs are often adjusting or improving some workflows that would otherwise require lots of tedium, which in turn allows me to focus on writing and planning.
 
-Files that were substantially modified by LLMs will say so in the header, e.g. `NOTICE: This file modified by an LLM coding system...`
+Files that were substantially modified by LLMs will say so in the header, e.g. `NOTICE: This file modified by an LLM coding system...` or something like that
 
 All other materials hand-typed with 🩵 in Chicago, IL.

@@ -1,4 +1,5 @@
 ---
+title: "Week 3 (CS 418 @ UIC)"
 format:
   revealjs:
     include-in-header:
@@ -130,7 +131,7 @@ Jack Bandy
 - Grid with cells, rows, columns (and sheets/tabs)
 - Excel, Google Sheets, Numbers, LibreOffice Calc, etc.
 - Convenient for manual entry, review, sharing
-- But don't keep your data in a spreadsheet...
+- But data scientists don't keep data in spreadsheets...
 :::
 
 ::: {.column width="58%"}
@@ -139,6 +140,32 @@ Jack Bandy
 |---|---|---|---|---|---|
 | 1 | name | company | street | city | phone |
 | 2 | Tyler Durden | Paper Street Soap Co. | 537 Paper Street | Bradford | (288) 555-0153 |
+:::
+:::
+
+::::
+
+---
+
+# Why Not Spreadsheets?
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.incremental}
+- Formulas and transformations are hidden inside cells
+- Data types, missing values can be ambiguous
+- Auto-formatting can corrupt values (e.g., gene name "SEPT2" becomes a date)<sup>[6]</sup>
+- Errors can go undetected for years without automated testing <sup>[7,8]</sup>
+:::
+:::
+
+::: {.column width="50%"}
+::: {.incremental}
+- No separation between data, logic, and presentation
+- Version control can be more difficult
+	- Sharing files -> accidental overwrites, conflicts
+- Larger datasets become slow
 :::
 :::
 
@@ -229,6 +256,7 @@ Tyler Durden	Paper Street Soap Co.	All Natural Handmade	537 Paper Street	Bradfor
 - Extensible Markup Language
 - Nested tags represent elements and attributes
 - Verbose, but widely used by older document systems
+- E.g. Excel uses xml under the hood
 :::
 
 ::: {.column width="58%"}
@@ -377,6 +405,7 @@ variables:
 | YAML | Human-edited configuration and pipeline settings | `name: Tyler Durden`<br>`city: Bradford` |
 | NetCDF | Labeled multi-dimensional scientific arrays | `temperature(time, lat, lon)` |
 | Parquet | Typed, compressed analytics data | `name: STRING`<br>`city: STRING` |
+| Spreadsheet | Small, early-stage data; prototypes; manual entry | *(Excel, Google Sheets, Numbers)* |
 
 ---
 
@@ -387,6 +416,9 @@ variables:
 3. LearningDS chapter 14, "Web Data," netCDF discussion: <https://learningds.org/ch/14/web_netCDF.html>.
 4. Format examples adapted from Wikipedia and project documentation: [JSON](https://en.wikipedia.org/wiki/JSON), [XML](https://en.wikipedia.org/wiki/XML), [Comma-separated values](https://en.wikipedia.org/wiki/Comma-separated_values), [YAML](https://en.wikipedia.org/wiki/YAML), [Tab-separated values](https://en.wikipedia.org/wiki/Tab-separated_values), [Spreadsheet](https://en.wikipedia.org/wiki/Spreadsheet), and [Apache Parquet](https://parquet.apache.org/).
 5. Tyler Durden business card image: Wikimedia Commons remake by Michaelpreid, modified, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), <https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png>.
-6. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
-7. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-8. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+6. Ziemann M., Eren Y., El-Osta A., "Gene name errors are widespread in the scientific literature," *Genome Biology* 17, 177 (2016): <https://link.springer.com/article/10.1186/s13059-016-1044-7>.
+7. European Spreadsheet Risks Interest Group (EuSpRIG), Horror Stories — a catalogue of real-world spreadsheet errors in business, government, and research: <https://eusprig.org/research-info/horror-stories/>.
+8. Inman, Phillip, "The Reinhart-Rogoff error — or how not to Excel at economics," *The Conversation*, 2013: <https://theconversation.com/the-reinhart-rogoff-error-or-how-not-to-excel-at-economics-13646>.
+9. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+10. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+11. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

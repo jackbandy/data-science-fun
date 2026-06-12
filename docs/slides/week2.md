@@ -1,4 +1,5 @@
 ---
+title: "Week 2 (CS 418 @ UIC)"
 format:
   revealjs:
     footer: '<img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 2</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week2.html">dodatascience.fun/slides/week2</a></span>'
