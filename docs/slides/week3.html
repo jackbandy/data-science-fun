@@ -6,10 +6,10 @@
 <script src="week3_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week3_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week3_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
-  <title>week3</title>
+  <title>Week 3 (CS 418 @ UIC)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -97,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week3_files/libs/revealjs/dist/theme/quarto-404456846e0faa3e4fc2f55e4803bcd8.css">
+  <link rel="stylesheet" href="week3_files/libs/revealjs/dist/theme/quarto-6f6b6ec41ca084d6d14704374fdd666e.css">
   <link rel="stylesheet" href="theme/revealjs-common.css">
   <link rel="stylesheet" href="theme/responsive-footer.css">
   <link href="week3_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -289,7 +289,13 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Week 3 (CS 418 @ UIC)</h1>
 
+<div class="quarto-title-authors">
+</div>
+
+</section>
 <section id="week-3-slide-deck" class="slide level1 course-title">
 <h1>Week 3 Slide Deck</h1>
 <h2 id="wrangling-filtering-formats">Wrangling, Filtering; Formats</h2>
@@ -311,7 +317,7 @@
 <li>Grid with cells, rows, columns (and sheets/tabs)</li>
 <li>Excel, Google Sheets, Numbers, LibreOffice Calc, etc.</li>
 <li>Convenient for manual entry, review, sharing</li>
-<li>But don’t keep your data in a spreadsheet…</li>
+<li>But data scientists don’t keep data in spreadsheets…</li>
 </ul>
 </div><div class="column" style="width:58%;">
 <div class="spreadsheet-demo">
@@ -354,6 +360,27 @@
 </tbody>
 </table>
 </div>
+</div></div>
+</section>
+<section id="why-not-spreadsheets" class="slide level1">
+<h1>Why Not Spreadsheets?</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment">Formulas and transformations are hidden inside cells</li>
+<li class="fragment">Data types, missing values can be ambiguous</li>
+<li class="fragment">Auto-formatting can corrupt values (e.g., gene name “SEPT2” becomes a date)<sup>[6]</sup></li>
+<li class="fragment">Errors can go undetected for years without automated testing <sup>[7,8]</sup></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li class="fragment">No separation between data, logic, and presentation</li>
+<li class="fragment">Version control can be more difficult
+<ul>
+<li class="fragment">Sharing files -&gt; accidental overwrites, conflicts</li>
+</ul></li>
+<li class="fragment">Larger datasets become slow</li>
+</ul>
 </div></div>
 </section>
 <section id="csv" class="slide level1">
@@ -418,6 +445,7 @@
 <li>Extensible Markup Language</li>
 <li>Nested tags represent elements and attributes</li>
 <li>Verbose, but widely used by older document systems</li>
+<li>E.g. Excel uses xml under the hood</li>
 </ul>
 </div><div class="column" style="width:58%;">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb4-1"><a href=""></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
@@ -568,6 +596,11 @@ A simplified example of what a NetCDF file can contain.
 <td>Typed, compressed analytics data</td>
 <td><code>name: STRING</code><br><code>city: STRING</code></td>
 </tr>
+<tr class="even">
+<td>Spreadsheet</td>
+<td>Small, early-stage data; prototypes; manual entry</td>
+<td><em>(Excel, Google Sheets, Numbers)</em></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -579,6 +612,9 @@ A simplified example of what a NetCDF file can contain.
 <li>LearningDS chapter 14, “Web Data,” netCDF discussion: <a href="https://learningds.org/ch/14/web_netCDF.html" class="uri">https://learningds.org/ch/14/web_netCDF.html</a>.</li>
 <li>Format examples adapted from Wikipedia and project documentation: <a href="https://en.wikipedia.org/wiki/JSON">JSON</a>, <a href="https://en.wikipedia.org/wiki/XML">XML</a>, <a href="https://en.wikipedia.org/wiki/Comma-separated_values">Comma-separated values</a>, <a href="https://en.wikipedia.org/wiki/YAML">YAML</a>, <a href="https://en.wikipedia.org/wiki/Tab-separated_values">Tab-separated values</a>, <a href="https://en.wikipedia.org/wiki/Spreadsheet">Spreadsheet</a>, and <a href="https://parquet.apache.org/">Apache Parquet</a>.</li>
 <li>Tyler Durden business card image: Wikimedia Commons remake by Michaelpreid, modified, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png" class="uri">https://commons.wikimedia.org/wiki/File:Tyler_Durden_Business_Card.png</a>.</li>
+<li>Ziemann M., Eren Y., El-Osta A., “Gene name errors are widespread in the scientific literature,” <em>Genome Biology</em> 17, 177 (2016): <a href="https://link.springer.com/article/10.1186/s13059-016-1044-7" class="uri">https://link.springer.com/article/10.1186/s13059-016-1044-7</a>.</li>
+<li>European Spreadsheet Risks Interest Group (EuSpRIG), Horror Stories — a catalogue of real-world spreadsheet errors in business, government, and research: <a href="https://eusprig.org/research-info/horror-stories/" class="uri">https://eusprig.org/research-info/horror-stories/</a>.</li>
+<li>Inman, Phillip, “The Reinhart-Rogoff error — or how not to Excel at economics,” <em>The Conversation</em>, 2013: <a href="https://theconversation.com/the-reinhart-rogoff-error-or-how-not-to-excel-at-economics-13646" class="uri">https://theconversation.com/the-reinhart-rogoff-error-or-how-not-to-excel-at-economics-13646</a>.</li>
 <li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 <li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>

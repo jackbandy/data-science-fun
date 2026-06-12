@@ -176,6 +176,41 @@ $code-color: $ink !default;
   .split-content { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; align-items: center; }
   .split-content p { display: flex; align-items: center; justify-content: center; }
   .split-content img { max-width: 100%; max-height: 540px; object-fit: contain; }
+  // Slides with an echoed code cell and a computed figure (use with
+  // auto-stretch: false). Code keeps its natural height; the figure is
+  // centered and fills 90% of the leftover height, clearing the footer band
+  // via the same padding reserve as the image-slide classes.
+  .code-figure-slide {
+    display: flex !important;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 32px 64px 76px;
+    div.cell {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .cell-output-display {
+      flex: 1;
+      min-height: 0;
+      // Quarto wraps the figure as div > figure > p > img; give every wrapper
+      // the full height so the img percentage below has something to resolve
+      // against.
+      > div, figure, p { height: 100%; min-height: 0; margin: 0; }
+      // The 76px slide padding already reserves the footer band, so the
+      // figure can take the full remaining height.
+      img {
+        display: block;
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        object-fit: contain;
+      }
+    }
+  }
   .sources h1 { font-size: $h1-size; }
   .sources ol { font-size: 0.95rem; line-height: 1.9; color: $muted; }
 }

@@ -6,10 +6,10 @@
 <script src="week11_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week11_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week11_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week11_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="week11_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
-  <title>week11</title>
+  <title>Week 11 (CS 418 @ UIC)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,8 +30,74 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week11_files/libs/revealjs/dist/theme/quarto-404456846e0faa3e4fc2f55e4803bcd8.css">
+  <link rel="stylesheet" href="week11_files/libs/revealjs/dist/theme/quarto-21deca6ab8150b367a7afa7124a72e7f.css">
   <link rel="stylesheet" href="theme/revealjs-common.css">
   <link rel="stylesheet" href="theme/responsive-footer.css">
   <link href="week11_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -130,7 +196,13 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Week 11 (CS 418 @ UIC)</h1>
 
+<div class="quarto-title-authors">
+</div>
+
+</section>
 <section id="week-11-slide-deck" class="slide level1 course-title">
 <h1>Week 11 Slide Deck</h1>
 <h2 id="recommendation-systems-ab-testing">Recommendation Systems; A/B Testing</h2>
@@ -145,16 +217,222 @@
 <li>Evaluation metrics</li>
 </ul>
 </section>
+<section id="examples-of-recommender-systems" class="slide level1 section-header">
+<h1>Examples of Recommender Systems</h1>
+</section>
+<section id="amazon-customers-who-bought-this" class="slide level1">
+<h1>Amazon: “Customers Who Bought This…”</h1>
+<ul>
+<li>Popularized <strong>item-to-item collaborative filtering</strong>: recommend items similar to what you bought, where “similar” means <em>bought by the same people</em> <sup>1</sup></li>
+<li>Works from behavior (purchases, views) — no ratings required</li>
+<li>The <em>Touching the Void</em> story is this system finding the long tail</li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Linden, Smith &amp; York, “Amazon.com recommendations: item-to-item collaborative filtering,” <em>IEEE Internet Computing</em> 7:1 (2003).</p></li></ol></aside></section>
+<section id="feeds" class="slide level1">
+<h1>Feeds</h1>
+<ul>
+<li><strong>TikTok / Shorts / Reels</strong> — feed algorithms are essentially recommenders</li>
+</ul>
+</section>
+<section id="and-also" class="slide level1">
+<h1>And Also…</h1>
+<ul>
+<li><strong>Spotify</strong> — E.g. Discover Weekly, collaborative filtering over listening histories</li>
+<li><strong>Online dating, job boards, app stores</strong> — same basic matrix structure, different items</li>
+<li><strong>News feeds</strong> — articles similar to what you’ve read, or read by similar readers</li>
+</ul>
+</section>
+<section id="the-premise" class="slide level1">
+<h1>The Premise</h1>
+<ul>
+<li>Suppose we pulled 100 random movies from IMDB/Letterboxd</li>
+<li>Sort them by popularity</li>
+<li>Views/popularity on the y axis</li>
+<li>“Hits” appear on the left side</li>
+</ul>
+</section>
+<section id="the-premise-plotted-synthetic-data" class="slide level1 code-figure-slide">
+<h1>The Premise, Plotted: Synthetic Data</h1>
+<div id="05025eb3" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np, polars <span class="im">as</span> pl, seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href=""></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> EngFormatter</span>
+<span id="cb1-3"><a href=""></a>views <span class="op">=</span> np.sort(np.random.default_rng(<span class="dv">418</span>).lognormal(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">100</span>))[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-4"><a href=""></a>movies <span class="op">=</span> pl.DataFrame({<span class="st">"rank"</span>: np.arange(<span class="dv">1</span>, <span class="dv">101</span>), <span class="st">"views"</span>: views})</span>
+<span id="cb1-5"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(movies, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"views"</span>)</span>
+<span id="cb1-6"><a href=""></a>ax.set_ylim(bottom<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-7"><a href=""></a>ax.yaxis.set_major_formatter(EngFormatter(sep<span class="op">=</span><span class="st">""</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="week11_files/figure-revealjs/cell-2-output-1.svg" alt="Dot plot of 100 synthetic movies, popularity versus rank, showing a few hugely popular hits on the left and a long tail of obscure movies on the right"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-premise-plotted-synthetic-data-1" class="slide level1 code-figure-slide">
+<h1>The Premise, Plotted: Synthetic Data</h1>
+<div id="db46fd52" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-code-line-numbers="7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np, polars <span class="im">as</span> pl, seaborn <span class="im">as</span> sns</span>
+<span id="cb2-2"><a href=""></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> EngFormatter</span>
+<span id="cb2-3"><a href=""></a>views <span class="op">=</span> np.sort(np.random.default_rng(<span class="dv">418</span>).lognormal(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">100</span>))[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb2-4"><a href=""></a>movies <span class="op">=</span> pl.DataFrame({<span class="st">"rank"</span>: np.arange(<span class="dv">1</span>, <span class="dv">101</span>), <span class="st">"views"</span>: views})</span>
+<span id="cb2-5"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(movies, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"views"</span>)</span>
+<span id="cb2-6"><a href=""></a>ax.set_ylim(bottom<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-7"><a href=""></a>ax.set_ylabel(<span class="st">"views"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb2-8"><a href=""></a>ax.yaxis.set_major_formatter(EngFormatter(sep<span class="op">=</span><span class="st">""</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="week11_files/figure-revealjs/cell-3-output-1.svg" alt="Dot plot of 100 synthetic movies, popularity versus rank, with a horizontal y-axis label for views"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-premise-plotted-100-random-movies" class="slide level1 code-figure-slide">
+<h1>The Premise, Plotted: 100 Random Movies</h1>
+<div id="6330bc87" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/random.csv"</span>).sample(<span class="dv">100</span>, seed<span class="op">=</span><span class="dv">418</span>)</span>
+<span id="cb3-2"><a href=""></a>imdb <span class="op">=</span> imdb.sort(<span class="st">"numVotes"</span>, descending<span class="op">=</span><span class="va">True</span>).with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
+<span id="cb3-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
+<span id="cb3-4"><a href=""></a>ax.set_ylim(bottom<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-5"><a href=""></a>ax.set_ylabel(<span class="st">"votes"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb3-6"><a href=""></a>ax.yaxis.set_major_formatter(EngFormatter(sep<span class="op">=</span><span class="st">""</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="week11_files/figure-revealjs/cell-4-output-1.svg" alt="Dot plot of 100 random IMDb movies sorted by vote count, showing a few standouts on the left and a long tail of barely-voted-on movies on the right"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-premise-plotted-100-most-popular-movies" class="slide level1 code-figure-slide">
+<h1>The Premise, Plotted: 100 Most Popular Movies</h1>
+<div id="330daa0f" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/popular.csv"</span>).head(<span class="dv">100</span>)</span>
+<span id="cb4-2"><a href=""></a>imdb <span class="op">=</span> imdb.with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
+<span id="cb4-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
+<span id="cb4-4"><a href=""></a>ax.set_ylabel(<span class="st">"votes"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb4-5"><a href=""></a>ax.yaxis.set_major_formatter(EngFormatter(sep<span class="op">=</span><span class="st">""</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="week11_files/figure-revealjs/cell-5-output-1.svg" alt="Dot plot of the 100 most-voted-on IMDb movies, showing that even among the most popular movies, a few mega-hits stand out above the rest"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-premise-plotted-100-most-popular-movies-1" class="slide level1 code-figure-slide">
+<h1>The Premise, Plotted: 100 Most Popular Movies</h1>
+<div id="178ed17b" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-code-line-numbers="4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/popular.csv"</span>).head(<span class="dv">100</span>)</span>
+<span id="cb5-2"><a href=""></a>imdb <span class="op">=</span> imdb.with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
+<span id="cb5-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
+<span id="cb5-4"><a href=""></a>ax.set_ylim(bottom<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-5"><a href=""></a>ax.set_ylabel(<span class="st">"votes"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb5-6"><a href=""></a>ax.yaxis.set_major_formatter(EngFormatter(sep<span class="op">=</span><span class="st">""</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="week11_files/figure-revealjs/cell-6-output-1.svg" alt="Dot plot of the 100 most-voted-on IMDb movies, with the y axis forced to start at zero"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="how-do-recommender-systems-work" class="slide level1 section-header">
+<h1>How Do Recommender Systems Work?</h1>
+</section>
+<section id="basic-architectures" class="slide level1">
+<h1>Basic Architectures</h1>
+<ol type="1">
+<li class="fragment"><strong>Content-based</strong>: recommend items whose <em>properties</em> are similar to items you liked
+<ul>
+<li class="fragment">“You liked three movies with Julia Roberts…”</li>
+<li class="fragment">“You liked action movies…”</li>
+<li class="fragment">“You liked movies &lt;90mins…”</li>
+</ul></li>
+<li class="fragment"><strong>Collaborative filtering</strong>: recommend items liked by <em>users similar to you</em>
+<ul>
+<li class="fragment">“People who watched X also watched Y…”</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-what-youtube-knows" class="slide level1">
+<h1>Example: What YouTube Knows</h1>
+<p>For every (user, video) pair, YouTube can record a <strong>utility</strong>:</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">lofi study mix</th>
+<th style="text-align: center;">cat fails</th>
+<th style="text-align: center;">intro to SQL</th>
+<th style="text-align: center;">marathon vlog</th>
+<th style="text-align: center;">sourdough 101</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Alice</strong></td>
+<td style="text-align: center;">95%</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">80%</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">10%</td>
+</tr>
+<tr class="even">
+<td><strong>Bob</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">100%</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">60%</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><strong>Carmen</strong></td>
+<td style="text-align: center;">90%</td>
+<td style="text-align: center;">15%</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><strong>Dev</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">85%</td>
+<td style="text-align: center;">70%</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>Consider utility as <strong>watch percentage</strong> (blank = never clicked/watched)</p>
+</section>
 <section id="sources" class="slide level1 sources">
 <h1>Sources</h1>
 <ol type="1">
-<li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week11.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week11.md</a>.</li>
+<li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week11.qmd" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week11.qmd</a>.</li>
+<li>Recommendation systems content follows Leskovec, Rajaraman &amp; Ullman, <a href="http://www.mmds.org/"><em>Mining of Massive Datasets</em></a>, Chapter 9.</li>
+<li>Linden, Smith &amp; York, “Amazon.com recommendations: item-to-item collaborative filtering,” <em>IEEE Internet Computing</em> 7:1 (2003). <a href="https://doi.org/10.1109/MIC.2003.1167344" class="uri">https://doi.org/10.1109/MIC.2003.1167344</a></li>
 <li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 <li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>
 </ol>
 
 </section>
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

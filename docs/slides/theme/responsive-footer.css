@@ -11,7 +11,7 @@
 
 @media screen and (max-width: 1100px) {
   .reveal.reveal .footer {
-    padding-left: 32px;
+    padding-left: 52px;
     padding-right: 116px;
   }
 
@@ -44,6 +44,10 @@
   .reveal.reveal .footer {
     padding-left: 16px;
     padding-right: 88px;
+  }
+
+  .reveal .slide-menu-button {
+    bottom: 60px !important;
   }
 
   .reveal.reveal .footer p {

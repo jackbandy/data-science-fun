@@ -164,7 +164,7 @@ from pathlib import Path
 import re
 
 html = Path("$html_out").read_text(encoding="utf-8")
-print(len(re.findall(r'<section\\b[^>]*class="[^"]*\\bslide\\b', html)))
+print(len(re.findall(r'<section\\b[^>]*class="[^"]*(?:\\bslide\\b|quarto-title-block)', html)))
 PY
 )"
   if [[ "$slide_count" -eq 0 ]]; then
