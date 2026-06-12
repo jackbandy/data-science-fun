@@ -28,6 +28,9 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Install Jupyter dependencies
+        run: python3 -m pip install jupyter nbformat
+
       - name: Install slide build dependencies
         run: npm ci
 
