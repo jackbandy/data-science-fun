@@ -144,31 +144,46 @@ print(by_access.with_columns(accessible_share=share))
 
 ---
 
-# Florence Nightingale's Mortality Diagram (1858) {.image-frame-slide}
-
-<img src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)">
-
----
-
-# {.image-only footer=false}
-
-<img src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)">
-
----
-
-# {.split}
+# Florence Nightingale's Mortality Diagram (1858) {.split data-auto-animate=""}
 
 ::: {.split-content}
 
 ::: {}
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Sed do eiusmod tempor incididunt ut labore et dolore magna
-- Ut enim ad minim veniam, quis nostrud exercitation
-- Duis aute irure dolor in reprehenderit in voluptate
-- Excepteur sint occaecat cupidatat non proident
+
+A **polar area chart** showing causes of mortality in the Crimean War:
+
+- Blue: deaths from preventable disease
+- Red: deaths from wounds
+- Black: other causes
+
+Used to advocate for sanitary reforms in military hospitals.
 :::
 
-<img src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)">
+<img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)">
+
+:::
+
+---
+
+# Florence Nightingale's Mortality Diagram (1858) {data-auto-animate=""}
+
+<img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)" class="r-stretch" style="object-fit: contain; display: block; margin: auto;">
+
+---
+
+# follow-up slide for nightingale {.split data-auto-animate=""}
+
+::: {.split-content}
+
+::: {}
+
+- Lorem ipsum dolor sit amet,
+- consectetur adipiscing elit
+- Sed do eiusmod tempor incididunt
+- ut labore et dolore magna
+:::
+
+<img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)">
 
 :::
 
