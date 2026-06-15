@@ -1,4 +1,6 @@
-# Appendix
+# Appendix {.unnumbered}
+
+**[← Back to Course Homepage](../../index.html)**
 
 ## Overview of Ethical Frameworks
 TK
