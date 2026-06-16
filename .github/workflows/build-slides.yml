@@ -39,10 +39,10 @@ jobs:
           BUILD_PDFS: "false"
         run: cd docs/slides && bash ./build_all_quarto.sh
 
-      - name: Compile Marp slides to HTML
-        env:
-          BUILD_PDFS: "false"
-        run: cd docs/slides/marp_archive && bash ./build_all_marp.sh
+      # - name: Compile Marp slides to HTML
+      #   env:
+      #     BUILD_PDFS: "false"
+      #   run: cd docs/slides/marp_archive && bash ./build_all_marp.sh
 
       - name: Commit compiled slide outputs
         run: |
