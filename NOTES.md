@@ -49,6 +49,38 @@ Learning DS Textbook:
   * stationarity
 * Classification
 
+## Lecture notes
+
+### 'Garden of Forking Data'
+* https://www.youtube.com/watch?v=R1vcdhPBlXA
+* estimate a proportion
+* bayesian workflow for an estimator
+* estimand: proportion of _ covered by water
+	* estimates are always distributions, not points
+* sample, e.g. L/W/L/L/W/W/L/W/W
+* how should we use the sample? How to produce a summary? How to represent uncertainty?
+* Workflow:
+	* 1. Define generative model
+	* 2. define specific estimated 
+	* 3. Design an estimator
+	* 4. Test
+	* 5. Analyze and summarize
+* connect DAG to function
+* "explanations with more ways to produce the sample are more plausible"
+* Jorge Luis Borges - El Jardin De Senderos Que Se Bifurcan
+* Example
+	* Four-sided die
+	* Five possible globes
+	* Assuming the globe is covered 25%, there are three ways to observe "WLW" from three rolls
+		* 8 ways (out of 64) if globe is 50% water
+		* 9 ways (out of 64) if globe is 75%
+	* If water is observed in the sample, the globe can't be all land.
+* "things that can happen more ways are more plausible"
+* probabilities: non-negative values that sum to one
+* 
+
+## Etc.
+
 
 [Data Scientist: The Sexiest Job of the 21st Century](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century)
 
