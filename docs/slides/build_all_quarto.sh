@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# build_all_quarto.sh — compile all Quarto revealjs slide decks to HTML and PDF
+# build_all_quarto.sh — compile all Quarto revealjs slide decks to HTML (and optionally PDF)
 # Usage: ./build_all_quarto.sh [output-dir]
 # If CHROME is set, it will be used as the Chrome/Chromium executable for PDF export.
-# Set BUILD_PDFS=false to render HTML only.
+# Set BUILD_PDFS=true to also generate PDF files.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTPUT_DIR="${1:-$SCRIPT_DIR}"
 SERVER_ROOT="${QUARTO_SERVER_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 QUARTO_CMD="${QUARTO_CMD:-quarto}"
 PORT="${QUARTO_PORT:-}"
-BUILD_PDFS="${BUILD_PDFS:-true}"
+BUILD_PDFS="${BUILD_PDFS:-false}"
 HAD_GITIGNORE=0
 if [[ -e "$SCRIPT_DIR/.gitignore" ]]; then
   HAD_GITIGNORE=1
@@ -51,6 +51,10 @@ find_chrome() {
 }
 
 mkdir -p "$OUTPUT_DIR"
+
+if [[ "$BUILD_PDFS" == "false" ]]; then
+  echo "[quarto] Building HTML only. To generate PDFs, use: BUILD_PDFS=true $0"
+fi
 
 SLIDE_FILES=()
 while IFS= read -r candidate; do
