@@ -250,13 +250,52 @@ $code-color: $ink !default;
 
   .slide-number {
     right: $slide-number-right !important;
+    // Reveal sets display inline, so !important is needed to flex-center.
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     width: $slide-number-width;
+    height: $footer-height;
     padding: 0;
+    line-height: 1;
     text-align: center;
     font-size: $slide-number-size !important;
     font-weight: 400;
     z-index: 21;
     a { font: inherit; color: inherit !important; }
-    .slide-number-current { font-weight: 700; }
+    .slide-number-current { font-weight: 400; }
+  }
+}
+
+// On image-only slides the footer goes semi-transparent so the image runs
+// full-bleed behind it. Every footer element — text, both badges, and the
+// slide number — shares one opacity so nothing stands out. Activates when the
+// slide carries data-state="image-only" (reveal mirrors that as a body class).
+$image-only-footer-opacity: 0.6;
+
+.image-only {
+  .reveal.reveal .footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    color: $text;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+
+    .footer-text {
+      opacity: $image-only-footer-opacity;
+    }
+
+    img[alt="UIC logo"] {
+      filter: none;
+      opacity: $image-only-footer-opacity;
+    }
+
+    img[alt="CC BY-NC-SA"] {
+      opacity: $image-only-footer-opacity;
+    }
+  }
+
+  .reveal.reveal .slide-number {
+    color: $text;
+    opacity: $image-only-footer-opacity;
   }
 }

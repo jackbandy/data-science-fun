@@ -9,6 +9,10 @@
   font-weight: 400;
 }
 
+.reveal .footer .footer-text:first-of-type {
+  margin-left: 16px;
+}
+
 .reveal .footer .footer-text a {
   font: inherit !important;
   color: inherit !important;
