@@ -79,6 +79,11 @@ Learning DS Textbook:
 * probabilities: non-negative values that sum to one
 * 
 
+## TODO
+
+* Add a side-by-side variant of the `.code-figure-slide` template (code and figure
+  left/right instead of stacked top/bottom).
+
 ## Etc.
 
 
