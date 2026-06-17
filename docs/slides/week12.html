@@ -30,8 +30,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
-  <link rel="stylesheet" href="week12_files/libs/revealjs/dist/theme/quarto-fac9c606639613c46301e480920ca740.css">
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="week12_files/libs/revealjs/dist/theme/quarto-23d907822c661540ca09933137d58514.css">
   <link rel="stylesheet" href="theme/revealjs-common.css">
   <link rel="stylesheet" href="theme/responsive-footer.css">
   <link href="week12_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -139,26 +158,481 @@
 </section>
 <section id="week-12-slide-deck" class="slide level1 course-title">
 <h1>Week 12 Slide Deck</h1>
-<h2 id="network-analysis">Network Analysis</h2>
+<h2 id="intro-to-network-analysis">Intro to Network Analysis</h2>
 <p>Jack Bandy 2026</p>
 </section>
-<section id="demo-content-slide" class="slide level1">
-<h1>Demo Content Slide</h1>
-<p>Placeholder content for Week 12.</p>
-<ul>
-<li>Network data</li>
-<li>Graph measures</li>
-<li>Network analysis</li>
-</ul>
+<section id="topic-title-placeholder" class="slide level1 course-title photo-title" data-state="photo-title" data-background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" data-background-size="cover">
+<h1>Topic Title Placeholder</h1>
+<p>CS 418 · Week 12 · 🟠 35th/Archer 🟠</p>
 </section>
-<section id="sources" class="slide level1 sources">
-<h1>Sources</h1>
+<section id="section" class="slide level1 photo-only" data-state="photo-only" data-background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" data-background-size="cover">
+<h1></h1>
+</section>
+<section id="what-is-a-graph" class="slide level1">
+<h1>What is a Graph?</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>A graph represents objects and relationships</strong></p>
+<ul>
+<li class="fragment"><span class="math inline">\(G = (V, E)\)</span></li>
+<li class="fragment"><span class="math inline">\(V\)</span> = vertices (objects)</li>
+<li class="fragment"><span class="math inline">\(E\)</span> = edges (relationships)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Social network graph <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="graph-applications" class="slide level1">
+<h1>Graph Applications</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Graphs model many real-world systems:</strong></p>
+<ul>
+<li class="fragment">World Wide Web</li>
+<li class="fragment">Social networks</li>
+<li class="fragment">Transportation networks</li>
+<li class="fragment">Computer networks</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Graph applications <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="graph-terminology" class="slide level1">
+<h1>Graph Terminology</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Key concepts:</strong></p>
+<ul>
+<li class="fragment"><strong>Endpoints:</strong> Vertices connected by an edge</li>
+<li class="fragment"><strong>Adjacent:</strong> Vertices connected by an edge</li>
+<li class="fragment"><strong>Degree:</strong> Number of edges on a vertex</li>
+<li class="fragment"><strong>Self-loop:</strong> Edge from vertex to itself</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Graph terminology <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="adjacency-matrix" class="slide level1">
+<h1>Adjacency Matrix</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Matrix representation of graphs</strong></p>
+<!-- $$M_{ij} = \begin{cases}
+1 & \text{if edge exists} \\
+0 & \text{if no edge}
+\end{cases}$$ -->
+<!-- complex formula — left commented for now -->
+<ul>
+<li class="fragment">Efficient for dense graphs</li>
+<li class="fragment">Easy to check connections</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Adjacency matrix example <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="types-of-graphs" class="slide level1">
+<h1>Types of Graphs</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Three important types:</strong></p>
+<ul>
+<li class="fragment"><strong>Directed:</strong> Edges have direction</li>
+<li class="fragment"><strong>Weighted:</strong> Edges have values</li>
+<li class="fragment"><strong>Attributed:</strong> Nodes have properties</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Graph types <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="community-detection" class="slide level1">
+<h1>Community Detection</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Finding groups in networks</strong></p>
+<ul>
+<li class="fragment">Communities = densely connected groups</li>
+<li class="fragment">Sparse connections between groups</li>
+<li class="fragment">Social groups in social networks</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Community detection <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="goodness-metrics" class="slide level1">
+<h1>Goodness Metrics</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Measuring community quality</strong></p>
+<p><strong>Density:</strong> Ratio of actual to possible edges</p>
+<p><span class="math display">\[\frac{2E_s}{S(S-1)}\]</span></p>
+<p><strong>Conductance:</strong> Fraction of edges leaving</p>
+<p><span class="math display">\[\frac{O_s}{2E_s + O_s}\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Modularity concept <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="modularity" class="slide level1">
+<h1>Modularity</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Most popular community detection metric</strong></p>
+<!-- $$Q = \frac{1}{2m} \sum_{v,w} \left[ A_{vw} - \frac{k_v k_w}{2m} \right] \delta(v,w)$$ -->
+<!-- complex formula — left commented for now -->
+<ul>
+<li class="fragment">Actual edges − Expected edges</li>
+<li class="fragment">Higher Q = better communities</li>
+<li class="fragment">Maximizing Q is NP-complete</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Modularity visualization <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="louvain-method" class="slide level1">
+<h1>Louvain Method</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Greedy modularity optimization</strong></p>
 <ol type="1">
+<li class="fragment">Start with each node as community</li>
+<li class="fragment">Move nodes to maximize Q</li>
+<li class="fragment">Aggregate communities into supernodes</li>
+<li class="fragment">Repeat until convergence</li>
+</ol>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Community detection <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="network-diffusion" class="slide level1">
+<h1>Network Diffusion</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>How events spread through networks</strong></p>
+<p><strong>Key questions:</strong></p>
+<ul>
+<li class="fragment">Will it spread?</li>
+<li class="fragment">Which nodes to target?</li>
+<li class="fragment">How to stop it?</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Simple network <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="broadcast-vs.-viral" class="slide level1">
+<h1>Broadcast vs.&nbsp;Viral</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Two ways content reaches a crowd</strong> <span class="citation" data-cites="goel2016structural">(<a href="#/references-credits" role="doc-biblioref" onclick="">Goel et al. 2016</a>)</span></p>
+<ul>
+<li class="fragment"><strong>Broadcast:</strong> one source reaches many directly (e.g.&nbsp;a front page, the Super Bowl)</li>
+<li class="fragment"><strong>Viral:</strong> person-to-person, over many generations</li>
+<li class="fragment">Real cascades mix the two</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Broadcast (shallow) vs.&nbsp;viral (deep) diffusion trees <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="structural-virality" class="slide level1">
+<h1>Structural Virality</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>A single number for tree shape</strong> <span class="citation" data-cites="goel2016structural">(<a href="#/references-credits" role="doc-biblioref" onclick="">Goel et al. 2016</a>)</span></p>
+<p>Average distance between all pairs of nodes in a diffusion tree (the <em>Wiener index</em>):</p>
+<p><span class="math display">\[\nu(T) = \frac{1}{n(n-1)} \sum_{i=1}^{n} \sum_{j=1}^{n} d_{ij}\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\nu(T) \approx 2\)</span>: pure broadcast (a star)</li>
+<li class="fragment">Large <span class="math inline">\(\nu(T)\)</span>: deep, multigenerational spread</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Diffusion tree with pairwise distances <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="what-spreads-online" class="slide level1">
+<h1>What Spreads Online?</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>~1 billion Twitter diffusion events</strong> <span class="citation" data-cites="goel2016structural">(<a href="#/references-credits" role="doc-biblioref" onclick="">Goel et al. 2016</a>)</span></p>
+<ul>
+<li class="fragment">Over 99% of cascades die in one generation</li>
+<li class="fragment">Virality varies widely (2 to 30+) — <strong>no</strong> “tipping point”</li>
+<li class="fragment">Virality stays low and barely grows with size</li>
+<li class="fragment">Popularity is driven mostly by the largest broadcast</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Distribution of cascade sizes and structural virality <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="virus-propagation-models" class="slide level1">
+<h1>Virus Propagation Models</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>VPMs simplify disease spread</strong></p>
+<ul>
+<li class="fragment">How virulent?</li>
+<li class="fragment">Recovery rate?</li>
+<li class="fragment">Immunity?</li>
+<li class="fragment">Immunity duration?</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>SIS model <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="sis-model" class="slide level1">
+<h1><span class="math inline">\(SIS\)</span> Model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Susceptible → Infected → Susceptible</strong></p>
+<ul>
+<li class="fragment">Example: flu</li>
+<li class="fragment"><span class="math inline">\(\beta\)</span> = transmission probability</li>
+<li class="fragment"><span class="math inline">\(\delta\)</span> = healing probability</li>
+<li class="fragment">No immunity</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>SIS model diagram <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="sir-model" class="slide level1">
+<h1><span class="math inline">\(SIR\)</span> Model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Susceptible → Infected → Recovered</strong></p>
+<ul>
+<li class="fragment">Example: mumps</li>
+<li class="fragment"><span class="math inline">\(\beta\)</span> = transmission probability</li>
+<li class="fragment"><span class="math inline">\(\delta\)</span> = healing probability</li>
+<li class="fragment">Life-time immunity</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>SIR model diagram <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="sirs-model" class="slide level1">
+<h1><span class="math inline">\(SIRS\)</span> Model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Temporary immunity</strong></p>
+<ul>
+<li class="fragment">Example: whooping cough</li>
+<li class="fragment"><span class="math inline">\(\gamma\)</span> = immunity loss probability</li>
+<li class="fragment">Immunity wears off over time</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>SIRS model diagram <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="seiv-model" class="slide level1">
+<h1><span class="math inline">\(SEIV\)</span> Model</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Most complex VPM</strong></p>
+<ul>
+<li class="fragment"><strong>E</strong> = Exposed (incubation)</li>
+<li class="fragment"><strong>V</strong> = Vaccinated</li>
+<li class="fragment"><span class="math inline">\(\varepsilon\)</span> = virus maturation</li>
+<li class="fragment"><span class="math inline">\(\theta\)</span> = vaccination rate</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>SEIV model diagram <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="epidemic-threshold" class="slide level1">
+<h1>Epidemic Threshold</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Critical point for virus spread</strong></p>
+<p><span class="math display">\[s = \lambda_1 \cdot C_{VPM}\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(s &lt; 1\)</span>: Virus dies out</li>
+<li class="fragment"><span class="math inline">\(s &gt; 1\)</span>: Epidemic spreads</li>
+<li class="fragment"><span class="math inline">\(\lambda_1\)</span> = network connectivity</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Epidemic threshold <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="network-connectivity" class="slide level1">
+<h1>Network Connectivity</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Why spectral radius matters</strong></p>
+<ul>
+<li class="fragment">Average degree ignores paths</li>
+<li class="fragment"><span class="math inline">\(\lambda_1\)</span> considers all path lengths</li>
+<li class="fragment">Better predicts spread</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Network connectivity examples <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="effective-strength" class="slide level1">
+<h1>Effective Strength</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Predicting epidemic spread</strong></p>
+<p><span class="math display">\[s = \lambda_1 \cdot C_{VPM}\]</span></p>
+<p><strong>For SIS:</strong> <span class="math inline">\(s = \lambda_1 \cdot \frac{\beta}{\delta}\)</span></p>
+<ul>
+<li class="fragment">Higher connectivity → more spread</li>
+<li class="fragment">Higher transmission → more spread</li>
+<li class="fragment">Higher healing → less spread</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Epidemic threshold visualization <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="immunization-problem" class="slide level1">
+<h1>Immunization Problem</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Which <span class="math inline">\(k\)</span> nodes to vaccinate?</strong></p>
+<p><strong>Goal:</strong> Minimize <span class="math inline">\(\lambda_1\)</span></p>
+<p><strong>Approaches:</strong></p>
+<ul>
+<li class="fragment">Random (poor)</li>
+<li class="fragment">High-degree nodes (better)</li>
+<li class="fragment">NetShield (best)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Network connectivity <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="netshield-algorithm" class="slide level1">
+<h1>NetShield Algorithm</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Efficient immunization</strong></p>
+<!-- $$Sv(S) = \sum_{i \in S} 2\lambda_1 u_1(i)^2 - \sum_{i,j \in S} A(i,j) u_1(i) u_1(j)$$ -->
+<!-- complex formula — left commented for now -->
+<ul>
+<li class="fragment">Approximates eigen-drop</li>
+<li class="fragment">Greedy selection</li>
+<li class="fragment">Outperforms heuristics</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Community detection showing key nodes <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="key-takeaways" class="slide level1">
+<h1>Key Takeaways</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Network Analysis:</strong></p>
+<ul>
+<li class="fragment">Graphs model relationships</li>
+<li class="fragment">Communities reveal structure</li>
+<li class="fragment">Modularity measures quality</li>
+<li class="fragment">VPMs model diffusion</li>
+<li class="fragment"><span class="math inline">\(\lambda_1\)</span> predicts spread</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../assets/orange-line/orange-line-trace-with-stops.svg" style="border: 1px solid #999; padding: 6px; max-width: 100%; max-height: 440px; object-fit: contain; display: block; margin: 0 auto;"></p>
+<div style="text-align: center;">
+<p>Network visualization <em>(placeholder)</em></p>
+</div>
+</div></div>
+</section>
+<section id="references-credits" class="slide level1 sources smaller scrollable">
+<h1>References &amp; Credits</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-blondel2008" class="csl-entry" role="listitem">
+Blondel, Vincent D., Jean-Loup Guillaume, Renaud Lambiotte, and Etienne Lefebvre. 2008. <span>“Fast Unfolding of Communities in Large Networks.”</span> <em>Journal of Statistical Mechanics: Theory and Experiment</em> 2008 (10): P10008. <a href="https://doi.org/10.1088/1742-5468/2008/10/P10008">https://doi.org/10.1088/1742-5468/2008/10/P10008</a>.
+</div>
+<div id="ref-chakrabarti2012" class="csl-entry" role="listitem">
+Chakrabarti, Deepayan, and Christos Faloutsos. 2012. <em>Graph Mining: Laws, Tools, and Case Studies</em>. Synthesis Lectures on Data Mining and Knowledge Discovery. Morgan &amp; Claypool. <a href="https://doi.org/10.2200/S00449ED1V01Y201209DMK006">https://doi.org/10.2200/S00449ED1V01Y201209DMK006</a>.
+</div>
+<div id="ref-fortunato2010" class="csl-entry" role="listitem">
+Fortunato, Santo. 2010. <span>“Community Detection in Graphs.”</span> <em>Physics Reports</em> 486 (3–5): 75–174. <a href="https://doi.org/10.1016/j.physrep.2009.11.002">https://doi.org/10.1016/j.physrep.2009.11.002</a>.
+</div>
+<div id="ref-goel2016structural" class="csl-entry" role="listitem">
+Goel, Sharad, Ashton Anderson, Jake Hofman, and Duncan J. Watts. 2016. <span>“The Structural Virality of Online Diffusion.”</span> <em>Management Science</em> 62 (1): 180–96. <a href="https://doi.org/10.1287/mnsc.2015.2158">https://doi.org/10.1287/mnsc.2015.2158</a>.
+</div>
+<div id="ref-newman2004" class="csl-entry" role="listitem">
+Newman, M. E. J., and M. Girvan. 2004. <span>“Finding and Evaluating Community Structure in Networks.”</span> <em>Physical Review E</em> 69 (2): 026113. <a href="https://doi.org/10.1103/PhysRevE.69.026113">https://doi.org/10.1103/PhysRevE.69.026113</a>.
+</div>
+<div id="ref-prakash2010" class="csl-entry" role="listitem">
+Prakash, B. Aditya, Deepayan Chakrabarti, Nicholas C. Valler, Michalis Faloutsos, and Christos Faloutsos. 2010. <em>Got the Flu (or Mumps)? <span>Check</span> the Eigenvalue!</em> <a href="https://arxiv.org/abs/1004.0060">https://arxiv.org/abs/1004.0060</a>.
+</div>
+<div id="ref-tong2010" class="csl-entry" role="listitem">
+Tong, Hanghang, B. Aditya Prakash, Charalampos Tsourakakis, Tina Eliassi-Rad, Christos Faloutsos, and Duen Horng Chau. 2010. <span>“On the Vulnerability of Large Graphs.”</span> <em>Proceedings of the 2010 IEEE International Conference on Data Mining (ICDM)</em>, 1091–96. <a href="https://doi.org/10.1109/ICDM.2010.54">https://doi.org/10.1109/ICDM.2010.54</a>.
+</div>
+</div>
+<div class="credits">
+<ul>
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week12.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week12.md</a>.</li>
-<li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.</li>
+<li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart. Network analysis content heavily adapted from Gonzalo Bello’s <strong>CS 418 - Lecture Slides 20 - Network Analysis.pdf</strong>.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 <li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>
-</ol>
+</ul>
+</div>
 
 </section>
     </div>

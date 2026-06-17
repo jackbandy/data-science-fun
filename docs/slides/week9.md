@@ -14,6 +14,16 @@ Jack Bandy
 
 ---
 
+# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
+
+CS 418 · Week 9 · 🟠 Roosevelt 🟠
+
+---
+
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
+
+---
+
 # Demo Content Slide
 
 Placeholder content for Week 9.

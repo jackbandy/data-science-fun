@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 380">
+  <!-- Social network as a graph: vertices = users, edges = friendships (CS 418 L20, slide 2) -->
+  <style>
+    text { font-family: 'Libre Franklin','ITC Franklin Gothic',Arial,sans-serif; }
+  </style>
+
+  <!-- Edges -->
+  <g stroke="#111111" stroke-width="2.5">
+    <line x1="150" y1="120" x2="250" y2="120"/>
+    <line x1="150" y1="120" x2="100" y2="220"/>
+    <line x1="150" y1="120" x2="200" y2="220"/>
+    <line x1="250" y1="120" x2="350" y2="120"/>
+    <line x1="250" y1="120" x2="300" y2="220"/>
+    <line x1="250" y1="120" x2="200" y2="220"/>
+    <line x1="350" y1="120" x2="400" y2="220"/>
+    <line x1="350" y1="120" x2="300" y2="220"/>
+    <line x1="100" y1="220" x2="200" y2="220"/>
+    <line x1="200" y1="220" x2="300" y2="220"/>
+    <line x1="300" y1="220" x2="400" y2="220"/>
+  </g>
+
+  <!-- Vertices (users) -->
+  <g text-anchor="middle" font-size="28" font-weight="700">
+    <circle cx="150" cy="120" r="33" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <text x="150" y="131" fill="#111111">A</text>
+    <circle cx="250" cy="120" r="33" fill="#f9461c" stroke="#c83214" stroke-width="3"/>
+    <text x="250" y="131" fill="#ffffff">B</text>
+    <circle cx="350" cy="120" r="33" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <text x="350" y="131" fill="#111111">C</text>
+    <circle cx="100" cy="220" r="33" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <text x="100" y="231" fill="#111111">D</text>
+    <circle cx="200" cy="220" r="33" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <text x="200" y="231" fill="#111111">E</text>
+    <circle cx="300" cy="220" r="33" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <text x="300" y="231" fill="#111111">F</text>
+    <circle cx="400" cy="220" r="33" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <text x="400" y="231" fill="#111111">G</text>
+  </g>
+
+  <!-- Caption -->
+  <text x="250" y="320" text-anchor="middle" fill="#565a5c" font-size="18">Vertices = users</text>
+  <text x="250" y="345" text-anchor="middle" fill="#565a5c" font-size="18">Edges = friendships</text>
+</svg>

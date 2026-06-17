@@ -109,6 +109,16 @@ Jack Bandy
 
 ---
 
+# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
+
+CS 418 · Week 3 · 🟠 Quincy 🟠
+
+---
+
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
+
+---
+
 
 
 # Data Formats {.section-header}

@@ -14,6 +14,11 @@ Jack Bandy
 
 ---
 
+
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
+
+---
+
 # Demo Content Slide
 
 Placeholder content for Week 1.

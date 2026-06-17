@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260">
+  <!-- Types of graphs: directed / weighted / attributed (CS 418 L20, slide 6) -->
+  <style>
+    text { font-family: 'Libre Franklin','ITC Franklin Gothic',Arial,sans-serif; }
+  </style>
+  <defs>
+    <marker id="gt-arrow" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 5 2.5 L 0 5 z" fill="#111111"/>
+    </marker>
+  </defs>
+
+  <!-- Directed -->
+  <g id="directed">
+    <text x="100" y="28" text-anchor="middle" fill="#111111" font-size="18" font-weight="700">Directed</text>
+    <line x1="76" y1="92" x2="124" y2="92" stroke="#111111" stroke-width="3" marker-end="url(#gt-arrow)"/>
+    <line x1="132" y1="112" x2="110" y2="146" stroke="#111111" stroke-width="3" marker-end="url(#gt-arrow)"/>
+    <line x1="88" y1="146" x2="68" y2="114" stroke="#111111" stroke-width="3" marker-end="url(#gt-arrow)"/>
+    <circle cx="60" cy="100" r="20" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <circle cx="140" cy="100" r="20" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <circle cx="100" cy="160" r="20" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <text x="100" y="215" text-anchor="middle" fill="#565a5c" font-size="14">Edges have direction</text>
+  </g>
+
+  <!-- Weighted -->
+  <g id="weighted">
+    <text x="300" y="28" text-anchor="middle" fill="#111111" font-size="18" font-weight="700">Weighted</text>
+    <line x1="276" y1="92" x2="324" y2="92" stroke="#111111" stroke-width="3"/>
+    <line x1="332" y1="112" x2="310" y2="146" stroke="#111111" stroke-width="3"/>
+    <line x1="288" y1="146" x2="268" y2="114" stroke="#111111" stroke-width="3"/>
+    <circle cx="260" cy="100" r="20" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <circle cx="340" cy="100" r="20" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <circle cx="300" cy="160" r="20" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+    <!-- Edge weights -->
+    <g text-anchor="middle" font-size="12" font-weight="700">
+      <circle cx="300" cy="92" r="11" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+      <text x="300" y="97" fill="#111111">5</text>
+      <circle cx="327" cy="132" r="11" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+      <text x="327" y="137" fill="#111111">3</text>
+      <circle cx="273" cy="132" r="11" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+      <text x="273" y="137" fill="#111111">7</text>
+    </g>
+    <text x="300" y="215" text-anchor="middle" fill="#565a5c" font-size="14">Edges have weights</text>
+  </g>
+
+  <!-- Attributed -->
+  <g id="attributed">
+    <text x="500" y="28" text-anchor="middle" fill="#111111" font-size="18" font-weight="700">Attributed</text>
+    <line x1="476" y1="92" x2="524" y2="92" stroke="#111111" stroke-width="3"/>
+    <line x1="532" y1="112" x2="510" y2="146" stroke="#111111" stroke-width="3"/>
+    <line x1="488" y1="146" x2="468" y2="114" stroke="#111111" stroke-width="3"/>
+    <g text-anchor="middle" font-size="16" font-weight="700">
+      <circle cx="460" cy="100" r="20" fill="#f9461c" stroke="#c83214" stroke-width="3"/>
+      <text x="460" y="106" fill="#ffffff">A</text>
+      <circle cx="540" cy="100" r="20" fill="#565a5c" stroke="#1a1a1a" stroke-width="3"/>
+      <text x="540" y="106" fill="#ffffff">B</text>
+      <circle cx="500" cy="160" r="20" fill="#aaaaaa" stroke="#565a5c" stroke-width="3"/>
+      <text x="500" y="166" fill="#1a1a1a">C</text>
+    </g>
+    <text x="500" y="215" text-anchor="middle" fill="#565a5c" font-size="14">Nodes carry attributes</text>
+  </g>
+</svg>

@@ -14,6 +14,16 @@ Jack Bandy
 
 ---
 
+# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
+
+CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
+
+---
+
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
+
+---
+
 # Demo Content Slide
 
 Placeholder content for Week 2.

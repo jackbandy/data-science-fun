@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360">
+  <!-- SEIV virus propagation model (CS 418 L20, slide 20) -->
+  <style>
+    text { font-family: 'Libre Franklin','ITC Franklin Gothic',Arial,sans-serif; }
+  </style>
+  <defs>
+    <marker id="seiv-arrow" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 5 2.5 L 0 5 z" fill="#111111"/>
+    </marker>
+  </defs>
+
+  <!-- Transitions -->
+  <!-- S -> E (beta) -->
+  <line x1="170" y1="110" x2="550" y2="110" stroke="#111111" stroke-width="2.5" marker-end="url(#seiv-arrow)"/>
+  <text x="360" y="96" text-anchor="middle" fill="#111111" font-size="20" font-weight="700" font-style="italic">&#946;</text>
+  <!-- E -> I (epsilon) -->
+  <path d="M 600 155 Q 612 220 593 246" fill="none" stroke="#111111" stroke-width="2.5" marker-end="url(#seiv-arrow)"/>
+  <text x="624" y="205" text-anchor="middle" fill="#111111" font-size="20" font-weight="700" font-style="italic">&#949;</text>
+  <!-- I -> V (delta) -->
+  <line x1="535" y1="280" x2="330" y2="280" stroke="#111111" stroke-width="2.5" marker-end="url(#seiv-arrow)"/>
+  <text x="430" y="302" text-anchor="middle" fill="#111111" font-size="20" font-weight="700" font-style="italic">&#948;</text>
+  <!-- V -> S (gamma) -->
+  <path d="M 270 248 Q 150 210 138 152" fill="none" stroke="#111111" stroke-width="2.5" marker-end="url(#seiv-arrow)"/>
+  <text x="172" y="205" text-anchor="middle" fill="#111111" font-size="20" font-weight="700" font-style="italic">&#947;</text>
+  <!-- S -> V (theta) -->
+  <path d="M 158 152 Q 230 215 268 250" fill="none" stroke="#111111" stroke-width="2.5" marker-end="url(#seiv-arrow)"/>
+  <text x="238" y="186" text-anchor="middle" fill="#111111" font-size="20" font-weight="700" font-style="italic">&#952;</text>
+
+  <!-- States -->
+  <circle cx="120" cy="110" r="45" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+  <text x="120" y="120" text-anchor="middle" fill="#111111" font-size="28" font-weight="700">S</text>
+  <circle cx="600" cy="110" r="45" fill="#aaaaaa" stroke="#565a5c" stroke-width="3"/>
+  <text x="600" y="120" text-anchor="middle" fill="#1a1a1a" font-size="28" font-weight="700">E</text>
+  <circle cx="600" cy="280" r="45" fill="#f9461c" stroke="#c83214" stroke-width="3"/>
+  <text x="600" y="290" text-anchor="middle" fill="#ffffff" font-size="28" font-weight="700">I</text>
+  <circle cx="290" cy="280" r="45" fill="#565a5c" stroke="#1a1a1a" stroke-width="3"/>
+  <text x="290" y="290" text-anchor="middle" fill="#ffffff" font-size="28" font-weight="700">V</text>
+
+  <text x="120" y="42" text-anchor="middle" fill="#565a5c" font-size="14">Susceptible</text>
+  <text x="600" y="42" text-anchor="middle" fill="#565a5c" font-size="14">Exposed</text>
+  <text x="600" y="345" text-anchor="middle" fill="#565a5c" font-size="14">Infected</text>
+  <text x="290" y="345" text-anchor="middle" fill="#565a5c" font-size="14">Vaccinated</text>
+</svg>
