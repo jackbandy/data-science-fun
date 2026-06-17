@@ -15,7 +15,7 @@ The data science lifecycle.
 *This chapter is in-progress.*
 
 ## What "understanding" includes
-TK
+In the data science lifecycle proposed by *Learning Data Science,* understanding is split into "understanding the data" and "understanding the world." The two are linked, but not the same...
 
 ### Understanding the data
 
