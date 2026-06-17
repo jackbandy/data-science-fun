@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <!-- SIS virus propagation model (CS 418 L20, slide 17) -->
+  <style>
+    text { font-family: 'Libre Franklin','ITC Franklin Gothic',Arial,sans-serif; }
+  </style>
+  <defs>
+    <marker id="sis-arrow" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 5 2.5 L 0 5 z" fill="#111111"/>
+    </marker>
+  </defs>
+
+  <!-- Transitions -->
+  <path d="M 145 100 Q 200 70 255 100" fill="none" stroke="#111111" stroke-width="2.5" marker-end="url(#sis-arrow)"/>
+  <text x="200" y="62" text-anchor="middle" fill="#111111" font-size="20" font-weight="700" font-style="italic">&#946;</text>
+  <path d="M 255 150 Q 200 180 145 150" fill="none" stroke="#111111" stroke-width="2.5" marker-end="url(#sis-arrow)"/>
+  <text x="200" y="198" text-anchor="middle" fill="#111111" font-size="20" font-weight="700" font-style="italic">&#948;</text>
+
+  <!-- States -->
+  <circle cx="100" cy="125" r="45" fill="#EEEEEE" stroke="#111111" stroke-width="3"/>
+  <text x="100" y="135" text-anchor="middle" fill="#111111" font-size="28" font-weight="700">S</text>
+  <circle cx="300" cy="125" r="45" fill="#f9461c" stroke="#c83214" stroke-width="3"/>
+  <text x="300" y="135" text-anchor="middle" fill="#ffffff" font-size="28" font-weight="700">I</text>
+
+  <text x="100" y="205" text-anchor="middle" fill="#565a5c" font-size="15">Susceptible</text>
+  <text x="300" y="205" text-anchor="middle" fill="#565a5c" font-size="15">Infected</text>
+</svg>

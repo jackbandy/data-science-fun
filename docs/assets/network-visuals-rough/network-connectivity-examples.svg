@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300">
+  <!-- Connectivity examples: clique / chain / star with largest eigenvalue lambda_1 -->
+  <style>
+    text { font-family: 'Libre Franklin','ITC Franklin Gothic',Arial,sans-serif; }
+  </style>
+
+  <!-- Clique (focal: orange) -->
+  <g id="clique">
+    <text x="90" y="30" text-anchor="middle" fill="#111111" font-size="20" font-weight="700">Clique</text>
+    <g stroke="#c83214" stroke-width="1.5">
+      <line x1="90" y1="80" x2="145" y2="105"/>
+      <line x1="90" y1="80" x2="145" y2="175"/>
+      <line x1="90" y1="80" x2="90" y2="200"/>
+      <line x1="90" y1="80" x2="35" y2="175"/>
+      <line x1="90" y1="80" x2="35" y2="105"/>
+      <line x1="145" y1="105" x2="145" y2="175"/>
+      <line x1="145" y1="105" x2="90" y2="200"/>
+      <line x1="145" y1="105" x2="35" y2="175"/>
+      <line x1="145" y1="105" x2="35" y2="105"/>
+      <line x1="145" y1="175" x2="90" y2="200"/>
+      <line x1="145" y1="175" x2="35" y2="175"/>
+      <line x1="145" y1="175" x2="35" y2="105"/>
+      <line x1="90" y1="200" x2="35" y2="175"/>
+      <line x1="90" y1="200" x2="35" y2="105"/>
+      <line x1="35" y1="175" x2="35" y2="105"/>
+    </g>
+    <g fill="#f9461c" stroke="#c83214" stroke-width="2">
+      <circle cx="90" cy="80" r="15"/>
+      <circle cx="145" cy="105" r="15"/>
+      <circle cx="145" cy="175" r="15"/>
+      <circle cx="90" cy="200" r="15"/>
+      <circle cx="35" cy="175" r="15"/>
+      <circle cx="35" cy="105" r="15"/>
+    </g>
+    <text x="90" y="250" text-anchor="middle" fill="#444444" font-size="14">Avg. degree = 5</text>
+    <text x="90" y="270" text-anchor="middle" fill="#444444" font-size="14">&#955;&#8321; = 5</text>
+  </g>
+
+  <!-- Chain (neutral) -->
+  <g id="chain">
+    <text x="450" y="30" text-anchor="middle" fill="#111111" font-size="20" font-weight="700">Chain</text>
+    <g stroke="#111111" stroke-width="2.5">
+      <line x1="350" y1="140" x2="390" y2="140"/>
+      <line x1="390" y1="140" x2="430" y2="140"/>
+      <line x1="430" y1="140" x2="470" y2="140"/>
+      <line x1="470" y1="140" x2="510" y2="140"/>
+      <line x1="510" y1="140" x2="550" y2="140"/>
+    </g>
+    <g fill="#EEEEEE" stroke="#111111" stroke-width="2.5">
+      <circle cx="350" cy="140" r="15"/>
+      <circle cx="390" cy="140" r="15"/>
+      <circle cx="430" cy="140" r="15"/>
+      <circle cx="470" cy="140" r="15"/>
+      <circle cx="510" cy="140" r="15"/>
+      <circle cx="550" cy="140" r="15"/>
+    </g>
+    <text x="450" y="250" text-anchor="middle" fill="#444444" font-size="14">Avg. degree = 1.67</text>
+    <text x="450" y="270" text-anchor="middle" fill="#444444" font-size="14">&#955;&#8321; = 1.80</text>
+  </g>
+
+  <!-- Star (neutral, hub highlighted) -->
+  <g id="star">
+    <text x="750" y="30" text-anchor="middle" fill="#111111" font-size="20" font-weight="700">Star</text>
+    <g stroke="#111111" stroke-width="2.5">
+      <line x1="750" y1="140" x2="750" y2="80"/>
+      <line x1="750" y1="140" x2="810" y2="110"/>
+      <line x1="750" y1="140" x2="810" y2="170"/>
+      <line x1="750" y1="140" x2="750" y2="200"/>
+      <line x1="750" y1="140" x2="690" y2="170"/>
+      <line x1="750" y1="140" x2="690" y2="110"/>
+    </g>
+    <g fill="#EEEEEE" stroke="#111111" stroke-width="2.5">
+      <circle cx="750" cy="80" r="15"/>
+      <circle cx="810" cy="110" r="15"/>
+      <circle cx="810" cy="170" r="15"/>
+      <circle cx="750" cy="200" r="15"/>
+      <circle cx="690" cy="170" r="15"/>
+      <circle cx="690" cy="110" r="15"/>
+    </g>
+    <circle cx="750" cy="140" r="15" fill="#f9461c" stroke="#c83214" stroke-width="2.5"/>
+    <text x="750" y="250" text-anchor="middle" fill="#444444" font-size="14">Avg. degree = 1.67</text>
+    <text x="750" y="270" text-anchor="middle" fill="#444444" font-size="14">&#955;&#8321; = &#8730;5 = 2.24</text>
+  </g>
+</svg>

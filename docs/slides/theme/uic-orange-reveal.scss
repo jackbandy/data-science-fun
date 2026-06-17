@@ -218,7 +218,15 @@ $code-color: $ink !default;
     }
   }
   .sources h1 { font-size: $h1-size; }
-  .sources ol { font-size: 0.95rem; line-height: 1.9; color: $muted; }
+  .sources ol,
+  .sources #refs,
+  .sources div.references,
+  .sources .csl-entry,
+  .sources .credits ul { font-size: 0.82rem; line-height: 1.5; color: $muted; }
+  // Credits match the (unnumbered, hanging-indent) bibliography entries.
+  .sources .credits ul { list-style: none; padding-left: 0; margin-top: 0.35em; }
+  .sources .credits li { margin-left: 2em; text-indent: -2em; margin-bottom: 0.35em; }
+  .sources .csl-entry { margin-bottom: 0.35em; }
 }
 
 .reveal.reveal {
@@ -305,3 +313,53 @@ $image-only-footer-opacity: 0.6;
     opacity: $image-only-footer-opacity;
   }
 }
+
+// Photo title and photo-only slides: background-image fills the frame,
+// text goes white over the photo, footer gets a frosted-glass overlay.
+// Pair .course-title.photo-title with data-state="photo-title" and
+// .photo-only with data-state="photo-only".
+
+.reveal {
+  .course-title.photo-title {
+    background: transparent !important;
+
+    h1 {
+      color: $paper;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+      border-bottom-color: rgba(255, 255, 255, 0.5);
+    }
+
+    h2, p {
+      color: rgba(255, 255, 255, 0.94);
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .photo-only {
+    background: transparent !important;
+    h1 { display: none; }
+  }
+}
+
+$photo-footer-opacity: 0.65;
+
+@mixin photo-footer {
+  .reveal.reveal .footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    color: $text;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+
+    .footer-text { opacity: $photo-footer-opacity; }
+    img[alt="UIC logo"] { filter: none; opacity: $photo-footer-opacity; }
+    img[alt="CC BY-NC-SA"] { opacity: $photo-footer-opacity; }
+  }
+
+  .reveal.reveal .slide-number {
+    color: $text;
+    opacity: $photo-footer-opacity;
+  }
+}
+
+.photo-title { @include photo-footer; }
+.photo-only  { @include photo-footer; }

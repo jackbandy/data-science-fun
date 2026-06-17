@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300">
+  <!-- Epidemic threshold: effective strength s vs. 1 -->
+  <style>
+    text { font-family: 'Libre Franklin','ITC Franklin Gothic',Arial,sans-serif; }
+  </style>
+
+  <!-- Formula -->
+  <text x="250" y="40" text-anchor="middle" fill="#111111" font-size="18" font-style="italic">s = &#955;&#8321; &#183; C_VPM</text>
+  <text x="250" y="65" text-anchor="middle" fill="#777777" font-size="14">(effective strength = connectivity &#215; VPM constant)</text>
+
+  <!-- Threshold line -->
+  <line x1="50" y1="150" x2="450" y2="150" stroke="#111111" stroke-width="2" stroke-dasharray="9 8"/>
+  <text x="250" y="143" text-anchor="middle" fill="#111111" font-size="15" font-weight="700">Epidemic threshold (s = 1)</text>
+
+  <!-- Below threshold: virus dies out (neutral) -->
+  <rect x="60" y="160" width="180" height="100" fill="#f4f4f2" stroke="#ddd" stroke-width="1"/>
+  <text x="150" y="190" text-anchor="middle" fill="#565a5c" font-size="16" font-weight="700">s &lt; 1</text>
+  <text x="150" y="210" text-anchor="middle" fill="#565a5c" font-size="14">Virus dies out</text>
+  <g>
+    <line x1="138" y1="232" x2="142" y2="228" stroke="#777777" stroke-width="1.5"/>
+    <line x1="158" y1="228" x2="162" y2="232" stroke="#777777" stroke-width="1.5"/>
+    <circle cx="130" cy="235" r="8" fill="#EEEEEE" stroke="#111111" stroke-width="1.5"/>
+    <circle cx="150" cy="225" r="8" fill="#f9461c" stroke="#c83214" stroke-width="1.5"/>
+    <circle cx="170" cy="235" r="8" fill="#EEEEEE" stroke="#111111" stroke-width="1.5"/>
+  </g>
+
+  <!-- Above threshold: virus spreads (orange) -->
+  <rect x="260" y="160" width="180" height="100" fill="#f9461c" fill-opacity="0.12" stroke="#f9461c" stroke-width="1"/>
+  <text x="350" y="190" text-anchor="middle" fill="#c83214" font-size="16" font-weight="700">s &gt; 1</text>
+  <text x="350" y="210" text-anchor="middle" fill="#c83214" font-size="14">Virus spreads</text>
+  <g>
+    <line x1="338" y1="232" x2="342" y2="228" stroke="#777777" stroke-width="1.5"/>
+    <line x1="358" y1="228" x2="362" y2="232" stroke="#777777" stroke-width="1.5"/>
+    <line x1="342" y1="238" x2="338" y2="242" stroke="#777777" stroke-width="1.5"/>
+    <line x1="362" y1="238" x2="358" y2="242" stroke="#777777" stroke-width="1.5"/>
+    <circle cx="330" cy="235" r="8" fill="#f9461c" stroke="#c83214" stroke-width="1.5"/>
+    <circle cx="350" cy="225" r="8" fill="#f9461c" stroke="#c83214" stroke-width="1.5"/>
+    <circle cx="370" cy="235" r="8" fill="#f9461c" stroke="#c83214" stroke-width="1.5"/>
+    <circle cx="350" cy="245" r="8" fill="#f9461c" stroke="#c83214" stroke-width="1.5"/>
+  </g>
+</svg>

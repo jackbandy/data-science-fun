@@ -11,13 +11,13 @@ Where Do We Come From? What Are We? Where Are We Going? [@mfa_gauguin_where_do_w
 *This chapter is in-progress.*
 
 ## Concluding Remarks
-A common question people ask about technology and ethics is something along these lines: "does ethics need to change? The world is so different with X, Y, and/or Z, do we not need different approaches compared to the old-school?"
+A common question people ask about technology and ethics is something along these lines: "does ethics need to change? The world is so different with X, Y, and/or Z, do we not need different approaches compared to traditional, old-school ethics?"
 
-There has also been an analogous question in computer science education when it comes to programming languages: "do we need to teach students this new programming language?"
+There have also been analogous questions in computer science education: "do we need to teach students this new programming language? Should we update the curriculum to account for the newly-released X, Y, and/or Z?"
 
-One goal of this mini-book is to defend the answer to such questions as "no, not really." Basic ethical principles (and ethical dilemmas) remain stable, regardless of the new tools and technologies that surround them. To practice ethics in data science involves many of the same kinds of decisions required to practice ethics in any other profession: e.g., consider the potential consequences of your decisions, listen to concerns shared by others, make changes slowly and carefully, respect the dignity of each human being, and so on.
+One goal of this mini-book is to defend the answer to such questions as "no, not really." The fundamental ethical principles (and ethical dilemmas) remain stable, even as new tools and technologies surround them. To practice ethics in data science involves many of the same kinds of decisions required to practice ethics in any other time period or profession: e.g., consider the potential consequences of your decisions, listen to concerns shared by others, make changes slowly and carefully, respect the dignity of each and every human being, and so on.
 
-One of my professors in grad school, [Pablo Boczkowski](https://scholar.google.com/citations?user=Q4MLDisAAAAJ&hl=en), used to frame it this way: an old play can be performed on many new stages. In the context of technology, the old plays are often the enduring questions of humanity, related to our identity, our purpose, our origins, etc. Ann Taves has summarized these "enduring questions" as follows [@taves_worldview_studies_2019]:
+One of my professors in grad school, [Pablo Boczkowski](https://scholar.google.com/citations?user=Q4MLDisAAAAJ&hl=en), used to frame it this way: a very old play can be performed on new stages. In the context of technology, the "very old plays" are often enduring questions related to human identity, purpose, origins, and prospects. Ann Taves has summarized these "enduring questions" into six categories [@taves_worldview_studies_2019]:
 
 * REALITY (ontology): What is ultimate reality? What exists? What is real?
 * ORIGINS (cosmology): Where did it come from? How did we get here? (Where is "here"?) Where are we going?
@@ -26,15 +26,15 @@ One of my professors in grad school, [Pablo Boczkowski](https://scholar.google.c
 * GOAL (axiology): What is the good (the goal) for which we should strive?
 * PATH (praxeology): What do we need to do to reach the goal? What path should we follow? How do we ensure that we are on the path?
 
-Paul Gauguin offered an even shorter version in the title of his painting *Where Do We Come From? What Are We? Where Are We Going?* [@mfa_gauguin_where_do_we_come_from_1897], as shown above.
+Paul Gauguin offered an even shorter version in the title of his painting *Where Do We Come From? What Are We? Where Are We Going?* [@mfa_gauguin_where_do_we_come_from_1897], as shown in the image at the start of this chapter.
 
-Such questions are remarkably persistent across human history, and they overlap substantially with ethics.
+Such questions are remarkably persistent across human history, and their persistence helps explain why ethical principles can remain stable even in the face of rapid technological developments.
 
-To use the theatrical metaphors, the axiological question ("what is the good toward which we strive?") can be thought of as a play that has been performed, or perhaps improvised, across many moments of history. The person asking this question may be holding an iPhone 17 Pro, an iPhone 3G, a palm pilot, a rotary desk phone, a quill pen, a papyrus scroll, a clay tablet, or nothing at all. These are merely different stages upon which people act.
+To use the theatrical metaphors, an axiological question ("what is the good toward which we strive?") can be thought of as a play that has been performed, or perhaps improvised, across many moments of history. The person asking this question may be holding an iPhone 17 Pro, an iPhone 3G, a palm pilot, a rotary desk phone, a quill pen, a papyrus scroll, a clay tablet, or nothing at all. The changing tools and environments people use are merely different props and stages upon which they act.
 
-In 2025, I watched Sarah Snook play 26 different characters in a rendition of *The Picture of Dorian Gray*. It was a decidedly modern translation, as the stage used multiple massive LCD screens and technologies that would not have been dreamed of when the 1890 novella was written [@onions_picture_dorian_gray_2025].
+In 2025, Sarah Snook played 26 different characters in a two-hour rendition of *The Picture of Dorian Gray*, performed at the Music Box Theatre in New York City. It was a decidedly modern translation, as the stage used multiple massive LCD screens and other technologies that would not have been dreamed of when the 1890 novella was written [@onions_picture_dorian_gray_2025].
 
-And yet, it was the same play, the same story conceived in December, 1887 when Oscar Wilde visited South Kensington and came up with the original idea of the play.
+And yet, it was the same play, the same story conceived in December, 1887 when Oscar Wilde visited South Kensington and came up with the original idea.
 
 More TK.
 
@@ -48,6 +48,9 @@ Consent
 
 Data
 : Multiple datum.
+
+Data Science
+: TK
 
 Data triangulation
 : TK

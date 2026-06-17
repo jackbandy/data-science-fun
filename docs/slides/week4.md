@@ -14,6 +14,16 @@ Jack Bandy
 
 ---
 
+# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop04-washington-wells-b.jpg" background-size="cover"}
+
+CS 418 · Week 4 · 🟠 Washington/Wells 🟠
+
+---
+
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop04-washington-wells-b.jpg" background-size="cover"}
+
+---
+
 # Demo Content Slide
 
 Placeholder content for Week 4.
