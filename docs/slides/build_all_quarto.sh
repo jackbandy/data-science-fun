@@ -70,6 +70,11 @@ fi
 SERVER_PID=""
 TMP_DIR=""
 cleanup() {
+  # Restore any deck source left stamped if a render was interrupted.
+  for backup in "$SCRIPT_DIR"/*.stampbak; do
+    [[ -e "$backup" ]] || continue
+    mv -f "$backup" "${backup%.stampbak}"
+  done
   if [[ -n "$SERVER_PID" ]]; then
     kill "$SERVER_PID" >/dev/null 2>&1 || true
     wait "$SERVER_PID" 2>/dev/null || true
@@ -91,10 +96,17 @@ for slide in "${SLIDE_FILES[@]}"; do
   base="$(basename "${slide%.*}")"
   html_out="$OUTPUT_DIR/$base.html"
   echo "[quarto] Generating HTML: $html_out from $slide"
+  # Stamp the compile time into the Sources slide of a throwaway copy, render,
+  # then restore the pristine source so the timestamp never gets committed.
+  src_file="$SCRIPT_DIR/$(basename "$slide")"
+  cp "$src_file" "$src_file.stampbak"
+  python3 "$SCRIPT_DIR/stamp_source_note.py" "$src_file" \
+    || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
   (
     cd "$SCRIPT_DIR"
     "$QUARTO_CMD" render "$(basename "$slide")" --to revealjs --output "$base.html"
-  )
+  ) || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
+  mv -f "$src_file.stampbak" "$src_file"
   if [[ "$OUTPUT_DIR" != "$SCRIPT_DIR" ]]; then
     mv "$SCRIPT_DIR/$base.html" "$html_out"
     if [[ -d "$SCRIPT_DIR/${base}_files" ]]; then
