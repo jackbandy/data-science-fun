@@ -6,8 +6,8 @@
 <script src="week0_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week0_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week0_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week0_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="week0_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>Week 0 (CS 418 @ UIC)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -97,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week0_files/libs/revealjs/dist/theme/quarto-fac9c606639613c46301e480920ca740.css">
+  <link rel="stylesheet" href="week0_files/libs/revealjs/dist/theme/quarto-6e16026434328c62b60da3ac9759db0b.css">
   <link rel="stylesheet" href="theme/revealjs-common.css">
   <link rel="stylesheet" href="theme/responsive-footer.css">
   <link href="week0_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -234,14 +234,28 @@
 </section>
 <section id="tabsets" class="slide level1">
 <h1>Tabsets</h1>
+<p>Drop a finger on a random spot of the spinning globe: <strong>Water</strong> or <strong>Land</strong>? About 75% of Earth’s surface is water, so each toss is a coin flip weighted by <code>p</code>.</p>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Tab A</a></li><li><a href="#tabset-1-2">Tab B</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Python</a></li><li><a href="#tabset-1-2">R</a></li><li><a href="#tabset-1-3">Julia</a></li><li><a href="#tabset-1-4">JavaScript</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
-<p>Content for <code>Tab A</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> random</span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a><span class="kw">def</span> globe_toss(p<span class="op">=</span><span class="fl">0.75</span>):</span>
+<span id="cb1-4"><a href=""></a>    <span class="cf">return</span> <span class="st">"Water"</span> <span class="cf">if</span> random.random() <span class="op">&lt;</span> p <span class="cf">else</span> <span class="st">"Land"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tabset-1-2">
-<p>Content for <code>Tab B</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>globe_toss <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">p =</span> <span class="fl">0.75</span>) {</span>
+<span id="cb2-2"><a href=""></a>  <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Water"</span>, <span class="st">"Land"</span>), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fu">c</span>(p, <span class="dv">1</span> <span class="sc">-</span> p))</span>
+<span id="cb2-3"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href=""></a><span class="fu">globe_toss</span>(p <span class="op">=</span> <span class="fl">0.75</span>) <span class="op">=</span> <span class="fu">rand</span>() <span class="op">&lt;</span> p ? <span class="st">"Water"</span> <span class="op">:</span> <span class="st">"Land"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href=""></a><span class="kw">function</span> <span class="fu">globeToss</span>(p <span class="op">=</span> <span class="fl">0.75</span>) {</span>
+<span id="cb4-2"><a href=""></a>  <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">&lt;</span> p <span class="op">?</span> <span class="st">"Water"</span> <span class="op">:</span> <span class="st">"Land"</span><span class="op">;</span></span>
+<span id="cb4-3"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -252,32 +266,53 @@
 <li>Syntax highlighting works in revealjs slides</li>
 <li>Code uses the theme’s Courier stack</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode python hljs"><span id="cb1-1" class="hljs-ln-code"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb1-2" class="hljs-ln-code"><a href=""></a></span>
-<span id="cb1-3" class="hljs-ln-code"><a href=""></a></span>
-<span id="cb1-4" class="hljs-ln-code"><a href=""></a><span class="kw">def</span> summarize_ridership(stations: pl.DataFrame) <span class="op">-&gt;</span> pl.DataFrame:</span>
-<span id="cb1-5" class="hljs-ln-code"><a href=""></a>    <span class="cf">return</span> (</span>
-<span id="cb1-6" class="hljs-ln-code"><a href=""></a>        stations</span>
-<span id="cb1-7" class="hljs-ln-code"><a href=""></a>        .group_by(<span class="st">"line"</span>)</span>
-<span id="cb1-8" class="hljs-ln-code"><a href=""></a>        .<span class="bu">len</span>(name<span class="op">=</span><span class="st">"station_count"</span>)</span>
-<span id="cb1-9" class="hljs-ln-code"><a href=""></a>        .sort(<span class="st">"station_count"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-10" class="hljs-ln-code"><a href=""></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode python hljs"><span id="cb5-1" class="hljs-ln-code"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb5-2" class="hljs-ln-code"><a href=""></a></span>
+<span id="cb5-3" class="hljs-ln-code"><a href=""></a></span>
+<span id="cb5-4" class="hljs-ln-code"><a href=""></a><span class="kw">def</span> summarize_ridership(stations: pl.DataFrame) <span class="op">-&gt;</span> pl.DataFrame:</span>
+<span id="cb5-5" class="hljs-ln-code"><a href=""></a>    <span class="cf">return</span> (</span>
+<span id="cb5-6" class="hljs-ln-code"><a href=""></a>        stations</span>
+<span id="cb5-7" class="hljs-ln-code"><a href=""></a>        .group_by(<span class="st">"line"</span>)</span>
+<span id="cb5-8" class="hljs-ln-code"><a href=""></a>        .<span class="bu">len</span>(name<span class="op">=</span><span class="st">"station_count"</span>)</span>
+<span id="cb5-9" class="hljs-ln-code"><a href=""></a>        .sort(<span class="st">"station_count"</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-10" class="hljs-ln-code"><a href=""></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="line-highlighting" class="slide level1">
 <h1>Line Highlighting</h1>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="3-4|6|7-10|12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb2-3"><a href=""></a></span>
-<span id="cb2-4"><a href=""></a>stations <span class="op">=</span> pl.read_csv(<span class="st">"cta_stations.csv"</span>)</span>
-<span id="cb2-5"><a href=""></a>orange <span class="op">=</span> stations.<span class="bu">filter</span>(pl.col(<span class="st">"line"</span>) <span class="op">==</span> <span class="st">"Orange"</span>)</span>
-<span id="cb2-6"><a href=""></a></span>
-<span id="cb2-7"><a href=""></a>by_access <span class="op">=</span> orange.group_by(<span class="st">"accessible"</span>).<span class="bu">len</span>(name<span class="op">=</span><span class="st">"station_count"</span>)</span>
-<span id="cb2-8"><a href=""></a>share <span class="op">=</span> np.<span class="bu">round</span>(</span>
-<span id="cb2-9"><a href=""></a>    by_access[<span class="st">"station_count"</span>] <span class="op">/</span> by_access[<span class="st">"station_count"</span>].<span class="bu">sum</span>(),</span>
-<span id="cb2-10"><a href=""></a>    <span class="dv">2</span>,</span>
-<span id="cb2-11"><a href=""></a>)</span>
-<span id="cb2-12"><a href=""></a></span>
-<span id="cb2-13"><a href=""></a><span class="bu">print</span>(by_access.with_columns(accessible_share<span class="op">=</span>share))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="3-4|6|7-10|12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a>stations <span class="op">=</span> pl.read_csv(<span class="st">"cta_stations.csv"</span>)</span>
+<span id="cb6-5"><a href=""></a>orange <span class="op">=</span> stations.<span class="bu">filter</span>(pl.col(<span class="st">"line"</span>) <span class="op">==</span> <span class="st">"Orange"</span>)</span>
+<span id="cb6-6"><a href=""></a></span>
+<span id="cb6-7"><a href=""></a>by_access <span class="op">=</span> orange.group_by(<span class="st">"accessible"</span>).<span class="bu">len</span>(name<span class="op">=</span><span class="st">"station_count"</span>)</span>
+<span id="cb6-8"><a href=""></a>share <span class="op">=</span> np.<span class="bu">round</span>(</span>
+<span id="cb6-9"><a href=""></a>    by_access[<span class="st">"station_count"</span>] <span class="op">/</span> by_access[<span class="st">"station_count"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb6-10"><a href=""></a>    <span class="dv">2</span>,</span>
+<span id="cb6-11"><a href=""></a>)</span>
+<span id="cb6-12"><a href=""></a></span>
+<span id="cb6-13"><a href=""></a><span class="bu">print</span>(by_access.with_columns(accessible_share<span class="op">=</span>share))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="code-figure" class="slide level1 code-figure-slide">
+<h1>Code + Figure</h1>
+<p>The globe toss from earlier: the proportion of water converges on <code>p</code>.</p>
+<div id="e112e5b6" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-3"><a href=""></a>water <span class="op">=</span> np.random.default_rng(<span class="dv">418</span>).random(<span class="dv">500</span>) <span class="op">&lt;</span> <span class="fl">0.75</span></span>
+<span id="cb7-4"><a href=""></a>running <span class="op">=</span> np.cumsum(water) <span class="op">/</span> np.arange(<span class="dv">1</span>, <span class="dv">501</span>)</span>
+<span id="cb7-5"><a href=""></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb7-6"><a href=""></a>ax.plot(running, color<span class="op">=</span><span class="st">"#f9461c"</span>)</span>
+<span id="cb7-7"><a href=""></a>ax.axhline(<span class="fl">0.75</span>, color<span class="op">=</span><span class="st">"#565a5c"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb7-8"><a href=""></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"toss"</span>, ylabel<span class="op">=</span><span class="st">"proportion water"</span>, ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="week0_files/figure-revealjs/cell-2-output-1.svg" alt="Running proportion of water across 500 simulated globe tosses, converging toward the dashed line at 0.75"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="column-layout" class="slide level1 smaller">
 <h1>Column Layout</h1>
@@ -341,6 +376,10 @@
 </div>
 </div>
 </section>
+<section id="image-frame-slide" class="slide level1 image-frame-slide">
+<h1>Image Frame Slide</h1>
+<p><img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line with each station marked as a labeled stop"></p>
+</section>
 <section id="florence-nightingales-mortality-diagram-1858" class="slide level1 split" data-auto-animate="">
 <h1 data-id="quarto-animate-title">Florence Nightingale’s Mortality Diagram (1858)</h1>
 <div class="split-content">
@@ -353,13 +392,13 @@
 </ul>
 <p>Used to advocate for sanitary reforms in military hospitals.</p>
 </div>
-<p><img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)"></p>
+<p><img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)"></p>
 </div>
 </section>
 <section id="florence-nightingales-mortality-diagram-1858-1" class="slide level1" data-auto-animate="">
 <h1 data-id="quarto-animate-title">Florence Nightingale’s Mortality Diagram (1858)</h1>
 
-<img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)" class="r-stretch" style="object-fit: contain; display: block; margin: auto;"></section>
+<img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)" class="r-stretch" style="object-fit: contain; display: block; margin: auto;"></section>
 <section id="follow-up-slide-for-nightingale" class="slide level1 split" data-auto-animate="">
 <h1 data-id="quarto-animate-title">follow-up slide for nightingale</h1>
 <div class="split-content">
@@ -371,7 +410,16 @@
 <li>ut labore et dolore magna</li>
 </ul>
 </div>
-<p><img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)"></p>
+<p><img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)"></p>
+</div>
+</section>
+<section id="florence-nightingales-mortality-diagram-1858-2" class="slide level1 image-only" data-state="image-only">
+<h1>Florence Nightingale’s Mortality Diagram (1858)</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/slides-misc/Nightingale-mortality.jpg"></p>
+<figcaption>Florence Nightingale, “Diagram of the causes of mortality in the army in the East” (1858) — a polar area chart shown full-bleed, with only the footer overlaid</figcaption>
+</figure>
 </div>
 </section>
 <section id="sources" class="slide level1 sources">
@@ -387,7 +435,7 @@
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p><img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 0</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week0.html">dodatascience.fun/slides/week0</a></span></p>
+<p><img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 0</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week0.html">dodatascience.fun/slides/week0</a></span></p>
 </div>
 </div></div>
 

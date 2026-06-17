@@ -183,7 +183,13 @@ $code-color: $ink !default;
   .code-figure-slide {
     display: flex !important;
     flex-direction: column;
-    height: 100%;
+    // Reveal vertically centers a slide by giving the section its content
+    // height and an inline `top` offset. That leaves the figure at its
+    // intrinsic (tiny) size on tall windows. Force the section to fill the
+    // slide and zero the offset so the flex children below can grow the
+    // figure into all the space between the code and the footer.
+    height: 100% !important;
+    top: 0 !important;
     box-sizing: border-box;
     padding: 32px 64px 76px;
     div.cell {

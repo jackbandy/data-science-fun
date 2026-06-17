@@ -2,7 +2,11 @@
 title: "Week 0 (CS 418 @ UIC)"
 format:
   revealjs:
-    footer: '<img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 0</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week0.html">dodatascience.fun/slides/week0</a></span>'
+    fig-format: svg
+    fig-width: 5
+    fig-height: 3.09  # golden ratio rectangle
+    auto-stretch: false  # figures sized by .code-figure-slide instead
+    footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 0</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week0.html">dodatascience.fun/slides/week0</a></span>'
 ---
 
 # Week 0 Slide Deck {.course-title}
@@ -43,15 +47,40 @@ Testing content slide.
 
 # Tabsets
 
+Drop a finger on a random spot of the spinning globe: **Water** or **Land**? About 75% of Earth's surface is water, so each toss is a coin flip weighted by `p`.
+
 ::: {.panel-tabset}
 
-### Tab A
+### Python
 
-Content for `Tab A`
+```python
+import random
 
-### Tab B
+def globe_toss(p=0.75):
+    return "Water" if random.random() < p else "Land"
+```
 
-Content for `Tab B`
+### R
+
+```r
+globe_toss <- function(p = 0.75) {
+  sample(c("Water", "Land"), size = 1, prob = c(p, 1 - p))
+}
+```
+
+### Julia
+
+```julia
+globe_toss(p = 0.75) = rand() < p ? "Water" : "Land"
+```
+
+### JavaScript
+
+```javascript
+function globeToss(p = 0.75) {
+  return Math.random() < p ? "Water" : "Land";
+}
+```
 
 :::
 
@@ -93,6 +122,25 @@ share = np.round(
 )
 
 print(by_access.with_columns(accessible_share=share))
+```
+
+---
+
+# Code + Figure {.code-figure-slide}
+
+The globe toss from earlier: the proportion of water converges on `p`.
+
+```{python}
+#| echo: true
+#| fig-alt: "Running proportion of water across 500 simulated globe tosses, converging toward the dashed line at 0.75"
+import numpy as np
+import matplotlib.pyplot as plt
+water = np.random.default_rng(418).random(500) < 0.75
+running = np.cumsum(water) / np.arange(1, 501)
+fig, ax = plt.subplots()
+ax.plot(running, color="#f9461c")
+ax.axhline(0.75, color="#565a5c", linestyle="--")
+ax.set(xlabel="toss", ylabel="proportion water", ylim=(0, 1))
 ```
 
 ---
@@ -144,6 +192,12 @@ print(by_access.with_columns(accessible_share=share))
 
 ---
 
+# Image Frame Slide {.image-frame-slide}
+
+<img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line with each station marked as a labeled stop">
+
+---
+
 # Florence Nightingale's Mortality Diagram (1858) {.split data-auto-animate=""}
 
 ::: {.split-content}
@@ -159,7 +213,7 @@ A **polar area chart** showing causes of mortality in the Crimean War:
 Used to advocate for sanitary reforms in military hospitals.
 :::
 
-<img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)">
+<img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)">
 
 :::
 
@@ -167,7 +221,7 @@ Used to advocate for sanitary reforms in military hospitals.
 
 # Florence Nightingale's Mortality Diagram (1858) {data-auto-animate=""}
 
-<img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)" class="r-stretch" style="object-fit: contain; display: block; margin: auto;">
+<img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)" class="r-stretch" style="object-fit: contain; display: block; margin: auto;">
 
 ---
 
@@ -183,9 +237,15 @@ Used to advocate for sanitary reforms in military hospitals.
 - ut labore et dolore magna
 :::
 
-<img data-id="nightingale-img" src="../images/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)">
+<img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)">
 
 :::
+
+---
+
+# Florence Nightingale's Mortality Diagram (1858) {.image-only data-state="image-only"}
+
+![Florence Nightingale, "Diagram of the causes of mortality in the army in the East" (1858) — a polar area chart shown full-bleed, with only the footer overlaid](../assets/slides-misc/Nightingale-mortality.jpg)
 
 ---
 

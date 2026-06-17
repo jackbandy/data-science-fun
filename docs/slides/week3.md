@@ -97,7 +97,7 @@ format:
           color: #666;
         }
         </style>
-    footer: '<img src="../images/uic-black-logo.svg" alt="UIC logo"> <img src="../images/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 3</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week3.html">dodatascience.fun/slides/week3</a></span>'
+    footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 3</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week3.html">dodatascience.fun/slides/week3</a></span>'
 ---
 
 # Week 3 Slide Deck {.course-title}
@@ -117,7 +117,7 @@ Jack Bandy
 
 # How Do We Store This Data? {.business-card-slide}
 
-![](../images/tyler-durden-business-card.png)
+![](../assets/slides-misc/tyler-durden-business-card.png)
 
 ---
 

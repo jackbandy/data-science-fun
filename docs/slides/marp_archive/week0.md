@@ -2,7 +2,7 @@
 marp: true
 theme: data-science-fun
 paginate: true
-footer: "![UIC logo](../images/uic-black-logo.svg)  ![CC BY-NC-SA](../images/cc-by-nc-sa-small.svg) CS 418, Intro to Data Science, Week 0 [dodatascience.fun/slides/week0](https://dodatascience.fun/slides/week0.html)"
+footer: "![UIC logo](../../assets/branding/uic-black-logo.svg)  ![CC BY-NC-SA](../../assets/branding/cc-by-nc-sa-small.svg) CS 418, Intro to Data Science, Week 0 [dodatascience.fun/slides/week0](https://dodatascience.fun/slides/week0.html)"
 ---
 
 <!-- _class: title -->
@@ -43,13 +43,13 @@ Testing content slide.
 
 # Florence Nightingale's Mortality Diagram (1858)
 
-![Florence Nightingale, "Diagram of the causes of mortality in the army in the East" (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)](../images/Nightingale-mortality.jpg)
+![Florence Nightingale, "Diagram of the causes of mortality in the army in the East" (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)](../../assets/slides-misc/Nightingale-mortality.jpg)
 
 ---
 
 <!-- _class: image-only -->
 
-![Florence Nightingale, "Diagram of the causes of mortality in the army in the East" (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)](../images/Nightingale-mortality.jpg)
+![Florence Nightingale, "Diagram of the causes of mortality in the army in the East" (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)](../../assets/slides-misc/Nightingale-mortality.jpg)
 
 ---
 
@@ -61,7 +61,7 @@ Testing content slide.
 - Duis aute irure dolor in reprehenderit in voluptate
 - Excepteur sint occaecat cupidatat non proident
 
-![Florence Nightingale, "Diagram of the causes of mortality in the army in the East" (1858)](../images/Nightingale-mortality.jpg)
+![Florence Nightingale, "Diagram of the causes of mortality in the army in the East" (1858)](../../assets/slides-misc/Nightingale-mortality.jpg)
 
 ---
 

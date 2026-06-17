@@ -22,9 +22,7 @@ docs/slides/**/*.quarto_ipynb
 docs/slides/_quarto_internal_scss_error.scss
 docs/css/quarto-reveal-*.css
 docs/slides/.*-pdf-export.html
-docs/assets/fonts/aphont/
-docs/assets/fonts/danh-da/
-docs/assets/fonts/routed-gothic/
+syllabus_source/.tmp-build/
 
 # Prompt scratch files
 prompts.txt

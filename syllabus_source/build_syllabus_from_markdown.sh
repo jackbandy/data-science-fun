@@ -30,7 +30,7 @@ if command -v fc-list >/dev/null 2>&1; then
 fi
 
 # Build a temporary PDF logo for the LaTeX header.
-LOGO_SVG_SRC="$ROOT_DIR/../docs/images/uic-black-logo.svg"
+LOGO_SVG_SRC="$ROOT_DIR/../docs/assets/branding/uic-black-logo.svg"
 LOGO_PDF_OUT="$(mktemp "${TMPDIR:-/tmp}/uic-black-logo.XXXXXX.pdf")"
 trap 'rm -f "$LOGO_PDF_OUT"' EXIT
 if [[ -f "$LOGO_SVG_SRC" ]]; then
