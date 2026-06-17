@@ -22,6 +22,11 @@ STROKE = "#111111"
 TEXT = "#111111"
 TEXT_ON_DARK = "#FFFFFF"
 ARROW_SIZE = 5
+STROKE_WIDTH = 3
+ARROW_GAP = 4  # px gap between arrowhead tip and node box
+ARROW_PULLBACK = ARROW_SIZE / 2 * STROKE_WIDTH + ARROW_GAP  # shaft ends at arrowhead midpoint
+SCOOT_FACTOR = 1.5  # multiply tip-centering correction to counteract perceived tilt
+PARALLEL_GAP = round(ARROW_SIZE * STROKE_WIDTH) + 3  # center-to-center spacing for parallel arrowheads
 FONT_FAMILY = "Libre Franklin"
 FONT_FILE = "LibreFranklin.woff2"
 FONT_SOURCE = OUT_DIR / "../fonts/libre-franklin" / FONT_FILE
@@ -45,38 +50,39 @@ NODE_POSITIONS = {
 EDGES = [
     ("ask_question", "obtain_data", "straight", 0),
     ("obtain_data", "understand_data", "straight", 0),
-    ("understand_data", "obtain_data", "lower", 106),
-    ("understand_data", "ask_question", "lower", 175),
+    ("understand_data", "obtain_data", "lower", 106, 0, -PARALLEL_GAP / 2),
+    ("understand_data", "ask_question", "lower", 175, PARALLEL_GAP, PARALLEL_GAP / 2),
     ("ask_question", "understand_data", "upper", 190),
     ("understand_data", "understand_world", "straight", 0),
-    ("understand_world", "ask_question", "lower", 245),
+    ("understand_world", "ask_question", "lower", 245, 0),
     ("understand_data", "reports", "upper", 165),
     ("understand_world", "reports", "straight", 0),
-    ("reports", "ask_question", "lower", 310),
+    ("reports", "ask_question", "lower", 310, -PARALLEL_GAP),
 ]
 
 ENTRY_POINTS = ["ask_question", "obtain_data"]
 
 
-def line_endpoint(source: tuple[int, int], target: tuple[int, int]) -> tuple[float, float]:
+def line_endpoint(source: tuple[int, int], target: tuple[int, int], is_arrow: bool = False) -> tuple[float, float]:
     sx, sy = source
     tx, ty = target
+    pb = ARROW_PULLBACK if is_arrow else 0
     if tx > sx:
-        return sx + NODE_WIDTH / 2, sy
+        return sx + NODE_WIDTH / 2 + pb, sy
     if tx < sx:
-        return sx - NODE_WIDTH / 2, sy
+        return sx - NODE_WIDTH / 2 - pb, sy
     if ty > sy:
-        return sx, sy + NODE_HEIGHT / 2
-    return sx, sy - NODE_HEIGHT / 2
+        return sx, sy + NODE_HEIGHT / 2 + pb
+    return sx, sy - NODE_HEIGHT / 2 - pb
 
 
-def draw_edge(source_id: str, target_id: str, route: str, offset: int) -> str:
+def draw_edge(source_id: str, target_id: str, route: str, offset: int, x_offset: float = 0, src_x_offset: float = 0) -> str:
     source = NODE_POSITIONS[source_id]
     target = NODE_POSITIONS[target_id]
 
     if route == "straight":
         x1, y1 = line_endpoint(source, target)
-        x2, y2 = line_endpoint(target, source)
+        x2, y2 = line_endpoint(target, source, is_arrow=True)
         return (
             f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
             'stroke="#111111" stroke-width="3" marker-end="url(#arrow)"/>'
@@ -84,15 +90,20 @@ def draw_edge(source_id: str, target_id: str, route: str, offset: int) -> str:
 
     sx, sy = source
     tx, ty = target
+    tx = tx + x_offset  # fan parallel arrowheads around the shared target centre
     top = route == "upper"
     y_edge = sy - NODE_HEIGHT / 2 if top else sy + NODE_HEIGHT / 2
     control_y = sy - offset if top else sy + offset
-    x1 = sx
+    x1 = sx + src_x_offset
     y1 = y_edge
-    x2 = tx
-    y2 = y_edge
-    c1x = sx + (tx - sx) * 0.35
+    y2 = y_edge - ARROW_PULLBACK if top else y_edge + ARROW_PULLBACK
+    c1x = sx + (tx - sx) * 0.35 + src_x_offset
     c2x = sx + (tx - sx) * 0.65
+    # Shift x2 so the arrowhead tip (displaced ARROW_HALF along the tangent) lands at tx.
+    dx_t = tx - c2x
+    dy_t = y2 - control_y
+    tang_len = (dx_t ** 2 + dy_t ** 2) ** 0.5
+    x2 = tx - SCOOT_FACTOR * (ARROW_SIZE / 2 * STROKE_WIDTH) * dx_t / tang_len
 
     return (
         f'<path d="M {x1:.1f} {y1:.1f} C {c1x:.1f} {control_y:.1f}, '
@@ -104,7 +115,7 @@ def draw_edge(source_id: str, target_id: str, route: str, offset: int) -> str:
 def draw_entry_point(node_id: str) -> str:
     x, y = NODE_POSITIONS[node_id]
     y1 = 0
-    y2 = y - NODE_HEIGHT / 2
+    y2 = y - NODE_HEIGHT / 2 - ARROW_PULLBACK
     return (
         f'<line x1="{x:.1f}" y1="{y1:.1f}" x2="{x:.1f}" y2="{y2:.1f}" '
         'stroke="#111111" stroke-width="3" stroke-dasharray="9 8" '
@@ -156,7 +167,7 @@ def make_svg(highlight_index: int | None) -> str:
     }}
   </style>
   <defs>
-    <marker id="arrow" markerWidth="{ARROW_SIZE}" markerHeight="{ARROW_SIZE}" refX="{ARROW_SIZE}" refY="{ARROW_SIZE / 2}"
+    <marker id="arrow" markerWidth="{ARROW_SIZE}" markerHeight="{ARROW_SIZE}" refX="{ARROW_SIZE / 2}" refY="{ARROW_SIZE / 2}"
             orient="auto" markerUnits="strokeWidth">
       <path d="M 0 0 L {ARROW_SIZE} {ARROW_SIZE / 2} L 0 {ARROW_SIZE} z" fill="#111111"/>
     </marker>
