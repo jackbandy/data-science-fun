@@ -6,6 +6,12 @@ subtitle: Introduction to Ethics in Data Science
 
 **[← Back to Course Homepage](../../index.html)**
 
+::: {#fig-dikw-pyramid-blank}
+<img src="../../assets/pyramid/01-dikw-pyramid-blank.svg" alt="The DIKW pyramid, unlabeled." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+The DIKW pyramid.
+:::
+
 > "Those analysis droids you've got over there only focus on symbols. Hagh! I should think you Jedi would have more respect for the difference between knowledge and, hu-hu-hu... *wisdom*."
 >
 > -- Dexter Jettster in *Attack of the Clones*, written by George Lucas and Jonathan Hales [@lucas_hales_aotc_2000, p. 35]

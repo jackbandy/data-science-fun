@@ -2,6 +2,12 @@
 
 **[← Back to Course Homepage](../../index.html)**
 
+::: {#fig-gauguin-where-do-we-come-from}
+<img src="../../assets/art/gauguin_where_do_we_come_from.jpg" alt="Paul Gauguin's painting Where Do We Come From? What Are We? Where Are We Going?" style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+Where Do We Come From? What Are We? Where Are We Going? [@mfa_gauguin_where_do_we_come_from_1897] (Wikimedia Commons file, public domain)
+:::
+
 *This chapter is in-progress.*
 
 ## Concluding Remarks
@@ -20,12 +26,7 @@ One of my professors in grad school, [Pablo Boczkowski](https://scholar.google.c
 * GOAL (axiology): What is the good (the goal) for which we should strive?
 * PATH (praxeology): What do we need to do to reach the goal? What path should we follow? How do we ensure that we are on the path?
 
-Paul Gauguin offered an even shorter version in the title of his painting *Where Do We Come From? What Are We? Where Are We Going?* [@mfa_gauguin_where_do_we_come_from_1897], as shown below.
-
-<figure>
-<img src="../../assets/art/gauguin_where_do_we_come_from.jpg" alt="Paul Gauguin's painting Where Do We Come From? What Are We? Where Are We Going?" style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
-<figcaption>Where Do We Come From? What Are We? Where Are We Going? (Wikimedia Commons file, public domain)</figcaption>
-</figure>
+Paul Gauguin offered an even shorter version in the title of his painting *Where Do We Come From? What Are We? Where Are We Going?* [@mfa_gauguin_where_do_we_come_from_1897], as shown above.
 
 Such questions are remarkably persistent across human history, and they overlap substantially with ethics.
 
