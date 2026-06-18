@@ -38,11 +38,11 @@ TK
 
 TK
 
-## Ethics in Maintaining Data
+## Maintaining Data
 
-TK
+Although not formally captured in the data science lifecycle figure(s), data scientists are often responsible for maintaining the data they obtain and analyze.
 
-## Case Study: Census Data
+## Example: How the Census Obtains Data
 
 The U.S. census offers a helpful example of ethical decision-making in the data science lifecycle. It has been explored in Data Feminism, as well as X and Y and other materials. It is included here in brief as a canonical example of subjectivity in the process of obtaining data.
 
@@ -50,7 +50,7 @@ The U.S. census offers a helpful example of ethical decision-making in the data 
 
 [Massachusetts printed schedule used in the 1790 census](../../assets/census/1790-massachusetts-printed-schedule.pdf).
 
-Categories: free White males 16 and over, free White males under 16, free White females, all other free persons, and slaves.
+Categories in the 1790 census: free White males 16 and over, free White males under 16, free White females, all other free persons, and slaves.
 
 <img src="../../assets/census/1790-massachusetts-printed-schedule.png" alt="Massachusetts printed schedule used in the 1790 census." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
@@ -92,9 +92,9 @@ Notes from Wikipedia's "Race and ethnicity in the United States census," section
 * In `2000`, a large share of Hispanic/Latino respondents selected `Some other race`, showing a mismatch between official categories and how respondents describe themselves.
 * Since `2000`, respondents have been allowed to select more than one race, so race totals can exceed the total population (not directly comparable with older censuses).
 
-## Case Study: Facebook Profile
+## Example: Facebook Profile
 
-Similar dynamics can be observed in the Facebook signup process. Until 2014, Facebook had essentially three options: male, female, or no answer. On February 13, 2014, Facebook substantially expanded its gender fields, with 58 different options, custom fields, and additional pronoun settings.
+Similar dynamics can be observed in the Facebook signup process: the process of "obtaining data" involved numerous subjective decisions. Until 2014, the signup process for Facebook offered three options in the gender field: male, female, or no answer. On February 13, 2014, Facebook substantially expanded its gender fields, with 58 different options, custom fields, and additional pronoun settings.
 
 Sources: ABC News [@abcn_news_facebook_gender_2014] and CNN [@kelly_facebook_gender_2014].
 
