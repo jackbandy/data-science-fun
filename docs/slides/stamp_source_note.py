@@ -6,7 +6,7 @@ Edits the given Markdown/Quarto deck in place. The build script calls this on a
 throwaway copy of each deck immediately before `quarto render`, so the rendered
 HTML/PDF carries the moment it was compiled. The note reads, e.g.:
 
-    Last modified and compiled June 17, 17:00h.
+    Last modified and compiled June 17, 17:00h Central (Chicago) time.
 
 Placement, in order of preference, inside the slide whose header carries the
 `.sources` class:
@@ -22,6 +22,7 @@ no-op. Usage: python3 stamp_source_note.py <deck.md>
 import re
 import sys
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 NOTE_PREFIX = "Last modified and compiled "
 
@@ -43,9 +44,9 @@ def marker_of(line):
 
 def main():
     path = sys.argv[1]
-    dt = datetime.now()
+    dt = datetime.now(ZoneInfo("America/Chicago"))
     timestamp = f"{dt:%B} {dt.day}, {dt:%H:%M}h"
-    note = f"{NOTE_PREFIX}{timestamp}."
+    note = f"{NOTE_PREFIX}{timestamp} Central (Chicago) time."
 
     text = open(path, encoding="utf-8").read()
     if NOTE_PREFIX in text:

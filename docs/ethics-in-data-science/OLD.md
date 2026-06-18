@@ -39,3 +39,60 @@ These are test citations for @ackoff_data_1989, @vance_information_1997, @bernst
 The data-information-knowledge-wisdom (DIKW) framing is commonly discussed in the literature (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011).
 
 The central premise is that ethical judgment is not a separate task for data scientists to work on after "technical" work is finished. Ethical decision-making shapes how data scientists frame questions, define project scopes, collect and prepare data, interpret patterns, develop understanding, and communicate new understanding to audiences.
+
+---
+
+## Chapter-by-chapter
+
+### Chapter 1: Working Toward Wisdom
+
+* Ethical frameworks as worldview lenses[@thomas_practical_data_ethics_2020].
+* Explain "situated knowledge" and the "view from nowhere" [@dignazio_klein_data_feminism_2020]
+* Data ethics sometimes considered a branch of ethics?
+	* studies moral problems related to data, algorithms, and corresponding practices [@floridi_taddeo_what_is_data_ethics_2016].
+* "Data visceralization" — making data sensory or bodily felt — alternative to purely abstract, detached representations of information [@wernimont_pandemic_death_counts_2022].
+
+### Chapter 2: Ethics in Asking Questions
+
+* questions for your questions
+* Data Feminism - "who is missing?" — questions that can only be answered with available data implicitly exclude what was never counted [@dignazio_klein_data_feminism_2020].
+* "what can be predicted" is different from "what should be predicted"
+	* ask whose interests are served by the prediction [@veliz2026prophecy].
+
+### Chapter 3: Ethics in Obtaining Data
+
+* Consent as freely given, reversible, informed, enthusiastic, and specific (FRIES framework) [@lee_building_consentful_2017].
+* "Datasheets for datasets" documentation practice
+	* motivation, composition, collection process, and recommended uses, analogous to nutrition labels [@thomas_practical_data_ethics_2020].
+* Data triangulation creates re-identification risks
+	* individually innocuous data points (zip code, birthdate, sex) can be combined to uniquely identify people
+* The Cambridge Analytica case as "control creep" — data collected for one purpose (Facebook profile enrichment) repurposed without explicit user consent [@wiki-data-ethics].
+* labor behind datasets is often invisible: data annotation, cleaning, curation, etc. [@dignazio_klein_data_feminism_2020].
+
+### Chapter 4: Ethics in Understanding
+
+* Proxies
+	* a variable that appears neutral (e.g., ZIP code, educational credential) may correlate tightly with protected characteristics [@barocas_selbst_big_data_disparate_impact_2016].
+* Google Flu Trends overfit to search behavior, drifted badly in production
+	* understanding search data is not the same as understanding influenza [@lazer_google_flu_2014].
+* Types of bias to watch for in modeling [@thomas_practical_data_ethics_2020]
+	* historical bias (in the real world before data collection)
+	* representation bias (who is in the sample)
+	* measurement bias (how variables are recorded)
+	* aggregation bias (collapsing distinct groups) 
+* Situated knowledge: acknowledge who did the analysis, with what data, and under what constraints, etc.[@dignazio_klein_data_feminism_2020]
+
+### Chapter 5: Ethics in Reporting, Decisions, and Solutions
+
+* Statistical and economic arguments as rhetorical acts (Deirdre McCloskey).
+* Model cards as example transparency practice: intended uses, performance across groups, known limitations [@thomas_practical_data_ethics_2020]
+* Predictions as interventions
+	* e.g. a recommendation system that surfaces content changes what gets read. "Forecasts help produce futures" [@veliz2026prophecy].
+* deficit-focused visualizations (showing what groups lack) vs. asset-based framings [@klein_dignazio_data_feminism_visualization].
+
+### Chapter 6: Conclusions
+
+* data ethics vs. data justice? [@dignazio_klein_data_feminism_2020].
+* enduring ethical frameworks pre-date computing: consequentialist, deontological, and virtue-based reasoning each illuminate different aspects of data science decisions
+	* none is sufficient alone
+	* 

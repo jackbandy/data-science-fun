@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="618" viewBox="0 0 1000 618" font-family="'Big Shoulders', 'Arial Narrow', Arial, sans-serif">
+  <rect width="1000" height="618" fill="#ffffff"/>
+
+  <!-- route line motif: a short orange run with one stop node, leading into the wordmark -->
+  <g>
+    <path d="M 120 300 L 360 300" fill="none" stroke="#f9461c" stroke-width="16" stroke-linecap="round"/>
+    <!-- stop node: white core, orange ring -->
+    <circle cx="200" cy="300" r="20" fill="#ffffff" stroke="#f9461c" stroke-width="9"/>
+    <!-- terminal turn hint -->
+    <path d="M 360 300 q 40 0 40 -40 L 400 210" fill="none" stroke="#f9461c" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="430" y="290" font-size="78" font-weight="700" fill="#1a1a1a" letter-spacing="0.5">DODATASCIENCE<tspan fill="#f9461c">.FUN</tspan></text>
+  <text x="432" y="338" font-size="30" fill="#565a5c" font-family="'ITC Franklin Gothic','Libre Franklin',sans-serif" letter-spacing="3">DATA SCIENCE THE FUN WAY · CS 418 · UIC</text>
+
+  <!-- caption -->
+  <text x="120" y="470" font-size="17" fill="#565a5c" font-family="'ITC Franklin Gothic','Libre Franklin',sans-serif">Wordmark concept — Orange Line run + a single stop node reads as the “do…” of the domain.</text>
+  <text x="120" y="586" font-size="13" fill="#aaaaaa" font-family="Courier,monospace">Original mark · CTA Orange Line color #F9461C · not a CTA logo or approximation</text>
+</svg>

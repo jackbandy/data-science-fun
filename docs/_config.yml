@@ -2,7 +2,11 @@ markdown: kramdown
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 
+url: "https://dodatascience.fun"
+include:
+  - .well-known
 title: Data Science the Fun Way
 description: Materials for CS 418 - Intro to Data Science at UIC
 
