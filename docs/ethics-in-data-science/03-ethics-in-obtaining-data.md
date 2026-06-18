@@ -25,6 +25,8 @@ Do you obtain it?
 ## What "obtaining data" includes
 
 TK
+* primary and secondary data sources
+* synthetic data
 
 ## Sensitive information
 
@@ -41,6 +43,9 @@ TK
 ## Maintaining Data
 
 Although not formally captured in the data science lifecycle figure(s), data scientists are often responsible for maintaining the data they obtain and analyze.
+
+* "data stewardship"
+* backups and retention
 
 ## Example: How the Census Obtains Data
 
