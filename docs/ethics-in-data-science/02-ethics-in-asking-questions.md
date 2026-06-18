@@ -57,6 +57,8 @@ Below are some examples of presuppositions associated with example questions, as
 * naïve about a particular context/setting
 * can reveal assumptions that "experts" have stopped considering
 * protect the "cry to understand" by improving the question
+	* increase specificity
+	* incorporate established knowledge
 
 ## Ill-phrased questions
 
@@ -68,11 +70,16 @@ Below are some examples of presuppositions associated with example questions, as
 ## Leading questions
 
 * usually implies a preferred answer
+	* e.g. "everything tasting good over here?"
+	* e.g. "
 * i.e. ad-hoc support of suspect decision-making
+* ask before answering
+* might actually be good to be more naïve
+	* ask as if you knew less
 
 ## Tedious questions
 
-* effort required to answer a question is disproportional to what the answer would teach us.
+* effort required to answer a question may be disproportional to what the answer would teach us.
 * measurable details are not always meaningful
 * triangle/pixel example from first chapter
 
@@ -91,6 +98,8 @@ If a potential employer were to ask my weight during a job interview, it would b
 TK
 
 * Deirdre McCloskey - notes on "objective" analysis as rhetorical/persuasive; questions embed values/narratives.
+* good to assume you might've missed something
+* data hubris
 
 ## Questions for your questions
 
@@ -103,7 +112,8 @@ TK
 * Who might be harmed if this question is answered poorly?
 * What kind of answer would actually change a decision?
 * Could a less invasive or more precise question serve the same purpose?
-* what can and cannot (should/should not) be predicted
+* What can and cannot (should/should not) be predicted?
+* Whose perspective(s) may be missing?
 
 
 ## Test
