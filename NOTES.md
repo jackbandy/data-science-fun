@@ -77,12 +77,60 @@ Learning DS Textbook:
 	* If water is observed in the sample, the globe can't be all land.
 * "things that can happen more ways are more plausible"
 * probabilities: non-negative values that sum to one
-* 
+* "statistics is not for giving you the answer you want, but to tell you what the data justify"
+* posterior probability distributions
+	* probability densities
+	* probability masses
+	* posterior distribution vs. posterior predictive
+* bayesian clinical trials: stop the trial as soon as you're sure there's therapeutic benefit. Therefore, always update with new data.
+	* More important when data is expensive/priceless
+* "the estimate is the distribution" - point estimates only when requested / needed for communication
+* 1: no minimum sample size
+* 2: shape embodies sample size
+* 3: no point estimate
+* 4: no 'one true interval'
+	* infinite possible ranges
+	* 50% central: same mass on the left and right
+	* nothing magical about 95%
+* "always summarize last"
+	* do all calculations with full distributions
+
+### Geocentric models
+* analogy - geocentric models as linear regression
+	* it might not be structurally/scientifically accurate, but it can still be predictive
+* 'theoria motvs corporvm coelestivm' - gauss' approach to normal error and least-squares estimation ("1809 Bayesian argument")
+* "useful family of estimators"
+	* "useful when handled with care"
+	* special cases: ANOVA, ANCOVA, t-test
+* linear models are not mechanistic
+* gaussian distribution = mean, dispersion
+* "just keep swimming" - fine/good to be a little confused, experience some resistance
+* creating a generative model
+	* "which variables listen to other variables?"
+* weight/height example
+	* H -> W
+	* W = f(H)
+	* height influences weight
+	* weight is some function of height
+* weight/height with other factors
+	* W = f(H, U)
+	* W = BH + U
+	* U from normal
+	* H from uniform
+* example priors:
+	* weight is more as height goes up
+* each data point constrains the distribution
 
 ## TODO
 
 * Add a side-by-side variant of the `.code-figure-slide` template (code and figure
   left/right instead of stacked top/bottom).
+
+## Running examples
+* globe toss: estimate % of water
+* voter turnout estimate
+* water/electricity/utility usage
+* 
 
 ## Etc.
 
