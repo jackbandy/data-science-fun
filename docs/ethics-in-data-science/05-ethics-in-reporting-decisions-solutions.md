@@ -22,13 +22,13 @@ This chapter explores some of the ethical considerations in the "reporting" phas
 
 This is especially important when predictive systems are used to shape what people see, how resources are allocated, or which options are made available. In that sense, every prediction is an intervention: a forecast does not merely describe the future, but can help bring about the future it predicts [@veliz2026prophecy].
 
-## Measuring What Matters
+## Measuring What?
 
 We will start exploring the ethics of reporting with a concrete example of college rankings.
 
-### Case Study: College Rankings
+### Example: College Rankings
 
-Cathy O'Neil's excellent book, *Weapons of Math Destruction* [@oneil_weapons_2017], sets up an excellent case study around college rankings.
+Cathy O'Neil's book, *Weapons of Math Destruction* [@oneil_weapons_2017], sets up an excellent case study around college rankings.
 
 What makes a good college? Beginning in 1988, U.S. News & World Report tried to answer this question using data. (footnote: notably, this was a deliberate attempt to save the magazine, which had been struggling financially. In 1983, they decided ranking 1,800 colleges and universities in the U.S. could provide a useful resource for millions of young people).
 
@@ -49,15 +49,25 @@ But consider what is left out of these metrics:
 * easy access to a nearby park
 * a ten-minute walk to get a frozen dessert
 
+### Measurement Scales
+
+TK
+
+* as an example of subjectivity / situated knowledge
+
 ### Goodhart's Law
+
+TK
 
 A measure can stop being a good measure when it becomes a target [@goodhart1984problems].
 
 ### Campbell's Law
 
+TK
+
 Social indicators become more vulnerable to corruption when used for high-stakes decision-making [@campbell1979assessing].
 
-### Case Study: Bayesian Diagnostic Testing
+### Example: Bayesian Diagnostic Testing
 
 Consider another classic case study in measurement and reporting concerns diagnostic testing in medicine. Veritasium's video *The Bayesian Trap* [@muller_bayesian_trap_2017] describes a version of this scenario: a disease affects 0.1% of the population, and a test for the disease is 99% accurate. Start with a random sample of 1,000 people.
 
