@@ -95,7 +95,7 @@ Even now, this image of the black squares is not really showing you the pixels. 
 A microscopic image of an LCD display showing subpixels. Source: Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 :::
 
-Yet again, even this statement about "what pixels look like" is somewhat inaccurate - this is not *exactly* what pixels look like. There is no way to show a zoomed-in picture of *your* screen at this very moment, although you could go get a magnifying glass if you are curious. And if you looked through that magnifying glass, zooming in further, you might see "subpixels" of red, blue, and green in your screen.
+Yet again, this statement about "what pixels look like" is somewhat inaccurate - this is not *exactly* what pixels look like. There is no way to show a zoomed-in picture of *your* screen at this very moment, although you could go get a magnifying glass if you are curious. And if you looked through that magnifying glass, zooming in further, you might see "subpixels" of red, blue, and green in your screen.
 
 ::: {#fig-lcd-pixel-macro-zoom}
 <img src="../../assets/subpixels/lcd-pixel-macro-2023-golden-zoom-10x.jpg" alt="Ten-times zoomed view of the LCD subpixel pattern." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -149,25 +149,7 @@ In short, the DIKW pyramid does not build itself.
 
 The concept of understanding will return in Avengers: Doomsday, in this case meaning [Chapter 4](04-ethics-in-understanding.md), which distinguishes between understanding data and understanding the world.
 
-## Common Knowledge
-Something profound happens when multiple people "read" (look at, watch, draw, view, etc.) information together. In brief, this is the phenomenon of common knowledge: shared awareness about what other people know, and/or what others have contributed to the pyramid.
-
-Common knowledge is often confused with mutual knowledge. If we both know that there is only one more ice cream bar in the freezer, that is mutual knowledge. But if we both know *that the other person knows* that there is only one ice cream bar in the freezer, that is common knowledge, or awareness about what other people know.
-
-Perhaps the best way to explain common knowledge is to recognize its use in storytelling methods which create suspense in film and television. For example, Alfred Hitchcock described the distinction between "surprise" and "suspense" as a difference in common knowledge: in a surprise, the audience discovers an important fact at the same time as the characters. The information is withheld from everyone [@hitchcock_interview_1973].
-
-But suspense depends on *partially* shared information. For example, when the audience knows that there is a bomb under the dining table, but they also know that Bob was gone when the bomb was placed under the table. In Hitchcock's framing, this scenario creates suspense because the audience anticipates danger from the bomb, and also knows that Bob does not anticipate the same danger.
-
-A data scientist can benefit from understanding and leveraging common knowledge (or lack thereof). When communicating results, for example, it may not be sufficient just to know what the audience knows. You may also want to know what audience members know *about what other audience members know*. The intricacies of common knowledge are fascinating, and two classic puzzles show how it can coordinate action [@fagin_reasoning_about_knowledge_1995].
-
-In "the hat puzzle," row of people each wear a hat they cannot see, and no one is allowed to move until they deduce their own hat color. The line stays frozen. Then, a *public* announcement states "at least one of you wears a red hat." The announcement adds no new visible fact, yet it converts mutual knowledge into common knowledge — and that is what finally allows the line move.
-
-A related puzzle, **the muddy children puzzle**, is described by @sep-dynamic-epistemic as follows:
-
-> Three children are playing in the mud. Father calls the children to the house, arranging them in a semicircle so that each child can clearly see every other child. “At least one of you has mud on your forehead”, says Father. The children look around, each examining every other child’s forehead. Of course, no child can examine his or her own. Father continues, "If you know whether your forehead is dirty, then step forward now." No child steps forward. Father repeats himself a second time, "If you know whether your forehead is dirty, then step forward now." Some but not all of the children step forward. Father repeats himself a third time, "If you know whether your forehead is dirty, then step forward now." All of the remaining children step forward. How many children have muddy foreheads?
-
-The father's announcement adds no new *visible* fact — every child could already see the others' foreheads — yet it creates the common knowledge that enables the deductions. Each round of silence carries information, and counting those silences lets each muddy child infer their own state.
-
+Understanding also connects to the phenomenon of *common knowledge* — shared awareness not just of facts, but of what other people know. This has direct implications for how data scientists communicate results, and is discussed in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md).
 
 ## Statistical worldviews
 
@@ -193,7 +175,7 @@ So, do you take the bet? One might expect there to be a single answer to the sta
 
 To my understanding, this particular debate has largely settled down. In 1986, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as sort of a live contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020].
 
-The rise of the causal inference paradigm does not imply a resolution to subjectivity. Causal modeling may offer more regularity in asking questions, i.e., "what would happen under intervention?" This lends to causal graphs (DAGs - we'll talk about them in class) and more formal structures, rather than just loose associations [@sep-causal-models].
+Still, the rise of the causal inference paradigm does not imply a conclusion to subjectivity in data science. Causal modeling may offer more regularity in asking questions, i.e., "what would happen under intervention?" This lends to structural modeling and causal graphs (DAGs - we'll talk about them in class) and more formal structures, rather than loose associations [@sep-causal-models].
 
 But causal modeling actually opens up another can of worms about what it actually means for one thing to cause another thing: 
 
@@ -205,6 +187,57 @@ But causal modeling actually opens up another can of worms about what it actuall
 * **Overdetermination**: Two people each empty a full bucket of water onto a campfire at the same moment, and either bucket alone would have been enough to put out the fire. Which bucket "caused" the fire to go out?
 
 For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter.
+
+## Towers, Pyramids, Cathedrals, Bazaars
+
+Data scientists work in a variety of different organizational contexts, with different structures and workflows. These different contexts are particularly relevant to the "reporting" stage of the data science lifecycle, as discussed in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md), which involves actively contributing to the larger organization.
+
+Still, before a data science project reaches the reporting stage, it is worth considering what kind of contributions will be expected at that stage, and how those expectations might shape work at other stages.
+
+This chapter suggests data science work as contributing to the DIKW pyramid, however, it has also hinted at limitations of the DIKW pyramid and the possibility of other paradigms for knowledge creation.
+
+TK [@raymond_cathedral_bazaar_1999]
+
+* cathedral - central planning, construct based on the blueprint, often for worship
+* pyramid - one layer at a time, construct what can be supported. Also tombs/monuments.
+* bazaar - public view, exploratory, invite feedback and community contribution
+* tower/ziggurats - restricted access (?), solid mass, purpose was...
+
+::: {#fig-escher-tower-of-babel}
+<img src="../../assets/art/escher_tower_of_babel_1928.jpg" alt="M.C. Escher's woodcut Tower of Babel (1928), depicting the unfinished biblical tower viewed from above, with tiny figures working on terraces." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+M.C. Escher, *Tower of Babel* (1928). Woodcut. [Source](https://en.wikipedia.org/wiki/File:Babel-escher.jpg)
+:::
+
+::: {#fig-bruegel-tower-of-babel}
+<img src="../../assets/art/bruegel_tower_of_babel_1563.jpg" alt="Pieter Bruegel the Elder's oil painting The Tower of Babel (c. 1563), showing the vast unfinished spiral tower rising against a clouded sky, with workers and machinery at its base." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+Pieter Bruegel the Elder, *The Tower of Babel* (c. 1563). Oil on panel. Kunsthistorisches Museum, Vienna. [Source](https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_(Vienna)_-_Google_Art_Project_-_edited.jpg)
+:::
+
+::: {#fig-rozsda-tower-of-babel}
+<img src="../../assets/art/rozsda_tower_of_babel_1958.jpg" alt="Endre Rozsda's 1958 painting La tour de Babel, a dense, fragmented composition in warm ochres and reds evoking accumulated layers of human history and industry." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+Endre Rozsda, *La tour de Babel* (1958). [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). [Source](https://commons.wikimedia.org/wiki/File:Endre_Rozsda_-_La_tour_de_Babel_(1958).jpg)
+:::
+
+::: {#fig-pococke-pyramid-section}
+<img src="../../assets/art/pococke_great_pyramid_section_1743.jpg" alt="Richard Pococke's 1743 engraving showing a cross-sectional diagram of the interior passages and chambers of the Great Pyramid, and below it a frontal view of the head of the Great Sphinx." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+Richard Pococke, *A Section of the Great Pyramid, and a View of the Head of the Sphynx* (1743). Engraving from *A Description of the East* (London: W. Bowyer, 1743–1745). [Source](https://commons.wikimedia.org/wiki/File:A_Section_of_the_Great_Pyramid,_and_a_View_of_the_Head_of_the_Sphynx_-_Pococke_Richard_-_1743.jpg)
+:::
+
+::: {#fig-monet-rouen-cathedral}
+<img src="../../assets/art/monet_rouen_cathedral_1894.jpg" alt="Claude Monet's 1894 painting of Rouen Cathedral's west facade in sunlight, rendered in thick impasto strokes of gold, cream, and blue-grey that dissolve the stone surface into light and atmosphere." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+Claude Monet, *Rouen Cathedral, West Facade, Sunlight* (1894). Oil on canvas. National Gallery of Art, Washington, D.C. [Source](https://commons.wikimedia.org/wiki/File:Claude_Monet_-_Rouen_Cathedral,_West_Facade,_Sunlight.jpg)
+:::
+
+::: {#fig-mahane-yehuda-market}
+<img src="../../assets/art/mahane_yehuda_market_2018.jpg" alt="Photograph of Mahane Yehuda market in Jerusalem, showing vendors and shoppers along a covered lane lined with stalls of produce, spices, and goods." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+Emilio García, *Mahane Yehuda* (2018). Photograph of Mahane Yehuda Market, Jerusalem. [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). [Source](https://commons.wikimedia.org/wiki/File:Mahane_Yehuda_(I)_(45298221191).jpg)
+:::
 
 ## References
 

@@ -5,7 +5,7 @@
 ::: {#fig-ds-lifecycle-v0}
 <img src="../../assets/lifecycle/ds-lifecycle-v0.svg" alt="The full data science lifecycle diagram." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-The data science lifecycle.
+The data science lifecycle. Although each stage of the lifecycle requires some degree of understanding, this chapter focuses on the two stages that explicitly name it.
 :::
 
 > "When we try to pick out anything by itself, we find it hitched to everything else in the Universe."
