@@ -106,6 +106,85 @@ These are mathematical tessellations inspired by M.C. Escher's style, created di
 
 ---
 
+## Pieter Bruegel the Elder (Public Domain)
+
+Bruegel died in 1569; his works are in the public domain worldwide.
+
+### Bruegel Files
+
+1. **bruegel_tower_of_babel_1563.jpg**
+   - Title: The Tower of Babel (Vienna version)
+   - Year: c. 1563
+   - Medium: Oil on panel (114 × 155 cm); held at Kunsthistorisches Museum, Vienna
+   - Dimensions: 3840 × 2810 pixels (3.7 MB; thumbnail of Google Art Project scan)
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_(Vienna)_-_Google_Art_Project_-_edited.jpg)
+   - License: Public Domain (CC PDM 1.0)
+
+---
+
+## Endre Rozsda (Creative Commons)
+
+Rozsda died in 1999. This work was released under CC BY-SA 4.0 by the rights holder, confirmed by the Wikimedia Foundation via OTRS.
+
+### Rozsda Files
+
+1. **rozsda_tower_of_babel_1958.jpg**
+   - Title: La tour de Babel (The Tower of Babel)
+   - Year: 1958
+   - Dimensions: 3618 × 2925 pixels (11.7 MB)
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Endre_Rozsda_-_La_tour_de_Babel_(1958).jpg)
+   - License: Creative Commons Attribution-Share Alike 4.0 International (CC BY-SA 4.0)
+
+---
+
+## Claude Monet (Public Domain)
+
+Monet died in 1926; his works are in the public domain worldwide.
+
+### Monet Files
+
+1. **monet_rouen_cathedral_1894.jpg**
+   - Title: Rouen Cathedral, West Facade, Sunlight
+   - Year: 1894
+   - Medium: Oil on canvas; held at National Gallery of Art, Washington, D.C.
+   - Dimensions: 1578 × 2395 pixels (1.1 MB)
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Claude_Monet_-_Rouen_Cathedral,_West_Facade,_Sunlight.jpg)
+   - License: Public Domain (CC PDM 1.0)
+
+---
+
+## Richard Pococke (Public Domain)
+
+Pococke died in 1765; this engraving was first published in 1743/1745 and is in the public domain worldwide.
+
+### Pococke Files
+
+1. **pococke_great_pyramid_section_1743.jpg**
+   - Title: A Section of the Great Pyramid, and a View of the Head of the Sphynx
+   - Year: 1743 (published 1743–1745)
+   - Medium: Engraving; from *A Description of the East, and some other Countries* (London: W. Bowyer, 1743–1745)
+   - Dimensions: 1005 × 1500 pixels
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:A_Section_of_the_Great_Pyramid,_and_a_View_of_the_Head_of_the_Sphynx_-_Pococke_Richard_-_1743.jpg)
+   - License: Public Domain (CC PDM 1.0)
+
+---
+
+## Emilio García (Creative Commons)
+
+### Market / Bazaar Files
+
+1. **mahane_yehuda_market_2018.jpg**
+   - Title: Mahane Yehuda (I)
+   - Year: 2018 (August 10)
+   - Medium: Photograph (Fujifilm X-T1, 35mm, f/1)
+   - Subject: Mahane Yehuda Market, Jerusalem (31°47′5.28″N 35°12′46.08″E)
+   - Dimensions: 3840 × 2560 pixels (thumbnail from original 4879 × 3253 px, 2.0 MB)
+   - Photographer: Emilio García (from Parla, Spain)
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mahane_Yehuda_(I)_(45298221191).jpg)
+   - License: Creative Commons Attribution-ShareAlike 2.0 Generic (CC BY-SA 2.0)
+
+---
+
 ## Paul Gauguin (Public Domain)
 
 Gauguin died in 1903; his works are in the public domain worldwide.
