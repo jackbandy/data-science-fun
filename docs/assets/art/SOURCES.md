@@ -126,6 +126,41 @@ Gauguin died in 1903; his works are in the public domain worldwide.
 
 Flamingo (1973–1974) is a 53-foot painted steel stabile by Alexander Calder, installed at Federal Plaza, Chicago. The sculpture itself is believed to be in the public domain (published in 1974 without the required copyright notice). The photographs below are individually licensed under Creative Commons.
 
+### Calder Mobile Files
+
+1. **calder_untitled_mobile_1976.jpg**
+   - Title: Untitled (the large mobile in the East Building atrium)
+   - Year: 1976
+   - Medium: Aluminum honeycomb, tubing, and paint; 910 × 2,316 cm (76 feet wide, 920 lbs)
+   - Location: National Gallery of Art, East Building atrium, Washington, D.C. (Gift of the Collectors Committee, 1977.76.1)
+   - Dimensions: 3,008 × 2,000 pixels (3.4 MB)
+   - Photographer: Rob Young (UK), via Flickr
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_-_East_Building_(5945994409).jpg)
+   - License: Creative Commons Attribution 2.0 Generic (CC BY 2.0)
+   - Note: Calder's last major work, completed weeks before his death; his largest mobile.
+
+2. **calder_four_elements_1961.jpg**
+   - Title: The Four Elements (*De fyra elementen*)
+   - Year: 1961
+   - Medium: Painted sheet metal, motor; approximately 9 m (30 feet) high
+   - Location: Moderna Museet sculpture park, Stockholm, Sweden
+   - Dimensions: 4,424 × 3,053 pixels (763 KB)
+   - Photographer: Frankie Fouganthin (FrankieF), February 19, 2015
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Four_Elements_(Alexander_Calder)_at_Moderna_Museet_in_Stockholm.jpg)
+   - License: Creative Commons Attribution-Share Alike 4.0 International (CC BY-SA 4.0)
+   - Note: One of Calder's few motorized mobiles; commissioned for Moderna Museet's 1958 opening.
+
+3. **calder_carmen_1974.jpg**
+   - Title: Carmen
+   - Year: 1974
+   - Medium: Painted sheet metal and wire (mobile)
+   - Location: Patio del Edificio Sabatini, Museo Nacional Centro de Arte Reina Sofía, Madrid, Spain
+   - Dimensions: 3,738 × 3,438 pixels (8.5 MB)
+   - Photographer: Francesco Bini (Sailko), February 21, 2022
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Alexander_calder,_carmen,_1974,_01.jpg)
+   - License: Creative Commons Attribution-Share Alike 4.0 International (CC BY-SA 4.0)
+   - Note: One of Calder's last large outdoor mobiles; installed in the museum's open courtyard.
+
 ### Calder Flamingo Files
 
 1. **calder_flamingo_staub.jpg**
