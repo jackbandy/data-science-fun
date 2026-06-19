@@ -17,14 +17,30 @@ There have also been analogous questions in computer science education: "do we n
 
 One goal of this mini-book is to defend the answer to such questions as "no, not really." The fundamental ethical principles (and ethical dilemmas) remain stable, even as new tools and technologies surround them. To practice ethics in data science involves many of the same kinds of decisions required to practice ethics in any other time period or profession: e.g., consider the potential consequences of your decisions, listen to concerns shared by others, make changes slowly and carefully, respect the dignity of each and every human being, and so on.
 
-One of my professors in grad school, [Pablo Boczkowski](https://scholar.google.com/citations?user=Q4MLDisAAAAJ&hl=en), used to frame it this way: a very old play can be performed on new stages. In the context of technology, the "very old plays" are often enduring questions related to human identity, purpose, origins, and prospects. Ann Taves has summarized these "enduring questions" into six categories [@taves_worldview_studies_2019]:
+One of my professors in grad school, [Pablo Boczkowski](https://scholar.google.com/citations?user=Q4MLDisAAAAJ&hl=en), used to frame it this way: a very old play can be performed on new stages. In the context of technology, the "very old plays" are often enduring questions related to human identity, purpose, origins, and prospects. Ann Taves has summarized these "enduring questions" into six categories [@taves_worldview_studies_2019], which I have lightly edited:
 
-* REALITY (ontology): What is ultimate reality? What exists? What is real?
-* ORIGINS (cosmology): Where did it come from? How did we get here? (Where is "here"?) Where are we going?
-* KNOWLEDGE (epistemology): How do we know this (about ourselves and reality more generally)?
-* SITUATION: What is the situation in which we find ourselves? (Who are "we"?)
-* GOAL (axiology): What is the good (the goal) for which we should strive?
-* PATH (praxeology): What do we need to do to reach the goal? What path should we follow? How do we ensure that we are on the path?
+* **Reality** (i.e. *ontology*)
+    * What is ultimate reality?
+    * What exists?
+    * What is real?
+* **Origins** (i.e. *cosmology*)
+    * Where did it come from?
+    * How did we get here?
+        * Where is "here"?
+    * Where are we going?
+* **Knowledge** (i.e. *epistemology*)
+    * How do we know any of this?
+    * How do we know about ourselves?
+    * How do we know about reality more generally?
+* **Situation**
+    * What is the situation in which we find ourselves?
+    * Who are "we"?
+* **Goal** (i.e. *axiology*)
+    * What is the good (the goal) for which we should strive?
+* **Path** (i.e. *praxeology*)
+    * What do we need to do to reach the goal?
+    * What path should we follow?
+    * How do we ensure that we are on the path?
 
 Paul Gauguin offered an even shorter version in the title of his painting *Where Do We Come From? What Are We? Where Are We Going?* [@mfa_gauguin_where_do_we_come_from_1897], as shown in the image at the start of this chapter.
 

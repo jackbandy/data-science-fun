@@ -136,9 +136,31 @@ TK
 
 TK. Cite [@veliz2026prophecy].
 
-## Communication and Accountability
 
-### Communication and audience
+
+## Communication
+
+### Common Knowledge
+
+Something profound happens when multiple people "read" (look at, watch, draw, view, etc.) information together. In brief, this is the phenomenon of common knowledge: shared awareness about what other people know, and/or what others have contributed to the pyramid.
+
+Common knowledge is often confused with mutual knowledge. If we both know that there is only one more ice cream bar in the freezer, that is mutual knowledge. But if we both know *that the other person knows* that there is only one ice cream bar in the freezer, that is common knowledge, or awareness about what other people know.
+
+Perhaps the best way to explain common knowledge is to recognize its use in storytelling methods which create suspense in film and television. For example, Alfred Hitchcock described the distinction between "surprise" and "suspense" as a difference in common knowledge: in a surprise, the audience discovers an important fact at the same time as the characters. The information is withheld from everyone [@hitchcock_interview_1973].
+
+But suspense depends on *partially* shared information. For example, when the audience knows that there is a bomb under the dining table, but they also know that Bob was gone when the bomb was placed under the table. In Hitchcock's framing, this scenario creates suspense because the audience anticipates danger from the bomb, and also knows that Bob does not anticipate the same danger.
+
+A data scientist can benefit from understanding and leveraging common knowledge (or lack thereof). When communicating results, for example, it may not be sufficient just to know what the audience knows. You may also want to know what audience members know *about what other audience members know*. The intricacies of common knowledge are fascinating, and two classic puzzles show how it can coordinate action [@fagin_reasoning_about_knowledge_1995].
+
+In "the hat puzzle," row of people each wear a hat they cannot see, and no one is allowed to move until they deduce their own hat color. The line stays frozen. Then, a *public* announcement states "at least one of you wears a red hat." The announcement adds no new visible fact, yet it converts mutual knowledge into common knowledge — and that is what finally allows the line move.
+
+A related puzzle, **the muddy children puzzle**, is described by @sep-dynamic-epistemic as follows:
+
+> Three children are playing in the mud. Father calls the children to the house, arranging them in a semicircle so that each child can clearly see every other child. "At least one of you has mud on your forehead", says Father. The children look around, each examining every other child's forehead. Of course, no child can examine his or her own. Father continues, "If you know whether your forehead is dirty, then step forward now." No child steps forward. Father repeats himself a second time, "If you know whether your forehead is dirty, then step forward now." Some but not all of the children step forward. Father repeats himself a third time, "If you know whether your forehead is dirty, then step forward now." All of the remaining children step forward. How many children have muddy foreheads?
+
+The father's announcement adds no new *visible* fact — every child could already see the others' foreheads — yet it creates the common knowledge that enables the deductions. Each round of silence carries information, and counting those silences lets each muddy child infer their own state.
+
+### Audience
 
 TK
 
