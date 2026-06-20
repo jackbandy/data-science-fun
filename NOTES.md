@@ -130,7 +130,10 @@ Learning DS Textbook:
 * globe toss: estimate % of water
 * voter turnout estimate
 * water/electricity/utility usage
-* 
+* estimate CTA ridership on a given day
+* determine if a drug is effective
+* which movie to watch with friends
+* which book to read
 
 ## Etc.
 
