@@ -243,9 +243,9 @@ h1 a:hover {
 .schedule-map {
   position: relative;
   width: 100%;
-  aspect-ratio: 1492 / 933;
+  aspect-ratio: 933 / 1492;
   background-color: #fff;
-  background-image: url("../assets/orange-line/orange-line-trace-line-only.svg");
+  background-image: url("../assets/orange-line/orange-line-trace-with-stops.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -255,14 +255,14 @@ h1 a:hover {
 
 .schedule-map-station {
   position: absolute;
-  width: 1.475%;
-  height: 2.359%;
+  width: 2.359%;
+  height: 1.475%;
   min-width: 0;
   min-height: 0;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: #fff;
+  background: transparent;
   appearance: none;
   -webkit-appearance: none;
   cursor: help;
@@ -273,8 +273,6 @@ h1 a:hover {
 .schedule-map-station.transfer {
   width: 2.68%;
   height: 4.286%;
-  background:
-    radial-gradient(circle, #fff 0 58%, #000 59% 93%, #fff 94% 100%);
 }
 
 .schedule-map-station.static {
@@ -284,7 +282,6 @@ h1 a:hover {
 .schedule-map-station:not(.static):hover,
 .schedule-map-station:not(.static):focus-visible {
   outline: none;
-  transform: translate(-50%, -50%) scale(1.35);
 }
 
 .schedule-map-chevron {
@@ -299,11 +296,11 @@ h1 a:hover {
 }
 
 .schedule-map-chevron.left {
-  transform: translate(-50%, -50%) rotate(-45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .schedule-map-chevron.right {
-  transform: translate(-50%, -50%) rotate(135deg);
+  transform: translate(-50%, -50%) rotate(225deg);
 }
 
 .schedule-table-wrap {
