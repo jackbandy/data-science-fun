@@ -149,20 +149,196 @@
 <section id="section" class="slide level1 photo-only" data-state="photo-only" data-background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" data-background-size="cover">
 <h1></h1>
 </section>
-<section id="demo-content-slide" class="slide level1">
-<h1>Demo Content Slide</h1>
-<p>Placeholder content for Week 10.</p>
+<section id="clustering" class="slide level1 section-header">
+<h1>Clustering</h1>
+</section>
+<section id="what-is-clustering" class="slide level1">
+<h1>What Is Clustering?</h1>
+<p><strong>Unsupervised</strong> learning — discover what is already there.</p>
 <ul>
-<li>Clustering</li>
-<li>PCA</li>
-<li>Model evaluation</li>
+<li>No labels / ground truth</li>
+<li>Group similar observations together</li>
+<li>Use similarity / distance to make groups</li>
+<li>Goals:
+<ul>
+<li>high similarity within clusters (cohesion)</li>
+<li>low similarity between cluster (separation)</li>
+</ul></li>
 </ul>
+</section>
+<section id="types-of-clustering" class="slide level1">
+<h1>Types of Clustering</h1>
+<ul>
+<li><strong>Complete vs.&nbsp;partial</strong> — every observation belongs to a cluster, or some may not</li>
+<li><strong>Non-overlapping vs.&nbsp;overlapping</strong> — each observation belongs to one cluster, or potentially many</li>
+</ul>
+<p>A <strong>clustering</strong> is a collection of clusters; different algorithms make different assumptions about these properties.</p>
+</section>
+<section id="k-means-clustering" class="slide level1">
+<h1>K-Means Clustering</h1>
+<p><strong>Algorithm sketch:</strong></p>
+<ol type="1">
+<li>Choose <span class="math inline">\(k\)</span> (number of clusters)</li>
+<li>Initialize <span class="math inline">\(k\)</span> centroids randomly</li>
+<li>Assign each point to the nearest centroid</li>
+<li>Recompute centroids as the mean of assigned points</li>
+<li>Repeat 3–4 until assignments stabilize</li>
+</ol>
+<p><em>Sensitive to initialization; run multiple times and keep the best result.</em></p>
+</section>
+<section id="choosing-k" class="slide level1">
+<h1>Choosing K</h1>
+<ul>
+<li><strong>Elbow method</strong></li>
+<li><strong>Silhouette score</strong></li>
+<li><strong>Domain knowledge</strong></li>
+<li>?</li>
+</ul>
+</section>
+<section id="k-means-limitations" class="slide level1">
+<h1>K-Means Limitations</h1>
+<ul>
+<li>Assumes spherical clusters, roughly equal size</li>
+<li>Sensitive to outliers
+<ul>
+<li>centroid gets pulled</li>
+</ul></li>
+<li>Must choose <span class="math inline">\(k\)</span> in advance</li>
+<li>Poor for non-convex shapes
+<ul>
+<li>DBSCAN, hierarchical clustering as alternatives</li>
+</ul></li>
+</ul>
+</section>
+<section id="k-means-initialization" class="slide level1">
+<h1>K-Means Initialization</h1>
+<p>K-means is <strong>sensitive to initialization</strong></p>
+<p><strong>Furthest-First Heuristic (FFH):</strong></p>
+<ol type="1">
+<li>Pick first centroid randomly from data points</li>
+<li>For each remaining centroid: pick the point that maximizes minimum distance to already-chosen centroids</li>
+</ol>
+<p><strong>K-means++:</strong> randomized version of FFH — pick next centroid with probability proportional to its minimum distance from existing centroids.</p>
+</section>
+<section id="cluster-evaluation" class="slide level1 section-header">
+<h1>Cluster Evaluation</h1>
+</section>
+<section id="cohesion-and-separation" class="slide level1">
+<h1>Cohesion and Separation</h1>
+<ul>
+<li><strong>Cohesion</strong> — how similar observations within a cluster are to each other</li>
+<li><strong>Separation</strong> — how distinct a cluster is from other clusters</li>
+</ul>
+<p><span class="math display">\[\text{cohesion}(C_i) = \frac{1}{|C_i|(|C_i|-1)/2} \sum_{x,y \in C_i} \text{proximity}(x, y)\]</span></p>
+<p><span class="math display">\[\text{separation}(C_i, C_j) = \frac{1}{|C_i||C_j|} \sum_{x \in C_i,\, y \in C_j} \text{proximity}(x, y)\]</span></p>
+<p>We want high cohesion and high separation.</p>
+</section>
+<section id="silhouette-coefficient" class="slide level1">
+<h1>Silhouette Coefficient</h1>
+<p>Combines cohesion and separation into a single score per observation:</p>
+<p><span class="math display">\[s_i = \frac{b - a}{\max(a, b)}\]</span></p>
+<ul>
+<li><span class="math inline">\(a\)</span> = average distance from point <span class="math inline">\(i\)</span> to all other points <strong>in the same cluster</strong></li>
+<li><span class="math inline">\(b\)</span> = average distance from point <span class="math inline">\(i\)</span> to all points <strong>in the nearest other cluster</strong></li>
+</ul>
+<p>Range: <span class="math inline">\([-1, 1]\)</span>. Negative → misclassified; 0 → overlapping; positive and close to 1 → well-clustered.</p>
+</section>
+<section id="hierarchical-clustering" class="slide level1 section-header">
+<h1>Hierarchical Clustering</h1>
+</section>
+<section id="hierarchical-clustering-1" class="slide level1">
+<h1>Hierarchical Clustering</h1>
+<p>Produces a <strong>dendrogram</strong> — a tree of nested clusters.</p>
+<p>Two approaches:</p>
+<ul>
+<li><strong>Agglomerative (bottom-up):</strong> start with each observation as its own cluster; merge the closest pair at each step until one cluster remains</li>
+<li><strong>Divisive (top-down):</strong> start with one cluster; split at each step until each observation is its own cluster</li>
+</ul>
+<p>Agglomerative is far more common in practice.</p>
+</section>
+<section id="agglomerative-linkage-methods" class="slide level1">
+<h1>Agglomerative Linkage Methods</h1>
+<p>How to define “closeness” between clusters:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Distance between <span class="math inline">\(C_i\)</span> and <span class="math inline">\(C_j\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Single link (MIN)</strong></td>
+<td>min distance between any two points</td>
+</tr>
+<tr class="even">
+<td><strong>Complete link (MAX)</strong></td>
+<td>max distance between any two points</td>
+</tr>
+<tr class="odd">
+<td><strong>Average link</strong></td>
+<td>mean distance across all pairs</td>
+</tr>
+</tbody>
+</table>
+<p>TODO look into Ward’s method</p>
+<p>Average link is most widely used (more robust to outliers than single/complete).</p>
+</section>
+<section id="principal-component-analysis-pca" class="slide level1 section-header">
+<h1>Principal Component Analysis (PCA)</h1>
+</section>
+<section id="what-is-pca" class="slide level1">
+<h1>What Is PCA?</h1>
+<p><strong>Dimensionality reduction</strong> — represent high-dimensional data in fewer dimensions, preserve as much variance as possible.</p>
+<ul>
+<li>Find directions (“principal components”) of maximum variance</li>
+<li>Each PC is a linear combination of original features</li>
+<li>PCs are orthogonal / uncorrelated</li>
+</ul>
+</section>
+<section id="why-use-pca" class="slide level1">
+<h1>Why Use PCA?</h1>
+<ul>
+<li>Visualization (project to 2D/3D for plotting)</li>
+<li>Noise reduction (drop low-variance components)</li>
+<li>Speed up downstream models (fewer features)</li>
+<li>Handle multicollinearity</li>
+</ul>
+<p><strong>Tradeoff:</strong> interpretability — PCs are abstract combinations of original features.</p>
+</section>
+<section id="scree-plot" class="slide level1">
+<h1>Scree Plot</h1>
+<p>Plot the <strong>explained variance ratio</strong> for each component. Helps decide how many PCs to keep.</p>
+<p><em>[TODO: add scree plot example]</em></p>
+</section>
+<section id="pca" class="slide level1">
+<h1>PCA</h1>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center" style="max-height:480px;border-radius:6px;">
+<figure>
+<p><img data-src="../assets/portraits/pete-crow-armstrong.jpg"></p>
+<figcaption>Pete Crow-Armstrong, Chicago Cubs CF</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<p><strong>#4 · CF · Chicago Cubs</strong></p>
+<ul>
+<li>2025 NL All-Star, Gold Glove winner</li>
+<li>Hit for the cycle on June 15, 2026
+<ul>
+<li>I was there!</li>
+<li>And I thought… PCA with PCA?</li>
+</ul></li>
+</ul>
+<p><em>Photo: Minda Haas Kuhlmann, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>, via Wikimedia Commons</em></p>
+</div></div>
 </section>
 <section id="sources" class="slide level1 sources">
 <h1>Sources</h1>
 <ol type="1">
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week10.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week10.md</a>.</li>
-<li>Last modified and compiled June 18, 13:12h Central (Chicago) time.</li>
+<li>Last modified and compiled June 20, 15:21h Central (Chicago) time.</li>
 <li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 <li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>
