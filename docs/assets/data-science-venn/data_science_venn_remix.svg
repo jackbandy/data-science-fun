@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="556" viewBox="0 0 900 556">
+  <defs>
+    <style>
+      @font-face {
+        font-family: 'Libre Franklin';
+        src: url('../fonts/libre-franklin/LibreFranklin.woff2') format('woff2');
+      }
+    </style>
+  </defs>
+
+  <rect width="900" height="556" fill="white"/>
+
+  <!--
+    Circles: equilateral triangle, all pairwise distances = 160px, r = 185px
+    Left  (Hacking Skills):         cx=370, cy=209
+    Right (Math and Statistics):    cx=530, cy=209
+    Bottom (Domain Expertise):      cx=450, cy=348
+    All labels use text-anchor="middle" so x positions are true visual centers.
+    Symmetric pairs: Hacking/Math at x=255/645 (255+645=900),
+    Danger Zone/Traditional Research at x=310/590 (310+590=900).
+  -->
+
+  <circle cx="370" cy="209" r="185" fill="#cccccc" fill-opacity="0.32"/>
+  <circle cx="530" cy="209" r="185" fill="#cccccc" fill-opacity="0.32"/>
+  <circle cx="450" cy="348" r="185" fill="#cccccc" fill-opacity="0.32"/>
+
+  <!-- Hacking Skills — upper-left exclusive petal -->
+  <text x="255" y="172" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="24" font-weight="600" fill="#2a2a2a">Hacking</text>
+  <text x="255" y="201" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="24" font-weight="600" fill="#2a2a2a">Skills</text>
+
+  <!-- Math and Statistics — upper-right exclusive petal (mirrored from left at x=645) -->
+  <text x="645" y="172" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="24" font-weight="600" fill="#2a2a2a">Math and</text>
+  <text x="645" y="201" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="24" font-weight="600" fill="#2a2a2a">Statistics</text>
+
+  <!-- Domain Expertise — bottom exclusive petal -->
+  <text x="450" y="455" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="24" font-weight="600" fill="#2a2a2a">Domain</text>
+  <text x="450" y="484" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="24" font-weight="600" fill="#2a2a2a">Expertise</text>
+
+  <!-- Machine Learning — Hacking ∩ Math only (above bottom circle, which starts at y=163) -->
+  <text x="450" y="116" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="13" fill="#555555">Machine</text>
+  <text x="450" y="133" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="13" fill="#555555">Learning</text>
+
+  <!-- Data Science — triple intersection -->
+  <text x="450" y="253" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Data</text>
+  <text x="450" y="273" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a1a">Science</text>
+
+  <!-- Danger Zone! — Hacking ∩ Domain only (x=310, mirrored at x=590) -->
+  <text x="310" y="326" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="13" fill="#555555">Danger</text>
+  <text x="310" y="343" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="13" fill="#555555">Zone!</text>
+
+  <!-- Traditional Research — Math ∩ Domain only (x=590, mirror of Danger Zone) -->
+  <text x="590" y="326" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="13" fill="#555555">Traditional</text>
+  <text x="590" y="343" font-family="Libre Franklin, sans-serif" text-anchor="middle" font-size="13" fill="#555555">Research</text>
+</svg>
