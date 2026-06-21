@@ -4,22 +4,18 @@ Two movie datasets drawn from [IMDb's public data files](https://datasets.imdbws
 
 ## Files
 
-| File | Description |
-|------|-------------|
-| `popular.csv` | Top 1000 movies ranked by number of IMDb votes |
-| `random.csv` | 1000 movies sampled at random from the remaining rated movies (seed 42) |
-| `collect.py` | Script that produced both files |
+- `popular.csv` — Top 1000 movies ranked by number of IMDb votes
+- `random.csv` — 1000 movies sampled at random from the remaining rated movies (seed 42)
+- `collect.py` — Script that produced both files
 
 ## Columns
 
-| Column | Source | Notes |
-|--------|--------|-------|
-| `primaryTitle` | title.basics | Release title |
-| `startYear` | title.basics | Release year |
-| `runtimeMinutes` | title.basics | Runtime; `\N` if unknown |
-| `genres` | title.basics | Comma-separated; `\N` if unknown |
-| `averageRating` | title.ratings | Weighted mean (1–10) |
-| `numVotes` | title.ratings | Total votes cast |
+- `primaryTitle` *(title.basics)* — Release title
+- `startYear` *(title.basics)* — Release year
+- `runtimeMinutes` *(title.basics)* — Runtime in minutes; `\N` if unknown
+- `genres` *(title.basics)* — Comma-separated genre list; `\N` if unknown
+- `averageRating` *(title.ratings)* — IMDb weighted mean rating (1–10)
+- `numVotes` *(title.ratings)* — Number of individual user ratings submitted
 
 ## Methodology
 
