@@ -14,13 +14,13 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
+# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
 
-CS 418 · Week 10 · 🟠 Halsted 🟠
+CS 418 · Week 10 · 🟠 Ashland 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
 
 ---
 

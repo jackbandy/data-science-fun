@@ -16,13 +16,13 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" background-size="cover"}
+# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
 
-CS 418 · Week 12 · 🟠 35th/Archer 🟠
+CS 418 · Week 12 · 🟠 Western 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" background-size="cover"}
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
 
 ---
 

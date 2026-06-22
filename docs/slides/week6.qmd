@@ -1,0 +1,1023 @@
+---
+title: "Week 6 (CS 418 @ UIC)"
+jupyter: cs418
+# Some code in this file was generated with LLM assistance.
+# It is maintained and vetted by jxb@uic.edu.
+# Please contact jxb@uic.edu with any issues or concerns.
+execute:
+  keep-ipynb: true
+format:
+  revealjs:
+    fig-format: svg
+    fig-width: 5
+    fig-height: 3.09
+    auto-stretch: false
+    footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 6</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week6.html">dodatascience.fun/slides/week6</a></span>'
+---
+
+# Week 6 Slide Deck {.course-title}
+
+## Visualizations
+
+Jack Bandy
+2026
+
+
+---
+
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
+
+---
+
+# Demo Content Slide
+
+Content for Week 6.
+
+::: {.incremental}
+- Visualization refinement
+- Interaction
+- Time series
+- Communicating uncertainty
+- Sneak peek at modeling
+:::
+
+---
+
+# Gapminder {.iframe-slide}
+
+<iframe src="https://www.gapminder.org/tools/#$chart-type=bubbles&url=v2" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+---
+
+# Time Series Visualization {.section-header}
+
+---
+
+# Time Series Basics
+
+A **univariate time series** is simply a sequence of observations of the **same variable** collected over time
+- not just a "bag of values"
+
+Two goals of time series analysis:
+
+::: {.incremental}
+- **Understand** or explain processes that produced the data
+- **Forecast** future values of the series (i.e. prediction)
+:::
+
+---
+
+# Time Series Examples
+
+::: {.incremental}
+- Airline passengers
+- Public transit ridership
+- Hourly/Daily/Monthly temperatures
+- Annual spending
+- Others you can think of?
+:::
+
+---
+
+# Why I love time series
+
+::: {.incremental}
+Time series can contextualize (almost) any arbitrary datum
+
+- e.g. "UIC had XXXX graduates last year"
+- e.g. "Chicago's budget grew by $XXmillion last year"
+- e.g. "the mortgate interest rate is X.X%"
+- e.g. "XX people have died from the flu this year"
+:::
+
+---
+
+# Airline Passengers: Setup
+
+```{python}
+#| echo: true
+import polars as pl
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+airline = pl.read_csv("../../datasets/airline-passengers/airline-passengers.csv")
+airline.sample(5, seed=42).sort("Month")
+
+```
+
+---
+
+# Airline Passengers Example {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line plot of monthly international airline passengers from 1949 to 1960, showing an upward trend with repeating seasonal peaks each summer that grow larger over time"
+airline = airline.with_columns(pl.col("Month").str.to_date("%Y-%m-%d"))
+ax = sns.lineplot(airline, x="Month", y="Passengers")
+ax.set_ylim(bottom=0)
+plt.tight_layout()
+```
+
+---
+
+# Airline Passengers: What Do You Notice?
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.incremental}
+- How to describe this series?
+- Overall trend(s)?
+- Seasonal changes?
+- Potential explanations?
+:::
+:::
+::: {.column width="50%"}
+```{python}
+#| echo: false
+#| fig-alt: "Line plot of monthly international airline passengers from 1949 to 1960, showing an upward trend with repeating seasonal peaks each summer that grow larger over time"
+ax = sns.lineplot(airline.select(["Month", "Passengers"]), x="Month", y="Passengers")
+ax.set_ylim(bottom=0)
+plt.tight_layout()
+```
+:::
+:::
+
+---
+
+# Spotting the Trend: Rolling Average
+
+```{python}
+#| echo: true
+airline = airline.with_columns(
+    pl.col("Passengers").rolling_mean(window_size=12).alias("trend")
+)
+airline.sample(5, seed=42).sort("Month")
+```
+
+---
+
+# Spotting the Trend: Rolling Average {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line plot of airline passengers with a smoothed 12-month rolling average overlaid as an orange line, making the underlying upward trend clearly visible through the seasonal noise"
+ax = sns.lineplot(airline, x="Month", y="Passengers", alpha=0.35, label="observed")
+sns.lineplot(
+    airline.filter(pl.col("trend").is_not_null()),
+    x="Month", y="trend", label="12-month avg", ax=ax
+)
+ax.legend()
+ax.set_ylim(bottom=0)
+plt.tight_layout()
+```
+
+---
+
+# Four-part Decomposition
+
+Time series can be decomposed into four parts:
+
+::: {.incremental}
+- **Level** — Baseline average value
+- **Trend** — Long-term increase or decrease
+- **Seasonality** — Repeating periodic pattern(s)
+- **Noise** — Random/unexplained variation
+:::
+
+
+---
+
+# Additive vs. Multiplicative Seasonality
+
+::: {.columns}
+::: {.column width="50%"}
+**Additive**
+
+$$y(t) = T + S + N$$
+
+Seasonal swings are **constant**: regardless of trend level, variation is a fixed amount.
+
+_→ Use when amplitudes stay flat._
+:::
+::: {.column .fragment width="50%"}
+**Multiplicative**
+
+$$y(t) = T \times S \times N$$
+
+Seasonality **scales with the trend** (bigger baseline means bigger swings).
+
+_→ Use when amplitudes grow._
+:::
+:::
+
+::: {.fragment}
+
+
+(Basically, if peaks get taller as the series continues, use multiplicative.)
+:::
+
+
+---
+
+# Additive vs. Multiplicative: Side by Side {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Two side-by-side seasonal component plots: the additive model shows growing seasonal amplitude over time, while the multiplicative model shows a stable repeating wave, making clear the multiplicative model is the better fit"
+from statsmodels.tsa.seasonal import seasonal_decompose
+values = airline["Passengers"].to_numpy().astype(float)
+# each panel is golden-ratio (5 x 3.09), so the full figure is extra-wide
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
+for model, ax in zip(["additive", "multiplicative"], axes):
+    r = seasonal_decompose(values, model=model, period=12)
+    ax.plot(r.seasonal[:36])
+    ax.set_title(f"{model.capitalize()}")
+    ax.set_xlabel("Month (first 3 years)")
+    ax.set_ylabel("Seasonal component")
+plt.tight_layout()
+```
+
+
+
+---
+
+# Choosing the Right Seasonality Model
+
+**Use additive when** seasonal swings are consistently the same size.
+
+ - _Example: a stadium closes outdoor seating during the winter, which reduces capacity by a fixed amount (e.g. 2,000 seats)._
+
+**Use multiplicative when** seasonal swings scale with the trend.
+
+- _Example: airline passengers — summer peaks are larger as the overall baseline gets higher (more people are flying)._
+
+Remember to plot the raw data, check if the peaks get taller.
+
+
+---
+
+
+
+
+
+# `seasonal_decompose`: Four Components {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| code-line-numbers: "4"
+#| fig-alt: "Four-panel decomposition plot of airline passenger data showing observed, trend, seasonal, and residual components stacked vertically"
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+values = airline["Passengers"].to_numpy().astype(float)
+result = seasonal_decompose(values, model="multiplicative", period=12)
+fig = result.plot()
+fig.set_size_inches(7, 4.3)
+fig.get_axes()[-1].set_xlabel("Month")
+plt.tight_layout()
+```
+
+---
+
+# The Trend Component {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| code-line-numbers: "3"
+#| fig-alt: "Smooth upward-sloping line showing only the trend component extracted from airline passenger data, with missing values at both ends where the rolling average cannot be computed"
+trend_df = pl.DataFrame({
+    "Month": airline["Month"],
+    "trend": pl.Series("trend", result.trend).fill_nan(None),
+}).drop_nulls("trend")
+
+ax = sns.lineplot(trend_df, x="Month", y="trend")
+ax.set_ylim(bottom=0)
+ax.set_ylabel("Passengers (trend)")
+ax.set_title("Trend Component")
+plt.tight_layout()
+```
+
+---
+
+# The Seasonal Component
+
+```{python}
+#| echo: true
+#| output: false
+seasonal_df = pl.DataFrame({
+    "Month": airline["Month"],
+    "seasonal": pl.Series("seasonal", result.seasonal),
+})
+first_two = seasonal_df.head(24)
+last_two = seasonal_df.tail(24)
+```
+
+We'll check to see if the seasonal factor stays **constant** over time (with a multiplicative model)
+
+---
+
+# The Seasonal Component: Stable Over Time? {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Two side-by-side panels of the multiplicative seasonal component: the first two years on the left and the last two years on the right. Both show an identical repeating wave with summer peaks and winter troughs, illustrating that the seasonal factor is constant over time."
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
+for df, ax, label in zip([first_two, last_two], axes, ["First 2 years", "Last 2 years"]):
+    sns.lineplot(df, x="Month", y="seasonal", ax=ax)
+    ax.axhline(1.0, color="gray", linestyle="--", alpha=0.5)
+    ax.set(xlabel="Month", title=label)
+    plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha="right")
+axes[0].set_ylabel("Seasonal factor")
+fig.suptitle("Seasonal Component (multiplicative)")
+plt.tight_layout()
+```
+
+---
+
+# The Residuals {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| code-line-numbers: "3"
+#| fig-alt: "Residuals after removing trend and seasonality from airline data, showing mostly random noise hovering around 1.0 with a few small spikes"
+resid_df = pl.DataFrame({
+    "Month": airline["Month"],
+    "resid": pl.Series("resid", result.resid).fill_nan(None),
+}).drop_nulls("resid")
+
+ax = sns.lineplot(resid_df, x="Month", y="resid")
+ax.axhline(1.0, color="gray", linestyle="--", alpha=0.5)
+ax.set_ylabel("Residual")
+ax.set_title("Residuals (multiplicative: ideal noise ≈ 1.0)")
+plt.tight_layout()
+```
+
+
+
+
+---
+
+# Stationarity
+
+- Some forecasting models assume stationarity
+- So you must know whether a series is stationary before modeling
+
+A stationary series is defined by:
+
+::: {.incremental}
+- **Constant mean** — no long-term drift up or down
+- **Constant variance** — spread stays the same over time
+- **No trend or seasonality**
+:::
+
+
+---
+
+# Stationary? {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line plot of monthly airline passengers from 1949 to 1960, showing an upward trend with growing seasonal oscillations before differencing"
+airline_diff = airline.with_columns(
+    pl.col("Passengers").diff().alias("first_diff")
+).drop_nulls()
+
+ax = sns.lineplot(airline, x="Month", y="Passengers")
+ax.set_ylim(bottom=0)
+ax.set_ylabel("Passengers")
+ax.set_title("Original Series")
+plt.tight_layout()
+```
+
+---
+
+# Making a Series Stationary: Differencing
+
+**Differencing** removes trend by computing the difference between consecutive observations:
+
+$$Y'_t = Y_t - Y_{t-1}$$
+
+This is called **first-order differencing** (difference order = 1).
+
+::: {.incremental}
+- (Recognize this concept?)
+- Repeat the process for stronger trends
+    - second-order differencing removes quadratic trends
+- _Example: if passengers are 100 → 120 → 139, the first differences are 20, 19 (much flatter)_
+:::
+
+---
+
+
+# Differencing: Before and After {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Two side-by-side panels: the original airline passenger series on the left with its upward trend and growing seasonal swings, and the first-order differenced series on the right oscillating around zero with no visible trend"
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
+sns.lineplot(airline, x="Month", y="Passengers", ax=axes[0])
+axes[0].set_ylim(bottom=0); axes[0].set_title("Before: Original Series")
+sns.lineplot(airline_diff, x="Month", y="first_diff", ax=axes[1])
+axes[1].axhline(0, color="gray", linestyle="--", alpha=0.5)
+axes[1].set_ylabel("Difference"); axes[1].set_title("After: First-Order Differencing")
+plt.tight_layout()
+```
+
+---
+
+# Time Series Example: CTA Rides {.section-header}
+
+---
+
+# Load UIC-Halsted Daily Ridership
+
+```{python}
+#| echo: true
+cta = pl.read_csv("../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv")
+uic = cta.filter(pl.col("stationname") == "UIC-Halsted")
+uic.sample(5, seed=42)
+```
+
+---
+
+# Load UIC-Halsted Daily Ridership {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line plot of daily CTA ridership at UIC-Halsted station over the last 10 years, showing a sharp drop in 2020 during COVID and gradual recovery, with rapid short-term oscillations from weekly seasonality"
+uic = (
+    cta.filter(pl.col("stationname") == "UIC-Halsted")
+    .with_columns(
+        pl.col("date").str.to_date("%m/%d/%Y"),
+        pl.col("rides").str.replace_all(",", "").cast(pl.Int64),
+    ).sort("date").filter(pl.col("date") >= pl.date(2016, 1, 1))
+)
+ax = sns.lineplot(uic, x="date", y="rides", linewidth=0.5)
+ax.set_ylim(bottom=0)
+plt.tight_layout()
+```
+
+---
+
+# Just for Fun {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| code-line-numbers: "1,2"
+#| fig-alt: "Line plot of daily CTA ridership at UIC-Halsted station colored in the CTA Blue Line color (#00A1DE)"
+CTA_BLUE = "#00A1DE"
+ax = sns.lineplot(uic, x="date", y="rides", linewidth=0.5, color=CTA_BLUE)
+ax.set_xlabel("Date")
+ax.set_ylim(bottom=0)
+plt.tight_layout()
+```
+
+---
+
+
+
+# Weekly Seasonality {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Box plot of UIC-Halsted ridership by day of week, showing much higher ridership Monday through Friday and very low ridership on Saturdays and Sundays, confirming a strong commuter and student pattern"
+day_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+uic_dow = uic.with_columns(pl.col("date").dt.strftime("%A").alias("day_name"))
+ax = sns.boxplot(uic_dow, x="day_name", y="rides", order=day_order, color=CTA_BLUE)
+ax.set_xlabel("")
+ax.tick_params(axis="x", rotation=30)
+ax.set_title("Ridership by Day of Week — UIC-Halsted")
+plt.tight_layout()
+```
+
+---
+
+# Decompose UIC-Halsted with Period = 7 {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Four-panel decomposition of UIC-Halsted daily ridership using a 7-day period, revealing the long-term trend including the COVID crash in 2020 and a clear weekly seasonal pattern"
+rides = uic["rides"].to_numpy().astype(float)
+cta_result = seasonal_decompose(rides, model="additive", period=7)
+fig = cta_result.plot()
+fig.set_size_inches(7, 4.3)
+fig.get_axes()[-1].set_xlabel("Day # (since Jan 2016)")
+plt.tight_layout()
+```
+
+---
+
+# Weekday-Only Fit: What's Still There? {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line plot of seasonally-adjusted UIC-Halsted ridership after subtracting the weekly seasonal component, showing a much smoother underlying trend with the COVID drop clearly visible"
+deseasonalized = pl.DataFrame({
+    "date": uic["date"],
+    "rides": pl.Series("rides", cta_result.observed - cta_result.seasonal),
+})
+ax = sns.lineplot(deseasonalized, x="date", y="rides", color=CTA_BLUE, linewidth=0.5)
+ax.set_xlabel("Date")
+ax.set_ylabel("Rides (seasonally adjusted)")
+ax.set_title("Observed − Seasonal Component")
+ax.set_ylim(bottom=0)
+plt.tight_layout()
+```
+
+---
+
+# Monthly Trend(s) for UIC-Halsted Stop {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Box plot of UIC-Halsted ridership by month of the year, showing lower ridership in January, the summer months June through August, and December, tracking the UIC academic calendar."
+month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+uic_month = uic.with_columns(pl.col("date").dt.strftime("%b").alias("month"))
+ax = sns.boxplot(uic_month, x="month", y="rides", order=month_order, color=CTA_BLUE)
+ax.set_xlabel("")
+ax.set_ylim(bottom=0)
+ax.set_title("Ridership by Month — UIC-Halsted")
+plt.tight_layout()
+```
+
+
+---
+
+# MSTL: Multiple Seasonal Decomposition {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Five-panel MSTL decomposition of UIC-Halsted daily ridership, separating the long-term trend, a 7-day weekly seasonal component, a 365-day annual seasonal component that tracks the academic calendar, and the residual noise."
+from statsmodels.tsa.seasonal import MSTL
+
+mstl = MSTL(rides, periods=(7, 365)).fit()
+fig = mstl.plot()
+fig.set_size_inches(7, 4.6)
+fig.get_axes()[-1].set_xlabel("Day # (since Jan 2016)")
+plt.tight_layout()
+```
+
+---
+
+# Understanding the Decomposition {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.incremental}
+- **Trend**: steady through ~2019, collapse in spring 2020 (COVID), gradual recovery
+- **Weekly seasonality**: weekday vs weekend ridership
+- **Annual seasonality**: dips in January, summer, and December (academic calendar)
+- **Residuals**: large spikes or dips mark unusual days — holidays, extreme weather, special events
+:::
+:::
+::: {.column width="50%"}
+```{python}
+#| echo: false
+#| fig-alt: "Five-panel MSTL decomposition of UIC-Halsted daily ridership showing observed, trend, weekly seasonal, annual seasonal, and residual components"
+fig = mstl.plot()
+_w = plt.rcParams["figure.figsize"][0]
+fig.set_size_inches(_w, _w * 1.618)
+fig.get_axes()[-1].set_xlabel("Day # (since Jan 2016)")
+plt.tight_layout()
+```
+:::
+:::
+
+---
+
+# A Different Station: Washington/Wabash {.section-header}
+
+---
+
+# Load Washington/Wabash
+
+```{python}
+#| echo: true
+CTA_ORANGE = "#F9461C"
+wabash = (
+    cta.filter(pl.col("stationname") == "Washington/Wabash")
+    .with_columns(
+        pl.col("date").str.to_date("%m/%d/%Y"),
+        pl.col("rides").str.replace_all(",", "").cast(pl.Int64),
+    ).sort("date").filter(pl.col("date") >= pl.date(2016, 1, 1))
+)
+wabash.sample(5, seed=42).sort("date")
+```
+
+---
+
+# Washington/Wabash: Ridership Over Time {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line plot of daily ridership at the Washington/Wabash station colored in CTA Orange, beginning in late 2017 when the station opened, with the 2020 COVID drop and partial recovery."
+ax = sns.lineplot(wabash, x="date", y="rides", linewidth=0.5, color=CTA_ORANGE)
+ax.set_xlabel("Date")
+ax.set_ylim(bottom=0)
+ax.set_title("Washington/Wabash — Daily Ridership")
+plt.tight_layout()
+```
+
+---
+
+# Washington/Wabash: Weekday Patterns {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Box plot of Washington/Wabash ridership by day of week. Weekdays are busiest, but Saturday and Sunday ridership stays relatively high compared to a student station, reflecting downtown shopping, tourism, and events."
+wabash_dow = wabash.with_columns(pl.col("date").dt.strftime("%A").alias("day_name"))
+ax = sns.boxplot(wabash_dow, x="day_name", y="rides", order=day_order, color=CTA_ORANGE)
+ax.set_xlabel("")
+ax.tick_params(axis="x", rotation=30)
+ax.set_title("Ridership by Day of Week — Washington/Wabash")
+plt.tight_layout()
+```
+
+---
+
+# Two Stations, Two Rhythms? (Weekday) {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Two side-by-side day-of-week box plots. UIC-Halsted (blue) collapses on weekends, while Washington/Wabash (orange) keeps substantial weekend ridership, showing a flatter weekly profile for the downtown Loop station."
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
+sns.boxplot(uic_dow, x="day_name", y="rides", order=day_order, color=CTA_BLUE, ax=axes[0])
+sns.boxplot(wabash_dow, x="day_name", y="rides", order=day_order, color=CTA_ORANGE, ax=axes[1])
+axes[0].set_title("UIC-Halsted (student / commuter)")
+axes[1].set_title("Washington/Wabash (downtown Loop)")
+for ax in axes: ax.set_xlabel(""); ax.tick_params(axis="x", rotation=45)
+plt.tight_layout()
+```
+
+---
+
+# Two Stations, Two Rhythms? (Monthly) {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Two side-by-side month-of-year box plots. UIC-Halsted (blue) shows pronounced dips in January, June through August, and December that track the academic calendar. Washington/Wabash (orange) shows a much flatter annual profile without summer lows."
+wabash_month = wabash.with_columns(pl.col("date").dt.strftime("%b").alias("month"))
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
+sns.boxplot(uic_month, x="month", y="rides", order=month_order, color=CTA_BLUE, ax=axes[0])
+sns.boxplot(wabash_month, x="month", y="rides", order=month_order, color=CTA_ORANGE, ax=axes[1])
+axes[0].set_title("UIC-Halsted (student / commuter)")
+axes[1].set_title("Washington/Wabash (downtown Loop)")
+for ax in axes: ax.set_xlabel(""); ax.tick_params(axis="x", rotation=45)
+plt.tight_layout()
+```
+
+---
+
+# Intuition
+
+:::
+
+- **Weekday : weekend ratio**
+    - the Loop has more weekend traffic (shopping, tourism, events, etc.)
+- **Academic calendar**
+    - UIC dips in January, summer, and December
+    - the Loop's annual seasonal swing is weaker
+- **History**
+    — Washington/Wabash only opened in **Aug 2017**
+    - (replaced Madison/Wabash and Randolph/Wabash)
+    - its series is much shorter
+:::
+
+---
+
+# More Forecasting Models {.section-header}
+
+---
+
+# Forecasting Models: Overview
+
+May be useful when working with more complex, intricate time series.
+
+::: {.incremental}
+- **AR(p)** — predict from the last *p* observations
+- **MA(q)** — predict from the last *q* forecast errors
+- **ARMA(p, q)** — combines AR and MA; requires a stationary series
+- **ARIMA(p, d, q)** — ARMA after *d* rounds of differencing; handles trend
+- **SARIMA(p, d, q)(P, D, Q)m** — adds seasonal AR, differencing, MA
+:::
+
+
+---
+
+
+# Bayesian Time Series {.section-header}
+
+---
+
+# Why Bayesian?
+
+::: {.incremental}
+- Classical models usually just give a **single point forecast**
+    - a Bayesian model returns a **full posterior distribution** for every quantity
+    - every estimate and prediction comes with a **credible interval**
+- **Priors** let you encode what you already know
+    - e.g. ridership can't be negative
+    - weekends will be different
+- Plays nicely with small data, missing days
+:::
+
+---
+
+# A Bayesian Ridership Model
+
+Let's start by modeling each day as **intercept + weekday effect + month effect + noise**, and let the data update our beliefs.
+
+```{python}
+#| echo: true
+#| output: false
+import numpy as np
+import pymc as pm
+
+recent = uic.filter(pl.col("date") >= pl.date(2023, 1, 1)).with_columns(
+    (pl.col("date").dt.weekday() - 1).alias("dow"),   # 0=Mon … 6=Sun
+    (pl.col("date").dt.month() - 1).alias("month"),    # 0=Jan … 11=Dec
+)
+dow   = recent["dow"].to_numpy()
+month = recent["month"].to_numpy()
+y     = recent["rides"].to_numpy().astype(float)
+
+with pm.Model() as model:
+    intercept = pm.Normal("intercept", mu=y.mean(), sigma=2000)
+    dow_eff   = pm.ZeroSumNormal("dow_eff", sigma=1500, shape=7)
+    month_eff = pm.ZeroSumNormal("month_eff", sigma=1500, shape=12)
+    sigma     = pm.HalfNormal("sigma", 2000)
+    mu = intercept + dow_eff[dow] + month_eff[month]
+    pm.Normal("obs", mu=mu, sigma=sigma, observed=y)
+    idata = pm.sample(500, tune=500, chains=2, cores=1,
+                      random_seed=0, progressbar=False)
+```
+
+---
+
+# Posterior: Weekday Effects {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Dot-and-interval plot of the posterior weekday effects on UIC-Halsted ridership. Weekdays sit well above zero and weekends well below, each shown with an 89% credible interval, so we see both the estimate and its uncertainty."
+post = idata.posterior
+dow_s = post["dow_eff"].values.reshape(-1, 7)
+means = dow_s.mean(0); lo, hi = np.percentile(dow_s, [5.5, 94.5], 0)
+fig, ax = plt.subplots(figsize=(7, 4.3))
+ax.errorbar(means, range(7), xerr=[means-lo, hi-means], fmt="o", color=CTA_BLUE, capsize=4)
+ax.axvline(0, color="gray", linestyle="--", alpha=0.5)
+ax.set_yticks(range(7)); ax.set_yticklabels(["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]); ax.invert_yaxis()
+ax.set(xlabel="Effect on daily rides (vs. average)", title="Posterior weekday effects (89% CI)")
+plt.tight_layout()
+```
+
+---
+
+# Using the Model to Predict {.section-header}
+
+---
+
+# Fitting and Forecasting
+
+Each posterior draw is one **plausible version of the world**.
+
+::: {.incremental}
+- To predict a new day:
+    - push **(weekday, month)** through *every* draw
+- That gives a **distribution** of outcomes
+    — not just a single number!
+- The **spread** provides uncertainty
+    - only use **mean** if asked 🙂
+- e.g. "how many rides on a *Tuesday in December*?" → let's look it up!
+:::
+
+---
+
+# Predicting a Specific Day
+
+```{python}
+#| echo: true
+#| output: false
+intercept_s = post["intercept"].values.flatten()
+month_s     = post["month_eff"].values.reshape(-1, 12)
+sigma_s     = post["sigma"].values.flatten()
+rng = np.random.default_rng(0)
+
+def predict(day, mon):
+    mu = intercept_s + dow_s[:, day] + month_s[:, mon]
+    return rng.normal(mu, sigma_s)
+```
+
+---
+
+# Predicting a Specific Day {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Violin plot of the posterior predictive ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October. The September weekday distribution sits much higher than the December weekday and October weekend, each with visible spread."
+scenarios = {"Tue · Dec": (1, 11), "Wed · Sep": (2, 8), "Sun · Oct": (6, 9)}
+frames = []
+for k, v in scenarios.items():
+    r = predict(*v)
+    frames.append(pl.DataFrame({"scenario": [k] * len(r), "rides": r}))
+draws = pl.concat(frames)
+ax = sns.violinplot(draws, x="scenario", y="rides", color=CTA_BLUE, cut=0)
+ax.set_ylim(bottom=0); ax.set_xlabel("")
+ax.set_title("Predicted ridership (full posterior predictive)")
+plt.tight_layout()
+```
+
+---
+
+# Reading the Predictions
+
+::: {.columns}
+::: {.column width="50%"}
+- **Tue in December**: ≈ 2,530 rides, 89% CI: 480 – 4,620
+- **Wed in September**: ≈ 5,150 rides, 89% CI: 2,950 – 7,260
+- **Sun in October**: ≈ 2,680 rides, 89% CI: 610 – 4,860
+- Intervals are wide (lots of **day-to-day noise** remains after weekday, month)
+:::
+::: {.column width="50%"}
+```{python}
+#| echo: false
+#| fig-alt: "Violin plot of the posterior predictive ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October."
+ax = sns.violinplot(draws, x="scenario", y="rides", color=CTA_BLUE, cut=0)
+ax.set_ylim(bottom=0); ax.set_xlabel("")
+plt.tight_layout()
+```
+:::
+:::
+
+---
+
+# Another Approach: Skip Time Altogether
+
+So far, the date was essentially the model. But ridership responds to factors (**causes??**) that can be identified and measured.
+
+::: {.incremental}
+- Treat each day as an independent **observation** (a "unit"), not a step in a sequence.
+- Predict from **covariates**: enrollment, weekday, holiday, special event, weather, etc...
+- This is a **causal / regression** framing
+    - a preview of how we'll model
+:::
+
+---
+
+# A Simple Causal DAG for Ridership {.image-frame-slide}
+
+```{python}
+#| echo: false
+#| fig-alt: "A simple directed acyclic graph with all root causes (UIC enrollment, month/term, weekday, holiday, weather, special event) pointing directly to Ridership."
+import networkx as nx
+
+G_simple = nx.DiGraph()
+root_causes = ["UIC enrollment", "Month / term", "Weekday", "Holiday", "Weather", "Special event"]
+G_simple.add_edges_from([(c, "Ridership") for c in root_causes])
+
+pos_simple = {
+    "UIC enrollment": (0, 5.0),
+    "Month / term":   (0, 4.0),
+    "Weekday":        (0, 3.0),
+    "Holiday":        (0, 2.0),
+    "Weather":        (0, 1.0),
+    "Special event":  (0, 0.0),
+    "Ridership":      (2.6, 2.5),
+}
+
+fig, ax = plt.subplots(figsize=(9, 5.5))
+nx.draw_networkx_nodes(G_simple, pos_simple, nodelist=root_causes,
+                       node_color="#dce6f2", edgecolors="#33526e", node_size=4200, ax=ax)
+nx.draw_networkx_nodes(G_simple, pos_simple, nodelist=["Ridership"],
+                       node_color=CTA_BLUE, edgecolors="#33526e", node_size=5800, ax=ax)
+nx.draw_networkx_labels(G_simple, pos_simple, font_size=8, ax=ax)
+nx.draw_networkx_edges(G_simple, pos_simple, arrowsize=18, node_size=5800,
+                       edge_color="#888", width=1.5, ax=ax)
+ax.set_axis_off()
+plt.tight_layout()
+```
+
+---
+
+# A Causal DAG for Ridership
+
+What drives daily ridership at a station? Not always directly — some causes work through **intermediate factors**.
+
+::: {.incremental}
+- **UIC enrollment** + **month/term** + **weather** → **UIC student attendance**
+- **Weekday** + **holiday** → student attendance, **UIC staff on campus**
+    - note the *academic calendar* affects students but **not** staff
+- **Special event** like concerts, games, speakers → directly boosts ridership
+- **Ridership** ← student attendance + staff on campus + special events + etc.
+:::
+
+
+---
+
+
+# A Hierarchical Causal DAG for Ridership {.image-frame-slide}
+
+```{python}
+#| echo: false
+#| fig-alt: "A directed acyclic graph with three columns: root causes on the left (UIC enrollment, month/term, weekday, holiday, weather, special event), two intermediary nodes in the middle (UIC student attendance and UIC staff on campus), and Ridership on the right. Arrows show which causes flow through which intermediary before reaching ridership."
+import networkx as nx
+
+G = nx.DiGraph()
+
+root_causes = ["UIC enrollment", "Month / term", "Weekday", "Holiday", "Weather", "Special event"]
+intermediaries = ["UIC student\nattendance", "UIC staff\non campus"]
+outcome = ["Ridership"]
+
+G.add_edges_from([(c, "UIC student\nattendance")
+                  for c in ["UIC enrollment", "Month / term", "Weekday", "Holiday", "Weather"]])
+G.add_edges_from([(c, "UIC staff\non campus") for c in ["Weekday", "Holiday"]])
+G.add_edge("UIC student\nattendance", "Ridership")
+G.add_edge("UIC staff\non campus", "Ridership")
+G.add_edge("Special event", "Ridership")
+
+pos = {
+    "UIC enrollment": (0, 5.0),
+    "Month / term":   (0, 4.0),
+    "Weekday":        (0, 3.0),
+    "Holiday":        (0, 2.0),
+    "Weather":        (0, 1.0),
+    "Special event":  (0, 0.0),
+    "UIC student\nattendance": (2.6, 3.5),
+    "UIC staff\non campus":    (2.6, 1.0),
+    "Ridership":      (5.2, 2.25),
+}
+
+fig, ax = plt.subplots(figsize=(9, 5.5))
+nx.draw_networkx_nodes(G, pos, nodelist=root_causes,
+                       node_color="#dce6f2", edgecolors="#33526e", node_size=4200, ax=ax)
+nx.draw_networkx_nodes(G, pos, nodelist=intermediaries,
+                       node_color="#fce8d5", edgecolors="#c85e00", node_size=5200, ax=ax)
+nx.draw_networkx_nodes(G, pos, nodelist=outcome,
+                       node_color=CTA_BLUE, edgecolors="#33526e", node_size=5800, ax=ax)
+nx.draw_networkx_labels(G, pos, font_size=8, ax=ax)
+straight_edges = [e for e in G.edges() if e != ("Special event", "Ridership")]
+nx.draw_networkx_edges(G, pos, edgelist=straight_edges, arrowsize=18, node_size=5200,
+                       edge_color="#888", width=1.5, ax=ax)
+nx.draw_networkx_edges(G, pos, edgelist=[("Special event", "Ridership")],
+                       arrowsize=18, node_size=5200, edge_color="#888", width=1.5, ax=ax,
+                       connectionstyle="arc3,rad=-0.3")
+ax.set_axis_off()
+plt.tight_layout()
+```
+
+---
+
+# Sources {.sources}
+
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week6.qmd>.
+2. Time series decomposition: Jason Brownlee, [*How to Decompose Time Series Data into Trend and Seasonality*](https://machinelearningmastery.com/decompose-time-series-data-trend-seasonality/), Machine Learning Mastery.
+3. Airline passengers dataset:
+   - Box, G.E.P., Jenkins, G.M. (1976). *Time Series Analysis: Forecasting and Control.* Holden-Day. ISBN 978-0-8162-1104-3. ([Internet Archive scan](https://archive.org/details/timeseriesanalys0000boxg)) ([5th edition via Wiley](https://www.wiley.com/en-us/Time+Series+Analysis:+Forecasting+and+Control,+5th+Edition-p-9781118675021))
+   - Dataset in R's base `datasets` package: [`AirPassengers`](https://rdrr.io/r/datasets/AirPassengers.html) — official R documentation with column definitions and citation
+   - Rdatasets mirror (CSV download): https://vincentarelbundock.github.io/Rdatasets/doc/datasets/AirPassengers.html
+4. CTA ridership data: [Chicago Data Portal — CTA Ridership: Station Entries — Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-Station-Entries-Daily-Totals/5neh-572f).
+5. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+6. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+7. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+
+
+
+---
+
+# ACF and PACF
+
+Use ACF and PACF plots to choose *p* and *q* from data.
+Two tools for choosing model order from data:
+
+::: {.incremental}
+- **ACF (Autocorrelation Function)** — correlation between $y_t$ and $y_{t-k}$ for each lag $k$. Use to choose MA order $q$: ACF "cuts off" after lag $q$.
+- **PACF (Partial Autocorrelation Function)** — correlation at lag $k$ after removing the effects explained by shorter lags. Use to choose AR order $p$: PACF "cuts off" after lag $p$.
+:::
+
+---
+
+# Reading ACF and PACF Plots
+
+Each bar = correlation at that lag; shaded band = 95% confidence interval.
+
+::: {.incremental}
+- Bars **within** the band → not significant (treat as zero)
+- **ACF decays slowly** → series may not be stationary — try differencing first
+- **ACF cuts off** sharply after lag $q$ → suggests **MA($q$)**
+- **PACF cuts off** sharply after lag $p$ → suggests **AR($p$)**
+- **Both decay gradually** → suggests **ARMA($p$, $q$)** — compare with AIC / BIC
+:::
+
+---
+
+# ACF and PACF: Airline Passengers {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Two-panel ACF and PACF plot for airline passenger data. The ACF shows slow sinusoidal decay indicating non-stationarity, while the PACF shows a sharp cutoff after lag 1 suggesting an AR(1) structure in the differenced series."
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7, 4.3))
+plot_acf(values, lags=30, ax=ax1, title="ACF — Airline Passengers")
+plot_pacf(values, lags=30, ax=ax2, title="PACF — Airline Passengers")
+plt.tight_layout()
+```

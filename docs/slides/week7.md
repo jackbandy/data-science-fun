@@ -14,13 +14,13 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
+# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop08-adams-wabash-b.jpg" background-size="cover"}
 
-CS 418 · Week 7 · 🟠 Washington/Wabash 🟠
+CS 418 · Week 7 · 🟠 Adams/Wabash 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
+# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop08-adams-wabash-b.jpg" background-size="cover"}
 
 ---
 
