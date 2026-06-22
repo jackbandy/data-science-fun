@@ -1,6 +1,6 @@
 ---
 title: "Week 6 (CS 418 @ UIC)"
-jupyter: cs418
+jupyter: python3
 # Some code in this file was generated with LLM assistance.
 # It is maintained and vetted by jxb@uic.edu.
 # Please contact jxb@uic.edu with any issues or concerns.
@@ -113,7 +113,7 @@ airline.sample(5, seed=42).sort("Month")
 #| echo: true
 #| fig-alt: "Line plot of monthly international airline passengers from 1949 to 1960, showing an upward trend with repeating seasonal peaks each summer that grow larger over time"
 airline = airline.with_columns(pl.col("Month").str.to_date("%Y-%m-%d"))
-ax = sns.lineplot(airline, x="Month", y="Passengers")
+ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"])
 ax.set_ylim(bottom=0)
 plt.tight_layout()
 ```
@@ -135,7 +135,7 @@ plt.tight_layout()
 ```{python}
 #| echo: false
 #| fig-alt: "Line plot of monthly international airline passengers from 1949 to 1960, showing an upward trend with repeating seasonal peaks each summer that grow larger over time"
-ax = sns.lineplot(airline.select(["Month", "Passengers"]), x="Month", y="Passengers")
+ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"])
 ax.set_ylim(bottom=0)
 plt.tight_layout()
 ```
@@ -161,11 +161,9 @@ airline.sample(5, seed=42).sort("Month")
 ```{python}
 #| echo: true
 #| fig-alt: "Line plot of airline passengers with a smoothed 12-month rolling average overlaid as an orange line, making the underlying upward trend clearly visible through the seasonal noise"
-ax = sns.lineplot(airline, x="Month", y="Passengers", alpha=0.35, label="observed")
-sns.lineplot(
-    airline.filter(pl.col("trend").is_not_null()),
-    x="Month", y="trend", label="12-month avg", ax=ax
-)
+ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"], alpha=0.35, label="observed")
+trend_not_null = airline.filter(pl.col("trend").is_not_null())
+sns.lineplot(x=trend_not_null["Month"], y=trend_not_null["trend"], label="12-month avg", ax=ax)
 ax.legend()
 ax.set_ylim(bottom=0)
 plt.tight_layout()
@@ -289,7 +287,7 @@ trend_df = pl.DataFrame({
     "trend": pl.Series("trend", result.trend).fill_nan(None),
 }).drop_nulls("trend")
 
-ax = sns.lineplot(trend_df, x="Month", y="trend")
+ax = sns.lineplot(x=trend_df["Month"], y=trend_df["trend"])
 ax.set_ylim(bottom=0)
 ax.set_ylabel("Passengers (trend)")
 ax.set_title("Trend Component")
@@ -322,7 +320,7 @@ We'll check to see if the seasonal factor stays **constant** over time (with a m
 #| fig-alt: "Two side-by-side panels of the multiplicative seasonal component: the first two years on the left and the last two years on the right. Both show an identical repeating wave with summer peaks and winter troughs, illustrating that the seasonal factor is constant over time."
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
 for df, ax, label in zip([first_two, last_two], axes, ["First 2 years", "Last 2 years"]):
-    sns.lineplot(df, x="Month", y="seasonal", ax=ax)
+    sns.lineplot(x=df["Month"], y=df["seasonal"], ax=ax)
     ax.axhline(1.0, color="gray", linestyle="--", alpha=0.5)
     ax.set(xlabel="Month", title=label)
     plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha="right")
@@ -344,7 +342,7 @@ resid_df = pl.DataFrame({
     "resid": pl.Series("resid", result.resid).fill_nan(None),
 }).drop_nulls("resid")
 
-ax = sns.lineplot(resid_df, x="Month", y="resid")
+ax = sns.lineplot(x=resid_df["Month"], y=resid_df["resid"])
 ax.axhline(1.0, color="gray", linestyle="--", alpha=0.5)
 ax.set_ylabel("Residual")
 ax.set_title("Residuals (multiplicative: ideal noise ≈ 1.0)")
@@ -381,7 +379,7 @@ airline_diff = airline.with_columns(
     pl.col("Passengers").diff().alias("first_diff")
 ).drop_nulls()
 
-ax = sns.lineplot(airline, x="Month", y="Passengers")
+ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"])
 ax.set_ylim(bottom=0)
 ax.set_ylabel("Passengers")
 ax.set_title("Original Series")
@@ -414,9 +412,9 @@ This is called **first-order differencing** (difference order = 1).
 #| echo: true
 #| fig-alt: "Two side-by-side panels: the original airline passenger series on the left with its upward trend and growing seasonal swings, and the first-order differenced series on the right oscillating around zero with no visible trend"
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
-sns.lineplot(airline, x="Month", y="Passengers", ax=axes[0])
+sns.lineplot(x=airline["Month"], y=airline["Passengers"], ax=axes[0])
 axes[0].set_ylim(bottom=0); axes[0].set_title("Before: Original Series")
-sns.lineplot(airline_diff, x="Month", y="first_diff", ax=axes[1])
+sns.lineplot(x=airline_diff["Month"], y=airline_diff["first_diff"], ax=axes[1])
 axes[1].axhline(0, color="gray", linestyle="--", alpha=0.5)
 axes[1].set_ylabel("Difference"); axes[1].set_title("After: First-Order Differencing")
 plt.tight_layout()
@@ -451,7 +449,7 @@ uic = (
         pl.col("rides").str.replace_all(",", "").cast(pl.Int64),
     ).sort("date").filter(pl.col("date") >= pl.date(2016, 1, 1))
 )
-ax = sns.lineplot(uic, x="date", y="rides", linewidth=0.5)
+ax = sns.lineplot(x=uic["date"], y=uic["rides"], linewidth=0.5)
 ax.set_ylim(bottom=0)
 plt.tight_layout()
 ```
@@ -465,7 +463,7 @@ plt.tight_layout()
 #| code-line-numbers: "1,2"
 #| fig-alt: "Line plot of daily CTA ridership at UIC-Halsted station colored in the CTA Blue Line color (#00A1DE)"
 CTA_BLUE = "#00A1DE"
-ax = sns.lineplot(uic, x="date", y="rides", linewidth=0.5, color=CTA_BLUE)
+ax = sns.lineplot(x=uic["date"], y=uic["rides"], linewidth=0.5, color=CTA_BLUE)
 ax.set_xlabel("Date")
 ax.set_ylim(bottom=0)
 plt.tight_layout()
@@ -482,7 +480,7 @@ plt.tight_layout()
 #| fig-alt: "Box plot of UIC-Halsted ridership by day of week, showing much higher ridership Monday through Friday and very low ridership on Saturdays and Sundays, confirming a strong commuter and student pattern"
 day_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 uic_dow = uic.with_columns(pl.col("date").dt.strftime("%A").alias("day_name"))
-ax = sns.boxplot(uic_dow, x="day_name", y="rides", order=day_order, color=CTA_BLUE)
+ax = sns.boxplot(x=uic_dow["day_name"], y=uic_dow["rides"], order=day_order, color=CTA_BLUE)
 ax.set_xlabel("")
 ax.tick_params(axis="x", rotation=30)
 ax.set_title("Ridership by Day of Week — UIC-Halsted")
@@ -515,7 +513,7 @@ deseasonalized = pl.DataFrame({
     "date": uic["date"],
     "rides": pl.Series("rides", cta_result.observed - cta_result.seasonal),
 })
-ax = sns.lineplot(deseasonalized, x="date", y="rides", color=CTA_BLUE, linewidth=0.5)
+ax = sns.lineplot(x=deseasonalized["date"], y=deseasonalized["rides"], color=CTA_BLUE, linewidth=0.5)
 ax.set_xlabel("Date")
 ax.set_ylabel("Rides (seasonally adjusted)")
 ax.set_title("Observed − Seasonal Component")
@@ -533,7 +531,7 @@ plt.tight_layout()
 month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 uic_month = uic.with_columns(pl.col("date").dt.strftime("%b").alias("month"))
-ax = sns.boxplot(uic_month, x="month", y="rides", order=month_order, color=CTA_BLUE)
+ax = sns.boxplot(x=uic_month["month"], y=uic_month["rides"], order=month_order, color=CTA_BLUE)
 ax.set_xlabel("")
 ax.set_ylim(bottom=0)
 ax.set_title("Ridership by Month — UIC-Halsted")
@@ -611,7 +609,7 @@ wabash.sample(5, seed=42).sort("date")
 ```{python}
 #| echo: true
 #| fig-alt: "Line plot of daily ridership at the Washington/Wabash station colored in CTA Orange, beginning in late 2017 when the station opened, with the 2020 COVID drop and partial recovery."
-ax = sns.lineplot(wabash, x="date", y="rides", linewidth=0.5, color=CTA_ORANGE)
+ax = sns.lineplot(x=wabash["date"], y=wabash["rides"], linewidth=0.5, color=CTA_ORANGE)
 ax.set_xlabel("Date")
 ax.set_ylim(bottom=0)
 ax.set_title("Washington/Wabash — Daily Ridership")
@@ -626,7 +624,7 @@ plt.tight_layout()
 #| echo: true
 #| fig-alt: "Box plot of Washington/Wabash ridership by day of week. Weekdays are busiest, but Saturday and Sunday ridership stays relatively high compared to a student station, reflecting downtown shopping, tourism, and events."
 wabash_dow = wabash.with_columns(pl.col("date").dt.strftime("%A").alias("day_name"))
-ax = sns.boxplot(wabash_dow, x="day_name", y="rides", order=day_order, color=CTA_ORANGE)
+ax = sns.boxplot(x=wabash_dow["day_name"], y=wabash_dow["rides"], order=day_order, color=CTA_ORANGE)
 ax.set_xlabel("")
 ax.tick_params(axis="x", rotation=30)
 ax.set_title("Ridership by Day of Week — Washington/Wabash")
@@ -641,8 +639,8 @@ plt.tight_layout()
 #| echo: true
 #| fig-alt: "Two side-by-side day-of-week box plots. UIC-Halsted (blue) collapses on weekends, while Washington/Wabash (orange) keeps substantial weekend ridership, showing a flatter weekly profile for the downtown Loop station."
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
-sns.boxplot(uic_dow, x="day_name", y="rides", order=day_order, color=CTA_BLUE, ax=axes[0])
-sns.boxplot(wabash_dow, x="day_name", y="rides", order=day_order, color=CTA_ORANGE, ax=axes[1])
+sns.boxplot(x=uic_dow["day_name"], y=uic_dow["rides"], order=day_order, color=CTA_BLUE, ax=axes[0])
+sns.boxplot(x=wabash_dow["day_name"], y=wabash_dow["rides"], order=day_order, color=CTA_ORANGE, ax=axes[1])
 axes[0].set_title("UIC-Halsted (student / commuter)")
 axes[1].set_title("Washington/Wabash (downtown Loop)")
 for ax in axes: ax.set_xlabel(""); ax.tick_params(axis="x", rotation=45)
@@ -658,8 +656,8 @@ plt.tight_layout()
 #| fig-alt: "Two side-by-side month-of-year box plots. UIC-Halsted (blue) shows pronounced dips in January, June through August, and December that track the academic calendar. Washington/Wabash (orange) shows a much flatter annual profile without summer lows."
 wabash_month = wabash.with_columns(pl.col("date").dt.strftime("%b").alias("month"))
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
-sns.boxplot(uic_month, x="month", y="rides", order=month_order, color=CTA_BLUE, ax=axes[0])
-sns.boxplot(wabash_month, x="month", y="rides", order=month_order, color=CTA_ORANGE, ax=axes[1])
+sns.boxplot(x=uic_month["month"], y=uic_month["rides"], order=month_order, color=CTA_BLUE, ax=axes[0])
+sns.boxplot(x=wabash_month["month"], y=wabash_month["rides"], order=month_order, color=CTA_ORANGE, ax=axes[1])
 axes[0].set_title("UIC-Halsted (student / commuter)")
 axes[1].set_title("Washington/Wabash (downtown Loop)")
 for ax in axes: ax.set_xlabel(""); ax.tick_params(axis="x", rotation=45)
@@ -820,7 +818,7 @@ for k, v in scenarios.items():
     r = predict(*v)
     frames.append(pl.DataFrame({"scenario": [k] * len(r), "rides": r}))
 draws = pl.concat(frames)
-ax = sns.violinplot(draws, x="scenario", y="rides", color=CTA_BLUE, cut=0)
+ax = sns.violinplot(x=draws["scenario"], y=draws["rides"], color=CTA_BLUE, cut=0)
 ax.set_ylim(bottom=0); ax.set_xlabel("")
 ax.set_title("Predicted ridership (full posterior predictive)")
 plt.tight_layout()
@@ -841,7 +839,7 @@ plt.tight_layout()
 ```{python}
 #| echo: false
 #| fig-alt: "Violin plot of the posterior predictive ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October."
-ax = sns.violinplot(draws, x="scenario", y="rides", color=CTA_BLUE, cut=0)
+ax = sns.violinplot(x=draws["scenario"], y=draws["rides"], color=CTA_BLUE, cut=0)
 ax.set_ylim(bottom=0); ax.set_xlabel("")
 plt.tight_layout()
 ```
