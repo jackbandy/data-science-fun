@@ -145,13 +145,12 @@ INJECT_PY
       mv "$SCRIPT_DIR/${base}_files" "$OUTPUT_DIR/${base}_files"
     fi
   fi
-  # Move the kept notebook into notebooks/ (not _files/, which Quarto scans and recurses into)
   ipynb_src="$SCRIPT_DIR/$base.quarto_ipynb"
   if [[ -f "$ipynb_src" ]]; then
-    notebooks_dir="$OUTPUT_DIR/notebooks"
-    mkdir -p "$notebooks_dir"
-    mv -f "$ipynb_src" "$notebooks_dir/$base.ipynb"
-    echo "[quarto] Saved notebook: $notebooks_dir/$base.ipynb"
+    code_dir="$OUTPUT_DIR/code_from_slides"
+    mkdir -p "$code_dir"
+    mv -f "$ipynb_src" "$code_dir/$base.ipynb"
+    echo "[quarto] Saved notebook: $code_dir/$base.ipynb"
   fi
 done
 
