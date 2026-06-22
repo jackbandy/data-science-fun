@@ -143,7 +143,9 @@ $code-color: $ink !default;
   }
 
   .image-slide p, .image-only p, .split-content > p { margin: 0; }
-  .image-only { padding: 0; overflow: hidden; background: #000; }
+  // .slides section.image-only wins over .slides section (0,3,1 > 0,2,1)
+  // so padding:0 and background:#000 actually take effect.
+  .slides section.image-only { padding: 0; overflow: hidden; background: #000; }
   .image-only p, .image-only img { width: 100%; height: 100%; }
   .image-only img { object-fit: cover; object-position: center; margin: 0; }
   .image-frame-slide {
@@ -180,18 +182,15 @@ $code-color: $ink !default;
   // auto-stretch: false). Code keeps its natural height; the figure is
   // centered and fills 90% of the leftover height, clearing the footer band
   // via the same padding reserve as the image-slide classes.
-  .code-figure-slide {
+  // Stacked code-above / figure-below slide. Specificity (0,3,1) ensures
+  // padding overrides the base .slides section rule (0,2,1).
+  .slides section.code-figure-slide {
     display: flex !important;
     flex-direction: column;
-    // Reveal vertically centers a slide by giving the section its content
-    // height and an inline `top` offset. That leaves the figure at its
-    // intrinsic (tiny) size on tall windows. Force the section to fill the
-    // slide and zero the offset so the flex children below can grow the
-    // figure into all the space between the code and the footer.
     height: 100% !important;
     top: 0 !important;
     box-sizing: border-box;
-    padding: 32px 64px 76px;
+    padding: 32px 64px 56px;
     div.cell {
       flex: 1;
       min-height: 0;
@@ -201,12 +200,7 @@ $code-color: $ink !default;
     .cell-output-display {
       flex: 1;
       min-height: 0;
-      // Quarto wraps the figure as div > figure > p > img; give every wrapper
-      // the full height so the img percentage below has something to resolve
-      // against.
       > div, figure, p { height: 100%; min-height: 0; margin: 0; }
-      // The 76px slide padding already reserves the footer band, so the
-      // figure can take the full remaining height.
       img {
         display: block;
         height: 100%;
@@ -217,6 +211,122 @@ $code-color: $ink !default;
       }
     }
   }
+  // Side-by-side code (left) + figure (right) slide, 50/50 default split.
+  .slides section.code-figure-side {
+    display: flex !important;
+    flex-direction: column;
+    height: 100% !important;
+    top: 0 !important;
+    box-sizing: border-box;
+    padding: 32px 64px 56px;
+    div.cell {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 1fr;
+      column-gap: 48px;
+      min-width: 0;
+    }
+    // Code panel: allow vertical scroll if content overflows
+    div.sourceCode {
+      overflow: auto;
+      min-height: 0;
+    }
+    // Figure panel: grow figure to fill available height
+    .cell-output-display {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      > div, figure, p { flex: 1; min-height: 0; margin: 0; }
+      img {
+        display: block;
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        object-fit: contain;
+      }
+    }
+  }
+  // Full-height embed slide: header + iframe or img filling remaining space,
+  // never overlapping the footer. Mirrors the .code-figure-slide layout pattern.
+  // .slides section.iframe-slide has specificity (0,3,1) > .slides section (0,2,1)
+  // so padding and other rules here override the base section rule.
+  .slides section.iframe-slide {
+    display: flex !important;
+    flex-direction: column;
+    height: 100% !important;
+    top: 0 !important;
+    box-sizing: border-box;
+    padding: 48px 64px 56px;
+    iframe, img {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    img {
+      object-fit: contain;
+      display: block;
+    }
+    .iframe-caption {
+      flex: none;
+      margin: 6px 0 0;
+      font-size: 0.5rem;
+      color: $muted;
+      line-height: 1.2;
+      a { color: $muted; text-decoration: underline; }
+    }
+  }
+
+  // Two-column slide: text bullets on the left, tall figure on the right.
+  // Mirrors the .code-figure-slide flex-chain so the figure fills available
+  // height without spilling behind the footer.
+  .slides section.text-figure-slide {
+    display: flex !important;
+    flex-direction: column;
+    height: 100% !important;
+    top: 0 !important;
+    box-sizing: border-box;
+
+    .columns {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .column:last-child {
+      align-self: stretch;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .column:last-child .cell {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .column:last-child .cell-output-display {
+      flex: 1;
+      min-height: 0;
+      > div, figure, p { height: 100%; min-height: 0; margin: 0; }
+      img {
+        display: block;
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+        margin: 0 auto;
+      }
+    }
+  }
+
   .sources h1 { font-size: $h1-size; }
   .sources ol,
   .sources #refs,

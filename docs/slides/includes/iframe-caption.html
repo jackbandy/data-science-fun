@@ -1,0 +1,33 @@
+<script>
+(() => {
+  function addIframeCaptions() {
+    if (!window.Reveal) return;
+    document.querySelectorAll('.reveal .iframe-slide').forEach(function (slide) {
+      if (slide.querySelector('.iframe-caption')) return;
+      var iframe = slide.querySelector('iframe');
+      if (!iframe) return;
+      var src = iframe.getAttribute('src');
+      if (!src) return;
+      var caption = document.createElement('p');
+      caption.className = 'iframe-caption';
+      var link = document.createElement('a');
+      link.href = src;
+      link.textContent = src;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      caption.appendChild(document.createTextNode('embedded web page: '));
+      caption.appendChild(link);
+      slide.appendChild(caption);
+    });
+  }
+
+  function install() {
+    if (!window.Reveal) { window.setTimeout(install, 50); return; }
+    Reveal.on('ready', addIframeCaptions);
+    addIframeCaptions();
+  }
+
+  document.addEventListener('DOMContentLoaded', install);
+  window.addEventListener('load', install);
+})();
+</script>

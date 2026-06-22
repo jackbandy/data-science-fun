@@ -6,8 +6,8 @@
 <script src="week3_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week3_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week3_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>Week 3 (CS 418 @ UIC)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -97,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week3_files/libs/revealjs/dist/theme/quarto-23d907822c661540ca09933137d58514.css">
+  <link rel="stylesheet" href="week3_files/libs/revealjs/dist/theme/quarto-bbc2f8fcbd7251ef29b6506dc235e167.css">
   <link rel="stylesheet" href="theme/revealjs-common.css">
   <link rel="stylesheet" href="theme/responsive-footer.css">
   <link href="week3_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -615,7 +615,7 @@ A simplified example of what a NetCDF file can contain.
 <h1>Sources</h1>
 <ol type="1">
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.md</a>.</li>
-<li>Last modified and compiled June 21, 16:08h Central (Chicago) time.</li>
+<li>Last modified and compiled June 22, 17:18h Central (Chicago) time.</li>
 <li>NetCDF reference: Unidata netCDF documentation, <a href="https://www.unidata.ucar.edu/software/netcdf/" class="uri">https://www.unidata.ucar.edu/software/netcdf/</a>.</li>
 <li>LearningDS chapter 14, “Web Data,” netCDF discussion: <a href="https://learningds.org/ch/14/web_netCDF.html" class="uri">https://learningds.org/ch/14/web_netCDF.html</a>.</li>
 <li>Format examples adapted from Wikipedia and project documentation: <a href="https://en.wikipedia.org/wiki/JSON">JSON</a>, <a href="https://en.wikipedia.org/wiki/XML">XML</a>, <a href="https://en.wikipedia.org/wiki/Comma-separated_values">Comma-separated values</a>, <a href="https://en.wikipedia.org/wiki/YAML">YAML</a>, <a href="https://en.wikipedia.org/wiki/Tab-separated_values">Tab-separated values</a>, <a href="https://en.wikipedia.org/wiki/Spreadsheet">Spreadsheet</a>, and <a href="https://parquet.apache.org/">Apache Parquet</a>.</li>
@@ -912,6 +912,39 @@ A simplified example of what a NetCDF file can contain.
 
       document.addEventListener("DOMContentLoaded", installSlideNumberFormatter);
       window.addEventListener("load", installSlideNumberFormatter);
+    })();
+    </script>
+    <script>
+    (() => {
+      function addIframeCaptions() {
+        if (!window.Reveal) return;
+        document.querySelectorAll('.reveal .iframe-slide').forEach(function (slide) {
+          if (slide.querySelector('.iframe-caption')) return;
+          var iframe = slide.querySelector('iframe');
+          if (!iframe) return;
+          var src = iframe.getAttribute('src');
+          if (!src) return;
+          var caption = document.createElement('p');
+          caption.className = 'iframe-caption';
+          var link = document.createElement('a');
+          link.href = src;
+          link.textContent = src;
+          link.target = '_blank';
+          link.rel = 'noopener';
+          caption.appendChild(document.createTextNode('embedded web page: '));
+          caption.appendChild(link);
+          slide.appendChild(caption);
+        });
+      }
+
+      function install() {
+        if (!window.Reveal) { window.setTimeout(install, 50); return; }
+        Reveal.on('ready', addIframeCaptions);
+        addIframeCaptions();
+      }
+
+      document.addEventListener('DOMContentLoaded', install);
+      window.addEventListener('load', install);
     })();
     </script>
     <script id="quarto-html-after-body" type="application/javascript">

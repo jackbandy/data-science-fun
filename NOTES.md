@@ -121,10 +121,21 @@ Learning DS Textbook:
 	* weight is more as height goes up
 * each data point constrains the distribution
 
+### Categories and Causes
+https://www.youtube.com/watch?v=GIdwLrW2nNo
+* "scientifically justifiable workflow"
+* "first law of statistical interpretation"
+	* the parameters in a posterior distribution are not independent - they have joint information
+* categories defined: discrete, unordered types
+	* distinct from ordered types!
+* causality: "if you intervene on a variable, which other variables change?"
+
 ## TODO
 
 * Add a side-by-side variant of the `.code-figure-slide` template (code and figure
   left/right instead of stacked top/bottom).
+* Polish the PDF rendering.
+* Check overflow on slide templates (i.e. spilling into footer).
 
 ## Running examples
 * globe toss: estimate % of water

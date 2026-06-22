@@ -11,7 +11,21 @@ OUTPUT_DIR="${1:-$SCRIPT_DIR}"
 SERVER_ROOT="${QUARTO_SERVER_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 QUARTO_CMD="${QUARTO_CMD:-quarto}"
 PORT="${QUARTO_PORT:-}"
-BUILD_PDFS="${BUILD_PDFS:-false}"
+# BUILD_PDFS: env var wins; otherwise prompt when running interactively.
+if [[ -z "${BUILD_PDFS:-}" ]]; then
+  if [[ -t 0 && -t 1 ]]; then
+    printf 'Generate PDFs? [y/N] (auto-no in 2s): '
+    if IFS= read -r -t 2 _pdf_reply 2>/dev/null; then
+      echo
+      if [[ "$_pdf_reply" =~ ^[Yy]$ ]]; then BUILD_PDFS=true; else BUILD_PDFS=false; fi
+    else
+      echo
+      BUILD_PDFS=false
+    fi
+  else
+    BUILD_PDFS=false
+  fi
+fi
 HAD_GITIGNORE=0
 if [[ -e "$SCRIPT_DIR/.gitignore" ]]; then
   HAD_GITIGNORE=1
@@ -52,8 +66,8 @@ find_chrome() {
 
 mkdir -p "$OUTPUT_DIR"
 
-if [[ "$BUILD_PDFS" == "false" ]]; then
-  echo "[quarto] Building HTML only. To generate PDFs, use: BUILD_PDFS=true $0"
+if [[ "$BUILD_PDFS" != "true" ]]; then
+  echo "[quarto] Building HTML only. Set BUILD_PDFS=true or answer 'y' at the prompt to include PDFs."
 fi
 
 SLIDE_FILES=()
@@ -102,6 +116,23 @@ for slide in "${SLIDE_FILES[@]}"; do
   cp "$src_file" "$src_file.stampbak"
   python3 "$SCRIPT_DIR/stamp_source_note.py" "$src_file" \
     || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
+  # For Python slides, ensure keep-ipynb: true is set so the notebook is preserved
+  if grep -q '```{python}' "$src_file"; then
+    python3 - "$src_file" <<'INJECT_PY'
+import sys, re
+path = sys.argv[1]
+with open(path) as f:
+    content = f.read()
+if 'keep-ipynb' not in content:
+    if re.search(r'^execute:', content, re.MULTILINE):
+        content = re.sub(r'^(execute:[ \t]*\n)', r'\1  keep-ipynb: true\n', content, count=1, flags=re.MULTILINE)
+    else:
+        content = re.sub(r'^(---\n)', r'---\nexecute:\n  keep-ipynb: true\n', content, count=1, flags=re.MULTILINE)
+    with open(path, 'w') as f:
+        f.write(content)
+INJECT_PY
+    if [[ $? -ne 0 ]]; then mv -f "$src_file.stampbak" "$src_file"; exit 1; fi
+  fi
   (
     cd "$SCRIPT_DIR"
     "$QUARTO_CMD" render "$(basename "$slide")" --to revealjs --output "$base.html"
@@ -114,9 +145,17 @@ for slide in "${SLIDE_FILES[@]}"; do
       mv "$SCRIPT_DIR/${base}_files" "$OUTPUT_DIR/${base}_files"
     fi
   fi
+  # Move the kept notebook into notebooks/ (not _files/, which Quarto scans and recurses into)
+  ipynb_src="$SCRIPT_DIR/$base.quarto_ipynb"
+  if [[ -f "$ipynb_src" ]]; then
+    notebooks_dir="$OUTPUT_DIR/notebooks"
+    mkdir -p "$notebooks_dir"
+    mv -f "$ipynb_src" "$notebooks_dir/$base.ipynb"
+    echo "[quarto] Saved notebook: $notebooks_dir/$base.ipynb"
+  fi
 done
 
-if [[ "$BUILD_PDFS" == "false" ]]; then
+if [[ "$BUILD_PDFS" != "true" ]]; then
   echo "[quarto] Skipping PDF generation."
   exit 0
 fi
@@ -126,10 +165,6 @@ if ! command -v node >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! python3 -c "import fitz" >/dev/null 2>&1; then
-  echo "Error: Python package PyMuPDF is required for merging PDF pages (import fitz failed)." >&2
-  exit 1
-fi
 
 CHROME_CMD="$(find_chrome || true)"
 if [[ -z "$CHROME_CMD" ]]; then
@@ -166,8 +201,6 @@ while time.time() < deadline:
         time.sleep(0.1)
 sys.exit("Timed out waiting for local preview server")
 PY
-
-TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/quarto-slides-pdf.XXXXXX")"
 
 echo "[quarto] Generating vector PDFs with $CHROME_CMD"
 for slide in "${SLIDE_FILES[@]}"; do
@@ -219,14 +252,8 @@ if rel_path.startswith(".."):
 print(urllib.parse.quote(rel_path.replace(os.sep, "/")))
 PY
 )"
-  echo "[quarto] Printing $slide_count slides for PDF: $pdf_out"
-  slide_dir="$TMP_DIR/$base"
-  mkdir -p "$slide_dir"
-  export CHROME_CMD
-  export QUARTO_PDF_PORT="$PORT"
-  export QUARTO_PDF_URL_PATH="$url_path"
-  export QUARTO_PDF_SLIDE_COUNT="$slide_count"
-  export QUARTO_PDF_SLIDE_DIR="$slide_dir"
+  echo "[quarto] Generating PDF ($slide_count slides): $pdf_out"
+  export CHROME_CMD QUARTO_PDF_PORT="$PORT" QUARTO_PDF_URL_PATH="$url_path" QUARTO_PDF_OUT="$pdf_out"
   node <<'NODE'
 const { spawn } = require("node:child_process");
 const fs = require("node:fs/promises");
@@ -235,11 +262,12 @@ const path = require("node:path");
 const chrome = process.env.CHROME_CMD;
 const port = Number(process.env.QUARTO_PDF_PORT);
 const urlPath = process.env.QUARTO_PDF_URL_PATH;
-const slideCount = Number(process.env.QUARTO_PDF_SLIDE_COUNT);
-const slideDir = process.env.QUARTO_PDF_SLIDE_DIR;
+const pdfOut = process.env.QUARTO_PDF_OUT;
 const remotePort = 40000 + Math.floor(Math.random() * 20000);
 const userData = path.join(process.env.TMPDIR || "/tmp", `quarto-chrome-${Date.now()}`);
-const baseUrl = `http://127.0.0.1:${port}/${urlPath}?controls=false&progress=false`;
+// ?print-pdf activates reveal.js's print layout: all slides are rendered at once
+// with page-break-after between them, so a single printToPDF call produces the full deck.
+const printUrl = `http://127.0.0.1:${port}/${urlPath}?print-pdf&controls=false&progress=false`;
 let chromeStderr = "";
 let chromeExit = null;
 
@@ -255,7 +283,7 @@ const browser = spawn(chrome, [
   "--remote-debugging-address=127.0.0.1",
   `--remote-debugging-port=${remotePort}`,
   "--window-size=1280,720",
-  `${baseUrl}#/0`
+  printUrl,
 ], { stdio: ["ignore", "ignore", "pipe"] });
 
 browser.stderr.on("data", (chunk) => {
@@ -293,7 +321,6 @@ async function waitForDebugger() {
 }
 
 function createClient(webSocketUrl) {
-  // Ensure a WebSocket implementation exists in Node (use 'ws' package if available)
   const WebSocketClass = (typeof WebSocket !== "undefined") ? WebSocket : (() => {
     try {
       return require('ws');
@@ -306,10 +333,8 @@ function createClient(webSocketUrl) {
   let id = 0;
   const pending = new Map();
 
-  // Support both browser-like and ws (Node) event APIs
   let ready;
   if (typeof socket.on === 'function') {
-    // ws module (Node)
     socket.on('message', (data) => {
       const message = JSON.parse(typeof data === 'string' ? data : data.toString());
       if (message.id && pending.has(message.id)) {
@@ -321,7 +346,6 @@ function createClient(webSocketUrl) {
     });
     ready = new Promise((resolve) => socket.on('open', resolve));
   } else {
-    // browser-like WebSocket
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
       if (message.id && pending.has(message.id)) {
@@ -334,11 +358,18 @@ function createClient(webSocketUrl) {
     ready = new Promise((resolve) => { socket.onopen = resolve; });
   }
 
-  function send(method, params = {}) {
+  function send(method, params = {}, timeoutMs = 30000) {
     const messageId = ++id;
     socket.send(JSON.stringify({ id: messageId, method, params }));
     return new Promise((resolve, reject) => {
-      pending.set(messageId, { resolve, reject });
+      const timer = setTimeout(() => {
+        pending.delete(messageId);
+        reject(new Error(`CDP timeout (${timeoutMs}ms) waiting for: ${method}`));
+      }, timeoutMs);
+      pending.set(messageId, {
+        resolve: (r) => { clearTimeout(timer); resolve(r); },
+        reject: (e) => { clearTimeout(timer); reject(e); },
+      });
     });
   }
 
@@ -353,34 +384,43 @@ async function main() {
       || tabs.find((entry) => entry.type === "page")
       || tabs[0];
     const client = createClient(tab.webSocketDebuggerUrl);
-    await client.ready;
+    await Promise.race([
+      client.ready,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Timed out connecting to Chrome WebSocket")), 10000)),
+    ]);
     await client.send("Page.enable");
     await client.send("Runtime.enable");
     await client.send("Emulation.setEmulatedMedia", { media: "screen" });
 
-    for (let index = 0; index < slideCount; index += 1) {
-      await client.send("Page.navigate", { url: `${baseUrl}#/${index}` });
-      await sleep(1200);
-      await client.send("Runtime.evaluate", {
-        expression: "window.Reveal && Reveal.isReady && Reveal.isReady()",
-        returnByValue: true
-      });
-      const pdf = await client.send("Page.printToPDF", {
-        landscape: false,
-        printBackground: true,
-        preferCSSPageSize: false,
-        marginTop: 0,
-        marginBottom: 0,
-        marginLeft: 0,
-        marginRight: 0,
-        paperWidth: 13.333333,
-        paperHeight: 7.5,
-        displayHeaderFooter: false
-      });
-      const filename = path.join(slideDir, `${String(index).padStart(3, "0")}.pdf`);
-      await fs.writeFile(filename, Buffer.from(pdf.data, "base64"));
+    // Navigate to print-pdf view and poll until reveal.js finishes rendering all slides.
+    await client.send("Page.navigate", { url: printUrl });
+    let isReady = false;
+    for (let i = 0; i < 60; i += 1) {
+      await sleep(500);
+      try {
+        const result = await client.send("Runtime.evaluate", {
+          expression: "document.readyState === 'complete' && window.Reveal && Reveal.isReady()",
+          returnByValue: true,
+        });
+        if (result.result?.value === true) { isReady = true; break; }
+      } catch { /* keep polling */ }
     }
+    if (!isReady) throw new Error("Timed out waiting for reveal.js print layout");
+    await sleep(1000); // buffer for late-loading images/fonts
 
+    const pdf = await client.send("Page.printToPDF", {
+      landscape: false,
+      printBackground: true,
+      preferCSSPageSize: false,
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      paperWidth: 13.333333,
+      paperHeight: 7.5,
+      displayHeaderFooter: false,
+    }, 120000);
+    await fs.writeFile(pdfOut, Buffer.from(pdf.data, "base64"));
     client.socket.close();
   } finally {
     browser.kill();
@@ -394,23 +434,6 @@ main().catch((error) => {
   process.exit(1);
 });
 NODE
-
-  python3 - <<PY
-from pathlib import Path
-import fitz
-
-slide_dir = Path("$slide_dir")
-pdf_out = Path("$pdf_out")
-merged = fitz.open()
-for pdf in sorted(slide_dir.glob("*.pdf")):
-    page_pdf = fitz.open(pdf)
-    merged.insert_pdf(page_pdf)
-    page_pdf.close()
-if merged.page_count == 0:
-    raise SystemExit("No slide PDFs generated")
-merged.save(pdf_out)
-merged.close()
-PY
   rm -f "$html_export"
 done
 

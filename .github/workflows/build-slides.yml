@@ -29,7 +29,7 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Install Jupyter and data science dependencies
-        run: python3 -m pip install jupyter nbformat numpy polars seaborn matplotlib
+        run: python3 -m pip install jupyter nbformat numpy polars seaborn matplotlib statsmodels
 
       - name: Install slide build dependencies
         run: npm ci

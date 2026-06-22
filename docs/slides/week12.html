@@ -6,8 +6,8 @@
 <script src="week12_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week12_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week12_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week12_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="week12_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>Week 12 (CS 418 @ UIC)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,7 +50,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="week12_files/libs/revealjs/dist/theme/quarto-23d907822c661540ca09933137d58514.css">
+  <link rel="stylesheet" href="week12_files/libs/revealjs/dist/theme/quarto-bbc2f8fcbd7251ef29b6506dc235e167.css">
   <link rel="stylesheet" href="theme/revealjs-common.css">
   <link rel="stylesheet" href="theme/responsive-footer.css">
   <link href="week12_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -161,11 +161,11 @@
 <h2 id="intro-to-network-analysis">Intro to Network Analysis</h2>
 <p>Jack Bandy 2026</p>
 </section>
-<section id="topic-title-placeholder" class="slide level1 course-title photo-title" data-state="photo-title" data-background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" data-background-size="cover">
+<section id="topic-title-placeholder" class="slide level1 course-title photo-title" data-state="photo-title" data-background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" data-background-size="cover">
 <h1>Topic Title Placeholder</h1>
-<p>CS 418 · Week 12 · 🟠 35th/Archer 🟠</p>
+<p>CS 418 · Week 12 · 🟠 Western 🟠</p>
 </section>
-<section id="section" class="slide level1 photo-only" data-state="photo-only" data-background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" data-background-size="cover">
+<section id="section" class="slide level1 photo-only" data-state="photo-only" data-background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" data-background-size="cover">
 <h1></h1>
 </section>
 <section id="what-is-a-graph" class="slide level1">
@@ -608,7 +608,7 @@ Tong, Hanghang, B. Aditya Prakash, Charalampos Tsourakakis, Tina Eliassi-Rad, Ch
 <div class="credits">
 <ul>
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week12.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week12.md</a>.</li>
-<li>Last modified and compiled June 21, 16:08h Central (Chicago) time.</li>
+<li>Last modified and compiled June 22, 17:18h Central (Chicago) time.</li>
 <li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart. Network analysis content heavily adapted from Gonzalo Bello’s <strong>CS 418 - Lecture Slides 20 - Network Analysis.pdf</strong>.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 <li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>
@@ -899,6 +899,39 @@ Tong, Hanghang, B. Aditya Prakash, Charalampos Tsourakakis, Tina Eliassi-Rad, Ch
 
       document.addEventListener("DOMContentLoaded", installSlideNumberFormatter);
       window.addEventListener("load", installSlideNumberFormatter);
+    })();
+    </script>
+    <script>
+    (() => {
+      function addIframeCaptions() {
+        if (!window.Reveal) return;
+        document.querySelectorAll('.reveal .iframe-slide').forEach(function (slide) {
+          if (slide.querySelector('.iframe-caption')) return;
+          var iframe = slide.querySelector('iframe');
+          if (!iframe) return;
+          var src = iframe.getAttribute('src');
+          if (!src) return;
+          var caption = document.createElement('p');
+          caption.className = 'iframe-caption';
+          var link = document.createElement('a');
+          link.href = src;
+          link.textContent = src;
+          link.target = '_blank';
+          link.rel = 'noopener';
+          caption.appendChild(document.createTextNode('embedded web page: '));
+          caption.appendChild(link);
+          slide.appendChild(caption);
+        });
+      }
+
+      function install() {
+        if (!window.Reveal) { window.setTimeout(install, 50); return; }
+        Reveal.on('ready', addIframeCaptions);
+        addIframeCaptions();
+      }
+
+      document.addEventListener('DOMContentLoaded', install);
+      window.addEventListener('load', install);
     })();
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
