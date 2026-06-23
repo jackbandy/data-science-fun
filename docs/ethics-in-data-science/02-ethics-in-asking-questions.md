@@ -12,19 +12,25 @@ Asking a question, in the context of the data science lifecycle.
 >
 > [@sagan_demon-haunted_1995, p. 303]
 
+> "The 'technique,' or treatment, of a problem begins with its first expression as a question. The way a question is asked limits and disposes the ways in which any answer to it — right or wrong — may be given." (Susanne Langer)
+>
+> [@langer_philosophy_1942]
+
 *This chapter is in-progress.*
 
 There is a [meme template](https://knowyourmeme.com/memes/all-three-are-going-to-lie-to-you-never-ask-a-woman-her-age) that begins, "Never ask a woman her age, a man his salary..."
 
-The basic principle introduced is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile to consider the appropriateness of a question as part of the data science lifecycle.
+The basic principle underlying this meme is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile to consider the appropriateness of a question as part of the data science lifecycle.
 
-In educational contexts, we appreciate all questions. The only bad question, as the saying goes, is the question that you do not ask.
-
-At the same time, as the aforementioned meme template suggests, some questions are more responsible, worthwhile, and/or appropriate than other questions. How might we distinguish these questions?
+In educational contexts, we appreciate all questions. The only bad question, as the saying goes, is the question that you do not ask. Yet as the aforementioned meme template suggests, some questions are more responsible, worthwhile, and/or appropriate than other questions. How might we distinguish these questions?
 
 [@sep-questions]
 
 ## What "asking questions" includes
+
+The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible entrypoints into the lifecycle - the other being "obtain data." In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," which also begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter.
+
+More TK.
 
 ## Some Types of questions
 | Question Type | Description | Example | Answers |
@@ -93,6 +99,14 @@ If a potential employer were to ask my weight during a job interview, it would b
 * "What medications are you taking?" may be appropriate in a medical intake, but not in a classroom survey.
 * try to ask for the least sensitive data that can address the question
 
+## Temporality in questions
+
+* categories: descriptive, predictive, counterfactual [@hernan_chance_2019]
+* self-reinforcing feedback loops [@oneil_weapons_2017]
+* embedded values in optimization targets [@eubanks_automating_2018]
+* example - "behavioral futures markets" sold to third parties [@zuboff_surveillance_2019]
+* More TK
+
 ## Framing and rhetoric
 
 TK
@@ -116,8 +130,18 @@ TK
 * Whose perspective(s) may be missing?
 
 
+## This is the hard part
+
+> "In my opinion, the social sciences are the hard sciences" (Michael Shermer)
+>
+> [@shermer_mind_market_2008]
+
+TK
+
 ## Test
 
 Test citations for question framing, rhetoric, and situated perspectives: the Stanford Encyclopedia overview of questions [@sep-questions] and *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
+
+
 
 ## References
