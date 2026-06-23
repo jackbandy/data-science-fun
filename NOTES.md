@@ -51,7 +51,9 @@ Learning DS Textbook:
 
 ## Lecture notes
 
-### 'Garden of Forking Data'
+Mostly Richard McElreath videos
+
+### 'Garden of Forking Data' (Statistical Rethinking)
 * https://www.youtube.com/watch?v=R1vcdhPBlXA
 * estimate a proportion
 * bayesian workflow for an estimator
@@ -95,7 +97,7 @@ Learning DS Textbook:
 * "always summarize last"
 	* do all calculations with full distributions
 
-### Geocentric models
+### Geocentric models (Statistical Rethinking)
 * analogy - geocentric models as linear regression
 	* it might not be structurally/scientifically accurate, but it can still be predictive
 * 'theoria motvs corporvm coelestivm' - gauss' approach to normal error and least-squares estimation ("1809 Bayesian argument")
@@ -121,7 +123,7 @@ Learning DS Textbook:
 	* weight is more as height goes up
 * each data point constrains the distribution
 
-### Categories and Causes
+### Categories and Causes (Statistical Rethinking)
 https://www.youtube.com/watch?v=GIdwLrW2nNo
 * "scientifically justifiable workflow"
 * "first law of statistical interpretation"
@@ -139,22 +141,45 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 	* "think like a journalist"
 	* interpretable, auditable models
 
+### Estimands and Estiplans (Statistical Rethinking)
+* https://www.youtube.com/watch?v=sYE8a95x-0E&list=PLDcUM9US4XdNOlqSyhe38US8mFgmqzI14&index=5
+* estimand is a goal of what you want
+	* estimator some way to figure out how to construct the estimand
+	* in a bayesian workflow, a generative model
+	* what you get might not be what you wanted - reconsider assumptions, models, etc.
+* synthetic data and estimates can be helpful to build confidence in models
+* posterior means are distributions
+* "always be contrasting" - the overlapping distributions don't tell us about the expected difference
+	* add a distribution/curve to show the difference - compute the contrast
+* "I'm a scientist, I hate statistics, but there is no other way out but through"
+* "the goal is to say, for each height, imagine manipulating sex, holding height constant, what's the change in weight?"
+* posterior bowtie
+	* distribution of weight differences from women and men at different heights
+* vast majority of weight differences can be attributed to height
+* a pipeline is not a workflow
 
-## TODO
+## Misc. TODO
 
 * Add a side-by-side variant of the `.code-figure-slide` template (code and figure
   left/right instead of stacked top/bottom).
 * Polish the PDF rendering.
 * Check overflow on slide templates (i.e. spilling into footer).
+* clean up ipynb headers
+* another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
+	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
+* ethics in data science mini-book - preregistration process - before "understanding"
+* 
 
 ## Running examples
 * globe toss: estimate % of water
-* voter turnout estimate
+* voter turnout estimate/forecast
 * water/electricity/utility usage
 * estimate CTA ridership on a given day
 * determine if a drug is effective
 * which movie to watch with friends
-* which book to read
+	* which movies have they seen
+* which book(s)/article(s) to read next
+* population dynamics: births, marriages, deaths, etc.
 
 ## Etc.
 
@@ -164,5 +189,7 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 Study to reproduce: [Did Taylor Swift kill a bunch of people?](https://statmodeling.stat.columbia.edu/2026/04/21/did-taylor-swift-kill-a-bunch-of-people/)
 
 Data Science Origins? John Tukey's 1962 work, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
+
+https://cs.uic.edu/undergraduate/data-science-major/
 
 "Is this data safe to release?"
