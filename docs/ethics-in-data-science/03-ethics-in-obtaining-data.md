@@ -22,6 +22,9 @@ Do you generate it?
 Do you collect it?
 Do you obtain it?
 
+## Sidebar: Can you start with data?
+TK
+
 ## What "obtaining data" includes
 
 TK

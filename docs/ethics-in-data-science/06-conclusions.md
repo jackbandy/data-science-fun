@@ -54,6 +54,14 @@ And yet, it was the same play, the same story conceived in December, 1887 when O
 
 More TK.
 
+## Hindsight and Foresight
+
+* importance of speculation
+* "ethics in the rearview mirror"
+* https://link.springer.com/article/10.1007/s43681-026-01084-5
+
+More TK.
+
 ## Glossary {.appendix}
 
 Common knowledge

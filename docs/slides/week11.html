@@ -260,7 +260,7 @@
 </section>
 <section id="the-premise-plotted-synthetic-data" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: Synthetic Data</h1>
-<div id="38107d99" class="cell" data-execution_count="1">
+<div id="3929e092" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np, polars <span class="im">as</span> pl, seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> EngFormatter</span>
 <span id="cb1-3"><a href=""></a>views <span class="op">=</span> np.sort(np.random.default_rng(<span class="dv">418</span>).lognormal(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">100</span>))[::<span class="op">-</span><span class="dv">1</span>]</span>
@@ -279,7 +279,7 @@
 </section>
 <section id="the-premise-plotted-synthetic-data-1" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: Synthetic Data</h1>
-<div id="f95fc2a7" class="cell" data-execution_count="2">
+<div id="04d52041" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-code-line-numbers="7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np, polars <span class="im">as</span> pl, seaborn <span class="im">as</span> sns</span>
 <span id="cb2-2"><a href=""></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> EngFormatter</span>
 <span id="cb2-3"><a href=""></a>views <span class="op">=</span> np.sort(np.random.default_rng(<span class="dv">418</span>).lognormal(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">100</span>))[::<span class="op">-</span><span class="dv">1</span>]</span>
@@ -299,7 +299,7 @@
 </section>
 <section id="the-premise-plotted-100-random-movies" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: 100 Random Movies</h1>
-<div id="73a03141" class="cell" data-execution_count="3">
+<div id="fb672eff" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/random.csv"</span>).sample(<span class="dv">100</span>, seed<span class="op">=</span><span class="dv">418</span>)</span>
 <span id="cb3-2"><a href=""></a>imdb <span class="op">=</span> imdb.sort(<span class="st">"numVotes"</span>, descending<span class="op">=</span><span class="va">True</span>).with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
 <span id="cb3-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
@@ -317,7 +317,7 @@
 </section>
 <section id="the-premise-plotted-100-most-popular-movies" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: 100 Most Popular Movies</h1>
-<div id="0e1a5203" class="cell" data-execution_count="4">
+<div id="71415572" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/popular.csv"</span>).head(<span class="dv">100</span>)</span>
 <span id="cb4-2"><a href=""></a>imdb <span class="op">=</span> imdb.with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
 <span id="cb4-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
@@ -334,7 +334,7 @@
 </section>
 <section id="the-premise-plotted-100-most-popular-movies-1" class="slide level1 code-figure-slide">
 <h1>The Premise, Plotted: 100 Most Popular Movies</h1>
-<div id="7954cc65" class="cell" data-execution_count="5">
+<div id="c52ca073" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-code-line-numbers="4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>imdb <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/movies-from-imdb/popular.csv"</span>).head(<span class="dv">100</span>)</span>
 <span id="cb5-2"><a href=""></a>imdb <span class="op">=</span> imdb.with_row_index(<span class="st">"rank"</span>, offset<span class="op">=</span><span class="dv">1</span>)  <span class="co"># rank from 1, not 0</span></span>
 <span id="cb5-3"><a href=""></a>ax <span class="op">=</span> sns.scatterplot(imdb, x<span class="op">=</span><span class="st">"rank"</span>, y<span class="op">=</span><span class="st">"numVotes"</span>)</span>
@@ -431,7 +431,7 @@
 <h1>Sources</h1>
 <ol type="1">
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week11.qmd" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week11.qmd</a>.</li>
-<li>Last modified and compiled June 22, 20:11h Central (Chicago) time.</li>
+<li>Last modified and compiled June 23, 12:35h Central (Chicago) time.</li>
 <li>Recommendation systems content follows Leskovec, Rajaraman &amp; Ullman, <a href="http://www.mmds.org/"><em>Mining of Massive Datasets</em></a>, Chapter 9.</li>
 <li>Linden, Smith &amp; York, “Amazon.com recommendations: item-to-item collaborative filtering,” <em>IEEE Internet Computing</em> 7:1 (2003). <a href="https://doi.org/10.1109/MIC.2003.1167344" class="uri">https://doi.org/10.1109/MIC.2003.1167344</a></li>
 <li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.</li>

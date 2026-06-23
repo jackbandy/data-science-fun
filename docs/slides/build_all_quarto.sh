@@ -147,10 +147,8 @@ INJECT_PY
   fi
   ipynb_src="$SCRIPT_DIR/$base.quarto_ipynb"
   if [[ -f "$ipynb_src" ]]; then
-    code_dir="$OUTPUT_DIR/code_from_slides"
-    mkdir -p "$code_dir"
-    mv -f "$ipynb_src" "$code_dir/$base.ipynb"
-    echo "[quarto] Saved notebook: $code_dir/$base.ipynb"
+    mv -f "$ipynb_src" "$SCRIPT_DIR/$base.ipynb"
+    echo "[quarto] Saved notebook: $SCRIPT_DIR/$base.ipynb"
   fi
 done
 
@@ -278,6 +276,7 @@ const browser = spawn(chrome, [
   "--no-sandbox",
   "--no-first-run",
   "--no-default-browser-check",
+  "--force-color-profile=srgb",
   `--user-data-dir=${userData}`,
   "--remote-debugging-address=127.0.0.1",
   `--remote-debugging-port=${remotePort}`,
@@ -405,19 +404,21 @@ async function main() {
       } catch { /* keep polling */ }
     }
     if (!isReady) throw new Error("Timed out waiting for reveal.js print layout");
-    await sleep(1000); // buffer for late-loading images/fonts
+    await client.send("Runtime.evaluate", { expression: "document.fonts.ready", awaitPromise: true });
+    await sleep(500); // buffer for late-loading images
 
     const pdf = await client.send("Page.printToPDF", {
       landscape: false,
       printBackground: true,
       preferCSSPageSize: false,
-      marginTop: 0,
-      marginBottom: 0,
-      marginLeft: 0,
-      marginRight: 0,
+      marginTop: 0.25,
+      marginBottom: 0.25,
+      marginLeft: 0.25,
+      marginRight: 0.25,
       paperWidth: 13.333333,
       paperHeight: 7.5,
       displayHeaderFooter: false,
+      generateDocumentOutline: true,
     }, 120000);
     await fs.writeFile(pdfOut, Buffer.from(pdf.data, "base64"));
     client.socket.close();

@@ -17,6 +17,8 @@ The data science lifecycle. Although each stage of the lifecycle requires some d
 ## What "understanding" includes
 In the data science lifecycle proposed by *Learning Data Science,* understanding is split into "understanding the data" and "understanding the world." The two are linked, but not the same...
 
+* mechanistic models and regression models
+
 ### Understanding the data
 
 ::: {#fig-ds-lifecycle-understand-data}
