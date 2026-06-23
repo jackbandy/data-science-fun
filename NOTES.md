@@ -130,6 +130,16 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 	* distinct from ordered types!
 * causality: "if you intervene on a variable, which other variables change?"
 
+### Data Science in Government (Monica G. Bobra)
+* try to select projects that "measurably improve a business process or service"
+* emphasis on interpretable models ("models that people can understand and explain")
+* social services example - model to help reduce benefit theft (CDSS - case study and technical paper)
+* running examples: social services, clean water
+* curricula suggestions
+	* "think like a journalist"
+	* interpretable, auditable models
+
+
 ## TODO
 
 * Add a side-by-side variant of the `.code-figure-slide` template (code and figure
