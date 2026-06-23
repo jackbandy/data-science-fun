@@ -158,6 +158,9 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 * vast majority of weight differences can be attributed to height
 * a pipeline is not a workflow
 
+### Elemental Confounds / Causal Inference
+* https://www.youtube.com/watch?v=lGR7D45Ww38&list=PLDcUM9US4XdNOlqSyhe38US8mFgmqzI14&index=6
+
 ## Misc. TODO
 
 * Add a side-by-side variant of the `.code-figure-slide` template (code and figure
@@ -168,7 +171,11 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 * another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
 	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
 * ethics in data science mini-book - preregistration process - before "understanding"
-* 
+* "linear models do not 'assume' anything"
+	* e.g. residuals can take whatever shape they want
+	* assumption is not a prior (?)
+	* strong inference requires strong assumptions
+	* "inference without assumptions is like an opinion without evidence"
 
 ## Running examples
 * globe toss: estimate % of water
