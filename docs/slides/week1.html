@@ -6,8 +6,8 @@
 <script src="week1_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week1_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week1_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week1_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="week1_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Week 1 (CS 418 @ UIC)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -154,6 +154,263 @@
 <li>Data science lifecycle</li>
 </ul>
 </section>
+<section id="what-is-data-science" class="slide level1">
+<h1>What is Data Science?</h1>
+<p><span style="color:#001E62;"><strong>Data science</strong></span> is an <span style="color:#f9461c;"><strong>interdisciplinary</strong></span> field that studies and applies tools and techniques for <span style="color:#f9461c;"><strong>deriving useful insights from data</strong></span>.</p>
+<div class="columns">
+<div class="column" style="width:26%;">
+<div style="font-size:0.7em; text-align:center; margin-top:1.4em;">
+<p>It uses techniques from <span style="color:#c0392b;"><strong>computer science</strong></span> and <span style="color:#c0392b;"><strong>statistics</strong></span>…</p>
+</div>
+</div><div class="column" style="width:48%;">
+<p><img src="../assets/week1-intro-data-science/venn-rgb.svg" alt="Venn diagram: computer science, math and statistics, and domain knowledge overlapping at data science" style="max-height:350px; width:auto; max-width:100%; display:block; margin:0 auto;"></p>
+</div><div class="column" style="width:26%;">
+<div style="font-size:0.7em; text-align:center; margin-top:1.4em;">
+<p>…to find patterns and explain relationships using data from different <span style="color:#c0392b;"><strong>domains</strong></span>.</p>
+</div>
+</div></div>
+<div style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;">
+<p>Source: Drew Conway, The Data Science Venn Diagram (2010)</p>
+</div>
+</section>
+<section id="why-data-science" class="slide level1">
+<h1>Why Data Science?</h1>
+<div style="max-width:88%; margin:0 auto; height:100%; display:flex; flex-direction:column; justify-content:flex-start; padding-top:2%;">
+<div style="background:#001E62; border-radius:20px; padding:1.2em 0.9em; text-align:center;">
+<p><span style="display:block; font-size:3em; font-weight:800; color:#f9461c; line-height:1.05;">~400 million</span> <span style="font-size:1.1em; color:#ffffff;">terabytes of data created — every single day</span></p>
+</div>
+<div style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.4em;">
+<p>Source: <a href="https://explodingtopics.com/blog/data-generated-per-day">Exploding Topics</a></p>
+</div>
+<div style="text-align:center; margin-top:0.6em; font-size:0.7em;">
+<p><strong>Data science is how we turn that flood into answers and insights</strong></p>
+</div>
+</div>
+</section>
+<section id="why-data-science-1" class="slide level1 image-frame-slide">
+<h1>Why Data Science?</h1>
+
+<img src="../assets/week1-intro-data-science/role-of-data-science.svg" alt="Hub-and-spoke diagram: data science at the center linked to healthcare, transportation, finance, climate science, public safety, and scientific research" class="r-stretch" style="border:none; box-shadow:none; background:transparent;"></section>
+<section id="what-do-data-scientists-do" class="slide level1">
+<h1>What Do Data Scientists Do?</h1>
+<ol type="1">
+<li class="fragment"><strong>Ask the right question</strong> — turn a vague goal into something measurable</li>
+<li class="fragment"><strong>Get &amp; clean the data</strong> — collect, merge, and fix messy real-world data</li>
+<li class="fragment"><strong>Explore &amp; visualize</strong> — hunt for patterns, outliers, and surprises</li>
+<li class="fragment"><strong>Model &amp; predict</strong> — build something that explains or forecasts</li>
+<li class="fragment"><strong>Communicate</strong> — turn results into decisions people can act on</li>
+</ol>
+</section>
+<section id="statistics-review" class="slide level1 section-header">
+<h1>Statistics review</h1>
+</section>
+<section id="our-roadmap" class="slide level1">
+<h1>Our Roadmap</h1>
+<p>Five things we’ll cover:</p>
+<ol type="1">
+<li class="fragment"><strong>Role of statistics in data science</strong></li>
+<li class="fragment"><strong>Descriptive statistics</strong></li>
+<li class="fragment"><strong>Probability</strong></li>
+<li class="fragment"><strong>Distributions</strong></li>
+<li class="fragment"><strong>Sampling</strong></li>
+</ol>
+</section>
+<section id="role-of-statistics-in-data-science" class="slide level1">
+<h1>Role of Statistics in Data Science</h1>
+<ul>
+<li class="fragment">Statistics is the science of learning from data under uncertainty.</li>
+<li class="fragment">It turns raw numbers into evidence we can actually trust.</li>
+<li class="fragment">It tells us what a sample says about the whole population.</li>
+<li class="fragment">It underpins every stage of the data science lifecycle.</li>
+</ul>
+</section>
+<section id="descriptive-statistics" class="slide level1">
+<h1>Descriptive Statistics</h1>
+<ul>
+<li class="fragment">Summarize and describe what’s in the data.</li>
+<li class="fragment"><strong>Center:</strong> Mean, median, mode.</li>
+<li class="fragment"><strong>Spread:</strong> Maximum, Minimum, Range, Standard deviation, Variance.</li>
+<li class="fragment"><strong>Position:</strong> Quartiles and percentiles.</li>
+</ul>
+</section>
+<section id="measures-of-center" class="slide level1">
+<h1>Measures of Center</h1>
+<ul>
+<li><strong>Mean</strong> — the average of all the values.</li>
+<li><strong>Median</strong> — the middle value of the sorted data.</li>
+<li><strong>Mode</strong> — the most frequent value (can be more than one).</li>
+</ul>
+<p><strong>Example</strong> A = {7, 9, 9, 12, 13}</p>
+<p><strong>Mean =</strong> (7 + 9 + 9 + 12 + 13) / 5 = 10<br>
+<strong>Median =</strong> 9<br>
+<strong>Mode =</strong> 9</p>
+</section>
+<section id="measures-of-center-1" class="slide level1">
+<h1>Measures of Center</h1>
+<div style="font-size:0.6em; font-style:normal; color:#1f8a9b; font-weight:700; margin-top:-0.3em;">
+<p>Using Python</p>
+</div>
+<p>With a pandas DataFrame, each measure is one method call:</p>
+<ul>
+<li><code>DataFrame.mean()</code> — the mean</li>
+<li><code>DataFrame.median()</code> — the median</li>
+<li><code>DataFrame.mode()</code> — the mode</li>
+</ul>
+</section>
+<section id="measures-of-spread" class="slide level1">
+<h1>Measures of Spread</h1>
+<div class="columns">
+<div class="column" style="width:20%;">
+<table style="border-collapse:collapse; margin:0.2em 26px 0 auto;">
+<tbody><tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 22px; text-align:center;">
+Grades
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 30px; text-align:center;">
+24
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 30px; text-align:center;">
+<span style="display:inline-block; border:3px solid #1f2d3d; border-radius:50%; width:50px; height:50px; line-height:50px; font-weight:bold;">35</span>
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 30px; text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 30px; text-align:center;">
+<span style="display:inline-block; border:3px solid #1f2d3d; border-radius:50%; width:50px; height:50px; line-height:50px; font-weight:bold;">21</span>
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 30px; text-align:center;">
+28
+</td>
+</tr>
+</tbody></table>
+<div style="font-size:0.5em; text-align:center; margin-top:0.6em; line-height:1.6;">
+<p><span style="color:#1f2d3d; font-weight:bold;">Maximum = 35</span><br> <span style="color:#1f2d3d; font-weight:bold;">Minimum = 21</span></p>
+</div>
+</div><div class="column" style="width:80%;">
+<div style="font-size:0.82em;">
+<p><strong>Maximum</strong> — The largest value in the data set.</p>
+<p><strong>Minimum</strong> — The smallest value in the data set.</p>
+<p><strong>Range</strong> — How far the data stretches, end to end.</p>
+</div>
+<div style="text-align:center; margin-top:1.2em;">
+<p><span class="math display">\[\text{Range} = \text{Max} - \text{Min} = 35 - 21 = 14\]</span></p>
+</div>
+</div></div>
+</section>
+<section id="measures-of-spread-1" class="slide level1">
+<h1>Measures of Spread</h1>
+<div class="columns">
+<div class="column" style="width:20%;">
+<table style="border-collapse:collapse; margin:0.2em 26px 0 auto;">
+<tbody><tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 22px; text-align:center;">
+Grades
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 30px; text-align:center;">
+24
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 30px; text-align:center;">
+35
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 30px; text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 30px; text-align:center;">
+21
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 30px; text-align:center;">
+28
+</td>
+</tr>
+</tbody></table>
+<div style="font-size:0.5em; text-align:right; margin-top:0.6em; line-height:1.6;">
+<p><span style="color:#000000; font-weight:bold;">Variance = 32.5</span><br> <span style="color:#000000; font-weight:bold;">Standard Deviation ≈ 5.7</span></p>
+</div>
+</div><div class="column" style="width:80%;">
+<div style="font-size:0.82em;">
+<p><strong>Standard deviation</strong> — The typical distance from the mean, in the data’s own units.</p>
+<p><strong>Variance</strong> — The variance of a dataset is the square of the standard deviation.</p>
+<p>Mean <span class="math inline">\(\bar{x} = 28\)</span>.</p>
+</div>
+<div style="text-align:center; margin-top:1.2em;">
+<p><span class="math display">\[\begin{aligned}
+s^2 &amp;= \frac{\sum (a_i-\bar{x})^2}{n-1} = \frac{130}{4} = 32.5 \\[6pt]
+s &amp;= \sqrt{32.5} \approx 5.7
+\end{aligned}\]</span></p>
+</div>
+</div></div>
+</section>
+<section id="measures-of-position" class="slide level1">
+<h1>Measures of Position</h1>
+<div class="columns">
+<div class="column" style="width:32%;">
+<table style="border-collapse:collapse; margin:0.4em auto 0;">
+<tbody><tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 24px; text-align:center;">
+Grades (sorted)
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 24px; text-align:center;">
+21
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 24px; text-align:center;">
+<span style="display:inline-block; border:3px solid #001E62; border-radius:50%; width:50px; height:50px; line-height:50px; color:#1f2d3d; font-weight:bold;">24</span>
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 24px; text-align:center;">
+<span style="display:inline-block; border:3px solid #001E62; border-radius:50%; width:50px; height:50px; line-height:50px; color:#1f2d3d; font-weight:bold;">28</span>
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 24px; text-align:center;">
+<span style="display:inline-block; border:3px solid #001E62; border-radius:50%; width:50px; height:50px; line-height:50px; color:#1f2d3d; font-weight:bold;">32</span>
+</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 24px; text-align:center;">
+35
+</td>
+</tr>
+</tbody></table>
+</div><div class="column" style="width:68%;">
+<div style="font-size:0.8em;">
+<p><strong>Percentiles</strong> divide a dataset into 100 equal parts such that n% of the data is less than or equal to the nth percentile.</p>
+<p><strong>Quartiles</strong> divide a dataset into quarters.</p>
+<ul>
+<li>First quartile (Q1) = 25% or less of the data.</li>
+<li>Second quartile (Q2) = 50% or less of the data / Median.</li>
+<li>Third quartile (Q3) = 75% or less of the data.</li>
+</ul>
+</div>
+<div style="text-align:center; margin-top:0.6em;">
+<p><span style="display:inline-block; border:2px solid #001E62; border-radius:6px; padding:6px 18px; margin:0 6px; font-weight:bold; color:#1f2d3d;">Q1 = 24</span> <span style="display:inline-block; border:2px solid #001E62; border-radius:6px; padding:6px 18px; margin:0 6px; font-weight:bold; color:#1f2d3d;">Q2 = 28</span> <span style="display:inline-block; border:2px solid #001E62; border-radius:6px; padding:6px 18px; margin:0 6px; font-weight:bold; color:#1f2d3d;">Q3 = 32</span></p>
+</div>
+</div></div>
+</section>
 <section id="data-science-lifecycle" class="slide level1 section-header">
 <h1>Data Science Lifecycle</h1>
 </section>
@@ -212,7 +469,6 @@
 <h1>Sources</h1>
 <ol type="1">
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week1.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week1.md</a>.</li>
-<li>Last modified and compiled June 23, 12:35h Central (Chicago) time.</li>
 <li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 <li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>
