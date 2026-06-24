@@ -30,6 +30,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="week5_files/libs/revealjs/dist/theme/quarto-bbc2f8fcbd7251ef29b6506dc235e167.css">
   <link rel="stylesheet" href="theme/revealjs-common.css">
@@ -158,11 +224,102 @@
 <li>Chart selection</li>
 </ul>
 </section>
+<section id="pie-donut-charts" class="slide level1 section-header">
+<h1>Pie &amp; Donut Charts</h1>
+</section>
+<section id="pie-charts-intuition" class="slide level1">
+<h1>Pie Charts Intuition</h1>
+<ul>
+<li>A pie chart encodes <strong>proportion</strong> as <strong>angle</strong> (and area)</li>
+<li>Works okay for “roughly half” or “roughly a quarter”</li>
+<li>Difficult to compare multiple slices</li>
+</ul>
+</section>
+<section id="pie-vs.-bar-example" class="slide level1 image-frame-slide">
+<h1>Pie vs.&nbsp;Bar Example</h1>
+<p><img data-src="../assets/pi-donut-demos/piecharts-remix01.svg"></p>
+</section>
+<section id="pie-vs.-bar-example-1" class="slide level1 image-frame-slide">
+<h1>Pie vs.&nbsp;Bar Example</h1>
+<p><img data-src="../assets/pi-donut-demos/piecharts-remix02.svg"></p>
+</section>
+<section id="the-donut-chart" class="slide level1">
+<h1>The Donut Chart</h1>
+<ul>
+<li>A <strong>donut chart</strong> is a pie chart with the center cut out</li>
+<li>Maintain the “this is all part of a whole” message</li>
+<li>Area comparison</li>
+</ul>
+</section>
+<section id="donut-in-the-wild-fifa-world-cup-2026" class="slide level1 image-frame-slide">
+<h1>Donut in the Wild: FIFA World Cup 2026</h1>
+<p><img data-src="../assets/pi-donut-demos/fifa-possession-example.jpeg"></p>
+</section>
+<section id="recreating-the-fifa-chart-setup" class="slide level1">
+<h1>Recreating the FIFA Chart: Setup</h1>
+<div id="f3eec1e6" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a>sizes  <span class="op">=</span> [<span class="dv">63</span>, <span class="dv">27</span>, <span class="dv">10</span>]</span>
+<span id="cb1-4"><a href=""></a>labels <span class="op">=</span> [<span class="st">'COL'</span>, <span class="st">'COD'</span>, <span class="st">'In Contest'</span>]</span>
+<span id="cb1-5"><a href=""></a>colors <span class="op">=</span> [<span class="st">'#f5c800'</span>, <span class="st">'#0057a8'</span>, <span class="st">'#00a896'</span>]</span>
+<span id="cb1-6"><a href=""></a></span>
+<span id="cb1-7"><a href=""></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="recreating-the-fifa-chart-draw" class="slide level1 code-figure-slide">
+<h1>Recreating the FIFA Chart: Draw</h1>
+<div id="b3c7c3ab" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a>ax.pie(sizes, labels<span class="op">=</span>labels, autopct<span class="op">=</span><span class="st">'%1.0f</span><span class="sc">%%</span><span class="st">'</span>,</span>
+<span id="cb2-2"><a href=""></a>       colors<span class="op">=</span>colors, startangle<span class="op">=</span><span class="dv">90</span>, counterclock<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-3"><a href=""></a>       wedgeprops<span class="op">=</span><span class="bu">dict</span>(width<span class="op">=</span><span class="fl">0.5</span>), pctdistance<span class="op">=</span><span class="fl">0.75</span>)</span>
+<span id="cb2-4"><a href=""></a>ax.set_title(<span class="st">'Possession'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb2-5"><a href=""></a>plt.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 480x296.64 with 0 Axes&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="recreating-the-fifa-chart" class="slide level1 code-figure-slide">
+<h1>Recreating the FIFA Chart</h1>
+<div id="7f3fb153" class="cell" data-fig-format="svg" data-fig-height="5" data-fig-width="5" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-2"><a href=""></a></span>
+<span id="cb4-3"><a href=""></a>sizes  <span class="op">=</span> [<span class="dv">63</span>, <span class="dv">27</span>, <span class="dv">10</span>]</span>
+<span id="cb4-4"><a href=""></a>labels <span class="op">=</span> [<span class="st">'COL'</span>, <span class="st">'COD'</span>, <span class="st">'In Contest'</span>]</span>
+<span id="cb4-5"><a href=""></a>colors <span class="op">=</span> [<span class="st">'#f5c800'</span>, <span class="st">'#0057a8'</span>, <span class="st">'#00a896'</span>]</span>
+<span id="cb4-6"><a href=""></a>_, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb4-7"><a href=""></a>ax.pie(sizes, labels<span class="op">=</span>labels, autopct<span class="op">=</span><span class="st">'%1.0f</span><span class="sc">%%</span><span class="st">'</span>, colors<span class="op">=</span>colors,</span>
+<span id="cb4-8"><a href=""></a>       startangle<span class="op">=</span><span class="dv">90</span>, counterclock<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb4-9"><a href=""></a>       wedgeprops<span class="op">=</span><span class="bu">dict</span>(width<span class="op">=</span><span class="fl">0.5</span>), pctdistance<span class="op">=</span><span class="fl">0.75</span>)</span>
+<span id="cb4-10"><a href=""></a>ax.set_title(<span class="st">'Possession'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="week5_files/figure-revealjs/cell-4-output-1.svg" alt="Donut chart of FIFA World Cup 2026 Group K possession: Colombia 63% in yellow, DR Congo 27% in blue, In Contest 10% in teal"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="recreating-the-fifa-chart-polished" class="slide level1">
+<h1>Recreating the FIFA Chart: Polished</h1>
+<div id="dc625d27" class="cell" data-fig-format="svg" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="week5_files/figure-revealjs/cell-5-output-1.svg" alt="Donut chart styled after the FIFA World Cup 2026 broadcast graphic: Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with legend on the right inside a semi-transparent dark rounded rectangle."></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="sources" class="slide level1 sources">
 <h1>Sources</h1>
 <ol type="1">
-<li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.md" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.md</a>.</li>
-<li>Last modified and compiled June 23, 12:35h Central (Chicago) time.</li>
+<li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.qmd" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.qmd</a>.</li>
+<li>Last modified and compiled June 23, 22:13h Central (Chicago) time.</li>
+<li>Pie vs.&nbsp;bar comparison: Schutz, <a href="https://commons.wikimedia.org/wiki/File:Piecharts.svg"><em>Piecharts.svg</em></a>, Wikimedia Commons, 2008. <a href="https://creativecommons.org/licenses/by/1.0/">CC BY 1.0</a>.</li>
 <li>Slides developed using materials from <a href="https://www.cs.uic.edu/~elena/">Elena Zheleva</a> and <a href="https://cs.uic.edu/profiles/gonzalo-bello/">Gonzalo Bello Lander</a>, the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.</li>
 <li>Slide deck built with <a href="https://quarto.org/">Quarto</a> revealjs.</li>
 <li>Title font is Big Shoulders; Body font is <a href="https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin">Libre Franklin</a>.</li>
