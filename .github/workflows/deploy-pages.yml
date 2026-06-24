@@ -26,16 +26,25 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Set up Pages
         uses: actions/configure-pages@v5
 
-      - name: Set up Quarto
+      - name: Set up Quarto (latest)
         uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: latest
 
-      - name: Install Jupyter and data science dependencies
-        run: python3 -m pip install jupyter nbformat numpy polars seaborn matplotlib
+      - name: Log Quarto version
+        run: quarto --version
+
+      - name: Install Python dependencies
+        run: |
+          pip install uv
+          uv pip install --system -r docs/slides/requirements.txt
 
       - name: Build FAQ
         run: cd docs/scripts && ./build_faq.sh
@@ -43,11 +52,60 @@ jobs:
       - name: Render Quarto book
         run: quarto render docs/ethics-in-data-science
 
-      # Manual slide builds for now
-      # - name: Render Quarto slides
-      #   env:
-      #     BUILD_PDFS: "false"
-      #   run: cd docs/slides && bash ./build_all_quarto.sh
+      - name: Detect changed slides
+        id: slide-changes
+        run: |
+          BEFORE="${{ github.event.before }}"
+
+          # Full rebuild on first push, force push, or manual dispatch
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]] || \
+             [[ "$BEFORE" =~ ^0+$ ]] || \
+             ! git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
+            echo "rebuild_all=true" >> "$GITHUB_OUTPUT"
+            echo "[slides] Manual dispatch or no previous commit — rebuilding all decks"
+            exit 0
+          fi
+
+          CHANGED=$(git diff --name-only "$BEFORE" HEAD)
+          echo "[slides] Changed files:"
+          echo "$CHANGED"
+
+          # Shared slide files that invalidate all rendered decks
+          if echo "$CHANGED" | grep -qE '^docs/slides/(_quarto\.yml|_metadata\.yml|references\.bib|build_all_quarto\.sh|stamp_source_note\.py|requirements\.txt)' || \
+             echo "$CHANGED" | grep -qE '^docs/slides/(theme|includes)/' || \
+             echo "$CHANGED" | grep -qE '^\.github/workflows/deploy-pages\.yml'; then
+            echo "rebuild_all=true" >> "$GITHUB_OUTPUT"
+            echo "[slides] Shared file changed — rebuilding all decks"
+            exit 0
+          fi
+
+          CHANGED_DECKS=$(echo "$CHANGED" \
+            | grep -oE 'docs/slides/week[0-9]+\.(qmd|md)' \
+            | sed 's|docs/slides/||' \
+            | sort -u \
+            | tr '\n' ' ' \
+            | sed 's/[[:space:]]*$//')
+
+          echo "rebuild_all=false" >> "$GITHUB_OUTPUT"
+          echo "changed_decks=$CHANGED_DECKS" >> "$GITHUB_OUTPUT"
+
+          if [[ -z "$CHANGED_DECKS" ]]; then
+            echo "[slides] No deck sources changed — skipping slide render"
+          else
+            echo "[slides] Decks to render: $CHANGED_DECKS"
+          fi
+
+      - name: Render Quarto slides
+        if: steps.slide-changes.outputs.rebuild_all == 'true' || steps.slide-changes.outputs.changed_decks != ''
+        env:
+          BUILD_PDFS: "false"
+        run: |
+          cd docs/slides
+          if [[ "${{ steps.slide-changes.outputs.rebuild_all }}" == "true" ]]; then
+            bash ./build_all_quarto.sh
+          else
+            RENDER_SLIDES="${{ steps.slide-changes.outputs.changed_decks }}" bash ./build_all_quarto.sh
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

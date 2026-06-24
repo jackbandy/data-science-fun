@@ -16,12 +16,16 @@ docs/ethics-in-data-science/**/*.quarto_ipynb
 docs/ethics-in-data-science/book/
 docs/ethics-in-data-science/*_files/
 
-# Quarto slides
+# Quarto slides (rendered artifacts — built by CI, not committed)
 docs/slides/.quarto/
 docs/slides/**/*.quarto_ipynb
 docs/slides/_quarto_internal_scss_error.scss
 docs/css/quarto-reveal-*.css
 docs/slides/.*-pdf-export.html
+docs/slides/week*_files/
+docs/slides/*.html
+docs/slides/*.pdf
+docs/slides/_libs/
 syllabus_source/.tmp-build/
 
 # Prompt scratch files
