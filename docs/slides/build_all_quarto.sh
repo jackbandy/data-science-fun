@@ -149,7 +149,7 @@ for slide in "${SLIDE_FILES[@]}"; do
   # then restore the pristine source so the timestamp never gets committed.
   src_file="$SCRIPT_DIR/$(basename "$slide")"
   cp "$src_file" "$src_file.stampbak"
-  python3 "$SCRIPT_DIR/stamp_source_note.py" "$src_file" \
+  python3 "$SCRIPT_DIR/postprocess_slides.py" "$src_file" \
     || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
   # For Python slides, ensure keep-ipynb: true is set so the notebook is preserved
   if grep -q '```{python}' "$src_file"; then
