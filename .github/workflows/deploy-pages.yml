@@ -27,8 +27,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
 
       - name: Set up Pages
         uses: actions/configure-pages@v5
@@ -57,12 +55,23 @@ jobs:
       - name: Render Quarto book
         run: quarto render docs/ethics-in-data-science
 
+      # TODO: Figure out how to build the slide PDFs in CI. PDF export needs a
+      # headless Chrome/Chromium plus Node on the runner (see build_all_quarto.sh),
+      # so BUILD_PDFS is forced off here for now and only HTML decks are deployed.
       - name: Render Quarto slides
         env:
           BUILD_PDFS: "false"
         run: |
           cd docs/slides
           bash ./build_all_quarto.sh
+
+      # Strip dev/build cruft so we don't ship venvs and caches to GitHub Pages.
+      - name: Prune build artifacts before upload
+        run: |
+          find docs -type d -name '.venv' -prune -exec rm -rf {} +
+          find docs -type d -name '.quarto' -prune -exec rm -rf {} +
+          find docs -type f -name '*.quarto_ipynb' -delete
+          find docs -type f -name '.DS_Store' -delete
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

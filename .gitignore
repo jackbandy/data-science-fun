@@ -26,6 +26,9 @@ docs/slides/week*_files/
 docs/slides/*.html
 docs/slides/*.pdf
 docs/slides/_libs/
+# Executed slide notebooks ARE committed (students reference the code), so keep
+# them tracked even though the rest of the rendered slide output is ignored above.
+!docs/slides/*.ipynb
 syllabus_source/.tmp-build/
 
 # Prompt scratch files
