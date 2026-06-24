@@ -55,12 +55,35 @@ jobs:
       - name: Render Quarto book
         run: quarto render docs/ethics-in-data-science
 
-      # TODO: Figure out how to build the slide PDFs in CI. PDF export needs a
-      # headless Chrome/Chromium plus Node on the runner (see build_all_quarto.sh),
-      # so BUILD_PDFS is forced off here for now and only HTML decks are deployed.
-      - name: Render Quarto slides
+      # HTML decks are required: if this fails, the deploy should fail loudly.
+      - name: Render Quarto slides (HTML — required)
         env:
           BUILD_PDFS: "false"
+        run: |
+          cd docs/slides
+          bash ./build_all_quarto.sh
+
+      # PDF export is a bonus. It needs a headless browser plus Node >=22 (for the
+      # global WebSocket the CDP driver in build_all_quarto.sh relies on). The steps
+      # below are non-blocking: if the browser, Node, or any deck's export fails,
+      # continue-on-error lets the HTML-only deploy proceed.
+      - name: Set up Node (>=22 for global WebSocket)
+        continue-on-error: true
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Set up Chromium for slide PDF export
+        id: setup-chrome
+        continue-on-error: true
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Render slide PDFs (bonus — non-blocking)
+        continue-on-error: true
+        env:
+          BUILD_PDFS: "true"
+          SKIP_HTML: "true"
+          CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: |
           cd docs/slides
           bash ./build_all_quarto.sh

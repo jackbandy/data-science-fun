@@ -5,6 +5,7 @@ set -euo pipefail
 # Usage: ./build_all_quarto.sh [output-dir]
 # If CHROME is set, it will be used as the Chrome/Chromium executable for PDF export.
 # Set BUILD_PDFS=true to also generate PDF files.
+# Set SKIP_HTML=true to skip HTML rendering and export PDFs from existing HTML.
 # Set RENDER_SLIDES="week1.md week5.qmd" to render only specific decks.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -136,6 +137,9 @@ cleanup() {
 }
 trap cleanup EXIT
 
+if [[ "${SKIP_HTML:-false}" == "true" ]]; then
+  echo "[quarto] SKIP_HTML=true: reusing existing HTML in $OUTPUT_DIR for PDF-only export"
+else
 echo "[quarto] Rendering HTML with $QUARTO_CMD"
 for slide in "${SLIDE_FILES[@]}"; do
   base="$(basename "${slide%.*}")"
@@ -182,6 +186,7 @@ INJECT_PY
     echo "[quarto] Saved notebook: $SCRIPT_DIR/$base.ipynb"
   fi
 done
+fi
 
 if [[ "$BUILD_PDFS" != "true" ]]; then
   echo "[quarto] Skipping PDF generation."
