@@ -166,7 +166,7 @@ INJECT_PY
   fi
   (
     cd "$SCRIPT_DIR"
-    "$QUARTO_CMD" render "$(basename "$slide")" --to revealjs --output "$base.html" --lib-dir _libs
+    "$QUARTO_CMD" render "$(basename "$slide")" --to revealjs --output "$base.html"
   ) || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
   mv -f "$src_file.stampbak" "$src_file"
   if [[ "$OUTPUT_DIR" != "$SCRIPT_DIR" ]]; then
