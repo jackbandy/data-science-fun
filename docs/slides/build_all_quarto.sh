@@ -183,6 +183,7 @@ INJECT_PY
   ipynb_src="$SCRIPT_DIR/$base.quarto_ipynb"
   if [[ -f "$ipynb_src" ]]; then
     mv -f "$ipynb_src" "$SCRIPT_DIR/$base.ipynb"
+    python3 "$SCRIPT_DIR/postprocess_slides.py" "$SCRIPT_DIR/$base.ipynb"
     echo "[quarto] Saved notebook: $SCRIPT_DIR/$base.ipynb"
   fi
 done
