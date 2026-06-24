@@ -3,7 +3,7 @@ nbformat
 numpy
 polars
 seaborn
-matplotlib
+matplotlib<3.9
 statsmodels
 networkx
 pymc
