@@ -27,9 +27,54 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Pages
         uses: actions/configure-pages@v5
+
+      # Detect which docs files changed in this push so we can skip unchanged renders.
+      # workflow_dispatch and initial pushes (zero SHA) always build everything.
+      - name: Detect changed files
+        id: changed
+        run: |
+          BEFORE="${{ github.event.before }}"
+          EVENT="${{ github.event_name }}"
+
+          if [[ "$EVENT" == "workflow_dispatch" ]] || \
+             [[ -z "$BEFORE" ]] || \
+             [[ "$BEFORE" == "0000000000000000000000000000000000000000" ]]; then
+            echo "build_faq=true"  >> "$GITHUB_OUTPUT"
+            echo "build_book=true" >> "$GITHUB_OUTPUT"
+            echo "render_slides="  >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          CHANGED=$(git diff --name-only "$BEFORE" "${{ github.sha }}")
+          echo "Changed files:"
+          echo "$CHANGED"
+
+          # FAQ: rebuild if source doc or Pandoc template changed
+          if echo "$CHANGED" | grep -qE '^docs/faq\.md$|^docs/_layouts/faq-pandoc\.html$'; then
+            echo "build_faq=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build_faq=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Book: rebuild if any file under ethics-in-data-science/ changed
+          if echo "$CHANGED" | grep -q '^docs/ethics-in-data-science/'; then
+            echo "build_book=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build_book=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Slides: collect base names of changed deck files (passed to RENDER_SLIDES)
+          SLIDES=$(echo "$CHANGED" \
+            | grep -E '^docs/slides/[^/]+\.(qmd|md)$' \
+            | sed 's|.*/||' \
+            | tr '\n' ' ' \
+            | sed 's/ *$//')
+          echo "render_slides=$SLIDES" >> "$GITHUB_OUTPUT"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -50,15 +95,43 @@ jobs:
           uv pip install --system -r docs/slides/requirements.txt
 
       - name: Build FAQ
+        if: steps.changed.outputs.build_faq == 'true'
         run: cd docs/scripts && ./build_faq.sh
 
+      # Cache the rendered book output. Exact key covers all source files under
+      # ethics-in-data-science/; a restore-keys fallback provides the last good
+      # build when sources change (triggering a fresh render below).
+      - name: Restore Quarto book cache
+        id: book-cache
+        uses: actions/cache@v4
+        with:
+          path: docs/ethics-in-data-science/book
+          key: book-${{ hashFiles('docs/ethics-in-data-science/**') }}
+          restore-keys: book-
+
       - name: Render Quarto book
+        if: steps.changed.outputs.build_book == 'true' || steps.book-cache.outputs.cache-hit != 'true'
         run: quarto render docs/ethics-in-data-science
 
+      # Cache the rendered slide HTML and assets. Exact key covers all slide source
+      # files plus the postprocessor and requirements; a restore-keys fallback lets
+      # us reuse unchanged decks and only re-render what changed (via RENDER_SLIDES).
+      - name: Restore slides cache
+        id: slides-cache
+        uses: actions/cache@v4
+        with:
+          path: docs/slides
+          key: slides-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/postprocess_slides.py', 'docs/slides/requirements.txt') }}
+          restore-keys: slides-
+
       # HTML decks are required: if this fails, the deploy should fail loudly.
+      # Skipped on exact cache hit (no sources changed). On a partial restore,
+      # RENDER_SLIDES limits rendering to only the changed deck files.
       - name: Render Quarto slides (HTML — required)
+        if: steps.slides-cache.outputs.cache-hit != 'true'
         env:
           BUILD_PDFS: "false"
+          RENDER_SLIDES: ${{ steps.changed.outputs.render_slides }}
         run: |
           cd docs/slides
           bash ./build_all_quarto.sh
