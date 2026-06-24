@@ -26,16 +26,28 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Pages
         uses: actions/configure-pages@v5
 
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-      - name: Install Jupyter and data science dependencies
-        run: python3 -m pip install jupyter nbformat numpy polars seaborn matplotlib
+      - name: Set up Quarto (latest release)
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: release
+
+      - name: Log Quarto version
+        run: quarto --version
+
+      - name: Install Python dependencies
+        run: |
+          pip install uv
+          uv pip install --system -r docs/slides/requirements.txt
 
       - name: Build FAQ
         run: cd docs/scripts && ./build_faq.sh
@@ -43,11 +55,26 @@ jobs:
       - name: Render Quarto book
         run: quarto render docs/ethics-in-data-science
 
-      # Manual slide builds for now
-      # - name: Render Quarto slides
-      #   env:
-      #     BUILD_PDFS: "false"
-      #   run: cd docs/slides && bash ./build_all_quarto.sh
+      # TODO: Figure out how to build the slide PDFs in CI. PDF export needs a
+      # headless Chrome/Chromium plus Node on the runner (see build_all_quarto.sh),
+      # so BUILD_PDFS is forced off here for now and only HTML decks are deployed.
+      - name: Render Quarto slides
+        env:
+          BUILD_PDFS: "false"
+        run: |
+          cd docs/slides
+          bash ./build_all_quarto.sh
+
+      # Strip dev/build cruft so we don't ship venvs and caches to GitHub Pages.
+      # TODO: Verify the slide notebooks (docs/slides/week*.ipynb) are actually
+      # reachable on the deployed site (e.g. dodatascience.fun/slides/week0.ipynb)
+      # so students can download the code — this prune must not remove them.
+      - name: Prune build artifacts before upload
+        run: |
+          find docs -type d -name '.venv' -prune -exec rm -rf {} +
+          find docs -type d -name '.quarto' -prune -exec rm -rf {} +
+          find docs -type f -name '*.quarto_ipynb' -delete
+          find docs -type f -name '.DS_Store' -delete
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

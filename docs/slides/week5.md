@@ -34,6 +34,102 @@ Placeholder content for Week 5.
 
 ---
 
+# Pie & Donut Charts {.section-header}
+
+---
+
+# Pie Charts: The Intuition
+
+- A pie chart encodes **proportion** as **angle** (and area)
+- Humans are decent at judging "roughly half" or "roughly a quarter"
+- We're much worse at comparing two slices that aren't adjacent
+
+---
+
+# Pie vs. Bar: Three Comparisons {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/Piecharts.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/Piecharts.svg)
+:::
+
+---
+
+# Pie vs. Bar: Case A {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/piecharts-remix01.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/piecharts-remix01.svg)
+:::
+
+---
+
+# Pie vs. Bar: Cases B & C {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/piecharts-remix02.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/piecharts-remix02.svg)
+:::
+
+---
+
+# The Donut Chart
+
+- A **donut chart** is a pie chart with the center cut out
+- The hole doesn't change the encoding — it's still angle/area
+- Common argument for donuts: center space can carry a label or summary stat
+- Common argument against: harder to judge angles without the center reference point
+
+---
+
+# Donut in the Wild: FIFA World Cup 2026 {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/fifa-possession-example.jpeg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/fifa-possession-example.jpeg)
+:::
+
+---
+
+# Recreating the FIFA Chart: Setup
+
+```python
+import matplotlib.pyplot as plt
+
+sizes  = [63, 27, 10]
+labels = ['COL', 'COD', 'In Contest']
+colors = ['#f5c800', '#0057a8', '#00a896']
+
+fig, ax = plt.subplots(figsize=(4, 4))
+```
+
+---
+
+# Recreating the FIFA Chart: Draw
+
+```python
+ax.pie(sizes, labels=labels, autopct='%1.0f%%',
+       colors=colors, startangle=90, counterclock=False,
+       wedgeprops=dict(width=0.5), pctdistance=0.75)
+ax.set_title('Possession', fontweight='bold')
+plt.tight_layout()
+plt.show()
+```
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.md>.

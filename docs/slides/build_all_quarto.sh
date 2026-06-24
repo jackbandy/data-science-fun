@@ -5,6 +5,7 @@ set -euo pipefail
 # Usage: ./build_all_quarto.sh [output-dir]
 # If CHROME is set, it will be used as the Chrome/Chromium executable for PDF export.
 # Set BUILD_PDFS=true to also generate PDF files.
+# Set RENDER_SLIDES="week1.md week5.qmd" to render only specific decks.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTPUT_DIR="${1:-$SCRIPT_DIR}"
@@ -34,6 +35,23 @@ fi
 if ! command -v "$QUARTO_CMD" >/dev/null 2>&1; then
   echo "Error: quarto command not found. Set QUARTO_CMD or install Quarto." >&2
   exit 1
+fi
+
+# Set up Python environment via uv if available
+if command -v uv >/dev/null 2>&1; then
+  VENV="$SCRIPT_DIR/.venv"
+  if [[ -f "$SCRIPT_DIR/requirements.txt" ]]; then
+    echo "[quarto] Installing Python dependencies with uv..."
+    [[ -d "$VENV" ]] || uv venv --quiet "$VENV"
+    uv pip install --quiet --python "$VENV" -r "$SCRIPT_DIR/requirements.txt"
+  fi
+  export VIRTUAL_ENV="$VENV"
+  export PATH="$VENV/bin:$PATH"
+  export QUARTO_PYTHON="$VENV/bin/python3"
+  python3() { uv run --no-project python3 "$@"; }
+  export -f python3
+else
+  echo "[quarto] Warning: uv not found. Install uv for reproducible Python environments." >&2
 fi
 
 find_chrome() {
@@ -71,11 +89,24 @@ if [[ "$BUILD_PDFS" != "true" ]]; then
 fi
 
 SLIDE_FILES=()
-while IFS= read -r candidate; do
-  if [[ "$candidate" == *.qmd ]] || grep -Eq '^[[:space:]]*revealjs:' "$candidate"; then
-    SLIDE_FILES+=("$candidate")
-  fi
-done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f \( -name "*.qmd" -o -name "*.md" \) | sort)
+if [[ -n "${RENDER_SLIDES:-}" ]]; then
+  # Selective build: RENDER_SLIDES is a space-separated list of filenames (e.g. "week1.md week5.qmd")
+  for name in $RENDER_SLIDES; do
+    candidate="$SCRIPT_DIR/$name"
+    if [[ -f "$candidate" ]]; then
+      SLIDE_FILES+=("$candidate")
+    else
+      echo "[quarto] Warning: specified slide '$name' not found, skipping" >&2
+    fi
+  done
+  echo "[quarto] Selective build: ${SLIDE_FILES[*]:-none}"
+else
+  while IFS= read -r candidate; do
+    if [[ "$candidate" == *.qmd ]] || grep -Eq '^[[:space:]]*revealjs:' "$candidate"; then
+      SLIDE_FILES+=("$candidate")
+    fi
+  done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f \( -name "*.qmd" -o -name "*.md" \) | sort)
+fi
 if [[ "${#SLIDE_FILES[@]}" -eq 0 ]]; then
   echo "[quarto] No Quarto slide files found in $SCRIPT_DIR"
   exit 0
