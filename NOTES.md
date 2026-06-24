@@ -168,6 +168,9 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 * Polish the PDF rendering.
 * Check overflow on slide templates (i.e. spilling into footer).
 * clean up ipynb headers
+* Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the
+  deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can
+  download the code from the slides.
 * another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
 	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
 * ethics in data science mini-book - preregistration process - before "understanding"

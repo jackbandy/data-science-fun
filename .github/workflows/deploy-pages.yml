@@ -66,6 +66,9 @@ jobs:
           bash ./build_all_quarto.sh
 
       # Strip dev/build cruft so we don't ship venvs and caches to GitHub Pages.
+      # TODO: Verify the slide notebooks (docs/slides/week*.ipynb) are actually
+      # reachable on the deployed site (e.g. dodatascience.fun/slides/week0.ipynb)
+      # so students can download the code — this prune must not remove them.
       - name: Prune build artifacts before upload
         run: |
           find docs -type d -name '.venv' -prune -exec rm -rf {} +
