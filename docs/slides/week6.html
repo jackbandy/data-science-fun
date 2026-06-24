@@ -264,14 +264,14 @@
 </section>
 <section id="airline-passengers-setup" class="slide level1">
 <h1>Airline Passengers: Setup</h1>
-<div id="f55b05af" class="cell" data-execution_count="1">
+<div id="2d011c85" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="cb1-2"><a href=""></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-3"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href=""></a></span>
 <span id="cb1-5"><a href=""></a>airline <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/airline-passengers/airline-passengers.csv"</span>)</span>
 <span id="cb1-6"><a href=""></a>airline.sample(<span class="dv">5</span>, seed<span class="op">=</span><span class="dv">42</span>).sort(<span class="st">"Month"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="37">
 <div><style>
 .dataframe > thead > tr,
 .dataframe > tbody > tr {
@@ -320,7 +320,7 @@
 </section>
 <section id="airline-passengers-example" class="slide level1 code-figure-slide">
 <h1>Airline Passengers Example</h1>
-<div id="8a80aaf8" class="cell" data-execution_count="2">
+<div id="1c671ac9" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a>airline <span class="op">=</span> airline.with_columns(pl.col(<span class="st">"Month"</span>).<span class="bu">str</span>.to_date(<span class="st">"%Y-%m-</span><span class="sc">%d</span><span class="st">"</span>))</span>
 <span id="cb2-2"><a href=""></a>ax <span class="op">=</span> sns.lineplot(x<span class="op">=</span>airline[<span class="st">"Month"</span>], y<span class="op">=</span>airline[<span class="st">"Passengers"</span>])</span>
 <span id="cb2-3"><a href=""></a>ax.set_ylim(bottom<span class="op">=</span><span class="dv">0</span>)</span>
@@ -345,7 +345,7 @@
 <li class="fragment">Potential explanations?</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="44a99b0f" class="cell" data-execution_count="3">
+<div id="9ad274b2" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -358,12 +358,12 @@
 </section>
 <section id="rolling-average" class="slide level1">
 <h1>Rolling Average</h1>
-<div id="81abe0c0" class="cell" data-execution_count="4">
+<div id="7148d658" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>airline <span class="op">=</span> airline.with_columns(</span>
 <span id="cb3-2"><a href=""></a>    pl.col(<span class="st">"Passengers"</span>).rolling_mean(window_size<span class="op">=</span><span class="dv">12</span>).alias(<span class="st">"trend"</span>)</span>
 <span id="cb3-3"><a href=""></a>)</span>
 <span id="cb3-4"><a href=""></a>airline.sample(<span class="dv">5</span>, seed<span class="op">=</span><span class="dv">42</span>).sort(<span class="st">"Month"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <div><style>
 .dataframe > thead > tr,
 .dataframe > tbody > tr {
@@ -419,7 +419,7 @@
 </section>
 <section id="rolling-average-1" class="slide level1 code-figure-slide">
 <h1>Rolling Average</h1>
-<div id="a03e9169" class="cell" data-execution_count="5">
+<div id="e08129a4" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>ax <span class="op">=</span> sns.lineplot(x<span class="op">=</span>airline[<span class="st">"Month"</span>], y<span class="op">=</span>airline[<span class="st">"Passengers"</span>], alpha<span class="op">=</span><span class="fl">0.35</span>, label<span class="op">=</span><span class="st">"observed"</span>)</span>
 <span id="cb4-2"><a href=""></a>trend_not_null <span class="op">=</span> airline.<span class="bu">filter</span>(pl.col(<span class="st">"trend"</span>).is_not_null())</span>
 <span id="cb4-3"><a href=""></a>sns.lineplot(x<span class="op">=</span>trend_not_null[<span class="st">"Month"</span>], y<span class="op">=</span>trend_not_null[<span class="st">"trend"</span>], label<span class="op">=</span><span class="st">"12-month avg"</span>, ax<span class="op">=</span>ax)</span>
@@ -465,7 +465,7 @@
 </section>
 <section id="additive-vs.-multiplicative-side-by-side" class="slide level1 code-figure-slide">
 <h1>Additive vs.&nbsp;Multiplicative: Side by Side</h1>
-<div id="b88de819" class="cell" data-execution_count="6">
+<div id="7940ccbf" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> statsmodels.tsa.seasonal <span class="im">import</span> seasonal_decompose</span>
 <span id="cb5-2"><a href=""></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.09</span>))</span>
 <span id="cb5-3"><a href=""></a><span class="cf">for</span> model, ax <span class="kw">in</span> <span class="bu">zip</span>([<span class="st">"additive"</span>, <span class="st">"multiplicative"</span>], axes):</span>
@@ -501,7 +501,7 @@
 </section>
 <section id="seasonal_decompose-four-components" class="slide level1">
 <h1><code>seasonal_decompose</code>: Four Components</h1>
-<div id="2927a208" class="cell" data-execution_count="7">
+<div id="28179466" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-code-line-numbers="1-3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> statsmodels.tsa.seasonal <span class="im">import</span> seasonal_decompose</span>
 <span id="cb6-2"><a href=""></a></span>
 <span id="cb6-3"><a href=""></a>values <span class="op">=</span> airline[<span class="st">"Passengers"</span>].to_numpy().astype(<span class="bu">float</span>)</span>
@@ -510,7 +510,7 @@
 </section>
 <section id="seasonal_decompose-four-components-1" class="slide level1 code-figure-slide">
 <h1><code>seasonal_decompose</code>: Four Components</h1>
-<div id="612c4641" class="cell" data-execution_count="8">
+<div id="30dc764d" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-code-line-numbers="1-3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>fig <span class="op">=</span> result.plot()</span>
 <span id="cb7-2"><a href=""></a>fig.set_size_inches(<span class="dv">7</span>, <span class="fl">4.3</span>)</span>
 <span id="cb7-3"><a href=""></a>fig.get_axes()[<span class="op">-</span><span class="dv">1</span>].set_xlabel(<span class="st">"Month"</span>)</span>
@@ -526,7 +526,7 @@
 </section>
 <section id="the-trend-component" class="slide level1 code-figure-slide">
 <h1>The Trend Component</h1>
-<div id="34622399" class="cell" data-execution_count="9">
+<div id="b7a0a12a" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-code-line-numbers="3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>trend_df <span class="op">=</span> pl.DataFrame({</span>
 <span id="cb8-2"><a href=""></a>    <span class="st">"Month"</span>: airline[<span class="st">"Month"</span>],</span>
 <span id="cb8-3"><a href=""></a>    <span class="st">"trend"</span>: pl.Series(<span class="st">"trend"</span>, result.trend).fill_nan(<span class="va">None</span>),</span>
@@ -548,7 +548,7 @@
 </section>
 <section id="the-seasonal-component" class="slide level1">
 <h1>The Seasonal Component</h1>
-<div id="92d1453e" class="cell" data-execution_count="10">
+<div id="0fce594a" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a>seasonal_df <span class="op">=</span> pl.DataFrame({</span>
 <span id="cb9-2"><a href=""></a>    <span class="st">"Month"</span>: airline[<span class="st">"Month"</span>],</span>
 <span id="cb9-3"><a href=""></a>    <span class="st">"seasonal"</span>: pl.Series(<span class="st">"seasonal"</span>, result.seasonal),</span>
@@ -560,7 +560,7 @@
 </section>
 <section id="the-seasonal-component-stable-over-time" class="slide level1 code-figure-slide">
 <h1>The Seasonal Component: Stable Over Time?</h1>
-<div id="1bd9fed4" class="cell" data-execution_count="11">
+<div id="9b8df1b6" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.09</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb10-2"><a href=""></a><span class="cf">for</span> df, ax, label <span class="kw">in</span> <span class="bu">zip</span>([first_two, last_two], axes, [<span class="st">"First 2 years"</span>, <span class="st">"Last 2 years"</span>]):</span>
 <span id="cb10-3"><a href=""></a>    sns.lineplot(x<span class="op">=</span>df[<span class="st">"Month"</span>], y<span class="op">=</span>df[<span class="st">"seasonal"</span>], ax<span class="op">=</span>ax)</span>
@@ -581,7 +581,7 @@
 </section>
 <section id="the-residuals" class="slide level1 code-figure-slide">
 <h1>The Residuals</h1>
-<div id="1e82394f" class="cell" data-execution_count="12">
+<div id="cf1d6ffe" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-code-line-numbers="3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a>resid_df <span class="op">=</span> pl.DataFrame({</span>
 <span id="cb11-2"><a href=""></a>    <span class="st">"Month"</span>: airline[<span class="st">"Month"</span>],</span>
 <span id="cb11-3"><a href=""></a>    <span class="st">"resid"</span>: pl.Series(<span class="st">"resid"</span>, result.resid).fill_nan(<span class="va">None</span>),</span>
@@ -616,7 +616,7 @@
 </section>
 <section id="stationary" class="slide level1 code-figure-slide">
 <h1>Stationary?</h1>
-<div id="923e8af6" class="cell" data-execution_count="13">
+<div id="7056ccbe" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>airline_diff <span class="op">=</span> airline.with_columns(</span>
 <span id="cb12-2"><a href=""></a>    pl.col(<span class="st">"Passengers"</span>).diff().alias(<span class="st">"first_diff"</span>)</span>
 <span id="cb12-3"><a href=""></a>).drop_nulls()</span>
@@ -651,7 +651,7 @@
 </section>
 <section id="differencing-before-and-after" class="slide level1 code-figure-slide">
 <h1>Differencing: Before and After</h1>
-<div id="0751561f" class="cell" data-execution_count="14">
+<div id="55bf915c" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.09</span>))</span>
 <span id="cb13-2"><a href=""></a>sns.lineplot(x<span class="op">=</span>airline[<span class="st">"Month"</span>], y<span class="op">=</span>airline[<span class="st">"Passengers"</span>], ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
 <span id="cb13-3"><a href=""></a>axes[<span class="dv">0</span>].set_ylim(bottom<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span> axes[<span class="dv">0</span>].set_title(<span class="st">"Before: Original Series"</span>)</span>
@@ -673,11 +673,11 @@
 </section>
 <section id="load-uic-halsted-daily-ridership" class="slide level1">
 <h1>Load UIC-Halsted Daily Ridership</h1>
-<div id="f94211ba" class="cell" data-execution_count="15">
+<div id="85bfb0a6" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>cta <span class="op">=</span> pl.read_csv(<span class="st">"../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"</span>)</span>
 <span id="cb14-2"><a href=""></a>uic <span class="op">=</span> cta.<span class="bu">filter</span>(pl.col(<span class="st">"stationname"</span>) <span class="op">==</span> <span class="st">"UIC-Halsted"</span>)</span>
 <span id="cb14-3"><a href=""></a>uic.sample(<span class="dv">5</span>, seed<span class="op">=</span><span class="dv">42</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="51">
 <div><style>
 .dataframe > thead > tr,
 .dataframe > tbody > tr {
@@ -747,7 +747,7 @@
 </section>
 <section id="load-uic-halsted-daily-ridership-1" class="slide level1 code-figure-slide">
 <h1>Load UIC-Halsted Daily Ridership</h1>
-<div id="9bc0ec2c" class="cell" data-execution_count="16">
+<div id="a7d6175d" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a>uic <span class="op">=</span> (</span>
 <span id="cb15-2"><a href=""></a>    cta.<span class="bu">filter</span>(pl.col(<span class="st">"stationname"</span>) <span class="op">==</span> <span class="st">"UIC-Halsted"</span>)</span>
 <span id="cb15-3"><a href=""></a>    .with_columns(</span>
@@ -769,7 +769,7 @@
 </section>
 <section id="just-for-fun" class="slide level1 code-figure-slide">
 <h1>Just for Fun</h1>
-<div id="1efcdc4e" class="cell" data-execution_count="17">
+<div id="f313534f" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-code-line-numbers="1,2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a>CTA_BLUE <span class="op">=</span> <span class="st">"#00A1DE"</span></span>
 <span id="cb16-2"><a href=""></a>ax <span class="op">=</span> sns.lineplot(x<span class="op">=</span>uic[<span class="st">"date"</span>], y<span class="op">=</span>uic[<span class="st">"rides"</span>], linewidth<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span>CTA_BLUE)</span>
 <span id="cb16-3"><a href=""></a>ax.set_xlabel(<span class="st">"Date"</span>)</span>
@@ -786,7 +786,7 @@
 </section>
 <section id="weekday-variation" class="slide level1 code-figure-slide">
 <h1>Weekday variation</h1>
-<div id="a16bbf5e" class="cell" data-execution_count="18">
+<div id="e7fa2d7c" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a>day_order <span class="op">=</span> [<span class="st">"Monday"</span>, <span class="st">"Tuesday"</span>, <span class="st">"Wednesday"</span>, <span class="st">"Thursday"</span>, <span class="st">"Friday"</span>, <span class="st">"Saturday"</span>, <span class="st">"Sunday"</span>]</span>
 <span id="cb17-2"><a href=""></a>uic_dow <span class="op">=</span> uic.with_columns(pl.col(<span class="st">"date"</span>).dt.strftime(<span class="st">"%A"</span>).alias(<span class="st">"day_name"</span>))</span>
 <span id="cb17-3"><a href=""></a>ax <span class="op">=</span> sns.boxplot(x<span class="op">=</span>uic_dow[<span class="st">"day_name"</span>], y<span class="op">=</span>uic_dow[<span class="st">"rides"</span>], order<span class="op">=</span>day_order, color<span class="op">=</span>CTA_BLUE)</span>
@@ -805,7 +805,7 @@
 </section>
 <section id="decomposing-with-period-7" class="slide level1 code-figure-slide">
 <h1>Decomposing with Period = 7</h1>
-<div id="f260585f" class="cell" data-execution_count="19">
+<div id="61ac6469" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a>rides <span class="op">=</span> uic[<span class="st">"rides"</span>].to_numpy().astype(<span class="bu">float</span>)</span>
 <span id="cb18-2"><a href=""></a>cta_result <span class="op">=</span> seasonal_decompose(rides, model<span class="op">=</span><span class="st">"additive"</span>, period<span class="op">=</span><span class="dv">7</span>)</span>
 <span id="cb18-3"><a href=""></a>fig <span class="op">=</span> cta_result.plot()</span>
@@ -823,7 +823,7 @@
 </section>
 <section id="period7-decomposition-whats-still-there" class="slide level1 code-figure-slide">
 <h1>Period=7 Decomposition: What’s Still There?</h1>
-<div id="730ec15c" class="cell" data-execution_count="20">
+<div id="dad69e1a" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a>deseasonalized <span class="op">=</span> pl.DataFrame({</span>
 <span id="cb19-2"><a href=""></a>    <span class="st">"date"</span>: uic[<span class="st">"date"</span>],</span>
 <span id="cb19-3"><a href=""></a>    <span class="st">"rides"</span>: pl.Series(<span class="st">"rides"</span>, cta_result.observed <span class="op">-</span> cta_result.seasonal),</span>
@@ -845,7 +845,7 @@
 </section>
 <section id="monthly-variations-for-uic-halsted-stop" class="slide level1 code-figure-slide">
 <h1>Monthly Variation(s) for UIC-Halsted Stop</h1>
-<div id="ed7ce3a8" class="cell" data-execution_count="21">
+<div id="2ba1e903" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a>month_order <span class="op">=</span> [<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>,</span>
 <span id="cb20-2"><a href=""></a>               <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>]</span>
 <span id="cb20-3"><a href=""></a>uic_month <span class="op">=</span> uic.with_columns(pl.col(<span class="st">"date"</span>).dt.strftime(<span class="st">"%b"</span>).alias(<span class="st">"month"</span>))</span>
@@ -865,7 +865,7 @@
 </section>
 <section id="mstl-multiple-seasonal-decomposition" class="slide level1 code-figure-slide">
 <h1>MSTL: Multiple Seasonal Decomposition</h1>
-<div id="eed4c27d" class="cell" data-execution_count="22">
+<div id="9ea74e3e" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a><span class="im">from</span> statsmodels.tsa.seasonal <span class="im">import</span> MSTL</span>
 <span id="cb21-2"><a href=""></a></span>
 <span id="cb21-3"><a href=""></a>mstl <span class="op">=</span> MSTL(rides, periods<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">365</span>)).fit()</span>
@@ -893,7 +893,7 @@
 <li class="fragment"><strong>Residuals</strong>: large spikes or dips mark unusual days — holidays, extreme weather, special events</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="5b4deb58" class="cell" data-execution_count="23">
+<div id="c86338ce" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -909,7 +909,7 @@
 </section>
 <section id="load-washingtonwabash" class="slide level1">
 <h1>Load Washington/Wabash</h1>
-<div id="8f0b8909" class="cell" data-execution_count="24">
+<div id="e90954c1" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a>CTA_ORANGE <span class="op">=</span> <span class="st">"#F9461C"</span></span>
 <span id="cb22-2"><a href=""></a>wabash <span class="op">=</span> (</span>
 <span id="cb22-3"><a href=""></a>    cta.<span class="bu">filter</span>(pl.col(<span class="st">"stationname"</span>) <span class="op">==</span> <span class="st">"Washington/Wabash"</span>)</span>
@@ -919,7 +919,7 @@
 <span id="cb22-7"><a href=""></a>    ).sort(<span class="st">"date"</span>).<span class="bu">filter</span>(pl.col(<span class="st">"date"</span>) <span class="op">&gt;=</span> pl.date(<span class="dv">2016</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
 <span id="cb22-8"><a href=""></a>)</span>
 <span id="cb22-9"><a href=""></a>wabash.sample(<span class="dv">5</span>, seed<span class="op">=</span><span class="dv">42</span>).sort(<span class="st">"date"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="24">
+<div class="cell-output cell-output-display" data-execution_count="60">
 <div><style>
 .dataframe > thead > tr,
 .dataframe > tbody > tr {
@@ -989,7 +989,7 @@
 </section>
 <section id="washingtonwabash-ridership-over-time" class="slide level1 code-figure-slide">
 <h1>Washington/Wabash: Ridership Over Time</h1>
-<div id="db5938d3" class="cell" data-execution_count="25">
+<div id="4109a1a9" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a>ax <span class="op">=</span> sns.lineplot(x<span class="op">=</span>wabash[<span class="st">"date"</span>], y<span class="op">=</span>wabash[<span class="st">"rides"</span>], linewidth<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span>CTA_ORANGE)</span>
 <span id="cb23-2"><a href=""></a>ax.set_xlabel(<span class="st">"Date"</span>)</span>
 <span id="cb23-3"><a href=""></a>ax.set_ylim(bottom<span class="op">=</span><span class="dv">0</span>)</span>
@@ -1006,7 +1006,7 @@
 </section>
 <section id="washingtonwabash-weekday-patterns" class="slide level1 code-figure-slide">
 <h1>Washington/Wabash: Weekday Patterns</h1>
-<div id="a12246bf" class="cell" data-execution_count="26">
+<div id="c2b3997f" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a>wabash_dow <span class="op">=</span> wabash.with_columns(pl.col(<span class="st">"date"</span>).dt.strftime(<span class="st">"%A"</span>).alias(<span class="st">"day_name"</span>))</span>
 <span id="cb24-2"><a href=""></a>ax <span class="op">=</span> sns.boxplot(x<span class="op">=</span>wabash_dow[<span class="st">"day_name"</span>], y<span class="op">=</span>wabash_dow[<span class="st">"rides"</span>], order<span class="op">=</span>day_order, color<span class="op">=</span>CTA_ORANGE)</span>
 <span id="cb24-3"><a href=""></a>ax.set_xlabel(<span class="st">""</span>)</span>
@@ -1024,7 +1024,7 @@
 </section>
 <section id="two-stations-two-rhythms-weekday" class="slide level1 code-figure-slide">
 <h1>Two Stations, Two Rhythms? (Weekday)</h1>
-<div id="3195b772" class="cell" data-execution_count="27">
+<div id="b427ee5e" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href=""></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.09</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb25-2"><a href=""></a>sns.boxplot(x<span class="op">=</span>uic_dow[<span class="st">"day_name"</span>], y<span class="op">=</span>uic_dow[<span class="st">"rides"</span>], order<span class="op">=</span>day_order, color<span class="op">=</span>CTA_BLUE, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
 <span id="cb25-3"><a href=""></a>sns.boxplot(x<span class="op">=</span>wabash_dow[<span class="st">"day_name"</span>], y<span class="op">=</span>wabash_dow[<span class="st">"rides"</span>], order<span class="op">=</span>day_order, color<span class="op">=</span>CTA_ORANGE, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
@@ -1043,7 +1043,7 @@
 </section>
 <section id="two-stations-two-rhythms-monthly" class="slide level1 code-figure-slide">
 <h1>Two Stations, Two Rhythms? (Monthly)</h1>
-<div id="d5ca3731" class="cell" data-execution_count="28">
+<div id="3f39b353" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href=""></a>wabash_month <span class="op">=</span> wabash.with_columns(pl.col(<span class="st">"date"</span>).dt.strftime(<span class="st">"%b"</span>).alias(<span class="st">"month"</span>))</span>
 <span id="cb26-2"><a href=""></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.09</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb26-3"><a href=""></a>sns.boxplot(x<span class="op">=</span>uic_month[<span class="st">"month"</span>], y<span class="op">=</span>uic_month[<span class="st">"rides"</span>], order<span class="op">=</span>month_order, color<span class="op">=</span>CTA_BLUE, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
@@ -1116,7 +1116,7 @@
 <section id="a-bayesian-ridership-model" class="slide level1">
 <h1>A Bayesian Ridership Model</h1>
 <p>Let’s start by modeling each day as <strong>intercept + weekday effect + month effect + noise</strong>, and let the data update our beliefs.</p>
-<div id="d262c913" class="cell" data-execution_count="29">
+<div id="851582c1" class="cell" data-execution_count="29">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb27-2"><a href=""></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
 <span id="cb27-3"><a href=""></a></span>
@@ -1141,7 +1141,7 @@
 </section>
 <section id="posterior-weekday-effects" class="slide level1 code-figure-slide">
 <h1>Posterior: Weekday Effects</h1>
-<div id="0b486d14" class="cell" data-execution_count="30">
+<div id="cba0cdbc" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href=""></a>post <span class="op">=</span> idata.posterior</span>
 <span id="cb28-2"><a href=""></a>dow_s <span class="op">=</span> post[<span class="st">"dow_eff"</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">7</span>)</span>
 <span id="cb28-3"><a href=""></a>means <span class="op">=</span> dow_s.mean(<span class="dv">0</span>)<span class="op">;</span> lo, hi <span class="op">=</span> np.percentile(dow_s, [<span class="fl">5.5</span>, <span class="fl">94.5</span>], <span class="dv">0</span>)</span>
@@ -1181,7 +1181,7 @@
 </section>
 <section id="predicting-a-given-day" class="slide level1">
 <h1>Predicting a Given Day</h1>
-<div id="4cb6f1d5" class="cell" data-execution_count="31">
+<div id="6efbcc2f" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href=""></a>intercept_s <span class="op">=</span> post[<span class="st">"intercept"</span>].values.flatten()</span>
 <span id="cb29-2"><a href=""></a>month_s     <span class="op">=</span> post[<span class="st">"month_eff"</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">12</span>)</span>
 <span id="cb29-3"><a href=""></a>sigma_s     <span class="op">=</span> post[<span class="st">"sigma"</span>].values.flatten()</span>
@@ -1194,7 +1194,7 @@
 </section>
 <section id="predicting-a-given-day-1" class="slide level1 code-figure-slide">
 <h1>Predicting a Given Day</h1>
-<div id="09b93f50" class="cell" data-execution_count="32">
+<div id="9162cb10" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href=""></a>scenarios <span class="op">=</span> {<span class="st">"Tue · Dec"</span>: (<span class="dv">1</span>, <span class="dv">11</span>), <span class="st">"Wed · Sep"</span>: (<span class="dv">2</span>, <span class="dv">8</span>), <span class="st">"Sun · Oct"</span>: (<span class="dv">6</span>, <span class="dv">9</span>)}</span>
 <span id="cb30-2"><a href=""></a>frames <span class="op">=</span> []</span>
 <span id="cb30-3"><a href=""></a><span class="cf">for</span> k, v <span class="kw">in</span> scenarios.items():</span>
@@ -1225,7 +1225,7 @@
 <li>Intervals are wide (lots of <strong>day-to-day noise</strong> remains after weekday, month)</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="053f8211" class="cell" data-execution_count="33">
+<div id="8cdeb285" class="cell" data-execution_count="33">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1264,7 +1264,7 @@
 </section>
 <section id="a-simple-causal-dag-for-ridership" class="slide level1 image-frame-slide">
 <h1>A Simple Causal DAG for Ridership</h1>
-<div id="a3fd93f5" class="cell" data-execution_count="34">
+<div id="56a12d3e" class="cell" data-execution_count="34">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1289,7 +1289,7 @@
 </section>
 <section id="a-hierarchical-causal-dag-for-ridership" class="slide level1 image-frame-slide">
 <h1>A Hierarchical Causal DAG for Ridership</h1>
-<div id="5f6327c5" class="cell" data-execution_count="35">
+<div id="7aad404d" class="cell" data-execution_count="35">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1303,7 +1303,7 @@
 <h1>Sources</h1>
 <ol type="1">
 <li>GitHub source: <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week6.qmd" class="uri">https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week6.qmd</a>.</li>
-<li>Last modified and compiled June 23, 12:35h Central (Chicago) time.</li>
+<li>Last modified and compiled June 23, 22:13h Central (Chicago) time.</li>
 <li>Time series decomposition: Jason Brownlee, <a href="https://machinelearningmastery.com/decompose-time-series-data-trend-seasonality/"><em>How to Decompose Time Series Data into Trend and Seasonality</em></a>, Machine Learning Mastery.</li>
 <li>Airline passengers dataset:
 <ul>
@@ -1341,7 +1341,7 @@
 </section>
 <section id="acf-and-pacf-airline-passengers" class="slide level1 code-figure-slide">
 <h1>ACF and PACF: Airline Passengers</h1>
-<div id="eb846f84" class="cell" data-execution_count="36">
+<div id="729b01d9" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href=""></a><span class="im">from</span> statsmodels.graphics.tsaplots <span class="im">import</span> plot_acf, plot_pacf</span>
 <span id="cb31-2"><a href=""></a></span>
 <span id="cb31-3"><a href=""></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="fl">4.3</span>))</span>
