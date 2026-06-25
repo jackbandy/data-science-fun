@@ -203,6 +203,9 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 
 Study to reproduce: [Did Taylor Swift kill a bunch of people?](https://statmodeling.stat.columbia.edu/2026/04/21/did-taylor-swift-kill-a-bunch-of-people/)
 
+Taller men more likely to be married? https://www.economist.com/graphic-detail/2026/06/19/the-deceptive-rise-of-the-short-king
+
+
 Data Science Origins? John Tukey's 1962 work, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
 
 https://cs.uic.edu/undergraduate/data-science-major/
