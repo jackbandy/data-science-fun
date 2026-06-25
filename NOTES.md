@@ -157,17 +157,23 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 	* distribution of weight differences from women and men at different heights
 * vast majority of weight differences can be attributed to height
 * a pipeline is not a workflow
+* * "linear models do not 'assume' anything"
+	* e.g. residuals can take whatever shape they want
+	* assumption is not a prior (?)
+	* strong inference requires strong assumptions
+	* "inference without assumptions is like an opinion without evidence"
 
 ### Elemental Confounds / Causal Inference
 * https://www.youtube.com/watch?v=lGR7D45Ww38&list=PLDcUM9US4XdNOlqSyhe38US8mFgmqzI14&index=6
 
 ## Misc. TODO
 
-* Add a side-by-side variant of the `.code-figure-slide` template (code and figure
-  left/right instead of stacked top/bottom).
+* Add a side-by-side variant of the `.code-figure-slide` template (code and figure left/right instead of stacked top/bottom).
 * Polish the PDF rendering.
 * Check overflow on slide templates (i.e. spilling into footer).
 * clean up ipynb headers
+* check mobile slide rendering (low-priority)
+	* slide numbers are not working
 * Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the
   deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can
   download the code from the slides.
@@ -177,11 +183,7 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 * another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
 	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
 * ethics in data science mini-book - preregistration process - before "understanding"
-* "linear models do not 'assume' anything"
-	* e.g. residuals can take whatever shape they want
-	* assumption is not a prior (?)
-	* strong inference requires strong assumptions
-	* "inference without assumptions is like an opinion without evidence"
+
 
 ## Running examples
 * globe toss: estimate % of water
