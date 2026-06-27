@@ -18,7 +18,7 @@ docs/ethics-in-data-science/*_files/
 
 # Quarto slides (rendered artifacts — built by CI, not committed)
 docs/slides/.quarto/
-docs/slides/**/*.quarto_ipynb
+docs/slides/**/*.quarto_ipynb*
 docs/slides/_quarto_internal_scss_error.scss
 docs/css/quarto-reveal-*.css
 docs/slides/.*-pdf-export.html

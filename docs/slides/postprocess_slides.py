@@ -5,11 +5,10 @@
 For .ipynb notebooks:
   1. Remove YAML frontmatter from the first markdown cell.
   2. Add <!-- slide N --> comment before each level-1 heading.
-  3. For slides with no associated code cells, append "*no code on slide*".
-  4. Insert a compilation timestamp into the Sources slide.
+  3. Insert a compilation timestamp into the Sources slide.
 
 For .qmd / .md files:
-  4. Insert a compilation timestamp into the Sources slide.
+  3. Insert a compilation timestamp into the Sources slide.
      (Replaces stamp_source_note.py for standalone use.)
 
 Usage:
@@ -147,21 +146,17 @@ def process_ipynb(path):
                 _set_src(cell, '\n'.join(kept) + '\n\n' + rest)
             break
 
-    # 2. Walk cells to identify slide numbers and whether each slide has code.
-    #    Rule: a code cell attaches to the last level-1 heading seen before it,
-    #    because code cells always follow the markdown cell that ends a slide.
+    # 2. Walk cells to identify slide numbers.
     slide_num = 0
-    slide_meta = []  # {num, cell_idx, has_code}
+    slide_meta = []  # {num, cell_idx}
 
     for i, cell in enumerate(cells):
         if cell['cell_type'] == 'markdown':
             for _ in HEADING_RE.finditer(_src(cell)):
                 slide_num += 1
-                slide_meta.append({'num': slide_num, 'cell_idx': i, 'has_code': False})
-        elif cell['cell_type'] == 'code' and slide_meta:
-            slide_meta[-1]['has_code'] = True
+                slide_meta.append({'num': slide_num, 'cell_idx': i})
 
-    # 3. Annotate markdown cells: number headings, mark code-free slides.
+    # 3. Annotate markdown cells: number headings.
     from collections import defaultdict
     by_cell = defaultdict(list)
     for s in slide_meta:
@@ -185,20 +180,12 @@ def process_ipynb(path):
                 sl = cell_slides[slide_ptr]
                 slide_ptr += 1
 
-                is_last_in_cell = slide_ptr == len(cell_slides)
-                # Earlier slides in the cell can never have code cells (code comes
-                # after the entire markdown cell, not mid-cell).
-                needs_no_code = not sl['has_code'] if is_last_in_cell else True
-
                 # Prepend slide-number comment before the heading.
                 part = (
                     part[:hm.start()]
                     + f'<!-- slide {sl["num"]} -->\n'
                     + part[hm.start():]
                 )
-
-                if needs_no_code:
-                    part = part.rstrip('\n') + '\n\n*no code on slide*\n'
 
             new_parts.append(part)
 
