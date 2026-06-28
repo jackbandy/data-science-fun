@@ -283,6 +283,131 @@ s &= \sqrt{32.5} \approx 5.7
 
 ---
 
+# Probability {.smaller}
+
+- **Probability** is a measure of the **likelihood** of an event occurring.
+- Probability is the language we use to quantify uncertainty in what the data tells us.
+
+:::: {.columns}
+
+::: {.column width="30%"}
+<div style="border:1px solid #001E62; border-radius:8px; padding:6px 16px; text-align:center; width:fit-content; margin:0.2em auto;">
+$$P(E) = \frac{|E|}{|S|}$$
+</div>
+:::
+
+::: {.column width="66%"}
+<div style="font-size:0.8em; line-height:1.3;">
+<b style="color:#f9461c;">E</b> = the event<br>
+<b style="color:#f9461c;">S</b> = sample space<br>
+<b style="color:#f9461c;">|E|</b> = number of outcomes in event E<br>
+<b style="color:#f9461c;">|S|</b> = total number of possible outcomes in S
+</div>
+:::
+
+::::
+
+- The probability of an event is always between <b>0 and 1</b>.
+
+<div style=border-radius:8px; padding:8px 16px; margin-top:0.4em; font-size:0.72em; line-height:1.3;">
+<i><b style="color:#f9461c;">Example:</b></i> A bag has 6 blue, 3 red, and 5 yellow marbles.<br>
+What is the probability of drawing a blue or red marble on the first draw? 
+<br>
+<i><b>P(E) =</b></i>
+</div>
+
+---
+
+# Terminology
+
+::: {style="font-size:0.85em; line-height:1.5;"}
+- **Experiment** — a process or action with an uncertain result
+- **Outcome** — a single possible result of an experiment
+- **Event** — a set of one or more outcomes we care about
+- **Sample space** — the set of all possible outcomes
+- **Complementary events** — are two events that exist such that one event will occur if and only if the other does not take place.
+:::
+---
+
+# Conditional Probability {.smaller}
+
+- **Conditional probability** is the probability of an event **given that another event has already happened**.
+- **P(A | B)** — "the probability of A given B."
+
+:::: {.columns}
+
+::: {.column width="30%"}
+<div style="border:2px solid #f9461c; border-radius:8px; padding:2px 7px; text-align:center; width:fit-content; margin:0.3em auto;">
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
+</div>
+:::
+
+::: {.column width="62%"}
+<div style="font-size:0.72em; line-height:2.5; margin-top:0.4em;">
+<b style="color:#f9461c;">P(A | B)</b>   =   probability of A given B<br>
+<b style="color:#f9461c;">P(A ∩ B)</b> = probability of both A and B<br>
+<b style="color:#f9461c;">P(B)</b> = probability of B (must be &gt; 0)
+</div>
+:::
+
+::::
+
+---
+
+# Conditional Probability {.smaller}
+
+**Example:** A deck contains 15 distinct cards labeled 1 through 15. Two cards are drawn at random without replacement.
+
+:::: {.columns}
+
+::: {.column width="48%"}
+[SET UP]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}
+
+::: {.fragment}
+**A** = both cards odd &nbsp;&nbsp; **B** = sum is even
+:::
+
+::: {.fragment}
+*Sum is even if both cards are odd, or both are even.*
+:::
+
+::: {.fragment}
+**Odd numbers (8)**<br>
+<span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">1</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">3</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">5</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">7</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">9</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">11</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">13</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">15</span>
+:::
+
+::: {.fragment}
+**Even numbers (7)**<br>
+<span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">2</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">4</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">6</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">8</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">10</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">12</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">14</span>
+:::
+:::
+
+::: {.column width="52%"}
+[SOLUTION]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}
+
+::: {.fragment}
+$$n(B) = \binom{8}{2} + \binom{7}{2} = 28 + 21 = 49$$
+:::
+
+::: {.fragment}
+$$n(A \cap B) = \binom{8}{2} = 28$$
+:::
+
+::: {.fragment}
+$$P(A \mid B) = \frac{n(A \cap B)}{n(B)} = \frac{28}{49} = \frac{4}{7}$$
+:::
+
+::: {.fragment}
+<div style="border-radius:8px; padding:8px 16px; text-align:center; margin-top:0.3em;">
+<span style="color:#fff; font-size:0.7em; letter-spacing:2px; font-weight:bold;">ANSWER</span> &nbsp;&nbsp; <span style="color:#f9461c; font-weight:bold; font-size:1.1em;">P(A | B) = 4/7</span>
+</div>
+:::
+:::
+
+::::
+
+---
+
 # Data Science Lifecycle {.section-header}
 
 ---
