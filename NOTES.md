@@ -168,7 +168,6 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 
 ## Misc. TODO
 
-* Add a side-by-side variant of the `.code-figure-slide` template (code and figure left/right instead of stacked top/bottom).
 * Polish the PDF rendering.
 * Check overflow on slide templates (i.e. spilling into footer).
 * clean up ipynb headers
