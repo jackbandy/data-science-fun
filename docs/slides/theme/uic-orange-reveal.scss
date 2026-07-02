@@ -391,6 +391,35 @@ $code-color: $ink !default;
   }
 }
 
+// PDF export: reveal hides the live slide-number (inline display:none) and
+// stamps a per-page .slide-number-pdf into each .pdf-page. The flex override
+// above would otherwise resurrect the live element, printing its load-time
+// value ("1 of N") onto every page via position: fixed.
+html.reveal-print {
+  .reveal.reveal .slide-number:not(.slide-number-pdf) { display: none !important; }
+  .reveal.reveal .slide-number-pdf { position: absolute; }
+  // The fixed footer (z-index 20) repeats on every printed page above the
+  // pdf-pages (z-index 1). Its opaque white band would paint over each
+  // page's slide number and the bottom of full-bleed photos, so it goes
+  // transparent in print — the pages are white anyway.
+  .reveal.reveal .footer { background: transparent; border-top-color: transparent; }
+  // Frosted band inside each page, mirroring the live photo-footer
+  // treatment: invisible over white pages, keeps the footer text and the
+  // page number legible over full-bleed photos. The number (z-index 21)
+  // stays crisp above the band.
+  .reveal .slides .pdf-page::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: $footer-height;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+  }
+}
+
 // On image-only slides the footer goes semi-transparent so the image runs
 // full-bleed behind it. Every footer element — text, both badges, and the
 // slide number — shares one opacity so nothing stands out. Activates when the

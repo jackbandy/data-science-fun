@@ -168,11 +168,9 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 
 ## Misc. TODO
 
-* Polish the PDF rendering.
 * Check overflow on slide templates (i.e. spilling into footer).
 * clean up ipynb headers
 * check mobile slide rendering (low-priority)
-	* slide numbers are not working
 * Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the
   deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can
   download the code from the slides.
