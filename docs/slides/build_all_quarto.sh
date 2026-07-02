@@ -38,8 +38,12 @@ if ! command -v "$QUARTO_CMD" >/dev/null 2>&1; then
   exit 1
 fi
 
-# Set up Python environment via uv if available
-if command -v uv >/dev/null 2>&1; then
+# Set up Python environment via uv if available.
+# SKIP_VENV=true uses the already-active Python environment instead (CI installs
+# dependencies system-wide, so building a second env here would be redundant).
+if [[ "${SKIP_VENV:-false}" == "true" ]]; then
+  echo "[quarto] SKIP_VENV=true: using the already-active Python environment"
+elif command -v uv >/dev/null 2>&1; then
   VENV="$SCRIPT_DIR/.venv"
   if [[ -f "$SCRIPT_DIR/requirements.txt" ]]; then
     echo "[quarto] Installing Python dependencies with uv..."
@@ -301,7 +305,9 @@ const remotePort = 40000 + Math.floor(Math.random() * 20000);
 const userData = path.join(process.env.TMPDIR || "/tmp", `quarto-chrome-${Date.now()}`);
 // ?print-pdf activates reveal.js's print layout: all slides are rendered at once
 // with page-break-after between them, so a single printToPDF call produces the full deck.
-const printUrl = `http://127.0.0.1:${port}/${urlPath}?print-pdf&controls=false&progress=false`;
+// margin=0.1 (reveal's `margin` config, PDF-only via query param) leaves a white
+// ring around each slide instead of printing content flush to the page edges.
+const printUrl = `http://127.0.0.1:${port}/${urlPath}?print-pdf&controls=false&progress=false&margin=0.1`;
 let chromeStderr = "";
 let chromeExit = null;
 
@@ -441,6 +447,14 @@ async function main() {
       } catch { /* keep polling */ }
     }
     if (!isReady) throw new Error("Timed out waiting for reveal.js print layout");
+    // Reveal stamps a bare sequence number into each page's .slide-number-pdf;
+    // rewrite to the "N of total" format the live deck's slide number uses.
+    await client.send("Runtime.evaluate", {
+      expression: `(() => {
+        const nums = document.querySelectorAll(".slide-number-pdf");
+        nums.forEach((el, i) => { el.textContent = (i + 1) + " of " + nums.length; });
+      })()`,
+    });
     await client.send("Runtime.evaluate", { expression: "document.fonts.ready", awaitPromise: true });
     await sleep(500); // buffer for late-loading images
 

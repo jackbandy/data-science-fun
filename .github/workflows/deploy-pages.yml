@@ -25,10 +25,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      # Full commit history is needed for the changed-files diff below, but a
+      # blob:none partial clone skips downloading historic file contents
+      # (checkout lazily fetches only the blobs the working tree needs).
       - name: Check out repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          filter: blob:none
 
       - name: Set up Pages
         uses: actions/configure-pages@v5
@@ -113,14 +117,20 @@ jobs:
         if: steps.changed.outputs.build_book == 'true' || steps.book-cache.outputs.cache-hit != 'true'
         run: quarto render docs/ethics-in-data-science
 
-      # Cache the rendered slide HTML and assets. Exact key covers all slide source
-      # files plus the postprocessor and requirements; a restore-keys fallback lets
-      # us reuse unchanged decks and only re-render what changed (via RENDER_SLIDES).
+      # Cache the rendered slide outputs ONLY (deck HTML, support files, libs).
+      # Exact key covers all slide source files plus the postprocessor and
+      # requirements; a restore-keys fallback lets us reuse unchanged decks and
+      # only re-render what changed (via RENDER_SLIDES). Tracked sources
+      # (week*.qmd/.md/.ipynb, index.html) must stay OUT of the cache path: a
+      # stale restore would otherwise overwrite the fresh checkout.
       - name: Restore slides cache
         id: slides-cache
         uses: actions/cache@v4
         with:
-          path: docs/slides
+          path: |
+            docs/slides/week*.html
+            docs/slides/week*_files
+            docs/slides/_libs
           key: slides-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/postprocess_slides.py', 'docs/slides/requirements.txt') }}
           restore-keys: slides-
 
@@ -131,6 +141,7 @@ jobs:
         if: steps.slides-cache.outputs.cache-hit != 'true'
         env:
           BUILD_PDFS: "false"
+          SKIP_VENV: "true"
           RENDER_SLIDES: ${{ steps.changed.outputs.render_slides }}
         run: |
           cd docs/slides
@@ -156,6 +167,7 @@ jobs:
         env:
           BUILD_PDFS: "true"
           SKIP_HTML: "true"
+          SKIP_VENV: "true"
           CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: |
           cd docs/slides
