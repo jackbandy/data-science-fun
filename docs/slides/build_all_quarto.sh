@@ -147,6 +147,13 @@ else
 echo "[quarto] Rendering HTML with $QUARTO_CMD"
 for slide in "${SLIDE_FILES[@]}"; do
   base="$(basename "${slide%.*}")"
+  # Decks using the knitr engine (R chunks) need Rscript; skip them with a
+  # warning where R isn't installed (e.g. CI) instead of failing the whole build.
+  if ! command -v Rscript >/dev/null 2>&1 \
+     && grep -qE '^engine:[[:space:]]*knitr|^```\{r' "$slide"; then
+    echo "[quarto] Warning: skipping $slide (needs R, and Rscript is not installed)" >&2
+    continue
+  fi
   html_out="$OUTPUT_DIR/$base.html"
   echo "[quarto] Generating HTML: $html_out from $slide"
   # Stamp the compile time into the Sources slide of a throwaway copy, render,
