@@ -117,7 +117,7 @@ jobs:
           restore-keys: r-pkgs-
 
       - name: Install R dependencies
-        run: Rscript -e 'pkgs <- c("knitr", "rmarkdown", "reticulate", "here", "ggplot2", "ggtext", "patchwork"); install.packages(setdiff(pkgs, rownames(installed.packages())))'
+        run: Rscript -e 'pkgs <- c("knitr", "rmarkdown", "reticulate", "here", "ggplot2", "ggtext", "patchwork", "svglite"); install.packages(setdiff(pkgs, rownames(installed.packages())))'
 
       - name: Build FAQ
         if: steps.changed.outputs.build_faq == 'true'

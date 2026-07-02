@@ -17,6 +17,7 @@ Scope: general setup, performance, and workflow simplification (slides/syllabus 
 ### Next up (from last session)
 
 - [ ] **Rebuild weeks 1–12** so the theme fixes (padding, slide numbers, mobile footer) apply to every deck, then review and commit.
+- [x] **Decide the future of the week5 R+Python deck (`week5.qmd`).** *(July 2, 2026: publishing the R deck — CI now installs R plus `knitr`/`rmarkdown`/`reticulate`/`here`/`ggplot2`/`ggtext`/`patchwork`, and the deck falls back to system `python3` when `.venv` is absent. `week5.md` is now stale and can be deleted whenever convenient.)*
 
 ### High-impact: repo size & assets
 
