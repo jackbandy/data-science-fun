@@ -46,6 +46,9 @@ sandbox/data-science-box-questions/downloads/
 sandbox/data-science-box-questions/pages/
 sandbox/data-science-box-questions/download_data_science_box.py
 
+# Script cache (not source)
+sandbox/scripts/ethics-reference-check-cache.json
+
 # Data 8 generated all-questions files
 sandbox/data-8-questions/
 sandbox/data-8-questions/0_all_questions*

@@ -1,5 +1,7 @@
 # Repository TODO
 
+- [ ] **Make a demo of Closeread.** Try out https://closeread.dev (Quarto extension for scrollytelling) and build a sample page
+
 ~~note to self - check mobile version of slides~~ (done — see mobile fix below)
 
 ---
@@ -24,7 +26,7 @@ Scope: general setup, performance, and workflow simplification (slides/syllabus 
 - [ ] **Delete `docs/assets/orange-line-stops-photos/` (remaining ~29 files).** Nothing references it except its own `SOURCES.md`; all decks use `orange-line-stops-better/` instead. Removing it further shrinks the deployed Pages artifact. If any photos are worth keeping for later, move them to `sandbox/ignore/`. *(July 2, 2026: the 14 byte-identical duplicates of `orange-line-stops-better/` files were deleted.)*
 - [ ] **Web-optimize the large JPGs that ship to Pages.** A dozen tracked images are 6–19 MB (`orange-line-stops-better/stop05-clark-lake-a.jpg` 18.5 MB, several `near-orange-line-stops/` and `art/` files 8–13 MB). Slides load these full-size. Resize to ~2000px max dimension at quality ~80 (typically <500 KB each); keep originals in `sandbox/ignore/` if provenance matters. `docs/` tracked content is currently ~446 MB against GitHub Pages' 1 GB soft limit.
 - [x] **Git history is 1.0 GB, mostly dead slide PDFs.** *(July 2, 2026: rewrote history with `git filter-repo --path-glob 'docs/slides/*.pdf' --invert-paths` and force-pushed. Any old clones must be re-cloned; commit hashes changed.)*
-- [ ] **Untrack `sandbox/scripts/ethics-reference-check-cache.json` (6.9 MB).** It's a script cache, not source; `git rm --cached` it and add to `.gitignore`.
+- [x] **Untrack `sandbox/scripts/ethics-reference-check-cache.json` (6.9 MB).** *(July 2, 2026: `git rm --cached` and added to root `.gitignore`.)*
 
 ### CI / deploy workflow (`.github/workflows/deploy-pages.yml`)
 
@@ -32,6 +34,7 @@ Scope: general setup, performance, and workflow simplification (slides/syllabus 
 - [x] **Stop cloning full history on every deploy.** *(July 2, 2026: added `filter: blob:none` to the checkout step; full commit graph is kept for the changed-files diff but historic blobs are no longer downloaded.)*
 - [x] **Python deps installed twice in CI.** *(July 2, 2026: `build_all_quarto.sh` now honors `SKIP_VENV=true`, and both CI render steps set it, so CI uses the system-wide `uv pip install` only.)*
 - [ ] **Pin `docs/slides/requirements.txt`.** Only two loose upper bounds (`matplotlib<3.9`, `arviz<0.20`); everything else floats, so CI renders can drift between runs. Pin exact versions (or commit a `uv lock` / `requirements.lock`) for reproducible deck output.
+- [ ] **Bump actions off deprecated Node.js 20.** `actions/cache@v4`, `actions/checkout@v4`, `actions/configure-pages@v5`, `actions/deploy-pages@v4`, `actions/setup-node@v4`, `actions/setup-python@v5`, `actions/upload-artifact@v4`, and `browser-actions/setup-chrome@v1` all target Node 20, which GitHub is deprecating; they're currently being force-run on Node 24. Upgrade to the latest major versions that target Node 24 before GitHub stops forcing the runtime. See https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
 
 ### Simplification / cruft
 
@@ -62,9 +65,9 @@ Each item should fit in a focused 5-10 minute pass.
 
 - [ ] **Restore the missing subpixel generator input.** `docs/assets/subpixels/make_pixel_assets.py` expects `lcd-pixel-macro-2023.jpg`, which is absent. Restore the source image or update the script to use an existing canonical input, then run it once.
 
-- [ ] **Fix the lifecycle font source path.** `docs/assets/lifecycle/make_lifecycle_figures.py` still checks the pre-move path `../../../slides/...`; change it to the current shared font location under `docs/slides/theme/fonts/`.
+- [x] **Fix the lifecycle font source path.** *(July 2, 2026: checked — the script already points at the current shared location, `docs/assets/fonts/libre-franklin/LibreFranklin.woff2`, and reran cleanly with no diff. This TODO's description was stale, not the code.)*
 
-- [ ] **Remove transient files from shared assets.** Delete `docs/assets/lifecycle/__pycache__/` and `docs/assets/triangles/.DS_Store`, then confirm `.gitignore` continues to exclude both patterns.
+- [x] **Remove transient files from shared assets.** *(July 2, 2026: deleted `docs/assets/lifecycle/__pycache__/`, `docs/assets/triangles/__pycache__/`, and `docs/assets/triangles/.DS_Store`; root `.gitignore` already excludes both patterns, so they were never tracked.)*
 
 - [ ] **Resolve the remaining ethics-book asset exceptions.** Move `cc-by-nc-sa.svg` and `dikw-pyramid.svg` out of `docs/ethics-in-data-science/assets/`, remove unused files, or revise `NOTE.md` to document why they remain.
 
