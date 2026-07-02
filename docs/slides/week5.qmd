@@ -15,7 +15,11 @@ format:
 ```{r}
 #| include: false
 library(reticulate)
-use_python(here::here(".venv/bin/python"), required = TRUE)
+# Prefer the local dev venv (built by build_all_quarto.sh); fall back to
+# whatever python3 is on PATH when it's absent (e.g. CI, which installs
+# dependencies system-wide via SKIP_VENV=true).
+venv_python <- here::here(".venv/bin/python")
+use_python(if (file.exists(venv_python)) venv_python else Sys.which("python3"), required = TRUE)
 ```
 
 ```{python}
