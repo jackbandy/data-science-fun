@@ -399,12 +399,22 @@ $$P(A \mid B) = \frac{n(A \cap B)}{n(B)} = \frac{28}{49} = \frac{4}{7}$$
 
 ::: {.fragment}
 <div style="border-radius:8px; padding:8px 16px; text-align:center; margin-top:0.3em;">
-<span style="color:#fff; font-size:0.7em; letter-spacing:2px; font-weight:bold;">ANSWER</span> &nbsp;&nbsp; <span style="color:#f9461c; font-weight:bold; font-size:1.1em;">P(A | B) = 4/7</span>
+<span style="color:#fff; font-size:0.7em; letter-spacing:2px; font-weight:bold;">ANSWER</span> &nbsp;&nbsp; <span style="font-weight:bold; font-size:1.1em;">P(A | B) = 4/7</span>
 </div>
 :::
 :::
 
 ::::
+
+---
+
+# Bayes' Theorem
+
+Conditional probabilities can be reversed using Bayes' theorem, which provides a systematic method for expressing one conditional probability in terms of another.
+
+$$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
+
+$$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 
 ---
 
