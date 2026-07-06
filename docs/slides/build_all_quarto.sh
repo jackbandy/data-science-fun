@@ -5,6 +5,7 @@ set -euo pipefail
 # Usage: ./build_all_quarto.sh [output-dir]
 # If CHROME is set, it will be used as the Chrome/Chromium executable for PDF export.
 # Set BUILD_PDFS=true to also generate PDF files.
+# Set SKIP_HTML=true to skip HTML rendering and export PDFs from existing HTML.
 # Set RENDER_SLIDES="week1.md week5.qmd" to render only specific decks.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -37,8 +38,12 @@ if ! command -v "$QUARTO_CMD" >/dev/null 2>&1; then
   exit 1
 fi
 
-# Set up Python environment via uv if available
-if command -v uv >/dev/null 2>&1; then
+# Set up Python environment via uv if available.
+# SKIP_VENV=true uses the already-active Python environment instead (CI installs
+# dependencies system-wide, so building a second env here would be redundant).
+if [[ "${SKIP_VENV:-false}" == "true" ]]; then
+  echo "[quarto] SKIP_VENV=true: using the already-active Python environment"
+elif command -v uv >/dev/null 2>&1; then
   VENV="$SCRIPT_DIR/.venv"
   if [[ -f "$SCRIPT_DIR/requirements.txt" ]]; then
     echo "[quarto] Installing Python dependencies with uv..."
@@ -136,16 +141,26 @@ cleanup() {
 }
 trap cleanup EXIT
 
+if [[ "${SKIP_HTML:-false}" == "true" ]]; then
+  echo "[quarto] SKIP_HTML=true: reusing existing HTML in $OUTPUT_DIR for PDF-only export"
+else
 echo "[quarto] Rendering HTML with $QUARTO_CMD"
 for slide in "${SLIDE_FILES[@]}"; do
   base="$(basename "${slide%.*}")"
+  # Decks using the knitr engine (R chunks) need Rscript; skip them with a
+  # warning where R isn't installed (e.g. CI) instead of failing the whole build.
+  if ! command -v Rscript >/dev/null 2>&1 \
+     && grep -qE '^engine:[[:space:]]*knitr|^```\{r' "$slide"; then
+    echo "[quarto] Warning: skipping $slide (needs R, and Rscript is not installed)" >&2
+    continue
+  fi
   html_out="$OUTPUT_DIR/$base.html"
   echo "[quarto] Generating HTML: $html_out from $slide"
   # Stamp the compile time into the Sources slide of a throwaway copy, render,
   # then restore the pristine source so the timestamp never gets committed.
   src_file="$SCRIPT_DIR/$(basename "$slide")"
   cp "$src_file" "$src_file.stampbak"
-  python3 "$SCRIPT_DIR/stamp_source_note.py" "$src_file" \
+  python3 "$SCRIPT_DIR/postprocess_slides.py" "$src_file" \
     || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
   # For Python slides, ensure keep-ipynb: true is set so the notebook is preserved
   if grep -q '```{python}' "$src_file"; then
@@ -179,9 +194,11 @@ INJECT_PY
   ipynb_src="$SCRIPT_DIR/$base.quarto_ipynb"
   if [[ -f "$ipynb_src" ]]; then
     mv -f "$ipynb_src" "$SCRIPT_DIR/$base.ipynb"
+    python3 "$SCRIPT_DIR/postprocess_slides.py" "$SCRIPT_DIR/$base.ipynb"
     echo "[quarto] Saved notebook: $SCRIPT_DIR/$base.ipynb"
   fi
 done
+fi
 
 if [[ "$BUILD_PDFS" != "true" ]]; then
   echo "[quarto] Skipping PDF generation."
@@ -295,7 +312,9 @@ const remotePort = 40000 + Math.floor(Math.random() * 20000);
 const userData = path.join(process.env.TMPDIR || "/tmp", `quarto-chrome-${Date.now()}`);
 // ?print-pdf activates reveal.js's print layout: all slides are rendered at once
 // with page-break-after between them, so a single printToPDF call produces the full deck.
-const printUrl = `http://127.0.0.1:${port}/${urlPath}?print-pdf&controls=false&progress=false`;
+// margin=0.1 (reveal's `margin` config, PDF-only via query param) leaves a white
+// ring around each slide instead of printing content flush to the page edges.
+const printUrl = `http://127.0.0.1:${port}/${urlPath}?print-pdf&controls=false&progress=false&margin=0.1`;
 let chromeStderr = "";
 let chromeExit = null;
 
@@ -435,6 +454,14 @@ async function main() {
       } catch { /* keep polling */ }
     }
     if (!isReady) throw new Error("Timed out waiting for reveal.js print layout");
+    // Reveal stamps a bare sequence number into each page's .slide-number-pdf;
+    // rewrite to the "N of total" format the live deck's slide number uses.
+    await client.send("Runtime.evaluate", {
+      expression: `(() => {
+        const nums = document.querySelectorAll(".slide-number-pdf");
+        nums.forEach((el, i) => { el.textContent = (i + 1) + " of " + nums.length; });
+      })()`,
+    });
     await client.send("Runtime.evaluate", { expression: "document.fonts.ready", awaitPromise: true });
     await sleep(500); // buffer for late-loading images
 

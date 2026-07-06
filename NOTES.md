@@ -157,28 +157,30 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 	* distribution of weight differences from women and men at different heights
 * vast majority of weight differences can be attributed to height
 * a pipeline is not a workflow
+* * "linear models do not 'assume' anything"
+	* e.g. residuals can take whatever shape they want
+	* assumption is not a prior (?)
+	* strong inference requires strong assumptions
+	* "inference without assumptions is like an opinion without evidence"
 
 ### Elemental Confounds / Causal Inference
 * https://www.youtube.com/watch?v=lGR7D45Ww38&list=PLDcUM9US4XdNOlqSyhe38US8mFgmqzI14&index=6
 
 ## Misc. TODO
 
-* Add a side-by-side variant of the `.code-figure-slide` template (code and figure
-  left/right instead of stacked top/bottom).
-* Polish the PDF rendering.
 * Check overflow on slide templates (i.e. spilling into footer).
 * clean up ipynb headers
+* check mobile slide rendering (low-priority)
 * Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the
   deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can
   download the code from the slides.
+* Validate CI notebook rendering and post-processing: push a change to a Python
+  slide deck and confirm (a) the `.ipynb` is regenerated, (b) `postprocess_slides.py`
+  runs on it, and (c) unchanged decks reuse their cached notebooks without re-rendering.
 * another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
 	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
 * ethics in data science mini-book - preregistration process - before "understanding"
-* "linear models do not 'assume' anything"
-	* e.g. residuals can take whatever shape they want
-	* assumption is not a prior (?)
-	* strong inference requires strong assumptions
-	* "inference without assumptions is like an opinion without evidence"
+
 
 ## Running examples
 * globe toss: estimate % of water
@@ -197,6 +199,9 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 [Data Scientist: The Sexiest Job of the 21st Century](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century)
 
 Study to reproduce: [Did Taylor Swift kill a bunch of people?](https://statmodeling.stat.columbia.edu/2026/04/21/did-taylor-swift-kill-a-bunch-of-people/)
+
+Taller men more likely to be married? https://www.economist.com/graphic-detail/2026/06/19/the-deceptive-rise-of-the-short-king
+
 
 Data Science Origins? John Tukey's 1962 work, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
 

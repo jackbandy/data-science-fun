@@ -1,19 +1,32 @@
 ---
 title: "Week 5 (CS 418 @ UIC)"
-jupyter: python3
+engine: knitr
 # Some code in this file was generated with LLM assistance.
 # It is maintained and vetted by jxb@uic.edu.
 # Please contact jxb@uic.edu with any issues or concerns.
-execute:
-  keep-ipynb: true
 format:
   revealjs:
-    fig-format: svg
     fig-width: 5
     fig-height: 3.09
     auto-stretch: false
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 5</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week5.html">dodatascience.fun/slides/week5</a></span>'
 ---
+
+```{r}
+#| include: false
+library(reticulate)
+# Prefer the local dev venv (built by build_all_quarto.sh); fall back to
+# whatever python3 is on PATH when it's absent (e.g. CI, which installs
+# dependencies system-wide via SKIP_VENV=true).
+venv_python <- here::here(".venv/bin/python")
+use_python(if (file.exists(venv_python)) venv_python else Sys.which("python3"), required = TRUE)
+```
+
+```{python}
+#| include: false
+import matplotlib
+matplotlib.use("Agg")
+```
 
 # Week 5 Slide Deck {.course-title}
 
@@ -121,6 +134,7 @@ fig, ax = plt.subplots(figsize=(4, 4))
 
 ```{python}
 #| echo: true
+#| fig-format: svg
 #| fig-alt: "Donut chart of FIFA World Cup 2026 Group K possession: Colombia 63% in yellow, DR Congo 27% in blue, In Contest 10% in teal"
 ax.pie(sizes, labels=labels, autopct='%1.0f%%',
        colors=colors, startangle=90, counterclock=False,
@@ -215,6 +229,128 @@ for i, (label, color, pct) in enumerate(zip(labels, colors, sizes)):
     ax_l.text(0.22, y, label,      color="white", fontsize=16, va="center")
     ax_l.text(0.72, y, f"{pct}%",  color="white", fontsize=16, va="center",
               fontweight="bold");
+```
+
+---
+
+# Recreating the FIFA Chart: R Setup
+
+```{r}
+#| echo: true
+library(ggplot2)
+
+sizes  <- c(63, 27, 10)
+labels <- c("COL", "COD", "In Contest")
+colors <- c("#fcd116", "#0057a8", "#00a896")
+
+df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = sizes,
+  color = colors
+)
+```
+
+---
+
+# Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+
+```{r}
+#| echo: true
+#| dev: svglite
+#| fig-alt: "Basic donut chart using ggplot2 coord_polar with default colors: Colombia, DR Congo, In Contest"
+ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1)
+```
+
+---
+
+# Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+
+```{r}
+#| echo: true
+#| dev: svglite
+#| code-line-numbers: "4-5"
+#| fig-alt: "Donut chart with FIFA colors applied and donut hole created via xlim"
+ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1) +
+  scale_fill_manual(values = setNames(df$color, df$label)) +
+  xlim(0.5, 2.5)
+```
+
+---
+
+# Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+
+```{r}
+#| echo: true
+#| dev: svglite
+#| code-line-numbers: "6-8"
+#| fig-alt: "Completed ggplot2 donut chart: Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with Possession title and minimal theme"
+ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1) +
+  scale_fill_manual(values = setNames(df$color, df$label)) +
+  xlim(0.5, 2.5) +
+  labs(title = "Possession", fill = NULL) +
+  theme_void() +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+```
+
+---
+
+# Recreating the FIFA Chart: R Polished
+
+```{r}
+#| echo: false
+#| dev: svglite
+#| fig-alt: "Polished donut chart styled after FIFA broadcast graphic, made with ggplot2: dark background, Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with colored dot legend"
+library(ggplot2)
+library(ggtext)
+library(patchwork)
+
+sizes  <- c(63, 27, 10)
+labels <- c("COL", "COD", "IN CONTEST")
+colors <- c("#fcd116", "#0057a8", "#00a896")
+df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = sizes,
+  color = colors
+)
+
+donut <- ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1, color = "white", linewidth = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1) +
+  scale_fill_manual(values = setNames(df$color, df$label)) +
+  xlim(0.5, 2.5) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.background = element_rect(fill = NA, color = NA))
+
+legend_df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = paste0(sizes, "%"),
+  color = colors,
+  y     = c(0.65, 0.45, 0.25)
+)
+legend_panel <- ggplot(legend_df, aes(y = y)) +
+  annotate("text", x = 0.1, y = 0.85, label = "POSSESSION",
+           color = "white", size = 6, fontface = "bold", hjust = 0) +
+  geom_point(aes(x = 0.12, color = label), size = 7) +
+  geom_text(aes(x = 0.24, label = label), color = "white",
+            size = 5, hjust = 0) +
+  geom_text(aes(x = 0.80, label = pct), color = "white",
+            size = 5, hjust = 1, fontface = "bold") +
+  scale_color_manual(values = setNames(df$color, df$label)) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.background = element_rect(fill = NA, color = NA))
+
+donut + legend_panel +
+  plot_layout(widths = c(2, 3)) &
+  theme(plot.background = element_rect(fill = "#000000bb", color = NA))
 ```
 
 ---

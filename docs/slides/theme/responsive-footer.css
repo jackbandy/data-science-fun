@@ -34,9 +34,11 @@
 }
 
 @media screen and (max-width: 760px) {
-  /* Reveal scroll mode hides slide numbers by default on mobile. */
+  /* Reveal scroll mode hides slide numbers by default on mobile. Re-show
+     with flex (not block) so the theme's vertical centering keeps the
+     number aligned with the footer band instead of riding at its top. */
   .reveal-viewport.reveal-scroll .slide-number {
-    display: block !important;
+    display: flex !important;
   }
 
   .reveal.reveal .footer .footer-text:first-of-type {

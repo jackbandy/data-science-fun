@@ -18,7 +18,7 @@ docs/ethics-in-data-science/*_files/
 
 # Quarto slides (rendered artifacts — built by CI, not committed)
 docs/slides/.quarto/
-docs/slides/**/*.quarto_ipynb
+docs/slides/**/*.quarto_ipynb*
 docs/slides/_quarto_internal_scss_error.scss
 docs/css/quarto-reveal-*.css
 docs/slides/.*-pdf-export.html
@@ -29,6 +29,8 @@ docs/slides/_libs/
 # Executed slide notebooks ARE committed (students reference the code), so keep
 # them tracked even though the rest of the rendered slide output is ignored above.
 !docs/slides/*.ipynb
+# The slides index is a maintained source file (not a build artifact).
+!docs/slides/index.html
 syllabus_source/.tmp-build/
 
 # Prompt scratch files
@@ -43,6 +45,9 @@ sandbox/open-intro-materials/download_open_intro_materials.py
 sandbox/data-science-box-questions/downloads/
 sandbox/data-science-box-questions/pages/
 sandbox/data-science-box-questions/download_data_science_box.py
+
+# Script cache (not source)
+sandbox/scripts/ethics-reference-check-cache.json
 
 # Data 8 generated all-questions files
 sandbox/data-8-questions/

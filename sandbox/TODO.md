@@ -1,10 +1,53 @@
 # Repository TODO
 
-note to self - check mobile version of slides
+- [ ] **Make a demo of Closeread.** Try out https://closeread.dev (Quarto extension for scrollytelling) and build a sample page
 
-LLM review performed June 5, 2026:
+~~note to self - check mobile version of slides~~ (done — see mobile fix below)
 
-## Recently Completed
+---
+
+## LLM audit performed July 2, 2026
+
+Scope: general setup, performance, and workflow simplification (slides/syllabus content excluded).
+
+### Recently Completed
+
+- [x] **PDF padding.** Slide PDFs now export with a white margin ring (reveal `margin=0.1` query param + 0.25in print margins) instead of content flush to the page edge.
+- [x] **PDF slide numbers.** Exported PDFs rewrite reveal's bare sequence numbers to the "N of total" format matching the live decks.
+- [x] **Mobile fix.** Mobile slide-number alignment corrected in the responsive footer theme.
+
+### Next up (from last session)
+
+- [ ] **Rebuild weeks 1–12** so the theme fixes (padding, slide numbers, mobile footer) apply to every deck, then review and commit.
+- [x] **Decide the future of the week5 R+Python deck (`week5.qmd`).** *(July 2, 2026: publishing the R deck — CI now installs R plus `knitr`/`rmarkdown`/`reticulate`/`here`/`ggplot2`/`ggtext`/`patchwork`, and the deck falls back to system `python3` when `.venv` is absent. `week5.md` is now stale and can be deleted whenever convenient.)*
+
+### High-impact: repo size & assets
+
+- [ ] **Delete `docs/assets/orange-line-stops-photos/` (remaining ~29 files).** Nothing references it except its own `SOURCES.md`; all decks use `orange-line-stops-better/` instead. Removing it further shrinks the deployed Pages artifact. If any photos are worth keeping for later, move them to `sandbox/ignore/`. *(July 2, 2026: the 14 byte-identical duplicates of `orange-line-stops-better/` files were deleted.)*
+- [ ] **Web-optimize the large JPGs that ship to Pages.** A dozen tracked images are 6–19 MB (`orange-line-stops-better/stop05-clark-lake-a.jpg` 18.5 MB, several `near-orange-line-stops/` and `art/` files 8–13 MB). Slides load these full-size. Resize to ~2000px max dimension at quality ~80 (typically <500 KB each); keep originals in `sandbox/ignore/` if provenance matters. `docs/` tracked content is currently ~446 MB against GitHub Pages' 1 GB soft limit.
+- [x] **Git history is 1.0 GB, mostly dead slide PDFs.** *(July 2, 2026: rewrote history with `git filter-repo --path-glob 'docs/slides/*.pdf' --invert-paths` and force-pushed. Any old clones must be re-cloned; commit hashes changed.)*
+- [x] **Untrack `sandbox/scripts/ethics-reference-check-cache.json` (6.9 MB).** *(July 2, 2026: `git rm --cached` and added to root `.gitignore`.)*
+
+### CI / deploy workflow (`.github/workflows/deploy-pages.yml`)
+
+- [x] **Slides cache can restore stale sources over the fresh checkout.** *(July 2, 2026: cache path narrowed to outputs only — `docs/slides/week*.html`, `week*_files`, `_libs` — so tracked sources can no longer be clobbered by a stale restore.)*
+- [x] **Stop cloning full history on every deploy.** *(July 2, 2026: added `filter: blob:none` to the checkout step; full commit graph is kept for the changed-files diff but historic blobs are no longer downloaded.)*
+- [x] **Python deps installed twice in CI.** *(July 2, 2026: `build_all_quarto.sh` now honors `SKIP_VENV=true`, and both CI render steps set it, so CI uses the system-wide `uv pip install` only.)*
+- [ ] **Pin `docs/slides/requirements.txt`.** Only two loose upper bounds (`matplotlib<3.9`, `arviz<0.20`); everything else floats, so CI renders can drift between runs. Pin exact versions (or commit a `uv lock` / `requirements.lock`) for reproducible deck output.
+- [ ] **Bump actions off deprecated Node.js 20.** `actions/cache@v4`, `actions/checkout@v4`, `actions/configure-pages@v5`, `actions/deploy-pages@v4`, `actions/setup-node@v4`, `actions/setup-python@v5`, `actions/upload-artifact@v4`, and `browser-actions/setup-chrome@v1` all target Node 20, which GitHub is deprecating; they're currently being force-run on Node 24. Upgrade to the latest major versions that target Node 24 before GitHub stops forcing the runtime. See https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+
+### Simplification / cruft
+
+- [ ] **Retire the Marp dependency.** `package.json`'s only dependency is `@marp-team/marp-cli` (124 MB `node_modules`), used solely by the archived `docs/slides/marp_archive/build_all_marp.sh`. Remove `package.json`/`package-lock.json`/`node_modules` and document `npx @marp-team/marp-cli` in the archive README for the rare rebuild. Also consider moving `marp_archive/` (11 MB, tracked) out of `docs/` so it stops deploying to the public site.
+- [ ] **Fix stale README claims.** README says "All slide builds are now manual (CI pipeline removed)" and that notebooks go to `code_from_slides/` — but `deploy-pages.yml` renders slides on push, and notebooks are saved as `docs/slides/week*.ipynb`. The layout diagram also lists `source-materials/`, which doesn't exist.
+- [ ] **Local disk reclaim (not git).** `sandbox/stanford-109-questions/` downloads are 3.7 GB and `docs/slides/.venv` is 717 MB — both gitignored and regenerable; delete whenever disk pressure matters.
+- [ ] **Resolve the CI notebook-reachability TODO.** The prune step in `deploy-pages.yml` carries a TODO to verify `dodatascience.fun/slides/week0.ipynb` is reachable after deploy. Check once and delete the comment.
+
+---
+
+## LLM review performed June 5, 2026
+
+### Recently Completed
 
 - [x] **Correct dataset filenames in three READMEs.** Updated `datasets/chicago-l-stations/README.md`, `datasets/chicago-tall-buildings/README.md`, and `datasets/cta-ridership/README.md` so their documented CSV names match the files actually present.
 
@@ -12,7 +55,7 @@ LLM review performed June 5, 2026:
 
 - [x] **Archive the old Orange Line standalone page.** The earlier Orange Line page and its support files now live under `sandbox/orange-line-v1/` instead of remaining as an active docs page.
 
-## Quick Tasks
+### Quick Tasks
 
 Each item should fit in a focused 5-10 minute pass.
 
@@ -22,15 +65,15 @@ Each item should fit in a focused 5-10 minute pass.
 
 - [ ] **Restore the missing subpixel generator input.** `docs/assets/subpixels/make_pixel_assets.py` expects `lcd-pixel-macro-2023.jpg`, which is absent. Restore the source image or update the script to use an existing canonical input, then run it once.
 
-- [ ] **Fix the lifecycle font source path.** `docs/assets/lifecycle/make_lifecycle_figures.py` still checks the pre-move path `../../../slides/...`; change it to the current shared font location under `docs/slides/theme/fonts/`.
+- [x] **Fix the lifecycle font source path.** *(July 2, 2026: checked — the script already points at the current shared location, `docs/assets/fonts/libre-franklin/LibreFranklin.woff2`, and reran cleanly with no diff. This TODO's description was stale, not the code.)*
 
-- [ ] **Remove transient files from shared assets.** Delete `docs/assets/lifecycle/__pycache__/` and `docs/assets/triangles/.DS_Store`, then confirm `.gitignore` continues to exclude both patterns.
+- [x] **Remove transient files from shared assets.** *(July 2, 2026: deleted `docs/assets/lifecycle/__pycache__/`, `docs/assets/triangles/__pycache__/`, and `docs/assets/triangles/.DS_Store`; root `.gitignore` already excludes both patterns, so they were never tracked.)*
 
 - [ ] **Resolve the remaining ethics-book asset exceptions.** Move `cc-by-nc-sa.svg` and `dikw-pyramid.svg` out of `docs/ethics-in-data-science/assets/`, remove unused files, or revise `NOTE.md` to document why they remain.
 
 - [ ] **Trim stale link-audit notes after verification.** Once the FAQ and worksheet routes are confirmed after deployment, update or remove the outdated notes at the bottom of this file.
 
-## Big-Picture Work
+### Big-Picture Work
 
 - [ ] **Unify build and deployment automation.** Decide whether GitHub Actions should build the book, slides, syllabus, and worksheets from source, rather than mixing automated builds with committed generated outputs.
 
@@ -40,9 +83,9 @@ Each item should fit in a focused 5-10 minute pass.
 
 - [ ] **Establish reproducibility and provenance rules for assets and datasets.** Require source URLs/licenses, canonical inputs for generator scripts, and documented regeneration commands for shared images and derived datasets.
 
-- [ ] **Set a repository-size strategy.** Review large datasets, PDFs, generated slide support files, and the multi-gigabyte sandbox; decide what belongs in Git, Git LFS, release archives, or ignored local storage.
+- [ ] **Set a repository-size strategy.** Review large datasets, PDFs, generated slide support files, and the multi-gigabyte sandbox; decide what belongs in Git, Git LFS, release archives, or ignored local storage. (See the July 2026 audit above for concrete numbers.)
 
-## Discoverability
+### Discoverability
 
 - [ ] **Add basic SEO metadata across public HTML pages.** Ensure each page has a distinct `<title>`, meta description, canonical URL, and Open Graph tags.
 
@@ -54,7 +97,7 @@ Each item should fit in a focused 5-10 minute pass.
 
 - [ ] **Tighten naming for search intent.** Review page titles, headings, and URLs so they explicitly target queries like `UIC intro to data science`, `CS 418`, `data science worksheets`, and `ethics in data science`.
 
-## Link Audit Notes
+### Link Audit Notes
 
 - FAQ route status is now a deployment verification task, since `docs/faq.html` exists locally.
 - Pending deployment: the new worksheet URL returns `404`, while the old `worksheet-pdfs/` URL still returns `200`.
