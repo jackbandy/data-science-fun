@@ -4,7 +4,9 @@
 
 ## Defining Data Science
 
-One of the dilemmas I encountered when first working on this course was settling on a basic definition: *what exactly is data science?* I have compiled some of my key reference points here, in case they may be useful to others.
+One of the dilemmas I encountered when first working on this course was settling on a basic definition: *what exactly is data science?* I have compiled some key reference points here, in case they may be useful to others.
+
+Given the plurality of definitions for "data," as well as the plurality of definitions for "science," it is perhaps unsurprising that "data science" lacks a clear, singular definition.
 
 A crucial point is that **data science is more than just the study of data** (or the "science of data").
 

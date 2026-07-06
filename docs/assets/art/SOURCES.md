@@ -262,6 +262,22 @@ Flamingo (1973–1974) is a 53-foot painted steel stabile by Alexander Calder, i
 
 ---
 
+## René Magritte (Public Domain in US)
+
+Magritte died in 1967. This work was first published in 1929; US copyright rules place all works published before 1930 in the public domain in the United States as of January 1, 2025. Note: the work remains under copyright in Belgium and the EU (life + 70 years) until 2037, so this file is not cleared for reuse outside the US.
+
+### Magritte Files
+
+1. **magritte_treachery_of_images_1929.webp**
+   - Title: The Treachery of Images (This is Not a Pipe) (*La trahison des images [Ceci n'est pas une pipe]*)
+   - Year: 1929
+   - Medium: Oil on canvas; held at Los Angeles County Museum of Art (LACMA)
+   - Dimensions: 2560 × 1918 pixels (135 KB)
+   - Source: [LACMA Collections](https://collections.lacma.org/object/31931)
+   - License: Public Domain in the United States (published before 1930); still under copyright in Belgium/EU until 2037
+
+---
+
 ## Usage Notes
 
 - **Kandinsky**: All files are in the public domain and may be freely reused, modified, and distributed without restriction.

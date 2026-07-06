@@ -21,8 +21,10 @@ The process of obtaining data is perhaps the aspect of data science with the mos
 Do you generate it?
 Do you collect it?
 Do you obtain it?
+Are data "given" or "taken?" [@barrowman_data_never_raw_2018]
+* "Data collection itself already is a form of processing."
 
-## Sidebar: Can you start with data?
+## Sidebar: Can you start/end with data?
 TK
 
 ## What "obtaining data" includes
