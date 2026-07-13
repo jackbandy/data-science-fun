@@ -119,7 +119,82 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
 
 ---
 
+# Data Wrangling {.section-header}
 
+---
+
+# What is Data Wrangling? {.smaller}
+
+::: {.incremental}
+
+- Data wrangling is the process of transforming raw, unstructured data into clean, consistent, and useful data that supports its intended application.
+
+- How can we perform data wrangling?
+  1. Discover and address quality issues
+  2. Reshape data into the structure your analysis needs
+  3. Filter down to the rows and columns that matter
+  4. Add new information to existing datasets (data augmentation)
+  5. Verify accuracy and consistency in the dataset
+
+:::
+
+---
+
+# Discover and address quality issues {.smaller}
+
+Find the problems in the raw data before they bias your results.
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+::: {.incremental}
+- **Missing values** — nulls, `NaN`, or disguised blanks like `"N/A"`, `-999`
+- **Duplicates** — the same row or entity recorded more than once
+- **Inconsistent formatting** — `"IL"` vs `"Illinois"`, `mm/dd/yyyy` vs `yyyy/dd/mm`
+- **Wrong data types** — numbers or dates stored as strings
+- **Structure issues** - mixed units: miles vs km
+- **Invalid values** — impossible entries such as age = 350
+:::
+:::
+
+::: {.column width="45%"}
+<table style="border-collapse:collapse; margin:0.4em auto 0; font-size:0.62em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">age</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">city</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">34</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Chicago</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">2</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">NaN</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Naperville</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">2</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">NaN</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Naperville</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">3</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">350</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">N/A</td>
+</tr>
+</table>
+
+:::
+
+::::
+
+
+Using Pandas:  df.info(), df.isna().sum(), df.duplicated().sum(), and df.describe().
+
+---
 
 # Data Formats {.section-header}
 
