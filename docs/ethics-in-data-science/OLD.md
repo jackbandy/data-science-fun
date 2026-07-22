@@ -1,5 +1,14 @@
 
 # Old Stuff
+
+### Zoom-in
+
+For one, during the work of data science, you may find yourself (or your team) in a "repeated zoom-in" cycle, and it is useful to be able to recognize them. These repeated loops can be useful to support exploration, but infuriating when they seem to go on forever (as the saying goes, they make "helpful servants but terrible masters").
+
+Data scientists will do well to recognize when they are "losing the forest for the trees," or when "mighty contests rise from trivial things" [@pope_rape_of_the_lock_1714, Canto I].
+
+Then again, who gets to decide what is trivial?
+
 ### Frequentist worldview (long-run behavior)
 
 * Probability as long-run frequency across repeated trials

@@ -24,7 +24,7 @@ A four-layer pyramid.
 
 *This chapter is in-progress.*
 
-> **Overview:** This chapter describes the DIKW pyramid — data, information, knowledge, wisdom — and its relevance to the data science lifecycle, especially as a way to consider the fundamental goals and purposes of data science work. The chapter also introduces concepts of *understanding* and *common knowledge*, and their relevance to data science. It closes with a brief discussion of statistical worldviews, where "just do the math" requires choosing particular beliefs about math and the world at large.
+> **Overview:** This chapter describes the DIKW pyramid — data, information, knowledge, wisdom — and its relevance to the data science lifecycle, especially as a way to consider the fundamental goals and purposes of data science work. The chapter also introduces concepts of *understanding* and *common knowledge*, and describes their relevance to data science. It closes with a brief discussion of statistical worldviews (e.g. Bayesian versus Frequentist), where "just do the math" actually requires choosing particular beliefs about math and the world at large.
 
 As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short [@rowley_wisdom_2007]. The DIKW framing has a long history across systems thinking and information science (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011). As argued by this chapter and other sources, the definitive hierarchy implied by the DIKW pyramid is somewhat misleading [@fricke_knowledge_2009], however, the intuitions around the metaphor offer helpful framing for data science work.
 
@@ -85,9 +85,9 @@ Again, the red frame shows the area where we will zoom in.
 The left edge of the "perfect" equilateral triangle breaks down even further.
 :::
 
-Now, the flaws of the triangle are even closer and more apparent. We have laid bare its imperfections (or at least some of its imperfections). Then again, those imperfections have lain there all along: the pixels (picture elements) in the original, perfect-looking triangle were always there, they were just too small to see.
+Now, the flaws of the triangle are even closer and more apparent. We have laid bare its imperfections (or at least some of its imperfections). Then again, those imperfections have lain there all along: the pixels (picture elements) in the original, perfect-looking triangle were always *there*, they were just too small to see.
 
-Even now, this image of the black squares is not really showing you the pixels. Here is what those black pixels actually look like up close:
+Even now, this image of the black squares is not really showing you the pixels. Here is what those "black" pixels actually look like up close:
 
 ::: {#fig-lcd-pixel-macro}
 <img src="../../assets/subpixels/lcd-pixel-macro-2023-golden.jpg" alt="Microscopic close-up of an LCD display showing red, green, and blue subpixels." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -95,7 +95,7 @@ Even now, this image of the black squares is not really showing you the pixels. 
 A microscopic image of an LCD display showing subpixels. Source: Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 :::
 
-Yet again, this statement about "what pixels look like" is somewhat inaccurate - this is not *exactly* what pixels look like. There is no way to show a zoomed-in picture of *your* screen at this very moment, although you could go get a magnifying glass if you are curious. And if you looked through that magnifying glass, zooming in further, you might see "subpixels" of red, blue, and green in your screen.
+But even this statement about "what pixels look like" is somewhat inaccurate - this is not *exactly* what pixels look like. There is no way to show a zoomed-in picture of *your* screen at this very moment, although you could go get a magnifying glass if you are curious. And if you looked through that magnifying glass, zooming in further, you might see "subpixels" of red, blue, and green in your screen.
 
 ::: {#fig-lcd-pixel-macro-zoom}
 <img src="../../assets/subpixels/lcd-pixel-macro-2023-golden-zoom-10x.jpg" alt="Ten-times zoomed view of the LCD subpixel pattern." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -103,32 +103,41 @@ Yet again, this statement about "what pixels look like" is somewhat inaccurate -
 A 10x zoom into the LCD subpixel image, showing rectangular subpixels. Source: Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 :::
 
-But the subpixels on your screen might not be the same shape as the subpixels on someone else's screen. For example, subpixels look rather different on a standard definition CRT television, a CRT computer monitor, and LCD laptop screens, as shown below.
+But the subpixels on your screen might not be the same shape as the subpixels on someone else's screen. Subpixels look rather different on a standard definition CRT television, a CRT computer monitor, and LCD laptop screens, as shown below.
 
 ::: {#fig-pixel-geometries}
 <img src="../../assets/subpixels/pixel-geometries.jpg" alt="Microscopic photos comparing pixel geometries from CRT and LCD displays." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-Pixel geometries from CRT and LCD displays, center-cropped to a golden-ratio rectangle. Source: Peter Halasz (Pengo), [*Pixel geometry 02 Pengo.jpg*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+Pixel geometries from CRT and LCD displays, center-cropped. Source: Peter Halasz (Pengo), [*Pixel geometry 02 Pengo.jpg*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 :::
 
 We could go on for quite a while with this repeated zoom-in effect. But what does all of this have to do with data science?
 
-For one, during the work of data science, you may find yourself (or your team) in a "repeated zoom-in" cycle, and it is useful to be able to recognize them. These repeated loops can be useful to support exploration, but infuriating when they seem to go on forever (as the saying goes, they make "helpful servants but terrible masters").
-
-Data scientists will do well to recognize when they are "losing the forest for the trees," or when "mighty contests rise from trivial things" [@pope_rape_of_the_lock_1714, Canto I].
-
-Then again, who gets to decide what is trivial? We began with an equilateral triangle, which one could reasonably consider to be trivial.
-
-Data scientists may often be tasked with answering a deceptively simple question:
+We began with a simple quest to understand a triangle. Data scientists will often be tasked with answering deceptively simple questions:
 * Do guests like the new cold brew recipe?
 * Is the running plan helping people run faster?
 * Do people sleep better with noise machines?
+* Is a business growing its customer base?
 
-But any real, living, curious human asking these questions will want more than "yes" or "no" as an answer. The task of a data scientist, then, is not merely to deliver the answer up the chain like a machine that takes data as input and gives knowledge as output.
+But any real, living, curious human asking these questions will want more than "yes" or "no" as an answer. The task of a data scientist, then, is not merely to deliver the answer up the chain. That is a task for machines.
 
-And this is the second point for which our triangle adventure is relevant. The real value of a (competent) data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist must explore the many possible decisions that can take data to construct information and/or knowledge.
+And this is the second point for which our triangle adventure is relevant. The real value of a (competent) data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist will constantly explore the possible decisions involved in turning data into information and/or knowledge.
 
-Wisdom involves the ability to say why the original figure was, in some sense, a triangle. And wisdom also involves being able to explain why the figure was not *exactly* a perfect triangle. Wisdom requires *understanding the process* of going from subpixels to pixels to lines to a triangle. In some contexts, a data scientist may need to simply say "yes, that is a triangle." In other contexts the data scientist may need to explain why it is technically *not* a triangle, and also explain how the subpixels, pixels, and (appearance of) lines create a figure that appears to be a triangle. One must occasionally bow to the consensus and accept "equilateral triangle" as the best available, most recognizable name for the shape that appears in the figure.
+Practically, this means competent data scientists will have a strong understanding of data acquisition processes, sampling processes, and how they fit into any conclusions drawn from the data. In short, data scientists will pay attention to data *provenance*.
+
+A strong grasp of provenance leads to a second component of "data science wisdom" discussed further in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md), in the context of George Box's famous aphorism that "all models are wrong, but some are useful."
+
+We can add that all *data* are wrong: all data are merely representations of the real world (or what we call the real world). This might be called the "treachery of data."
+
+::: {#fig-treachery-of-images}
+<img src="../../assets/art/magritte_treachery_of_images_1929.webp" alt="René Magritte's painting of a pipe with the caption 'Ceci n'est pas une pipe' (This is not a pipe)." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+René Magritte, *The Treachery of Images* (1929). The (image of a) painting of a pipe is not itself a pipe, and data are representations of the world, not the world itself. Source: [LACMA Collections](https://collections.lacma.org/object/31931), public domain in the United States.
+:::
+
+So, what does the triangle figure have to do with "data science wisdom?" In short, wisdom involves being able to explain why the figure was not *exactly* a perfect triangle. Wisdom requires *understanding the process* of going from subpixels to pixels to (an appearance of) lines to an imperfect representation of a triangle.
+
+Wisdom also involves a willingness to say why the original figure was, in some sense, a triangle. One must occasionally bow to the consensus and accept "equilateral triangle" as the best available, most recognizable name for the shape that appears in the figure.
 
 As will be discussed in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md), this kind of wisdom requires an awareness of goals, audience knowledge, and other contextual factors which can improve communication.
 
@@ -139,105 +148,55 @@ Notably missing from the DIKW pyramid is the word "understanding." This points t
 
 To quote Ursula Le Guin, "What good are all the objects in the universe, if there is no subject?" [@leguin_mrs_brown_1979]. And to rephrase this sentiment in the context of the DIKW pyramid, "what good are all the data, if there is no data scientist?"
 
-There must be some subject that turns data into information, information into knowledge, and knowledge into wisdom. If these transformations can happen, they happen through human understanding.
+There must be some subject that transforms data into information, information into knowledge, and knowledge into wisdom. If and when these transformations happen, they happen through the effort of human attention.
 
 Intuitively, knowing something is more than just storing some piece of information. Knowledge is more than compiled information (just as information is more than compiled data). @zeleny_management_1987 describes knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
 
 What makes Wikipedia a source of knowledge is not merely the text on the page(s), but rather the coordination process of the Wikipedia editor network which iteratively writes, reviews, and updates the Wikipedia page(s). Furthermore, the knowledge captured on the page(s) can only "spread" when someone reads it and trusts. And a person trusts the text on the page(s) because of the subjects who crafted and re-crafted the language, ensuring its coherence and alignment with existing human language.
 
-In short, the DIKW pyramid does not build itself.
+The DIKW pyramid does not build itself. Moreover, different people and organizations do not all construct knowledge in the same way(s). [Chapter 5](05-ethics-in-reporting-decisions-solutions.md) revisits the pyramid metaphor along with alternative metaphors for knowledge construction.
 
-The concept of understanding will return in Avengers: Doomsday, in this case meaning [Chapter 4](04-ethics-in-understanding.md), which distinguishes between understanding data and understanding the world.
+Understanding also connects to the phenomenon of *common knowledge* — shared awareness not just of facts, but of what other people know. This has direct implications for how data scientists communicate results, and is also discussed in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md).
 
-Understanding also connects to the phenomenon of *common knowledge* — shared awareness not just of facts, but of what other people know. This has direct implications for how data scientists communicate results, and is discussed in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md).
+The concept of understanding will also return in [Chapter 4](04-ethics-in-understanding.md), which distinguishes between understanding data and understanding the world.
+
 
 ## Statistical worldviews
 
 One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere" [@dignazio_klein_data_feminism_2020], there are many "researcher degrees of freedom" exercised throughout the lifecycle. Making decisions within these degrees of freedom entails a degree of subjectivity.
 
-To demonstrate this and conclude the chapter, we will consider one historical example: frequentist versus Bayesian statistics. 
+To demonstrate this and conclude the chapter, we will explore the example of frequentist versus Bayesian statistics. 
 
 Consider a simple scenario from [@ipeirotis_bayesian_frequentist_2008]:
 
-* You have a coin that, when flipped, ends up head with probability *p* and ends up tail with probability *1−p*
-* The value of *p* is unknown, but you want to know it
+* You have a coin that, when flipped, ends up head with probability *p* (and ends up tail with probability *1−p*)
+* The value of *p* is unknown, and you want to know it
 * You flip the coin 14 times and get 10 heads
 * A stranger walks by and offers a bet as to whether the next two flips will both be heads
 * Do you take the bet?
 
-I will leave the mathematical details to the original source and focus on the relevant aspect for this book: the different conclusions reached through different statistical worldviews.
+I will leave the mathematical details to the original source and statistics textbooks. For now, we will focus on the different conclusions reached through different statistical worldviews.
 
-In this particular example, a *frequentist* would estimate *p* from the 14 observations, estimating a 51% chance of two consecutive heads. A *Bayesian* reaches a different estimate, 48.5% (by treating *p* as a distribution, incorporating prior beliefs, and using Bayes' theorem to account for the observations).
+In this particular example, a *frequentist* would estimate *p* from the 14 observations, estimating a 51% chance of two consecutive heads. A *Bayesian* reaches a different estimate, 48.5% (by treating *p* as a distribution, incorporating prior beliefs, and using Bayes' theorem to account for the 14 observations).
 
-There are some underlying beliefs behind these numbers: frequentists treat probability as long-run frequency and judge procedures by their error rates across repeated trials [@sep-statistics]. Bayesians, on the other hand, treat probability as a degree of belief (or "credence") that is updated as evidence arrives [@sep-epistemology-bayesian].
+There are underlying beliefs supporting these numbers: frequentists treat probability as long-run frequency/percentages and judge procedures by their error rates across repeated trials [@sep-statistics]. Bayesians, on the other hand, treat probability as a degree of belief (or "credence") that is updated as evidence arrives [@sep-epistemology-bayesian].
 
-So, do you take the bet? One might expect there to be a single answer to the statistical question: "just do the math!" But "the math" was not given to us on a stone tablet, and we have multiple paradigms upon which we might base our statistical calculations. This is a case where one must choose which math to use, and to some extent, what to believe about the world.
+So, do you take the bet? One might expect there to be a single answer to the statistical question: "just do the math!" But "the math" was not given to us on a stone tablet, and we have multiple paradigms upon which we might base our math. This is a case where one must choose which math to use, and to some extent, what to believe about the world.
 
-To my understanding, this particular debate has largely settled down. In 1986, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as sort of a live contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020].
+To my understanding, this particular debate has settled down. In 1986, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as sort of a live contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020].
 
-Still, the rise of the causal inference paradigm does not imply a conclusion to subjectivity in data science. Causal modeling may offer more regularity in asking questions, i.e., "what would happen under intervention?" This lends to structural modeling and causal graphs (DAGs - we'll talk about them in class) and more formal structures, rather than loose associations [@sep-causal-models].
+Still, the rise of the causal inference paradigm does not imply a conclusion to subjectivity in data science. Causal modeling may offer more regularity in asking questions, i.e., "what would happen after an intervention?" This lends to structural modeling and causal graphs (specifically, directed acyclic graphs, or DAGs - we'll talk about them in class) and more formal structures, rather than loose associations [@sep-causal-models].
 
-But causal modeling actually opens up another can of worms about what it actually means for one thing to cause another thing: 
+But causal modeling actually opens up additional cans of worms about what it actually means for one thing to "cause" another thing. Here are some examples:
 
 * **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that just consistently show up at the same time?
 * **Multiple necessary conditions**: When a fire needs heat, fuel, and oxygen, which one is considered "the cause" of the fire? 
-* **Causation without pattern**: How do we make sense of (or prove) one-time "causes" and effects, like the meteor that killed the dinosaurs?
-* **Common causes**: Ice cream sales and drownings rise and fall together, but ice cream does not cause drowning (and drowning does not cause ice cream sales). How do we know when there is a lurking third factor (in this case summer weather) that drives multiple effects?
-* **Directionality**: A train's speedometer needle turns as the train goes faster, and the train goes faster as the speedometer needle turns. Of course, flicking the needle will not speed up the train. How do we determine causal directionality in more complicated scenarios?
-* **Overdetermination**: Two people each empty a full bucket of water onto a campfire at the same moment, and either bucket alone would have been enough to put out the fire. Which bucket "caused" the fire to go out?
+* **Causation without pattern**: How do we make sense of (or prove) one-time "causes" and effects that we cannot replicate? For example, how do we know the meteor caused dinosaur extinction?
+* **Common causes**: Ice cream sales and drownings rise and fall together, but ice cream does not cause drowning (and drowning does not cause ice cream sales). How do we figure out when there is an underlying third factor (in this case summer weather) that drives multiple effects?
+* **Directionality**: A train's speedometer needle turns as the train goes faster, and the train goes faster as the speedometer needle turns. But of course, manually moving the needle will not speed up the train. How do we determine causal directionality in more complicated scenarios?
+* **Overdetermination**: Two people each empty a full bucket of water onto a campfire at the same moment, and either bucket alone may have been enough to put out the fire. Which bucket "caused" the fire to go out?
 
 For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter.
-
-## Towers, Pyramids, Cathedrals, Bazaars
-
-Data scientists work in a variety of different organizational contexts, with different structures and workflows. These different contexts are particularly relevant to the "reporting" stage of the data science lifecycle, as discussed in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md), which involves actively contributing to the larger organization.
-
-Still, before a data science project reaches the reporting stage, it is worth considering what kind of contributions will be expected at that stage, and how those expectations might shape work at other stages.
-
-This chapter suggests data science work as contributing to the DIKW pyramid, however, it has also hinted at limitations of the DIKW pyramid and the possibility of other paradigms for knowledge creation.
-
-TK [@raymond_cathedral_bazaar_1999]
-
-* cathedral - central planning, construct based on the blueprint, often for worship
-* pyramid - one layer at a time, construct what can be supported. Also tombs/monuments.
-* bazaar - public view, exploratory, invite feedback and community contribution
-* tower/ziggurats - restricted access (?), solid mass, purpose was...
-
-::: {#fig-escher-tower-of-babel}
-<img src="../../assets/art/escher_tower_of_babel_1928.jpg" alt="M.C. Escher's woodcut Tower of Babel (1928), depicting the unfinished biblical tower viewed from above, with tiny figures working on terraces." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
-
-M.C. Escher, *Tower of Babel* (1928). Woodcut. [Source](https://en.wikipedia.org/wiki/File:Babel-escher.jpg)
-:::
-
-::: {#fig-bruegel-tower-of-babel}
-<img src="../../assets/art/bruegel_tower_of_babel_1563.jpg" alt="Pieter Bruegel the Elder's oil painting The Tower of Babel (c. 1563), showing the vast unfinished spiral tower rising against a clouded sky, with workers and machinery at its base." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
-
-Pieter Bruegel the Elder, *The Tower of Babel* (c. 1563). Oil on panel. Kunsthistorisches Museum, Vienna. [Source](https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_(Vienna)_-_Google_Art_Project_-_edited.jpg)
-:::
-
-::: {#fig-rozsda-tower-of-babel}
-<img src="../../assets/art/rozsda_tower_of_babel_1958.jpg" alt="Endre Rozsda's 1958 painting La tour de Babel, a dense, fragmented composition in warm ochres and reds evoking accumulated layers of human history and industry." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
-
-Endre Rozsda, *La tour de Babel* (1958). [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). [Source](https://commons.wikimedia.org/wiki/File:Endre_Rozsda_-_La_tour_de_Babel_(1958).jpg)
-:::
-
-::: {#fig-pococke-pyramid-section}
-<img src="../../assets/art/pococke_great_pyramid_section_1743.jpg" alt="Richard Pococke's 1743 engraving showing a cross-sectional diagram of the interior passages and chambers of the Great Pyramid, and below it a frontal view of the head of the Great Sphinx." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
-
-Richard Pococke, *A Section of the Great Pyramid, and a View of the Head of the Sphynx* (1743). Engraving from *A Description of the East* (London: W. Bowyer, 1743–1745). [Source](https://commons.wikimedia.org/wiki/File:A_Section_of_the_Great_Pyramid,_and_a_View_of_the_Head_of_the_Sphynx_-_Pococke_Richard_-_1743.jpg)
-:::
-
-::: {#fig-monet-rouen-cathedral}
-<img src="../../assets/art/monet_rouen_cathedral_1894.jpg" alt="Claude Monet's 1894 painting of Rouen Cathedral's west facade in sunlight, rendered in thick impasto strokes of gold, cream, and blue-grey that dissolve the stone surface into light and atmosphere." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
-
-Claude Monet, *Rouen Cathedral, West Facade, Sunlight* (1894). Oil on canvas. National Gallery of Art, Washington, D.C. [Source](https://commons.wikimedia.org/wiki/File:Claude_Monet_-_Rouen_Cathedral,_West_Facade,_Sunlight.jpg)
-:::
-
-::: {#fig-mahane-yehuda-market}
-<img src="../../assets/art/mahane_yehuda_market_2018.jpg" alt="Photograph of Mahane Yehuda market in Jerusalem, showing vendors and shoppers along a covered lane lined with stalls of produce, spices, and goods." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
-
-Emilio García, *Mahane Yehuda* (2018). Photograph of Mahane Yehuda Market, Jerusalem. [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). [Source](https://commons.wikimedia.org/wiki/File:Mahane_Yehuda_(I)_(45298221191).jpg)
-:::
 
 ## References
 

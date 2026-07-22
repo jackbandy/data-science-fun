@@ -1,5 +1,21 @@
 # Art Attribution and Licensing
 
+## Hanabusa Itchō (Public Domain)
+
+Itchō died in 1724. This 1888 woodblock print reproduction is a faithful photographic reproduction of a public-domain, two-dimensional work of art, so it carries no separate copyright.
+
+### Itchō Files
+
+1. **itcho_blind_monks_examining_elephant_1888.jpg**
+   - Title: Blind Monks Examining an Elephant (衆瞽探象之圖)
+   - Artist: Hanabusa Itchō (1652–1724)
+   - Date: 1888 woodblock print reproduction
+   - Dimensions: 4,030 × 2,920 pixels (3.1 MB)
+   - Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Blind_monks_examining_an_elephant.jpg)
+   - License: Public Domain
+
+---
+
 ## Wassily Kandinsky (Public Domain)
 
 All Kandinsky works are in the public domain. Kandinsky died in 1944, and his works qualify for public domain protection (in most jurisdictions: life + 80 years or fewer).
@@ -275,6 +291,21 @@ Magritte died in 1967. This work was first published in 1929; US copyright rules
    - Dimensions: 2560 × 1918 pixels (135 KB)
    - Source: [LACMA Collections](https://collections.lacma.org/object/31931)
    - License: Public Domain in the United States (published before 1930); still under copyright in Belgium/EU until 2037
+
+---
+
+## Royal Belgian Football Association / adidas (Copyrighted — used under fair use)
+
+Unlike the other works in this folder, this file is a **copyrighted commercial photograph**, not public domain. It is included here for editorial/commentary purposes in a non-commercial course slide deck, discussing the jersey's design as a direct homage to Magritte's *The Treachery of Images*. It should not be reused outside that context without separate permission.
+
+### Jersey Files
+
+1. **belgium_2026_away_jersey_collar_tag.jpg**
+   - Subject: Belgium national team 2026 World Cup away jersey, collar detail reading "Ceci n'est pas un maillot" ("This is not a jersey")
+   - Designer: adidas, in collaboration with the Royal Belgian Football Association
+   - Dimensions: 1820 × 1125 pixels (golden-ratio crop, center-cropped from the original 2000 × 1125; 194 KB)
+   - Source: [Hyperallergic, "Belgium's Magritte-Inspired Soccer Jersey Mirrors a Surreal World Cup"](https://hyperallergic.com/belgiums-magritte-inspired-soccer-jersey-mirrors-a-surreal-world-cup/)
+   - License: Copyrighted (adidas / Royal Belgian FA); used here under fair use for non-commercial educational commentary
 
 ---
 

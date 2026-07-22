@@ -42,7 +42,7 @@ It uses techniques from [**computer science**]{style="color:#c0392b;"} and [**st
 ::::
 
 :::: {.column width="48%"}
-<img src="../assets/week1-intro-data-science/venn-rgb.svg" alt="Venn diagram: computer science, math and statistics, and domain knowledge overlapping at data science" style="max-height:350px; width:auto; max-width:100%; display:block; margin:0 auto;">
+<img src="../assets/data-science-venn/data_science_venn_remix_v2.svg" alt="Venn diagram with three overlapping circles labeled Hacking Skills, Math and Statistics Knowledge, and Substantive Expertise. Their intersections are labeled Machine Learning, Traditional Research, and Danger Zone, with Data Science at the center." style="max-height:350px; width:auto; max-width:100%; display:block; margin:0 auto;">
 ::::
 
 :::: {.column width="26%"}
@@ -56,6 +56,74 @@ It uses techniques from [**computer science**]{style="color:#c0392b;"} and [**st
 ::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
 Source: Drew Conway, The Data Science Venn Diagram (2010)
 :::
+
+---
+
+# What is Data Science? {.image-frame-slide}
+
+<img src="../assets/week1-intro-data-science/venn-rgb.svg" alt="Venn diagram: computer science, math and statistics, and domain knowledge overlapping at data science">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+Source: Drew Conway, [The Data Science Venn Diagram](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram) (2010)
+:::
+
+---
+
+# A Data Science Elephant? {.image-frame-slide}
+
+<img src="../assets/art/itcho_blind_monks_examining_elephant_1888.jpg" alt="Blind monks examining an elephant, each touching a different part and describing it differently, a 1888 woodblock print reproduction of a work by Hanabusa Itchō">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Hanabusa Itchō, *Blind Monks Examining an Elephant* (1888 woodblock print reproduction), public domain. [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Blind_monks_examining_an_elephant.jpg).
+:::
+
+---
+
+# My Take: The Data Science Elephantidae
+
+::::: {.columns}
+
+:::: {.column width="44%"}
+::: {.incremental}
+- Data scientists often define the field by the part they touched
+- **Elephantidae**: biological family that includes elephants, mammoths, mastodons
+- Data science as a "family" of related methods, topics, questions
+:::
+::::
+
+:::: {.column width="52%"}
+<img src="../assets/phylogeny/elephantidae-cladogram.svg" alt="Cladogram of Elephantidae within Proboscidea, showing Loxodonta and Palaeoloxodon as sister genera, and Mammuthus and Elephas as sister genera" style="max-height:600px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy).
+:::
+::::
+
+:::::
+
+---
+
+# My Take: The Data Science Elephantidae
+
+::::: {.columns}
+
+:::: {.column width="44%"}
+::: {.incremental}
+- The family runs deeper than any one member
+- Data scientists do not have a monopoly on knowledge 
+- We are in a much larger ecosystem!
+:::
+::::
+
+:::: {.column width="52%"}
+<img src="../assets/phylogeny/elephantidae-cladogram.svg" alt="Cladogram of Elephantidae within Proboscidea, showing Loxodonta and Palaeoloxodon as sister genera, and Mammuthus and Elephas as sister genera" style="max-height:600px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy).
+:::
+::::
+
+:::::
 
 ---
 
@@ -73,7 +141,7 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 :::
 
 ::: {style="text-align:center; margin-top:0.6em; font-size:0.7em;"}
-**Data science is how we turn that flood into answers and insights**
+**Data science can help turn the flood of data into information and knowledge**
 :::
 
 ::::
@@ -340,9 +408,46 @@ $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 
 ---
 
+# The Treachery of Images {.section-header}
+
+---
+
+# This is not a jersey {.image-frame-slide}
+
+<img src="../assets/art/belgium_2026_away_jersey_collar_tag.jpg" alt="Collar of Belgium's 2026 World Cup away jersey, reading 'Ceci n'est pas un maillot' (This is not a jersey), designed by adidas with the Royal Belgian Football Association as a tribute to Magritte">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+Belgium's 2026 World Cup away jersey, "Ceci n'est pas un maillot." Photo via [Hyperallergic](https://hyperallergic.com/belgiums-magritte-inspired-soccer-jersey-mirrors-a-surreal-world-cup/).
+:::
+
+---
+
+# This is not a pipe {.image-frame-slide}
+
+<img src="../assets/art/magritte_treachery_of_images_1929.webp" alt="René Magritte's painting of a pipe with the caption 'Ceci n'est pas une pipe' (This is not a pipe)">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+René Magritte, *The Treachery of Images* (1929). [LACMA Collections](https://collections.lacma.org/object/31931).
+:::
+
+---
+
+# This is not a triangle {.image-frame-slide}
+
+<img src="../assets/triangles/00-triangle-best.svg" alt="An equilateral triangle on a golden-ratio canvas">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+An equilateral triangle — or is it? See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/01-working-toward-wisdom.html).
+:::
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week1.md>.
-2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
-3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/), [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the [Berkeley DS 100 team](https://ds100.org/), [Marine Carpuat](https://www.cs.umd.edu/~marine/), and [Brian Ziebart](https://cs.uic.edu/profiles/brian-ziebart).
+3. [Elda Shatro](https://github.com/eldashatro4) contributed to these slides.
+4. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+5. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+6. *The Treachery of Images* (1929) by René Magritte, courtesy of [LACMA Collections](https://collections.lacma.org/object/31931); public domain in the United States.
+7. Belgium 2026 World Cup away jersey by adidas and the Royal Belgian Football Association, photo via [Hyperallergic](https://hyperallergic.com/belgiums-magritte-inspired-soccer-jersey-mirrors-a-surreal-world-cup/); used under fair use for educational commentary.
