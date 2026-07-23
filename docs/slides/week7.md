@@ -34,6 +34,41 @@ Placeholder content for Week 7.
 
 ---
 
+# The Trouble With p < .05 {.section-header}
+
+---
+
+# p-Hacking: A Peculiar Prevalence
+
+*Placeholder — to be developed.*
+
+- p-values should be smoothly distributed
+- Instead, there is a suspicious pile-up of values *just below* .05 [@masicampo2012]
+- researcher degrees of freedom
+- selective reporting
+
+---
+
+# Many Analysts, One Data Set
+
+*Placeholder — to be developed.*
+
+- 29 teams, same data, same question: does skin tone predict red cards? [@silberzahn2018]
+- analytic choices alone produced varying effect estimates
+- for pre-registration and transparent reporting
+
+---
+
+# Remember the elephant? {.image-frame-slide}
+
+<img src="../assets/art/itcho_blind_monks_examining_elephant_1888.jpg" alt="Blind monks examining an elephant, each touching a different part and describing it differently, a 1888 woodblock print reproduction of a work by Hanabusa Itchō">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Hanabusa Itchō, *Blind Monks Examining an Elephant* (1888 woodblock print reproduction), public domain. [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Blind_monks_examining_an_elephant.jpg).
+:::
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week7.md>.

@@ -12,25 +12,27 @@ Reports, decisions, and solutions, in the context of the data science lifecycle.
 
 A data scientist may do a lot of work by themselves. Even a data science *team* may work within an organization for extended periods of time, and not interact with other teams.
 
-But eventually, data science projects usually involve some kind of communication to the outside world. The reference textbook calls this phase of the lifecycle "reports, decisions, and solutions," and it usually requires the data scientist(s) to share results in some way.
+But eventually, any valuable data science project will involve some kind of communication to the outside world. The reference textbook calls this phase of the lifecycle "reports, decisions, and solutions," and it usually requires the data scientist(s) to share results in some way.
 
 For example, data scientists may often be asked to develop and/or analyze "key performance indicators" (KPIs) for an organization. KPIs (or simply "performance indicators") are metrics intended to evaluate progress toward a specific goal, kind of like a grade on a report card.
 
-As another example, a data scientist may be asked to evaluate a specific change or intervention at an organization. "We put more native plants in the ground, did it reduce soil erosion?" When given such a task, data scientists must eventually report back about their findings.
+As another example, a data scientist may be asked to evaluate a specific change or intervention at an organization. "We put more native plants in the ground, did it reduce soil erosion?" "We gave employees a raise, did that boost morale?" When tasked with such questions, data scientists eventually report back about their findings.
 
-This chapter explores some of the ethical considerations in the "reporting" phase of the data science lifecycle. When data scientists are making a specific decision, proposing a solution, or simply reporting about a previous decision/solution, there is vast potential for unintended consequences. In general, data scientists must take care at this phase of the lifecycle in order to avoid what Muller describes as a "tyranny of metrics" [@muller_tyranny_2018] - the overuse and/or misuse of measurement.
+This chapter explores some of the ethical considerations in the "reporting" phase of the data science lifecycle. When data scientists are making a specific decision, proposing a solution, or simply reporting about a previous decision/solution, there is vast potential for unintended consequences. In general, data scientists must take care at this phase of the lifecycle in order to avoid what Muller describes as a "tyranny of metrics" [@muller_tyranny_2018] - the overuse and/or misuse of measurement to justify certain decisions or behaviors.
 
-This is especially important when predictive systems are used to shape what people see, how resources are allocated, or which options are made available. In that sense, every prediction is an intervention: a forecast does not merely describe the future, but can help bring about the future it predicts [@veliz2026prophecy].
+This is especially important when predictive systems are used to shape the messages people see, how resources are allocated, and/or which choices are offered to people. In that sense, every prediction is an intervention: a forecast does not merely describe the future, but can help bring about the future it predicts [@veliz2026prophecy].
 
 ## Measuring What?
 
-We will start exploring the ethics of reporting with a concrete example of college rankings.
+To ground this chapter, we will start exploring the ethics of reporting with a concrete example of college rankings.
 
 ### Example: College Rankings
 
-Cathy O'Neil's book, *Weapons of Math Destruction* [@oneil_weapons_2017], sets up an excellent case study around college rankings.
+Cathy O'Neil's book, *Weapons of Math Destruction* [@oneil_weapons_2017], describes a compelling case study of metrics around college rankings.
 
-What makes a good college? Beginning in 1988, U.S. News & World Report tried to answer this question using data. (footnote: notably, this was a deliberate attempt to save the magazine, which had been struggling financially. In 1983, they decided ranking 1,800 colleges and universities in the U.S. could provide a useful resource for millions of young people).
+The U.S. News & World Report began with a straightforward question: what makes a good college, and how can we measure it? Notably, this was a deliberate attempt to save the U.S. News & World Report magazine, which had been struggling financially. In 1983, they realized that a ranking of 1,800 colleges and universities in the U.S. could be a valuable resource for millions of parents and high-schoolers approaching college decisions. I
+
+So, beginning in 1988, U.S. News & World Report tried using data to 
 
 This led to a trap. U.S. News & World Report could only develop their rankings based on measurable data. This may seem obvious, and many of the metrics seem like good proxies for what makes a good school:
 
@@ -40,13 +42,14 @@ This led to a trap. U.S. News & World Report could only develop their rankings b
 * percentage of freshmen who make it to sophomore year
 * percentage of freshman who graduate
 
-But consider what is left out of these metrics:
+But consider some of the aspects of life which are left out of these metrics:
 
 * a picnic table in shady spot on campus
 * a fun intramural ultimate frisbee league
 * a Friday night lecture series with free cookies
 * a professor who recognizes you and waves hello on campus
 * easy access to a nearby park
+* ergonomic chairs in the library for long study periods
 * a ten-minute walk to get a frozen dessert
 
 ### Measurement Scales
@@ -213,9 +216,17 @@ The father's announcement adds no new *visible* fact — every child could alrea
 
 TK
 
-* (Another spot to draw on Deirdre McCloskey, i.e. statistical/economic arguments being rhetorical acts; obligations when persuading with models, metrics, etc.)
-
 test citations for communicating data with attention to emotion, embodiment, and audience - *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
+
+### Researcher Degrees of Freedom
+
+TK
+
+* many small choices shape the result
+* same data, different analysts, different conclusions [@silberzahn2018]
+* p-hacking definition
+* p-values pile up suspiciously just below .05 [@masicampo2012]
+* other fingerprints of p-hacking
 
 ### Retractions and Corrections
 
