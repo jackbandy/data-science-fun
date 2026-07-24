@@ -17,6 +17,7 @@ Miscellaneous topics:
 Miscellaneous exercise ideas:
 * data diorama
 * de-anonymization challenge
+* competition to estimate voter turnout
 * portfolio piece - interactive data explainer / data story
 
 What is included in data science?
@@ -165,18 +166,36 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 
 ### Elemental Confounds / Causal Inference
 * https://www.youtube.com/watch?v=lGR7D45Ww38&list=PLDcUM9US4XdNOlqSyhe38US8mFgmqzI14&index=6
+* Make DAGS for structural causal models
+* "Correlation is common"
+	* Waffle House / Divorce example, other spurious correlations
+* Confounding: "anything that confuses you about causation"
+	* can be omitted and/or included variables
+* good and bad heuristics
+* "sometimes negative examples are just as useful as positive examples"
+* goal is to make transparent causal assumptions, "use logic to derive their consequences"
+	* result will be a well-justified estimator
+* Sewell Wright 1920 - statistical genetics - path diagrams (the original DAGs)
+* "How can we analyze data as if it were from a randomized experiment?" (When there was actually no experiment)
+	* Need to understand why experiments work anyway
+* Rules of d-separation (direction separation)
+* Four elemental confounds: fork, pipe, collider, descendant
+* Fork
+	* "once I know Z, there is nothing X and Y can tell us, because all the information in X and Y come from Z"
+	* example: marriage rate and divorce rate as X and Y. In Waffle House locations / divorce example, Z is the median age of marriage.
+	* interrupt the fork by stratifying (can be categorical or parametric)
+* simulating interventions - manipulating the generative model
+	* "playing god" - remove everything else that influences a variable, and influence it ourselves
+	* total interventions vs soft interventions
+* 
 
 ## Misc. TODO
 
 * Check overflow on slide templates (i.e. spilling into footer).
 * clean up ipynb headers
 * check mobile slide rendering (low-priority)
-* Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the
-  deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can
-  download the code from the slides.
-* Validate CI notebook rendering and post-processing: push a change to a Python
-  slide deck and confirm (a) the `.ipynb` is regenerated, (b) `postprocess_slides.py`
-  runs on it, and (c) unchanged decks reuse their cached notebooks without re-rendering.
+* Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can download the code from the slides.
+* Validate CI notebook rendering and post-processing: push a change to a Python slide deck and confirm (a) the `.ipynb` is regenerated, (b) `postprocess_slides.py` runs on it, and (c) unchanged decks reuse their cached notebooks without re-rendering.
 * another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
 	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
 * ethics in data science mini-book - preregistration process - before "understanding"
@@ -195,13 +214,11 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 
 ## Etc.
 
-
 [Data Scientist: The Sexiest Job of the 21st Century](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century)
 
 Study to reproduce: [Did Taylor Swift kill a bunch of people?](https://statmodeling.stat.columbia.edu/2026/04/21/did-taylor-swift-kill-a-bunch-of-people/)
 
 Taller men more likely to be married? https://www.economist.com/graphic-detail/2026/06/19/the-deceptive-rise-of-the-short-king
-
 
 Data Science Origins? John Tukey's 1962 work, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
 
