@@ -37,7 +37,7 @@ When relevant, I have also written the chapters to align with some of the ACM Da
 | Identify and address bias in data and models | [Ethics in Understanding](04-ethics-in-understanding.md) |
 | Communicate the limitations and uncertainty of analyses to non-technical audiences | [Ethics in Reporting Decisions & Solutions](05-ethics-in-reporting-decisions-solutions.md) |
 
-This is not the only book to include these topics and competencies, and it is definitely not the only book to discuss ethics in data science more broadly. Many of the topics discussed in the book have been described elsewhere, in books and articles and essays which often serve as source material. These sources include:
+This is not the only book to include these topics and competencies, and it is definitely not the only book to discuss ethics in data science more broadly. Many of the topics discussed in the book have been described elsewhere, in books and articles and essays which often serve as source material. These sources include (but are not limited to):
 
 * Alberto Cairo, *How Charts Lie* [@cairo_how_charts_lie_2019]
 * Catherine D'Ignazio and Lauren Klein, *Data Feminism* [@dignazio_klein_data_feminism_2020]
@@ -48,8 +48,8 @@ This is not the only book to include these topics and competencies, and it is de
 * Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton, "Data science ethics" in *Modern Data Science with R* [@baumer_kaplan_horton_data_science_ethics_2021]
 * Rachel Thomas, *Practical Data Ethics* [@thomas_practical_data_ethics_2020]
 
-Still, what is intended to be distinctly useful about this book is its explicit alignment with the "data science lifecycle" from *Learning Data Science* [@lau_learning_2023], as well as its alignment with ACM competencies. When combined, the lifecycle model and the ACM competencies offer a helpful way to organize the wide array of ethical questions, dilemmas, and decisions that arise in data science work.
+Still, what is intended to be distinctly useful about this book is its alignment with the "data science lifecycle" from *Learning Data Science* [@lau_learning_2023], as well as its alignment with ACM competencies. Especially when combined, the lifecycle model and the ACM competencies offer a helpful way to organize the wide array of topics and methods that arise in the vast body of activity we call data science work.
 
-Before exploring the details of these lifecycle stages through [Ethics in Asking Questions](02-ethics-in-asking-questions.md), [Ethics in Obtaining Data](03-ethics-in-obtaining-data.md), [Ethics in Understanding](04-ethics-in-understanding.md), and [Ethics in Reporting Decisions & Solutions](05-ethics-in-reporting-decisions-solutions.md), I have taken the liberty to include a framing chapter, [Working Toward Wisdom](01-working-toward-wisdom.md), which zooms out and considers a somewhat audacious question: why are we doing any of this at all?
+Before exploring ethical implications of these lifecycle stages and competencies through [Ethics in Asking Questions](02-ethics-in-asking-questions.md), [Ethics in Obtaining Data](03-ethics-in-obtaining-data.md), [Ethics in Understanding](04-ethics-in-understanding.md), and [Ethics in Reporting Decisions & Solutions](05-ethics-in-reporting-decisions-solutions.md), I have taken the liberty to include a framing chapter, [Working Toward Wisdom](01-working-toward-wisdom.md), which zooms out and considers a somewhat audacious question: why are we doing any of this at all?
 
 ## References

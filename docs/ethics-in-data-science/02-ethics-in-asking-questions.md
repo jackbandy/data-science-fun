@@ -26,13 +26,21 @@ In educational contexts, we appreciate all questions. The only bad question, as 
 
 [@sep-questions]
 
-## What "asking questions" includes
+## Where Questions Come From
 
-The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible entrypoints into the lifecycle - the other being "obtain data." In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," which also begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter.
+The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible entry-points into the lifecycle (the other being "obtain data"). In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," which also begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt also suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter.
+
+The data science lifecycle may start with asking a question, but not every question makes it through the full lifecycle. If you ask the score of a tennis match, or the current time, or the temperature outside, or someone's name, you will not proceed through the lifecycle as exhaustively as you would to answer other questions.
+
+So, how do we know when a question is well-suited for the data science lifecycle? On the one hand, you can never be certain. That is one reason why the "Ask a question" step of the lifecycle includes four arrows pointing to it: other steps in the lifecycle can often lead data scientists to revise their original question and begin the process anew.
+
+On the other had, as data scientists learn from experience, there are some checks and heuristics that can help identify the kinds of questions which make for good data science.
+
+In *The Craft of Research*, Wayne Booth observes that 'not with a big question that attracts everyone in a field, but with a mental itch about a small question that only a single researcher wants to scratch
 
 More TK.
 
-## Some Types of questions
+## Basic Types of Questions
 | Question Type | Description | Example | Answers |
 | --- | --- | --- | --- |
 | "Whether" | Presents a finite number of direct answers. May be yes-or-no questions, or questions that name two or more possible direct answers. | Was there a quorum at the meeting? | a. There was a quorum at the meeting.<br>b. There was no quorum at the meeting. |
@@ -58,7 +66,8 @@ Below are some examples of presuppositions associated with example questions, as
 | Why do the planets move in elliptical orbits with the sun at one focus? | a. The gravitational pull of the sun causes the planets to move in elliptical orbits. | The planets do move in elliptical orbits with the sun at one focus. |
 
 
-## Naïve questions
+## Common Pitfalls
+### Naïve questions
 
 * naïve about a particular context/setting
 * can reveal assumptions that "experts" have stopped considering
@@ -66,14 +75,14 @@ Below are some examples of presuppositions associated with example questions, as
 	* increase specificity
 	* incorporate established knowledge
 
-## Ill-phrased questions
+### Ill-phrased questions
 
 * terms, scope, or possible answers unclear.
 * may include a loaded presupposition or judgment (e.g. "Why did the new policy fail?")
 * "Are students doing better this year?" - which students, compared with when, and according to which measure of "better."
 * empirical question can be separate from judgment, to some extent (?)
 
-## Leading questions
+### Leading questions
 
 * usually implies a preferred answer
 	* e.g. "everything tasting good over here?"
@@ -83,13 +92,13 @@ Below are some examples of presuppositions associated with example questions, as
 * might actually be good to be more naïve
 	* ask as if you knew less
 
-## Tedious questions
+### Tedious questions
 
 * effort required to answer a question may be disproportional to what the answer would teach us.
 * measurable details are not always meaningful
 * triangle/pixel example from first chapter
 
-## Invasive questions
+### Invasive questions
 
 If a potential employer were to ask my weight during a job interview, it would be inappropriate. However, when I visit the Department of Motor Vehicles (DMV) to obtain my driver’s license, I am required to provide an answer. I have consented to the requirements of the system if I wish to obtain their permission to drive cars in the state (i.e. to get my driver's license).
 
@@ -129,18 +138,18 @@ TK
 * What can and cannot (should/should not) be predicted?
 * Whose perspective(s) may be missing?
 
+## Test
 
-## This is the hard part
+Test citations for question framing, rhetoric, and situated perspectives: the Stanford Encyclopedia overview of questions [@sep-questions] and *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
+
+## This is actually the hard part
 
 > "In my opinion, the social sciences are the hard sciences" (Michael Shermer)
 >
 > [@shermer_mind_market_2008]
 
-TK
+Crafting a high-quality research question for the data science lifecycle can be unexpectedly difficult and time-consuming.
 
-## Test
-
-Test citations for question framing, rhetoric, and situated perspectives: the Stanford Encyclopedia overview of questions [@sep-questions] and *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
 
 
 
