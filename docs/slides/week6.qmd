@@ -882,7 +882,20 @@ So far, the date was essentially the model. But ridership responds to factors (d
 
 ---
 
-# A Simple Causal DAG for Ridership {.image-frame-slide}
+# Moving Toward Causality {.section-header}
+
+---
+
+# Causality Example: What Influences CTA Ridership? {.image-frame-slide}
+
+Say we want to estimate how many people will go through the UIC-Halsted station on a given date. What would you want to know?
+
+<img src="../assets/confounds/ridership-unknown-causes.svg" alt="Four blue circles, each labeled with a question mark, with arrows pointing to a box labeled Ridership." style="max-height: 420px; margin-top: 18px;">
+
+
+---
+
+# Causality Example: A Simple DAG for Ridership {.image-frame-slide}
 
 ```{python}
 #| echo: false
@@ -917,7 +930,7 @@ plt.tight_layout()
 
 ---
 
-# A Causal DAG for Ridership
+# Causality Example: Indirect Causes of Ridership
 
 What drives daily ridership at a station? Not always directly — some causes work through **intermediate factors**.
 
@@ -933,7 +946,7 @@ What drives daily ridership at a station? Not always directly — some causes wo
 ---
 
 
-# A Hierarchical Causal DAG for Ridership {.image-frame-slide}
+# Causality Example: A Hierarchical DAG for Ridership {.image-frame-slide}
 
 ```{python}
 #| echo: false
@@ -985,6 +998,91 @@ plt.tight_layout()
 
 ---
 
+# The Elemental Confounds
+
+For now, just know what they are (we will look at workflow implications soon).
+
+::: {.incremental}
+- **Fork** — $Z$ causes both: $X \leftarrow Z \rightarrow Y$
+- **Pipe** — $Z$ passes the effect along: $X \rightarrow Z \rightarrow Y$
+- **Collider** — $Z$ is caused by both: $X \rightarrow Z \leftarrow Y$
+- **Descendant** — $Z$ causes something else we measured
+:::
+
+
+---
+
+# The Fork {.split}
+
+:::: {.split-content}
+
+::: {}
+$Z$ causes $X$ **and** it causes $Y$.
+
+- So $X$ and $Y$ move together, even though neither one causes the other
+- More Waffle Houses, more divorces
+- More ice cream consumption, more drownings
+	- Both increase during the summer
+:::
+
+<img src="../assets/confounds/fork.svg" alt="Fork DAG: Z at the top with arrows pointing down to X on the left and Y on the right. Z is filled dark to mark the variable to split the data by.">
+
+::::
+
+---
+
+# The Pipe {.split}
+
+:::: {.split-content}
+
+::: {}
+$X$ causes $Z$, and $Z$ causes $Y$ ($Z$ is the step in between)
+
+- E.g. Weekday → students on campus → ridership
+- Hold "students on campus" fixed and the weekday looks like it does nothing
+:::
+
+<img src="../assets/confounds/pipe.svg" alt="Pipe DAG: X points to Z, which points to Y, in a horizontal chain. Z is filled dark to mark the in-between step.">
+
+::::
+
+---
+
+# The Collider {.split}
+
+:::: {.split-content}
+
+::: {}
+$X$ and $Y$ both cause $Z$ (the arrows crash into it)
+
+- $X$ and $Y$ have nothing to do with each other
+- E.g. analyzing nly the grants that got funded, only applicants who got hired
+:::
+
+<img src="../assets/confounds/collider.svg" alt="Collider DAG: X on the left and Y on the right both point up to Z. Z is filled orange to warn against splitting the data by it.">
+
+::::
+
+
+---
+
+# The Descendant {.split}
+
+:::: {.split-content}
+
+::: {}
+$D$ doesn't cause anything, it's just a **side effect** of $Z$.
+
+- Using $D$ is a bit like using $Z$, since $D$ carries *some* of $Z$'s information
+- Like a watered-down version of whatever $Z$ would have done
+:::
+
+<img src="../assets/confounds/descendant.svg" alt="Descendant DAG: X points to Z, which points to Y; Z also points down to D. Z is filled dark and D is filled orange.">
+
+::::
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week6.qmd>.
@@ -994,9 +1092,11 @@ plt.tight_layout()
    - Dataset in R's base `datasets` package: [`AirPassengers`](https://rdrr.io/r/datasets/AirPassengers.html) — official R documentation with column definitions and citation
    - Rdatasets mirror (CSV download): https://vincentarelbundock.github.io/Rdatasets/doc/datasets/AirPassengers.html
 4. CTA ridership data: [Chicago Data Portal — CTA Ridership: Station Entries — Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-Station-Entries-Daily-Totals/5neh-572f).
-5. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
-6. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-7. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+5. Four elemental confounds: Richard McElreath, *Statistical Rethinking: A Bayesian Course with Examples in R and Stan*, 2nd ed. (CRC Press, 2020), ch. 6 — and the [Statistical Rethinking 2026 lecture series](https://github.com/rmcelreath/stat_rethinking_2026).
+6. W. Jake Thompson, [*Statistical Rethinking: Solutions (2nd ed.) — Ch. 6, The Haunted DAG & The Causal Terror*](https://sr2-solutions.wjakethompson.com/causes-confounds-colliders).
+7. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+8. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+9. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
 
 
 
