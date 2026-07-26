@@ -133,16 +133,24 @@ h2 {
 }
 
 .sign-detail a,
-.sources a {
+.sources a,
+.sources-note a {
   color: #f9461c;
   text-decoration: none;
   border-bottom: 1px solid #f9461c;
 }
 
 .sign-detail a:hover,
-.sources a:hover {
+.sources a:hover,
+.sources-note a:hover {
   color: #c83214;
   border-bottom-color: #c83214;
+}
+
+/* Trailing note under a `.sources` list */
+.sources-note {
+  max-width: var(--home-panel-width);
+  margin-top: 1.4rem;
 }
 
 footer {
