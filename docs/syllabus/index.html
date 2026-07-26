@@ -1,95 +1,64 @@
 <!DOCTYPE html>
+<!-- NOTICE: This file modified by an LLM coding system on 2026-07-26. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CS 418 Syllabus</title>
   <style>
-html, body {
-  font-family: "Theinhardt", Arial, sans-serif;
-  font-size: 11pt;
-  line-height: 1.35;
-}
+    html, body {
+      font-family: "Theinhardt", Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.35;
+    }
+    body {
+      margin: 1in auto;
+      max-width: 8.5in;
+    }
+    body::before {
+      content: "WORK IN PROGRESS";
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-28deg);
+      font-size: 4.5rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(0, 0, 0, 0.08);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 0;
+    }
+    body > * { position: relative; z-index: 1; }
 
-body {
-  margin: 1in auto;
-  max-width: 8.5in;
-}
+    h1, h2 { font-family: "Theinhardt", Arial, sans-serif; }
+    h1 {
+      font-size: 14pt;
+      font-weight: 700;
+      padding: 10px 12px;
+      background: rgb(200, 200, 200);
+      border: 1px solid #000;
+      margin: 1.0em 0 0.7em 0;
+    }
+    h2 {
+      font-size: 12pt;
+      font-weight: 700;
+      margin: 0.9em 0 0.35em 0;
+    }
+    ul, ol { padding-left: 1.25em; }
+    .underline { text-decoration: underline; }
+    table th:nth-child(2),
+    table td:nth-child(2) { min-width: 6.6em; }
 
-h1, h2, h3 {
-  font-family: "Theinhardt", Arial, sans-serif;
-}
-
-h1 {
-  font-size: 18pt;
-  margin: 0 0 0.5em 0;
-  text-align: center;
-}
-
-/* Center the blurb immediately under the title (Markdown `h1` + paragraph). */
-h1 + p {
-  text-align: center;
-}
-
-h2 {
-  font-size: 14pt;
-  font-weight: 700;
-  padding: 10px 12px;
-  background: rgb(200, 200, 200);
-  border: 1px solid #000;
-  margin: 1.0em 0 0.7em 0;
-}
-
-h3 {
-  font-size: 12pt;
-  font-weight: 700;
-  margin: 0.9em 0 0.35em 0;
-}
-
-ul, ol {
-  padding-left: 1.25em;
-}
-
-.underline {
-  text-decoration: underline;
-}
-
-body::before {
-  content: "WORK IN PROGRESS";
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-28deg);
-  font-size: 4.5rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(0, 0, 0, 0.08);
-  pointer-events: none;
-  white-space: nowrap;
-  z-index: 0;
-}
-
-body > * {
-  position: relative;
-  z-index: 1;
-}
-
-table th:nth-child(2),
-table td:nth-child(2) {
-  min-width: 6.6em;
-}
-
+    header { text-align: center; }
+    header .course-title { font-size: 18pt; font-weight: 700; margin: 0 0 0.5em 0; }
     .syllabus-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       margin: 0 0 1.25rem 0;
     }
-    .syllabus-logo img {
-      height: 22px;
-      width: auto;
-      display: block;
-    }
+    .syllabus-logo img { height: 22px; width: auto; display: block; }
     .syllabus-meta {
       font-size: 0.75rem;
       color: #999;
@@ -97,6 +66,8 @@ table td:nth-child(2) {
       white-space: nowrap;
     }
     .syllabus-meta a { color: inherit; }
+    .draft-note { margin: 0 0 1rem 0; text-align: center; font-size: 0.75rem; color: #999; }
+    .site-link { margin: 0 0 1rem 0; text-align: center; font-size: 0.85rem; }
   </style>
 </head>
 <body>
@@ -106,19 +77,22 @@ table td:nth-child(2) {
     <img src="../assets/branding/uic-black-logo.svg" alt="UIC logo">
   </div>
   <div class="syllabus-meta">
-    This version created 06/07/2026,
-13:42 &nbsp;&nbsp; <a href="https://dodatascience.fun/syllabus/syllabus.pdf">Click here for PDF version</a>
+    This version created 07/26/2026,
+15:57 &nbsp;&nbsp; <a href="https://dodatascience.fun/syllabus/syllabus.pdf">Click here for PDF version</a>
   </div>
 </div>
 
-<p style="margin:0 0 1rem 0; text-align:center; font-size:0.75rem; color:#999;"><strong>WORK IN PROGRESS</strong> - draft syllabus subject to revision</p>
-<p style="margin:0 0 1rem 0; text-align:center; font-size:0.85rem;"><a href="https://dodatascience.fun">Back to course website</a></p>
+<p class="draft-note"><strong>WORK IN PROGRESS</strong> - draft syllabus subject to revision</p>
+<p class="site-link"><a href="https://dodatascience.fun">Back to course website</a></p>
 
-<h1 id="introduction-to-data-science-cs-418">Introduction to Data
-Science (CS 418)</h1>
-<p style="text-align:center;"><strong>UIC College of Engineering</strong>, 3 Undergraduate Hours, 4 graduate hours</p>
-<h2 id="i.-instructor-course-details">I. Instructor &amp; Course
-Details</h2>
+<header>
+  <p class="course-title">Introduction to Data Science (CS 418)</p>
+  <p><strong>UIC College of Engineering</strong>, 3 Undergraduate Hours,
+4 graduate hours</p>
+</header>
+
+<h1 id="i.-instructor-course-details">I. Instructor &amp; Course
+Details</h1>
 <p><strong><u>Jack Bandy</u></strong></p>
 <p>Email address: jxb@uic.edu</p>
 <p>Drop-In Office Hours (in-person or virtual): TK</p>
@@ -144,7 +118,7 @@ href="mailto:LTS@uic.edu"><u>LTS@uic.edu</u></a>.</p>
 <p>CRN: 44033</p>
 <p>Schedule Type: Lecture</p>
 <p>Instructional Method: Meet on campus</p>
-<h2 id="ii.-course-information">II. Course Information</h2>
+<h1 id="ii.-course-information">II. Course Information</h1>
 <p><strong><u>Catalog Course Description and Prerequisite/corequisite
 Statement</u></strong></p>
 <p>Provides an in-depth overview of data science in engineering. Topics
@@ -157,14 +131,14 @@ STAT 381 or IE 342 or ECE 341.</p>
 <p>Course materials and assignments can be complex and challenging, but
 they are crucial to your intellectual and personal growth and
 development. There are times you may need extra help.</p>
-<h3 id="course-goals-and-learning-outcomes"><u>Course Goals and Learning
-Outcomes</u></h3>
+<h2 id="course-goals-and-learning-outcomes"><u>Course Goals and Learning
+Outcomes</u></h2>
 <ul>
 <li>Learning outcome 1</li>
 <li>Learning outcome 2</li>
 <li>Learning outcome 3</li>
 </ul>
-<h3 id="course-topics"><u>Course Topics</u></h3>
+<h2 id="course-topics"><u>Course Topics</u></h2>
 <ul>
 <li>Course introduction, statistics review, and the data science
 lifecycle</li>
@@ -180,10 +154,10 @@ design, communication, and critique</li>
 <li>Recommendation systems and A/B testing</li>
 <li>Network analysis, graphs, relationships, and network measures</li>
 </ul>
-<h2 id="iii.-course-policies-classroom-expectations">III. Course
-Policies &amp; Classroom Expectations</h2>
-<h3 id="grading-policy-and-point-breakdown"><u>Grading Policy and Point
-Breakdown</u></h3>
+<h1 id="iii.-course-policies-classroom-expectations">III. Course
+Policies &amp; Classroom Expectations</h1>
+<h2 id="grading-policy-and-point-breakdown"><u>Grading Policy and Point
+Breakdown</u></h2>
 <p>Explain how you are going to measure student progress towards the
 achievement of your course goals and learning objectives. Be explicit in
 describing the way in which students will be evaluated, and be clear in
@@ -197,15 +171,15 @@ the grading scale used for the course.</p>
 <p><em>Adapted from the <a
 href="https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/">UIC
 CATE syllabus template</a>.</em></p>
-<h3 id="policy-for-missed-or-late-work"><u>Policy for Missed or Late
-Work</u></h3>
+<h2 id="policy-for-missed-or-late-work"><u>Policy for Missed or Late
+Work</u></h2>
 <p>Clearly communicate the consequences of late or missing assignments,
 as well as the policy for missed exams.</p>
 <p><em>Adapted from the <a
 href="https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/">UIC
 CATE syllabus template</a>.</em></p>
-<h3 id="attendance-participation-policy"><u>Attendance / Participation
-Policy</u></h3>
+<h2 id="attendance-participation-policy"><u>Attendance / Participation
+Policy</u></h2>
 <p>The activities we do during class are essential to your learning in
 this course, so you should make every effort to attend all class
 meetings and to arrive to class on time. I recognize, however, that
@@ -225,8 +199,8 @@ how you can best fulfill the course requirements.</p>
 <p><em>Adapted from the <a
 href="https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/">UIC
 CATE syllabus template</a>.</em></p>
-<h2 id="iv.-course-schedule">IV. Course Schedule</h2>
-<h3 id="weekly-schedule"><u>Weekly Schedule</u></h3>
+<h1 id="iv.-course-schedule">IV. Course Schedule</h1>
+<h2 id="weekly-schedule"><u>Weekly Schedule</u></h2>
 <!-- SCHEDULE_MARKDOWN_START -->
 <table>
 <colgroup>
@@ -463,9 +437,9 @@ measures</td>
 </tbody>
 </table>
 <!-- SCHEDULE_MARKDOWN_END -->
-<h2 id="v.-accommodations">V. Accommodations</h2>
-<h3 id="disability-accommodation-procedures"><u>Disability Accommodation
-Procedures</u></h3>
+<h1 id="v.-accommodations">V. Accommodations</h1>
+<h2 id="disability-accommodation-procedures"><u>Disability Accommodation
+Procedures</u></h2>
 <p>UIC is committed to full inclusion and participation of people with
 disabilities in all aspects of university life. If you face or
 anticipate disability-related barriers while at UIC, you should connect
@@ -481,7 +455,7 @@ accommodations.</p>
 <p><em>Adapted from the <a
 href="https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/">UIC
 CATE syllabus template</a>.</em></p>
-<h3 id="religious-accommodations"><u>Religious Accommodations</u></h3>
+<h2 id="religious-accommodations"><u>Religious Accommodations</u></h2>
 <p>I will make every effort to avoid scheduling exams or requiring
 student projects be submitted on religious holidays. If you wish to
 observe your religious holidays, please notify me by the tenth day of
@@ -497,8 +471,8 @@ religious accommodations.</p>
 <p><em>Adapted from the <a
 href="https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/">UIC
 CATE syllabus template</a>.</em></p>
-<h2 id="vi.-classroom-environment">VI. Classroom Environment</h2>
-<h3 id="inclusive-community"><u>Inclusive Community</u></h3>
+<h1 id="vi.-classroom-environment">VI. Classroom Environment</h1>
+<h2 id="inclusive-community"><u>Inclusive Community</u></h2>
 <p>At UIC we expect all members of this class to contribute to a
 respectful, welcoming, and inclusive environment for every other member
 of our class. If there are aspects of the instruction or design of this

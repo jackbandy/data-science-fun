@@ -1,24 +1,11 @@
 ---
 title: "CS 418 Syllabus"
+course-title: "Introduction to Data Science (CS 418)"
+college: "UIC College of Engineering"
+credit-hours: "3 Undergraduate Hours, 4 graduate hours"
 ---
 
-```{=latex}
-\newcounter{none}
-```
-
-# Introduction to Data Science (CS 418)
-
-```{=latex}
-\begin{center}
-\textbf{UIC College of Engineering}, 3 Undergraduate Hours, 4 graduate hours
-\end{center}
-```
-
-```{=html}
-<p style="text-align:center;"><strong>UIC College of Engineering</strong>, 3 Undergraduate Hours, 4 graduate hours</p>
-```
-
-## I. Instructor & Course Details
+# I. Instructor & Course Details
 
 **[Jack Bandy]{.underline}**
 
@@ -66,7 +53,7 @@ Schedule Type: Lecture
 Instructional Method: Meet on campus
 
 
-## II. Course Information
+# II. Course Information
 
 **[Catalog Course Description and Prerequisite/corequisite Statement]{.underline}**
 
@@ -79,13 +66,13 @@ Provides an in-depth overview of data science in engineering. Topics include mod
 
 Course materials and assignments can be complex and challenging, but they are crucial to your intellectual and personal growth and development. There are times you may need extra help.
 
-### [Course Goals and Learning Outcomes]{.underline}
+## [Course Goals and Learning Outcomes]{.underline}
 
 - Learning outcome 1
 - Learning outcome 2
 - Learning outcome 3
 
-### [Course Topics]{.underline}
+## [Course Topics]{.underline}
 
 - Course introduction, statistics review, and the data science lifecycle
 - Python foundations, dataframes, Polars, and obtaining data
@@ -99,9 +86,9 @@ Course materials and assignments can be complex and challenging, but they are cr
 - Recommendation systems and A/B testing
 - Network analysis, graphs, relationships, and network measures
 
-## III. Course Policies & Classroom Expectations
+# III. Course Policies & Classroom Expectations
 
-### [Grading Policy and Point Breakdown]{.underline}
+## [Grading Policy and Point Breakdown]{.underline}
 
 Explain how you are going to measure student progress towards the achievement of your course goals and learning objectives. Be explicit in describing the way in which students will be evaluated, and be clear in describing how grades will be determined so that students always know where they stand at any time during the semester and do not feel that grading is done arbitrarily. Provide a breakdown of points or percentage of total points possible for each assignment.
 
@@ -109,13 +96,13 @@ Provide an outline of assignments and the associated number of points or percent
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
-### [Policy for Missed or Late Work]{.underline}
+## [Policy for Missed or Late Work]{.underline}
 
 Clearly communicate the consequences of late or missing assignments, as well as the policy for missed exams.
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
-### [Attendance / Participation Policy]{.underline}
+## [Attendance / Participation Policy]{.underline}
 
 The activities we do during class are essential to your learning in this course, so you should make every effort to attend all class meetings and to arrive to class on time. I recognize, however, that illness, personal emergencies, university obligations, religious observances, and other circumstances may sometimes cause you to be late to class or prevent your attendance entirely.
 
@@ -123,9 +110,9 @@ Because active participation in the course is one of the most important ways to 
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
-## IV. Course Schedule
+# IV. Course Schedule
 
-### [Weekly Schedule]{.underline}
+## [Weekly Schedule]{.underline}
 
 <!-- SCHEDULE_MARKDOWN_START -->
 | Week | Class Day | Topic | Before Class | In Class |
@@ -162,23 +149,23 @@ Because active participation in the course is one of the most important ways to 
 | 15 | Wednesday | Presentations |  |  |
 <!-- SCHEDULE_MARKDOWN_END -->
 
-## V. Accommodations
+# V. Accommodations
 
-### [Disability Accommodation Procedures]{.underline}
+## [Disability Accommodation Procedures]{.underline}
 
 UIC is committed to full inclusion and participation of people with disabilities in all aspects of university life. If you face or anticipate disability-related barriers while at UIC, you should connect with the Disability Resource Center (DRC) at drc.uic.edu, drc@uic.edu, or at (312) 413-2183 to create a plan for reasonable accommodations. In order to receive accommodations, you will need to disclose the disability to the DRC, complete an interactive registration process with the DRC, and provide me with a Letter of Accommodation (LOA). Letters of Accommodations can be presented at any point of the semester and, unless otherwise noted, do not expire once obtained. Upon receipt of an LOA, I will gladly work with you and the DRC to implement approved accommodations.
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
-### [Religious Accommodations]{.underline}
+## [Religious Accommodations]{.underline}
 
 I will make every effort to avoid scheduling exams or requiring student projects be submitted on religious holidays. If you wish to observe your religious holidays, please notify me by the tenth day of the semester of the date when you will be absent unless the religious holiday is observed on or before the tenth day of the semester. In such cases, please notify me at least five days in advance of the date when you will be absent. I will make every reasonable effort to honor your request and not penalize you for missing the class. If an examination or project is due during your absence, you will be given an exam or assignment equivalent to the one completed by those students in attendance. Students may appeal through campus grievance procedures for religious accommodations.
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
-## VI. Classroom Environment
+# VI. Classroom Environment
 
-### [Inclusive Community]{.underline}
+## [Inclusive Community]{.underline}
 
 At UIC we expect all members of this class to contribute to a respectful, welcoming, and inclusive environment for every other member of our class. If there are aspects of the instruction or design of this course that result in barriers to your inclusion, engagement, accurate assessment or achievement, please notify me as soon as possible.
 

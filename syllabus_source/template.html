@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- NOTICE: This file modified by an LLM coding system on 2026-07-26. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>$if(title)$$title$$else$Syllabus$endif$</title>
+  <style>
+    html, body {
+      font-family: "Theinhardt", Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.35;
+    }
+    body {
+      margin: 1in auto;
+      max-width: 8.5in;
+    }
+    body::before {
+      content: "WORK IN PROGRESS";
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-28deg);
+      font-size: 4.5rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(0, 0, 0, 0.08);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 0;
+    }
+    body > * { position: relative; z-index: 1; }
+
+    h1, h2 { font-family: "Theinhardt", Arial, sans-serif; }
+    h1 {
+      font-size: 14pt;
+      font-weight: 700;
+      padding: 10px 12px;
+      background: rgb(200, 200, 200);
+      border: 1px solid #000;
+      margin: 1.0em 0 0.7em 0;
+    }
+    h2 {
+      font-size: 12pt;
+      font-weight: 700;
+      margin: 0.9em 0 0.35em 0;
+    }
+    ul, ol { padding-left: 1.25em; }
+    .underline { text-decoration: underline; }
+    table th:nth-child(2),
+    table td:nth-child(2) { min-width: 6.6em; }
+
+    header { text-align: center; }
+    header .course-title { font-size: 18pt; font-weight: 700; margin: 0 0 0.5em 0; }
+    .syllabus-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 0 0 1.25rem 0;
+    }
+    .syllabus-logo img { height: 22px; width: auto; display: block; }
+    .syllabus-meta {
+      font-size: 0.75rem;
+      color: #999;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .syllabus-meta a { color: inherit; }
+    .draft-note { margin: 0 0 1rem 0; text-align: center; font-size: 0.75rem; color: #999; }
+    .site-link { margin: 0 0 1rem 0; text-align: center; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+<div class="syllabus-top">
+  <div class="syllabus-logo">
+    <img src="../assets/branding/uic-black-logo.svg" alt="UIC logo">
+  </div>
+  <div class="syllabus-meta">
+    This version created $created$ &nbsp;&nbsp; <a href="https://dodatascience.fun/syllabus/syllabus.pdf">Click here for PDF version</a>
+  </div>
+</div>
+
+<p class="draft-note"><strong>WORK IN PROGRESS</strong> - draft syllabus subject to revision</p>
+<p class="site-link"><a href="https://dodatascience.fun">Back to course website</a></p>
+
+<header>
+  <p class="course-title">$course-title$</p>
+  <p><strong>$college$</strong>, $credit-hours$</p>
+</header>
+
+$body$
+
+</body>
+</html>
