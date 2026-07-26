@@ -132,7 +132,6 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
 - How can we perform data wrangling?
   1. Discover and address quality issues
   2. Reshape data into the structure your analysis needs
-  3. Filter down to the rows and columns that matter
   4. Add new information to existing datasets (data augmentation)
   5. Verify accuracy and consistency in the dataset
 
@@ -142,24 +141,25 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
 
 # Discover and address quality issues {.smaller}
 
-Find the problems in the raw data before they bias your results.
+Find issues in the raw data before they bias the dataset result.
 
 :::: {.columns}
 
 ::: {.column width="55%"}
 
-::: {.incremental}
 - **Missing values** — nulls, `NaN`, or disguised blanks like `"N/A"`, `-999`
 - **Duplicates** — the same row or entity recorded more than once
 - **Inconsistent formatting** — `"IL"` vs `"Illinois"`, `mm/dd/yyyy` vs `yyyy/dd/mm`
 - **Wrong data types** — numbers or dates stored as strings
-- **Structure issues** - mixed units: miles vs km
+- **Structure issues** — mixed units, e.g. miles vs km
 - **Invalid values** — impossible entries such as age = 350
-:::
 :::
 
 ::: {.column width="45%"}
-<table style="border-collapse:collapse; margin:0.4em auto 0; font-size:0.62em;">
+
+<p class="code-caption" style="margin-bottom:0.4em;">Raw data often looks like this:</p>
+
+<table style="border-collapse:collapse; margin:0.2em auto 0; font-size:0.62em;">
 <tr>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">id</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">age</td>
@@ -172,18 +172,18 @@ Find the problems in the raw data before they bias your results.
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">2</td>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">NaN</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 16px; text-align:center;">NaN</td>
 <td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Naperville</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">2</td>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">NaN</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 16px; text-align:center;">NaN</td>
 <td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Naperville</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">3</td>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">350</td>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">N/A</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 16px; text-align:center;">350</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 16px; text-align:center;">N/A</td>
 </tr>
 </table>
 
@@ -191,8 +191,305 @@ Find the problems in the raw data before they bias your results.
 
 ::::
 
+Pandas: `df.info()`, `df.isna().sum()`, `df.duplicated().sum()`, and `df.describe()`.
 
-Using Pandas:  df.info(), df.isna().sum(), df.duplicated().sum(), and df.describe().
+---
+
+# Reshape data into the structure your analysis needs {.smaller}
+
+Rearrange rows and columns until the table matches what your analysis needs.
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+- **Tidy data** — one row per observation, one column per variable
+- **Wide → long** — collapse many columns into key/value pairs with df.melt()
+- **Long → wide** — spread one column back out into many with df.pivot()
+- **Combine tables** — stack rows with pd.concat(), match on keys with pd.merge()
+- **Rename and reindex** — clean column names, set an index, sort the rows
+:::
+
+::: {.column width="45%"}
+
+<p style="margin:0 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">Wide format</p>
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.55em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">2023</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">2024</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">30</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">34</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">2</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">41</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">45</td>
+</tr>
+</table>
+
+<p style="margin:0.9em 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">Long format</p>
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.55em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">year</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">value</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">2023</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">30</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">2024</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">34</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">2</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">2023</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">41</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">2</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">2024</td>
+<td style="border:2px solid #f9461c; padding:5px 18px; text-align:center;">45</td>
+</tr>
+</table>
+:::
+
+::::
+
+Pandas: `df.melt()`, `df.pivot()`, `pd.concat()`, and `pd.merge()`.
+
+---
+
+# Add new information to existing datasets {.smaller}
+
+To improve model optimization and analyzability of the dataset we can use **data augumentation**.
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+- **Derived columns** — compute from what you already have, e.g. speed from miles and hours (df.assign())
+- **Binning** — classify numeric data into categories based on the ranges you specify (pd.cut())
+- **External joins** — attach weather, census, or geographic data on a shared key (pd.merge())
+- **Group features** — add a group's summary statistic onto each of its rows (df.groupby().transform())
+- **Encoding** — convert text variables into numerical columns of 0s and 1s, model-ready (pd.get_dummies())
+:::
+
+::: {.column width="45%"}
+
+<p style="margin:0 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">Raw dataset</p>
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.5em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">trip</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">driver</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">city</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">miles</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">hours</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Kevin</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Chicago</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">12</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">0.5</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">2</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Kevin</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Naperville</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">30</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">0.6</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">3</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Yuseph</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Chicago</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">8</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">0.4</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">4</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Yuseph</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Naperville</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">45</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">0.9</td>
+</tr>
+</table>
+
+<p style="margin:1.1em 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">Population<span style="font-weight:400; font-family:monospace; font-size:0.9em; color:#666;"></span></p>
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.5em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 14px; text-align:center;">city</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 14px; text-align:center;">population</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 14px; text-align:center;">Chicago</td>
+<td style="border:2px solid #f9461c; padding:5px 14px; text-align:center;">~2.73</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 14px; text-align:center;">Naperville</td>
+<td style="border:2px solid #f9461c; padding:5px 14px; text-align:center;">~0.15</td>
+</tr>
+</table>
+
+<p class="code-caption" style="margin-top:0.6em;"></p>
+
+:::
+
+::::
+
+---
+
+# Example of application
+
+<table style="border-collapse:collapse; margin:0.6em auto 0; font-size:0.42em;">
+<tr>
+<td colspan="4"></td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">df.assign()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">pd.cut()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">pd.merge()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">.transform()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">get_dummies()</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">trip</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">driver</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">miles</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">hours</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">mph</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">distance</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">population</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">driver_avg</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">Naperville</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Kevin</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">12</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.5</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">24.0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">short</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">2.70</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">16.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">2</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Kevin</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">31</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.7</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">44.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">long</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0.15</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">16.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">1</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">3</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Yuseph</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">8</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.4</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">20.0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">short</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">2.70</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">26.5</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">4</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Yuseph</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">45</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.9</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">50.0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">long</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0.15</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">26.5</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">1</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">5</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Kevin</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">6</td>
+<td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">20.0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">short</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">2.70</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">16.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0</td>
+</tr>
+</table>
+
+Why do we need to perform *data augmentation* in a dataset?
+
+::: {.incremental}
+- Improve machine learning models
+-  Reduce overfitting and model robustness
+-  Correct imbalenced dataset
+:::
+
+---
+
+# Verify accuracy and consistency in the dataset {.smaller}
+
+Useful techniques to verify accuracy and consistency:
+
+::: {.incremental}
+- Range and format checks
+- Consistency checks
+- Cross-field logic
+- Statistical analysis
+:::
+
+---
+
+# Data Filtering {.section-header}
+
+---
+
+# Data Filtering {.smaller}
+
+Data filtering is part of the data wrangling process, but it answers a different question: is this data relevant to my analysis?
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Keep rows that satisfy a condition** — a comparison returns True/False for every row
+- **Select only the columns you need** - based on the question that you raising for the analysis
+- **Combine multiple conditions** — you can combine multiple variable with AND or OR
+- **Smaller data, clearer analysis**
+:::
+
+::: {.column width="58%"}
+```python
+# rows that satisfy a condition
+df[df["miles"] > 15]
+
+# multiple conditions — parenthesize each one
+df[(df["miles"] > 15) & (df["hours"] < 1)]
+
+# only the columns you need
+df[["trip", "driver", "miles"]]
+
+# .loc[] takes rows and columns together
+df.loc[df["miles"] > 15, ["trip", "miles"]]
+
+# .query() reads like the sentence you meant
+df.query("miles > 15 and hours < 1")
+```
+:::
+
+::::
 
 ---
 

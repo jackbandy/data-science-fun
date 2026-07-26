@@ -44,7 +44,6 @@ Placeholder content for Week 4.
 # Why Exploratory Data Analysis matters?
 
 ::: {.incremental}
-- Detect anomalies such as missing values, null values and outliers
 - Identify trends patterns 
 - Discover relationship between variables
 - Test underlying assumptions
@@ -57,7 +56,7 @@ Placeholder content for Week 4.
 - The steps of exploratory data analysis are:
   1. Data Collection and Loading (setting up your environment)
   2. Summary Statistics (*describe()* using pandas)
-  3. Hadling anomalies (e.g missing data)
+  3. Handling anomalies (e.g missing data)
   4) Understanding the shape of the data 
   5) Detecting outliers
   6) Correlation Analysis
