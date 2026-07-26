@@ -4,11 +4,18 @@
 # by direct link; course materials just won't surface in search yet.
 #
 # TO GO LIVE FOR FALL 2026: delete the "Disallow: /" line below to open the
-# whole site to crawlers.
+# site to crawlers. Leave the /assets/ rule in place — it is meant to outlive
+# the pre-launch block.
+#
+# ASSETS: /assets/ holds figures, fonts, and images, some of them third-party
+# material reproduced for course use (e.g. ACM figures under
+# assets/lifecycle/). Keeping crawlers out avoids those being indexed,
+# thumbnailed, or swept into training corpora as if they were ours.
 
 User-agent: *
 Allow: /$
 Allow: /index.html
+Disallow: /assets/
 Disallow: /
 
 Sitemap: https://dodatascience.fun/sitemap.xml

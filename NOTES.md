@@ -21,6 +21,14 @@ Miscellaneous exercise ideas:
 * portfolio piece - interactive data explainer / data story
 
 What is included in data science?
+
+ACM resources on scoping the field:
+* ACM Data Science Task Force, [Computing Competencies for Undergraduate Data Science Curricula](https://dstf.acm.org/DSTF_Final_Report.pdf) (Jan. 2021) — the ACM Education Board's answer to "what parts of data science are computing's contribution." Eleven core computing Knowledge Areas
+  * Earlier drafts + conference outreach slides (SIGCSE, ITiCSE, JSM) at https://dstf.acm.org/
+* Longbing Cao, [Data Science: A Comprehensive Overview](https://doi.org/10.1145/3076253), *ACM Computing Surveys* 50(3), 2017 — survey
+	* Longbing Cao, [Data Science: Challenges and Directions](https://doi.org/10.1145/3015456), *Communications of the ACM* 60(8), 2017 — shorter, more classroom-friendly version
+* Victoria Stodden, [The Data Science Life Cycle: A Disciplined Approach to Advancing Data Science as a Science](https://doi.org/10.1145/3360646), *Communications of the ACM* 63(7), 2020 
+
 Learning DS Textbook:
 * Data science life cycle
   * ask questions, obtain data, understand data, understand world
@@ -193,12 +201,12 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 
 * Check overflow on slide templates (i.e. spilling into footer).
 * clean up ipynb headers
-* check mobile slide rendering (low-priority)
 * Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can download the code from the slides.
 * Validate CI notebook rendering and post-processing: push a change to a Python slide deck and confirm (a) the `.ipynb` is regenerated, (b) `postprocess_slides.py` runs on it, and (c) unchanged decks reuse their cached notebooks without re-rendering.
 * another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
 	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
 * ethics in data science mini-book - preregistration process - before "understanding"
+* check mobile slide rendering (low-priority)
 
 
 ## Running examples
@@ -211,6 +219,7 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 	* which movies have they seen
 * which book(s)/article(s) to read next
 * population dynamics: births, marriages, deaths, etc.
+* "is it safe to release this data to the public?"
 
 ## Etc.
 
@@ -220,8 +229,8 @@ Study to reproduce: [Did Taylor Swift kill a bunch of people?](https://statmodel
 
 Taller men more likely to be married? https://www.economist.com/graphic-detail/2026/06/19/the-deceptive-rise-of-the-short-king
 
-Data Science Origins? John Tukey's 1962 work, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
+Data Science Origins?
+
+John Tukey's 1962 work, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
 
 https://cs.uic.edu/undergraduate/data-science-major/
-
-"Is this data safe to release?"
