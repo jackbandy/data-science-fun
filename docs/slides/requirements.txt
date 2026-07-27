@@ -3,6 +3,8 @@ nbformat
 numpy
 polars
 seaborn
+plotnine
+pyarrow
 matplotlib<3.9
 statsmodels
 networkx

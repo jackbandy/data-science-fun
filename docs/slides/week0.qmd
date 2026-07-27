@@ -30,6 +30,10 @@ CS 418 · Week 0 · 🟠 Harold Washington Library 🟠
 
 ---
 
+# Common Slide Templates {.section-header}
+
+---
+
 # Content Slide
 
 Testing content slide.
@@ -40,6 +44,20 @@ Testing content slide.
 - Test quote
 
 > "The greatest value of a picture is when it forces us to notice what we never expected to see." — John Tukey
+
+---
+
+# Tukey on Pictures {.quote-slide}
+
+> The greatest value of a picture is when it forces us to notice what we never expected to see.
+
+::: {.attribution}
+John W. Tukey
+:::
+
+::: {.quote-source}
+*Exploratory Data Analysis* (1977), p. vi. The `h1` above is hidden by the theme — it stays in the markdown so the slide still shows up in the outline and slide menu.
+:::
 
 ---
 
@@ -182,6 +200,21 @@ ax.set(
 
 ---
 
+# Figure Only {.figure-slide}
+
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| fig-alt: "Running proportion of water across 500 simulated globe tosses, drawn wide with no code shown, converging toward the dashed line at 0.75"
+fig, ax = plt.subplots(figsize=(10, 4.2))
+ax.plot(running, color="#f9461c")
+ax.axhline(0.75, color="#565a5c", linestyle="--")
+ax.set(xlabel="toss", ylabel="proportion water", ylim=(0, 1));
+```
+
+---
+
 # Text + Figure {.text-figure-slide}
 
 ::: {.columns}
@@ -264,6 +297,12 @@ ax.set(xlabel="water in 9 tosses", ylabel="simulations", xticks=range(10));
 
 ---
 
+# Image Slide {.image-slide}
+
+<img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line with each station marked as a labeled stop">
+
+---
+
 # Image Frame Slide {.image-frame-slide}
 
 <img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line with each station marked as a labeled stop">
@@ -325,6 +364,10 @@ Used to advocate for sanitary reforms in military hospitals.
 
 <iframe src="https://www.uic.edu" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
+::: {.iframe-caption}
+An `.iframe-caption` sits under the embed at small type — use it for a source line or a URL: <https://www.uic.edu>
+:::
+
 ---
 
 # Discussion Template w Timer {.split}
@@ -338,7 +381,7 @@ Used to advocate for sanitary reforms in military hospitals.
 3. Demo question 3
 :::
 
-<iframe src="../timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 520px; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 520px; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
 :::
 
@@ -347,6 +390,11 @@ Used to advocate for sanitary reforms in military hospitals.
 # Sources {.sources}
 
 1. Nightingale, Florence. "Diagram of the causes of mortality in the army in the East." *Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army*, 1858. Image via Wikimedia Commons: <https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg>. Public domain.
-2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
-3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+2. Tukey, John W. *Exploratory Data Analysis*. Addison-Wesley, 1977.
+
+::: {.credits}
+- GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week0.qmd>.
+- Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+- Slide deck built with [Quarto](https://quarto.org/) revealjs.
+- Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+:::

@@ -119,7 +119,49 @@ $code-color: $ink !default;
   .panel-tabset [role="tablist"],
   .panel-tabset [role="tab"][aria-selected="true"] { border-bottom-color: $border; }
 
-  .slide-number-delimiter, .slide-number-b, .image-only h1 { display: none; }
+  .slide-number-delimiter, .slide-number-b, .image-only h1, .quote-slide h1 { display: none; }
+
+  // Full-slide pull quote: one large statement, centered vertically, with the
+  // attribution beneath it. The h1 is kept in the markdown for the outline and
+  // slide menu, then hidden above (same pattern as .image-only).
+  .slides section.quote-slide {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    height: 100% !important;
+    top: 0 !important;
+    box-sizing: border-box;
+    padding: 48px 112px 92px;
+
+    blockquote {
+      border-left: none;
+      border-top: $title-rule solid $orange;
+      padding: 0.5em 0 0;
+      margin: 0;
+      color: $ink;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 2.3rem;
+      line-height: 1.24;
+      p { margin: 0; }
+    }
+
+    .attribution {
+      margin-top: 0.9em;
+      font-size: 0.9rem;
+      color: $muted;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .quote-source {
+      margin-top: 0.6em;
+      font-size: 0.62rem;
+      line-height: 1.45;
+      color: $muted;
+      a { color: $steel; text-decoration: underline; }
+    }
+  }
 
   section.course-title {
     display: flex !important;
@@ -139,7 +181,13 @@ $code-color: $ink !default;
     text-align: center;
     padding: 32px 64px 76px;
     h1 { border-bottom: none; margin: 0 0 16px; }
-    img { max-height: 520px; max-width: 100%; object-fit: contain; }
+    img {
+      max-height: 520px;
+      max-width: 100%;
+      object-fit: contain;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    }
   }
 
   .image-slide p, .image-only p, .split-content > p { margin: 0; }
@@ -184,7 +232,10 @@ $code-color: $ink !default;
   // via the same padding reserve as the image-slide classes.
   // Stacked code-above / figure-below slide. Specificity (0,3,1) ensures
   // padding overrides the base .slides section rule (0,2,1).
-  .slides section.code-figure-slide {
+  // .figure-slide is the same layout for cells with `echo: false`, where the
+  // figure is the only thing under the heading and should fill the slide.
+  .slides section.code-figure-slide,
+  .slides section.figure-slide {
     display: flex !important;
     flex-direction: column;
     height: 100% !important;
@@ -211,6 +262,53 @@ $code-color: $ink !default;
       }
     }
   }
+  // With no code cell above it, center the figure in the leftover height so a
+  // figure whose aspect ratio is narrower than the slide is not top-heavy.
+  .slides section.figure-slide div.cell { justify-content: center; }
+
+  // A setup cell that only defines things produces an empty div.cell. Without
+  // this it would still claim an equal share of the flex height above.
+  .slides section.figure-slide div.cell:not(:has(.cell-output-display)),
+  .slides section.code-figure-slide div.cell:not(:has(.cell-output-display)) {
+    flex: 0 0 auto;
+  }
+
+  // Build-up figures: several rendered versions of the same plot overlaid in an
+  // .r-stack and revealed as fragments, so panels fill in (or layers are added)
+  // without the surrounding layout shifting. Reveal's .r-stack is a grid, so
+  // the flex rules above do not reach the cells inside it.
+  .slides section.figure-slide .r-stack,
+  .slides section.code-figure-slide .r-stack {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    > * {
+      grid-area: 1 / 1;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
+    div.cell {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+      margin: 0;
+    }
+    .cell-output-display { flex: 1; min-height: 0; }
+  }
+
+  // On a .build-slide each fragment is a whole cell — code block plus its
+  // figure — and the code grows a line at a time. Reserving the height of the
+  // longest version keeps the figure below it from jumping between steps.
+  .slides section.build-slide .r-stack div.sourceCode {
+    height: 6.2em;
+    min-height: 6.2em;
+    margin: 0 0 8px;
+    overflow: hidden;
+  }
+
   // Side-by-side code (left) + figure (right) slide, 50/50 default split.
   .slides section.code-figure-side {
     display: flex !important;

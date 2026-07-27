@@ -170,13 +170,13 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 # Our Roadmap
 
-Five things we'll cover:
+Four things we'll cover:
 
 ::: {.incremental}
 1. **Role of statistics in data science**
-3. **Probability**
-4. **Distributions**
-5. **Sampling**
+2. **Probability**
+3. **Distributions**
+4. **Sampling**
 :::
 
 ---
@@ -234,7 +234,7 @@ What is the probability of drawing a blue or red marble on the first draw?
 - **Outcome** — a single possible result of an experiment
 - **Event** — a set of one or more outcomes we care about
 - **Sample space** — the set of all possible outcomes
-- **Complementary events** — are two events that exist such that one event will occur if and only if the other does not take place.
+- **Complementary events** — two events where one occurs if and only if the other does not
 :::
 ---
 

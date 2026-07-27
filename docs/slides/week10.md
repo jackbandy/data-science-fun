@@ -37,7 +37,7 @@ CS 418 · Week 10 · 🟠 Ashland 🟠
 - Use similarity / distance to make groups
 - Goals:
 	- high similarity within clusters (cohesion)
-	- low similarity between cluster (separation)
+	- low similarity between clusters (separation)
 
 ---
 

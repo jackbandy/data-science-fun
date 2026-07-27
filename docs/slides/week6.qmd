@@ -86,7 +86,7 @@ Time series can contextualize (almost) any arbitrary datum
 
 - e.g. "UIC had XXXX graduates last year"
 - e.g. "Chicago's budget grew by $XXmillion last year"
-- e.g. "the mortgate interest rate is X.X%"
+- e.g. "the mortgage interest rate is X.X%"
 - e.g. "XX people have died from the flu this year"
 :::
 
@@ -685,7 +685,7 @@ plt.tight_layout()
     - UIC dips in January, summer, and December
     - the Loop's annual seasonal swing is weaker
 - **History**
-    — Washington/Wabash only opened in **Aug 2017**
+    - Washington/Wabash only opened in **Aug 2017**
     - (replaced Madison/Wabash and Randolph/Wabash)
     - its series is much shorter
 
@@ -697,7 +697,7 @@ plt.tight_layout()
 
 # Forecasting Models: Overview
 
-May be useful when working with more complex, intricate time series.
+May be useful when working with more complex time series.
 
 ::: {.incremental}
 - **AR(p)** — predict from the last *p* observations
@@ -790,7 +790,7 @@ Each posterior draw is one **plausible version of the world**.
 - To predict a new day:
     - push **(weekday, month)** through *every* draw (every version of the world)
 - That gives a **distribution** of outcomes
-    — not just a single number!
+    - not just a single number!
 - The **spread** provides uncertainty
     - only use **mean** if asked 🙂
 - e.g. "how many rides on a *Tuesday in December*?" → let's look!
@@ -1056,7 +1056,7 @@ $X$ causes $Z$, and $Z$ causes $Y$ ($Z$ is the step in between)
 $X$ and $Y$ both cause $Z$ (the arrows crash into it)
 
 - $X$ and $Y$ have nothing to do with each other
-- E.g. analyzing nly the grants that got funded, only applicants who got hired
+- E.g. analyzing only the grants that got funded, only the applicants who got hired
 :::
 
 <img src="../assets/confounds/collider.svg" alt="Collider DAG: X on the left and Y on the right both point up to Z. Z is filled orange to warn against splitting the data by it.">

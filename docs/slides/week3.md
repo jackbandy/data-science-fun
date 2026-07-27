@@ -132,8 +132,8 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
 - How can we perform data wrangling?
   1. Discover and address quality issues
   2. Reshape data into the structure your analysis needs
-  4. Add new information to existing datasets (data augmentation)
-  5. Verify accuracy and consistency in the dataset
+  3. Add new information to existing datasets (data augmentation)
+  4. Verify accuracy and consistency in the dataset
 
 :::
 
@@ -141,7 +141,7 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
 
 # Discover and address quality issues {.smaller}
 
-Find issues in the raw data before they bias the dataset result.
+Find issues in the raw data before they bias your results.
 
 :::: {.columns}
 
@@ -271,7 +271,7 @@ Pandas: `df.melt()`, `df.pivot()`, `pd.concat()`, and `pd.merge()`.
 
 # Add new information to existing datasets {.smaller}
 
-To improve model optimization and analyzability of the dataset we can use **data augumentation**.
+We can add information to a dataset through **data augmentation**.
 
 :::: {.columns}
 
@@ -434,8 +434,8 @@ Why do we need to perform *data augmentation* in a dataset?
 
 ::: {.incremental}
 - Improve machine learning models
--  Reduce overfitting and model robustness
--  Correct imbalenced dataset
+- Reduce overfitting
+- Correct imbalanced datasets
 :::
 
 ---
@@ -465,8 +465,8 @@ Data filtering is part of the data wrangling process, but it answers a different
 
 ::: {.column width="42%"}
 - **Keep rows that satisfy a condition** — a comparison returns True/False for every row
-- **Select only the columns you need** - based on the question that you raising for the analysis
-- **Combine multiple conditions** — you can combine multiple variable with AND or OR
+- **Select only the columns you need** — based on the question you're asking
+- **Combine multiple conditions** — join comparisons with AND or OR
 - **Smaller data, clearer analysis**
 :::
 
@@ -564,7 +564,7 @@ df.query("miles > 15 and hours < 1")
 - Plain-text table: one row per record, one delimiter between fields
 - Often used for spreadsheets, exports, and simple datasets
 - Easy to inspect
-- types and hierarchy are usually implicit
+- Types and hierarchy are usually implicit
 :::
 
 ::: {.column width="58%"}
@@ -638,7 +638,7 @@ Tyler Durden	Paper Street Soap Co.	All Natural Handmade	537 Paper Street	Bradfor
 - Extensible Markup Language
 - Nested tags represent elements and attributes
 - Verbose, but widely used by older document systems
-- E.g. Excel uses xml under the hood
+- E.g. Excel uses XML under the hood
 :::
 
 ::: {.column width="58%"}
