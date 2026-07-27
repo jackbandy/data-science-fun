@@ -23,7 +23,7 @@ A: Good question. I'm planning a Python-forward course, mostly leaning on [Polar
 ---
 
 
-## Paper? Really?
+## Paper
 
 **Q: Why make exercises/notes/etc. handwritten? Shouldn't data science be on a computer?**
 
@@ -60,6 +60,8 @@ A: Various reasons, including: (1) making materials can be fun, (2) I think stud
 **Q: What is data science, exactly?**
 
 A: This is a simple question without a simple answer. At least, I do not yet have a simple answer, but I do appreciate that data science seems to be a "big tent" for many different genres of scholarship. Another version of this question might be, "what is _not_ data science?"
+
+For some reference points, check out the "ethics in data science" mini-book, which has a section on ["Defining Data Science"](ethics-in-data-science/book/07-glossary.html#sec-defining-data-science).
 
 ---
 

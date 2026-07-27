@@ -62,9 +62,11 @@ The U.S. census offers a helpful example of ethical decision-making in the data 
 
 Categories in the 1790 census: free White males 16 and over, free White males under 16, free White females, all other free persons, and slaves.
 
+::: {#fig-census-1790}
 <img src="../../assets/census/1790-massachusetts-printed-schedule.png" alt="Massachusetts printed schedule used in the 1790 census." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-Source: Census Bureau questionnaire page [@census_1790_questionnaire] and National Archives scan hosted by Census.gov [@national_archives_1790_schedule].
+Massachusetts printed schedule used in the 1790 census. Source: Census Bureau questionnaire page [@census_1790_questionnaire] and National Archives scan hosted by Census.gov [@national_archives_1790_schedule].
+:::
 
 ### Census form in 1850
 
@@ -72,9 +74,11 @@ Source: Census Bureau questionnaire page [@census_1790_questionnaire] and Nation
 
 Categories: name, age, sex, color, occupation, value of real estate, birthplace, married within the year, school attendance, literacy, deafness, dumbness, blindness, insanity, idiocy, pauper status, and conviction.
 
+::: {#fig-census-1850}
 <img src="../../assets/census/1850-free-inhabitants-schedule.png" alt="1850 Free Inhabitants schedule." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-Source: Census Bureau questionnaire page [@census_1850_questionnaire] and direct image file from Census.gov [@census_1850_free_inhabitants_image].
+The 1850 Free Inhabitants schedule. Source: Census Bureau questionnaire page [@census_1850_questionnaire] and direct image file from Census.gov [@census_1850_free_inhabitants_image].
+:::
 
 ### Census form in 1940
 
@@ -82,9 +86,11 @@ Source: Census Bureau questionnaire page [@census_1850_questionnaire] and direct
 
 Categories: name, relationship, personal description, residence, birthplace, citizenship, education, employment, occupation, income, veteran status, Social Security, and selected supplemental questions for sample respondents.
 
+::: {#fig-census-1940}
 <img src="../../assets/census/1940-population-questionnaire.png" alt="1940 population questionnaire." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-Source: Census Bureau questionnaire page [@census_1940_questionnaire] and direct PDF from Census.gov [@census_1940_population_pdf].
+The 1940 population questionnaire. Source: Census Bureau questionnaire page [@census_1940_questionnaire] and direct PDF from Census.gov [@census_1940_population_pdf].
+:::
 
 ### Census form in 2020
 
@@ -92,9 +98,11 @@ Source: Census Bureau questionnaire page [@census_1940_questionnaire] and direct
 
 Categories: household count, ownership or tenure, phone number, name, sex, age and date of birth, Hispanic/Latino/Spanish origin, race, relationship, and whether the person usually lives or stays elsewhere.
 
+::: {#fig-census-2020}
 <img src="../../assets/census/2020-informational-questionnaire.png" alt="2020 informational bilingual questionnaire." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color); padding: 10px;" />
 
-Source: Census Bureau questionnaire page [@census_2020_questionnaire] and direct PDF from Census.gov [@census_2020_informational_pdf].
+The 2020 informational bilingual questionnaire. Source: Census Bureau questionnaire page [@census_2020_questionnaire] and direct PDF from Census.gov [@census_2020_informational_pdf].
+:::
 
 Notes from Wikipedia's "Race and ethnicity in the United States census," section "Relation between ethnicity and race in census results" [@wikipedia_race_ethnicity_census]:
 

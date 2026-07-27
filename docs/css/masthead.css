@@ -11,8 +11,15 @@
 }
 
 /* CTA rail line colors are listed in index.css. */
+/* `margin: 0` is load-bearing, not redundant: index.css zeroes it via a `*`
+   reset, but the syllabus has no such reset, so without this the browser's
+   default `hr` margin appears there and the masthead sits lower. Every rule
+   below likewise avoids inheriting from the host page, so the masthead renders
+   identically wherever it is included. */
 .orange-line {
+  box-sizing: border-box;
   border: none;
+  margin: 0;
   height: 12px;
   background-color: #f9461c;
   display: block;
@@ -20,6 +27,7 @@
 }
 
 .site-masthead {
+  box-sizing: border-box;
   max-width: 700px;
   margin: 48px auto;
   padding: 0 24px;
@@ -46,11 +54,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px 28px;
+  margin: 0;
+  padding: 0;
 }
 
 .site-nav a {
   font-family: 'ITC Franklin Gothic', 'Libre Franklin', 'Franklin Gothic', 'Franklin Gothic Medium', Arial, 'Mulish', sans-serif;
-  font-size: 16px;
+  font-size: 19px;
+  line-height: 1.2;
   font-weight: 700;
   letter-spacing: 0.01em;
   color: #555;
@@ -68,9 +79,9 @@
 .site-nav a.is-external::after {
   content: "";
   display: inline-block;
-  width: 11px;
-  height: 11px;
-  margin-left: 4px;
+  width: 13px;
+  height: 13px;
+  margin-left: 5px;
   vertical-align: middle;
   opacity: 0.7;
   background-color: currentColor;

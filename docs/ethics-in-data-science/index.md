@@ -26,7 +26,7 @@ Broadly, the lifecycle stages correspond to the chapters in this book as follows
 | [Understand the Data](https://learningds.org/ch/01/lifecycle_cycle.html) | [4 Ethics in Understanding](04-ethics-in-understanding.md) |
 | [Understand the World](https://learningds.org/ch/01/lifecycle_cycle.html) | [4 Ethics in Understanding](04-ethics-in-understanding.md) |
 | Reports, decisions, solutions| [5 Ethics in Reporting, Decision-Making, and Problem-Solving](05-ethics-in-reporting-decisions-solutions.md) |
-|  | [6 Conclusion and Glossary](06-conclusions.md) |
+|  | [6 Conclusion](06-conclusions.md) |
 :::
 
 

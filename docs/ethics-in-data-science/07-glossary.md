@@ -8,9 +8,76 @@
 
 TK: a running list of terms used throughout the book, with short definitions and pointers to the chapter where each is introduced.
 
-* TK
+Campbell's Law
+: Social indicator metrics become often become corrupt when they are used for high-stakes decision-making. [Source: @campbell1979assessing]
 
-## Defining Data Science
+Common knowledge
+: Shared awareness about what other people know. That is, not just knowing a proposition, but also awareness that others know that proposition too. Often conflated with mutual knowledge. [Source: @sep-common-knowledge]
+
+Consent
+: Permission that is freely given, reversible, informed, enthusiastic, and specific. [Source: @lee_building_consentful_2017]
+
+Data
+: Multiple datum.
+
+Data Science
+: See @sec-defining-data-science.
+
+Data science lifecycle
+: TK
+
+Data triangulation
+: TK
+
+Data visceralization
+: an attempt to make data sensory, bodily, or experientially felt in some way. [Source: @mit_media_lab_dobson_2014; @wernimont_pandemic_death_counts_2022]
+
+Datum
+: A single data point, such as a number or symbol.
+
+Disparate impact
+: TK [@barocas_selbst_big_data_disparate_impact_2016]
+
+Documentation debt
+: TK
+
+Ethics
+: Acting well in the world. [Source: @burton_computing_2023]
+
+Goodhart's Law
+: A measure can stop being a good measure when it becomes a target. [Source: @goodhart1984problems]
+
+Information
+: TK
+
+Knowledge
+: TK
+
+Mutual knowledge
+: A proposition is mutual knowledge among people when each person knows that proposition. [Source: @sep-common-knowledge]
+
+Presupposition
+: A background claim that must be true in order for a question to have a meaningful answer. [Source: @sep-questions]
+
+Proxy
+: TK [@barocas_selbst_big_data_disparate_impact_2016]
+
+Sensitive information
+: TK [@nissenbaum_privacy_contextual_integrity_2004]
+
+Situated knowledge
+: TK [@dignazio_klein_data_feminism_2020]
+
+Tech Debt
+: TK
+
+Wisdom
+: TK
+
+Worldview
+: TK [@taves_worldview_studies_2019; @sep-statistics]
+
+## Defining Data Science {#sec-defining-data-science}
 
 One of the dilemmas I encountered when first working on this course was settling on a basic definition: _what exactly is data science?_ I have compiled some key reference points here, in case they may be useful to others.
 
@@ -18,17 +85,21 @@ Given the plurality of definitions for "data," as well as the plurality of defin
 
 One crucial point is that **data science is more than just the study of data** (or the "science of data").
 
-In a 1991 paper, Michael R. Fellows wrote that "Computer Science is not about machines, in the same way that astronomy is not _about telescopes_" [@fellows_cs_1991]. Computer Science is more about the study of what can be computed, and the various methods which Computer Scientists use to approach related questions (e.g. analysis, design, theory, experimentation).
+In a 1991 paper, Michael R. Fellows wrote that "Computer Science is not about machines, in the same way that astronomy is not _about telescopes_" [@fellows_cs_1991]. Computer Science is more about the study of what can be computed, and the various methods which Computer Scientists use to approach questions about computability (e.g. analysis, design, theory, experimentation).
 
-Similarly, Data Science is about more than just studying data: it necessarily involves such questions as: What are data useful for? What methods allow us to learn from data? What are the limits of learning from data? What exactly is (and/or is not) captured in data? Competent data scientists must be aware of data's limitations, and how these limitations may affect the information and knowledge built on top of data (recall the DIKW pyramid from [Chapter 1](01-working-toward-wisdom.md).
+Similarly, Data Science is about more than just studying data: it necessarily involves such questions as: What are data useful for? What methods allow us to learn from data? What are the limits of learning from data? What exactly is (and/or is not) captured in data? Data scientists must be aware of data's limitations, and how these limitations may affect the information and knowledge built on top of data (recall the DIKW pyramid from [Chapter 1](01-working-toward-wisdom.md).
 
-Here are some approaches to define data science accordingly:
+Here are some approaches to define data science:
 
 - **Vasant Dhar (2013)**: gives a concise, prediction-oriented definition: "data science is the study of the generalizable extraction of knowledge from data" [@dhar_data_science_2013].
 
 - **Drew Conway (2010)** offered a visual definition: the Data Science Venn Diagram, which locates data science at the intersection of _hacking skills_, _math and statistics knowledge_, and _substantive (domain) expertise_ [@conway_venn_2010].
 
-  ![A remix of Drew Conway's Data Science Venn Diagram, showing the intersection of hacking skills, math/statistics knowledge, and domain expertise. Based on [Conway's original blog post](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram).](../assets/data-science-venn/data_science_venn_remix_v2.svg){fig-alt="Venn diagram with three overlapping circles labeled Hacking Skills, Math & Statistics Knowledge, and Substantive Expertise. Their intersections are labeled Machine Learning, Traditional Research, and Danger Zone, with Data Science at the center."}
+  ::: {#fig-data-science-venn}
+  <img src="../../assets/data-science-venn/data_science_venn_remix_v2.svg" alt="Venn diagram with three overlapping circles labeled Hacking Skills, Math &amp; Statistics Knowledge, and Substantive Expertise. Their intersections are labeled Machine Learning, Traditional Research, and Danger Zone, with Data Science at the center." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+  A remix of Drew Conway's Data Science Venn Diagram, showing the intersection of hacking skills, math/statistics knowledge, and domain expertise. Based on [Conway's original blog post](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram).
+  :::
 
 - **Cathy O'Neil and Rachel Schutt (2013)** ask a fun question "can we use data science to define data science?" [@oneil_2013_doing]. They analyze… TK.
 
