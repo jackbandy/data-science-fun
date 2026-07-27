@@ -12,9 +12,9 @@ The data science lifecycle. Although each stage of the lifecycle requires some d
 >
 > -- John Muir, as quoted by the Sierra Club John Muir Exhibit [@wood_john_muir_misquoted]
 
-> "All models are wrong."
+> "Essentially, all models are wrong, but some are useful."
 >
-> -- [George E. P. Box]
+> -- George E. P. Box and Norman R. Draper [@box_draper_empirical_model_building_1987]
 
 > "A map is not the territory it represents, but, if correct, it has a similar structure to the territory, which accounts for its usefulness."
 >
@@ -26,7 +26,19 @@ The data science lifecycle. Although each stage of the lifecycle requires some d
 
 The two previous chapters discussed limits in asking questions and obtaining data, which tend to be the starting points for data science lifecycles. Once equipped with question(s) and data, however limited both may be, the next step is to pursue understanding.
 
-In the ideal lifecycle, data scientists will be able to understand the data in ways that also help them understand the world. This is much easier said than done, for reasons that will be explored in this chapter.
+In the ideal lifecycle, data scientists will be able to understand the data in ways that also help them understand the world. But for reasons that will be explored in this chapter, this is much easier said than done -- "the data" and "the model" and "the world" are often disconnected in surprising ways.
+
+The first reason is the one named in this chapter's epigraph. George Box's 1976 paper "Science and Statistics" put it bluntly: "since all models are wrong the scientist cannot obtain a 'correct' one by excessive elaboration" [@box_science_and_statistics_1976]. The aphorism most people quote comes from a later textbook with Norman Draper: "Essentially, all models are wrong, but some are useful" [@box_draper_empirical_model_building_1987].
+
+[Chapter 1](01-working-toward-wisdom.md) noted that the same holds one level down, before any modeling is done: all *data* are wrong. Data are representations of the real world (or what we call the real world), and a representation is never the thing it represents. Again, we might call this the **treachery of data**, after René Magritte's painting of a pipe over the caption *Ceci n'est pas une pipe* — "This is not a pipe."
+
+::: {#fig-treachery-of-images}
+<img src="../../assets/art/magritte_treachery_of_images_1929.webp" alt="René Magritte's painting of a pipe with the caption 'Ceci n'est pas une pipe' (This is not a pipe)." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+René Magritte, *The Treachery of Images* (1929). The (image of a) painting of a pipe is not itself a pipe, and data are representations of the world, not the world itself. Source: [LACMA Collections](https://collections.lacma.org/object/31931), public domain in the United States.
+:::
+
+This chapter describes how and why data scientists can explore "*which* aspects of the world did some dataset/model capture, which were left out, and how the difference can matter for the questions at hand. The next section explores this through three lessons drawn from a classic puzzle in machine learning: the model is not the world, several models can look equally correct, and a pattern found in data is not a law governing the world.
 
 ## Three Lessons from Michalski's Trains
 
@@ -60,8 +72,7 @@ Different rendering of Michalski's trains, cropped from [@helff_vlol_2023].
 ### Patterns are not Laws
 Overfitting etc.
 
-## What "understanding" includes
-TK.
+## Developing Real Understanding
 
 
 ### Understanding the data
@@ -108,5 +119,7 @@ TK
 ## Test
 
 Test citations for understanding as situated, embodied interpretation: the Sierra Club John Muir Exhibit discussion of a common misquotation [@wood_john_muir_misquoted] and *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
+
+Transition to communication / decisions / reporting.
 
 ## References

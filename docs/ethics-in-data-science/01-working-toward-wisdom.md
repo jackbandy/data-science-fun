@@ -125,15 +125,7 @@ And this is the second point for which our triangle adventure is relevant. The r
 
 Practically, this means competent data scientists will have a strong understanding of data acquisition processes, sampling processes, and how they fit into any conclusions drawn from the data. In short, data scientists will pay attention to data *provenance*.
 
-A strong grasp of provenance leads to a second component of "data science wisdom" discussed further in [Chapter 5](05-ethics-in-reporting-decisions-solutions.md), in the context of George Box's famous aphorism that "all models are wrong, but some are useful."
-
-We can add that all *data* are wrong: all data are merely representations of the real world (or what we call the real world). This might be called the "treachery of data."
-
-::: {#fig-treachery-of-images}
-<img src="../../assets/art/magritte_treachery_of_images_1929.webp" alt="René Magritte's painting of a pipe with the caption 'Ceci n'est pas une pipe' (This is not a pipe)." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
-
-René Magritte, *The Treachery of Images* (1929). The (image of a) painting of a pipe is not itself a pipe, and data are representations of the world, not the world itself. Source: [LACMA Collections](https://collections.lacma.org/object/31931), public domain in the United States.
-:::
+A strong grasp of provenance leads to a second component of "data science wisdom" discussed further in [Chapter 4](04-ethics-in-understanding.md), in the context of George Box's famous aphorism that "all models are wrong, but some are useful" [@box_draper_empirical_model_building_1987]. We can add that all *data* are wrong, too: all data are merely representations of the real world (or what we call the real world). Chapter 4 calls this the "treachery of data."
 
 So, what does the triangle figure have to do with "data science wisdom?" In short, wisdom involves being able to explain why the figure was not *exactly* a perfect triangle. Wisdom requires *understanding the process* of going from subpixels to pixels to (an appearance of) lines to an imperfect representation of a triangle.
 

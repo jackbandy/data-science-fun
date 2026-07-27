@@ -10,17 +10,21 @@ Reports, decisions, and solutions, in the context of the data science lifecycle.
 
 *This chapter is in-progress.*
 
-A data scientist may do a lot of work by themselves. Even a data science *team* may work within an organization for extended periods of time, and not interact with other teams.
+A data scientist may do a lot of work individually. Even a data science *team* may work within an organization for extended periods of time, and not interact with other teams.
 
-But eventually, any valuable data science project will involve some kind of communication to the outside world. The reference textbook calls this phase of the lifecycle "reports, decisions, and solutions," and it usually requires the data scientist(s) to share results in some way.
+But eventually, any valuable data science project will involve some kind of communication to the outside world. The reference textbook, [*Learning Data Science*](https://learningds.org/intro.html), calls this phase of the lifecycle "reports, decisions, and solutions," and it usually requires the data scientist(s) to share results in some way.
 
 For example, data scientists may often be asked to develop and/or analyze "key performance indicators" (KPIs) for an organization. KPIs (or simply "performance indicators") are metrics intended to evaluate progress toward a specific goal, kind of like a grade on a report card.
 
-As another example, a data scientist may be asked to evaluate a specific change or intervention at an organization. "We put more native plants in the ground, did it reduce soil erosion?" "We gave employees a raise, did that boost morale?" When tasked with such questions, data scientists eventually report back about their findings.
+As another example, a data scientist may be asked to evaluate a specific change or intervention at an organization. "We put more native plants in the ground, did it reduce soil erosion?" "We gave employees a raise, did that boost morale?" "We sent a fundraising email, did we get more donations?" When tasked with such questions, data scientists eventually report back about their findings.
 
-This chapter explores some of the ethical considerations in the "reporting" phase of the data science lifecycle. When data scientists are making a specific decision, proposing a solution, or simply reporting about a previous decision/solution, there is vast potential for unintended consequences. In general, data scientists must take care at this phase of the lifecycle in order to avoid what Muller describes as a "tyranny of metrics" [@muller_tyranny_2018] - the overuse and/or misuse of measurement to justify certain decisions or behaviors.
+This chapter explores ethical considerations in the "reporting" phase of the data science lifecycle. It is worth noting importance of this phase: a data scientist might ask a compelling question, obtain high-quality data, perform robust analyses, and develop sound understanding of their data and the world. But without effectively communicating to others, this work is of much less value.
 
-This is especially important when predictive systems are used to shape the messages people see, how resources are allocated, and/or which choices are offered to people. In that sense, every prediction is an intervention: a forecast does not merely describe the future, but can help bring about the future it predicts [@veliz2026prophecy].
+When data scientists are making a specific decision, proposing a solution, or simply communicating about a previous decision/solution, there is vast potential for unintended consequences. In general, data scientists must take care at this phase of the lifecycle in order to avoid what Jerry Z. Muller describes as a "tyranny of metrics" [@muller_tyranny_2018] - the overuse and/or misuse of measurement to justify certain decisions or behaviors.
+
+This is especially important when predictive systems are used to shape people's access to different messages, resources, and choices about their lives. When data scientists at Spotify decide what to include in the annual "Spotify Wrapped" reports, they are actively shaping what people will listen to in the days and weeks after its release. When data scientists at financial organizations model credit risk and report lending thresholds, they are actively shaping how much money people can access. 
+
+In short, every prediction can be an intervention: a forecast does not merely describe the future, but helps bring about the future it predicts [@veliz2026prophecy].
 
 ## Measuring What?
 
@@ -134,10 +138,6 @@ TK
 ### Tech debt and documentation debt
 
 TK
-
-### Prediction as Influence
-
-TK. Cite [@veliz2026prophecy].
 
 ## Towers, Pyramids, Cathedrals, Bazaars
 
@@ -255,10 +255,8 @@ Committee on Publication Ethics (COPE) has guidelines for retractions and correc
 
 Test citation for Retraction Watch [@van_noorden_2011_reality] (public database showing patterns in retraction)
 
-### Test
+### Further Cases
 
-classic studies in dubious data science - Facebook's political mobilization experiment [@bond_social_influence_2012], emotional contagion study [@kramer_emotional_contagion_2014], Target's pregnancy prediction marketing [@duhigg_companies_secrets_2012], Google Flu Trends [@lazer_google_flu_2014]...
-
-test citations for ethical debriefs of the Facebook experiments - the PNAS editorial expression of concern [@verma_editorial_expression_2014], Grimmelmann's letter to the PNAS editor [@grimmelmann_letter_pnas_2014], and later research-ethics analyses [@kahn_learning_2014; @boyd_untangling_2016].
+Several well-known cases bear directly on reporting, decisions, and solutions: Facebook's political mobilization experiment, the emotional contagion study, Target's pregnancy prediction marketing, and Google Flu Trends. These are collected with the rest of the book's case studies in [Appendix C: Famous Case Studies](09-case-studies.md).
 
 ## References

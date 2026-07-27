@@ -1,6 +1,14 @@
-# Appendix {.unnumbered}
+# Glossary
 
 **[← Back to Course Homepage](../../index.html)**
+
+## Key Terms
+
+*This section is in-progress.*
+
+TK: a running list of terms used throughout the book, with short definitions and pointers to the chapter where each is introduced.
+
+* TK
 
 ## Defining Data Science
 
@@ -51,44 +59,14 @@ Elephantidae is a biological family (of the taxonomic order of Proboscidea, the 
 
 For one, it preserves the relevance of the blind men and the elephant, or the elephant in the dark, or whichever version you prefer. The specific part(s) of the elephant which one touches will lead them to a different definition of the data science elephant.
 
-Taking it a step further, data scientists are also often trying to define slightly different species which all belong to a common family - elephantidae. This widening captures the notion of data science as a "big tent" field, or perhaps a post-discipline.
+Taking it a step further, data scientists are also often trying to define slightly different species which all belong to a common family - elephantidae. This captures the notion of data science as a "big tent" field, or perhaps a post-discipline.
 
-And to go just one step further, the elephantidae family includes mammoths and mastodons, which lived about 50,000 years ago during the ice age https://nhmu.utah.edu/articles/mammoths-and-mastodons-made-great-ice-age-team
+And to go just one step further, the elephantidae family includes mammoths and mastodons, which lived about 50,000 years ago during the ice age, alongside massive glaciers https://nhmu.utah.edu/articles/mammoths-and-mastodons-made-great-ice-age-team
 
-Mammoths and mastodons did not actually live directly on glaciers, and in some cases, glaciers actually trapped mammoths and led to their death https://en.wikipedia.org/wiki/Snowmastodon_site but their proximity to icebergs allows me to draw one final point from the elephantidae metaphor: it all goes much deeper. Data science is much larger than one method or one textbook, and even when viewed as a "family" of methods or topics or fields, it is still just one family of scholarship. In other words, data science will only take you so far.
+Mammoths and mastodons did not actually live directly on glaciers, and in some cases, glaciers actually trapped mammoths and led to their death https://en.wikipedia.org/wiki/Snowmastodon_site but their proximity to icebergs allows me to draw one final point from the elephantidae metaphor, which is essentially this: it all goes much deeper. Data science is much larger than one method or one textbook, and even when viewed as a "family" of methods or topics or fields, it is still just one family of scholarship. In other words, the iceberg is very deep, and data science will only take you so far.
 
-Especially when viewed as a family, the data science elephantidae are strong. A mastodon can take us very far, particularly when travleing in herds. At the same time, data scientists may find ourselves surrounded by icebergs. Some icebergs entrap us. Others are too weak or too melted for a mastodon to stand on. And other icebergs may be sturdy enough for herd to cross, and yet, they go far deeper than a mammoth could ever reach or comprehend.
+Especially when viewed as a family, the data science elephantidae are strong. A mastodon can take us very far, particularly when traveling in herds. At the same time, data scientists may find ourselves surrounded by icebergs. Some icebergs entrap us. Others are too weak or too melted for a mastodon to stand on. And other icebergs may be sturdy enough for herd to cross, and yet, they go far deeper than a mammoth could ever reach or comprehend.
 
 In short, data scientists do not have a monopoly on human knowledge, even when viewed as a wide family. We would do well to collaborate with and learn from other families in the vast ecosystems of human knowledge and wisdom.
 
-
-## Overview of Ethical Frameworks
-A thorough introduction to ethical theory is outside the scope of this book. For data scientists, computer scientists, and others seeking such an introduction, I suggest @burton_computing_2023.
-
-This brief appendix is intended as a high-level orientation to three branches of normative ethics which are often viewed as the three main competing views: virtue ethics, deontological ethics, and utilitarian / consequentialist ethics.
-
-### Virtue Ethics
-TK
-* role models / exemplars
-* what is right as what is virtuous
-* table of dimension, excess, golden mean, deficiency
-
-### Deontological Ethics
-
-TK
-* duty
-* deontic square viz
-
-### Utilitarian Ethics
-
-TK
-* trolley viz
-* weigh the consequences
-	* who / what / when / where
-* decision branches / outcomes
-
-### Beyond the "Big Three"
-TK
-* care ethics
-* ubuntu ethics ("I am because we are")
-* 
+## References
