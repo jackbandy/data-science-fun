@@ -8,6 +8,7 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
 - [chicago-movies-in-parks](chicago-movies-in-parks/) — City of Chicago "Movies in the Parks" event listings
 - [chicago-street-names](chicago-street-names/) — Chicago street names with suffix and address range fields
 - [chicago-tall-buildings](chicago-tall-buildings/) — Buildings with 10 or more stories in Chicago
+- [cook-county-home-sales-2025](cook-county-home-sales-2025/) — Residential property sales recorded in Cook County during 2025, de-identified
 - [cta-ridership](cta-ridership/) — CTA annual ridership totals
 - [fake-news-twitter-2016-election](fake-news-twitter-2016-election/) — Replication archive for Vosoughi et al., *Science* 2019 study on fake news spread on Twitter
 - [galton-vox-populi-1907](galton-vox-populi-1907/) — Quantile summary of 787 weight estimates from Galton's 1907 "wisdom of crowds" experiment
