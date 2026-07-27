@@ -36,7 +36,9 @@ data-science-fun/
 
 ## GitHub Actions
 
-Using GitHub Actions workflows for some materials. The goal is to keep things more portable, accessible, and easily editable. This usually means putting "raw content" in a markdown file somewhere, which gets assembled and served automatically any time there is a push.
+My goal is to make materials very portable, accessible, and **easily editable**. This usually means putting "raw content" in a markdown file somewhere, which gets assembled and served automatically any time there is a push (via GitHub Actions workflows).
+
+Although it feels over-engineered in some cases, the setup allows quick editing of slide materials, syllabus text, and/or the mini-book. Simply edit a markdown file, commit/push the changes, and let GitHub handle the rest.
 
 ### Slide build
 
@@ -106,12 +108,14 @@ push to main
 [upload _site/ -> GitHub Pages]
 ```
 
-- **The schedule lives once, in `docs/_data/schedule.csv`.** Jekyll reads it as `site.data.schedule` for the homepage table; `schedule.lua` expands the empty ` ```schedule ` block in `syllabus.md` into the same rows for Pandoc. No sync script, no generated table committed anywhere. Week-to-station labels for the homepage dots are in `docs/_data/stations.yml`.
+- **The schedule lives in one place: `docs/_data/schedule.csv`.** Jekyll reads it as `site.data.schedule` for the homepage table; `schedule.lua` expands the empty ` ```schedule ` block in `syllabus.md` into the same rows for Pandoc.
+	- There is no sync script and no generated table committed anywhere.
+	- Week-to-station labels for the homepage dots are in `docs/_data/stations.yml`.
 - The text source is `syllabus_source/syllabus.md`. Its YAML block holds the header (course title, college, credit hours); the templates render it. `underline.lua` handles its `[...]{.underline}` spans.
-- The build needs `pandoc`, `xelatex`, and `rsvg-convert`. The workflow apt-installs them and caches `docs/syllabus/` on an exact hash of the sources, so unrelated pushes skip the slow TeX Live install and keep the existing "created" timestamp.
+- The build needs `pandoc`, `xelatex`, and `rsvg-convert`. The workflow apt-installs them and caches `docs/syllabus/`, so unrelated pushes skip the TeX Live install and keep the existing "created" timestamp.
 - The UIC logo comes from `docs/assets/branding/uic-black-logo.svg`, converted to PDF for the LaTeX header at build time.
-- Both templates carry a WORK IN PROGRESS watermark: `AddToShipoutPictureBG` in `template.tex`, `body::before` in `template.html`.
-- To preview locally, run `syllabus_source/build.sh` before `jekyll serve` — a fresh clone has no `docs/syllabus/` until something builds it.
+- Both templates currently have a WORK IN PROGRESS watermark: `AddToShipoutPictureBG` in `template.tex`, `body::before` in `template.html`.
+- To preview locally, run `syllabus_source/build.sh` before `jekyll serve` — a fresh clone will have no `docs/syllabus/` until running the build script
 
 ### Worksheet build
 
@@ -152,22 +156,24 @@ The Quarto mini-book for "Ethics in Data Science" lives at `docs/ethics-in-data-
                   [dodatascience.fun/ethics-in-data-science/book/]
 ```
 
-- On pushes to `main`, the workflow renders the book with `quarto render docs/ethics-in-data-science`.
+- On pushes to `main`, the GitHub workflow renders the book with `quarto render docs/ethics-in-data-science`.
 - Jekyll then builds `docs/` into `_site/`, which is uploaded as the Pages artifact.
-- GitHub Pages serves that artifact directly, so the generated `docs/ethics-in-data-science/book/` output is no longer tracked in git.
+- GitHub Pages serves that artifact directly, so the generated `docs/ethics-in-data-science/book/` output is not tracked in git.
 - This keeps Quarto output separate from version control
-- Any change to a .md file will automatically propagate. You can also preview changes with `quarto render`
-- **The book stays independent of Jekyll.** Its rendered pages carry no YAML front matter, so Jekyll copies them through byte for byte and never runs them past Liquid. Its `.md` sources are listed in `docs/_config.yml`'s `exclude` so Jekyll does not try to render them itself. Editing and previewing the book is still pure Quarto.
+- Any change to a .md file will automatically propagate. You can also preview changes locally with `quarto render`
+- **The book stays independent of Jekyll.** Its `.md` sources are listed in `docs/_config.yml`'s `exclude`, so Jekyll does not try to render them. Editing and previewing the book is pure Quarto.
 
 ### FAQ build
 
-The FAQ source is `docs/faq.md`. There is no build script: its front matter sets `layout: default`, so Jekyll renders it to `/faq.html` during the Pages build. Edit the Markdown and push.
+The FAQ source is `docs/faq.md`. There is no build script: its front matter sets `layout: default`, so Jekyll renders it to `/faq.html` during the Pages build.
 
-### Page chrome (masthead, footer, layout)
+Again, to edit this page, simply edit `docs/faq.md` Markdown and push.
 
-The site header/nav and the GitHub footer each live in exactly one file: `docs/_includes/masthead.html` (styles in `docs/css/masthead.css`) and `docs/_includes/footer.html`. The `<h1>` text and the nav links are hardcoded there, so every page reads the same — change them once.
+### masthead, footer, layout
 
-Most pages get all of it from `_layouts/default.html` by setting `layout: default`. That is how `docs/faq.md` and `docs/slides/index.html` work, and it is the default choice for a new page:
+The site header/nav and the GitHub footer each live in exactly one file: `docs/_includes/masthead.html` (styles in `docs/css/masthead.css`) and `docs/_includes/footer.html`. The `<h1>` text and the nav links are hardcoded there, so every page reads the same.
+
+Most pages use `_layouts/default.html` by setting `layout: default`. That is how `docs/faq.md` and `docs/slides/index.html` work, and it is the default choice for a new page:
 
 ```yaml
 ---
@@ -177,16 +183,16 @@ nav: slides     # optional; marks the active nav link
 ---
 ```
 
-Two pages skip the layout because they need their own `<head>`, and pull the includes in by hand instead:
+Two pages skip that layout:
 
 - `docs/index.html` — hand-written social/OG meta for the landing page.
-- `syllabus_source/template.html` — a Pandoc template that emits front matter and `{% include masthead.html %}` into `docs/syllabus/index.html`; Jekyll expands it at deploy time.
+- `syllabus_source/template.html` — a Pandoc template that emits front matter and `{% include masthead.html %}` into `docs/syllabus/index.html` (Jekyll expands it)
 
 `nav` accepts `home`, `slides`, `book`, `syllabus`, `faq`, or `timer`, and adds `aria-current="page"` to that link.
 
 ### Previewing the site locally
 
-The includes and the FAQ are assembled by Jekyll, so a plain static file server will show `{% include ... %}` as literal text. To see the real thing:
+The includes and the FAQ are assembled by Jekyll, so a plain static file server will show `{% include ... %}` as literal text. To preview the actual site:
 
 ```bash
 cd docs
@@ -194,15 +200,10 @@ bundle install          # first time only
 bundle exec jekyll serve
 ```
 
-That serves the site at <http://localhost:4000> and rebuilds on save. `docs/Gemfile` pins the `github-pages` gem so local output matches what the deploy workflow produces. Quarto output (slides, mini-book) is served as-is, so keep using `quarto preview` for those.
+That serves the site at <http://localhost:4000> and rebuilds on save.
 
-Jekyll caches rendered Liquid in `docs/.jekyll-cache/`, and that cache does **not** notice `_config.yml` edits — a changed `title` will keep rendering stale until you clear it. If a config change seems to do nothing, `rm -rf docs/_site docs/.jekyll-cache` and rebuild.
+Quarto output (slides, mini-book) is served as-is, so use `quarto preview` for those.
 
-Ruby 3.x is required — `ffi` dropped support for the macOS system Ruby 2.6. `docs/.ruby-version` pins 3.4.10, so rbenv switches to it automatically on `cd docs`. If `bundle` errors with `cannot load such file -- .../bundler-4.0.17/exe/bundle`, rbenv has fallen back to `system` (Homebrew Ruby, whose bundler install is broken); check with `rbenv version` and install the pinned version if it is missing:
-
-```bash
-rbenv install 3.4.10
-```
 
 ## Course topics
 
@@ -258,8 +259,10 @@ The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](
 
 The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html), but in short: I use them sparingly, and with caution, sort of like a credit card. If I do not have sufficient "money" (understanding) to "pay back" (explain, modify, rewrite, etc.) what I "buy" (generate), I probably should use a different tool, or do some learning.
 
-In some cases, I move things out of the sandbox after editing and  testing and verification. In practice, these means that LLMs may be adjusting or improving some workflows that would otherwise require lots of time/tedium (e.g. the syllabus build workflow). This allows me to focus more on writing/thinking, planning, and teaching (at least that is the theory, and has mostly been my experience so far).
+In some cases, I move things out of the `sandbox/` after editing and testing and verification. In practice, this means that LLMs may be adjusting or improving some workflows that would otherwise require lots of time/tedium (e.g. the syllabus build workflow and other GitHub action setups). This allows me to focus more on writing/thinking, planning, and teaching (at least that is the theory, and has mostly been my experience so far).
 
-Files that were substantially modified by LLMs will say so in the header, e.g. `NOTICE: This file modified by an LLM coding system...` or something like that
+I willingly take responsibility for what is in this repository, including those files which were modified by LLMs. Please contact me if you notice any issues - those are my fault.
+
+Files that were substantially modified by LLMs will say so in the header, e.g. `NOTICE: This file modified by an LLM coding system...` or something like that.
 
 All other materials hand-typed with 🩵 in Chicago, IL.
