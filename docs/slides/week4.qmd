@@ -125,7 +125,8 @@ The steps of exploratory data analysis are:
 
 ---
 
-# Discovering and handling anomaliesSkipping this step causes problems downstream
+# Discovering and handling anomalies
+Skipping this step often causes problems downstream
 
 Categories include:
 
@@ -870,8 +871,6 @@ Three filters before a single plot. Each one is a decision about what counts as 
 ::: {.fragment .fade-out fragment-index=1}
 ```{python}
 #| echo: true
-#| fig-width: 9
-#| fig-height: 4
 #| fig-alt: "Scatter plot of Cook County home sales, square footage against sale price, drawn with default styling so a few multi-million-dollar sales stretch the y-axis and flatten the rest of the cloud"
 (ggplot(homes, aes("building_sqft", "sale_price"))
  + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True))
@@ -881,8 +880,6 @@ Three filters before a single plot. Each one is a decision about what counts as 
 ::: {.fragment .fade-in-then-out fragment-index=1}
 ```{python}
 #| echo: true
-#| fig-width: 9
-#| fig-height: 4
 #| fig-alt: "The same scatter plot with the y-axis limited to two million dollars, which spreads the bulk of the sales out over the full height of the panel"
 (ggplot(homes, aes("building_sqft", "sale_price"))
  + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True)
@@ -894,8 +891,6 @@ Three filters before a single plot. Each one is a decision about what counts as 
 ::: {.fragment .fade-in-then-out fragment-index=2}
 ```{python}
 #| echo: true
-#| fig-width: 9
-#| fig-height: 4
 #| fig-alt: "The same scatter plot with both axes cropped, to two million dollars and six thousand square feet, bringing the cone shape of the main cloud into view"
 (ggplot(homes, aes("building_sqft", "sale_price"))
  + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True)
@@ -908,8 +903,6 @@ Three filters before a single plot. Each one is a decision about what counts as 
 ::: {.fragment .fade-in-then-out fragment-index=3}
 ```{python}
 #| echo: true
-#| fig-width: 9
-#| fig-height: 4
 #| fig-alt: "The same cropped scatter plot, now with the axes labelled building square footage and sale price"
 (ggplot(homes, aes("building_sqft", "sale_price"))
  + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True)
@@ -923,8 +916,6 @@ Three filters before a single plot. Each one is a decision about what counts as 
 ::: {.fragment fragment-index=4}
 ```{python}
 #| echo: true
-#| fig-width: 9
-#| fig-height: 4
 #| fig-alt: "Scatter plot of about 24,800 Cook County single-family home sales, building square footage on the x-axis against sale price on the y-axis, showing an upward trend that fans out widely at larger sizes"
 (ggplot(homes, aes("building_sqft", "sale_price"))
  + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True)
