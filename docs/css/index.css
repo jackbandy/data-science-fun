@@ -34,13 +34,7 @@ body {
 /* Red Line: #C60C30 | Blue Line: #00A1DE | Brown Line: #62361B */
 /* Green Line: #009B3A | Orange Line: #F9461C | Purple Line: #522398 */
 /* Yellow Line (Skokie Swift): #F9E300 */
-.orange-line {
-  border: none;
-  height: 12px;
-  background-color: #f9461c;
-  display: block;
-  width: 100%;
-}
+/* The masthead rule (.orange-line) and nav live in css/masthead.css. */
 
 .container {
   max-width: 700px;

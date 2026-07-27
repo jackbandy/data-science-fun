@@ -1,19 +1,29 @@
+---
+nav: syllabus
+---
 <!DOCTYPE html>
 <!-- NOTICE: This file modified by an LLM coding system on 2026-07-26. -->
+<!-- Pandoc writes this to docs/syllabus/index.html, front matter and all;
+     Jekyll expands the masthead include at deploy time. View the built file
+     through `jekyll serve`, not off disk, or the include shows as Liquid. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>$if(title)$$title$$else$Syllabus$endif$</title>
+  <link rel="stylesheet" href="../css/masthead.css">
   <style>
     html, body {
       font-family: "Theinhardt", Arial, sans-serif;
       font-size: 11pt;
       line-height: 1.35;
     }
-    body {
+    /* The masthead spans the window; the document itself keeps page margins. */
+    body { margin: 0; }
+    .syllabus-doc {
       margin: 1in auto;
       max-width: 8.5in;
+      padding: 0 24px;
     }
     body::before {
       content: "WORK IN PROGRESS";
@@ -67,10 +77,18 @@
     }
     .syllabus-meta a { color: inherit; }
     .draft-note { margin: 0 0 1rem 0; text-align: center; font-size: 0.75rem; color: #999; }
-    .site-link { margin: 0 0 1rem 0; text-align: center; font-size: 0.85rem; }
+
+    @media print {
+      .site-masthead, .orange-line { display: none; }
+      .syllabus-doc { margin: 0 auto; padding: 0; }
+    }
   </style>
 </head>
 <body>
+
+{% include masthead.html %}
+
+<div class="syllabus-doc">
 
 <div class="syllabus-top">
   <div class="syllabus-logo">
@@ -82,7 +100,6 @@
 </div>
 
 <p class="draft-note"><strong>WORK IN PROGRESS</strong> - draft syllabus subject to revision</p>
-<p class="site-link"><a href="https://dodatascience.fun">Back to course website</a></p>
 
 <header>
   <p class="course-title">$course-title$</p>
@@ -90,6 +107,8 @@
 </header>
 
 $body$
+
+</div>
 
 </body>
 </html>

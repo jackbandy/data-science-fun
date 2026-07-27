@@ -1,3 +1,6 @@
+---
+nav: home
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#F9461C">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Data Science the Fun Way</title>
-  <meta name="description" content="Materials for CS 418 — Intro to Data Science at UIC: slides, worksheets, and a syllabus for learning data science the fun way.">
+  <title>Introduction to Data Science (CS 418)</title>
+  <meta name="description" content="Materials for CS 418 — Introduction to Data Science at UIC: slides, worksheets, and a syllabus.">
   <link rel="canonical" href="https://dodatascience.fun/">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Data Science the Fun Way">
-  <meta property="og:title" content="Data Science the Fun Way">
+  <meta property="og:site_name" content="Introduction to Data Science">
+  <meta property="og:title" content="Introduction to Data Science (CS 418)">
   <meta property="og:description" content="Materials for CS 418 — Intro to Data Science at UIC.">
   <meta property="og:url" content="https://dodatascience.fun/">
   <meta property="og:locale" content="en_US">
@@ -18,13 +21,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://dodatascience.fun/assets/orange-line/orange-line-trace-with-stops.png">
   <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/masthead.css">
 </head>
 <body>
-  <hr class="orange-line">
-  <div class="container">
-    <h1><a href="https://dodatascience.fun">Introduction to Data Science (CS 418)</a></h1>
-  </div>
-  <hr class="orange-line">
+  {% include masthead.html %}
   <div class="container">
     <div class="sign">
       <div class="sign-top">
@@ -113,237 +113,43 @@
       </div>
     </figure>
     <div class="schedule-table-wrap">
-      <!-- SCHEDULE_TABLE_START -->
-<table class="schedule-table">
-  <thead>
-    <tr>
-      <th scope="col">Week</th>
-      <th scope="col">Class Day</th>
-      <th scope="col">Topic</th>
-      <th scope="col">Before Class</th>
-      <th scope="col">In Class</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 1, Harold Washington Library" aria-label="Week 1, Harold Washington Library" tabindex="0">1</span></th>
-      <td>Monday</td>
-      <td>Course introduction; statistics review</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Data science lifecycle</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 2, LaSalle/Van Buren" aria-label="Week 2, LaSalle/Van Buren" tabindex="0">2</span></th>
-      <td>Monday</td>
-      <td>Python foundations; dataframes and Polars</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Obtaining data</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 3, Quincy" aria-label="Week 3, Quincy" tabindex="0">3</span></th>
-      <td>Monday</td>
-      <td>Wrangling data; filtering data</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Data formats</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 4, Washington/Wells" aria-label="Week 4, Washington/Wells" tabindex="0">4</span></th>
-      <td>Monday</td>
-      <td>Exploratory analysis</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Descriptive statistics</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 5, Clark/Lake" aria-label="Week 5, Clark/Lake" tabindex="0">5</span></th>
-      <td>Monday</td>
-      <td>Visualization</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Visualization</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 6, Washington/Wabash" aria-label="Week 6, Washington/Wabash" tabindex="0">6</span></th>
-      <td>Monday</td>
-      <td>Visualization</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Visualization</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 7, Adams/Wabash" aria-label="Week 7, Adams/Wabash" tabindex="0">7</span></th>
-      <td>Monday</td>
-      <td>Hypothesis testing</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Estimation and sampling; randomness</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 8, Roosevelt" aria-label="Week 8, Roosevelt" tabindex="0">8</span></th>
-      <td>Monday</td>
-      <td>Linear regression</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Intro to classification</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 9, Halsted" aria-label="Week 9, Halsted" tabindex="0">9</span></th>
-      <td>Monday</td>
-      <td>Decision trees</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Support vector machines; kernels</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 10, Ashland" aria-label="Week 10, Ashland" tabindex="0">10</span></th>
-      <td>Monday</td>
-      <td>Clustering; principal component analysis</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Model evaluation</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 11, 35th/Archer" aria-label="Week 11, 35th/Archer" tabindex="0">11</span></th>
-      <td>Monday</td>
-      <td>Recommendation systems</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>A/B testing</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 12, Western" aria-label="Week 12, Western" tabindex="0">12</span></th>
-      <td>Monday</td>
-      <td>Network analysis</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Graphs and relationships; network measures</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 13, Kedzie" aria-label="Week 13, Kedzie" tabindex="0">13</span></th>
-      <td>Monday</td>
-      <td>TBD</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>TBD</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 14, Pulaski" aria-label="Week 14, Pulaski" tabindex="0">14</span></th>
-      <td>Monday</td>
-      <td>Presentations</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Presentations</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row" rowspan="2"><span class="schedule-week-dot" data-label="Week 15, Midway" aria-label="Week 15, Midway" tabindex="0">15</span></th>
-      <td>Monday</td>
-      <td>Presentations</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Wednesday</td>
-      <td>Presentations</td>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
-<!-- SCHEDULE_TABLE_END -->
+      {%- assign weeks = site.data.schedule | group_by: "Week" %}
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th scope="col">Week</th>
+            <th scope="col">Class Day</th>
+            <th scope="col">Topic</th>
+            <th scope="col">Before Class</th>
+            <th scope="col">In Class</th>
+          </tr>
+        </thead>
+        <tbody>
+        {%- for week in weeks -%}
+          {%- assign station = site.data.stations[week.name] -%}
+          {%- if station -%}
+            {%- assign dot = "Week " | append: week.name | append: ", " | append: station -%}
+          {%- else -%}
+            {%- assign dot = "Week " | append: week.name -%}
+          {%- endif -%}
+          {%- for row in week.items %}
+          <tr>
+            {%- if forloop.first %}
+            <th scope="row" rowspan="{{ week.items | size }}"><span class="schedule-week-dot" data-label="{{ dot | escape }}" aria-label="{{ dot | escape }}" tabindex="0">{{ week.name | escape }}</span></th>
+            {%- endif %}
+            <td>{{ row["Class Day"] | escape }}</td>
+            <td>{{ row["Topic"] | escape }}</td>
+            <td>{{ row["Before Class"] | escape }}</td>
+            <td>{{ row["In Class"] | escape }}</td>
+          </tr>
+          {%- endfor -%}
+        {%- endfor %}
+        </tbody>
+      </table>
     </div>
     <div id="schedule-tooltip" aria-hidden="true"></div>
   </div>
-  <footer>
-    <a href="https://github.com/jackbandy/data-science-fun">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577
-          0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755
-          -1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305
-          3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93
-          0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176
-          0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405
-          1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23
-          .645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22
-          0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22
-          0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57
-          C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-      </svg>
-      github.com/jackbandy/data-science-fun
-    </a>
-  </footer>
+  {% include footer.html %}
   <script src="js/schedule-tooltip.js"></script>
 </body>
 </html>

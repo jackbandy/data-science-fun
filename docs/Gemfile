@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+
+# Matches what GitHub Pages runs, so a local `bundle exec jekyll serve` renders
+# the masthead the same way the deploy workflow does.
+gem "github-pages", group: :jekyll_plugins

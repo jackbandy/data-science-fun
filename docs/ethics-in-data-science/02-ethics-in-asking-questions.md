@@ -40,6 +40,11 @@ In *The Craft of Research*, Wayne Booth observes that 'not with a big question t
 
 More TK.
 
+topic vs question
+* a topic only becomes research when it provokes a specific question
+* what is lost if a question goes unanswered — the "so what?" test [@booth_craft_of_research_2024]
+
+
 ## Basic Types of Questions
 | Question Type | Description | Example | Answers |
 | --- | --- | --- | --- |

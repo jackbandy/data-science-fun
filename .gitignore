@@ -16,6 +16,10 @@ docs/ethics-in-data-science/**/*.quarto_ipynb
 docs/ethics-in-data-science/book/
 docs/ethics-in-data-science/*_files/
 
+# Built in CI by syllabus_source/build.sh, not committed
+docs/syllabus/index.html
+docs/syllabus/syllabus.pdf
+
 # Quarto slides (rendered artifacts — built by CI, not committed)
 docs/slides/.quarto/
 docs/slides/**/*.quarto_ipynb*
@@ -61,3 +65,10 @@ datasets/musiclab-salganik-2006/musiclab_data/
 datasets/musiclab-salganik-2006/musiclab_songs/
 datasets/musiclab-salganik-2006/data_release.pdf
 datasets/musiclab-salganik-2006/README.txt
+
+# Local Jekyll preview (the Pages workflow builds these in CI)
+docs/_site/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+docs/Gemfile.lock
+docs/vendor/

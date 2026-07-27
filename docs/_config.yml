@@ -7,11 +7,18 @@ plugins:
 url: "https://dodatascience.fun"
 include:
   - .well-known
-title: Data Science the Fun Way
+title: Introduction to Data Science
 description: Materials for CS 418 - Intro to Data Science at UIC
 
+# Jekyll renders any file with YAML front matter, whatever its extension. The
+# Quarto sources below all have it, so without these entries Jekyll would render
+# e.g. slides/week0.qmd over the real Reveal.js deck Quarto built there. Quarto's
+# generated output has no front matter, so it is copied through untouched.
 exclude:
-  - slides/**/*.md
+  # Slide sources -- Quarto compiles these into slides/week*.html
+  - slides/*.md
+  - slides/*.qmd
+  - slides/marp_archive/*.md
   # Quarto book sources (published HTML lives in `ethics-in-data-science/book/`)
   - ethics-in-data-science/*.md
   - ethics-in-data-science/_quarto.yml
@@ -19,7 +26,20 @@ exclude:
   - ethics-in-data-science/.quarto
   - ethics-in-data-science/.venv
   - ethics-in-data-science/assets
+  # Attribution/licensing notes that live next to the assets they document.
+  # The github-pages gem bundles jekyll-optional-front-matter and
+  # jekyll-readme-index, which would otherwise render each one into a bare,
+  # layout-less public page and list it in sitemap.xml.
+  - assets/*.md
+  - assets/**/*.md
+  # Local Jekyll tooling, never part of the site
+  - Gemfile
+  - Gemfile.lock
+  - vendor
 
-# Build settings
+# Without this the github-pages gem applies jekyll-theme-primer and writes a
+# theme stylesheet into assets/css/; this site brings its own CSS.
+theme: null
+timezone: America/Chicago
 future: false
 lsi: false

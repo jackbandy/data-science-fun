@@ -1,5 +1,8 @@
 ---
+layout: default
 title: FAQ
+nav: faq
+show_last_updated: true
 ---
 
 # FAQ

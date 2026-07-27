@@ -1,0 +1,18 @@
+# Orange Line station for each course week, used as the hover label on the
+# homepage schedule dots. Keys are quoted so they stay strings and match the
+# Week column of _data/schedule.csv.
+"1": Harold Washington Library
+"2": LaSalle/Van Buren
+"3": Quincy
+"4": Washington/Wells
+"5": Clark/Lake
+"6": Washington/Wabash
+"7": Adams/Wabash
+"8": Roosevelt
+"9": Halsted
+"10": Ashland
+"11": 35th/Archer
+"12": Western
+"13": Kedzie
+"14": Pulaski
+"15": Midway

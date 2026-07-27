@@ -13,13 +13,19 @@ data-science-fun/
 ├── .github/workflows/           # GitHub Actions stuff
 ├── docs/                        # Public-facing site root
 │   ├── index.html               # Landing page
+│   ├── faq.md                   # FAQ source (Jekyll renders it to /faq.html)
+│   ├── _config.yml              # Jekyll config
+│   ├── _data/                   # schedule.csv (the one copy) + stations.yml
+│   ├── _includes/               # The one copy of the site header/nav and footer
+│   ├── _layouts/default.html    # Layout for Markdown pages
+│   ├── Gemfile                  # Local Jekyll preview only
 │   ├── css/                     # Shared stylesheets
 │   ├── slides/                  # Quarto decks and archived Marp workflow
-│   ├── syllabus/                # Generated syllabus output (html, pdf)
+│   ├── syllabus/                # Generated syllabus output (gitignored, built in CI)
 │   ├── worksheets/              # Generated worksheet PDFs
 │   ├── ethics-in-data-science/  # Quarto mini-book
 │   └── CNAME                    # domain config
-├── syllabus_source/             # Syllabus source and helpers
+├── syllabus_source/             # Syllabus markdown, pandoc templates, lua filters
 ├── worksheets_source/           # Worksheet source and build script
 ├── sandbox/                     # Quarantine for LLM-modified or experimental content
 ├── source-materials/            # Reference and upstream source files
@@ -47,9 +53,7 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 
 **Building slides:**
 
-All slide builds are now **manual** (CI pipeline removed).
-
-To build all slides:
+`deploy-pages.yml` renders the decks on every push, caching the output and re-rendering only the decks whose sources changed. HTML is required (a failure fails the deploy); the PDF export is best-effort and non-blocking. To build locally:
 
 ```bash
 cd docs/slides
@@ -74,37 +78,40 @@ The slide theme uses Big Shoulders for title headings and a Franklin-style sans 
 
 ### Syllabus build
 
-This is somewhat over-engineered (with help from LLMs), but the result is that I can easily edit the schedule (in a .csv) and/or text in the syllabus (in a .md), and the changes automatically propagate.
+This is somewhat over-engineered (with help from LLMs), but the result is that I can edit the schedule (in a .csv) and/or the text of the syllabus (in a .md), and the changes propagate everywhere on the next push. Nothing here is built on my laptop or committed — GitHub Actions runs it.
 
-The markdown workflow is in `syllabus_source/`, and the generated files are published under `docs/syllabus/`:
+Sources are in `syllabus_source/`; outputs land in `docs/syllabus/` and are gitignored, so a push is the whole workflow:
 
 ```text
-       [syllabus_source/schedule.csv]
-                     |
-                     v
-       [sync_schedule.py] --> [docs/index.html schedule table]
-                     |
-                     v
-       [syllabus_source/syllabus.md]
-                     |
-          +----------+----------+
-          |     (pandoc)        |
-          v                     v
-  [template.html]         [template.tex]
-          |                     |
-          v                     v
-[docs/syllabus/index.html]  [docs/syllabus/syllabus.pdf]
+push to main
+     |
+     v
+[GitHub Actions: deploy-pages.yml]
+     |
+     |  1. syllabus_source/build.sh
+     |       [docs/_data/schedule.csv] --(schedule.lua)--> [syllabus.md]
+     |                                                          |
+     |                                             +------------+------------+
+     |                                             |         (pandoc)        |
+     |                                             v                         v
+     |                                      [template.html]           [template.tex]
+     |                                             v                         v
+     |                              [docs/syllabus/index.html]  [docs/syllabus/syllabus.pdf]
+     |
+     |  2. jekyll build docs/ -> _site/
+     |       [docs/_data/schedule.csv] --(Liquid loop)--> homepage schedule table
+     |       [docs/syllabus/index.html] -> masthead include expanded in place
+     |
+     v
+[upload _site/ -> GitHub Pages]
 ```
 
-- Run `syllabus_source/build.sh`. It syncs the schedule, then compiles the markdown to both HTML and PDF (via latex).
-- The upstream source is `syllabus_source/syllabus.md`. Its YAML block holds the header (course title, college, credit hours); the templates render it.
-- The shared course schedule is `syllabus_source/schedule.csv`. `sync_schedule.py` writes it into both the syllabus table and the homepage table, between `SCHEDULE_*` marker comments (so do not hand-edit either table).
-- `underline.lua` handles `[...]{.underline}` spans, schedule table's column widths, etc.
-- The build needs `pandoc`, `xelatex`, `rsvg-convert`, and `python3`.
+- **The schedule lives once, in `docs/_data/schedule.csv`.** Jekyll reads it as `site.data.schedule` for the homepage table; `schedule.lua` expands the empty ` ```schedule ` block in `syllabus.md` into the same rows for Pandoc. No sync script, no generated table committed anywhere. Week-to-station labels for the homepage dots are in `docs/_data/stations.yml`.
+- The text source is `syllabus_source/syllabus.md`. Its YAML block holds the header (course title, college, credit hours); the templates render it. `underline.lua` handles its `[...]{.underline}` spans.
+- The build needs `pandoc`, `xelatex`, and `rsvg-convert`. The workflow apt-installs them and caches `docs/syllabus/` on an exact hash of the sources, so unrelated pushes skip the slow TeX Live install and keep the existing "created" timestamp.
 - The UIC logo comes from `docs/assets/branding/uic-black-logo.svg`, converted to PDF for the LaTeX header at build time.
-- Both templates carry a WORK IN PROGRESS watermark: the `AddToShipoutPictureBG` block in `template.tex` and the `body::before` rule in `template.html`.
-- Only `index.html` and `syllabus.pdf` are published under `docs/syllabus/`.
-- The output is served directly at `dodatascience.fun/syllabus/`.
+- Both templates carry a WORK IN PROGRESS watermark: `AddToShipoutPictureBG` in `template.tex`, `body::before` in `template.html`.
+- To preview locally, run `syllabus_source/build.sh` before `jekyll serve` — a fresh clone has no `docs/syllabus/` until something builds it.
 
 ### Worksheet build
 
@@ -131,7 +138,12 @@ The Quarto mini-book for "Ethics in Data Science" lives at `docs/ethics-in-data-
                             [quarto render docs/ethics-in-data-science]
                                           |
                                           v
-                            [upload docs/ as Pages artifact]
+                            [jekyll build docs/ -> _site/]
+                              (book output has no front matter,
+                               so it is copied through untouched)
+                                          |
+                                          v
+                             [upload _site/ as Pages artifact]
                                           |
                                           v
                                 [deploy to GitHub Pages]
@@ -141,17 +153,56 @@ The Quarto mini-book for "Ethics in Data Science" lives at `docs/ethics-in-data-
 ```
 
 - On pushes to `main`, the workflow renders the book with `quarto render docs/ethics-in-data-science`.
-- It uploads the full `docs/` directory as a GitHub Pages artifact.
+- Jekyll then builds `docs/` into `_site/`, which is uploaded as the Pages artifact.
 - GitHub Pages serves that artifact directly, so the generated `docs/ethics-in-data-science/book/` output is no longer tracked in git.
 - This keeps Quarto output separate from version control
 - Any change to a .md file will automatically propagate. You can also preview changes with `quarto render`
+- **The book stays independent of Jekyll.** Its rendered pages carry no YAML front matter, so Jekyll copies them through byte for byte and never runs them past Liquid. Its `.md` sources are listed in `docs/_config.yml`'s `exclude` so Jekyll does not try to render them itself. Editing and previewing the book is still pure Quarto.
 
 ### FAQ build
 
-The FAQ source is `docs/faq.md`.
+The FAQ source is `docs/faq.md`. There is no build script: its front matter sets `layout: default`, so Jekyll renders it to `/faq.html` during the Pages build. Edit the Markdown and push.
 
-- Run `cd docs/scripts && ./build_faq.sh` to generate `docs/faq.html`.
-- The Pages deployment workflow rebuilds the FAQ before uploading `docs/`.
+### Page chrome (masthead, footer, layout)
+
+The site header/nav and the GitHub footer each live in exactly one file: `docs/_includes/masthead.html` (styles in `docs/css/masthead.css`) and `docs/_includes/footer.html`. The `<h1>` text and the nav links are hardcoded there, so every page reads the same — change them once.
+
+Most pages get all of it from `_layouts/default.html` by setting `layout: default`. That is how `docs/faq.md` and `docs/slides/index.html` work, and it is the default choice for a new page:
+
+```yaml
+---
+layout: default
+title: Slides   # feeds <title> via jekyll-seo-tag
+nav: slides     # optional; marks the active nav link
+---
+```
+
+Two pages skip the layout because they need their own `<head>`, and pull the includes in by hand instead:
+
+- `docs/index.html` — hand-written social/OG meta for the landing page.
+- `syllabus_source/template.html` — a Pandoc template that emits front matter and `{% include masthead.html %}` into `docs/syllabus/index.html`; Jekyll expands it at deploy time.
+
+`nav` accepts `home`, `slides`, `book`, `syllabus`, `faq`, or `timer`, and adds `aria-current="page"` to that link.
+
+### Previewing the site locally
+
+The includes and the FAQ are assembled by Jekyll, so a plain static file server will show `{% include ... %}` as literal text. To see the real thing:
+
+```bash
+cd docs
+bundle install          # first time only
+bundle exec jekyll serve
+```
+
+That serves the site at <http://localhost:4000> and rebuilds on save. `docs/Gemfile` pins the `github-pages` gem so local output matches what the deploy workflow produces. Quarto output (slides, mini-book) is served as-is, so keep using `quarto preview` for those.
+
+Jekyll caches rendered Liquid in `docs/.jekyll-cache/`, and that cache does **not** notice `_config.yml` edits — a changed `title` will keep rendering stale until you clear it. If a config change seems to do nothing, `rm -rf docs/_site docs/.jekyll-cache` and rebuild.
+
+Ruby 3.x is required — `ffi` dropped support for the macOS system Ruby 2.6. `docs/.ruby-version` pins 3.4.10, so rbenv switches to it automatically on `cd docs`. If `bundle` errors with `cannot load such file -- .../bundler-4.0.17/exe/bundle`, rbenv has fallen back to `system` (Homebrew Ruby, whose bundler install is broken); check with `rbenv version` and install the pinned version if it is missing:
+
+```bash
+rbenv install 3.4.10
+```
 
 ## Course topics
 
@@ -200,7 +251,7 @@ Still working on this 🙂 there are too many possibilities... But main units wi
 	* Network-based recommendation systems
 * Group presentations (weeks 14-15)
 
-The "ground truth" for the week-by-week schedule is [`syllabus_source/schedule.csv`](syllabus_source/schedule.csv). It is intended to be the single source for the schedule on the [course homepage](https://dodatascience.fun/) and in the [syllabus](https://dodatascience.fun/syllabus/).
+The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](docs/_data/schedule.csv). It is the single source for the schedule on the [course homepage](https://dodatascience.fun/) and in the [syllabus](https://dodatascience.fun/syllabus/) — edit it and both tables follow.
 
 
 ## Note on LLM use

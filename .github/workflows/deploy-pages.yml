@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "docs/**"
+      - "syllabus_source/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
@@ -51,7 +52,6 @@ jobs:
              [[ -z "$BEFORE" ]] || \
              [[ "$BEFORE" == "0000000000000000000000000000000000000000" ]] || \
              ! git cat-file -e "$BEFORE" 2>/dev/null; then
-            echo "build_faq=true"  >> "$GITHUB_OUTPUT"
             echo "build_book=true" >> "$GITHUB_OUTPUT"
             echo "render_slides="  >> "$GITHUB_OUTPUT"
             exit 0
@@ -60,13 +60,6 @@ jobs:
           CHANGED=$(git diff --name-only "$BEFORE" "${{ github.sha }}")
           echo "Changed files:"
           echo "$CHANGED"
-
-          # FAQ: rebuild if source doc or Pandoc template changed
-          if echo "$CHANGED" | grep -qE '^docs/faq\.md$|^docs/_layouts/faq-pandoc\.html$'; then
-            echo "build_faq=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "build_faq=false" >> "$GITHUB_OUTPUT"
-          fi
 
           # Book: rebuild if any file under ethics-in-data-science/ changed
           if echo "$CHANGED" | grep -q '^docs/ethics-in-data-science/'; then
@@ -118,10 +111,6 @@ jobs:
 
       - name: Install R dependencies
         run: Rscript -e 'pkgs <- c("knitr", "rmarkdown", "reticulate", "here", "ggplot2", "ggtext", "patchwork", "svglite"); install.packages(setdiff(pkgs, rownames(installed.packages())))'
-
-      - name: Build FAQ
-        if: steps.changed.outputs.build_faq == 'true'
-        run: cd docs/scripts && ./build_faq.sh
 
       # Cache the rendered book output. Exact key covers all source files under
       # ethics-in-data-science/; a restore-keys fallback provides the last good
@@ -194,6 +183,33 @@ jobs:
           cd docs/slides
           bash ./build_all_quarto.sh
 
+      # The syllabus is built here rather than committed, so it must exist on
+      # every run. Cache it on an exact key only: a hit skips both the ~1 GB
+      # TeX Live install and the render, and keeps the "This version created"
+      # stamp from when the content actually changed rather than resetting it
+      # on unrelated pushes. Any source change misses and rebuilds in full.
+      - name: Restore syllabus cache
+        id: syllabus-cache
+        uses: actions/cache@v4
+        with:
+          path: docs/syllabus
+          key: syllabus-${{ hashFiles('syllabus_source/**', 'docs/_data/schedule.csv', 'docs/assets/branding/uic-black-logo.svg') }}
+
+      - name: Install syllabus build tools
+        if: steps.syllabus-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            pandoc librsvg2-bin fontconfig fonts-liberation \
+            texlive-xetex texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended
+
+      # Writes docs/syllabus/{index.html,syllabus.pdf}. The HTML carries front
+      # matter, so the Jekyll step below expands its masthead include.
+      - name: Build syllabus (HTML + PDF)
+        if: steps.syllabus-cache.outputs.cache-hit != 'true'
+        run: bash syllabus_source/build.sh
+
       # Strip dev/build cruft so we don't ship venvs and caches to GitHub Pages.
       # TODO: Verify the slide notebooks (docs/slides/week*.ipynb) are actually
       # reachable on the deployed site (e.g. dodatascience.fun/slides/week0.ipynb)
@@ -205,10 +221,19 @@ jobs:
           find docs -type f -name '*.quarto_ipynb' -delete
           find docs -type f -name '.DS_Store' -delete
 
+      # Runs last, once every generated page is on disk. Jekyll expands the
+      # shared includes into the pages that carry front matter and renders
+      # docs/faq.md; the Quarto output above has none, so it is copied as-is.
+      - name: Build site with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
