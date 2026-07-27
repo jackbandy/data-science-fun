@@ -80,8 +80,7 @@ body {
 /* Route pill, after the route buttons in `.title-routes` on a CTA station page:
    solid fill, white bold label, small radius. Start matches it. Filled with
    $orange-dark rather than Orange Line #f9461c, for label contrast. */
-.timer-selector button,
-.timer-selector .route-btn {
+.timer-selector button {
   padding: 7px 16px;
   font-size: 14px;
   font-weight: 700;
@@ -96,23 +95,7 @@ body {
   white-space: nowrap;
 }
 
-.timer-selector button:hover,
-.timer-selector .route-btn:hover { background: #a52810; }
-
-/* Right-justified at the end of the control row */
-.timer-selector .route-btn {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.route-btn-icon {
-  width: 14px;
-  height: 14px;
-  fill: #fff;
-  flex-shrink: 0;
-}
+.timer-selector button:hover { background: #a52810; }
 
 .estimated-arrivals { background: #fff; }
 
