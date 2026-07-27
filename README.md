@@ -25,12 +25,12 @@ data-science-fun/
 │   ├── worksheets/              # Generated worksheet PDFs
 │   ├── ethics-in-data-science/  # Quarto mini-book
 │   └── CNAME                    # domain config
+├── datasets/                    # Datasets used in class materials
 ├── syllabus_source/             # Syllabus markdown, pandoc templates, lua filters
 ├── worksheets_source/           # Worksheet source and build script
 ├── sandbox/                     # Quarantine for LLM-modified or experimental content
 ├── source-materials/            # Reference and upstream source files
 ├── NOTES.md                     # Working notes and planning
-├── package.json                 # Dependencies for slides
 └── README.md                    # This file
 ```
 
@@ -70,7 +70,7 @@ The script generates Quarto revealjs output files (`.html` and `.pdf`) for every
 - The decks are `docs/slides/week0.md` through `docs/slides/week12.md`, with `.qmd` files using Quarto's extended markdown. Each file contains Quarto Reveal.js configuration.
 - Each compiled deck produces an HTML file, PDF, and `_files/` support directory (containing CSS, JavaScript, and other assets).
 - Quarto revealjs HTML depends on the `*_files/` directories for styles to load properly on GitHub Pages.
-- SVGs and other vector formats whenever possible.
+- Slides use SVGs and other vector formats whenever possible.
 - The previous Marp experiment is archived in `docs/slides/marp_archive/`. Run `docs/slides/marp_archive/build_all_marp.sh` to rebuild its HTML and PDF outputs.
 - More complicated than Google Slides? Yes. Worth it for freedom, portability, accessibility, etc.? For now, yes.
 
@@ -80,7 +80,7 @@ The slide theme uses Big Shoulders for title headings and a Franklin-style sans 
 
 ### Syllabus build
 
-This is somewhat over-engineered (with help from LLMs), but the result is that I can edit the schedule (in a .csv) and/or the text of the syllabus (in a .md), and the changes propagate everywhere on the next push. Nothing here is built on my laptop or committed — GitHub Actions runs it.
+Again, this is somewhat over-engineered (with help from LLMs), but the result is that I can edit the schedule (in a .csv) and/or the text of the syllabus (in a .md), and the changes propagate everywhere on the next push.
 
 Sources are in `syllabus_source/`; outputs land in `docs/syllabus/` and are gitignored, so a push is the whole workflow:
 
@@ -252,7 +252,7 @@ Still working on this 🙂 there are too many possibilities... But main units wi
 	* Network-based recommendation systems
 * Group presentations (weeks 14-15)
 
-The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](docs/_data/schedule.csv). It is the single source for the schedule on the [course homepage](https://dodatascience.fun/) and in the [syllabus](https://dodatascience.fun/syllabus/) — edit it and both tables follow.
+The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](docs/_data/schedule.csv) — see the [Syllabus build](#syllabus-build) section above.
 
 
 ## Note on LLM use
