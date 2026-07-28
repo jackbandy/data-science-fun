@@ -38,7 +38,7 @@ jobs:
       # Skipped on PRs because it needs permission to write to Pages
       - name: Set up Pages
         if: github.event_name != 'pull_request'
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       # Detect which docs files changed to skip unchanged renders.
       - name: Detect changed files
