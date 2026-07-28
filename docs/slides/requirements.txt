@@ -9,7 +9,7 @@ polars
 seaborn
 plotnine
 pyarrow
-matplotlib<3.9
+matplotlib<3.12
 statsmodels
 networkx
 pymc
