@@ -1,0 +1,137 @@
+\documentclass[11pt]{article}
+
+% ---------- packages ----------
+\usepackage[top=0.75in,bottom=0.75in,left=0.9in,right=0.9in,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{needspace}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=black,linkcolor=black}
+
+% ---------- header / footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CS 418: Intro to Data Science}
+\rhead{UIC, Fall 2026}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- worksheet metadata ----------
+\newcommand{\worksheetnumber}{1}
+\newcommand{\topictitle}{Intro, Stats Review, and the Data Science Lifecycle}
+
+% ---------- problem command ----------
+\newcounter{problem}
+\newcommand{\problem}[1]{%
+  \refstepcounter{problem}%
+  \vspace{0.55em}%
+  \noindent\textbf{Problem \theproblem.} #1\par
+}
+\newcommand{\hint}[1]{\vspace{0.3em}\noindent\textit{Hint: #1}\par}
+% Global scale for answer space: change 3/5 to tighten or loosen every gap at once.
+\newcommand{\worklines}[1]{\vspace{\dimexpr#1*1/2\relax}}
+
+\setlist[enumerate,1]{label=(\alph*), itemsep=0.5em, topsep=0.2em, parsep=0pt}
+
+\begin{document}
+
+% ================= HEADER BLOCK =================
+\begin{center}
+  {\large\textbf{Worksheet \#\worksheetnumber}}\\[0.25em]
+  {\large \topictitle}
+\end{center}
+
+\vspace{0.5em}
+\noindent
+\begin{tabular}{@{}l@{}}
+Name: \rule{2.2in}{0.4pt}\\[0.55em]
+NetID: \rule{2.2in}{0.4pt}\\[0.55em]
+Date: \rule{2.2in}{0.4pt}
+\end{tabular}
+
+\vspace{0.9em}
+
+\noindent\textbf{Learning objectives:}
+\begin{itemize}[label=\textbullet, leftmargin=1.6em, itemsep=0.1em, topsep=0.2em]
+  \item Describe data science as an interdisciplinary field and explain why practitioners define it differently.
+  \item Compute classical, complementary, and conditional probabilities, and apply Bayes' theorem.
+  \item Trace a real question through the five stages of the data science lifecycle.
+\end{itemize}
+
+\vspace{0.8em}
+\hrule
+\vspace{0.5em}
+
+% ================= PROBLEMS =================
+
+\problem{Drew Conway's Venn diagram places data science at the intersection of hacking skills, math and statistics knowledge, and substantive expertise.}
+\begin{enumerate}
+  \item Which two circles overlap to form the ``danger zone''? Explain in one or two sentences why that combination is dangerous.
+  \worklines{2.5em}
+  \item We described data science as an \emph{Elephantidae} --- a family of related methods. Give an example of two people whose jobs both count as data science but who would describe the field differently.
+  \worklines{3em}
+\end{enumerate}
+
+\problem{A bag contains 6 blue, 3 red, and 5 yellow marbles. One marble is drawn at random.}
+\begin{enumerate}
+  \item How many outcomes are in the sample space $S$?
+  \worklines{2em}
+  \item Let $E$ be the event that the marble is blue or red. Compute $P(E) = \dfrac{|E|}{|S|}$.
+  \worklines{2.5em}
+  \item Let $Y$ be the event that the marble is yellow. Compute $P(Y)$ and verify that $E$ and $Y$ are complementary events.
+  \worklines{2.5em}
+  \item Now two marbles are drawn \emph{without replacement}. What is the probability that both are blue?
+  \worklines{3em}
+\end{enumerate}
+
+\problem{Match each term to the correct description by writing the letter in the blank.}
+
+\vspace{0.5em}
+\noindent
+\begin{tabular}{@{}p{0.32\textwidth}p{0.62\textwidth}@{}}
+\rule{0.4in}{0.4pt} Experiment & (A) The set of all possible results \\[0.6em]
+\rule{0.4in}{0.4pt} Outcome & (B) A set of one or more results we care about \\[0.6em]
+\rule{0.4in}{0.4pt} Event & (C) A process or action with an uncertain result \\[0.6em]
+\rule{0.4in}{0.4pt} Sample space & (D) Two events where one occurs if and only if the other does not \\[0.6em]
+\rule{0.4in}{0.4pt} Complementary events & (E) A single possible result of the process \\
+\end{tabular}
+
+\needspace{7\baselineskip}
+\problem{Two of 13 distinct cards labeled 1--13 are drawn \emph{without replacement}. Let $A$ = both cards odd, and $B$ = the sum is even.}
+\begin{enumerate}
+  \item Explain in one sentence why the sum is even exactly when both cards are odd or both cards are even.
+  \worklines{2em}
+  \item Count $n(B)$ using binomial coefficients.
+  \worklines{3em}
+  \item Count $n(A \cap B)$.
+  \worklines{2.5em}
+  \item Compute $P(A \mid B) = \dfrac{n(A \cap B)}{n(B)}$ and simplify.
+  \worklines{3em}
+\end{enumerate}
+\hint{There are 7 odd labels and 6 even labels. Order does not matter, so count unordered pairs.}
+
+\problem{A fraud-detection model flags transactions for review. $0.5\%$ of transactions are fraudulent; the model flags $95\%$ of fraudulent transactions and $2\%$ of legitimate ones. Let $F$ = fraudulent and $R$ = flagged.}
+\begin{enumerate}
+  \item Write down $P(F)$, $P(R \mid F)$, and $P(R \mid F')$ from the description.
+  \worklines{2.5em}
+  \item Use the law of total probability to compute $P(R)$:
+  \[ P(R) = P(R \mid F)P(F) + P(R \mid F')P(F') \]
+  \worklines{3em}
+  \item Apply Bayes' theorem to compute $P(F \mid R)$, the probability that a flagged transaction is actually fraudulent.
+  \worklines{3.5em}
+\end{enumerate}
+\hint{Think about how many legitimate transactions there are compared to fraudulent ones.}
+
+\problem{\textbf{Scenario:} UIC wants to know whether the new shuttle schedule reduced student wait times on campus. For each stage of the lifecycle, write one concrete action a data scientist would take.}
+\begin{enumerate}
+  \item Ask a question: \rule{4in}{0.4pt}
+  \item Obtain data: \rule{4in}{0.4pt}
+  \item Understand the data: \rule{4in}{0.4pt}
+  \item Understand the world: \rule{4in}{0.4pt}
+  \item Reports, decisions, solutions: \rule{4in}{0.4pt}
+\end{enumerate}
+\hint{The lifecycle is a cycle, not a line. Where might this project loop back to an earlier stage?}
+
+\end{document}

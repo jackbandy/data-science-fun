@@ -49,8 +49,7 @@ Linear regression models a linear relationship between two variables.
 
 ::: {.column width="45%"}
 
-![](images/linearRegression.png
-)
+![](../assets/week8/advertising-sales.svg)
 
 
 :::
@@ -66,10 +65,64 @@ $$\hat{y} = b_0 + b_1 x$$
 
 where
 
+::: {.incremental}
 - $\hat{y}$ — the response variable, which we are trying to predict based on $x$
 - $x$ — the predictor variable
 - $b_0$ — the intercept, the predicted value of $y$ when $x$ is zero
 - $b_1$ — the slope, how much the predicted value of $y$ changes for every one-unit increase in the value of $x$
+:::
+
+---
+
+# Correlation coefficient {.smaller}
+
+The correlation coefficient $r$ measures the strength and direction of a linear relationship.
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+::: {.incremental}
+- $r$ always falls between $-1$ and $+1$.
+- The sign gives the direction: positive rises, negative falls.
+- The closer $|r|$ is to 1, the tighter the points hug the line.
+- $r$ near 0 means no linear pattern — a curved one may still exist.
+:::
+
+:::
+
+::: {.column width="45%"}
+
+![](../assets/week8/correlation-strengths.svg)
+
+<p class="code-caption" style="margin-top:0.5em;">Same idea at four strengths</p>
+
+:::
+
+::::
+
+::: {.notes}
+r is symmetric — swapping x and y leaves it unchanged — while the regression slope is not. The near-zero panel is the one to dwell on: no linear pattern is not the same as no pattern. Correlation says nothing about cause; that comes from the study design.
+:::
+
+---
+
+# Correlation coefficient example {.smaller}
+
+::: {style="font-size:1.5em;"}
+$$r = \frac{\sum (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum (x_i-\bar{x})^2 \; \sum (y_i-\bar{y})^2}}$$
+:::
+
+::: {.incremental}
+- Each term pairs how far a point sits from $\bar{x}$ with how far it sits from $\bar{y}$.
+- That product is positive when both deviate the same way, negative when they deviate oppositely.
+- The denominator rescales the total so the result always lands between $-1$ and $+1$.
+:::
+
+
+::: {.notes}
+Walk the numerator first: it is a sum of products of deviations, so it grows when x and y move together. The denominator is just normalization — it is what forces the range, and it is why r has no units.
+:::
 
 ---
 
