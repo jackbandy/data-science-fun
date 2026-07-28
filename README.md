@@ -2,7 +2,7 @@
 ## Materials for CS 418: Intro to Data Science
 ### University of Illinois Chicago (UIC)
 
-I'm preparing to teach a section of CS 418 (Intro to Data Science) in Fall 2026. This repository is intended as the main container for materials, including slides, worksheets, references, etc. My goal is to create a library of accessible, high-quality materials, including hand-written / hand-drawn exercises, inspired by [Tom Yeh's "AI by Hand" series](https://www.byhand.ai).
+These are in-progress materials for a section of CS 418 (Intro to Data Science) in Fall 2026. This repository is intended as the main container for reference materials, including slides, worksheets, demo code, etc. The goal is to create a library of accessible, high-quality materials, including hand-written / hand-drawn exercises, inspired by [Tom Yeh's "AI by Hand" series](https://www.byhand.ai).
 
 Materials are under active development during Summer 2026. The public-facing site, [DoDataScience.fun](https://dodatascience.fun/), lives at the `docs/` folder, deployed via GitHub Pages.
 
@@ -36,13 +36,13 @@ data-science-fun/
 
 ## GitHub Actions
 
-My goal is to make materials very portable, accessible, and **easily editable**. This usually means putting "raw content" in a markdown file somewhere, which gets assembled and served automatically any time there is a push (via GitHub Actions workflows).
+The goal of the setup is to make materials very portable, accessible, and **easily editable**. This usually means putting "raw content" in a markdown file somewhere, which gets assembled and served automatically any time there is a push (via GitHub Actions workflows).
 
 Although it feels over-engineered in some cases, the setup allows quick editing of slide materials, syllabus text, and/or the mini-book. Simply edit a markdown file, commit/push the changes, and let GitHub handle the rest.
 
 ### Slide build
 
-I'm trying to avoid Google Slides, and the current markdown-based slide workflow uses Quarto to generate Reveal.js decks.
+I'm trying to avoid Google Slides, and the current markdown-based slide workflow uses Quarto to generate Reveal.js decks in html:
 
 ```text
  [docs/slides/week0.qmd ... week12.md]
@@ -55,7 +55,7 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 
 **Building slides:**
 
-`deploy-pages.yml` renders the decks on every push, caching the output and re-rendering only the decks whose sources changed. HTML is required (a failure fails the deploy); the PDF export is best-effort and non-blocking. To build locally:
+`deploy-pages.yml` renders the decks on every push, caching the output and re-rendering only the decks whose sources changed. HTML is required (a failure fails the deploy); the PDF export is sort of a best-effort (non-blocking if it fails). To build locally:
 
 ```bash
 cd docs/slides
