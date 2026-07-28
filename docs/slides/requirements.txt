@@ -1,6 +1,10 @@
 jupyter
 nbformat
-numpy
+# numba (pulled in via arviz, used by week6's pymc deck) removed support for
+# np.row_stack at NumPy 2.5. Unpinned, the resolver takes numpy 2.5 and is then
+# forced onto a numba prerelease that still calls it, breaking the slide render.
+# Capping here keeps numpy 2.4.x with stable numba. Lift once numba supports 2.5.
+numpy<2.5
 polars
 seaborn
 plotnine
