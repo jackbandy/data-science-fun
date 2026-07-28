@@ -162,23 +162,8 @@ for slide in "${SLIDE_FILES[@]}"; do
   cp "$src_file" "$src_file.stampbak"
   python3 "$SCRIPT_DIR/postprocess_slides.py" "$src_file" \
     || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
-  # For Python slides, ensure keep-ipynb: true is set so the notebook is preserved
-  if grep -q '```{python}' "$src_file"; then
-    python3 - "$src_file" <<'INJECT_PY'
-import sys, re
-path = sys.argv[1]
-with open(path) as f:
-    content = f.read()
-if 'keep-ipynb' not in content:
-    if re.search(r'^execute:', content, re.MULTILINE):
-        content = re.sub(r'^(execute:[ \t]*\n)', r'\1  keep-ipynb: true\n', content, count=1, flags=re.MULTILINE)
-    else:
-        content = re.sub(r'^(---\n)', r'---\nexecute:\n  keep-ipynb: true\n', content, count=1, flags=re.MULTILINE)
-    with open(path, 'w') as f:
-        f.write(content)
-INJECT_PY
-    if [[ $? -ne 0 ]]; then mv -f "$src_file.stampbak" "$src_file"; exit 1; fi
-  fi
+  # keep-ipynb: true comes from _metadata.yml, which applies to every deck in
+  # this directory — no per-deck frontmatter edit needed.
   (
     cd "$SCRIPT_DIR"
     "$QUARTO_CMD" render "$(basename "$slide")" --to revealjs --output "$base.html"
@@ -199,6 +184,10 @@ INJECT_PY
   fi
 done
 fi
+
+# Refresh the "Supporting Python code" links in index.html so every deck that
+# produced a notebook is linked (and any that stopped producing one is not).
+python3 "$SCRIPT_DIR/sync_slide_links.py" "$SCRIPT_DIR"
 
 if [[ "$BUILD_PDFS" != "true" ]]; then
   echo "[quarto] Skipping PDF generation."

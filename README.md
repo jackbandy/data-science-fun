@@ -63,7 +63,15 @@ cd docs/slides
 BUILD_PDFS=true ./build_all_quarto.sh  # Include PDFs
 ```
 
-The script generates Quarto revealjs output files (`.html` and `.pdf`) for every slide source (`.qmd` or `.md`) in the slides directory. Executable Python code is converted to Jupyter notebooks and saved in `code_from_slides/`.
+The script generates Quarto revealjs output files (`.html` and `.pdf`) for every slide source (`.qmd` or `.md`) in the slides directory.
+
+Decks that run Python on the Jupyter engine also keep their executed notebook as `docs/slides/weekN.ipynb`, so students can download and run the full code behind the slides. This comes from `execute: keep-ipynb: true` in `docs/slides/_quarto.yml`, which applies to every deck in the directory — don't repeat it in individual deck frontmatter. (`keep-ipynb` is a document-level option, but Quarto's project config propagates it; setting it in `_metadata.yml` does *not* work.) Unlike the rest of the rendered slide output, these notebooks are committed.
+
+Decks on the **knitr** engine (`engine: knitr`) can't produce a notebook at all — that includes R + Python combo decks that drive Python through reticulate, like Week 5. Those link their `weekN.qmd` source instead. The source is the better artifact anyway: it holds the *full* code including `include: false` setup chunks, and it can't drift from the deck the way a checked-in notebook can. (`keep-md: true` is **not** a substitute — it emits only the chunks visible on slides, drops the hidden setup, and its output carries `revealjs:` front matter that the build would then mistake for another deck source.)
+
+After rendering, `sync_slide_links.py` rewrites the "Supporting … code" bullets in `docs/slides/index.html`: a notebook link where one exists, otherwise a source link, each labelled with the languages the deck runs ("Supporting R + Python code"). The lines are generated — edit the script, not the markup.
+
+Those `.qmd` download links resolve because the Pages workflow copies `docs/slides/week*.qmd` into `_site/slides/` **after** Jekyll runs. `docs/_config.yml` deliberately excludes `slides/*.qmd` — a `.qmd` opens with YAML front matter, so Jekyll would otherwise render it into `slides/weekN.html` and clobber the real deck. Copying post-Jekyll publishes the sources verbatim.
 
 **Notes:**
 

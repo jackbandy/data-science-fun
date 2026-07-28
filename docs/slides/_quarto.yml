@@ -9,6 +9,13 @@ format:
     controls: true
     progress: true
 
+# Every deck here keeps its executed notebook, so any deck with Python cells
+# produces a weekN.ipynb students can download. Decks with no executable code
+# are unaffected (only the jupyter engine emits one). This is the single place
+# keep-ipynb is set — do not repeat it in individual deck frontmatter.
+execute:
+  keep-ipynb: true
+
 slide-level: 1
 bibliography: references.bib
 lib-dir: _libs

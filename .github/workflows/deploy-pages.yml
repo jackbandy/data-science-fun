@@ -230,6 +230,19 @@ jobs:
           source: ./docs
           destination: ./_site
 
+      # Runs AFTER Jekyll, on purpose. docs/_config.yml excludes slides/*.qmd
+      # because a .qmd opens with YAML front matter, so Jekyll would render it
+      # into slides/weekN.html and clobber the real Reveal.js deck Quarto built.
+      # Copying straight into _site bypasses Jekyll entirely and publishes the
+      # sources verbatim, which is what the index's "download source" links on
+      # knitr decks (R + Python via reticulate, which cannot yield an .ipynb)
+      # point at. Kept in sync by docs/slides/sync_slide_links.py.
+      - name: Publish slide sources for download
+        run: |
+          mkdir -p _site/slides
+          cp docs/slides/week*.qmd _site/slides/
+          ls -1 _site/slides/week*.qmd
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

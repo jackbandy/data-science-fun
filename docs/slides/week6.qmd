@@ -4,8 +4,6 @@ jupyter: python3
 # Some code in this file was generated with LLM assistance.
 # It is maintained and vetted by jxb@uic.edu.
 # Please contact jxb@uic.edu with any issues or concerns.
-execute:
-  keep-ipynb: true
 format:
   revealjs:
     fig-format: svg

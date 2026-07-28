@@ -70,6 +70,18 @@ Placeholder content for Week 5.
 ---
 
 
+# Pie vs. Bar: Three Comparisons {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/Piecharts.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/Piecharts.svg)
+:::
+
+---
+
 # Pie vs. Bar Example {.image-frame-slide}
 
 ::: {.content-visible when-format="html"}
@@ -99,6 +111,8 @@ Placeholder content for Week 5.
 - A **donut chart** is a pie chart with the center cut out
 - Keeps the "this is all part of a whole" message
 - Slices are still hard to compare
+- Common argument for donuts: the center space can carry a label or summary stat
+- Common argument against: harder to judge angles without the center reference point
 
 ---
 
