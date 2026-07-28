@@ -53,26 +53,6 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
  [Reveal.js HTML]          [PDF]
 ```
 
-**Building slides:**
-
-`deploy-pages.yml` renders the decks on every push, caching the output and re-rendering only the decks whose sources changed. HTML is required (a failure fails the deploy); the PDF export is sort of a best-effort (non-blocking if it fails). To build locally:
-
-```bash
-cd docs/slides
-./build_all_quarto.sh       # HTML only (default)
-BUILD_PDFS=true ./build_all_quarto.sh  # Include PDFs
-```
-
-The script generates Quarto revealjs output files (`.html` and `.pdf`) for every slide source (`.qmd` or `.md`) in the slides directory.
-
-Decks that run Python on the Jupyter engine also keep their executed notebook as `docs/slides/weekN.ipynb`, so students can download and run the full code behind the slides. This comes from `execute: keep-ipynb: true` in `docs/slides/_quarto.yml`, which applies to every deck in the directory — don't repeat it in individual deck frontmatter. (`keep-ipynb` is a document-level option, but Quarto's project config propagates it; setting it in `_metadata.yml` does *not* work.) Unlike the rest of the rendered slide output, these notebooks are committed.
-
-Decks on the **knitr** engine (`engine: knitr`) can't produce a notebook at all — that includes R + Python combo decks that drive Python through reticulate, like Week 5. Those link their `weekN.qmd` source instead. The source is the better artifact anyway: it holds the *full* code including `include: false` setup chunks, and it can't drift from the deck the way a checked-in notebook can. (`keep-md: true` is **not** a substitute — it emits only the chunks visible on slides, drops the hidden setup, and its output carries `revealjs:` front matter that the build would then mistake for another deck source.)
-
-After rendering, `sync_slide_links.py` rewrites the "Supporting … code" bullets in `docs/slides/index.html`: a notebook link where one exists, otherwise a source link, each labelled with the languages the deck runs ("Supporting R + Python code"). The lines are generated — edit the script, not the markup.
-
-Those `.qmd` download links resolve because the Pages workflow copies `docs/slides/week*.qmd` into `_site/slides/` **after** Jekyll runs. `docs/_config.yml` deliberately excludes `slides/*.qmd` — a `.qmd` opens with YAML front matter, so Jekyll would otherwise render it into `slides/weekN.html` and clobber the real deck. Copying post-Jekyll publishes the sources verbatim.
-
 **Notes:**
 
 - The decks are `docs/slides/week0.md` through `docs/slides/week12.md`, with `.qmd` files using Quarto's extended markdown. Each file contains Quarto Reveal.js configuration.
@@ -82,7 +62,24 @@ Those `.qmd` download links resolve because the Pages workflow copies `docs/slid
 - The previous Marp experiment is archived in `docs/slides/marp_archive/`. Run `docs/slides/marp_archive/build_all_marp.sh` to rebuild its HTML and PDF outputs.
 - More complicated than Google Slides? Yes. Worth it for freedom, portability, accessibility, etc.? For now, yes.
 
-**Theme:**
+**Building slides:**
+
+```bash
+cd docs/slides
+./build_all_quarto.sh       # HTML only (default)
+BUILD_PDFS=true ./build_all_quarto.sh  # Include PDFs
+```
+
+** Technical Notes**
+- `deploy-pages.yml` renders the decks on every push (cache output and re-render only changed sources)
+- HTML is required, PDF export is best-effort (non-blocking)
+- Jupyter-engine decks keep their executed notebook as `docs/slides/weekN.ipynb` - makes it easy to download and run the code
+	- **knitr**-engine decks (R + Python combos like Week 5) can't produce a notebook, so they link their `weekN.qmd` source instead
+- `sync_slide_links.py` rewrites the "Supporting … code" bullets in `docs/slides/index.html` after rendering (notebook link if one exists, else source link)
+- The workflow should copy `docs/slides/week*.qmd` into `_site/slides/` after Jekyll runs
+	- (`docs/_config.yml` excludes `slides/*.qmd` from Jekyll)
+
+**Slide Theme:**
 
 The slide theme uses Big Shoulders for title headings and a Franklin-style sans stack for body and footer text. The repo self-hosts Libre Franklin from `impallari/Libre-Franklin` as the libre body-font asset used across the decks.
 
