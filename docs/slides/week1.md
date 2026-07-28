@@ -437,7 +437,7 @@ René Magritte, *The Treachery of Images* (1929). [LACMA Collections](https://co
 <img src="../assets/triangles/00-triangle-best.svg" alt="An equilateral triangle on a golden-ratio canvas">
 
 ::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
-An equilateral triangle — or is it? See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/01-working-toward-wisdom.html).
+An equilateral triangle — or is it? See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
 :::
 
 ---

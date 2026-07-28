@@ -241,6 +241,15 @@ jobs:
       # Outside links are handled weekly - link-check-external.yml.
       #
       # PDFs are excluded
+      #
+      # --root-dir resolves root-relative links (the masthead's "/", "/slides/")
+      # against _site; without it every one of them errors out as unresolvable.
+      #
+      # --include-verbatim is deliberately not set: it makes lychee read the
+      # inline <script> blocks in the reveal.js decks and Quarto book, where
+      # JS string fragments ("#", ref.getAttribute('data-footnote-href')) get
+      # misparsed as links and fail
+      # the <a href> links are still checked.
       - name: Check internal links
         continue-on-error: ${{ github.event_name != 'pull_request' }}
         uses: lycheeverse/lychee-action@v2
@@ -248,7 +257,7 @@ jobs:
           args: >-
             --offline
             --no-progress
-            --include-verbatim
+            --root-dir ${{ github.workspace }}/_site
             --exclude '\.pdf$'
             --exclude-path _site/slides/_libs
             --exclude-path _site/ethics-in-data-science/book/site_libs
