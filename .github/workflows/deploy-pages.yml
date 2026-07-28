@@ -173,7 +173,7 @@ jobs:
         id: setup-chrome
         if: github.event_name != 'pull_request'
         continue-on-error: true
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
 
       - name: Render slide PDFs (bonus — non-blocking)
         if: github.event_name != 'pull_request'
