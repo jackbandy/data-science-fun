@@ -30,7 +30,7 @@ jobs:
     steps:
       # Full commit history is needed for the changed-files diff below
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           filter: blob:none

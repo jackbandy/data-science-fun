@@ -23,7 +23,7 @@ jobs:
   generated-files:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Re-run the slide link generator
         run: python3 docs/slides/sync_slide_links.py docs/slides
@@ -44,7 +44,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -80,7 +80,7 @@ jobs:
   duplicate-assets:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # There are 5 known sets of duplicates left in docs/ (a shared font file,
       # a license badge, and a few reused SVGs). Rather than fail on those,
