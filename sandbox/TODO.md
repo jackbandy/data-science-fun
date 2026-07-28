@@ -23,8 +23,8 @@ Scope: general setup, performance, and workflow simplification (slides/syllabus 
 
 ### High-impact: repo size & assets
 
-- [ ] **Delete `docs/assets/orange-line-stops-photos/` (remaining ~29 files).** Nothing references it except its own `SOURCES.md`; all decks use `orange-line-stops-better/` instead. Removing it further shrinks the deployed Pages artifact. If any photos are worth keeping for later, move them to `sandbox/ignore/`. *(July 2, 2026: the 14 byte-identical duplicates of `orange-line-stops-better/` files were deleted.)*
-- [ ] **Web-optimize the large JPGs that ship to Pages.** A dozen tracked images are 6–19 MB (`orange-line-stops-better/stop05-clark-lake-a.jpg` 18.5 MB, several `near-orange-line-stops/` and `art/` files 8–13 MB). Slides load these full-size. Resize to ~2000px max dimension at quality ~80 (typically <500 KB each); keep originals in `sandbox/ignore/` if provenance matters. `docs/` tracked content is currently ~446 MB against GitHub Pages' 1 GB soft limit.
+- [x] **Delete `docs/assets/orange-line-stops-photos/`.** *(July 28, 2026: deleted the whole directory — 108 MB, 43 files. Verified first that no deck referenced it (only its own `SOURCES.md` did), that `orange-line-stops-better/` carries its own complete `SOURCES.md` so CC attribution is preserved, and that only one image differed by content (`stop01-harold-washington-library-a.jpg`, where `better/` holds the curated version). The 27 photos with no counterpart in `better/` went with it; they remain recoverable from git history if any are wanted later.)*
+- [ ] **Web-optimize the large JPGs that ship to Pages.** 22 tracked images under `docs/` are still over 5 MB (`orange-line-stops-better/stop05-clark-lake-a.jpg` 18.5 MB, several `near-orange-line-stops/` and `art/` files 8–13 MB). Slides load these full-size, which is a real accessibility problem for students on phones or campus wifi. Resize to ~2000px max dimension at quality ~80 (typically <500 KB each); keep originals in `sandbox/ignore/` if provenance matters. `docs/` tracked content is ~337 MB against GitHub Pages' 1 GB soft limit.
 - [x] **Git history is 1.0 GB, mostly dead slide PDFs.** *(July 2, 2026: rewrote history with `git filter-repo --path-glob 'docs/slides/*.pdf' --invert-paths` and force-pushed. Any old clones must be re-cloned; commit hashes changed.)*
 - [x] **Untrack `sandbox/scripts/ethics-reference-check-cache.json` (6.9 MB).** *(July 2, 2026: `git rm --cached` and added to root `.gitignore`.)*
 
@@ -34,7 +34,24 @@ Scope: general setup, performance, and workflow simplification (slides/syllabus 
 - [x] **Stop cloning full history on every deploy.** *(July 2, 2026: added `filter: blob:none` to the checkout step; full commit graph is kept for the changed-files diff but historic blobs are no longer downloaded.)*
 - [x] **Python deps installed twice in CI.** *(July 2, 2026: `build_all_quarto.sh` now honors `SKIP_VENV=true`, and both CI render steps set it, so CI uses the system-wide `uv pip install` only.)*
 - [ ] **Pin `docs/slides/requirements.txt`.** Only two loose upper bounds (`matplotlib<3.9`, `arviz<0.20`); everything else floats, so CI renders can drift between runs. Pin exact versions (or commit a `uv lock` / `requirements.lock`) for reproducible deck output.
-- [ ] **Bump actions off deprecated Node.js 20.** `actions/cache@v4`, `actions/checkout@v4`, `actions/configure-pages@v5`, `actions/deploy-pages@v4`, `actions/setup-node@v4`, `actions/setup-python@v5`, `actions/upload-artifact@v4`, and `browser-actions/setup-chrome@v1` all target Node 20, which GitHub is deprecating; they're currently being force-run on Node 24. Upgrade to the latest major versions that target Node 24 before GitHub stops forcing the runtime. See https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+- [ ] **Bump actions off deprecated Node.js 20.** `actions/cache@v4`, `actions/checkout@v4`, `actions/configure-pages@v5`, `actions/deploy-pages@v4`, `actions/setup-node@v4`, `actions/setup-python@v5`, `actions/upload-artifact@v4`, and `browser-actions/setup-chrome@v1` all target Node 20, which GitHub is deprecating; they're currently being force-run on Node 24. Upgrade to the latest major versions that target Node 24 before GitHub stops forcing the runtime. See https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/ *(July 28, 2026: Dependabot now watches `.github/workflows/` weekly and will open these bumps as PRs, but major-version bumps still need a human to review and merge.)*
+
+---
+
+## Automated checks — added July 28, 2026
+
+Set up in this pass: PR builds + a required `build` check on `main` (with admin/write
+bypass so direct pushes still work), an internal link check inside the build, a weekly
+external link check that files a tracking issue, Dependabot, and `repo-checks.yml`
+(generated-file drift, `ruff`/`shellcheck`, duplicate-file ratchet).
+
+### Still to add
+
+- [ ] **Guard against new oversized files.** Fail a PR that adds a file over ~2 MB, with a label to override for genuine datasets. This only stops things getting worse — it does nothing about the 22 images already over 5 MB (see "Web-optimize the large JPGs" above), and nothing about git history, which still carries every deleted blob.
+- [ ] **Alt-text ratchet for accessibility.** 34 of 43 markdown images use empty alt text (`![](...)`) and 30 `<img>` tags have no `alt` at all, which cuts against the repo's stated accessibility goal. This can't blanket-fail: empty alt is *correct* for purely decorative images. Build it as a count that must not increase, then work the number down. Considered and deferred: a full `pa11y`/`axe` sweep, which is more thorough but much noisier on Reveal.js decks (theme contrast warnings on every slide).
+- [ ] **Secret scanning.** Two layers, both free on public repos: enable GitHub secret scanning + push protection in repo settings (blocks at push time, no workflow needed), and add `gitleaks` in CI as a backstop. The realistic risk here isn't an API key — it's a student name, grade, or Canvas token pasted into a notebook cell or a file under `datasets/`.
+- [ ] **Validate `docs/_data/schedule.csv` on PRs.** It's the single source of truth for both the Jekyll homepage table and `schedule.lua`'s syllabus expansion, so a malformed row silently produces a wrong table in two places. Check column count, parseable dates, chronological order, and no duplicate weeks.
+- [ ] **Consider making `repo-checks.yml` required.** Currently advisory. Note the trap if you do: required checks deadlock with `paths:` filters — see the header comment in `deploy-pages-skip.yml` for why that companion workflow exists.
 
 ### Simplification / cruft
 

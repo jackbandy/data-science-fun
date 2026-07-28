@@ -1,0 +1,33 @@
+version: 2
+
+updates:
+  # Keeps the action versions in .github/workflows/ up to date.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+      # 6am local year-round
+      time: "06:00"
+      timezone: "America/Chicago"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
+    groups:
+      # Bundle the small routine updates into one PR instead of six.
+      actions:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Python packages used to build the slides. Updates here can change how
+  # slides/charts actually look, so these come as separate PRs
+  - package-ecosystem: "pip"
+    directory: "/docs/slides"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 3

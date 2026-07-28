@@ -1,0 +1,93 @@
+name: Check external links
+
+# links to readings, datasets, tool docs, websites, etc.
+# can break over time
+#
+# This setup should check for broken links once a week and file a GitHub issue
+# listing what's broken,
+#
+# reads the source files, not the built site
+
+on:
+  schedule:
+    # Thursdays at 11:00 UTC, which is 6am in Chicago during daylight saving
+    # time and 5am the rest of the year. GitHub only accepts UTC here, so the
+    # local time shifts by an hour when the clocks change.
+    - cron: "0 11 * * 4"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: link-check-external
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check external links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --include-verbatim
+            --scheme https
+            --scheme http
+            --max-concurrency 8
+            --timeout 20
+            --max-retries 2
+            --accept 200..=299,403,429
+            --exclude-path docs/ethics-in-data-science/book
+            --exclude-path docs/slides/marp_archive
+            --exclude-path docs/slides/_libs
+            --exclude-path docs/syllabus
+            'README.md'
+            'NOTES.md'
+            'docs/**/*.md'
+            'docs/**/*.qmd'
+            'docs/**/*.html'
+            'docs/_data/**/*.yml'
+            'syllabus_source/**/*.md'
+            'worksheets_source/**/*.md'
+          output: ./lychee/out.md
+          # don't fail the job over a broken link
+          fail: false
+
+      - name: Open or update the tracking issue
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Broken external links"
+          content-filepath: ./lychee/out.md
+          labels: |
+            link-rot
+            automated
+
+      - name: Close the tracking issue when everything resolves
+        if: steps.lychee.outputs.exit_code == 0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          # The step above adds to an open issue with this title if one exists.
+          # Closing it here is what makes next week start a fresh report
+          # instead of adding onto an old one.
+          issue=$(gh issue list --state open --label link-rot \
+            --search 'Broken external links in:title' \
+            --json number,title \
+            --jq '.[] | select(.title == "Broken external links") | .number' \
+            | head -n 1)
+
+          if [[ -n "$issue" ]]; then
+            gh issue comment "$issue" --body "All external links resolved as of $(date -u '+%Y-%m-%d'). Closing automatically."
+            gh issue close "$issue"
+          else
+            echo "No open link-rot issue to close."
+          fi

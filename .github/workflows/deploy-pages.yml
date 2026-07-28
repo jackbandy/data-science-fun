@@ -7,44 +7,53 @@ on:
       - "docs/**"
       - "syllabus_source/**"
       - ".github/workflows/deploy-pages.yml"
+  # build on pull requests, so mistakes show up before the site goes live
+  pull_request:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "syllabus_source/**"
+      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      # Full commit history is needed for the changed-files diff below, but a
-      # blob:none partial clone skips downloading historic file contents
-      # (checkout lazily fetches only the blobs the working tree needs).
+      # Full commit history is needed for the changed-files diff below
       - name: Check out repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           filter: blob:none
 
+      # Skipped on PRs because it needs permission to write to Pages
       - name: Set up Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
-      # Detect which docs files changed in this push so we can skip unchanged renders.
-      # workflow_dispatch and initial pushes (zero SHA) always build everything.
+      # Detect which docs files changed to skip unchanged renders.
       - name: Detect changed files
         id: changed
         run: |
-          BEFORE="${{ github.event.before }}"
           EVENT="${{ github.event_name }}"
+
+          # A push tells us the commit it started from (event.before), but a
+          # PR doesn't. For PRs, compare against the branch it will merge into
+          # so we see every change in the PR, not just the newest commit.
+          if [[ "$EVENT" == "pull_request" ]]; then
+            BEFORE="${{ github.event.pull_request.base.sha }}"
+          else
+            BEFORE="${{ github.event.before }}"
+          fi
 
           # Fall back to a full build when BEFORE is unknown or unresolvable
           # (manual runs, first push, or a force-push after a history rewrite).
@@ -112,9 +121,7 @@ jobs:
       - name: Install R dependencies
         run: Rscript -e 'pkgs <- c("knitr", "rmarkdown", "reticulate", "here", "ggplot2", "ggtext", "patchwork", "svglite"); install.packages(setdiff(pkgs, rownames(installed.packages())))'
 
-      # Cache the rendered book output. Exact key covers all source files under
-      # ethics-in-data-science/; a restore-keys fallback provides the last good
-      # build when sources change (triggering a fresh render below).
+      # Cache the rendered book output
       - name: Restore Quarto book cache
         id: book-cache
         uses: actions/cache@v4
@@ -128,11 +135,7 @@ jobs:
         run: quarto render docs/ethics-in-data-science
 
       # Cache the rendered slide outputs ONLY (deck HTML, support files, libs).
-      # Exact key covers all slide source files plus the postprocessor and
-      # requirements; a restore-keys fallback lets us reuse unchanged decks and
-      # only re-render what changed (via RENDER_SLIDES). Tracked sources
-      # (week*.qmd/.md/.ipynb, index.html) must stay OUT of the cache path: a
-      # stale restore would otherwise overwrite the fresh checkout.
+
       - name: Restore slides cache
         id: slides-cache
         uses: actions/cache@v4
@@ -144,9 +147,7 @@ jobs:
           key: slides-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/postprocess_slides.py', 'docs/slides/requirements.txt') }}
           restore-keys: slides-
 
-      # HTML decks are required: if this fails, the deploy should fail loudly.
-      # Skipped on exact cache hit (no sources changed). On a partial restore,
-      # RENDER_SLIDES limits rendering to only the changed deck files.
+      # HTML decks are required: if this fails, the deploy should fail
       - name: Render Quarto slides (HTML — required)
         if: steps.slides-cache.outputs.cache-hit != 'true'
         env:
@@ -157,11 +158,12 @@ jobs:
           cd docs/slides
           bash ./build_all_quarto.sh
 
-      # PDF export is a bonus. It needs a headless browser plus Node >=22 (for the
-      # global WebSocket the CDP driver in build_all_quarto.sh relies on). The steps
-      # below are non-blocking: if the browser, Node, or any deck's export fails,
+      # PDF export is a bonus - it needs a headless browser plus Node >=22 
+      # The steps below are non-blocking: if the browser, Node, or any deck's export fails,
       # continue-on-error lets the HTML-only deploy proceed.
+      # Skipped on PRs.
       - name: Set up Node (>=22 for global WebSocket)
+        if: github.event_name != 'pull_request'
         continue-on-error: true
         uses: actions/setup-node@v4
         with:
@@ -169,10 +171,12 @@ jobs:
 
       - name: Set up Chromium for slide PDF export
         id: setup-chrome
+        if: github.event_name != 'pull_request'
         continue-on-error: true
         uses: browser-actions/setup-chrome@v1
 
       - name: Render slide PDFs (bonus — non-blocking)
+        if: github.event_name != 'pull_request'
         continue-on-error: true
         env:
           BUILD_PDFS: "true"
@@ -185,9 +189,7 @@ jobs:
 
       # The syllabus is built here rather than committed, so it must exist on
       # every run. Cache it on an exact key only: a hit skips both the ~1 GB
-      # TeX Live install and the render, and keeps the "This version created"
-      # stamp from when the content actually changed rather than resetting it
-      # on unrelated pushes. Any source change misses and rebuilds in full.
+      # TeX Live install and the render, keeps the "This version created" stamp
       - name: Restore syllabus cache
         id: syllabus-cache
         uses: actions/cache@v4
@@ -211,9 +213,7 @@ jobs:
         run: bash syllabus_source/build.sh
 
       # Strip dev/build cruft so we don't ship venvs and caches to GitHub Pages.
-      # TODO: Verify the slide notebooks (docs/slides/week*.ipynb) are actually
-      # reachable on the deployed site (e.g. dodatascience.fun/slides/week0.ipynb)
-      # so students can download the code — this prune must not remove them.
+      # TODO: Verify the slide notebooks (docs/slides/week*.ipynb)
       - name: Prune build artifacts before upload
         run: |
           find docs -type d -name '.venv' -prune -exec rm -rf {} +
@@ -221,26 +221,14 @@ jobs:
           find docs -type f -name '*.quarto_ipynb' -delete
           find docs -type f -name '.DS_Store' -delete
 
-      # Runs last, once every generated page is on disk. Jekyll expands the
-      # shared includes into the pages that carry front matter and renders
-      # docs/faq.md; the Quarto output above has none, so it is copied as-is.
+      # Runs last, once every generated page is on disk.
       - name: Build site with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./docs
           destination: ./_site
 
-      # Runs AFTER Jekyll, on purpose. docs/_config.yml excludes slides/*.qmd
-      # because a .qmd opens with YAML front matter, so Jekyll would render it
-      # into slides/weekN.html and clobber the real Reveal.js deck Quarto built.
-      # Copying straight into _site bypasses Jekyll entirely and publishes the
-      # sources verbatim, which is what the index's "download source" links on
-      # knitr decks (R + Python via reticulate, which cannot yield an .ipynb)
-      # point at. Kept in sync by docs/slides/sync_slide_links.py.
-      # jekyll-build-pages is a container action running as root, so it leaves
-      # _site owned by root while this step runs as `runner` -- hence the chown
-      # before writing. Reclaiming ownership (rather than `sudo cp`) also keeps
-      # the uploaded artifact free of root-owned files.
+      # Runs AFTER Jekyll, on purpose
       - name: Publish slide sources for download
         run: |
           sudo chown -R "$(id -u):$(id -g)" _site
@@ -248,11 +236,48 @@ jobs:
           cp docs/slides/week*.qmd _site/slides/
           ls -1 _site/slides/week*.qmd
 
+      # Looks for links that point to internal pages or files that don't exist.
+      # --offline means it only checks local files
+      # Outside links are handled weekly - link-check-external.yml.
+      #
+      # PDFs are excluded
+      - name: Check internal links
+        continue-on-error: ${{ github.event_name != 'pull_request' }}
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --no-progress
+            --include-verbatim
+            --exclude '\.pdf$'
+            --exclude-path _site/slides/_libs
+            --exclude-path _site/ethics-in-data-science/book/site_libs
+            '_site/**/*.html'
+          fail: true
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
 
+  # Publishing is a separate job
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # Uses the site the build job already uploaded, so there's nothing to
+      # check out or rebuild here.
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

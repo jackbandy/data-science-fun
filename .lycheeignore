@@ -1,0 +1,36 @@
+# Links the automated link-checker should skip.
+# Used by .github/workflows/link-check-external.yml and by the link check
+# inside deploy-pages.yml.
+
+# --- Sites that block automated visitors -------------------------------------
+# (errors say nothing about whether the link works for real people)
+https://(www\.)?linkedin\.com
+https://(www\.)?x\.com
+https://(www\.)?twitter\.com
+https://(www\.)?facebook\.com
+https://(www\.)?instagram\.com
+https://(www\.)?reddit\.com
+https://(www\.)?wiley\.com
+https://(www\.)?sciencedirect\.com
+https://(www\.)?jstor\.org
+https://(www\.)?tandfonline\.com
+https://link\.springer\.com
+https://dl\.acm\.org
+https://ieeexplore\.ieee\.org
+https://doi\.org
+
+# --- UIC / Canvas ------------------------------------------------------------
+# These require logging in, so the checker only ever reaches the login page.
+https://uic\.instructure\.com
+https://.*\.uic\.edu/.*login
+
+# --- Placeholders, not real links --------------------------------------------
+# Jekyll/Quarto template code that gets filled in when the site is built.
+.*\{\{.*\}\}.*
+.*\{%.*%\}.*
+^https?://example\.(com|org)
+
+# --- Local development -------------------------------------------------------
+^https?://localhost
+^https?://127\.0\.0\.1
+^https?://0\.0\.0\.0

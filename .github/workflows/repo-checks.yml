@@ -1,0 +1,116 @@
+name: Repo checks
+
+# Three quick checks that don't need the site to be built. They run in
+# parallel and finish in well under a minute.
+#
+# None of these are required checks, so they show up as a red X but don't
+# block merging. See .github/workflows/deploy-pages.yml for the build.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  # docs/slides/index.html has some lines that are written by a script, not by
+  # hand. This re-runs the script and fails if the result differs from what's
+  # committed -- which means someone edited those lines directly and the next
+  # deploy would silently overwrite their work.
+  generated-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Re-run the slide link generator
+        run: python3 docs/slides/sync_slide_links.py docs/slides
+
+      - name: Check the result matches what's committed
+        run: |
+          if ! git diff --exit-code -- docs/slides/index.html; then
+            echo ""
+            echo "docs/slides/index.html is out of date."
+            echo "The diff above is what sync_slide_links.py would change."
+            echo ""
+            echo "Fix it by running this and committing the result:"
+            echo "  python3 docs/slides/sync_slide_links.py docs/slides"
+            exit 1
+          fi
+          echo "index.html matches the generator output."
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ruff
+        run: pip install ruff
+
+      # Only checks for things that are actually broken: syntax errors,
+      # undefined names, typos in variable names. Ruff's full default rules
+      # flag another ~60 style nits in the existing scripts, which would just
+      # mean a permanently red check nobody looks at. Tighten later if you
+      # ever want to clean those up.
+      - name: Check Python scripts
+        run: ruff check --select=E9,F63,F7,F82 --exclude=sandbox .
+
+      # shellcheck comes preinstalled on GitHub's Ubuntu runners.
+      # sandbox/ is scratch work and marp_archive/ is a retired experiment,
+      # so neither is worth gating on.
+      - name: Check shell scripts
+        run: |
+          scripts=$(git ls-files '*.sh' | grep -v '^sandbox/' | grep -v marp_archive)
+          echo "Checking:"; echo "$scripts"
+          # --severity=error catches real bugs (bad syntax, unset variables in
+          # dangerous spots) while ignoring style suggestions.
+          # shellcheck disable=SC2086
+          shellcheck --severity=error $scripts
+
+  # Flags files under docs/ that are byte-for-byte copies of each other.
+  # Duplicates make the repo bigger and make it unclear which copy is the real
+  # one when you go to update an image.
+  duplicate-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # There are 5 known sets of duplicates left in docs/ (a shared font file,
+      # a license badge, and a few reused SVGs). Rather than fail on those,
+      # this only fails if the number goes UP. Lower the number as you clean
+      # them up -- that locks in the progress.
+      - name: Check for new duplicate files
+        env:
+          BASELINE: 5
+        run: |
+          git ls-files -z 'docs/*' | xargs -0 md5sum | sort > all.txt
+          awk '{print $1}' all.txt | uniq -d > dups.txt
+          count=$(wc -l < dups.txt | tr -d ' ')
+
+          echo "Duplicate sets found: $count (baseline: $BASELINE)"
+          echo ""
+          while read -r h; do
+            echo "Identical files:"
+            grep "^$h" all.txt | awk '{print "    " $2}'
+          done < dups.txt
+
+          if [ "$count" -gt "$BASELINE" ]; then
+            echo ""
+            echo "That's more duplicates than before. Either reuse the existing"
+            echo "file instead of adding a copy, or raise BASELINE in this file"
+            echo "if the copy is intentional."
+            exit 1
+          fi
+
+          if [ "$count" -lt "$BASELINE" ]; then
+            echo ""
+            echo "Nice -- fewer duplicates than the baseline."
+            echo "Set BASELINE to $count in this file to keep it from creeping back."
+          fi

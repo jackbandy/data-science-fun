@@ -1,0 +1,31 @@
+name: Deploy GitHub Pages (skip)
+
+# This workflow exists only to keep pull requests from getting stuck.
+#
+# On main, the "build" check is required before a PR can merge. But the real
+# build (deploy-pages.yml) only runs when a PR changes site files. So a PR that
+# only touches datasets/ or README.md would never run "build", and GitHub would
+# wait forever
+#
+# This runs on the PRs ignored by the "real" build 
+#
+# The paths-ignore list below must stay identical to the `paths:` list under
+# `pull_request:` in deploy-pages.yml. If you change one, change the other, or
+# some PRs will run both workflows and others will run neither.
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "syllabus_source/**"
+      - ".github/workflows/deploy-pages.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "No site files changed, so there is nothing to build."
