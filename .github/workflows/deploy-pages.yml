@@ -237,8 +237,13 @@ jobs:
       # sources verbatim, which is what the index's "download source" links on
       # knitr decks (R + Python via reticulate, which cannot yield an .ipynb)
       # point at. Kept in sync by docs/slides/sync_slide_links.py.
+      # jekyll-build-pages is a container action running as root, so it leaves
+      # _site owned by root while this step runs as `runner` -- hence the chown
+      # before writing. Reclaiming ownership (rather than `sudo cp`) also keeps
+      # the uploaded artifact free of root-owned files.
       - name: Publish slide sources for download
         run: |
+          sudo chown -R "$(id -u):$(id -g)" _site
           mkdir -p _site/slides
           cp docs/slides/week*.qmd _site/slides/
           ls -1 _site/slides/week*.qmd
