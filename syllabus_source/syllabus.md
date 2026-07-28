@@ -65,6 +65,11 @@ Provides an in-depth overview of data science in engineering. Topics include mod
 
 **Prerequisite(s):** Grade of C or better in CS 251; and STAT 381 or IE 342 or ECE 341.
 
+**Section-Specific Description**
+
+TK
+
+
 ## [Welcome!]{.underline}
 
 Data are fun! More TK.
