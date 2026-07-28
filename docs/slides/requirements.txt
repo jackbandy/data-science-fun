@@ -9,7 +9,12 @@ polars
 seaborn
 plotnine
 pyarrow
-matplotlib<3.9
+# matplotlib 3.11 stopped importing style/core into the matplotlib.style
+# namespace (style/__init__.py no longer does `from .core import ...`).
+# arviz's __init__ does `style.core.USER_LIBRARY_PATHS.append(...)`, which
+# then raises AttributeError. Capping here keeps 3.10.x, which still exposes
+# it. Lift once arviz imports matplotlib.style.core directly.
+matplotlib<3.11
 statsmodels
 networkx
 pymc
