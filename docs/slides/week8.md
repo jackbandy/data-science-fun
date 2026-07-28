@@ -34,6 +34,45 @@ Placeholder content for Week 8.
 
 ---
 
+# Linear Regression {.smaller}
+Linear regression models a linear relationship between two variables.
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+- The variable being modeled or predicted is called the response variable.
+- The variable used to predict the response is called the predictor variable.
+- One predictor gives a line; several predictors give a plane.
+
+:::
+
+::: {.column width="45%"}
+
+![](images/linearRegression.png
+)
+
+
+:::
+
+::::
+
+---
+
+# Linear regression equation {.smaller}
+A fitted model uses this regression line equation:
+
+$$\hat{y} = b_0 + b_1 x$$
+
+where
+
+- $\hat{y}$ — the response variable, which we are trying to predict based on $x$
+- $x$ — the predictor variable
+- $b_0$ — the intercept, the predicted value of $y$ when $x$ is zero
+- $b_1$ — the slope, how much the predicted value of $y$ changes for every one-unit increase in the value of $x$
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week8.md>.
