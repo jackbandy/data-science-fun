@@ -210,6 +210,18 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 * Look into `raster=True` on the `geom_point` calls in the week 4 "Square Footage vs. Price" build-up. It is there purely for file size: 24,775 points as vector SVG is ~18 MB per figure, and that slide renders five of them (~90 MB) — with raster the whole deck's figures come to 1.8 MB.
 
 
+## Privacy topics
+
+
+* Week 2 Wed (Obtaining data) — segment on data you *can't* obtain and why
+* Week 3 Wed (Data formats) — aggregation as a format: k-anonymity, binning, topcoding
+* Week 7 Wed (Estimation and sampling; randomness) — DP as deliberately added noise
+	* By-hand exercise: add Laplace noise to a small count query, vary epsilon?
+* Week 13 (TBD) — federated learning / private computation?
+* Mini-book `09-case-studies.md` - mention 2020 Census DP?
+* See https://courses.openmined.org/
+
+
 ## Running examples
 * globe toss: estimate % of water
 * voter turnout estimate/forecast
