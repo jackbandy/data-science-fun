@@ -116,6 +116,28 @@ Below are some examples of presuppositions associated with example questions, ag
 * measurable details are not always meaningful
 * triangle/pixel example from first chapter
 
+### Questions with settled answers
+
+* questions that have already been answered "well enough" [@booth_craft_of_research_2024]
+* distinct from *replication*, where re-asking a settled question is the point
+* worth asking anyway when the "settled" answer rests on data or assumptions that have since changed
+* More TK
+
+### Questions with speculative answers
+
+* no evidence could realistically settle the question
+* i.e. any answer stays a matter of opinion
+* often signaled by counterfactuals far outside the data (e.g. "what would this city look like if the highway had never been built?")
+* speculations versus findings 
+* More TK
+
+### Questions whose answers would be dead ends
+
+* answerable, but the answer leads nowhere
+* fails the "so what?" test described earlier [@booth_craft_of_research_2024]
+* related to tedious questions, but the problem is more about the destination
+* More TK
+
 ### Invasive questions
 
 If a potential employer were to ask my weight during a job interview, it would be inappropriate. However, when I visit the Department of Motor Vehicles (DMV) to obtain my driver's license, I am required to provide an answer. I have consented to the requirements of the system if I wish to obtain their permission to drive cars in the state (i.e. to get my driver's license).
@@ -164,6 +186,9 @@ TK
 * Could a less invasive or more precise question serve the same purpose?
 * What can and cannot (should/should not) be predicted?
 * Whose perspective(s) may be missing?
+* Booth's "so what" section
+	* What would be lost if this question is not answered?
+	* Why would others think this question is worth asking?
 
 ## Test
 
