@@ -20,25 +20,28 @@ Asking a question, in the context of the data science lifecycle.
 
 There is a [meme template](https://knowyourmeme.com/memes/all-three-are-going-to-lie-to-you-never-ask-a-woman-her-age) that begins, "Never ask a woman her age, a man his salary..."
 
-The basic principle underlying this meme is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile to consider the appropriateness of a question as part of the data science lifecycle.
+The basic principle underlying this meme is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile to consider the quality of a question as part of the data science lifecycle.
 
-In educational contexts, we appreciate all questions. The only bad question, as the saying goes, is the question that you do not ask. Yet as the aforementioned meme template suggests, some questions are more responsible, worthwhile, and/or appropriate than other questions. How might we distinguish these questions?
+In educational contexts, we appreciate all questions. The only bad question, as the saying goes, is the question you do not ask. And yet, as the aforementioned template suggests, some questions are more responsible, worthwhile, and/or appropriate than other questions. How might we distinguish these questions?
 
 [@sep-questions]
 
+As observed in The Craft of Research (Booth et al.), good questions usually present a corresponding problem, such that answering the question solves that problem.
+
+I will use some modified examples from The Craft of Research to discuss the characteristics of high-quality (and low-quality) questions.
+
+
 ## Where Questions Come From
 
-The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible entry-points into the lifecycle (the other being "obtain data"). In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," which also begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt also suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter.
+The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible starting points in the lifecycle (the other being "obtain data"). In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," a method which begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt also suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter, and Booth et al.'s observation in The Craft of Research.
 
 The data science lifecycle may start with asking a question, but not every question makes it through the full lifecycle. If you ask the score of a tennis match, or the current time, or the temperature outside, or someone's name, you will not proceed through the lifecycle as exhaustively as you would to answer other questions.
 
-So, how do we know when a question is well-suited for the data science lifecycle? On the one hand, you can never be certain. That is one reason why the "Ask a question" step of the lifecycle includes four arrows pointing to it: other steps in the lifecycle can often lead data scientists to revise their original question and begin the process anew.
+So, how do we know when a question is well-suited for the data science lifecycle? On the one hand, you can never be certain when you only have the question. That is one reason why the "Ask a question" step of the lifecycle includes four arrows pointing to it: other steps in the lifecycle can often lead data scientists back to revise their original question and begin the process anew.
 
 On the other had, as data scientists learn from experience, there are some checks and heuristics that can help identify the kinds of questions which make for good data science.
 
-In *The Craft of Research*, Wayne Booth observes that 'not with a big question that attracts everyone in a field, but with a mental itch about a small question that only a single researcher wants to scratch
-
-More TK.
+In *The Craft of Research*, Wayne Booth observes that 'not with a big question that attracts everyone in a field, but with a mental itch about a small question that only a single researcher wants to scratch.
 
 topic vs question
 * a topic only becomes research when it provokes a specific question
