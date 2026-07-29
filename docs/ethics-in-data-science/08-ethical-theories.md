@@ -2,6 +2,8 @@
 
 **[← Back to Course Homepage](../../index.html)**
 
+⬜ *Chapter Status: early development. Crrently just an outline.*
+
 A thorough introduction to ethical theory is outside the scope of this book. For data scientists, computer scientists, and others seeking such an introduction, I suggest @burton_computing_2023.
 
 This brief appendix is intended as a high-level orientation to three branches of normative ethics which are often viewed as the three main competing views: virtue ethics, deontological ethics, and utilitarian / consequentialist ethics.

@@ -8,21 +8,26 @@
 Obtaining data, in the context of the data science lifecycle.
 :::
 
-*This chapter is in-progress.*
+🔴 *Chapter Status: in development. Some sections drafted, mostly incomplete.*
 
 The process of obtaining data is perhaps the aspect of data science with the most concrete and direct ethical implications.
 
 ## Where do data come from?
 
 > "'Raw data' is an oxymoron."
->
-> -- Lisa Gitelman and Virginia Jackson [@gitelman_jackson_introduction_2013]
+
+-- Lisa Gitelman and Virginia Jackson [@gitelman_jackson_introduction_2013]
 
 Do you generate it?
 Do you collect it?
 Do you obtain it?
 Are data "given" or "taken?" [@barrowman_data_never_raw_2018]
 * "Data collection itself already is a form of processing."
+
+## The rhetoric of "raw" data
+
+* calling data "raw" is itself a persuasive move [@gitelman_jackson_introduction_2013]
+* More TK
 
 ## Sidebar: Can you start/end with data?
 TK

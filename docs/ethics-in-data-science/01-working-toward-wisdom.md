@@ -13,16 +13,16 @@ A four-layer pyramid.
 :::
 
 > "Those analysis droids you've got over there only focus on symbols. Hagh! I should think you Jedi would have more respect for the difference between knowledge and, hu-hu-hu... *wisdom*."
->
-> -- Dexter Jettster in *Attack of the Clones*, written by George Lucas and Jonathan Hales [@lucas_hales_aotc_2000, p. 35]
+
+-- Dexter Jettster in *Attack of the Clones*, written by George Lucas and Jonathan Hales [@lucas_hales_aotc_2000, p. 35]
 
 
 > "Where is the Life we have lost in living? Where is the wisdom we have lost in knowledge? Where is the knowledge we have lost in information?"
->
-> -- T. S. Eliot in *The Rock* [@eliot_rock_1934]
+
+-- T. S. Eliot in *The Rock* [@eliot_rock_1934]
 
 
-*This chapter is in-progress.*
+🟡 *Chapter Status: working draft. Mostly drafted end-to-end but still under revision. It will be marked 🟢 near-final draft once settled.*
 
 > **Overview:** This chapter describes the DIKW pyramid — data, information, knowledge, wisdom — and its relevance to the data science lifecycle, especially as a way to consider the fundamental goals and purposes of data science work. The chapter also introduces concepts of *understanding* and *common knowledge*, and describes their relevance to data science. It closes with a brief discussion of statistical worldviews (e.g. Bayesian versus Frequentist), where "just do the math" actually requires choosing particular beliefs about math and the world at large.
 
@@ -189,6 +189,12 @@ But causal modeling actually opens up additional cans of worms about what it act
 * **Overdetermination**: Two people each empty a full bucket of water onto a campfire at the same moment, and either bucket alone may have been enough to put out the fire. Which bucket "caused" the fire to go out?
 
 For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter.
+
+## The rhetoric of "objectivity"
+
+* choosing a statistical paradigm
+* choices about how to persuade [@mccloskey_rhetoric_of_economics_1998]
+* More TK
 
 ## References
 

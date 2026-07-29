@@ -2,7 +2,7 @@
 
 **[← Back to Course Homepage](../../index.html)**
 
-*This section is in-progress.*
+🔴 *Chapter Status: in development. Each case has a short summary, but needs more description.*
 
 Many professional fields develop various fables, myths, stories, etc. that serve as cautionary tales for practitioners.
 

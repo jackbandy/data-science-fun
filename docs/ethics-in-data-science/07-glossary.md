@@ -4,7 +4,7 @@
 
 ## Key Terms
 
-*This section is in-progress.*
+⬜ *Status: early development. Most entries are still placeholders marked `TK`. It will be marked 🟢 near-final draft when ready.*
 
 TK: a running list of terms used throughout the book, with short definitions and pointers to the chapter where each is introduced.
 

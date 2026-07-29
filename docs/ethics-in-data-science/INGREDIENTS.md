@@ -98,13 +98,33 @@ Nested lists indent by four spaces:
 ## Blockquotes (epigraphs)
 
 Chapters often open with a quotation followed by an attribution line that starts
-with `--`, names the source in *italics*, and ends with a citation. Separate the
-quote and attribution with a blank `>` line.
+with `--`, names the source in *italics*, and ends with a citation.
+
+Only the quotation itself goes in the blockquote. The attribution sits **outside**
+the blockquote as normal text, separated by a blank line — not a `>` line — so the
+source is visually distinct from the words being quoted.
 
 ```markdown
 > "Where is the Life we have lost in living? Where is the wisdom we have lost in knowledge? Where is the knowledge we have lost in information?"
+
+-- T. S. Eliot in *The Rock* [@eliot_rock_1934]
+```
+
+Do not put the attribution inside the quote:
+
+```markdown
+> "Where is the Life we have lost in living?..."
 >
 > -- T. S. Eliot in *The Rock* [@eliot_rock_1934]
+```
+
+When a quotation is introduced in prose that already names the source, no
+attribution line is needed — the lead-in carries the citation:
+
+```markdown
+A related puzzle, **the muddy children puzzle**, is described by @sep-dynamic-epistemic as follows:
+
+> Three children are playing in the mud...
 ```
 
 ---
@@ -140,18 +160,25 @@ Every chapter ends with a references heading; Quarto fills in the list:
 
 ---
 
-## In-progress markers & section stubs
+## Status markers & section stubs
 
-Mark unfinished chapters and sections consistently so they are easy to find.
+Each draft chapter carries a one-line status note near the top, using an emoji
+square for the level:
+
+| Marker | Level | Meaning |
+| --- | --- | --- |
+| ⬜ | early development | mostly an outline; little finished prose |
+| 🔴 | in development | some sections drafted, many still outlines |
+| 🟡 | working draft | drafted end-to-end, still under revision |
+| 🟢 | near-final draft | content settled; only light editing left |
 
 ```markdown
-*This chapter is in-progress.*
+🟡 *Chapter Status: working draft. Most sections are drafted....*
 
 TK
 ```
 
-`*This chapter is in-progress.*` goes near the top of a draft chapter; `TK`
-("to come") marks a spot that still needs content.
+`TK` ("to come") marks a spot that still needs content. No chapter is 🟢 yet.
 
 ---
 

@@ -8,7 +8,7 @@
 Reports, decisions, and solutions, in the context of the data science lifecycle.
 :::
 
-*This chapter is in-progress.*
+🟡 *Chapter Status: working draft. The chapter is pretty long, but some sections still need work.*
 
 A data scientist may do a lot of work individually. Even a data science *team* may work within an organization for extended periods of time, and not interact with other teams.
 
@@ -73,6 +73,13 @@ A measure can stop being a good measure when it becomes a target [@goodhart1984p
 TK
 
 Social indicators become more vulnerable to corruption when used for high-stakes decision-making [@campbell1979assessing].
+
+### Rhetoric of metrics
+
+TK
+
+* a published number argues for something, whether or not it intends to
+* More TK
 
 ### Example: Bayesian Diagnostic Testing
 
@@ -217,6 +224,21 @@ The father's announcement adds no new *visible* fact — every child could alrea
 TK
 
 test citations for communicating data with attention to emotion, embodiment, and audience - *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
+
+### Statistical arguments as rhetoric
+
+TK
+
+* economics "works with metaphors and stories," not mathematical rigor alone [@mccloskey_rhetoric_of_economics_1998]
+* More TK
+
+### Visual rhetoric
+
+TK
+
+* design choices in narrative visualization produce framing effects [@hullman_diakopoulos_visualization_rhetoric_2011]
+* deficit-focused framings vs. asset-based framings [@klein_dignazio_data_feminism_visualization]
+* More TK
 
 ### Researcher Degrees of Freedom
 

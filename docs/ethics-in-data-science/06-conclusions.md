@@ -8,7 +8,7 @@
 Where Do We Come From? What Are We? Where Are We Going? [@mfa_gauguin_where_do_we_come_from_1897] (Wikimedia Commons file, public domain)
 :::
 
-*This chapter is in-progress.*
+🔴 *Chapter Status: in development. The main argument is roughly sketched out.*
 
 ## Concluding Remarks
 A common question people ask about technology and ethics is something along these lines: "does ethics need to change? The world is so different with X, Y, and/or Z, do we not need different approaches compared to traditional, old-school ethics?"
@@ -51,6 +51,13 @@ To use the theatrical metaphors, an axiological question ("what is the good towa
 In 2025, Sarah Snook played 26 different characters in a two-hour rendition of *The Picture of Dorian Gray*, performed at the Music Box Theatre in New York City. It was a decidedly modern translation, as the stage used multiple massive LCD screens and other technologies that would not have been dreamed of when the 1890 novella was written [@onions_picture_dorian_gray_2025].
 
 And yet, it was the same play, the same story conceived in December, 1887 when Oscar Wilde visited South Kensington and came up with the original idea.
+
+More TK.
+
+## Rhetoric as an enduring art
+
+* one of the oldest "old plays" performed on the newest stages
+* the tools change (dashboards, model cards, press releases); the persuasive moves do not [@mccloskey_rhetoric_of_economics_1998]
 
 More TK.
 

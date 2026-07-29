@@ -9,18 +9,18 @@ The data science lifecycle. Although each stage of the lifecycle requires some d
 :::
 
 > "When we try to pick out anything by itself, we find it hitched to everything else in the Universe."
->
-> -- John Muir, as quoted by the Sierra Club John Muir Exhibit [@wood_john_muir_misquoted]
+
+-- John Muir, as quoted by the Sierra Club John Muir Exhibit [@wood_john_muir_misquoted]
 
 > "Essentially, all models are wrong, but some are useful."
->
-> -- George E. P. Box and Norman R. Draper [@box_draper_empirical_model_building_1987]
+
+-- George E. P. Box and Norman R. Draper [@box_draper_empirical_model_building_1987]
 
 > "A map is not the territory it represents, but, if correct, it has a similar structure to the territory, which accounts for its usefulness."
->
-> -- Alfred Korzybski [@korzybski_non_aristotelian_1931]
 
-*This chapter is in-progress.*
+-- Alfred Korzybski [@korzybski_non_aristotelian_1931]
+
+🔴 *Chapter Status: in development. Opening sections are drafted, others outlined / incomplete.*
 
 ## Your Model is Always Wrong
 
@@ -102,6 +102,13 @@ TK
 
 ### Uncertainty
 TK
+
+### Explanation as persuasion
+
+TK
+
+* when multiple models fit, choosing which to present is a rhetorical act
+* More TK
 
 ### Validity, overfitting, generalization
 TK

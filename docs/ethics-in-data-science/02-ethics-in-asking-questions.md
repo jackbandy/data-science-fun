@@ -8,15 +8,15 @@
 Asking a question, in the context of the data science lifecycle.
 :::
 
-> "There are naïve questions, tedious questions, ill-phrased questions, questions put after inadequate self-criticism. But every question is a cry to understand the world." (Carl Sagan)
->
-> [@sagan_demon-haunted_1995, p. 303]
+> "There are naïve questions, tedious questions, ill-phrased questions, questions put after inadequate self-criticism. But every question is a cry to understand the world."
 
-> "The 'technique,' or treatment, of a problem begins with its first expression as a question. The way a question is asked limits and disposes the ways in which any answer to it — right or wrong — may be given." (Susanne Langer)
->
-> [@langer_philosophy_1942]
+-- Carl Sagan in *The Demon-Haunted World* [@sagan_demon-haunted_1995, p. 303]
 
-*This chapter is in-progress.*
+> "The 'technique,' or treatment, of a problem begins with its first expression as a question. The way a question is asked limits and disposes the ways in which any answer to it — right or wrong — may be given."
+
+-- Susanne Langer in *Philosophy in a New Key* [@langer_philosophy_1942]
+
+🟡 *Chapter Status: working draft. Most sections drafted, some parts still need polish and/or filling in..*
 
 There is a [meme template](https://knowyourmeme.com/memes/all-three-are-going-to-lie-to-you-never-ask-a-woman-her-age) that begins, "Never ask a woman her age, a man his salary..."
 
@@ -24,16 +24,16 @@ The basic principle underlying this meme is that some questions are more appropr
 
 In educational contexts, we appreciate all questions. The only bad question, as the saying goes, is the question you do not ask. And yet, as the aforementioned template suggests, some questions are more responsible, worthwhile, and/or appropriate than other questions. How might we distinguish these questions?
 
-[@sep-questions]
+Philosophers have studied the structure of questions in considerable depth, and this chapter draws on that work throughout [@sep-questions].
 
-As observed in The Craft of Research (Booth et al.), good questions usually present a corresponding problem, such that answering the question solves that problem.
+As observed in *The Craft of Research*, good questions usually present a corresponding problem, such that answering the question solves that problem [@booth_craft_of_research_2024].
 
-I will use some modified examples from The Craft of Research to discuss the characteristics of high-quality (and low-quality) questions.
+I will use some modified examples from *The Craft of Research* to discuss the characteristics of high-quality (and low-quality) questions.
 
 
 ## Where Questions Come From
 
-The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible starting points in the lifecycle (the other being "obtain data"). In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," a method which begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt also suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter, and Booth et al.'s observation in The Craft of Research.
+The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible starting points in the lifecycle (the other being "obtain data"). In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," a method which begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt also suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter, and to the observation in *The Craft of Research* [@booth_craft_of_research_2024].
 
 The data science lifecycle may start with asking a question, but not every question makes it through the full lifecycle. If you ask the score of a tennis match, or the current time, or the temperature outside, or someone's name, you will not proceed through the lifecycle as exhaustively as you would to answer other questions.
 
@@ -41,14 +41,18 @@ So, how do we know when a question is well-suited for the data science lifecycle
 
 On the other had, as data scientists learn from experience, there are some checks and heuristics that can help identify the kinds of questions which make for good data science.
 
-In *The Craft of Research*, Wayne Booth observes that 'not with a big question that attracts everyone in a field, but with a mental itch about a small question that only a single researcher wants to scratch.
+In *The Craft of Research*, Booth and colleagues observe that research usually begins not with a big question that attracts everyone in a field, but with a mental itch about a small question that only a single researcher wants to scratch [@booth_craft_of_research_2024]. <!-- TODO: verify wording and page number against the 5th edition; restore as a direct quotation if it can be quoted exactly. -->
 
-topic vs question
+Topic vs. question:
+
 * a topic only becomes research when it provokes a specific question
 * what is lost if a question goes unanswered — the "so what?" test [@booth_craft_of_research_2024]
 
 
 ## Basic Types of Questions
+
+The taxonomy below follows the Stanford Encyclopedia of Philosophy entry on questions [@sep-questions].
+
 | Question Type | Description | Example | Answers |
 | --- | --- | --- | --- |
 | "Whether" | Presents a finite number of direct answers. May be yes-or-no questions, or questions that name two or more possible direct answers. | Was there a quorum at the meeting? | a. There was a quorum at the meeting.<br>b. There was no quorum at the meeting. |
@@ -57,13 +61,18 @@ topic vs question
 |  |  | What is the smallest prime number greater than 12? | a. 13 is the smallest prime number greater than 12. |
 |  |  | Which cardinal was elected Pope in 2013? | a. Cardinal Angelo Scola<br>b. Cardinal Odilo Scherer<br>c. Jorge Mario Bergoglio |
 | "Why" | Asks for an explanation (not just a fact). Closely tied to causal, data-informed, or interpretive explanation. | Why do the planets move in elliptical orbits with the sun at one focus? | a. The gravitational pull of the sun causes the planets to move in elliptical orbits. |
-| Indirect ("Embedded") | Comes from the complement of a clause-embedding predicate, such as `know` or `wonder`. These questions appear inside larger statements rather than standing alone. | Bob knows who spoke to Mary. | TK |
+| Indirect ("Embedded") | Comes from the complement of a clause-embedding predicate, such as `know` or `wonder`. These questions appear inside larger statements rather than standing alone. | Bob knows who spoke to Mary. | a. Carol spoke to Mary.<br>b. Dave spoke to Mary. |
+|  |  | Alice wonders whether there was a quorum at the meeting. | a. There was a quorum at the meeting.<br>b. There was no quorum at the meeting. |
+|  |  | The analyst discovered which neighborhoods were undercounted. | a. The north side was undercounted.<br>b. The east side was undercounted. |
 
+
+Note that an indirect question is not itself asked, so the sentence containing it is true or false rather than answered. The "Answers" column above lists answers to the *embedded* question — the ones Bob knows, Alice wonders about, or the analyst discovered.
 
 ### Presuppositions
+
 Many questions involve a *presupposition*: a background claim that must be true in order for the question to have a correct answer. If someone denies that background claim (i.e. the presupposition), they are correcting the question itself, and may not be able to answer the original question.
 
-Below are some examples of presuppositions associated with example questions, as drawn from [@sep-questions].
+Below are some examples of presuppositions associated with example questions, again drawn from the Stanford Encyclopedia of Philosophy entry on questions [@sep-questions].
 
 | Question | Answer(s) | Presupposition(s) |
 | --- | --- | --- |
@@ -75,6 +84,7 @@ Below are some examples of presuppositions associated with example questions, as
 
 
 ## Common Pitfalls
+
 ### Naïve questions
 
 * naïve about a particular context/setting
@@ -94,7 +104,7 @@ Below are some examples of presuppositions associated with example questions, as
 
 * usually implies a preferred answer
 	* e.g. "everything tasting good over here?"
-	* e.g. "
+	* e.g. TK
 * i.e. ad-hoc support of suspect decision-making
 * ask before answering
 * might actually be good to be more naïve
@@ -108,7 +118,7 @@ Below are some examples of presuppositions associated with example questions, as
 
 ### Invasive questions
 
-If a potential employer were to ask my weight during a job interview, it would be inappropriate. However, when I visit the Department of Motor Vehicles (DMV) to obtain my driver’s license, I am required to provide an answer. I have consented to the requirements of the system if I wish to obtain their permission to drive cars in the state (i.e. to get my driver's license).
+If a potential employer were to ask my weight during a job interview, it would be inappropriate. However, when I visit the Department of Motor Vehicles (DMV) to obtain my driver's license, I am required to provide an answer. I have consented to the requirements of the system if I wish to obtain their permission to drive cars in the state (i.e. to get my driver's license).
 
 * asks for information whose sensitivity exceeds the purpose of the interaction.
 * can become coercive
@@ -128,9 +138,18 @@ If a potential employer were to ask my weight during a job interview, it would b
 
 TK
 
-* Deirdre McCloskey - notes on "objective" analysis as rhetorical/persuasive; questions embed values/narratives.
+* More notes on "objective" analysis as rhetorical/persuasive
+* questions embed values/narratives [@mccloskey_rhetoric_of_economics_1998].
 * good to assume you might've missed something
 * data hubris
+
+### Ethos, pathos, logos
+
+* More TK
+
+### The rhetoric of "just asking questions"
+
+* More TK
 
 ## Questions for your questions
 
@@ -152,9 +171,9 @@ Test citations for question framing, rhetoric, and situated perspectives: the St
 
 ## This is actually the hard part
 
-> "In my opinion, the social sciences are the hard sciences" (Michael Shermer)
->
-> [@shermer_mind_market_2008]
+> "In my opinion, the social sciences are the hard sciences."
+
+-- Michael Shermer in *The Mind of the Market* [@shermer_mind_market_2008]
 
 Crafting a high-quality research question for the data science lifecycle can be unexpectedly difficult and time-consuming.
 
