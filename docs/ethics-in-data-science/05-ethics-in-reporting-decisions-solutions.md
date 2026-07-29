@@ -30,13 +30,13 @@ In short, every prediction can be an intervention: a forecast does not merely de
 
 To ground this chapter, we will start exploring the ethics of reporting with a concrete example of college rankings.
 
-### Example: College Rankings
+### Example: College Rankings {#sec-college-rankings}
 
 Cathy O'Neil's book, *Weapons of Math Destruction* [@oneil_weapons_2017], describes a compelling case study of metrics around college rankings.
 
-The U.S. News & World Report began with a straightforward question: what makes a good college, and how can we measure it? Notably, this was a deliberate attempt to save the U.S. News & World Report magazine, which had been struggling financially. In 1983, they realized that a ranking of 1,800 colleges and universities in the U.S. could be a valuable resource for millions of parents and high-schoolers approaching college decisions. I
+The U.S. News & World Report began with a straightforward question: what makes a good college, and how can we measure it? Notably, this was a deliberate attempt to save the U.S. News & World Report magazine, which had been struggling financially. In 1983, they realized that a ranking of 1,800 colleges and universities in the U.S. could be a valuable resource for millions of parents and high-schoolers approaching college decisions.
 
-So, beginning in 1988, U.S. News & World Report tried using data to 
+So, beginning in 1988, U.S. News & World Report tried using data to...
 
 This led to a trap. U.S. News & World Report could only develop their rankings based on measurable data. This may seem obvious, and many of the metrics seem like good proxies for what makes a good school:
 
@@ -52,9 +52,18 @@ But consider some of the aspects of life which are left out of these metrics:
 * a fun intramural ultimate frisbee league
 * a Friday night lecture series with free cookies
 * a professor who recognizes you and waves hello on campus
-* easy access to a nearby park
+* easy access to a nearby park or natural area
 * ergonomic chairs in the library for long study periods
 * a ten-minute walk to get a frozen dessert
+
+TK — what colleges spent to improve their rank:
+
+* spending on facilities and amenities: recreation centers, residence halls, dining.
+	* Jacob et al found that many institutions face a real demand for consumption amenities
+	* spending on them is a rational response to what students actually choose [@jacob_college_country_club_2018]
+* construction does not appears in the ranked metrics directly
+* but the spending is financed, and financing shows up in tuition
+* financing shows up in student debt, borne by the students (the rankings were supposed to help) - argued by [@oneil_weapons_2017]
 
 ### Measurement Scales
 
@@ -62,24 +71,47 @@ TK
 
 * as an example of subjectivity / situated knowledge
 
-### Goodhart's Law
+### Goodhart's Law {#sec-goodharts-law}
 
 TK
 
 A measure can stop being a good measure when it becomes a target [@goodhart1984problems].
 
-### Campbell's Law
+The college rankings from @sec-college-rankings are a useful illustration. Each metric was a reasonable proxy for school quality *before* it was ranked on. But once the ranking existed, colleges had a reason to move the proxies directly (rather than to improve the underlying quality).
+
+Details TK
+* acceptance rates: soliciting applications from students who will be rejected - lowers the acceptance rate without changing who enrolls
+* student-teacher ratios: counting non-teaching staff, or splitting sections, adjusts the ratio without changing class experience
+* SAT scores: making score submission optional can raise the reported average by changing who reports
+* metrics not measured - metrics not gamed (e.g. picnic table, frisbee league, professor who waves hello)
+
+### Campbell's Law {#sec-campbells-law}
 
 TK
 
 Social indicators become more vulnerable to corruption when used for high-stakes decision-making [@campbell1979assessing].
 
-### Rhetoric of metrics
+Goodhart's law describes a measure losing its value as a measure, Campbell's law adds that the underlying social process can become distorted.
 
-TK
-
-* a published number argues for something, whether or not it intends to
-* More TK
+* **standardized test scores in schools.** Campbell's own example, arguing achievement tests are valuable "under conditions of normal teaching aimed at general competence,"
+	* when test scores become the goal of teaching, they "lose their value as indicators of educational status and distort the educational process in undesirable ways" [@campbell1979assessing]
+	* e.g. narrowing the curriculum, answer-changing.
+* **surgeon and hospital mortality scorecards.** Publishing outcome rates per provider can lead providers to decline high-risk patients.
+	* Dranove et al- cardiac surgery report cards introduced in New York and Pennsylvania [@dranove_report_cards_2003]
+	* nobody falsifies anything
+	* data-generating-process problem (not fraud)
+* **sales quotas tied to compensation.** Wells Fargo employees opened deposit and credit card accounts customers never requested, enrolled customers in services they had not asked for
+	* driven by sales targets / compensation structure [@cfpb_wells_fargo_consent_order_2016]
+	* internal goal of at least eight financial products per customer, the "Gr-eight initiative"
+	* "pinning": issuing ATM cards and setting PINs without authorization, then impersonating the customer
+	* Los Angeles City Attorney's lawsuit: bankers would "input false generic email addresses such as 1234@wellsfargo.com, noname@wellsfargo.com, or none@wellsfargo.com to ensure the transaction is completed" [@egan_wells_fargo_horror_stories_2016]
+	* "sandbagging": refusing to open accounts customers actually requested until the next reporting period, so the sale landed where it helped the quota [@egan_wells_fargo_horror_stories_2016]
+	* management encouraged staff to "achieve 'solutions' through family members"
+		* employees reported having "tapped out every family member and friend for accounts" and spending "holiday dinners trying to convince" relatives to sign up [@egan_wells_fargo_horror_stories_2016]
+	* the quota was daily - staff told NPR they were expected to sell at least eight products a day, and 20 a day during a sales push called "Jump into January" [@arnold_wells_fargo_toxic_culture_2016]
+	* U.S. Bank too
+		* July 2022 - CFPB fined U.S. Bank $37.5 million for accessing credit reports and opening checking and savings accounts, credit cards, and lines of credit without customers' permission [@sweet_us_bank_fake_accounts_2022; @cfpb_us_bank_consent_order_2022]
+		* again driven by sales goals attached to employees' job requirements
 
 ### Example: Bayesian Diagnostic Testing
 
@@ -229,14 +261,14 @@ test citations for communicating data with attention to emotion, embodiment, and
 
 TK
 
-* economics "works with metaphors and stories," not mathematical rigor alone [@mccloskey_rhetoric_of_economics_1998]
+* e.g. economics "works with metaphors and stories"  [@mccloskey_rhetoric_of_economics_1998]
 * More TK
 
 ### Visual rhetoric
 
 TK
 
-* design choices in narrative visualization produce framing effects [@hullman_diakopoulos_visualization_rhetoric_2011]
+* design choices in narrative visualization, framing effects [@hullman_diakopoulos_visualization_rhetoric_2011]
 * deficit-focused framings vs. asset-based framings [@klein_dignazio_data_feminism_visualization]
 * More TK
 

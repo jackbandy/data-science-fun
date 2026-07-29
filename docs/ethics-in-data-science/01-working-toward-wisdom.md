@@ -153,7 +153,7 @@ Understanding also connects to the phenomenon of *common knowledge* — shared a
 The concept of understanding will also return in [Chapter 4](04-ethics-in-understanding.md), which distinguishes between understanding data and understanding the world.
 
 
-## Statistical worldviews
+## Statistical worldviews {#sec-statistical-worldviews}
 
 One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere" [@dignazio_klein_data_feminism_2020], there are many "researcher degrees of freedom" exercised throughout the lifecycle. Making decisions within these degrees of freedom entails a degree of subjectivity.
 
@@ -175,11 +175,15 @@ There are underlying beliefs supporting these numbers: frequentists treat probab
 
 So, do you take the bet? One might expect there to be a single answer to the statistical question: "just do the math!" But "the math" was not given to us on a stone tablet, and we have multiple paradigms upon which we might base our math. This is a case where one must choose which math to use, and to some extent, what to believe about the world.
 
-To my understanding, this particular debate has settled down. In 1986, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as sort of a live contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020].
+To my understanding, this particular debate has settled down. In 1986, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as an active contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020].
 
-Still, the rise of the causal inference paradigm does not imply a conclusion to subjectivity in data science. Causal modeling may offer more regularity in asking questions, i.e., "what would happen after an intervention?" This lends to structural modeling and causal graphs (specifically, directed acyclic graphs, or DAGs - we'll talk about them in class) and more formal structures, rather than loose associations [@sep-causal-models].
+But even if "everyone is a Bayesian," this does not settle the matter, or eliminate the existence of subjective worldviews. In short, you cannot "just do the math," you still need to have an opinion. A particularly relevant example can be called the "problem of the priors" in Bayesian epistemology [@sep-epistemology-bayesian]. Bayesians may agree to treat probability as a degree of belief, but how exactly do you form a belief before data are available? Different camps of Bayesians (i.e. "subjective Bayesians" or "objective Bayesians") will have different answers to this question.
 
-But causal modeling actually opens up additional cans of worms about what it actually means for one thing to "cause" another thing. Here are some examples:
+Bayesians also disagree on a number of other questions [@sep-epistemology-bayesian], for example, about whether a prior/credence must be a single number, whether a given body of evidence permits exactly one rational credence or several, and how to update credences/beliefs in cases such as the "problem of old evidence." These are cases where a (Bayesian) data scientist choosing a prior is making a subjective choice, not merely "doing the math."
+
+Even the rise of the causal inference paradigm does not imply a conclusion to subjectivity in data science. Causal modeling may offer more regularity in asking questions, i.e., "what would happen after an intervention?" This lends to structural modeling and causal graphs (specifically, directed acyclic graphs, or DAGs - we'll talk about them in class) and more formal structures, rather than loose associations [@sep-causal-models].
+
+But causal modeling opens up additional cans of worms about what it actually means for one thing to "cause" another thing. Here are some examples:
 
 * **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that just consistently show up at the same time?
 * **Multiple necessary conditions**: When a fire needs heat, fuel, and oxygen, which one is considered "the cause" of the fire? 

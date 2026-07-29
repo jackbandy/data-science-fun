@@ -4,15 +4,24 @@
 
 ## Key Terms
 
-⬜ *Status: early development. Most entries are still placeholders marked `TK`. It will be marked 🟢 near-final draft when ready.*
+⬜ *Status: early development. Most entries are still placeholders.*
 
-TK: a running list of terms used throughout the book, with short definitions and pointers to the chapter where each is introduced.
+TK: terms used throughout the book, with definitions and pointers to relevant chapter(s).
+
+[Aristotle's four causes]{#four-causes}
+: TK — four distinct ways that one thing can explain another: the *material cause*, *formal cause*, *efficient cause*, and *final cause* [Source: @sep-aristotle-causality]
 
 Campbell's Law
-: Social indicator metrics become often become corrupt when they are used for high-stakes decision-making. [Source: @campbell1979assessing]
+: "Social indicator metrics often become corrupt and unreliable when used for high-stakes decision-making." Examples include standardized test scores (Campbell's example), mortality scorecards for surgeons [@dranove_report_cards_2003], and sales quotas tied to compensation [@cfpb_wells_fargo_consent_order_2016]. See @sec-campbells-law. [Source: @campbell1979assessing]
+
+Causation without pattern
+: TK — one-time causes and effects that cannot be replicated, e.g. meteor and dinosaur extinction. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+
+Common causes
+: TK — an underlying third factor driving two effects, e.g. summer weather, ice cream sales, drownings. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Common knowledge
-: Shared awareness about what other people know. That is, not just knowing a proposition, but also awareness that others know that proposition too. Often conflated with mutual knowledge. [Source: @sep-common-knowledge]
+: Shared awareness about what other people know. That is, not just knowing a proposition/fact, but also awareness that others know that proposition/fact too. Often conflated with mutual knowledge. [Source: @sep-common-knowledge]
 
 Consent
 : Permission that is freely given, reversible, informed, enthusiastic, and specific. [Source: @lee_building_consentful_2017]
@@ -35,17 +44,29 @@ Data visceralization
 Datum
 : A single data point, such as a number or symbol.
 
+Directionality
+: TK — determining which of two correlated things is the cause and which is the effect, e.g. train's speed and its speedometer needle. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+
 Disparate impact
 : TK [@barocas_selbst_big_data_disparate_impact_2016]
 
 Documentation debt
 : TK
 
+Efficient cause
+: TK — the source of change or rest, e.g. for a bronze statue, the art of bronze-casting. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
+
 Ethics
 : Acting well in the world. [Source: @burton_computing_2023]
 
+Final cause
+: TK — a thing's purpose or end, what it is good for. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
+
+Formal cause
+: TK — a thing's real-world essence. E.g. for a bronze statue, the actual shape of the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
+
 Goodhart's Law
-: A measure can stop being a good measure when it becomes a target. [Source: @goodhart1984problems]
+: "A measure can stop being a good measure when it becomes a target." E.g. see @sec-college-rankings: acceptance rates, student-teacher ratios, and reported SAT scores can all be moved directly once they are ranked on (may or may not improve the actual school quality). See @sec-goodharts-law. [Source: @goodhart1984problems]
 
 Information
 : TK
@@ -53,8 +74,17 @@ Information
 Knowledge
 : TK
 
+Material cause
+: TK — what a thing is made of. E.g. for a bronze statue, the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
+
+Multiple necessary conditions
+: TK — several conditions are required for an outcome, which one counts as "the" cause? E.g. a fire needs heat, fuel, and oxygen. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+
 Mutual knowledge
-: A proposition is mutual knowledge among people when each person knows that proposition. [Source: @sep-common-knowledge]
+: A proposition is mutual knowledge among people when each person knows that proposition. Often conflated with common knowledge. [Source: @sep-common-knowledge]
+
+Overdetermination
+: TK — two sufficient causes may occur at once, e.g. two people each empty a full bucket of water onto a campfire. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Presupposition
 : A background claim that must be true in order for a question to have a meaningful answer. [Source: @sep-questions]
@@ -67,6 +97,9 @@ Sensitive information
 
 Situated knowledge
 : TK [@dignazio_klein_data_feminism_2020]
+
+Spurious regularities
+: TK — things consistently occur together without one causing the other, e.g. rooster crows every morning before sunrise. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Tech Debt
 : TK
