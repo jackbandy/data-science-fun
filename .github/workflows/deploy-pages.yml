@@ -112,7 +112,7 @@ jobs:
           use-public-rspm: true
 
       - name: Cache R packages
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.R_LIBS_USER }}
           key: r-pkgs-${{ hashFiles('.github/workflows/deploy-pages.yml') }}
@@ -124,7 +124,7 @@ jobs:
       # Cache the rendered book output
       - name: Restore Quarto book cache
         id: book-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: docs/ethics-in-data-science/book
           key: book-${{ hashFiles('docs/ethics-in-data-science/**') }}
@@ -138,7 +138,7 @@ jobs:
 
       - name: Restore slides cache
         id: slides-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             docs/slides/week*.html
@@ -192,7 +192,7 @@ jobs:
       # TeX Live install and the render, keeps the "This version created" stamp
       - name: Restore syllabus cache
         id: syllabus-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: docs/syllabus
           key: syllabus-${{ hashFiles('syllabus_source/**', 'docs/_data/schedule.csv', 'docs/assets/branding/uic-black-logo.svg') }}
