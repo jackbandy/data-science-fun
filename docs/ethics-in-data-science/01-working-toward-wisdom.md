@@ -196,14 +196,31 @@ Even the rise of the causal inference paradigm described by @mcelreath_statistic
 Causal inference offers more formal structures [@sep-causal-models], it also opens up additional cans of worms. Namely, what does it actually means for one thing to "cause" another thing? Here are some common complications:
 
 * **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that just consistently show up at the same time?
+	* (Structurally, this is a **fork**: some third factor drives two events without either causing the other.)
 * **Multiple necessary conditions**: When a fire needs heat, fuel, and oxygen, which one is considered "the cause" of the fire?
+	* (Structurally, this is a **collider**: several independent conditions point into the same effect.)
 * **Causation without pattern**: How do we make sense of (or prove) one-time "causes" and effects that we cannot replicate? For example, how do we know the meteor caused dinosaur extinction?
 * **Common causes**: Ice cream sales and drownings rise and fall together, but ice cream does not cause drowning (and drowning does not cause ice cream sales). How do we figure out when there is an underlying third factor (in this case summer weather) that drives multiple effects?
+	* (Structurally, this is also a **fork**: the third factor points to both measured variables.)
+
+::: {#fig-wisdom-fork}
+<img src="../assets/confounds/fork.svg" alt="Fork DAG: Z at the top with arrows pointing down to X on the left and Y on the right. Z is filled dark to mark the variable to split the data by." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+The fork: a common cause $Z$ (e.g., summer weather, or the Earth's rotation) drives both $X$ and $Y$, producing a correlation between them even though neither causes the other.
+:::
+
 * **Directionality**: A train's speedometer needle turns as the train goes faster, and the train goes faster as the speedometer needle turns. But of course, manually moving the needle will not speed up the train. How do we determine causal directionality in more complicated scenarios?
+	* (Structurally, this is a **pipe** read backwards: the needle is a downstream effect of the speed, not a cause of it.)
 * **Overdetermination**: Two people each empty a full bucket of water onto a campfire at the same moment, and either bucket alone may have been enough to put out the fire. Which bucket "caused" the fire to go out?
+	* (Structurally, this is also a **collider**: two independent causes converge on one effect.)
 
+::: {#fig-wisdom-collider}
+<img src="../assets/confounds/collider.svg" alt="Collider DAG: X on the left and Y on the right both point up to Z. Z is filled orange to warn against splitting the data by it." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter.
+The collider: independent causes $X$ and $Y$ (e.g., heat and fuel, or two buckets of water) both point into a shared effect $Z$, so conditioning on $Z$ (e.g., "there is a fire") can make $X$ and $Y$ appear associated even when they are not.
+:::
+
+For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter. The [Week 6 slides on causal graphs](../slides/week6.qmd) work through all four elemental confounds — fork, pipe, collider, and descendant — in more depth.
 
 ## Conclusion
 

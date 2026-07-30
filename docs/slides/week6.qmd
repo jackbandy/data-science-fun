@@ -1021,6 +1021,8 @@ $Z$ causes $X$ **and** it causes $Y$.
 - More Waffle Houses, more divorces
 - More ice cream consumption, more drownings
 	- Both increase during the summer
+- The rooster crows, then the sun rises
+	- Both driven by the Earth's rotation, not by each other
 :::
 
 <img src="../assets/confounds/fork.svg" alt="Fork DAG: Z at the top with arrows pointing down to X on the left and Y on the right. Z is filled dark to mark the variable to split the data by.">
@@ -1038,6 +1040,7 @@ $X$ causes $Z$, and $Z$ causes $Y$ ($Z$ is the step in between)
 
 - E.g. Weekday → students on campus → ridership
 - Hold "students on campus" fixed and the weekday looks like it does nothing
+- Directionality puzzles are a pipe read backwards: the speedometer needle turns *because* the train speeds up, not the other way around
 :::
 
 <img src="../assets/confounds/pipe.svg" alt="Pipe DAG: X points to Z, which points to Y, in a horizontal chain. Z is filled dark to mark the in-between step.">
@@ -1055,6 +1058,8 @@ $X$ and $Y$ both cause $Z$ (the arrows crash into it)
 
 - $X$ and $Y$ have nothing to do with each other
 - E.g. analyzing only the grants that got funded, only the applicants who got hired
+- A fire needs heat **and** fuel — both point into "there's a fire," so conditioning on it can make heat and fuel look linked
+- Two buckets dumped on a fire at once: either alone might've put it out (overdetermination)
 :::
 
 <img src="../assets/confounds/collider.svg" alt="Collider DAG: X on the left and Y on the right both point up to Z. Z is filled orange to warn against splitting the data by it.">

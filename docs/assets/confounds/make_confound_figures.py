@@ -128,8 +128,9 @@ BLUE_STROKE = "#33526E"
 CTA_BLUE = "#00A1DE"
 CIRCLE_R = 56
 QUESTION_YS = (95, 240, 385, 530)
-OUTCOME = (760, 309)
-OUTCOME_W, OUTCOME_H = 250, 120
+OUTCOME_LEFT = 760 - 250 / 2
+OUTCOME_W, OUTCOME_H = 340, 120
+OUTCOME = (OUTCOME_LEFT + OUTCOME_W / 2, 309)
 
 
 def render_question_dag() -> str:
@@ -175,8 +176,67 @@ def render_question_dag() -> str:
         f'stroke="{BLUE_STROKE}" stroke-width="{STROKE_WIDTH}"/>'
         f'<text x="{OUTCOME[0]}" y="{OUTCOME[1]}" fill="{TEXT_ON_DARK}" '
         'font-family="Libre Franklin, Arial, sans-serif" font-size="36" '
-        'font-weight="700" text-anchor="middle" dominant-baseline="central">Ridership</text>'
+        'font-weight="700" text-anchor="middle" dominant-baseline="central">CTA Ridership</text>'
     )
+    parts.append("</svg>")
+    return "\n".join(parts)
+
+
+def render_pipe_ambiguous() -> str:
+    """Same X-Z-Y layout as pipe.svg, but with the arrow direction unknown:
+    a double-headed arrow on each edge plus a '?' above it."""
+    font_b64 = base64.b64encode(FONT_SOURCE.read_bytes()).decode("ascii")
+    nodes = {"X": (200, 309, NEUTRAL), "Z": (500, 309, CLOSE), "Y": (800, 309, NEUTRAL)}
+    edges = [("X", "Z"), ("Z", "Y")]
+    parts = [
+        f'<svg width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}" '
+        'fill="none" xmlns="http://www.w3.org/2000/svg" role="img" '
+        'aria-label="Pipe with unknown edge direction">',
+        f'<rect width="{WIDTH}" height="{HEIGHT}" fill="white"/>',
+        "<style>@font-face { font-family: 'Libre Franklin'; "
+        f"src: url('data:font/woff2;base64,{font_b64}') format('woff2'); "
+        "font-weight: 400 700; }</style>",
+        '<defs><marker id="arrow" viewBox="0 0 5 5" refX="2.5" refY="2.5" '
+        'markerWidth="5" markerHeight="5" markerUnits="strokeWidth" orient="auto">'
+        f'<path d="M 0 0 L 5 2.5 L 0 5 z" fill="{STROKE}"/></marker>'
+        '<marker id="arrow-start" viewBox="0 0 5 5" refX="2.5" refY="2.5" '
+        'markerWidth="5" markerHeight="5" markerUnits="strokeWidth" orient="auto-start-reverse">'
+        f'<path d="M 0 0 L 5 2.5 L 0 5 z" fill="{STROKE}"/></marker></defs>',
+    ]
+
+    for src, dst in edges:
+        x1, y1, x2, y2 = edge_path(nodes[src][:2], nodes[dst][:2])
+        # Both ends carry an arrowhead here, so both need the full PULLBACK
+        # (edge_path only pulls the end back that far; the start only got ARROW_GAP).
+        dx, dy = x2 - x1, y2 - y1
+        length = (dx**2 + dy**2) ** 0.5
+        ux, uy = dx / length, dy / length
+        extra = PULLBACK - ARROW_GAP
+        x1, y1 = x1 + ux * extra, y1 + uy * extra
+        parts.append(
+            f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
+            f'stroke="{STROKE}" stroke-width="{STROKE_WIDTH}" '
+            'marker-start="url(#arrow-start)" marker-end="url(#arrow)"/>'
+        )
+        mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+        parts.append(
+            f'<text x="{mx:.1f}" y="{my - 22:.1f}" fill="{STROKE}" '
+            'font-family="Libre Franklin, Arial, sans-serif" font-size="40" '
+            'font-weight="700" text-anchor="middle" dominant-baseline="central">?</text>'
+        )
+
+    for label, (cx, cy, fill) in nodes.items():
+        text_fill = TEXT if fill == NEUTRAL else TEXT_ON_DARK
+        parts.append(
+            f'<rect x="{cx - NODE_W / 2:.1f}" y="{cy - NODE_H / 2:.1f}" '
+            f'width="{NODE_W}" height="{NODE_H}" rx="6" fill="{fill}" '
+            f'stroke="{STROKE}" stroke-width="{STROKE_WIDTH}"/>'
+            f'<text x="{cx:.1f}" y="{cy:.1f}" fill="{text_fill}" '
+            'font-family="Libre Franklin, Arial, sans-serif" font-size="44" '
+            'font-weight="700" text-anchor="middle" dominant-baseline="central">'
+            f"{escape(label)}</text>"
+        )
+
     parts.append("</svg>")
     return "\n".join(parts)
 
@@ -189,4 +249,8 @@ if __name__ == "__main__":
 
     path = OUT_DIR / "ridership-unknown-causes.svg"
     path.write_text(render_question_dag())
+    print(f"wrote {path}")
+
+    path = OUT_DIR / "pipe-ambiguous.svg"
+    path.write_text(render_pipe_ambiguous())
     print(f"wrote {path}")

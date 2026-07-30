@@ -69,6 +69,26 @@ Source: Drew Conway, [The Data Science Venn Diagram](http://drewconway.com/zia/2
 
 ---
 
+# Another Metaphor
+
+::::: {.columns}
+
+:::: {.column width="44%"}
+::: {.incremental}
+- TK
+- TK
+- TK
+:::
+::::
+
+:::: {.column width="56%"}
+<img src="../assets/week1-intro-data-science/role-of-data-science-cta-remix-v3.svg" alt="TK" style="max-height:400px; width:auto; max-width:100%; display:block; margin:0 auto;">
+::::
+
+:::::
+
+---
+
 # A Data Science Elephant? {.image-frame-slide}
 
 <img src="../assets/art/itcho_blind_monks_examining_elephant_1888.jpg" alt="Blind monks examining an elephant, each touching a different part and describing it differently, a 1888 woodblock print reproduction of a work by Hanabusa Itchō">
@@ -152,14 +172,34 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ---
 
+
 # What Do Data Scientists Do?
 
 ::: {.incremental}
 1. **Ask the right question** — turn a vague goal into something measurable
 2. **Get & clean the data** — collect, merge, and fix messy real-world data
-3. **Explore & visualize** — hunt for patterns, outliers, and surprises
-4. **Model & predict** — build something that explains or forecasts
-5. **Communicate** — turn results into decisions people can act on
+3. **Explore & visualize** — search and discover patterns, outliers, and surprises
+4. **Model & predict** — build something that explains and/or forecasts
+5. **Communicate** — turn results into stories, decisions
+:::
+
+---
+
+# "Simple" Questions
+
+::: {.incremental}
+- Do guests like the new cold brew recipe?
+- Is the running plan helping people run faster?
+- Do people sleep better with noise machines?
+- Did the advertising campaign make a difference?
+:::
+
+::: {.fragment style="text-align:center; margin-top:0.8em;"}
+**No real, curious human wants just "yes" or "no."** Data scientists can *explain* the answer in detail.
+:::
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
 :::
 
 ---
@@ -168,7 +208,7 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ---
 
-# Our Roadmap
+# Roadmap
 
 Four things we'll cover:
 
@@ -184,7 +224,7 @@ Four things we'll cover:
 # Role of Statistics in Data Science
 
 ::: {.incremental}
-- Statistics is the science of learning from data under uncertainty.
+- Statistics: the science of learning from data under uncertainty.
 - It turns raw numbers into evidence we can actually trust.
 - It tells us what a sample says about the whole population.
 - It underpins every stage of the data science lifecycle.
@@ -227,7 +267,7 @@ What is the probability of drawing a blue or red marble on the first draw?
 
 ---
 
-# Terminology
+# Key Terminology
 
 ::: {style="font-size:0.85em; line-height:1.5;"}
 - **Experiment** — a process or action with an uncertain result
@@ -327,6 +367,54 @@ $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 
 ---
 
+# Do You Take the Bet?
+
+- A coin lands heads with unknown probability *p*
+- You flip it **14 times** and get **10 heads**
+- A stranger offers a bet: will the **next two flips** both be heads?
+
+::::: {.columns}
+
+:::: {.column width="50%"}
+::: {.fragment}
+[FREQUENTIST]{style="color:#001E62; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}<br>
+Estimate *p* from the 14 observations: **51%**
+:::
+::::
+
+:::: {.column width="50%"}
+::: {.fragment}
+[BAYESIAN]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}<br>
+Treat *p* as a distribution with a prior: **48.5%**
+:::
+::::
+
+:::::
+
+::: {.fragment style="text-align:center; margin-top:0.6em;"}
+**Same data, opposite sides of the bet?!**
+:::
+
+<!-- TODO: from Ch. 1, "Statistical worldviews."  Source: Ipeirotis (2008); cite properly on the Sources slide. -->
+
+---
+
+# "Just Do the Math"
+
+::: {.incremental}
+- **Frequentist**: probability = long-run frequency; judge procedures by error rates
+- **Bayesian**: probability = degree of belief, updated as evidence arrives
+- There is not always a "correct option"
+:::
+
+<!-- TODO: from Ch. 1, "Statistical worldviews." Efron (1986) "Why Isn't Everyone a Bayesian?" vs. McElreath (2020) - subsumed by causal inference? -->
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+:::
+
+---
+
 # Data Science Lifecycle {.section-header}
 
 ---
@@ -408,6 +496,35 @@ $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 
 ---
 
+# What's Missing?
+
+::: {.incremental}
+- **Understanding** — no layer of the pyramid 
+- But pyramid does not build itself
+- "What good are all the objects in the universe, if there is no subject?" — Ursula K. Le Guin
+- Knowledge as a "network of relations through which humans coordinate their actions" (Zeleny, 1987)
+:::
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+:::
+
+---
+
+# Ursula K. Le Guin {.quote-slide}
+
+> What good are all the objects in the universe, if there is no subject?
+
+::: {.attribution}
+Ursula K. Le Guin
+:::
+
+::: {.quote-source}
+"Science Fiction and Mrs. Brown" (1975), in *[The Language of the Night](https://openlibrary.org/books/OL4100441M/The_language_of_the_night)* (1979).
+:::
+
+---
+
 # The Treachery of Images {.section-header}
 
 ---
@@ -442,6 +559,95 @@ An equilateral triangle — or is it? See [Chapter 1: Working Toward Wisdom](../
 
 ---
 
+# Let's Zoom In (Powers of Ten) {.image-frame-slide}
+
+<img src="../assets/triangles/01-triangle-frame.svg" alt="An equilateral triangle with a red rectangular frame around its left edge, marking the next crop">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+The red frame is 1/10th the size of the original canvas (160px vs. 1600px).
+:::
+
+---
+
+# 10× {.image-frame-slide}
+
+<img src="../assets/triangles/02-triangle-edge.svg" alt="A cropped and enlarged view of the triangle's left edge, showing a jagged rather than straight line">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+The "straight" edge is jagged — the only way to draw a line with square pixels.
+:::
+
+---
+
+# 10× {.image-frame-slide}
+
+<img src="../assets/triangles/03-triangle-edge-frame.svg" alt="An enlarged view of the triangle's edge with a smaller red frame marking the next crop">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+Again, the red frame marks where we zoom next.
+:::
+
+---
+
+# 100× {.image-frame-slide}
+
+<img src="../assets/triangles/04-triangle-edge-zoom.svg" alt="A further enlarged crop of the triangle's edge, resolving into individual square blocks">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+The pixels were there the whole time — they were just too small to see.
+:::
+
+---
+
+# ...these aren't pixels {.image-frame-slide}
+
+<img src="../assets/subpixels/lcd-pixel-macro-2023-golden.jpg" alt="Microscopic close-up of an LCD display showing red, green, and blue subpixels">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+:::
+
+---
+
+# Subpixels {.image-frame-slide}
+
+<img src="../assets/subpixels/lcd-pixel-macro-2023-golden-zoom-10x.jpg" alt="Ten-times zoomed view of the LCD subpixel pattern, showing rectangular red, green, and blue subpixels">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+:::
+
+---
+
+# Your Screen Isn't My Screen {.image-frame-slide}
+
+<img src="../assets/subpixels/pixel-geometries.jpg" alt="Microscopic photos comparing pixel geometries from CRT television, CRT monitor, and LCD displays">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Peter Halasz (Pengo), [*Pixel geometry 02*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+:::
+
+---
+
+# Provenance {.image-frame-slide}
+
+::: {style="font-size:0.72em; line-height:1.45; margin-bottom:0.5em;"}
+- **Wisdom** = being able to explain *why* the figure was not a perfect triangle
+- and being willing to say why it *is*, in some sense, a triangle
+- understand how "subpixels of data" become "images of information"
+- "All models are wrong" (Box)
+	- All **data** are wrong too!
+	- Or at least incomplete
+:::
+
+<img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom" style="max-height:300px;">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+:::
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week1.md>.
@@ -451,3 +657,7 @@ An equilateral triangle — or is it? See [Chapter 1: Working Toward Wisdom](../
 5. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
 6. *The Treachery of Images* (1929) by René Magritte, courtesy of [LACMA Collections](https://collections.lacma.org/object/31931); public domain in the United States.
 7. Belgium 2026 World Cup away jersey by adidas and the Royal Belgian Football Association, photo via [Hyperallergic](https://hyperallergic.com/belgiums-magritte-inspired-soccer-jersey-mirrors-a-surreal-world-cup/); used under fair use for educational commentary.
+8. LCD subpixel micrographs by Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+9. Pixel geometry comparison by Peter Halasz (Pengo), [*Pixel geometry 02*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+10. The zoom sequence, DIKW discussion, and frequentist/Bayesian coin bet draw on [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html); the coin-bet example is from [Panos Ipeirotis (2008)](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html).
+11. "Powers of ten" zoom framing after Charles and Ray Eames, *Powers of Ten* (1968/1977).
