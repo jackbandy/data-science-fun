@@ -22,7 +22,7 @@ A four-layer pyramid.
 -- T. S. Eliot in *The Rock* [@eliot_rock_1934]
 
 
-> **Overview:** This chapter describes the DIKW pyramid — data, information, knowledge, wisdom — and its relevance to the data science lifecycle, especially as a way to consider the fundamental goals and purposes of data science work. The chapter also introduces concepts of *understanding* and *common knowledge*, and describes their relevance to data science. It closes with a brief discussion of statistical worldviews (e.g. Bayesian versus Frequentist), explaining why data scientists cannot simply "just do the math" - they often must choose particular beliefs about math and the world at large.
+> **Overview:** This chapter describes the DIKW pyramid — data, information, knowledge, wisdom — and its relevance to the data science lifecycle, especially as a way to consider the fundamental goals and purposes of data science work. The chapter also discusses concepts of *understanding* and *common knowledge*, and describes their relevance to data science. It closes with a brief discussion of statistical worldviews (e.g. Bayesian versus Frequentist), explaining why data scientists cannot simply "just do the math" - they often must choose particular beliefs about math and the world at large.
 
 As one works through the various stages of the [data science lifecycle](https://learningds.org/ch/01/lifecycle_cycle.html), it is helpful to consider how each stage relates to what is often called the data-information-knowledge-wisdom "hierarchy" or the "DIKW pyramid" for short [@rowley_wisdom_2007]. The DIKW framing has a long history across systems thinking and information science (e.g., @ackoff_data_1989; @vance_information_1997; @bernstein_data-information-knowledge-wisdom_2011). As argued by this chapter and other sources, the definitive hierarchy implied by the DIKW pyramid is somewhat misleading [@fricke_knowledge_2009], however, the intuitions around the metaphor offer helpful framing for data science work.
 
@@ -163,16 +163,16 @@ TK — develop:
 
 ## Statistical worldviews {#sec-statistical-worldviews}
 
-One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere" [@nagel_view_from_nowhere_1986; @haraway_situated_knowledges_1988; @dignazio_klein_data_feminism_2020], there are many "researcher degrees of freedom" exercised throughout the lifecycle. Making decisions within these degrees of freedom entails a degree of subjectivity.
+One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to various steps in the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere" [@nagel_view_from_nowhere_1986; @haraway_situated_knowledges_1988; @dignazio_klein_data_feminism_2020], there are many "researcher degrees of freedom" exercised throughout the lifecycle. Making decisions within these degrees of freedom entails a degree of subjectivity, and requires data scientists to bring some humanity to their work.
 
-To demonstrate this and conclude the chapter, we will explore the example of frequentist versus Bayesian statistics.
+To help demonstrate the relevance of worldviews in data science, we will conclude the chapter with the example of frequentist versus Bayesian statistics.
 
 Consider a simple scenario from [@ipeirotis_bayesian_frequentist_2008]:
 
 * You have a coin that, when flipped, ends up head with probability *p* (and ends up tail with probability *1−p*)
 * The value of *p* is unknown, and you want to know it
 * You flip the coin 14 times and get 10 heads
-* A stranger walks by and offers a bet as to whether the next two flips will both be heads
+* A stranger walks by after the 14th flip and offers a bet as to whether the next two flips will yield two heads
 * Do you take the bet?
 
 The mathematical details are worked out in the original source; what matters here is the different conclusions reached through different statistical worldviews.
@@ -181,17 +181,19 @@ In this particular example, a *frequentist* would estimate *p* from the 14 obser
 
 There are underlying beliefs supporting these numbers: frequentists treat probability as long-run frequency/percentages and judge procedures by their error rates across repeated trials [@sep-statistics]. Bayesians, on the other hand, treat probability as a degree of belief (or "credence") that is updated as evidence arrives [@sep-epistemology-bayesian].
 
-So, do you take the bet? One might expect there to be a single answer to the statistical question: "just do the math!" But "the math" was not given to us on a stone tablet, and we have multiple paradigms upon which we might base our math. This is a case where one must choose which math to use, and to some extent, what to believe about the world.
+So, do you take the bet? One might expect there to be a single answer to the statistical question: "just do the math!" But we have multiple paradigms upon which we might base our math. This is a case where a data scientist must choose which math to use, and to some extent, what to believe about the world.
 
-This particular debate has largely settled. In 1986, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as an active contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020].
+This particular debate actually seems to have settled down. In a widely-cited 1986 paper, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as an active contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020]. That is, the main question has become: what can we expect to happen from a particular intervention?
 
-But even if "everyone is a Bayesian," this does not settle the matter, or eliminate the existence of subjective worldviews. In short, you cannot "just do the math," you still need to have an opinion. A particularly relevant example can be called the "problem of the priors" in Bayesian epistemology [@sep-epistemology-bayesian]. Bayesians may agree to treat probability as a degree of belief, but how exactly do you form a belief before data are available? Different camps of Bayesians (i.e. "subjective Bayesians" or "objective Bayesians") will have different answers to this question.
+But even if "everyone is a Bayesian," this does not settle the matter, or eliminate the existence of subjective worldviews. In short, you cannot "just do the math," you still need to have an opinion. A particularly relevant example is sometimes called the "problem of the priors" in Bayesian epistemology [@sep-epistemology-bayesian]. Bayesians may agree to treat probability as a degree of belief, but how exactly do you form a belief before data are available? Different camps of Bayesians (i.e. "subjective Bayesians" or "objective Bayesians") will have different answers to this question.
 
-Bayesians also disagree on a number of other questions [@sep-epistemology-bayesian], for example, about whether a prior/credence must be a single number, whether a given body of evidence permits exactly one rational credence or several, and how to update credences/beliefs in cases such as the "problem of old evidence." These are cases where a (Bayesian) data scientist choosing a prior is making a subjective choice, not merely "doing the math."
+Bayesians also disagree on a number of other questions [@sep-epistemology-bayesian], for example, about whether a prior/credence must be a single number, whether a given body of evidence permits exactly one rational credence or several, and how to update credences/beliefs. These are cases in which a (Bayesian) data scientist must make a choice (e.g. when choosing a prior), and cannot simply "do the math."
 
-Even the rise of the causal inference paradigm does not imply a conclusion to subjectivity in data science. Causal modeling may offer more regularity in asking questions, i.e., "what would happen after an intervention?" This lends to structural modeling and causal graphs (specifically, directed acyclic graphs, or DAGs) and more formal structures, rather than loose associations [@sep-causal-models].
+All this is *not* to say the process is unscientific. There are well-justified norms, standards, and conventions throughout the data science lifecycle. But not every norm, standard, or convention is one that all data scientists agree upon. And whenever there is a lack of consensus, it is helpful to understand how people reach different viewpoints, and where one's own worldview fits in.
 
-But causal modeling opens up additional cans of worms about what it actually means for one thing to "cause" another thing. Here are some examples:
+Even the rise of the causal inference paradigm described by @mcelreath_statistical_rethinking_2020 does not imply a conclusion to subjective decision-making in data science. Causal modeling may offer more regularity in asking questions (i.e., "what would happen after an intervention?") and helpful standards in structural modeling via causal graphs (specifically, directed acyclic graphs, or DAGs).
+
+Causal inference offers more formal structures [@sep-causal-models], it also opens up additional cans of worms. Namely, what does it actually means for one thing to "cause" another thing? Here are some common complications:
 
 * **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that just consistently show up at the same time?
 * **Multiple necessary conditions**: When a fire needs heat, fuel, and oxygen, which one is considered "the cause" of the fire?
