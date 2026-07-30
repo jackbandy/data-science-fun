@@ -4,24 +4,24 @@
 
 ## Key Terms
 
-⬜ *Status: early development. Most entries are still placeholders.*
+⬜ *Section Status: early development. Most entries are still placeholders.*
 
 TK: terms used throughout the book, with definitions and pointers to relevant chapter(s).
 
 [Aristotle's four causes]{#four-causes}
-: TK — four distinct ways that one thing can explain another: the *material cause*, *formal cause*, *efficient cause*, and *final cause* [Source: @sep-aristotle-causality]
+: TK — four different ways that one thing can explain another thing: the *material cause*, *formal cause*, *efficient cause*, and *final cause* [Source: @sep-aristotle-causality]
 
 Campbell's Law
-: "Social indicator metrics often become corrupt and unreliable when used for high-stakes decision-making." Examples include standardized test scores (Campbell's example), mortality scorecards for surgeons [@dranove_report_cards_2003], and sales quotas tied to compensation [@cfpb_wells_fargo_consent_order_2016]. See @sec-campbells-law. [Source: @campbell1979assessing]
+: The notion that social indicator metrics often become corrupt and unreliable when used for high-stakes decision-making. Examples include standardized test scores (Campbell's example), mortality scorecards for surgeons [@dranove_report_cards_2003], and sales quotas tied to compensation [@cfpb_wells_fargo_consent_order_2016]. See @sec-campbells-law. [Source: @campbell1979assessing]
 
 Causation without pattern
-: TK — one-time causes and effects that cannot be replicated, e.g. meteor and dinosaur extinction. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+: Occasions when one-time causes and effects cannot be replicated, e.g. the meteor which caused the dinosaur extinction. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Common causes
-: TK — an underlying third factor driving two effects, e.g. summer weather, ice cream sales, drownings. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+: Cases in which an underlying third factor is driving two effects, e.g. summer weather, ice cream sales, drownings. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Common knowledge
-: Shared awareness about what other people know. That is, not just knowing a proposition/fact, but also awareness that others know that proposition/fact too. Often conflated with mutual knowledge. [Source: @sep-common-knowledge]
+: Shared awareness about what other people know. That is, not just knowing a proposition/fact, but also having awareness that others know that proposition/fact too (as well as others knowing that *you* know that proposition/fact). Often conflated with mutual knowledge. [Source: @sep-common-knowledge]
 
 Consent
 : Permission that is freely given, reversible, informed, enthusiastic, and specific. [Source: @lee_building_consentful_2017]
@@ -45,7 +45,7 @@ Datum
 : A single data point, such as a number or symbol.
 
 Directionality
-: TK — determining which of two correlated things is the cause and which is the effect, e.g. train's speed and its speedometer needle. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+: Relevant when determining which of two correlated things is the cause and which is the effect, e.g. train's speed and its speedometer needle. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Disparate impact
 : TK [@barocas_selbst_big_data_disparate_impact_2016]
@@ -59,6 +59,13 @@ Efficient cause
 Ethics
 : Acting well in the world. [Source: @burton_computing_2023]
 
+Eudaimonia
+: TK
+Often translated "happiness" or "flourishing"
+The highest human good, the [telos](#telos) which Aristotle argues is the aim of all human activity: "Every art and every inquiry, and similarly every action and pursuit, is thought to aim at some good" [@aristotle_nicomachean_ethics, *Nicomachean Ethics* I.1, 1094a].
+More than pleasure or satisfaction or a specific state of feeling.
+"human good turns out to be activity of soul in accordance with virtue" [@aristotle_nicomachean_ethics, *Nicomachean Ethics* I.7, 1097b–1098a]. 
+
 Final cause
 : TK — a thing's purpose or end, what it is good for. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
 
@@ -66,7 +73,7 @@ Formal cause
 : TK — a thing's real-world essence. E.g. for a bronze statue, the actual shape of the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
 
 Goodhart's Law
-: "A measure can stop being a good measure when it becomes a target." E.g. see @sec-college-rankings: acceptance rates, student-teacher ratios, and reported SAT scores can all be moved directly once they are ranked on (may or may not improve the actual school quality). See @sec-goodharts-law. [Source: @goodhart1984problems]
+: The notion that a measure can stop being a helpful measure when it becomes a target. E.g. see @sec-college-rankings: acceptance rates, student-teacher ratios, and reported SAT scores can all be moved directly once they are ranked on (but may or may not improve the actual school quality). See @sec-goodharts-law. [Source: @goodhart1984problems]
 
 Information
 : TK
@@ -75,16 +82,16 @@ Knowledge
 : TK
 
 Material cause
-: TK — what a thing is made of. E.g. for a bronze statue, the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
+: What a thing is made of. E.g. for a bronze statue, the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
 
 Multiple necessary conditions
-: TK — several conditions are required for an outcome, which one counts as "the" cause? E.g. a fire needs heat, fuel, and oxygen. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+: Describes when several conditions are required for a given outcome (which one counts as "the" cause?). E.g. a fire needs heat, fuel, and oxygen.
 
 Mutual knowledge
 : A proposition is mutual knowledge among people when each person knows that proposition. Often conflated with common knowledge. [Source: @sep-common-knowledge]
 
 Overdetermination
-: TK — two sufficient causes may occur at once, e.g. two people each empty a full bucket of water onto a campfire. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+: Describes situations in which two sufficient causes may occur at once, e.g. two people each empty a full bucket of water onto a campfire.
 
 Presupposition
 : A background claim that must be true in order for a question to have a meaningful answer. [Source: @sep-questions]
@@ -99,10 +106,16 @@ Situated knowledge
 : TK [@dignazio_klein_data_feminism_2020]
 
 Spurious regularities
-: TK — things consistently occur together without one causing the other, e.g. rooster crows every morning before sunrise. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+: Used to describe when things consistently occur together without one causing the other, e.g. rooster crows every morning before sunrise. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Tech Debt
 : TK
+
+Teleology
+: Explanation of something based on its end or purpose, not what came before it to "cause" it. "Nature is a cause, a cause that operates for a purpose" [@aristotle_physics, *Physics* II.8, 199b]. Rosenblueth, Wiener, and Bigelow - what does a model or metric "aim" at [@rosenblueth_wiener_bigelow_teleology_1943]. TK — connect to @sec-goodharts-law.
+
+[Telos]{#telos}
+: The "end," "goal," or "completion" toward which a thing is directed (root of *teleology*). Another name for the "final cause," the fourth of [Aristotle's four causes](#four-causes): "in the sense of end or 'that for the sake of which' a thing is done, e.g. health is the cause of walking about" [@aristotle_physics, *Physics* II.3, 194b].
 
 Wisdom
 : TK
