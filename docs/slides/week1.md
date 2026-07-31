@@ -172,21 +172,13 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 # What is Data Science? (Yet Another Metaphor)
 
-::::: {.columns}
+<img src="../assets/week1-intro-data-science/role-of-data-science-cta-remix-v2.svg" alt="A transit map of data science. Grey rail lines are labelled journalism, politics, sports, transportation, finance, general scientific research, education, public health, and climate science; the Orange Line, still in color, is labelled data science, runs up into the Loop, and ends in the southwest at &quot;your own project(s)&quot;." style="max-height:600px; width:auto; max-width:100%; display:block; margin:0 auto;">
 
-:::: {.column width="44%"}
-::: {.incremental}
+::: {.notes}
 - Many fields "share the same track" (i.e. methods, tools, etc.)
 - Data science makes up much of that shared track
 - Data science can also go in its own direction
 :::
-::::
-
-:::: {.column width="56%"}
-<img src="../assets/week1-intro-data-science/role-of-data-science-cta-remix-v2.svg" alt="A transit map of data science. Grey rail lines are labelled journalism, politics, sports, transportation, finance, general scientific research, education, public health, and climate science; the Orange Line, still in color, is labelled data science, runs up into the Loop, and ends in the southwest at &quot;your own project(s)&quot;." style="max-height:400px; width:auto; max-width:100%; display:block; margin:0 auto;">
-::::
-
-:::::
 
 ---
 
@@ -349,26 +341,14 @@ Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislav
 
 # What else is Missing?
 
-::::: {.columns}
-
-:::: {.column width="52%"}
 ::: {.incremental}
 - **Understanding** — no layer of the pyramid 
 - The pyramid does not build itself
 - "What good are all the objects in the universe, if there is no subject?" — Ursula K. Le Guin
 - Knowledge as a "network of relations through which humans coordinate their actions" (Zeleny, 1987)
 :::
-::::
 
-:::: {.column width="44%"}
-<img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom" style="max-height:520px; width:auto; max-width:100%; display:block; margin:0 auto;">
-::::
-
-:::::
-
-::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
-See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
-:::
+<img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom" style="max-height:400px; width:auto; max-width:100%; display:block; margin:0.5em auto 0;">
 
 ---
 
@@ -383,6 +363,12 @@ Ursula K. Le Guin
 ::: {.quote-source}
 "Science Fiction and Mrs. Brown" (1975), in *[The Language of the Night](https://openlibrary.org/books/OL4100441M/The_language_of_the_night)* (1979).
 :::
+
+---
+
+# Questions about the DIKW Pyramid? {.image-frame-slide}
+
+<img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom">
 
 ---
 
@@ -493,8 +479,8 @@ Peter Halasz (Pengo), [*Pixel geometry 02*](https://commons.wikimedia.org/wiki/F
 # Provenance {.image-frame-slide}
 
 ::: {style="font-size:0.72em; line-height:1.45; margin-bottom:0.5em;"}
-- **Wisdom** = being able to explain *why* the figure was not a perfect triangle
-- and being willing to say why it *is*, in some sense, a triangle
+- Analogy: data scientists can explain *why* the figure was not a perfect triangle
+- and are willing to say why it *is*, in some sense, a triangle
 - understand how "subpixels of data" become "images of information"
 - "All models are wrong" (Box)
 	- All **data** are wrong too!
@@ -513,7 +499,7 @@ See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working
 
 ## Statistics Review
 
-Jack Bandy
+Jack Bandy and Elda Shatro
 2026
 
 ---
@@ -707,7 +693,7 @@ ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(36
 :::::
 
 ::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
-Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008). See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
 :::
 
 ---
@@ -719,11 +705,8 @@ Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://w
 - **Bayesian**: probability = degree of belief, updated as evidence arrives
 - Efron (1986) asked "Why Isn't Everyone a Bayesian?" — an active contest at the time
 - McElreath (2020): the debate has largely been **subsumed by causal inference**
-- Even so: you still have to pick a prior. There is not always a "correct option"
-:::
-
-::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
-See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+- Even so: you still have to choose a prior.
+- One of many examples in data science where there is not always a single correct option
 :::
 
 ---
