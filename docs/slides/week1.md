@@ -29,6 +29,16 @@ Week 1.
 
 ---
 
+# The Data Science Venn Diagram {.image-frame-slide}
+
+<img src="../assets/data-science-venn/Data_Science_VD.png.webp" alt="Drew Conway's data science Venn diagram: three overlapping circles labeled Hacking Skills, Math &amp; Statistics Knowledge, and Substantive Expertise. The pairwise overlaps are labeled Machine Learning, Traditional Research, and Danger Zone!, with Data Science at the center.">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+Drew Conway, [*The Data Science Venn Diagram*](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram) (2010), [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/).
+:::
+
+---
+
 # What is Data Science?
 
 [**Data science**]{style="color:#001E62;"} is an [**interdisciplinary**]{style="color:#f9461c;"} field that studies and applies tools and techniques for [**deriving useful insights from data**]{style="color:#f9461c;"}.
@@ -42,7 +52,7 @@ It uses techniques from [**computer science**]{style="color:#c0392b;"} and [**st
 ::::
 
 :::: {.column width="48%"}
-<img src="../assets/data-science-venn/data_science_venn_remix_v2.svg" alt="Venn diagram with three overlapping circles labeled Hacking Skills, Math and Statistics Knowledge, and Substantive Expertise. Their intersections are labeled Machine Learning, Traditional Research, and Danger Zone, with Data Science at the center." style="max-height:350px; width:auto; max-width:100%; display:block; margin:0 auto;">
+<img src="../assets/data-science-venn/data_science_venn_remix_v2.svg" alt="Venn diagram with three overlapping circles labeled Hacking Skills, Math and Statistics Knowledge, and Substantive Expertise. Their intersections are labeled Machine Learning, Traditional Research, and Danger Zone, with Data Science at the center." style="max-height:350px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
 ::::
 
 :::: {.column width="26%"}
@@ -85,15 +95,15 @@ Hanabusa Itchō, *Blind Monks Examining an Elephant* (1888 woodblock print repro
 
 ::::: {.columns}
 
-:::: {.column width="44%"}
+:::: {.column width="48%"}
 ::: {.incremental}
 - Data scientists often define the field by the part they touched
-- **Elephantidae**: biological family that includes elephants, mammoths, mastodons
-- Data science as a "family" of related methods, topics, questions
+- **Elephantidae**: biological family including elephants, mammoths, mastodons
+- Data science as a "family" of related methods, topics, etc.
 :::
 ::::
 
-:::: {.column width="52%"}
+:::: {.column width="48%"}
 <img src="../assets/phylogeny/elephantidae-cladogram.svg" alt="Cladogram of Elephantidae within Proboscidea, showing Loxodonta and Palaeoloxodon as sister genera, and Mammuthus and Elephas as sister genera" style="max-height:600px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
 
 ::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
@@ -111,9 +121,9 @@ Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy
 
 :::: {.column width="44%"}
 ::: {.incremental}
-- The family runs deeper than any one member
+- The family runs deeper than a single member
 - Data scientists do not have a monopoly on knowledge 
-- We are in a much larger ecosystem!
+- Data scientists are in a much larger ecosystem!
 :::
 ::::
 
@@ -166,13 +176,13 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 # What is Data Science? {.image-frame-slide}
 
-<img src="../assets/week1-intro-data-science/role-of-data-science.svg" alt="Hub-and-spoke diagram: data science at the center linked to healthcare, transportation, finance, climate science, public safety, and scientific research" class="r-stretch" style="border:none; box-shadow:none; background:transparent;">
+<img src="../assets/week1-intro-data-science/role-of-data-science.svg" alt="Hub-and-spoke diagram: data science at the center linked to healthcare, transportation, climate science, public safety, and scientific research" class="r-stretch" style="border:none; box-shadow:none; background:transparent;">
 
 ---
 
 # What is Data Science? (Yet Another Metaphor)
 
-<img src="../assets/week1-intro-data-science/role-of-data-science-cta-remix-v2.svg" alt="A transit map of data science. Grey rail lines are labelled journalism, politics, sports, transportation, finance, general scientific research, education, public health, and climate science; the Orange Line, still in color, is labelled data science, runs up into the Loop, and ends in the southwest at &quot;your own project(s)&quot;." style="max-height:600px; width:auto; max-width:100%; display:block; margin:0 auto;">
+<img src="../assets/week1-intro-data-science/role-of-data-science-cta-remix-v2.svg" alt="A transit map of data science. Grey rail lines are labelled journalism, politics, sports, art, design transportation, general scientific research, education, public health, and climate science; the Orange Line, still in color, is labelled data science, runs up into the Loop, and ends in the southwest at &quot;your own project(s)&quot;." style="max-height:660px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
 
 ::: {.notes}
 - Many fields "share the same track" (i.e. methods, tools, etc.)
@@ -250,42 +260,76 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ---
 
+# Source for the Lifecycle {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle.svg" alt="The data science lifecycle drawn with every connection shown: ask a question, obtain data, understand the data, and understand the world, linked by arrows running in both directions — including understanding the data sending you back to obtain more data, or back to the original question — with 'reports, decisions, solutions' as an output.">
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+Sam Lau, Joey Gonzalez, and Deb Nolan, ["The Data Science Lifecycle"](https://learningds.org/ch/01/lifecycle_intro.html), in *[Learning Data Science](https://learningds.org/)*.
+:::
+
+---
+
+# Related Work Cycles
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+
+::: {style="font-size:0.8em; margin-top:0.5em;"}
+- **TK** — how other fields draw similar loops
+:::
+:::
+
+<!-- TODO: e.g. the scientific method, OSEMN, CRISP-DM, design thinking, the audit/eval loop). "same shape, different vocabulary" -->
+
+---
+
 # The DIKW Pyramid {.section-header}
 
 
 ---
 
-# The DIKW Pyramid {.image-frame-slide}
+# Pyramids {.image-frame-slide}
+
+<object type="image/svg+xml" data="../assets/pyramid/comparison-of-pyramids-smil.svg" aria-label="Profiles of well-known pyramid and near-pyramid structures — from the Great Pyramid of Giza and the Pyramid of Djoser to the Louvre Pyramid, the Transamerica Pyramid, and the Ryugyong Hotel — all drawn to a common scale with a height axis in metres." style="width:auto; height:452px; aspect-ratio:560/350; display:block; margin:0 auto; background:#fff; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);"></object>
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Cmglee, [*Comparison of pyramids SMIL*](https://commons.wikimedia.org/wiki/File:Comparison_of_pyramids_SMIL.svg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+:::
+
+---
+
+# The DIKW Pyramid: Blank {.image-frame-slide}
 
 <img src="../assets/pyramid/01-dikw-pyramid-blank.svg" alt="A blank pyramid outline for the data–information–knowledge–wisdom hierarchy">
 
 ---
 
-# The DIKW Pyramid {.image-frame-slide}
+# The DIKW Pyramid: Four Layers {.image-frame-slide}
 
 <img src="../assets/pyramid/02-dikw-pyramid-divided.svg" alt="The DIKW pyramid divided into four horizontal layers">
 
 ---
 
-# The DIKW Pyramid {.image-frame-slide}
+# The DIKW Pyramid: Data {.image-frame-slide}
 
 <img src="../assets/pyramid/03-dikw-pyramid-data.svg" alt="The DIKW pyramid with the bottom 'data' layer labeled">
 
 ---
 
-# The DIKW Pyramid {.image-frame-slide}
+# The DIKW Pyramid: Information {.image-frame-slide}
 
 <img src="../assets/pyramid/04-dikw-pyramid-data-info.svg" alt="The DIKW pyramid with the 'data' and 'information' layers labeled">
 
 ---
 
-# The DIKW Pyramid {.image-frame-slide}
+# The DIKW Pyramid: Knowledge {.image-frame-slide}
 
 <img src="../assets/pyramid/05-dikw-pyramid-data-info-knowledge.svg" alt="The DIKW pyramid with the 'data', 'information', and 'knowledge' layers labeled">
 
 ---
 
-# The DIKW Pyramid {.image-frame-slide}
+# The DIKW Pyramid: Wisdom {.image-frame-slide}
 
 <img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom">
 
@@ -297,9 +341,8 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 :::: {.column width="52%"}
 ::: {.incremental}
-- Tuomi (1999): "data emerges only after we have information, and that information emerges only after we already have knowledge"
+- Tuomi (1999): "data emerges only after we have information...  information emerges only after we already have knowledge"
 - You need knowledge to decide what is even worth measuring
-- Frické (2009): a data-first pyramid "encourages the mindless and meaningless collection of data in the hope that one day it will ascend to information"
 :::
 ::::
 
@@ -323,7 +366,7 @@ Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislav
 ::: {.incremental}
 - Does wisdom sit at the top of the pyramid?
 - Or does wisdom hold up the whole thing?
-- Or is this metaphor missing something else?
+- What else could be messing in this metaphor?
 :::
 ::::
 
@@ -339,16 +382,43 @@ Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislav
 
 ---
 
-# What else is Missing?
+# Martin Frické {.quote-slide}
 
-::: {.incremental}
-- **Understanding** — no layer of the pyramid 
-- The pyramid does not build itself
-- "What good are all the objects in the universe, if there is no subject?" — Ursula K. Le Guin
-- Knowledge as a "network of relations through which humans coordinate their actions" (Zeleny, 1987)
+> [A data-first pyramid] encourages the mindless and meaningless collection of data in the hope that one day it will ascend to information.
+
+::: {.attribution}
+Martin Frické
 :::
 
-<img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom" style="max-height:400px; width:auto; max-width:100%; display:block; margin:0.5em auto 0;">
+::: {.quote-source}
+["The Knowledge Pyramid: A Critique of the DIKW Hierarchy"](https://doi.org/10.1177/0165551508094050), *Journal of Information Science* 35(2), 2009, pp. 131–142.
+:::
+
+---
+
+# What else is Missing? {data-auto-animate=""}
+
+<img data-id="dikw-full" src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom" style="max-height:520px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
+
+---
+
+# What else is Missing? {data-auto-animate=""}
+
+::::: {.columns}
+
+:::: {.column width="52%"}
+::: {.incremental}
+- **Understanding** — no layer in the pyramid 
+- The pyramid does not build itself
+- Knowledge as a "network of relations through which humans coordinate their actions" (Zeleny, 1987)
+:::
+::::
+
+:::: {.column width="44%"}
+<img data-id="dikw-full" src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom" style="max-height:520px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
+::::
+
+:::::
 
 ---
 
@@ -730,3 +800,5 @@ Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://w
 15. Bradley Efron, ["Why Isn't Everyone a Bayesian?"](https://doi.org/10.1080/00031305.1986.10475342), *The American Statistician* 40(1), 1986, pp. 1–5.
 16. Richard McElreath, *[Statistical Rethinking: A Bayesian Course with Examples in R and Stan](https://xcelab.net/rm/statistical-rethinking/)*, 2nd ed., Chapman and Hall/CRC, 2020.
 17. Coin toss photo by ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).
+18. Drew Conway, [*The Data Science Venn Diagram*](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram) (2010), [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/); the remixed Venn diagrams in this deck are derived from it.
+19. Sam Lau, Joey Gonzalez, and Deb Nolan, ["The Data Science Lifecycle"](https://learningds.org/ch/01/lifecycle_intro.html), in *[Learning Data Science](https://learningds.org/)*.

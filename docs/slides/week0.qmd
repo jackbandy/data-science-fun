@@ -142,7 +142,7 @@ function globeToss(p = 0.75) {
 
 ---
 
-# Pretty Code {auto-animate="true"}
+# Pretty Code
 
 - Syntax highlighting works in revealjs slides
 - Code uses the theme's Courier stack
@@ -359,6 +359,16 @@ ax.set(xlabel="water in 9 tosses", ylabel="simulations", xticks=range(10));
 
 ---
 
+# Auto-Animate: Two Rules {.smaller}
+
+::: {style="font-size:0.8em; line-height:1.5;"}
+- **It takes two adjacent slides.** `auto-animate` on a lone slide animates nothing — the attribute is inert unless the *next* slide has it too.
+- **Give matched elements a `data-id`.** Reveal auto-matches text by content and images by `src`, but an explicit `data-id` wins and is what keeps a figure connected when its container changes (centered → column).
+:::
+
+
+---
+
 # Image & Embed Slides {.section-header}
 
 ---
@@ -372,6 +382,44 @@ ax.set(xlabel="water in 9 tosses", ylabel="simulations", xticks=range(10));
 # Image Frame Slide {.image-frame-slide}
 
 <img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line with each station marked as a labeled stop">
+
+---
+
+# Standard Image Treatment {.smaller}
+
+Content images carry a **hairline border and a soft drop shadow**. The border
+gives a white-background image a definite edge against a white slide; the shadow
+lifts it slightly, so it reads as *a picture of something* rather than as part of
+the slide itself.
+
+::: {style="font-size:0.8em; line-height:1.5;"}
+- **Automatic** on `{.image-frame-slide}` and `{.image-slide}` — the theme styles the image, so add no inline style.
+- **`{.split}` layouts deliberately opt out** — the diagrams sit inside a text column, where a frame would crowd them.
+- **Styling an image inline** (e.g. inside `::: {.columns}`) bypasses the theme, so add the treatment yourself:
+:::
+
+``` html
+border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);
+```
+
+::: {style="font-size:0.72em; color:#565a5c; margin-top:0.4em;"}
+Exception: line-art diagrams meant to float on the slide background (transparent
+SVGs) set `border:none; box-shadow:none; background:transparent;` on purpose.
+:::
+
+---
+
+# Golden Rectangles {.smaller}
+
+make figures/pictures/things **[golden rectangles](https://en.wikipedia.org/wiki/Golden_rectangle)** whenever possible !
+( sides in the ratio 1 : φ, φ ≈ 1.618)
+
+::: {style="font-size:0.8em; line-height:1.5;"}
+- Consistent proportions mean figures sit at the same size slide to slide, instead of each one needing its own `max-height` nudge.
+- can be portrait or landscape rectangles
+- Ex. `00-triangle-best.svg` is **1600 × 989**,
+:::
+
 
 ---
 

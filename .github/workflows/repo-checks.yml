@@ -98,7 +98,10 @@ jobs:
           echo ""
           while read -r h; do
             echo "Identical files:"
-            grep "^$h" all.txt | awk '{print "    " $2}'
+            # md5sum prints "<32-char hash><2 spaces><path>", so strip a fixed
+            # 34 characters rather than splitting on whitespace -- filenames
+            # with spaces in them would otherwise be reported truncated.
+            grep "^$h" all.txt | sed 's/^.\{34\}/    /'
           done < dups.txt
 
           if [ "$count" -gt "$BASELINE" ]; then

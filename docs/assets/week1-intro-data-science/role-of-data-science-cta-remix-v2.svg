@@ -25,7 +25,7 @@
 <svg viewBox="285 -174.5 822 1330" xmlns="http://www.w3.org/2000/svg"
      font-family="Libre Franklin, Helvetica Neue, Helvetica, Arial, sans-serif"
      role="img" aria-labelledby="ttl">
-<title id="ttl">A transit map of data science. Grey rail lines are labelled journalism, politics, sports, transportation, finance, general scientific research, education, public health and climate science; the Orange Line, still in colour, is labelled data science, runs up into the Loop where it circles as the innermost of three nested rounded rectangles, and ends in the south-west at "your own project(s)". A transparent orange rounded rectangle sits behind the Loop and the "DATA SCIENCE" label, joining them visually.</title>
+<title id="ttl">A transit map of data science. Grey rail lines are labelled journalism, politics, sports, transportation, art, general scientific research, education, public health and climate science; the Orange Line, still in colour, is labelled data science, runs up into the Loop where it circles as the innermost of three nested rounded rectangles, and ends in the south-west at "your own project(s)". A transparent orange rounded rectangle sits behind the Loop and the "DATA SCIENCE" label, joining them visually.</title>
 
 <!-- highlight: transparent orange rounded rectangle behind the Loop and the DATA SCIENCE label -->
 <rect x="810" y="530" width="295" height="145" rx="26" ry="26" fill="#F9461C" fill-opacity="0.14"/>
@@ -64,6 +64,8 @@
 <text x="722.6" y="542.3" text-anchor="end" font-size="26" font-weight="700" letter-spacing="1.6" fill="#33393F">General Scientific Research</text>
 <text x="407" y="634.8" font-size="26" font-weight="700" letter-spacing="1.6" fill="#33393F">Education</text>
 <text x="547" y="730" font-size="26" font-weight="700" letter-spacing="1.6" fill="#33393F">Public Health</text>
+
+<text x="859.2" y="820" text-anchor="end" font-size="26" font-weight="700" letter-spacing="1.6" fill="#33393F">Art</text>
 
 <!-- the bottom pair share a baseline: reading as one row beats holding the 12-unit gap
      against two termini that are 5 units apart vertically -->
