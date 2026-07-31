@@ -141,14 +141,14 @@ $code-color: $ink !default;
       color: $ink;
       font-style: normal;
       font-weight: 500;
-      font-size: 2.3rem;
-      line-height: 1.24;
+      font-size: 2.75rem;
+      line-height: 1.22;
       p { margin: 0; }
     }
 
     .attribution {
       margin-top: 0.9em;
-      font-size: 0.9rem;
+      font-size: 1.05rem;
       color: $muted;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -156,7 +156,7 @@ $code-color: $ink !default;
 
     .quote-source {
       margin-top: 0.6em;
-      font-size: 0.62rem;
+      font-size: 0.78rem;
       line-height: 1.45;
       color: $muted;
       a { color: $steel; text-decoration: underline; }

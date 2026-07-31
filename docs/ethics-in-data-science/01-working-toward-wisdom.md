@@ -7,9 +7,9 @@ subtitle: Introduction to Ethics in Data Science
 **[← Back to Course Homepage](../../index.html)**
 
 ::: {#fig-dikw-pyramid-blank}
-<img src="../../assets/pyramid/01-dikw-pyramid-blank.svg" alt="An unlabeled pyramid with four layers." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<object type="image/svg+xml" data="../../assets/pyramid/comparison-of-pyramids-smil.svg" aria-label="Profiles of popular pyramid and near-pyramid buildings, drawn to a common scale." style="width: 100%; height: auto; aspect-ratio: 560 / 350; background: #fff; border: 1px solid var(--bs-border-color);"></object>
 
-A four-layer pyramid.
+Profiles of popular pyramid and near-pyramid structures drawn to a common scale. Hover over a label or profile to bring it forward. Source: Cmglee, [*Comparison of pyramids SMIL.svg*](https://commons.wikimedia.org/wiki/File:Comparison_of_pyramids_SMIL.svg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 :::
 
 > "Those analysis droids you've got over there only focus on symbols. Hagh! I should think you Jedi would have more respect for the difference between knowledge and, hu-hu-hu... *wisdom*."
@@ -20,6 +20,11 @@ A four-layer pyramid.
 > "Where is the Life we have lost in living? Where is the wisdom we have lost in knowledge? Where is the knowledge we have lost in information?"
 
 -- T. S. Eliot in *The Rock* [@eliot_rock_1934]
+
+
+> "Wisdom cannot be passed on... Knowledge can be conveyed, but not wisdom. It can be found, it can be lived... but it cannot be expressed in words and taught."
+
+-- Siddhartha in Hermann Hesse's *Siddhartha* [@hesse_siddhartha_1922]
 
 
 > **Overview:** This chapter describes the DIKW pyramid — data, information, knowledge, wisdom — and its relevance to the data science lifecycle, especially as a way to consider the fundamental goals and purposes of data science work. The chapter also discusses concepts of *understanding* and *common knowledge*, and describes their relevance to data science. It closes with a brief discussion of statistical worldviews (e.g. Bayesian versus Frequentist), explaining why data scientists cannot simply "just do the math" - they often must choose particular beliefs about math and the world at large.
@@ -36,9 +41,10 @@ The basic premise of the DIKW pyramid is as follows. To build a pyramid with wis
 
 Like all metaphors, the DIKW pyramid eventually breaks down. Knowledge creation is not always a matter of assembling data into information and then assembling that information into knowledge. And wisdom is not *literally* the top layer of an abstract pyramid, nor is it the guaranteed product of assembling data, information, and knowledge.
 
-Still, the DIKW model accurately suggests that one purpose of data (i.e. data science) is, generally, to point us toward wisdom. "Wisdom" may be a surprising word to see in a data science book. It is seemingly a squishy, amorphous concept, perhaps better suited for discussion in some philosophy or humanities textbook. Yet the concept of wisdom is helpful to consider as an end goal, or *telos*, in data science work.
+Still, the DIKW model accurately suggests that one purpose of data (i.e. data science) is, generally, to point us toward wisdom. "Wisdom" may be a surprising word to see in a data science book, and it may seem better suited for other textbooks. Yet the concept of wisdom is helpful to consider as an end goal, or *telos*, in data science work.
 
 ## What is wisdom?
+
 Anyone who wants to answer the question "what is wisdom" would benefit from also being able to answer the question, "what is a triangle?"[^triangle-spinoza]
 
 To start, let us try to display a perfect equilateral triangle on your screen, or at least get as close as we can. Here is an attempt.
@@ -49,9 +55,29 @@ To start, let us try to display a perfect equilateral triangle on your screen, o
 An attempt to display a perfect equilateral triangle.
 :::
 
-Looks like a pretty good triangle! It uses scalable vector graphics (i.e. an svg file) to make the lines look as crisp as they possibly can on a computer screen. The image only uses a few pieces of information: the size of the frame (using the golden ratio, of course), the location of the three points for an equilateral triangle within that frame, and the color and width of the line to connect those dots. This particular image uses a black line with a width of six pixels.
+Figure @fig-triangle-ideal looks like a pretty good triangle! It uses scalable vector graphics (i.e. an svg file) to make the lines look as crisp as they possibly can on a computer screen. The image only uses a few pieces of information: the size of the frame (using the golden ratio, of course), the location of the three points for an equilateral triangle within that frame, and the color and width of the line to connect those dots. This particular image uses a black line with a width of six pixels.
 
-But is there really a triangle in this image? Is it a perfect triangle? (Similar philosophical questions are asked about various shapes, such as the existence of perfect circles [@payne_perfect_circles_2019], or perfect spheres [].) One way to find out if it is truly "perfect" is to zoom in on a portion of the triangle. We will zoom in by a power of ten, inspired by the Eames films [@eames_powers_of_ten_1968; @eames_powers_of_ten_1977].
+The entire image comes from just a few lines of code:
+
+``` {.xml filename="00-triangle-best.svg"}
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1600"
+  height="989"
+  viewBox="0 0 1600 989"
+>
+  <rect width="100%" height="100%" fill="white" />
+  <polygon
+    points="364.84,871.36 800.00,117.64 1235.16,871.36"
+    fill="none"
+    stroke="black"
+    stroke-width="6"
+    stroke-linejoin="round"
+  />
+</svg>
+```
+
+But is there really a triangle in this image? Is it a perfect triangle? (Similar philosophical questions are asked about various shapes, such as the existence of perfect circles [@payne_perfect_circles_2019], or perfect spheres [@muller_roundest_object_2013].) One way to find out if it is truly "perfect" is to zoom in on a portion of the triangle. We will zoom in by a power of ten, inspired by the Eames films [@eames_powers_of_ten_1968; @eames_powers_of_ten_1977].
 
 ::: {#fig-triangle-frame}
 <img src="../../assets/triangles/01-triangle-frame.svg" alt="An equilateral triangle with a highlighted rectangular frame around its left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />

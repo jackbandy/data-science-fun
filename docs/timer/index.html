@@ -17,6 +17,19 @@
   <meta property="og:url" content="https://dodatascience.fun/timer/">
   <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="timer.css">
+  <script>
+    // Embedded in an iframe (the course slides) the attribution footer is noise,
+    // and the viewer has no way out of the frame. Swap it for a link to the real
+    // page. Set in <head> so the footer never flashes before it is hidden.
+    if (window.self !== window.top) {
+      document.documentElement.classList.add('embedded');
+      document.addEventListener('DOMContentLoaded', function () {
+        // Point at whatever copy of the timer is actually framed, so this works
+        // from the deployed site and from a local build alike.
+        document.getElementById('openStandalone').href = window.location.href;
+      });
+    }
+  </script>
 </head>
 <body>
 
@@ -29,6 +42,8 @@
       </svg>
       <b>cta</b> style timer
     </h1>
+    <a class="open-standalone" id="openStandalone" href="https://dodatascience.fun/timer/"
+       target="_blank" rel="noopener">Open in new tab</a>
   </div>
 
   <div class="timer-selector">

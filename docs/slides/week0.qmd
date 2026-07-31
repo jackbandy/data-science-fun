@@ -73,6 +73,34 @@ John W. Tukey
 
 ---
 
+# Fragments
+
+Unlike `.incremental`, individual `.fragment` divs can be ordered and given
+their own animation, which is what the build slides below rely on.
+
+::: {.fragment}
+A plain `.fragment` is hidden until you advance to it.
+:::
+
+::: {.fragment .fade-out fragment-index=2}
+`.fade-out` is the reverse: visible from the start, gone at step 2.
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+`.fade-in-then-out` appears at step 2 and leaves again at step 3.
+:::
+
+::: {.fragment fragment-index=3}
+Sharing a `fragment-index` is how one block swaps in as another swaps out.
+:::
+
+::: {.notes}
+Anything inside a `.notes` div is speaker-only — press `S` to open the speaker
+view. It never renders on the slide itself.
+:::
+
+---
+
 # Tabsets
 
 Drop a finger on a random spot of the spinning globe: **Water** or **Land**? About 75% of Earth's surface is water, so each toss is a coin flip weighted by `p`.
@@ -215,6 +243,44 @@ ax.set(xlabel="toss", ylabel="proportion water", ylim=(0, 1));
 
 ---
 
+# Building Up a Figure {.code-figure-slide .build-slide}
+
+::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+```{python}
+#| echo: true
+#| fig-alt: "Running proportion of water across 500 globe tosses, plotted with default styling and a full 0-to-1 y-axis"
+fig, ax = plt.subplots()
+ax.plot(running)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{python}
+#| echo: true
+#| fig-alt: "The same running-proportion line, now drawn in UIC orange"
+fig, ax = plt.subplots()
+ax.plot(running, color="#f9461c")
+ax.set(ylim=(0, 1))
+```
+:::
+
+::: {.fragment fragment-index=2}
+```{python}
+#| echo: true
+#| fig-alt: "The same line with axis labels and a dashed reference line marking the true proportion of 0.75"
+fig, ax = plt.subplots()
+ax.plot(running, color="#f9461c")
+ax.axhline(0.75, color="#565a5c", linestyle="--")
+ax.set(xlabel="toss", ylabel="proportion water", ylim=(0, 1))
+```
+:::
+
+:::
+
+---
+
 # Text + Figure {.text-figure-slide}
 
 ::: {.columns}
@@ -330,13 +396,7 @@ Used to advocate for sanitary reforms in military hospitals.
 
 ---
 
-# Florence Nightingale's Mortality Diagram (1858) {.iframe-slide data-auto-animate=""}
-
-<img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart showing deaths from preventable disease (blue), wounds (red), and other causes (black)">
-
----
-
-# follow-up slide for nightingale {.split data-auto-animate=""}
+# Split Slide, Auto-Animate Follow-Up {.split data-auto-animate=""}
 
 ::: {.split-content}
 
@@ -383,6 +443,33 @@ An `.iframe-caption` sits under the embed at small type — use it for a source 
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 520px; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
+:::
+
+---
+
+# Format-Conditional Content
+
+`.content-visible` picks a different asset per output format — useful when an
+animated SVG works on the web but needs a static fallback in the PDF.
+
+::: {.content-visible when-format="html"}
+<img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line, shown in the HTML slides">
+:::
+
+::: {.content-visible when-format="pdf"}
+<img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line, shown in the PDF export">
+:::
+
+---
+
+# TODO Slide Template
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+
+``` markdown
+<!-- TODO: what's missing  -->
+```
 :::
 
 ---

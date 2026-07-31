@@ -5,9 +5,9 @@ format:
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 1</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week1.html">dodatascience.fun/slides/week1</a></span>'
 ---
 
-# Week 1 Slide Deck {.course-title}
+# Week 1, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
 
-## Intro, Stats Review; Data Science Lifecycle
+## Intro; Data Science Lifecycle
 
 Jack Bandy
 2026
@@ -21,7 +21,7 @@ Jack Bandy
 
 # Demo Content Slide
 
-Placeholder content for Week 1.
+Week 1.
 
 - Course introduction
 - Statistics review
@@ -69,25 +69,7 @@ Source: Drew Conway, [The Data Science Venn Diagram](http://drewconway.com/zia/2
 
 ---
 
-# Another Metaphor
 
-::::: {.columns}
-
-:::: {.column width="44%"}
-::: {.incremental}
-- TK
-- TK
-- TK
-:::
-::::
-
-:::: {.column width="56%"}
-<img src="../assets/week1-intro-data-science/role-of-data-science-cta-remix-v3.svg" alt="TK" style="max-height:400px; width:auto; max-width:100%; display:block; margin:0 auto;">
-::::
-
-:::::
-
----
 
 # A Data Science Elephant? {.image-frame-slide}
 
@@ -166,18 +148,54 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ::::
 
-# Why Data Science? {.image-frame-slide}
+---
+
+# How Big Is a Terabyte?
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+
+::: {style="font-size:0.8em; margin-top:0.5em;"}
+- **TK**
+:::
+:::
+
+<!-- TODO: add 1 TB visual before the 400M TB/day slide -->
+
+---
+
+# What is Data Science? {.image-frame-slide}
 
 <img src="../assets/week1-intro-data-science/role-of-data-science.svg" alt="Hub-and-spoke diagram: data science at the center linked to healthcare, transportation, finance, climate science, public safety, and scientific research" class="r-stretch" style="border:none; box-shadow:none; background:transparent;">
 
 ---
 
+# What is Data Science? (Yet Another Metaphor)
 
-# What Do Data Scientists Do?
+::::: {.columns}
+
+:::: {.column width="44%"}
+::: {.incremental}
+- Many fields "share the same track" (i.e. methods, tools, etc.)
+- Data science makes up much of that shared track
+- Data science can also go in its own direction
+:::
+::::
+
+:::: {.column width="56%"}
+<img src="../assets/week1-intro-data-science/role-of-data-science-cta-remix-v2.svg" alt="A transit map of data science. Grey rail lines are labelled journalism, politics, sports, transportation, finance, general scientific research, education, public health, and climate science; the Orange Line, still in color, is labelled data science, runs up into the Loop, and ends in the southwest at &quot;your own project(s)&quot;." style="max-height:400px; width:auto; max-width:100%; display:block; margin:0 auto;">
+::::
+
+:::::
+
+---
+
+
+# So what Do Data Scientists Do?
 
 ::: {.incremental}
-1. **Ask the right question** — turn a vague goal into something measurable
-2. **Get & clean the data** — collect, merge, and fix messy real-world data
+1. **Ask good questions** — turn a vague goal into something measurable
+2. **Obtain & clean the data** — collect, merge, and fix messy real-world data
 3. **Explore & visualize** — search and discover patterns, outliers, and surprises
 4. **Model & predict** — build something that explains and/or forecasts
 5. **Communicate** — turn results into stories, decisions
@@ -185,232 +203,17 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ---
 
-# "Simple" Questions
+# Example Questions
 
 ::: {.incremental}
 - Do guests like the new cold brew recipe?
 - Is the running plan helping people run faster?
 - Do people sleep better with noise machines?
 - Did the advertising campaign make a difference?
-:::
-
-::: {.fragment style="text-align:center; margin-top:0.8em;"}
-**No real, curious human wants just "yes" or "no."** Data scientists can *explain* the answer in detail.
-:::
-
-::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
-See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
-:::
-
----
-
-# Statistics review {.section-header}
-
----
-
-# Roadmap
-
-Four things we'll cover:
-
-::: {.incremental}
-1. **Role of statistics in data science**
-2. **Probability**
-3. **Distributions**
-4. **Sampling**
-:::
-
----
-
-# Role of Statistics in Data Science
-
-::: {.incremental}
-- Statistics: the science of learning from data under uncertainty.
-- It turns raw numbers into evidence we can actually trust.
-- It tells us what a sample says about the whole population.
-- It underpins every stage of the data science lifecycle.
-:::
-
----
-
-# Probability {.smaller}
-
-- **Probability** is a measure of the **likelihood** of an event occurring.
-- Probability is the language we use to quantify uncertainty in what the data tells us.
-
-:::: {.columns}
-
-::: {.column width="30%"}
-<div style="border:1px solid #001E62; border-radius:8px; padding:6px 16px; text-align:center; width:fit-content; margin:0.2em auto;">
-$$P(E) = \frac{|E|}{|S|}$$
-</div>
-:::
-
-::: {.column width="66%"}
-<div style="font-size:0.8em; line-height:1.3;">
-<b style="color:#f9461c;">E</b> = the event<br>
-<b style="color:#f9461c;">S</b> = sample space<br>
-<b style="color:#f9461c;">|E|</b> = number of outcomes in event E<br>
-<b style="color:#f9461c;">|S|</b> = total number of possible outcomes in S
-</div>
-:::
-
-::::
-
-- The probability of an event is always between <b>0 and 1</b>.
-
-<div style=border-radius:8px; padding:8px 16px; margin-top:0.4em; font-size:0.72em; line-height:1.3;">
-<i><b style="color:#f9461c;">Example:</b></i> A bag has 6 blue, 3 red, and 5 yellow marbles.<br>
-What is the probability of drawing a blue or red marble on the first draw? 
-<br>
-<i><b>P(E) =</b></i>
-</div>
-
----
-
-# Key Terminology
-
-::: {style="font-size:0.85em; line-height:1.5;"}
-- **Experiment** — a process or action with an uncertain result
-- **Outcome** — a single possible result of an experiment
-- **Event** — a set of one or more outcomes we care about
-- **Sample space** — the set of all possible outcomes
-- **Complementary events** — two events where one occurs if and only if the other does not
-:::
----
-
-# Conditional Probability {.smaller}
-
-- **Conditional probability** is the probability of an event **given that another event has already happened**.
-- **P(A | B)** — "the probability of A given B."
-
-:::: {.columns}
-
-::: {.column width="30%"}
-<div style="border:2px solid #f9461c; border-radius:8px; padding:2px 7px; text-align:center; width:fit-content; margin:0.3em auto;">
-$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
-</div>
-:::
-
-::: {.column width="62%"}
-<div style="font-size:0.72em; line-height:2.5; margin-top:0.4em;">
-<b style="color:#f9461c;">P(A | B)</b>   =   probability of A given B<br>
-<b style="color:#f9461c;">P(A ∩ B)</b> = probability of both A and B<br>
-<b style="color:#f9461c;">P(B)</b> = probability of B (must be &gt; 0)
-</div>
-:::
-
-::::
-
----
-
-# Conditional Probability {.smaller}
-
-**Example:** A deck contains 15 distinct cards labeled 1 through 15. Two cards are drawn at random without replacement.
-
-:::: {.columns}
-
-::: {.column width="48%"}
-[SET UP]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}
-
-::: {.fragment}
-**A** = both cards odd &nbsp;&nbsp; **B** = sum is even
-:::
-
-::: {.fragment}
-*Sum is even if both cards are odd, or both are even.*
-:::
-
-::: {.fragment}
-**Odd numbers (8)**<br>
-<span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">1</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">3</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">5</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">7</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">9</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">11</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">13</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">15</span>
-:::
-
-::: {.fragment}
-**Even numbers (7)**<br>
-<span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">2</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">4</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">6</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">8</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">10</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">12</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">14</span>
-:::
-:::
-
-::: {.column width="52%"}
-[SOLUTION]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}
-
-::: {.fragment}
-$$n(B) = \binom{8}{2} + \binom{7}{2} = 28 + 21 = 49$$
-:::
-
-::: {.fragment}
-$$n(A \cap B) = \binom{8}{2} = 28$$
-:::
-
-::: {.fragment}
-$$P(A \mid B) = \frac{n(A \cap B)}{n(B)} = \frac{28}{49} = \frac{4}{7}$$
-:::
-
-::: {.fragment}
-<div style="border-radius:8px; padding:8px 16px; text-align:center; margin-top:0.3em;">
-<span style="color:#fff; font-size:0.7em; letter-spacing:2px; font-weight:bold;">ANSWER</span> &nbsp;&nbsp; <span style="font-weight:bold; font-size:1.1em;">P(A | B) = 4/7</span>
-</div>
-:::
-:::
-
-::::
-
----
-
-# Bayes' Theorem
-
-Conditional probabilities can be reversed using Bayes' theorem, which provides a systematic method for expressing one conditional probability in terms of another.
-
-$$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
-
-$$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
-
----
-
-# Do You Take the Bet?
-
-- A coin lands heads with unknown probability *p*
-- You flip it **14 times** and get **10 heads**
-- A stranger offers a bet: will the **next two flips** both be heads?
-
-::::: {.columns}
-
-:::: {.column width="50%"}
-::: {.fragment}
-[FREQUENTIST]{style="color:#001E62; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}<br>
-Estimate *p* from the 14 observations: **51%**
-:::
-::::
-
-:::: {.column width="50%"}
-::: {.fragment}
-[BAYESIAN]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}<br>
-Treat *p* as a distribution with a prior: **48.5%**
-:::
-::::
-
-:::::
-
-::: {.fragment style="text-align:center; margin-top:0.6em;"}
-**Same data, opposite sides of the bet?!**
-:::
-
-<!-- TODO: from Ch. 1, "Statistical worldviews."  Source: Ipeirotis (2008); cite properly on the Sources slide. -->
-
----
-
-# "Just Do the Math"
-
-::: {.incremental}
-- **Frequentist**: probability = long-run frequency; judge procedures by error rates
-- **Bayesian**: probability = degree of belief, updated as evidence arrives
-- There is not always a "correct option"
-:::
-
-<!-- TODO: from Ch. 1, "Statistical worldviews." Efron (1986) "Why Isn't Everyone a Bayesian?" vs. McElreath (2020) - subsumed by causal inference? -->
-
-::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
-See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+- 
+- **No real, curious human wants just "yes" or "no."**
+- Data scientists can *explain* answers in detail.
+- (See mini-book, [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html)).
 :::
 
 ---
@@ -421,37 +224,37 @@ See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working
 
 # The Data Science Lifecycle {.image-frame-slide}
 
-<img src="../assets/lifecycle/ds-lifecycle-v0.svg" alt="Data science lifecycle diagram: ask a question, obtain data, understand the data, understand the world, and reports/decisions/solutions, connected by arrows in a cycle">
+<img src="../assets/lifecycle-steps/ds-lifecycle-step0.svg" alt="Blank data science lifecycle scaffold: five unlabeled boxes connected by arrows in a cycle">
 
 ---
 
 # The Data Science Lifecycle {.image-frame-slide}
 
-<img src="../assets/lifecycle/ds-lifecycle-v1.svg" alt="Data science lifecycle with the 'ask a question' stage highlighted">
+<img src="../assets/lifecycle-steps/ds-lifecycle-step1.svg" alt="Data science lifecycle with the first stage highlighted and labeled 'ask a question'; the remaining boxes are still blank">
 
 ---
 
 # The Data Science Lifecycle {.image-frame-slide}
 
-<img src="../assets/lifecycle/ds-lifecycle-v2.svg" alt="Data science lifecycle with the 'obtain data' stage highlighted">
+<img src="../assets/lifecycle-steps/ds-lifecycle-step2.svg" alt="Data science lifecycle with the second stage highlighted and labeled 'obtain data'; 'ask a question' is labeled but no longer highlighted">
 
 ---
 
 # The Data Science Lifecycle {.image-frame-slide}
 
-<img src="../assets/lifecycle/ds-lifecycle-v3.svg" alt="Data science lifecycle with the 'understand the data' stage highlighted">
+<img src="../assets/lifecycle-steps/ds-lifecycle-step3.svg" alt="Data science lifecycle with the third stage highlighted and labeled 'understand the data'; the first two stages are labeled">
 
 ---
 
 # The Data Science Lifecycle {.image-frame-slide}
 
-<img src="../assets/lifecycle/ds-lifecycle-v4.svg" alt="Data science lifecycle with the 'understand the world' stage highlighted">
+<img src="../assets/lifecycle-steps/ds-lifecycle-step4.svg" alt="Data science lifecycle with the fourth stage highlighted and labeled 'understand the world'; the first three stages are labeled">
 
 ---
 
 # The Data Science Lifecycle {.image-frame-slide}
 
-<img src="../assets/lifecycle/ds-lifecycle-v5.svg" alt="Data science lifecycle with the 'reports, decisions, solutions' stage highlighted">
+<img src="../assets/lifecycle-steps/ds-lifecycle-step5.svg" alt="Data science lifecycle with the final stage highlighted and labeled 'reports, decisions, solutions'; all five stages are now labeled">
 
 ---
 
@@ -496,14 +299,72 @@ See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working
 
 ---
 
-# What's Missing?
+# Is the Pyramid Upside Down?
 
+::::: {.columns}
+
+:::: {.column width="52%"}
+::: {.incremental}
+- Tuomi (1999): "data emerges only after we have information, and that information emerges only after we already have knowledge"
+- You need knowledge to decide what is even worth measuring
+- Frické (2009): a data-first pyramid "encourages the mindless and meaningless collection of data in the hope that one day it will ascend to information"
+:::
+::::
+
+:::: {.column width="44%"}
+<img src="../assets/pyramid/upside-down-pyramid-bratislava.jpg" alt="The Slovak Radio Building in Bratislava, an inverted pyramid resting on its point" style="max-height:520px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislava 02*](https://commons.wikimedia.org/wiki/File:Upside_down_Pyramid,_Bratislava_02.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+:::
+::::
+
+:::::
+
+---
+
+# Is the Pyramid Upside Down?
+
+::::: {.columns}
+
+:::: {.column width="52%"}
+::: {.incremental}
+- Does wisdom sit at the top of the pyramid?
+- Or does wisdom hold up the whole thing?
+- Or is this metaphor missing something else?
+:::
+::::
+
+:::: {.column width="44%"}
+<img src="../assets/pyramid/upside-down-pyramid-bratislava.jpg" alt="The Slovak Radio Building in Bratislava, an inverted pyramid resting on its point" style="max-height:520px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislava 02*](https://commons.wikimedia.org/wiki/File:Upside_down_Pyramid,_Bratislava_02.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+:::
+::::
+
+:::::
+
+---
+
+# What else is Missing?
+
+::::: {.columns}
+
+:::: {.column width="52%"}
 ::: {.incremental}
 - **Understanding** — no layer of the pyramid 
-- But pyramid does not build itself
+- The pyramid does not build itself
 - "What good are all the objects in the universe, if there is no subject?" — Ursula K. Le Guin
 - Knowledge as a "network of relations through which humans coordinate their actions" (Zeleny, 1987)
 :::
+::::
+
+:::: {.column width="44%"}
+<img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom" style="max-height:520px; width:auto; max-width:100%; display:block; margin:0 auto;">
+::::
+
+:::::
 
 ::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
 See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
@@ -619,7 +480,7 @@ Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia
 
 ---
 
-# Your Screen Isn't My Screen {.image-frame-slide}
+# Different Screens {.image-frame-slide}
 
 <img src="../assets/subpixels/pixel-geometries.jpg" alt="Microscopic photos comparing pixel geometries from CRT television, CRT monitor, and LCD displays">
 
@@ -648,6 +509,225 @@ See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working
 
 ---
 
+# Week 1, Day 2 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
+
+## Statistics Review
+
+Jack Bandy
+2026
+
+---
+
+# Statistics Review {.section-header}
+
+---
+
+# Roadmap
+
+Four things we'll cover:
+
+::: {.incremental}
+1. **Role of statistics in data science**
+2. **Probability**
+3. **Distributions**
+4. **Sampling**
+:::
+
+---
+
+# Statistics in Data Science
+
+::: {.incremental}
+- Statistics: the science of learning from data under uncertainty.
+- It turns raw numbers into evidence we can actually trust.
+- It tells us what a sample says about the whole population.
+- It underpins every stage of the data science lifecycle.
+:::
+
+---
+
+# Probability {.smaller}
+
+- **Probability** is a measure of the **likelihood** of an event occurring.
+- Probability is the language we use to quantify uncertainty in what the data tells us.
+
+:::: {.columns}
+
+::: {.column width="30%"}
+<div style="border:1px solid #001E62; border-radius:8px; padding:6px 16px; text-align:center; width:fit-content; margin:0.2em auto;">
+$$P(E) = \frac{|E|}{|S|}$$
+</div>
+:::
+
+::: {.column width="66%"}
+<div style="font-size:0.8em; line-height:1.3;">
+<b style="color:#f9461c;">E</b> = the event<br>
+<b style="color:#f9461c;">S</b> = sample space<br>
+<b style="color:#f9461c;">|E|</b> = number of outcomes in event E<br>
+<b style="color:#f9461c;">|S|</b> = total number of possible outcomes in S
+</div>
+:::
+
+::::
+
+- The probability of an event is always between <b>0 and 1</b>.
+
+<div style=border-radius:8px; padding:8px 16px; margin-top:0.4em; font-size:0.72em; line-height:1.3;">
+<i><b style="color:#f9461c;">Example:</b></i> A bag has 6 blue, 3 red, and 5 yellow marbles.<br>
+What is the probability of drawing a blue or red marble on the first draw? 
+<br>
+<i><b>P(E) =</b></i>
+</div>
+
+---
+
+# Key Terminology
+
+::: {style="font-size:0.85em; line-height:1.5;"}
+- **Experiment** — a process or action with an uncertain result
+- **Outcome** — a single possible result of an experiment
+- **Event** — a set of one or more outcomes we care about
+- **Sample space** — the set of all possible outcomes
+- **Complementary events** — two events where one occurs if and only if the other does not
+	- E.g. coin flip
+:::
+---
+
+# Conditional Probability {.smaller}
+
+- **Conditional probability** is the probability of an event **given that another event has already happened**.
+- **P(A | B)** — "the probability of A given B."
+
+:::: {.columns}
+
+::: {.column width="30%"}
+<div style="border:2px solid #f9461c; border-radius:8px; padding:2px 7px; text-align:center; width:fit-content; margin:0.3em auto;">
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
+</div>
+:::
+
+::: {.column width="62%"}
+<div style="font-size:0.72em; line-height:2.5; margin-top:0.4em;">
+<b style="color:#f9461c;">P(A | B)</b>   =   probability of A given B<br>
+<b style="color:#f9461c;">P(A ∩ B)</b> = probability of both A and B<br>
+<b style="color:#f9461c;">P(B)</b> = probability of B (must be &gt; 0)
+</div>
+:::
+
+::::
+
+---
+
+# Conditional Probability {.smaller}
+
+**Example:** A deck contains 15 distinct cards labeled 1 through 15. Two cards are drawn at random without replacement.
+
+:::: {.columns}
+
+::: {.column width="48%"}
+[SET UP]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}
+
+::: {.fragment}
+**A** = both cards odd &nbsp;&nbsp; **B** = sum is even
+:::
+
+::: {.fragment}
+*Sum is even if both cards are odd, or both are even.*
+:::
+
+::: {.fragment}
+**Odd numbers (8)**<br>
+<span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">1</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">3</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">5</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">7</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">9</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">11</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">13</span><span style="display:inline-block; background:#FDE7E0; border:1px solid #f9461c; color:#f9461c; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">15</span>
+:::
+
+::: {.fragment}
+**Even numbers (7)**<br>
+<span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">2</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">4</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">6</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">8</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">10</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">12</span><span style="display:inline-block; background:#DCE6F1; border:1px solid #001E62; color:#001E62; font-weight:bold; border-radius:5px; padding:3px 8px; margin:2px;">14</span>
+:::
+:::
+
+::: {.column width="52%"}
+[SOLUTION]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.8em;"}
+
+::: {.fragment}
+$$n(B) = \binom{8}{2} + \binom{7}{2} = 28 + 21 = 49$$
+:::
+
+::: {.fragment}
+$$n(A \cap B) = \binom{8}{2} = 28$$
+:::
+
+::: {.fragment}
+$$P(A \mid B) = \frac{n(A \cap B)}{n(B)} = \frac{28}{49} = \frac{4}{7}$$
+:::
+
+::: {.fragment}
+<div style="border-radius:8px; padding:8px 16px; text-align:center; margin-top:0.3em;">
+<span style="color:#fff; font-size:0.7em; letter-spacing:2px; font-weight:bold;">ANSWER</span> &nbsp;&nbsp; <span style="font-weight:bold; font-size:1.1em;">P(A | B) = 4/7</span>
+</div>
+:::
+:::
+
+::::
+
+---
+
+# Bayes' Theorem
+
+Conditional probabilities can be reversed using Bayes' theorem, which provides a systematic method for expressing one conditional probability in terms of another.
+
+$$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
+
+$$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
+
+---
+
+# Coin Flip Odds
+
+::::: {.columns}
+
+:::: {.column width="56%"}
+::: {.incremental}
+- **14 flips, 10 heads.**
+- Will the next two both be heads?
+- [FREQUENTIST]{style="color:#001E62; font-weight:bold; letter-spacing:2px;"} — **51%**
+- [BAYESIAN]{style="color:#f9461c; font-weight:bold; letter-spacing:2px;"} — **48.5%**
+- **Same data, opposite sides of the bet?!**
+:::
+::::
+
+:::: {.column width="40%"}
+<img src="../assets/slides-misc/coin-toss.jpg" alt="A coin in mid-air above a thumb that has just flipped it" style="max-height:480px; width:auto; max-width:100%; display:block; margin:0 auto; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).
+:::
+::::
+
+:::::
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008). See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+:::
+
+---
+
+# "Just Do the Math"
+
+::: {.incremental}
+- **Frequentist**: probability = long-run frequency; judge procedures by error rates
+- **Bayesian**: probability = degree of belief, updated as evidence arrives
+- Efron (1986) asked "Why Isn't Everyone a Bayesian?" — an active contest at the time
+- McElreath (2020): the debate has largely been **subsumed by causal inference**
+- Even so: you still have to pick a prior. There is not always a "correct option"
+:::
+
+::: {style="text-align:center; font-size:0.5em; color:#565a5c; margin-top:0.3em;"}
+See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+:::
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week1.md>.
@@ -661,3 +741,9 @@ See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working
 9. Pixel geometry comparison by Peter Halasz (Pengo), [*Pixel geometry 02*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 10. The zoom sequence, DIKW discussion, and frequentist/Bayesian coin bet draw on [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html); the coin-bet example is from [Panos Ipeirotis (2008)](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html).
 11. "Powers of ten" zoom framing after Charles and Ray Eames, *Powers of Ten* (1968/1977).
+12. Ilkka Tuomi, ["Data Is More than Knowledge: Implications of the Reversed Knowledge Hierarchy for Knowledge Management and Organizational Memory"](https://doi.org/10.1080/07421222.1999.11518258), *Journal of Management Information Systems* 16(3), 1999, pp. 103–117.
+13. Martin Frické, ["The Knowledge Pyramid: A Critique of the DIKW Hierarchy"](https://doi.org/10.1177/0165551508094050), *Journal of Information Science* 35(2), 2009, pp. 131–142.
+14. Slovak Radio Building photo by Thomas Ledl, [*Upside down Pyramid, Bratislava 02*](https://commons.wikimedia.org/wiki/File:Upside_down_Pyramid,_Bratislava_02.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+15. Bradley Efron, ["Why Isn't Everyone a Bayesian?"](https://doi.org/10.1080/00031305.1986.10475342), *The American Statistician* 40(1), 1986, pp. 1–5.
+16. Richard McElreath, *[Statistical Rethinking: A Bayesian Course with Examples in R and Stan](https://xcelab.net/rm/statistical-rethinking/)*, 2nd ed., Chapman and Hall/CRC, 2020.
+17. Coin toss photo by ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).

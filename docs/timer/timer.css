@@ -291,3 +291,39 @@ body {
 }
 
 .footnotes a:hover { text-decoration: underline; }
+
+/* Embedded (in an iframe) the page loses its footer and the masthead gains the
+   one link a framed viewer actually needs: a way out to the standalone timer.
+   Right gutter matches the 15px used by the content rows below. Coloured
+   $orange-dark like the title and Start button, since it is an action. */
+.open-standalone {
+  display: none;
+  margin-left: auto;
+  padding-right: 15px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c83214;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Arrow-out-of-box icon, matching the `is-external` links in the site masthead
+   (css/masthead.css). Same mask-not-background trick, so it inherits the link
+   colour instead of shipping a second, differently-coloured copy of the glyph. */
+.open-standalone::after {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-left: 5px;
+  vertical-align: middle;
+  opacity: 0.7;
+  background-color: currentColor;
+  -webkit-mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><path d="M6 1h5v5L8.5 3.5 4.8 7.2 3.8 6.2l3.7-3.7z"/><path d="M2 3h2v1H2v6h6V8h1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>') no-repeat center / contain;
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><path d="M6 1h5v5L8.5 3.5 4.8 7.2 3.8 6.2l3.7-3.7z"/><path d="M2 3h2v1H2v6h6V8h1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>') no-repeat center / contain;
+}
+
+.open-standalone:hover { text-decoration: underline; }
+
+.embedded .footnotes { display: none; }
+.embedded .open-standalone { display: inline-block; }
