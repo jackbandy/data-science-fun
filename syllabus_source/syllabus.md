@@ -119,7 +119,7 @@ Please protect the integrity of other course materials and content: as a general
 
 This is a 400-level University course; as such, we will aim to discuss topics with maturity, dignity, humanity, rigor, and respect for scholarly inquiry.
 
-Data science touches many different topics, and some materials will address war, death, sickness, discrimination, surveillance, sex, violence, and related subjects which may be distressing. Please know that the goal is never to cause distress, but to meaningfully engage with real-world issues.
+Data science touches many different topics, and some materials will address sickness, death, war, politics, discrimination, surveillance, sex, violence, and related subjects which may be distressing. Please know that the goal is never to cause distress, but to meaningfully engage with real-world issues.
 
 Furthermore, some readings and other content may expose you to ideas, subjects, or views that may challenge you, cause you discomfort, or recall past negative experiences or traumas. I try to include content notices whenever appropriate. If you have suggested changes (i.e. if there is a place where you think I should add a content notice), or you would like me to be aware of a specific topic of concern, please email or visit me during office hours.
 
@@ -176,7 +176,9 @@ If you anticipate any difficulty meeting a due date, contact the instructor as s
 
 ## [Attendance / Participation Policy]{.underline}
 
-The activities we do during class are essential to your learning in this course, so you should make every effort to attend all class meetings and to arrive to class on time. I recognize, however, that illness, personal emergencies, university obligations, religious observances, and other circumstances may sometimes cause you to be late to class or prevent your attendance entirely.
+The activities we do during class are essential to your learning in this course, so please make every effort to attend all class meetings and to arrive to class on time.
+
+I recognize that illness, personal emergencies, university obligations, religious observances, and other circumstances may sometimes cause you to be late to class or prevent your attendance entirely.
 
 Because active participation in the course is one of the most important ways to learn, you will be assessed on your class engagement. Engagement looks a little different for everyone, but in general, an engaged student will come to class prepared, contribute regularly to class activities or discussions, listen attentively to peers and the instructor, stay on-task during class, complete their work in a timely manner, and reach out to the instructor if they have questions or start to fall behind. If you anticipate any barriers to your full engagement in the course, I encourage you to contact me so we can strategize about how you can best fulfill the course requirements.
 

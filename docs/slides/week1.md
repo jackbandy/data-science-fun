@@ -29,6 +29,166 @@ Week 1.
 
 ---
 
+# Syllabus Overview {.iframe-slide}
+
+<iframe src="../syllabus/" title="CS 418 syllabus" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+::: {.iframe-caption}
+Full syllabus: <https://dodatascience.fun/syllabus/>
+:::
+
+---
+
+# Attendance Policy
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+
+::: {style="font-size:0.8em; margin-top:0.5em;"}
+- **TK**
+:::
+:::
+
+
+---
+
+# In-Class Tech
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+
+::: {style="font-size:0.8em; margin-top:0.5em;"}
+- **TK** — laptops, phones, etc. during class...
+:::
+:::
+
+<!-- TODO: when laptops are open vs. closed -->
+
+---
+
+# The Benefits of Paper
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+
+::: {style="font-size:0.8em; margin-top:0.5em;"}
+- **TK**
+:::
+:::
+
+<!-- TODO: handwritten notes, worksheets, sketch charts first, etc. -->
+
+---
+
+# Schedule Overview
+
+::::: {.columns}
+
+:::: {.column width="60%"}
+::: {style="font-size:0.62em; line-height:1.35;"}
+| Weeks | Topic |
+|:--|:--|
+| **1** | Intro; statistics review; the lifecycle |
+| **2–3** | Python, Polars, obtaining & wrangling data |
+| **4** | Exploratory analysis; descriptive statistics |
+| **5–6** | Visualization |
+| **7** | Hypothesis testing; estimation & sampling |
+| **8–9** | Regression; classification; trees; SVMs |
+| **10** | Clustering; PCA; model evaluation |
+| **11** | Recommendation systems; A/B testing |
+| **12** | Network analysis; graphs |
+| **14–15** | Presentations |
+:::
+
+::: {style="font-size:0.55em; color:#565a5c; margin-top:0.4em;"}
+Source of truth: the [course schedule](https://dodatascience.fun/#schedule).
+:::
+::::
+
+:::: {.column width="36%"}
+<img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Trace of the CTA Orange Line with its stops marked, standing in for the sequence of weeks in the course" style="max-height:560px; width:auto; max-width:100%; display:block; margin:0 auto;">
+
+::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
+One stop at a time.
+:::
+::::
+
+:::::
+
+---
+
+# What to Expect in this Class
+
+::::: {.columns}
+
+:::: {.column width="32%"}
+[LANGUAGES & TOOLS]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.6em;"}
+
+::: {.incremental}
+::: {style="font-size:0.66em;"}
+- **Python**
+- **Polars** for dataframes
+- **matplotlib**, **seaborn**, **plotnine**
+- Also!
+- Sample of **R** and **Rstudio**
+- **tidyverse** and **ggplot**
+- Also!
+- **git** + **GitHub**
+:::
+:::
+::::
+
+:::: {.column width="32%"}
+[TECHNIQUES]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.6em;"}
+
+::: {.incremental}
+::: {style="font-size:0.66em;"}
+- Designing and creating charts
+- Confidence intervals
+- Linear regression
+- Classification via trees, SVMs, etc.
+- $k$-means clustering, PCA
+- A/B testing
+- Networks, community detection
+:::
+:::
+::::
+
+:::: {.column width="32%"}
+[THEMES]{style="color:#f9461c; font-weight:bold; letter-spacing:2px; font-size:0.6em;"}
+
+::: {.incremental}
+::: {style="font-size:0.66em;"}
+- The data science lifecycle
+- Asking questions worth answering
+- **Provenance**: where data comes from
+- Reasoning under uncertainty
+- What models can and can't do
+- Ethics and implications
+- Reproducible work
+- Communicating results
+:::
+:::
+::::
+
+:::::
+
+---
+
+# Do the Tools Matter?
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+
+::: {style="font-size:0.8em; margin-top:0.5em;"}
+- **TK**
+:::
+:::
+
+<!-- TODO: Polars vs. pandas, Python vs. R, notebook vs. script; etc. -->
+
+---
+
 # The Data Science Venn Diagram {.image-frame-slide}
 
 <img src="../assets/data-science-venn/Data_Science_VD.png.webp" alt="Drew Conway's data science Venn diagram: three overlapping circles labeled Hacking Skills, Math &amp; Statistics Knowledge, and Substantive Expertise. The pairwise overlaps are labeled Machine Learning, Traditional Research, and Danger Zone!, with Data Science at the center.">

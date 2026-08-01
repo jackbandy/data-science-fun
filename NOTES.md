@@ -1,63 +1,5 @@
 # Notes
 
-## Unstructured jots on what to include
-
-Course description:
-Provides an in-depth overview of data science in engineering. Topics include modeling, storage, manipulation, integration, classification, analysis, visualization, information extraction, and big data in the engineering domain.
-
-Miscellaneous topics:
-* Recommender systems
-* Evaluation metrics (e.g. https://www.byhand.ai/p/ai-eval-equations-you-must-know)
-* Moviepass projection flop
-  * Mitch Lowe AMA on Reddit - https://www.reddit.com/r/movies/comments/8u00y3/im_mitch_lowe_ceo_of_moviepass_ama/
-  * "A Platform for Burning Cash" - https://d3.harvard.edu/platform-digit/submission/moviepass-a-platform-for-burning-cash/
-  * Blog post - https://www.residualthoughts.com/2018/03/15/the-numbers-behind-moviepass-and-why-its-probably-doomed/
-  * Slate article - https://archive.ph/IxKa9
-
-Miscellaneous exercise ideas:
-* data diorama
-* de-anonymization challenge
-* competition to estimate voter turnout
-* portfolio piece - interactive data explainer / data story
-
-What is included in data science?
-
-ACM resources on scoping the field:
-* ACM Data Science Task Force, [Computing Competencies for Undergraduate Data Science Curricula](https://dstf.acm.org/DSTF_Final_Report.pdf) (Jan. 2021) — the ACM Education Board's answer to "what parts of data science are computing's contribution." Eleven core computing Knowledge Areas
-  * Earlier drafts + conference outreach slides (SIGCSE, ITiCSE, JSM) at https://dstf.acm.org/
-* Longbing Cao, [Data Science: A Comprehensive Overview](https://doi.org/10.1145/3076253), *ACM Computing Surveys* 50(3), 2017 — survey
-	* Longbing Cao, [Data Science: Challenges and Directions](https://doi.org/10.1145/3015456), *Communications of the ACM* 60(8), 2017 — shorter, more classroom-friendly version
-* Victoria Stodden, [The Data Science Life Cycle: A Disciplined Approach to Advancing Data Science as a Science](https://doi.org/10.1145/3360646), *Communications of the ACM* 63(7), 2020 
-
-Learning DS Textbook:
-* Data science life cycle
-  * ask questions, obtain data, understand data, understand world
-* Questions / data scope
-  * Instruments protocols
-  * Population, access framing, sampling
-  * Measurement errors and accuracy
-  * Big data pitfalls ("data hubris")
-* Simulation and Data Design
-* Modeling with Summary Stats
-  * Loss minimization
-* Dataframes
-  * data frames and other common representations
-  * subsetting, aggregating, joining, transforming
-* Relations and SQL
-* Wrangling files
-* Wrangling dataframes
-* Exploratory data analysis (eDA)
-* Data visualizations
-* Data sources
-  * Text
-  * Binary formats
-  * Binary formats, APIs, scraping, etc.
-* Linear Modeling
-* Time series modeling / analysis
-  * seasonality
-  * stationarity
-* Classification
-
 ## Lecture notes
 
 Mostly Richard McElreath videos
@@ -236,16 +178,76 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 * population dynamics: births, marriages, deaths, etc.
 * "is it safe to release this data to the public?"
 
+
+## Unstructured jots on what to include
+
+Course description:
+Provides an in-depth overview of data science in engineering. Topics include modeling, storage, manipulation, integration, classification, analysis, visualization, information extraction, and big data in the engineering domain.
+
+Miscellaneous topics:
+* Recommender systems
+* Evaluation metrics (e.g. https://www.byhand.ai/p/ai-eval-equations-you-must-know)
+* Moviepass projection flop
+  * Mitch Lowe AMA on Reddit - https://www.reddit.com/r/movies/comments/8u00y3/im_mitch_lowe_ceo_of_moviepass_ama/
+  * "A Platform for Burning Cash" - https://d3.harvard.edu/platform-digit/submission/moviepass-a-platform-for-burning-cash/
+  * Blog post - https://www.residualthoughts.com/2018/03/15/the-numbers-behind-moviepass-and-why-its-probably-doomed/
+  * Slate article - https://archive.ph/IxKa9
+
+Miscellaneous exercise ideas:
+* data diorama
+* de-anonymization challenge
+* competition to estimate voter turnout
+* portfolio piece - interactive data explainer / data story
+
+What is included in data science?
+
+ACM resources on scoping the field:
+* ACM Data Science Task Force, [Computing Competencies for Undergraduate Data Science Curricula](https://dstf.acm.org/DSTF_Final_Report.pdf) (Jan. 2021) — the ACM Education Board's answer to "what parts of data science are computing's contribution." Eleven core computing Knowledge Areas
+  * Earlier drafts + conference outreach slides (SIGCSE, ITiCSE, JSM) at https://dstf.acm.org/
+* Longbing Cao, [Data Science: A Comprehensive Overview](https://doi.org/10.1145/3076253), *ACM Computing Surveys* 50(3), 2017 — survey
+	* Longbing Cao, [Data Science: Challenges and Directions](https://doi.org/10.1145/3015456), *Communications of the ACM* 60(8), 2017 — shorter, more classroom-friendly version
+* Victoria Stodden, [The Data Science Life Cycle: A Disciplined Approach to Advancing Data Science as a Science](https://doi.org/10.1145/3360646), *Communications of the ACM* 63(7), 2020 
+
+Learning DS Textbook:
+* Data science life cycle
+  * ask questions, obtain data, understand data, understand world
+* Questions / data scope
+  * Instruments protocols
+  * Population, access framing, sampling
+  * Measurement errors and accuracy
+  * Big data pitfalls ("data hubris")
+* Simulation and Data Design
+* Modeling with Summary Stats
+  * Loss minimization
+* Dataframes
+  * data frames and other common representations
+  * subsetting, aggregating, joining, transforming
+* Relations and SQL
+* Wrangling files
+* Wrangling dataframes
+* Exploratory data analysis (eDA)
+* Data visualizations
+* Data sources
+  * Text
+  * Binary formats
+  * Binary formats, APIs, scraping, etc.
+* Linear Modeling
+* Time series modeling / analysis
+  * seasonality
+  * stationarity
+* Classification
 ## Etc.
+
+Birthday effect - are people [more likely to die on their birthday](https://pudding.cool/2025/04/birthday-effect/)
 
 [Data Scientist: The Sexiest Job of the 21st Century](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century)
 
 Study to reproduce: [Did Taylor Swift kill a bunch of people?](https://statmodeling.stat.columbia.edu/2026/04/21/did-taylor-swift-kill-a-bunch-of-people/)
 
-Taller men more likely to be married? https://www.economist.com/graphic-detail/2026/06/19/the-deceptive-rise-of-the-short-king
+Pudding article - [Words used to teach English Language Learners](https://pudding.cool/2026/07/essential-words/)
 
-Data Science Origins?
+Data journlism - [Taller men more likely to be married?](https://www.economist.com/graphic-detail/2026/06/19/the-deceptive-rise-of-the-short-king)
 
-John Tukey's 1962 work, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
+John Tukey 1962, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
 
 https://cs.uic.edu/undergraduate/data-science-major/
