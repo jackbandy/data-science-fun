@@ -236,6 +236,7 @@ Learning DS Textbook:
   * seasonality
   * stationarity
 * Classification
+
 ## Etc.
 
 Birthday effect - are people [more likely to die on their birthday](https://pudding.cool/2025/04/birthday-effect/)
@@ -251,3 +252,5 @@ Data journlism - [Taller men more likely to be married?](https://www.economist.c
 John Tukey 1962, [The Future of Data Analysis](https://www.jstor.org/stable/2237638)
 
 https://cs.uic.edu/undergraduate/data-science-major/
+
+https://www.techtimes.com/articles/322586/20260801/chatgpt-research-habit-cost-hank-green-accuracy-his-brand-was-built.htm
