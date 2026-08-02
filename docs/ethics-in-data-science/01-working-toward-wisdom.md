@@ -39,13 +39,13 @@ A rendition of the DIKW pyramid, with data at the base supporting successive lay
 
 The basic premise of the DIKW pyramid is as follows. To build a pyramid with wisdom at the top, start with a brick: a datum. Use multiple bricks to create a large organized layer of bricks: data. Upon a solid foundation of data, we can begin to construct information, and upon a solid layer of information, we can construct knowledge.
 
-Like all metaphors, the DIKW pyramid eventually breaks down. Knowledge creation is not always a matter of assembling data into information and then assembling that information into knowledge. And wisdom is not *literally* the top layer of an abstract pyramid, nor is it the guaranteed product of assembling data, information, and knowledge.
+Like all metaphors, the DIKW pyramid eventually breaks down. Knowledge creation is not always a matter of assembling data into information and then assembling that information into knowledge. And wisdom is not *literally* the top layer of a pyramid, nor is it the guaranteed product of assembling data, information, and knowledge.
 
-Still, the DIKW model accurately suggests that one purpose of data (i.e. data science) is, generally, to point us toward wisdom. "Wisdom" may be a surprising word to see in a data science book, and it may seem better suited for other textbooks. Yet the concept of wisdom is helpful to consider as an end goal, or *telos*, in data science work.
+Still, the DIKW model accurately suggests that one purpose of data (i.e. data science) is, generally, to point one toward wisdom. "Wisdom" may be a surprising word to see in a data science book, and it may seem better suited for other textbooks. Yet the concept of wisdom is helpful to consider as an end goal, or *telos*, in data science work.
 
 ## What is wisdom?
 
-Anyone who wants to answer the question "what is wisdom" would benefit from also being able to answer the question, "what is a triangle?"[^triangle-spinoza]
+To answer the question "what is wisdom," one would benefit from also being able to answer the question, "what is a triangle?"[^triangle-spinoza]
 
 To start, let us try to display a perfect equilateral triangle on your screen, or at least get as close as we can. Here is an attempt.
 
@@ -77,7 +77,7 @@ The entire image comes from just a few lines of code:
 </svg>
 ```
 
-But is there really a triangle in this image? Is it a perfect triangle? (Similar philosophical questions are asked about various shapes, such as the existence of perfect circles [@payne_perfect_circles_2019], or perfect spheres [@muller_roundest_object_2013].) One way to find out if it is truly "perfect" is to zoom in on a portion of the triangle. We will zoom in by a power of ten, inspired by the Eames films [@eames_powers_of_ten_1968; @eames_powers_of_ten_1977].
+But is there really a triangle in this image? Is there a *perfect* triangle in this image? (Similar philosophical questions are asked about various shapes, such as the existence of perfect circles [@payne_perfect_circles_2019], or perfect spheres [@muller_roundest_object_2013].) One way to find out if it is truly "perfect" is to zoom in on a portion of the triangle. We will zoom in by a power of ten, inspired by the Eames films [@eames_powers_of_ten_1968; @eames_powers_of_ten_1977].
 
 ::: {#fig-triangle-frame}
 <img src="../../assets/triangles/01-triangle-frame.svg" alt="An equilateral triangle with a highlighted rectangular frame around its left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -85,7 +85,7 @@ But is there really a triangle in this image? Is it a perfect triangle? (Similar
 The red rectangular frame will be the outer frame for the next image.
 :::
 
-The red rectangle represents another golden-ratio rectangle, this one being 1/10th the size of the original rectangle (160 pixels instead of the original 1600 pixels). Now, we will look at that frame up close.
+The red rectangle represents another golden-ratio rectangle, this one being 1/10th the size of the original rectangle (e.g. 160 pixels of the original 1600 pixels). Now, we will look at that frame up close.
 
 ::: {#fig-triangle-edge}
 <img src="../../assets/triangles/02-triangle-edge.svg" alt="A cropped and enlarged view of the triangle's left edge." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -132,59 +132,51 @@ Still, the subpixels on your screen might not be the same shape as the subpixels
 ::: {#fig-pixel-geometries}
 <img src="../../assets/subpixels/pixel-geometries.jpg" alt="Microscopic photos comparing pixel geometries from CRT and LCD displays." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
-Pixel geometries from CRT and LCD displays, center-cropped. Source: Peter Halasz (Pengo), [*Pixel geometry 02 Pengo.jpg*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+Up-close pixel geometries from CRT and LCD displays. Source: Peter Halasz (Pengo), [*Pixel geometry 02 Pengo.jpg*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 :::
 
-We could go on for quite a while with this repeated zoom-in effect. The Eames films about "powers of ten" zoom in all the way to... But what does all of this have to do with data science?
+We could go on for quite a while with this repeated zoom-in effect. The Eames films about "powers of ten" zoom in all the way to...(quarks?)...
 
-We began with a simple quest to understand a triangle. Analogously, data scientists will often be tasked with answering deceptively simple questions:
-* Do guests like the new cold brew recipe?
-* Is the running plan helping people run faster?
+And what does all of this have to do with data science?
+
+We began by asking "what is a triangle?" A seemingly simple quest for understanding. Analogously, data scientists will often be tasked with answering deceptively simple questions:
+* How much does stretching help reduce injuries?
 * Do people sleep better with noise machines?
-* Is a business growing its customer base?
-* Did the advertising campaign make a difference?
+* Is the cafe serving more customers than it was last year?
+* Did the flyers bring more people to the restaurant?
 
-But any real, living, curious human asking these questions will want more than "yes" or "no" as an answer. The task of a data scientist, then, is not merely to deliver the answer up the chain.
+Any real, living, curious human asking these questions will want more than a one-word answer. Even the yes-or-no questions beg for a story (more on questions in the next chapter). The task of a data scientist, then, is not merely to extract and deliver a one-word answer.
 
-And this is the second point for which our triangle adventure is relevant. The real value of a (competent) data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist will constantly explore the possible decisions involved in turning data into information and/or knowledge.
+This is the second point for which the triangle adventure is relevant. The real value of a (competent) data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist will constantly explore the possible decisions involved in turning data into information and/or knowledge, and the story that unfolds from those decisions.
 
-Practically, this means competent data scientists will have a strong understanding of data acquisition processes, sampling processes, and how they fit into any conclusions drawn from the data. In short, data scientists will pay attention to data *provenance*.
+Practically, this means data scientists benefit from a strong understanding of data acquisition processes, sampling processes, and how those processes fit into any conclusions drawn from the data. In short, data scientists will pay attention to data *provenance*.
 
-A strong grasp of provenance leads to a second component of "data science wisdom" discussed further in Chapter 4, in the context of George Box's famous aphorism that "all models are wrong, but some are useful" [@box_draper_empirical_model_building_1987]. We can add that all *data* are wrong, too: all data are merely representations of the real world (or what we call the real world). Chapter 4 calls this the "treachery of data."
+A strong grasp of provenance is an important component of "data science wisdom." When traced back to its origins, data are always limited. Thus, George Box's famous aphorism that "all models are wrong, but some are useful" [@box_draper_empirical_model_building_1987] might be amended. We can add that all *data* are wrong, too: all data are imperfect representations of the real world (or what we call the real world). Some data are very useful, but all data are limited snapshots of the world. Chapter 4 calls this the "treachery of data" and discusses it in more detail.
 
-So, what does the triangle figure have to do with "data science wisdom?" In short, wisdom involves being able to explain why the figure was not *exactly* a perfect triangle. Wisdom requires *understanding the process* of going from subpixels to pixels to (an appearance of) lines to an imperfect representation of a triangle.
+The triangle figure thus illustrates several dimensions of "data science wisdom." Wisdom involves being able to explain why the figure was not *exactly* a perfect triangle. Wisdom requires *understanding the process* of going from subpixels to pixels to (an appearance of) lines to an imperfect representation of a triangle. Data science wisdom requires paying attention to *provenance* - tracing the (appearance of) a triangle all the way to its origins in subpixels, or perhaps even further!
 
-Wisdom also involves a willingness to say why the original figure was, in some sense, a triangle. One must occasionally bow to the consensus and accept "equilateral triangle" as the best available, most recognizable name for the shape that appears in the figure.
-
-As will be discussed in Chapter 5, this kind of wisdom requires an awareness of goals, audience knowledge, and other contextual factors which can improve communication.
+Wisdom also involves a willingness to say why the original figure was, in some sense, a triangle. One must occasionally bow to the consensus and accept "equilateral triangle" as the best available, most recognizable name for the shape that appears in the figure. As will be discussed in Chapter 5, this kind of wisdom requires an awareness of goals, audience knowledge, and other contextual factors which can improve communication.
 
 
 ## Understanding
 
-Notably missing from the DIKW pyramid is the word "understanding." This points to another limitation of the metaphor: we are not just working with fixed, static data that are automatically converted to information and/or knowledge and/or wisdom. The existence of the DIKW pyramid thus implies human understanding.
+Notably missing from the DIKW pyramid is the word "understanding." This points to another limitation of the metaphor: fixed, static data are not automatically converted to information and/or knowledge and/or wisdom. The existence of the DIKW pyramid thus implies human understanding - someone had to build the pyramid.
 
 To quote Ursula Le Guin, "What good are all the objects in the universe, if there is no subject?" [@leguin_mrs_brown_1979]. And to rephrase this sentiment in the context of the DIKW pyramid, "what good are all the data, if there is no data scientist?"
 
-There must be some subject that transforms data into information, information into knowledge, and knowledge into wisdom. If and when these transformations happen, they happen through the effort of human attention.
+To construct the DIKW pyramid, there must be some subject that transforms data into information, information into knowledge, and so on. If and when these transformations happen, they happen through the effort of human attention.
 
-Intuitively, knowing something is more than just storing some piece of information. Knowledge is more than compiled information (just as information is more than compiled data). @zeleny_management_1987 describes knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
+For example, what makes Wikipedia a source of knowledge is not merely the text on the page(s), but the coordination process of the many Wikipedia editor communities which iteratively write, review, and update Wikipedia pages. Furthermore, the information captured on Wikipedia pages can only "spread" and become knowledge when people read and trust that information. And a person trusts the information because of the subjects who crafted and re-crafted the language, ensuring its coherence and alignment with existing language.
 
-What makes Wikipedia a source of knowledge is not merely the text on the page(s), but rather the coordination process of the Wikipedia editor network which iteratively writes, reviews, and updates the Wikipedia page(s). Furthermore, the knowledge captured on the page(s) can only "spread" when someone reads it and trusts it. And a person trusts the text on the page(s) because of the subjects who crafted and re-crafted the language, ensuring its coherence and alignment with existing human language.
+This construction process is understanding: information is more than compiled data, it is *understood* data. In other words, information is not automatically a property of data. And knowledge is not just stored information, it is *understood* information. @zeleny_management_1987 describes knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
 
-The DIKW pyramid does not build itself. Moreover, different people and organizations do not all construct knowledge in the same way(s). Chapter 5 revisits the pyramid metaphor along with alternative metaphors for knowledge construction.
+This activity, exemplified by the continuous editing of Wikipedia editor communities, is the essence of understanding. The DIKW pyramid does not build itself: it is built by the human activity of devoting attention to gain understanding, which is often done in community.
 
-Understanding also connects to the phenomenon of *common knowledge* — shared awareness not just of facts, but of what other people know. This has direct implications for how data scientists communicate results, and is also discussed in Chapter 5.
+Human relations can often complicate things. Different people and organizations do not all construct knowledge in the same way(s), and Chapter 5 revisits the pyramid metaphor along with some of the alternative metaphors for knowledge construction - e.g. cathedrals and bazars.
 
-The concept of understanding will also return in Chapter 4, which distinguishes between understanding data and understanding the world.
+Furthermore, when it comes to understanding among multiple people, we broach the phenomenon of *common knowledge* — shared awareness not just of facts, but awareness of the facts other people know. This phenomenon has direct implications for how data scientists communicate results, and is also discussed in Chapter 5. Effective communication in building the DIKW pyramid also requires a distinction between "understanding the data" and "understanding the world" - discussed further in Chapter 4.
 
-TK — develop:
-
-* what "understanding" adds that the DIKW layers do not capture
-* understanding as an activity performed by a subject
-* not a property of data
-* example - same dataset, multiple analysts
-* why a data scientist's understanding as part of provenance
-* tie back to the triangle / understanding the process
+(TK mention example - same dataset, multiple analysts)
 
 
 ## Statistical worldviews {#sec-statistical-worldviews}

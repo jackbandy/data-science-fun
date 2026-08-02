@@ -96,6 +96,9 @@ Overdetermination
 Presupposition
 : A background claim that must be true in order for a question to have a meaningful answer. [Source: @sep-questions]
 
+Provenance
+: TK
+
 Proxy
 : TK [@barocas_selbst_big_data_disparate_impact_2016]
 

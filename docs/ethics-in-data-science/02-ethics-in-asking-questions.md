@@ -16,19 +16,21 @@ Asking a question, in the context of the data science lifecycle.
 
 -- Susanne Langer in *Philosophy in a New Key* [@langer_philosophy_1942]
 
-🟡 *Chapter Status: working draft. Most sections drafted, some parts still need polish and/or filling in..*
+🟡 *Chapter Status: early working draft. Most sections drafted, some parts still need polish and/or filling in..*
 
 There is a [meme template](https://knowyourmeme.com/memes/all-three-are-going-to-lie-to-you-never-ask-a-woman-her-age) that begins, "Never ask a woman her age, a man his salary..."
 
-The basic principle underlying this meme is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile to consider the quality of a question as part of the data science lifecycle.
+The basic principle underlying this meme is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile to consider the quality and appropriateness of a question when working through the data science lifecycle.
 
-In educational contexts, we appreciate all questions. The only bad question, as the saying goes, is the question you do not ask. And yet, as the aforementioned template suggests, some questions are more responsible, worthwhile, and/or appropriate than other questions. How might we distinguish these questions?
+In educational contexts, we appreciate all questions. The only bad question, as the saying goes, is the question you do not ask. And yet, as the aforementioned template suggests, some questions are more responsible, worthwhile, and/or appropriate than other questions. How might we distinguish these "good" or "better" questions?
 
-Philosophers have studied the structure of questions in considerable depth, and this chapter draws on that work throughout [@sep-questions].
+As observed in *The Craft of Research*, good questions usually present a corresponding problem, such that answering the question solves that problem [@booth_craft_of_research_2024]. Generally, this chapter agrees, and it uses some modified examples from *The Craft of Research* to discuss the characteristics of high-quality (and low-quality) questions.
 
-As observed in *The Craft of Research*, good questions usually present a corresponding problem, such that answering the question solves that problem [@booth_craft_of_research_2024].
+This chapter draws on the work of philosophers who have studied questions in considerable depth [@sep-questions], including their origins, structures, categories, pitfalls, and more.
 
-I will use some modified examples from *The Craft of Research* to discuss the characteristics of high-quality (and low-quality) questions.
+Although a question can make or break the data science lifecycle, there is no requirement or expectation to ask a perfect question at the very beginning. The "Ask a question" step of the lifecycle includes four arrows pointing to it because other steps in the lifecycle often lead to revised and improved questions.
+
+You can always go back and refine your question. Still, you have to start somewhere.
 
 
 ## Where Questions Come From
