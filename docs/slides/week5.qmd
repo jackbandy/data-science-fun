@@ -369,6 +369,22 @@ donut + legend_panel +
 
 ---
 
+# Color Blindness
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+
+``` markdown
+<!-- TODO: ~8% of men have red-green color vision deficiency.
+     Cover: why the default red/green pairing fails; colorblind-safe
+     palettes (viridis, Okabe-Ito); redundant encoding (shape, position,
+     direct labels) so hue is never the only channel carrying the data.
+     Possible demo: simulate the FIFA donut above under deuteranopia. -->
+```
+:::
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.qmd>.

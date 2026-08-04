@@ -39,11 +39,11 @@ Handwritten exercises force the learner to really do the thing. Instead of just 
 
 **Q: Why not just use Google Slides?**
 
-A: The short answer is that I think Google sucks. This is not to say anything about the people at Google - they have made some amazing technology over the years! But they have pulled the rug out from under us a few too many times. Gmail, Google Photos, and Google Drive have all seen substantial decay, and unfortunately I cannot trust that Google Slides will be protected. It might be a few years down the road, but I expect the company will move forward with limited storage, proprietary formatting, restricted portability, etc.
+A: The short answer is that I no longer trust Google products. I know a few people who worked (or used to work) at Google who I *do* trust, and this is *not* to say anything about those people or any people at Google. They have made some amazing technology over the years! But Google, er, Alphabet, has pulled the rug out from under us a few too many times. Gmail, Google Photos, and Google Drive have all seen substantial decay, and unfortunately I cannot trust that Google Slides will be protected. It might be a few years down the road, but I expect the company will move forward with limited storage, proprietary formatting, restricted portability, etc.
 
-So, for now I am using a markdown-to-html pipeline via [Quarto](https://quarto.org/), which is open source and free (as in freedom). I plan to keep content mostly in markdown text and svg images, so the slides should be easy to recreate or port over if the need ever arises. If you have other ideas or suggestions on this front, please let me know.
+There are actually a few subtle lock-in effects in Google slides already, especially the integration with other Google products. 
 
-The slide theme uses Big Shoulders for title headings and an ITC Franklin Gothic stack for body and footer text. ITC Franklin Gothic is commercial, so the repository also includes Libre Franklin from the upstream `impallari/Libre-Franklin` project as a permissively licensed fallback.
+So, for now I am using a markdown-to-html pipeline via [Quarto](https://quarto.org/), which is open source and free (as in freedom). I plan to keep content mostly in markdown text and svg images, so the slides should be easy to recreate, port over, and/or move to a different host if the need ever arises (I'm watching you, GitHub...). If you have other ideas or suggestions on this front, please let me know.
 
 ---
 
@@ -51,7 +51,7 @@ The slide theme uses Big Shoulders for title headings and an ITC Franklin Gothic
 
 **Q: Why make new materials when there is already so much out there?**
 
-A: Various reasons, including: (1) making materials can be fun, (2) I think students probably learn better when materials are "handmade" by their instructors in some way, rather than generic mass-distributed textbooks, and (3) some of the materials I really want/need to be able to teach data science effectively do not seem to exist yet.
+A: Various reasons, including: (1) making materials can be fun, (2) I think students probably learn better when materials are "handmade" by their instructors in some way, rather than generic mass-distributed textbooks, and (3) some of the materials I really want/need to be able to teach data science effectively do not seem to exist yet. Or they do exist, and I have an idea to make them 2% better.
 
 ---
 
@@ -67,7 +67,7 @@ For some reference points, check out the "ethics in data science" mini-book, whi
 
 ## Jobs
 
-**Q: Will data science be obsolete soon? Will anyone hire human data scientist? Won't AI take all the data science jobs?**
+**Q: Will data science be obsolete soon? Will anyone hire human data scientists? Won't AI take all the data science jobs?**
 
 A: Wow, three questions! From my point of view: **no**, data science will not be obsolete soon, **yes**, organizations will still hire human data scientists, and **no**, AI will not take over all the data science jobs. Some AI tools seem very useful for writing code, which can be helpful in the data science workflow. But LLMs on their own cannot make data useful and meaningful for humans -- much less for organizations. There are deeper discussions to be had here, more than I can fit into an FAQ page, but here are some high-level points.
 
