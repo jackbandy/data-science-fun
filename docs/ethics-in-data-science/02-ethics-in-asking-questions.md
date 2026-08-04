@@ -44,7 +44,7 @@ So, how do we know when a question is well-suited for the data science lifecycle
 
 On the other had, as data scientists learn from experience, there are some checks, heuristics, and conventions that can help identify the kinds of questions which make for good data science work.
 
-In *The Craft of Research*, Booth and colleagues observe that research usually begins not with a big question that attracts everyone in a field, but with a "mental itch" about a small question that only a single researcher wants to scratch [@booth_craft_of_research_2024].
+In *The Craft of Research*, Booth and colleagues observe that research usually does not begin with a big question that attracts everyone in a field, but with a "mental itch" about a small question that only a single researcher wants to scratch [@booth_craft_of_research_2024].
 
 Topic vs. question:
 
@@ -92,7 +92,7 @@ Below are some examples of presuppositions associated with example questions, dr
 
 ## Common Pitfalls
 
-A data scientist who can recognize what type of question they are working with, as well as the presuppositions of that question, is well on their way to good work.
+A data scientist who can recognize what type of question they are working with, as well as the presuppositions of that question, is well on their way to good work. There are also
 
 ### Naïve questions
 
@@ -101,18 +101,24 @@ A data scientist who can recognize what type of question they are working with, 
 * protect the "cry to understand" by improving the question
 	* increase specificity
 	* incorporate established knowledge
+* e.g. "Which NBA players are the best scorers?" — arguably naïve about the domain, like possession-level context, true shooting percentage, measures of efficiency beyond raw points per game
+	* https://pudding.cool/2026/06/ethical-champions/
 
 ### Ill-phrased questions
 
 * terms, scope, or possible answers unclear.
 * may include a loaded presupposition or judgment (e.g. "Why did the new policy fail?")
 * "Are students doing better this year?" - which students, compared with when, and according to which measure of "better."
+* e.g. "Is our museum's collection diverse?" — diverse in artist nationality, gender, medium, era? measured by number of works held, or by wall space actually on view?
+* e.g. "How did the wildfire affect air quality?" — over what radius, what averaging window, and against which baseline season?
+* e.g. "Is news coverage biased?" — bias in story selection, in sourcing, word choice, topic coverage, etc.
 
 ### Leading questions
 
 * usually implies a preferred answer
 	* e.g. "everything tasting good over here?"
-	* e.g. TK
+	* e.g. "How much did the tutoring program raise test scores?" — presupposes it raised them
+* e.g. "Do voters prefer the status quo of rising costs?"
 * i.e. ad-hoc support of suspect decision-making
 * ask before answering
 * might actually be good to be more naïve
@@ -123,6 +129,7 @@ A data scientist who can recognize what type of question they are working with, 
 * effort required to answer a question may be disproportional to what the answer would teach us.
 * measurable details are not always meaningful
 * triangle/pixel example from first chapter
+* e.g. counting how many times each city council member says the word "budget," ignoring how they voted
 
 ### Questions with settled answers
 
@@ -137,6 +144,8 @@ A data scientist who can recognize what type of question they are working with, 
 * i.e. any answer stays a matter of opinion
 * often signaled by counterfactuals far outside the data (e.g. "what would this city look like if the highway had never been built?")
 * speculations versus findings 
+* e.g. "Would the 2000 presidential election have gone differently with social media?" — no control world, no way to intervene
+* e.g. "Which students would have succeeded if they'd chosen a different major?" — the counterfactual student is unobservable
 * More TK
 
 ### Questions whose answers would be dead ends
@@ -144,6 +153,9 @@ A data scientist who can recognize what type of question they are working with, 
 * answerable, but the answer leads nowhere
 * fails the "so what?" test described earlier [@booth_craft_of_research_2024]
 * related to tedious questions, but the problem is more about the destination
+* e.g. "How many of the city's bus stops face north?" — answerable and precise. But not connected to real decisions
+* e.g. "Do students with longer last names take longer to finish homework?" - what would follow?
+* e.g. "which jersey number has scored the most points?" - answerable and precise, but nothing to act on
 * More TK
 
 ### Invasive questions
@@ -153,8 +165,10 @@ If a potential employer were to ask my weight during a job interview, it would b
 * asks for information whose sensitivity exceeds the purpose of the interaction.
 * can become coercive
 	* e.g. when people must answer to access grades, employment, housing, healthcare, public services, etc.
-* "What medications are you taking?" may be appropriate in a medical intake, but not in a classroom survey.
+* e.g. "What medications are you taking?" may be appropriate in a medical intake, but not in a classroom survey.
+* e.g. a transit fare app collecting continuous location history
 * try to ask for the least sensitive data that can address the question
+* more in obtaining data
 
 ## Temporality in questions
 
@@ -184,8 +198,9 @@ TK
 ## Questions for your questions
 
 * Who asked this question?
-	* What are their goals and incentives?
-* Who else may have asked this question?
+	* What are their goals?
+	* What are their incentives?
+* Who else may have already asked this question?
 	* Have they shared results anywhere?
 * Are there existing data to address this question?
 * What assumptions does the question make before any data are collected?
