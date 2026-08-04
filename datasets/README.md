@@ -4,6 +4,7 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
 
 ### Datasets
 
+- [chicago-air-quality](chicago-air-quality/) — every PM2.5 and NO2 measurement from the 283-sensor Open Air Chicago network during July 2026
 - [chicago-l-stations](chicago-l-stations/) — CTA L stop records with station names, service flags, and location data
 - [chicago-movies-in-parks](chicago-movies-in-parks/) — City of Chicago "Movies in the Parks" event listings
 - [chicago-street-names](chicago-street-names/) — Chicago street names with suffix and address range fields
