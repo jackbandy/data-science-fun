@@ -1,3 +1,4 @@
+# NOTICE: subpixel-crop section added by an LLM coding agent; unreviewed.
 from __future__ import annotations
 
 import math
@@ -11,6 +12,12 @@ ASSET_DIR = Path(__file__).resolve().parent
 SOURCE = ASSET_DIR / "lcd-pixel-macro-2023.jpg"
 CROP_OUTPUT = ASSET_DIR / "lcd-pixel-macro-2023-golden.jpg"
 ZOOM_OUTPUT = ASSET_DIR / "lcd-pixel-macro-2023-golden-zoom-10x.jpg"
+SUBPIXEL_OUTPUT = ASSET_DIR / "lcd-pixel-macro-2023-golden-subpixel.jpg"
+# Crop box in full-resolution source coordinates, found by hand: it isolates
+# the pure-color core of a single red subpixel, avoiding the black grid lines
+# around it, sized to a landscape golden-ratio rectangle.
+SUBPIXEL_BOX = (2935, 1949, 2953, 1960)
+SUBPIXEL_SCALE = 45
 
 
 def centered_golden_crop_box(width: int, height: int) -> tuple[int, int, int, int]:
@@ -45,6 +52,13 @@ def main() -> None:
     zoom_box = centered_zoom_box(*cropped.size, factor=10)
     zoomed = cropped.crop(zoom_box).resize(cropped.size, resample=Image.Resampling.LANCZOS)
     save_jpeg(zoomed, ZOOM_OUTPUT)
+
+    subpixel = source.crop(SUBPIXEL_BOX)
+    subpixel = subpixel.resize(
+        (subpixel.width * SUBPIXEL_SCALE, subpixel.height * SUBPIXEL_SCALE),
+        resample=Image.Resampling.LANCZOS,
+    )
+    save_jpeg(subpixel, SUBPIXEL_OUTPUT)
 
 
 if __name__ == "__main__":

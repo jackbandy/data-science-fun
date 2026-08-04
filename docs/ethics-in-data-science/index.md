@@ -2,7 +2,7 @@
 
 **[← Back to Course Homepage](../../index.html)**
 
-*This is a placeholder page. The book is a work-in-progress.*
+*This mini-book is a work-in-progress.*
 
 ::: {#fig-ds-lifecycle}
 <img src="../../assets/lifecycle/ds-lifecycle-v0.svg" alt="The full data science lifecycle." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -14,7 +14,9 @@ How can data be collected responsibly? Which data are considered private or sens
 
 The purpose of this mini-book is to introduce data scientists to ethical considerations that arise throughout the data science lifecycle. There are many versions of the lifecycle, and this book is organized around the one described in *Learning Data Science*, which divides data work into four broad stages [@lau_learning_2023].
 
-Broadly, the lifecycle stages correspond to the chapters in this book as follows:
+Broadly, the lifecycle stages correspond to the chapters in this book, with three exceptions: first, I have added a framing chapter, and second, there is an "extra" chapter since @lau_learning_2023 does not include a dedicated chapter about reporting, decision-making, and problem-solving. The third exception is that I have written a combined chapter about "understanding the data" and "understanding the world," rather than separating them. Many of the ethical considerations related to these two steps have to do with differences between "understanding the data" and "understanding the world," so I have written about them in the same chapter.
+
+Thus, the correspondence between @lau_learning_2023 and this book is as follows:
 
 ::: {tbl-colwidths="[55,45]"}
 | *Learning Data Science* | Corresponding material in this book |
@@ -30,7 +32,7 @@ Broadly, the lifecycle stages correspond to the chapters in this book as follows
 :::
 
 
-When relevant, I have also written the chapters to align with some of the ACM Data Science Task Force's "Competencies for Data Science," including the 2021 release as well as the 2026 work-in-progress [@acm_dstf_ccdsc_2021]. Here are a few samples of mapping from this book to the ACM competency areas:
+When relevant, I have also written some sections to align with some of the ACM Data Science Task Force's "Competencies for Data Science," including the 2021 release as well as the 2026 work-in-progress [@acm_dstf_ccdsc_2021]. Here are a few samples of mapping from this book to the ACM competency areas:
 
 ::: {tbl-colwidths="[55,45]"}
 | ACM competency area | Supporting material in this book |
@@ -55,7 +57,10 @@ This is not the only book to include these topics and competencies, and it is de
 * Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton, "Data science ethics" in *Modern Data Science with R* [@baumer_kaplan_horton_data_science_ethics_2021]
 * Rachel Thomas, *Practical Data Ethics* [@thomas_practical_data_ethics_2020]
 
-Still, what is intended to be distinctly useful about this book is its alignment with the "data science lifecycle" from *Learning Data Science* [@lau_learning_2023], as well as its alignment with ACM competencies. Especially when combined, the lifecycle model and the ACM competencies offer a helpful way to organize the wide array of topics and methods that arise in the vast body of activity we call data science work.
+
+**Why not just read those?**
+
+I recommend that you do read them! Still, what is intended to be distinctly useful about this book is its alignment with the "data science lifecycle" from *Learning Data Science* [@lau_learning_2023], as well as its alignment with ACM competencies. Especially when combined, the lifecycle model and the ACM competencies offer a helpful way to organize the wide array of topics and methods that arise in the vast body of activity we call data science work.
 
 Before exploring ethical implications of these lifecycle stages and competencies through [Ethics in Asking Questions](02-ethics-in-asking-questions.md), [Ethics in Obtaining Data](03-ethics-in-obtaining-data.md), [Ethics in Understanding](04-ethics-in-understanding.md), and [Ethics in Reporting Decisions & Solutions](05-ethics-in-reporting-decisions-solutions.md), I have taken the liberty to include a framing chapter, [Working Toward Wisdom](01-working-toward-wisdom.md), which zooms out and considers a somewhat audacious question: why are we doing any of this at all?
 

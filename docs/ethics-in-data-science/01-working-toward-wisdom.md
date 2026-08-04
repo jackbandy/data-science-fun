@@ -127,7 +127,8 @@ And even this statement about "what pixels look like" is somewhat inaccurate - t
 A 10x zoom into the LCD subpixel image, showing rectangular subpixels. Source: Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 :::
 
-Still, the subpixels on your screen might not be the same shape as the subpixels on someone else's screen. Subpixels look rather different on a standard definition CRT television, a CRT computer monitor, and LCD laptop screens, as shown below.
+
+Even at the subpixel level, the subpixels on your screen might not be the same shape as the subpixels on another screen. Subpixels look different when it shows up on a standard definition CRT television, a CRT computer monitor, or LCD laptop screens, as shown in figure @fig-pixel-geometries.
 
 ::: {#fig-pixel-geometries}
 <img src="../../assets/subpixels/pixel-geometries.jpg" alt="Microscopic photos comparing pixel geometries from CRT and LCD displays." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -135,48 +136,53 @@ Still, the subpixels on your screen might not be the same shape as the subpixels
 Up-close pixel geometries from CRT and LCD displays. Source: Peter Halasz (Pengo), [*Pixel geometry 02 Pengo.jpg*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 :::
 
-We could go on for quite a while with this repeated zoom-in effect. The Eames films about "powers of ten" zoom in all the way to...(quarks?)...
+We could go on for quite a while with this repeated zoom-in effect. The Eames films about "powers of ten" zoom in all the way until "a single proton fills our scene," describing it as "the edge of present understanding." Let's formally end our triangle journey with one more zoom, filling the scene with a single red subpixel.
+
+::: {#fig-lcd-subpixel-fill}
+<img src="../../assets/subpixels/lcd-pixel-macro-2023-golden-subpixel.jpg" alt="Extreme close-up of a single red LCD subpixel filling the entire frame." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+A single red subpixel, zoomed in to fill the frame. Cropped from the same source image by Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia.org/wiki/File:2023_Mikroskopowy_obraz_matrycy_LCD.jpg), licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+:::
 
 And what does all of this have to do with data science?
 
-We began by asking "what is a triangle?" A seemingly simple quest for understanding. Analogously, data scientists will often be tasked with answering deceptively simple questions:
+We began by asking "what is a triangle?" - a seemingly simple quest for understanding, yet it took us all the way to a single red subpixel. Analogously, data scientists will often be tasked with answering deceptively simple questions:
 * How much does stretching help reduce injuries?
 * Do people sleep better with noise machines?
 * Is the cafe serving more customers than it was last year?
+* Was there a reduction in theft from adding security cameras?
 * Did the flyers bring more people to the restaurant?
 
-Any real, living, curious human asking these questions will want more than a one-word answer. Even the yes-or-no questions beg for a story (more on questions in the next chapter). The task of a data scientist, then, is not merely to extract and deliver a one-word answer.
+Any real, living, curious human asking these questions will want more than a one-word answer. Even the yes-or-no questions beg for a story. The task of a data scientist, then, is not merely to extract and deliver a one-word answer.
 
 This is the second point for which the triangle adventure is relevant. The real value of a (competent) data scientist is to understand, in detail, how the subpixels of data can become images of information. That is, a data scientist will constantly explore the possible decisions involved in turning data into information and/or knowledge, and the story that unfolds from those decisions.
 
-Practically, this means data scientists benefit from a strong understanding of data acquisition processes, sampling processes, and how those processes fit into any conclusions drawn from the data. In short, data scientists will pay attention to data *provenance*.
+Practically, this means data scientists benefit from a strong understanding of data acquisition processes, sampling processes, inference processes, and more, as well as how these processes fit into any conclusions drawn from the data. In short, data scientists will pay attention to the *provenance* of data, information, and knowledge.
 
-A strong grasp of provenance is an important component of "data science wisdom." When traced back to its origins, data are always limited. Thus, George Box's famous aphorism that "all models are wrong, but some are useful" [@box_draper_empirical_model_building_1987] might be amended. We can add that all *data* are wrong, too: all data are imperfect representations of the real world (or what we call the real world). Some data are very useful, but all data are limited snapshots of the world. Chapter 4 calls this the "treachery of data" and discusses it in more detail.
+A strong grasp of provenance is an important component of "data science wisdom." When traced back to its origins, data are always limited. George Box's famous aphorism that "all models are wrong, but some are useful" [@box_draper_empirical_model_building_1987] might therefore be amended: all *data* are wrong, too. That is, all data are imperfect representations of the real world (or what we call the real world). Some data are very useful for understanding the world, but all data are limited snapshots. Chapter 4 calls this the "treachery of data" and discusses it in more detail.
 
-The triangle figure thus illustrates several dimensions of "data science wisdom." Wisdom involves being able to explain why the figure was not *exactly* a perfect triangle. Wisdom requires *understanding the process* of going from subpixels to pixels to (an appearance of) lines to an imperfect representation of a triangle. Data science wisdom requires paying attention to *provenance* - tracing the (appearance of) a triangle all the way to its origins in subpixels, or perhaps even further!
+The "triangle" has thus illustrated several dimensions of "data science wisdom." Wisdom involves being able to explain why the figure @fig-triangle-ideal was not *exactly* a perfect triangle. Wisdom requires *understanding the process* of going from subpixels to pixels to (an appearance of) lines to an imperfect representation of a triangle. In other words, it requires attention to *provenance* - tracing the (appearance of) a triangle all the way to its origins in subpixels, or perhaps even further!
 
-Wisdom also involves a willingness to say why the original figure was, in some sense, a triangle. One must occasionally bow to the consensus and accept "equilateral triangle" as the best available, most recognizable name for the shape that appears in the figure. As will be discussed in Chapter 5, this kind of wisdom requires an awareness of goals, audience knowledge, and other contextual factors which can improve communication.
+Wisdom also involves a willingness to say why figure @fig-triangle-ideal was, in some sense, a triangle. One must occasionally bow to the consensus and accept "equilateral triangle" as the best available, most recognizable name for the shape that appears. As will be discussed in Chapter 5, this kind of wisdom requires an awareness of goals, audience knowledge, and other contextual factors which can improve communication.
 
 
 ## Understanding
 
-Notably missing from the DIKW pyramid is the word "understanding." This points to another limitation of the metaphor: fixed, static data are not automatically converted to information and/or knowledge and/or wisdom. The existence of the DIKW pyramid thus implies human understanding - someone had to build the pyramid.
+Notably missing from the DIKW pyramid is the word "understanding." This points to another limitation of the metaphor: fixed, static data are not automatically converted to information and/or knowledge and/or wisdom. The existence of the DIKW pyramid thus implies human understanding. Some human(s) must have built the pyramid.
 
-To quote Ursula Le Guin, "What good are all the objects in the universe, if there is no subject?" [@leguin_mrs_brown_1979]. And to rephrase this sentiment in the context of the DIKW pyramid, "what good are all the data, if there is no data scientist?"
+Here is another way to make the point, using the words of Ursula Le Guin: "What good are all the objects in the universe, if there is no subject?" [@leguin_mrs_brown_1979]. And to rephrase this sentiment in the context of the DIKW pyramid, "what good are all the data, if there is no data scientist?"
 
-To construct the DIKW pyramid, there must be some subject that transforms data into information, information into knowledge, and so on. If and when these transformations happen, they happen through the effort of human attention.
+To construct the DIKW pyramid, there must be some human subject that transforms data into information and information into knowledge. If and when these transformations happen, they happen through the effort of human attention.
 
 For example, what makes Wikipedia a source of knowledge is not merely the text on the page(s), but the coordination process of the many Wikipedia editor communities which iteratively write, review, and update Wikipedia pages. Furthermore, the information captured on Wikipedia pages can only "spread" and become knowledge when people read and trust that information. And a person trusts the information because of the subjects who crafted and re-crafted the language, ensuring its coherence and alignment with existing language.
 
-This construction process is understanding: information is more than compiled data, it is *understood* data. In other words, information is not automatically a property of data. And knowledge is not just stored information, it is *understood* information. @zeleny_management_1987 describes knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
+This construction process is what we might call understanding. Information is more than compiled data, it is *understood* data. This means information is not a guaranteed property of data. And knowledge is not just stored information, it is *understood* information. @zeleny_management_1987 applies a similar principle, describing knowledge as a "network of relations through which humans coordinate their actions," adding that "knowledge brings (through language) coherence and coordination to the otherwise turbulent and chaotic world of human action."
 
 This activity, exemplified by the continuous editing of Wikipedia editor communities, is the essence of understanding. The DIKW pyramid does not build itself: it is built by the human activity of devoting attention to gain understanding, which is often done in community.
 
 Human relations can often complicate things. Different people and organizations do not all construct knowledge in the same way(s), and Chapter 5 revisits the pyramid metaphor along with some of the alternative metaphors for knowledge construction - e.g. cathedrals and bazars.
 
 Furthermore, when it comes to understanding among multiple people, we broach the phenomenon of *common knowledge* — shared awareness not just of facts, but awareness of the facts other people know. This phenomenon has direct implications for how data scientists communicate results, and is also discussed in Chapter 5. Effective communication in building the DIKW pyramid also requires a distinction between "understanding the data" and "understanding the world" - discussed further in Chapter 4.
-
-(TK mention example - same dataset, multiple analysts)
 
 
 ## Statistical worldviews {#sec-statistical-worldviews}
@@ -211,7 +217,7 @@ All this is *not* to say the process is unscientific. There are well-justified n
 
 Even the rise of the causal inference paradigm described by @mcelreath_statistical_rethinking_2020 does not imply a conclusion to subjective decision-making in data science. Causal modeling may offer more regularity in asking questions (i.e., "what would happen after an intervention?") and helpful standards in structural modeling via causal graphs (specifically, directed acyclic graphs, or DAGs).
 
-Causal inference offers more formal structures [@sep-causal-models], it also opens up additional cans of worms. Namely, what does it actually means for one thing to "cause" another thing? Here are some common complications:
+Causal inference offers more standardized structures for modeling [@sep-causal-models], but it can also open up additional cans of worms. Namely, what does it actually mean for one thing to "cause" another thing? Here are some common complications:
 
 * **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that just consistently show up at the same time?
 	* (Structurally, this is a **fork**: some third factor drives two events without either causing the other.)
@@ -238,11 +244,13 @@ The fork: a common cause $Z$ (e.g., summer weather, or the Earth's rotation) dri
 The collider: independent causes $X$ and $Y$ (e.g., heat and fuel, or two buckets of water) both point into a shared effect $Z$, so conditioning on $Z$ (e.g., "there is a fire") can make $X$ and $Y$ appear associated even when they are not.
 :::
 
-For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter. The [Week 6 slides on causal graphs](../slides/week6.qmd) work through all four elemental confounds — fork, pipe, collider, and descendant — in more depth.
+For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter. Also, the [Week 6 slides about causal graphs](../slides/week6.qmd) work through elemental confounds — fork, pipe, collider, and descendant — in more depth.
 
 ## Conclusion
 
-TK
+The purpose of this chapter is to introduce the DIKW pyramid, and describe what it means to "work toward wisdom" as a data scientist. And yet, as the epigraph of this chapter suggests, "wisdom" is not easily passed to a reader. The same goes for knowledge: one must do their own work in order to truly learn, to gain real *understanding*.
+
+This makes data science - the human process of assembling data and information into knowledge - a subjective process. The data science lifecycle is scientifically justified, yet it also has contingencies at every step: what data to collect, how to collect it, which statistical worldview to adopt, which analyses to apply, which findings to communicate, and so on. While wisdom cannot be directly transmitted, understanding these subjectivities and the resultant multiverse of data science is a crucial foundation.
 
 ## References
 

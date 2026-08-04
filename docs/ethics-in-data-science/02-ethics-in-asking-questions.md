@@ -18,7 +18,8 @@ Asking a question, in the context of the data science lifecycle.
 
 🟡 *Chapter Status: early working draft. Most sections drafted, some parts still need polish and/or filling in..*
 
-There is a [meme template](https://knowyourmeme.com/memes/all-three-are-going-to-lie-to-you-never-ask-a-woman-her-age) that begins, "Never ask a woman her age, a man his salary..."
+
+You may have heard that you should "never ask a woman her age, or a man his salary..." The idea has become a [meme template](https://knowyourmeme.com/memes/all-three-are-going-to-lie-to-you-never-ask-a-woman-her-age) for framing questions that should (or should not) be posed to certain people.
 
 The basic principle underlying this meme is that some questions are more appropriate than others. Put another way, questions have varying levels of "appropriateness," and it is worthwhile to consider the quality and appropriateness of a question when working through the data science lifecycle.
 
@@ -35,15 +36,15 @@ You can always go back and refine your question. Still, you have to start somewh
 
 ## Where Questions Come From
 
-The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible starting points in the lifecycle (the other being "obtain data"). In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," a method which begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt also suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter, and to the observation in *The Craft of Research* [@booth_craft_of_research_2024].
+The data science lifecycle which this book adapts from @lau_learning_2023 suggests "ask a question" as one of two possible starting points in the lifecycle (the other being "obtain data"). In *Doing Data Science*, O'Neil and Schutt note the data science lifecycle can be thought of "as an extension or variation of the scientific method," a method which begins with "ask a question" [@oneil_2013_doing]. O'Neil and Schutt also suggest that this initial question is often connected to identifying some kind of problem, similar to Susanne Langer's observation quoted at the beginning of this chapter: "The way a question is asked limits and disposes the ways in which any answer to it... may be given." *The Craft of Research* [@booth_craft_of_research_2024] makes similar observations: your question(s) will shape your answer(s).
 
-The data science lifecycle may start with asking a question, but not every question makes it through the full lifecycle. If you ask the score of a tennis match, or the current time, or the temperature outside, or someone's name, you will not proceed through the lifecycle as exhaustively as you would to answer other questions.
+The data science lifecycle may start with asking a question, but not every question makes it through the full lifecycle. If you ask the score of a tennis match, or the current time, or the temperature outside, or someone's name, you will probably not proceed through the lifecycle as exhaustively as you would when answering other questions (e.g. how does the weather influence voter turnout).
 
-So, how do we know when a question is well-suited for the data science lifecycle? On the one hand, you can never be certain when you only have the question. That is one reason why the "Ask a question" step of the lifecycle includes four arrows pointing to it: other steps in the lifecycle can often lead data scientists back to revise their original question and begin the process anew.
+So, how do we know when a question is well-suited for the data science lifecycle? On the one hand, you can never be certain when you only have the question. That is one reason why the "Ask a question" step of the lifecycle includes *four* arrows pointing to it: other steps in the lifecycle can often lead data scientists back to revise their original question and restart the process anew.
 
-On the other had, as data scientists learn from experience, there are some checks and heuristics that can help identify the kinds of questions which make for good data science.
+On the other had, as data scientists learn from experience, there are some checks, heuristics, and conventions that can help identify the kinds of questions which make for good data science work.
 
-In *The Craft of Research*, Booth and colleagues observe that research usually begins not with a big question that attracts everyone in a field, but with a mental itch about a small question that only a single researcher wants to scratch [@booth_craft_of_research_2024]. <!-- TODO: verify wording and page number against the 5th edition; restore as a direct quotation if it can be quoted exactly. -->
+In *The Craft of Research*, Booth and colleagues observe that research usually begins not with a big question that attracts everyone in a field, but with a "mental itch" about a small question that only a single researcher wants to scratch [@booth_craft_of_research_2024].
 
 Topic vs. question:
 
@@ -53,28 +54,32 @@ Topic vs. question:
 
 ## Basic Types of Questions
 
-The taxonomy below follows the Stanford Encyclopedia of Philosophy entry on questions [@sep-questions].
+One part of identifying good questions is identifying what type of question you have. The Stanford Encyclopedia of Philosophy [@sep-questions] offers a helpful taxonomy, dividing questions into several main types: "whether," "which," and "why" questions, as well as indirect or "embedded" questions, as summarized in the following table.
 
 | Question Type | Description | Example | Answers |
 | --- | --- | --- | --- |
-| "Whether" | Presents a finite number of direct answers. May be yes-or-no questions, or questions that name two or more possible direct answers. | Was there a quorum at the meeting? | a. There was a quorum at the meeting.<br>b. There was no quorum at the meeting. |
+| "Whether" | Presents a finite number of direct answers. May be yes-or-no questions, or "multiple choice" questions that name a finite number of possible direct answers. | Was there a quorum at the meeting? | a. There was a quorum at the meeting.<br>b. There was no quorum at the meeting. |
 |  |  | Does Alice live in Chicago, in New York City, or in Los Angeles? | a. Alice lives in Chicago.<br>b. Alice lives in New York City.<br>c. Alice lives in Los Angeles. |
-| "Which" | Seeks a specific person, thing, or value. May have an indefinite or infinite number of direct answers. | Who was the President of the USA in 1978? | a. Jimmy Carter<br>b. Gerald Ford  |
+| "Which" | Seeks a specific person, thing, or value. May have an indefinite, or infinite, number of possible direct answers. | Who was the President of the USA in 1978? | a. Jimmy Carter<br>b. Gerald Ford  |
 |  |  | What is the smallest prime number greater than 12? | a. 13 is the smallest prime number greater than 12. |
-|  |  | Which cardinal was elected Pope in 2013? | a. Cardinal Angelo Scola<br>b. Cardinal Odilo Scherer<br>c. Jorge Mario Bergoglio |
+|  |  | Who was elected Pope in 2013? | a. Cardinal Angelo Scola<br>b. Cardinal Odilo Scherer<br>c. Jorge Mario Bergoglio |
 | "Why" | Asks for an explanation (not just a fact). Closely tied to causal, data-informed, or interpretive explanation. | Why do the planets move in elliptical orbits with the sun at one focus? | a. The gravitational pull of the sun causes the planets to move in elliptical orbits. |
-| Indirect ("Embedded") | Comes from the complement of a clause-embedding predicate, such as `know` or `wonder`. These questions appear inside larger statements rather than standing alone. | Bob knows who spoke to Mary. | a. Carol spoke to Mary.<br>b. Dave spoke to Mary. |
+| Indirect ("Embedded") | Comes from embedded predicates, such as `know` or `wonder`. Indirect questions are inferred from larger statements. | Bob knows who spoke to Mary. | a. Carol spoke to Mary.<br>b. Dave spoke to Mary. |
 |  |  | Alice wonders whether there was a quorum at the meeting. | a. There was a quorum at the meeting.<br>b. There was no quorum at the meeting. |
-|  |  | The analyst discovered which neighborhoods were undercounted. | a. The north side was undercounted.<br>b. The east side was undercounted. |
+|  |  | The analyst discovered which neighborhoods were undercounted. | a. Humboldt Park was undercounted.<br>b. Bridgeport was undercounted. |
 
 
-Note that an indirect question is not itself asked, so the sentence containing it is true or false rather than answered. The "Answers" column above lists answers to the *embedded* question — the ones Bob knows, Alice wonders about, or the analyst discovered.
+Indirect questions are not explicitly asked the way that "whether," "which," or "why" questions are asked. Rather, they come from sentences with incomplete or implied information. The "Answers" column above lists answers to the *embedded* question — the answer that Bob knows, Alice wonders about, or the analyst discovered.
+
+Indirect questions are also subjective. For instance, in the "Bob knows who spoke to Mary" example, Bob does not have a question. And Bob might not be the only person with knowledge about who spoke to Mary. Thus, when asking or addressing indirect questions, it is important to consider who knows certain facts, as well as *what others know* about who knows certain facts. Further discussion of this phenomena, common knowledge, is in chapter X.
 
 ### Presuppositions
 
-Many questions involve a *presupposition*: a background claim that must be true in order for the question to have a correct answer. If someone denies that background claim (i.e. the presupposition), they are correcting the question itself, and may not be able to answer the original question.
+To assess the quality of different questions, it is also helpful to recognize presuppositions. A *presupposition* can be defined as a background claim that must be true in order for the question to have a meaningful or correct answer. If someone denies that background claim (i.e. the presupposition), they are correcting the question itself, and it may not be possible to answer the original question.
 
-Below are some examples of presuppositions associated with example questions, again drawn from the Stanford Encyclopedia of Philosophy entry on questions [@sep-questions].
+As an introductory example, consider the question "Who was the the Roman emperor in 2020?" It presupposes that the Roman Empire was active in 2020, and that an emperor was in place. Neither presupposition is true, so the question has no meaningful answer.
+
+Below are some examples of presuppositions associated with example questions, drawn from the Stanford Encyclopedia of Philosophy [@sep-questions].
 
 | Question | Answer(s) | Presupposition(s) |
 | --- | --- | --- |
@@ -86,6 +91,8 @@ Below are some examples of presuppositions associated with example questions, ag
 
 
 ## Common Pitfalls
+
+A data scientist who can recognize what type of question they are working with, as well as the presuppositions of that question, is well on their way to good work.
 
 ### Naïve questions
 
@@ -100,7 +107,6 @@ Below are some examples of presuppositions associated with example questions, ag
 * terms, scope, or possible answers unclear.
 * may include a loaded presupposition or judgment (e.g. "Why did the new policy fail?")
 * "Are students doing better this year?" - which students, compared with when, and according to which measure of "better."
-* empirical question can be separate from judgment, to some extent (?)
 
 ### Leading questions
 
@@ -192,9 +198,6 @@ TK
 	* What would be lost if this question is not answered?
 	* Why would others think this question is worth asking?
 
-## Test
-
-Test citations for question framing, rhetoric, and situated perspectives: the Stanford Encyclopedia overview of questions [@sep-questions] and *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
 
 ## This is actually the hard part
 
@@ -204,7 +207,17 @@ Test citations for question framing, rhetoric, and situated perspectives: the St
 
 Crafting a high-quality research question for the data science lifecycle can be unexpectedly difficult and time-consuming.
 
+* specificity
 
+
+# Conclusion
+
+* know what kind of question you are asking
+* state questions early
+* revise and clarify questions often
+	* get specific about metrics
+
+Test citations for question framing, rhetoric, and situated perspectives: the Stanford Encyclopedia overview of questions [@sep-questions] and *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
 
 
 ## References
