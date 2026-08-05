@@ -72,11 +72,30 @@ jobs:
           # don't fail the job over a broken link
           fail: false
 
+      # create-issue-from-file only updates an existing issue when it is handed
+      # an issue-number; with just a title it opens a new one every time. Look
+      # the open report up here so a second bad week edits last week's issue
+      # instead of filing a duplicate. Empty output means "none open, file one".
+      - name: Find the open tracking issue
+        id: tracking_issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          issue=$(gh issue list --state open --label link-rot \
+            --search 'Broken external links in:title' \
+            --json number,title \
+            --jq '.[] | select(.title == "Broken external links") | .number' \
+            | head -n 1)
+          echo "number=$issue" >> "$GITHUB_OUTPUT"
+          echo "Open tracking issue: ${issue:-none}"
+
       - name: Open or update the tracking issue
         if: steps.lychee.outputs.exit_code != 0
         uses: peter-evans/create-issue-from-file@v6
         with:
           title: "Broken external links"
+          issue-number: ${{ steps.tracking_issue.outputs.number }}
           content-filepath: ./lychee/out.md
           labels: |
             link-rot
@@ -87,16 +106,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
+          issue: ${{ steps.tracking_issue.outputs.number }}
         run: |
-          # The step above adds to an open issue with this title if one exists.
           # Closing it here is what makes next week start a fresh report
           # instead of adding onto an old one.
-          issue=$(gh issue list --state open --label link-rot \
-            --search 'Broken external links in:title' \
-            --json number,title \
-            --jq '.[] | select(.title == "Broken external links") | .number' \
-            | head -n 1)
-
           if [[ -n "$issue" ]]; then
             gh issue comment "$issue" --body "All external links resolved as of $(date -u '+%Y-%m-%d'). Closing automatically."
             gh issue close "$issue"
