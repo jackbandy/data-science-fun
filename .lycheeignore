@@ -32,6 +32,11 @@ https://.*\.uic\.edu/.*login
 # `openssl s_client -connect www.uic.edu:443` verifies cleanly.
 ^https://www\.uic\.edu/?$
 
+# --- Slow from CI, fine for real people --------------------------------------
+# Serves in well under a second from a normal connection but has timed out
+# against the 20s limit from GitHub's runners. The link itself is good.
+^https://www\.stat\.berkeley\.edu/~brill/Papers/EDASage\.pdf$
+
 # --- Placeholders, not real links --------------------------------------------
 # Jekyll/Quarto template code that gets filled in when the site is built.
 .*\{\{.*\}\}.*
