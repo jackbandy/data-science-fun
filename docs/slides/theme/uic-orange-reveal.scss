@@ -18,6 +18,20 @@ $slide-number-width: 104px;
 $slide-number-right: 20px;
 $title-rule: 12px;
 $heading-rule: 6px;
+// Small-text scale. Captions, notes and eyebrows share one absolute size so a
+// credit line reads the same whether it sits under a full-bleed figure or
+// inside a narrow column. The dense sizes stay relative: they shrink body copy
+// against whatever context it is in.
+$small-size: 0.5rem;
+$dense-size: 0.8em;
+$dense-smaller-size: 0.65em;
+// Figure sizing. One frame, three heights — use .figure-sm / .figure-lg rather
+// than a bespoke max-height per image.
+$figure-height: 520px;
+$figure-height-sm: 360px;
+$figure-height-lg: 620px;
+$figure-border: 1px solid rgba(0, 0, 0, 0.12);
+$figure-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 $orange: #f9461c;
 $orange-dark: #c83214;
 $ink: #1a1a1a;
@@ -67,6 +81,20 @@ $code-bg: #ececea !default;
 $code-color: $ink !default;
 
 /*-- scss:rules --*/
+
+// The standard figure treatment: a contained image on a faint card. Shared by
+// .image-frame-slide img and the standalone .figure class.
+@mixin figure-frame {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: $figure-height;
+  margin: 0 auto;
+  padding: 0;
+  border: $figure-border;
+  box-shadow: $figure-shadow;
+  object-fit: contain;
+}
 
 :root {
   --r-main-font: #{$theme-body-font};
@@ -119,7 +147,42 @@ $code-color: $ink !default;
   .panel-tabset [role="tablist"],
   .panel-tabset [role="tab"][aria-selected="true"] { border-bottom-color: $border; }
 
-  .slide-number-delimiter, .slide-number-b, .image-only h1, .quote-slide h1 { display: none; }
+  .slide-number-delimiter, .slide-number-b, .image-only h1, .quote-slide h1,
+  .prompt-slide h1 { display: none; }
+
+  // "Share your thoughts" prompt: one bold question, centered, nothing else.
+  // Same skeleton as .quote-slide (hidden h1 kept for the outline), but the
+  // question is centered rather than set as a pull quote.
+  .slides section.prompt-slide {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100% !important;
+    top: 0 !important;
+    box-sizing: border-box;
+    padding: 48px 112px 92px;
+
+    .prompt-eyebrow {
+      font-size: 1.05rem;
+      color: $muted;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.9em;
+    }
+
+    .prompt-question {
+      border-top: $title-rule solid $orange;
+      padding-top: 0.5em;
+      max-width: 900px;
+      color: $ink;
+      font-weight: 700;
+      font-size: 3rem;
+      line-height: 1.2;
+      p { margin: 0; }
+    }
+  }
 
   // Full-slide pull quote: one large statement, centered vertically, with the
   // attribution beneath it. The h1 is kept in the markdown for the outline and
@@ -162,6 +225,46 @@ $code-color: $ink !default;
       a { color: $steel; text-decoration: underline; }
     }
   }
+
+  // ---------------------------------------------------------------------
+  // Small text. Four roles, one size. Use these instead of inline styles.
+  //
+  //   .caption        credit or source line under a figure (centered)
+  //   .note           aside or pointer to a reading (left-aligned)
+  //   .eyebrow        all-caps orange label above a block
+  //   .dense/.dense-smaller   shrink body copy in tight tables and lists
+  // ---------------------------------------------------------------------
+  .caption,
+  .note {
+    font-size: $small-size;
+    line-height: 1.3;
+    color: $steel;
+    margin-top: 0.3em;
+    a { color: $steel; text-decoration: underline; }
+  }
+
+  .caption { text-align: center; }
+  .note { text-align: left; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: $small-size;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $orange;
+
+    // Boxed variant for drafting markers.
+    &.todo {
+      background: $orange;
+      color: $paper;
+      border-radius: 4px;
+      padding: 2px 10px;
+    }
+  }
+
+  .dense { font-size: $dense-size; line-height: 1.45; }
+  .dense-smaller { font-size: $dense-smaller-size; line-height: 1.35; }
 
   section.course-title {
     display: flex !important;
@@ -210,17 +313,35 @@ $code-color: $ink !default;
       max-width: none;
     }
     p { margin: 0; }
-    img {
-      display: block;
-      width: auto;
-      max-width: 100%;
-      max-height: 520px;
-      margin: 0 auto;
-      padding: 0;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-      object-fit: contain;
-    }
+    img { @include figure-frame; }
+  }
+
+  // The same frame for images that sit outside .image-frame-slide — inside a
+  // column, a split layout, or raw HTML. Add .figure so every image on every
+  // slide reads the same instead of hand-rolling border/shadow inline.
+  img.figure { @include figure-frame; }
+
+  // Height modifiers. Selectors are doubled so they outrank
+  // `.image-frame-slide img` and work in both contexts.
+  img.figure-sm, .image-frame-slide img.figure-sm { max-height: $figure-height-sm; }
+  img.figure-lg, .image-frame-slide img.figure-lg { max-height: $figure-height-lg; }
+
+  // Opt out of the frame: for transparent SVGs that should sit directly on the
+  // slide with no card edge.
+  img.figure-plain, .image-frame-slide img.figure-plain {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  // Overlapping photo stack (the subpixel zoom sequence): a deliberately
+  // different, heavier treatment. Position stays inline; the look lives here.
+  img.photo-card, .image-frame-slide img.photo-card {
+    border: 3px solid $paper;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38);
+    object-fit: cover;
+    // Transparent SVGs in the stack need an opaque card behind them.
+    background: $paper;
   }
   .split { display: grid !important; grid-template-rows: auto 1fr; align-items: center; }
   .split-content { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; align-items: center; }
@@ -369,13 +490,10 @@ $code-color: $ink !default;
       object-fit: contain;
       display: block;
     }
+    // Same tier as .caption; only the flex behaviour differs.
     .iframe-caption {
+      @extend .caption;
       flex: none;
-      margin: 6px 0 0;
-      font-size: 0.5rem;
-      color: $muted;
-      line-height: 1.2;
-      a { color: $muted; text-decoration: underline; }
     }
   }
 
@@ -576,6 +694,14 @@ $image-only-footer-opacity: 0.6;
     background: transparent !important;
     h1 { display: none; }
   }
+}
+
+// Adding photo-title-zoom to a slide's data-state keeps the photo filling the
+// frame (background-size: cover) but pushes in another 10%. A bare percentage
+// background-size cannot do this: it is measured against the viewport, so it
+// zooms out whenever the viewport is narrower than the photo.
+.photo-title-zoom .reveal .slide-background.present .slide-background-content {
+  transform: scale(1.1);
 }
 
 $photo-footer-opacity: 0.65;

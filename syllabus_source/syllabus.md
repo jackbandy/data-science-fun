@@ -27,13 +27,13 @@ Drop-In Hours location: TK
 
 **Course Site:** [dodatascience.fun](https://dodatascience.fun/)
 
-The course site includes slides, the syllabus, worksheets, and the course schedule.
+The course site includes slides, the syllabus, worksheets, the course schedule, and links to various reference materials.
 
 For technical questions about Canvas, email the Learning Technology Solutions team at [[LTS@uic.edu]{.underline}](mailto:LTS@uic.edu).
 
 **Email Expectations**
 
-Students are responsible for all messages sent to your UIC email and Canvas accounts. I generally aim to respond to emails within TK hours during the week.
+Students are responsible for all messages sent to UIC email and Canvas accounts. I generally aim to respond to emails within 24 hours during weekdays. I generally do not check my email on Saturday and Sunday.
 
 **PrairieLearn:** TK
 
@@ -59,7 +59,7 @@ Instructional Method: Meet on campus
 
 # II. Course Information
 
-**[Catalog Course Description and Prerequisite/corequisite Statement]{.underline}**
+**[Catalog Course Description]{.underline}**
 
 Provides an in-depth overview of data science in engineering. Topics include modeling, storage, manipulation, integration, classification, analysis, visualization, information extraction, and big data in the engineering domain.
 
@@ -67,23 +67,31 @@ Provides an in-depth overview of data science in engineering. Topics include mod
 
 **Section-Specific Description**
 
-TK
+Although it may or may not be the "[sexiest job of the 21st century](https://hbr.org/2022/07/is-data-scientist-still-the-sexiest-job-of-the-21st-century)," data science remains critically important for knowledge work, decision-making, planning, and collaboration across society. The purpose of this course is to introduce the "data science lifecycle" and how to navigate it effectively. The data science lifecycle includes: asking good questions, obtaining and stewarding data, making sense of data, understanding the world based on data, and communicating insights. "Data science" is a broad and ever-expanding family of topics, but we will work together in this class to develop the skills and knowledge needed for effective data science work.
 
 
 ## [Welcome!]{.underline}
 
-Data are fun! More TK.
+Data are fun, and data science can be even more fun! This class will... TK
 
 ***Growth Mindset:***
 
-Course materials and assignments can be complex and challenging, but they are crucial to your intellectual and personal growth and development. There are times you may need extra help.
+Course materials and assignments can be complex and challenging, but they are crucial to your intellectual and personal growth and development. Just like a challenging weight-lifting exercise is intended to strengthen your body, a challenging class exercise is intended to strengthen your mind.
+
+If and when you need help...
 
 ## [Course Goals and Learning Outcomes]{.underline}
 
-- Learning outcome 1
-- Learning outcome 2
-- Learning outcome 3
-- TK
+
+If we are successful, by the end of the semester, you will have proficiency in the following:
+- Obtaining and preparing data for exploratory data analysis, including intentional selection of data storage formats
+- Creating descriptive visualizations for exploratory data analysis
+- Exploring data through summary statistics, tabulation, and aggregation techniques
+- Creating "persuasive" data visualizations to communicate specific patterns, trends, and/or insights from data
+- Developing models for data analysis (including.e. regression, classification, clustering)
+- Evaluating models and understanding their structure, meaning, statistical significance, and limitations
+- Clearly communicating the results and implications of data analyses, and explaining how those results are connected to various decisions made in the data science lifecycle
+
 
 ## [Course Topics]{.underline}
 
@@ -111,9 +119,8 @@ TK
 
 Slides and other reference materials are publicly available online under a Creative Commons license.
 
-Please protect the integrity of other course materials and content: as a general rule of thumb, please do not upload course materials onto third-party websites or share private content with anyone who is not enrolled in our course. If you have any questions about this, please let me know.
+Please protect the integrity of other course materials and content: as a general rule of thumb, please do not upload course materials onto third-party websites or share private content with anyone who is not enrolled in our course. If you have any questions about this, please ask.
 
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
 **Content Notices**
 
@@ -121,9 +128,8 @@ This is a 400-level University course; as such, we will aim to discuss topics wi
 
 Data science touches many different topics, and some materials will address sickness, death, war, politics, discrimination, surveillance, sex, violence, and related subjects which may be distressing. Please know that the goal is never to cause distress, but to meaningfully engage with real-world issues.
 
-Furthermore, some readings and other content may expose you to ideas, subjects, or views that may challenge you, cause you discomfort, or recall past negative experiences or traumas. I try to include content notices whenever appropriate. If you have suggested changes (i.e. if there is a place where you think I should add a content notice), or you would like me to be aware of a specific topic of concern, please email or visit me during office hours.
+Furthermore, some readings and other content may expose you to ideas, subjects, or views that may challenge you, cause you discomfort, or recall past negative experiences or traumas. I try to include content notices whenever appropriate. If you have suggested changes (i.e. if there is a place where you recommend adding a content notice), or you would like me to be aware of a specific topic of concern, please email or visit me during office hours.
 
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
 # III. Course Policies & Classroom Expectations
 
@@ -190,13 +196,45 @@ TK
 
 ## [Privacy Notification and Policy for Video Recording of Class Sessions]{.underline}
 
-TK
+As of right now I do not plan to record class sessions this semester. If this changes, I will ask for your permission to record, and it will most likely be only audio.
 
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
+Similarly, please do not record any video or audio from class without permission.
 
-## [Classroom Conduct Policy]{.underline}
+## [Classroom Conduct and in-class Technology]{.underline}
 
-TK *(expected courteous behavior in the classroom: talking, food/drinks, cell phones, personal computers, recording devices)*
+**TLDR:** no phones, no laptops in class - take notes on paper! :-D 
+
+This class meets twice a week for one hour and fifteen minutes, totaling 2.5 hours per week. The purpose of our meeting time is to learn, and the following policies are written with that purpose in mind. Outside of our meeting times, of course, you are free to use your devices however you choose.
+
+I remember the frustration and shock I felt in my first Computer Science course in college, when I learned that I was not allowed to use my computer. I have slowly realized that this policy was best for me as a student, and in most cases, is the best policy for an effective learning environment.
+
+In Summer 2026, I looked at peer-reviewed scientific evidence on the subject. As with other times I have explored the evidence, my impression was that **in-class device usage is detrimental for learning**, even when students feel accustomed to multitasking. Individual studies as well as meta-reviews continue to characterize devices in class as fundamentally distracting, with a negative influence on various measure of learning and performance.
+
+Interestingly, while some students can multitask and still comprehend material *during* class time, those students experience significantly reduced long-term retention ([Glass & Kang, 2019](https://doi.org/10.1080/01443410.2018.1489046)).
+
+For these reasons, **by default, all class periods will be free from cell phones, laptops, and tablets**. In some cases, we will use devices for activities, usually for a few minutes at the end of class.
+
+This policy is intended for your own benefit as well as the benefit of your classmates, as using a phone/laptop often has a chain reaction of distracting other students.
+
+For most class sessions, you will be provided a worksheet to take guided notes and write down questions that arise or factoids you wish to research after class. You are always encouraged to ask about factoids that you might otherwise look up on your device - someone in the class might know the answer, or at least have some insight!
+
+Also, if you prefer to take notes on a device that can sit flat on the table, and you are confident that you can do this without distracting yourself and without distracting others, please come see me to make an arrangement.
+
+Finally, **I will revisit the no-phone no-laptop policy with students throughout the semester**, and I remain open to revising the policy based on feedback / student needs.
+
+In case you are curious, here is some of the evidence I looked at during Summer 2026 regarding in-class device distractions:
+
+- Flanigan, Brady, Dai, & Ray (2023). Managing student digital distraction in the college classroom: A self-determination theory perspective. *Educational Psychology Review*. [doi.org/10.1007/s10648-023-09780-y](https://doi.org/10.1007/s10648-023-09780-y)
+    - "...research has suggested that these digital distractions can negatively impact learning and performance."
+- Dontre (2021). The influence of technology on academic distraction: A review. *Human Behavior and Emerging Technologies*. [doi.org/10.1002/hbe2.229](https://doi.org/10.1002/hbe2.229)
+    - "The detrimental effects of student smartphone and social media use on academic distraction are more conspicuous, especially with the pervasiveness of personal digital devices."
+- Martin, Long, Haywood, & Xie (2025). Digital distractions in education: A systematic review of research on causes, consequences and prevention strategies. *Educational Technology Research and Development*. [doi.org/10.1007/s11423-025-10550-6](https://doi.org/10.1007/s11423-025-10550-6)
+    - "Consequences for digital distraction included personal performance issues (66.67%), ineffective classroom instruction (23.33%), and problematic technology use (10%)."
+- Wang, Tigelaar, Zhou, & Admiraal (2023). The effects of mobile technology usage on cognitive, affective, and behavioural learning outcomes in primary and secondary education: A systematic review with meta-analysis. *Journal of Computer Assisted Learning*. [doi.org/10.1111/jcal.12759](https://doi.org/10.1111/jcal.12759)
+    - Notably, this review found that *structured, instructor-directed* technology use can help: "using mobile technology produced medium positive and statistically significant effects on primary and secondary students' learning."
+- Sana, Weston, & Cepeda (2013). Laptop multitasking hinders classroom learning for both users and nearby peers. *Computers & Education*. [doi.org/10.1016/j.compedu.2012.10.003](https://doi.org/10.1016/j.compedu.2012.10.003)
+    - "...multitasking on a laptop poses a significant distraction to both users and fellow students and can be detrimental to comprehension of lecture content."
+
 
 ## [Academic Integrity]{.underline}
 
@@ -208,16 +246,17 @@ By submitting your assignments for grading you acknowledge these terms, you decl
 
 This does not mean you need to complete all work in a bunker. You are encouraged to discuss your ideas with friends and classmates, and to explore related work. An important part of scholarship is standing on the shoulders of giants (and acknowledging whose shoulders we stand upon) — in other words, **cite your sources**.
 
-**Please ask the instructor if you need clarity about academic integrity** for specific exercises. When in doubt, it is always better to check with the instructor before proceeding. I will reach out to you personally before submitting a report of academic misconduct.
+**Please ask the instructor if you need clarity about academic integrity** for specific exercises. When in doubt, it is always better to check. I will reach out to you personally before submitting a report of academic misconduct.
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
 ## [Use of Generative Artificial Intelligence]{.underline}
 
-TK
+**TLDR:** wait until later in the semester.
 
-While this class will ask you to use some LLM-based coding tools, we will be working up to be able to use them. I plan to include a red light, yellow light, or green light policy for AI usage on each exercise. Generally, early assignments will be "red light" (no AI usage allowed). About halfway through the semester, we will experiment with specific use cases for these tools, and eventually some exercises will allow you to use them at your own judgment.
+While this class will eventually invite you to experiment with some LLM-based coding tools, we will be working up to that point. Generally, early assignments will be "red light" (no AI usage allowed). A few weeks into the semester, we will experiment with specific use cases for these tools ("yellow light"), and eventually some exercises will allow you to use them at your own judgment ("green light").
 
+Each exercise will have a red light, yellow light, or green light policy for AI usage. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
 
 More details TK - check [CATE Teaching Guide on Creating AI Policies for Teaching and Learning](https://teaching.uic.edu/cate-teaching-guides/digital-learning/creating-ai-policies-for-teaching-and-learning/))*
 
@@ -276,7 +315,11 @@ TK
 
 ## [Providing Feedback About This Course]{.underline}
 
-TK
+This is my first time teaching a full-semester data science course, and I am confident that there will be many ways to improve the course experience. I will provide structured opportunities for you to share feedback, which I take seriously -- each semester I make changes based on feedback from previous students. I also try to make time in each class session for students to ask any questions they may have about the course.
+
+I also encourage you to make pull requests to the GitHub.
+
+Details TK.
 
 ## [UIC Resources]{.underline}
 

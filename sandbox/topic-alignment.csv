@@ -1,0 +1,31 @@
+Day,Zheleva topic,Bello topic,tentative
+Day 1,Course intro; what is data science (Jan 13),L01 Introduction: What is Data Science?,W1 Mon: Course introduction; statistics review
+Day 2,Data science lifecycle (Jan 15),L02 Probability & Statistics I,W1 Wed: Data science lifecycle
+Day 3,"Data design & sampling; pandas/dataframes (Jan 20)",L03 Probability & Statistics II,W2 Mon: Python foundations; dataframes and Polars
+Day 4,Data wrangling I (Jan 22),L04 Probability & Statistics III,W2 Wed: Obtaining data
+Day 5,"Data acquisition (HTTP, APIs); wrangling II (Jan 27)",L05 Data Collection,W3 Mon: Wrangling data; filtering data
+Day 6,Exploratory data analysis (Jan 29),L06 Data Preparation,W3 Wed: Data formats
+Day 7,Data visualization I (Feb 3),L07 Data Visualization,W4 Mon: Exploratory analysis
+Day 8,Data visualization II (Feb 5),L08 Exploratory Data Analysis,W4 Wed: Descriptive statistics
+Day 9,Hypothesis testing (Feb 10),L09 Introduction to Data Modeling,W5 Mon: Visualization
+Day 10,Estimation & sampling distributions (Feb 12),L10 Regression I,W5 Wed: Visualization
+Day 11,Linear regression (Feb 17),L11 Regression II,W6 Mon: Visualization
+Day 12,Classification I (Feb 19),L12 Classification I,W6 Wed: Visualization
+Day 13,Classification II (Feb 24),L13 Classification II,W7 Mon: Hypothesis testing
+Day 14,Classification III (Feb 26),L14 Clustering I,W7 Wed: Estimation and sampling; randomness
+Day 15,Classification IV / neural nets & LLMs (Mar 3),L15 Clustering II,W8 Mon: Linear regression
+Day 16,Unsupervised learning (Mar 10),L16 Text Analysis I,W8 Wed: Intro to classification
+Day 17,Unsupervised learning in practice (Mar 19),L17 Text Analysis II,W9 Mon: Decision trees
+Day 18,Databases & SQL I (Mar 31),L18 Time Series Analysis,W9 Wed: Support vector machines; kernels
+Day 19,Databases & SQL II (Apr 2),L19 Big Data,W10 Mon: Clustering; principal component analysis
+Day 20,Big data / distributed computing (Apr 7),L20 Network Analysis,W10 Wed: Model evaluation
+Day 21,Ensembles in practice (Apr 9),L-Bonus Classification III,W11 Mon: Recommendation systems
+Day 22,Causality / causal inference (Apr 14),,W11 Wed: A/B testing
+Day 23,A/B testing (Apr 16),,W12 Mon: Network analysis
+Day 24,,,W12 Wed: Graphs and relationships; network measures
+Day 25,,,W13 Mon: TBD
+Day 26,,,W13 Wed: TBD
+Day 27,,,W14 Mon: Presentations
+Day 28,,,W14 Wed: Presentations
+Day 29,,,W15 Mon: Presentations
+Day 30,,,W15 Wed: Presentations
