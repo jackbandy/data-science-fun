@@ -31,6 +31,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
+      # Two of the --exclude-path entries below are not about link rot:
+      #
+      # docs/_includes/masthead.html is a Jekyll template whose nav links are
+      # root-relative ("/", "/slides/", "/faq.html"). They only resolve against
+      # the built site, and deploy-pages.yml already checks them there with
+      # --root-dir _site. Checked here they can only ever error.
+      #
+      # docs/assets/fonts holds vendored upstream READMEs. Their links are the
+      # font authors' (including a typo'd "cyreal.rog" that ships upstream),
+      # not ours to fix, and editing them would fork the vendored copy.
       - name: Check external links
         id: lychee
         uses: lycheeverse/lychee-action@v2
@@ -48,6 +58,8 @@ jobs:
             --exclude-path docs/slides/marp_archive
             --exclude-path docs/slides/_libs
             --exclude-path docs/syllabus
+            --exclude-path docs/_includes/masthead.html
+            --exclude-path docs/assets/fonts
             'README.md'
             'NOTES.md'
             'docs/**/*.md'

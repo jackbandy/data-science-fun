@@ -24,6 +24,14 @@ https://doi\.org
 https://uic\.instructure\.com
 https://.*\.uic\.edu/.*login
 
+# www.uic.edu serves an out-of-order certificate chain: where the "InCommon RSA
+# Server CA 2" intermediate belongs it sends the "AAA Certificate Services"
+# root instead. Browsers and curl paper over this by fetching the missing
+# intermediate themselves; lychee does not, so it reports "SSL certificate not
+# trusted" for a page that loads fine for real people. Drop this line once
+# `openssl s_client -connect www.uic.edu:443` verifies cleanly.
+^https://www\.uic\.edu/?$
+
 # --- Placeholders, not real links --------------------------------------------
 # Jekyll/Quarto template code that gets filled in when the site is built.
 .*\{\{.*\}\}.*
