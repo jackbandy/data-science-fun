@@ -1,0 +1,295 @@
+/* NOTICE: This file was substantially generated/modified by an LLM.
+
+   Palette: deliberately almost none. A spectrogram encodes loudness as
+   darkness, so any hue on the plot would compete with the one channel that
+   carries data. Everything is the grayscale ramp from assets/STYLE.md
+   (ink #1a1a1a on paper #fff, borders #ddd, muted #777), and the single
+   accent — Orange Line #F9461C — is spent on the one element that is not
+   data: the cursor marking "now". */
+
+@font-face {
+  font-family: 'Big Shoulders';
+  src: url('../assets/fonts/big-shoulders/BigShoulders.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Libre Franklin';
+  src: url('../assets/fonts/libre-franklin/LibreFranklin.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'ITC Franklin Gothic', 'Libre Franklin', 'Franklin Gothic', Arial, sans-serif;
+  background: #fff;
+  color: #444;
+  line-height: 1.6;
+  padding: 0 15px 48px;
+}
+
+.interior-content-wrapper {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.pageHeading {
+  padding: 15px 0;
+  border-bottom: 3px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+}
+
+.pageHeading .title {
+  /* Big Shoulders: the repo's heading face (assets/STYLE.md), also the slide
+     title font in slides/theme/uic-orange-reveal.scss. */
+  font-family: 'Big Shoulders', 'Arial Narrow', Arial, sans-serif;
+  font-size: 34px;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  color: #1a1a1a;
+  text-transform: lowercase;
+}
+
+.pageHeading .title b { font-weight: 700; }
+
+.title-icon {
+  width: 26px;
+  height: 26px;
+  fill: #1a1a1a;
+  vertical-align: baseline;
+  margin-right: 6px;
+}
+
+/* --- controls ---------------------------------------------------------- */
+
+.controls {
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.controls label {
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-left: 6px;
+}
+
+.controls button {
+  font: inherit;
+  font-weight: 600;
+  padding: 7px 14px;
+  border: 2px solid #1a1a1a;
+  background: #1a1a1a;
+  color: #fff;
+  cursor: pointer;
+}
+
+.controls button:hover { background: #444; border-color: #444; }
+
+.controls button.secondary {
+  background: #fff;
+  color: #1a1a1a;
+}
+
+.controls button.secondary:hover { background: #f4f4f2; }
+
+.controls button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.controls select {
+  font: inherit;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #1a1a1a;
+}
+
+/* --- the plot ---------------------------------------------------------- */
+
+.scope {
+  display: grid;
+  /* Left gutter holds the frequency axis; the plot takes the rest. */
+  grid-template-columns: 46px 1fr;
+  grid-template-rows: auto auto;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.axis {
+  display: block;
+  width: 46px;
+  height: 100%;
+  border-right: 1px solid #ddd;
+}
+
+.plot {
+  position: relative;
+  overflow: hidden;
+  /* Sized in JS from the golden ratio (see spectrogram.js); this is the
+     pre-measurement fallback so the box never starts at zero height. */
+  height: 340px;
+}
+
+.plot canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Static horizontal rules at the axis ticks. They live in an overlay rather
+   than on the canvas because the canvas scrolls: painted lines would smear
+   sideways along with the audio. */
+.gridlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gridlines i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(26, 26, 26, 0.10);
+}
+
+/* The one non-data mark on the plot, so it gets the one accent colour. */
+.cursor {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f9461c;
+  transform: translateX(-1px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cursor.live { opacity: 1; }
+
+.idle-message {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 clamp(16px, 8vw, 90px);
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  background: #fff;
+}
+
+.idle-message b { color: #1a1a1a; }
+.idle-message .hint { font-size: 13px; color: #aaa; }
+.idle-message.error b { color: #c83214; }
+.idle-message.hidden { display: none; }
+
+.time-axis {
+  grid-column: 2;
+  position: relative;
+  /* Two bands: the top one belongs to the "now" label, which slides along it
+     with the cursor, so the caption below is centred clear of its path. */
+  padding: 4px 8px 5px;
+  border-top: 1px solid #ddd;
+  font-size: 11px;
+  color: #777;
+  text-align: center;
+}
+
+.time-axis-caption {
+  display: block;
+  margin-top: 21px;
+}
+
+/* "now" means wherever the cursor is, which for the first pass across an empty
+   plot is not the right-hand edge. So the label rides the cursor (JS sets
+   `left`) instead of sitting at the end of the axis, and it is hidden entirely
+   while the mic is off and there is no "now" to point at. */
+.now-label {
+  position: absolute;
+  top: 4px;
+  color: #c83214;
+  font-weight: 600;
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.now-label.live { visibility: visible; }
+
+.caption {
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.caption a { color: #c83214; }
+
+/* --- chrome ------------------------------------------------------------ */
+
+.footnotes {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 15px;
+  font-size: 11px;
+  color: #999;
+  text-align: center;
+  background: #f4f4f2;
+}
+
+.footnotes a {
+  color: #888;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+.footnotes a:hover { text-decoration: underline; }
+
+/* Embedded (in an iframe) the page loses its footer and the masthead gains the
+   one link a framed viewer actually needs: a way out to the standalone page. */
+.open-standalone {
+  display: none;
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c83214;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.open-standalone::after {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-left: 5px;
+  vertical-align: middle;
+  opacity: 0.7;
+  background-color: currentColor;
+  -webkit-mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><path d="M6 1h5v5L8.5 3.5 4.8 7.2 3.8 6.2l3.7-3.7z"/><path d="M2 3h2v1H2v6h6V8h1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>') no-repeat center / contain;
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><path d="M6 1h5v5L8.5 3.5 4.8 7.2 3.8 6.2l3.7-3.7z"/><path d="M2 3h2v1H2v6h6V8h1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>') no-repeat center / contain;
+}
+
+.open-standalone:hover { text-decoration: underline; }
+
+.embedded body { padding-bottom: 15px; }
+.embedded .footnotes { display: none; }
+.embedded .open-standalone { display: inline-block; }
+
+@media (max-width: 600px) {
+  .pageHeading .title { font-size: 26px; }
+  .controls { font-size: 13px; }
+  .controls label { margin-left: 0; }
+}
