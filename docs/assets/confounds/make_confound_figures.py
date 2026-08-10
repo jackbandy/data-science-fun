@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate SVGs for the four elemental confounds (fork, pipe, collider, descendant).
+"""Generate SVGs for the elemental confounds (fork, pipe, collider, descendant).
 
 Follows docs/assets/STYLE.md: golden-ratio canvas, rounded-rect nodes, #111 arrows
 with a filled triangle head, embedded Libre Franklin.
@@ -57,6 +57,19 @@ FIGURES = {
             "D": (500, 480, OPEN),
         },
         [("X", "Z"), ("Z", "Y"), ("Z", "D")],
+    ),
+    # Descendant of a collider, as in the gas grill of Chapter 1: gas level and
+    # igniter both feed the flame, and the doneness of the meat is a side effect
+    # of the flame. Both Z and D are orange because stratifying on either one
+    # opens the spurious gas-igniter path.
+    "descendant-collider": (
+        {
+            "X": (265, 120, NEUTRAL),
+            "Y": (735, 120, NEUTRAL),
+            "Z": (500, 320, OPEN),
+            "D": (500, 510, OPEN),
+        },
+        [("X", "Z"), ("Y", "Z"), ("Z", "D")],
     ),
 }
 

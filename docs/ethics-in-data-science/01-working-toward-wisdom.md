@@ -187,7 +187,7 @@ Furthermore, when it comes to understanding among multiple people, we broach the
 
 ## Statistical worldviews {#sec-statistical-worldviews}
 
-One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to various steps in the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere" [@nagel_view_from_nowhere_1986; @haraway_situated_knowledges_1988; @dignazio_klein_data_feminism_2020], there are many "researcher degrees of freedom" exercised throughout the lifecycle. Making decisions within these degrees of freedom entails a degree of subjectivity, and requires data scientists to bring some humanity to their work.
+One final component of wisdom for the data scientist is an awareness of different worldviews and their relevance to various steps in the data science lifecycle. Although some may view data scientists as having a neutral, objective, "view from nowhere" [@nagel_view_from_nowhere_1986; @haraway_situated_knowledges_1988; @dignazio_klein_data_feminism_2020], there are many "researcher degrees of freedom" exercised throughout the lifecycle. Data scientists make decisions within these degrees of freedom, which entails a degree of subjectivity. This means data scientists bring situated humanity into their work: their prior experiences, tastes, distastes, habits of mind, and other aspects of their worldview.
 
 To help demonstrate the relevance of worldviews in data science, we will conclude the chapter with the example of frequentist versus Bayesian statistics.
 
@@ -196,28 +196,28 @@ Consider a simple scenario from [@ipeirotis_bayesian_frequentist_2008]:
 * You have a coin that, when flipped, ends up head with probability *p* (and ends up tail with probability *1−p*)
 * The value of *p* is unknown, and you want to know it
 * You flip the coin 14 times and get 10 heads
-* A stranger walks by after the 14th flip and offers a bet as to whether the next two flips will yield two heads
-* Do you take the bet?
+* A stranger walks by after the 14th flip and offers a bet: will  the next two flips yield two heads?
+* You must choose whether to take the bet.
 
-The mathematical details are worked out in the original source; what matters here is the different conclusions reached through different statistical worldviews.
+While the mathematical details are worked out in the original source, what matters here is that different mathematical conclusions are reached through different statistical worldviews.
 
 In this particular example, a *frequentist* would estimate *p* from the 14 observations, estimating a 51% chance of two consecutive heads. A *Bayesian* reaches a different estimate, 48.5% (by treating *p* as a distribution, incorporating prior beliefs, and using Bayes' theorem to account for the 14 observations).
 
-There are underlying beliefs supporting these numbers: frequentists treat probability as long-run frequency/percentages and judge procedures by their error rates across repeated trials [@sep-statistics]. Bayesians, on the other hand, treat probability as a degree of belief (or "credence") that is updated as evidence arrives [@sep-epistemology-bayesian].
+There are underlying beliefs supporting these numbers: frequentists treat probability as long-run frequency/percentages, and judge procedures by their error rates across repeated trials [@sep-statistics]. Bayesians, on the other hand, treat probability as a degree of belief (or "credence") that is updated as evidence arrives [@sep-epistemology-bayesian]. In this case, Bayesians start with the prior belief that coins are expected to land on tails 50% of the time and head 50% of the time.
 
-So, do you take the bet? One might expect there to be a single answer to the statistical question: "just do the math!" But we have multiple paradigms upon which we might base our math. This is a case where a data scientist must choose which math to use, and to some extent, what to believe about the world.
+So, do you take the bet? One might expect there to be a single answer to the statistical question: "just do the math!" But this example demonstrates multiple paradigms upon which we might base our math. This is a case where a data scientist must choose which math to use, and to some extent, what to believe about the world.
 
-This particular debate actually seems to have settled down. In a widely-cited 1986 paper, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as an active contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath (and others) have suggested that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020]. That is, the main question has become: what can we expect to happen from a particular intervention?
+The value of data scientists is not that they "just do the math," but that they have well-informed views about which math to do and why.
 
-But even if "everyone is a Bayesian," this does not settle the matter, or eliminate the existence of subjective worldviews. In short, you cannot "just do the math," you still need to have an opinion. A particularly relevant example is sometimes called the "problem of the priors" in Bayesian epistemology [@sep-epistemology-bayesian]. Bayesians may agree to treat probability as a degree of belief, but how exactly do you form a belief before data are available? Different camps of Bayesians (i.e. "subjective Bayesians" or "objective Bayesians") will have different answers to this question.
+The Bayesian/Frequentist statistical debate actually seems to have settled down. In a widely-cited 1986 paper, Bradley Efron asked "Why Isn't Everyone a Bayesian?" and implied the choice as an active contest [@efron_why_isnt_bayesian_1986]. More recently, however, Richard McElreath suggests that the Bayesian-versus-frequentist debate has essentially been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020]. That is, the main question has become: what can we expect to happen from a given intervention?
 
-Bayesians also disagree on a number of other questions [@sep-epistemology-bayesian], for example, about whether a prior/credence must be a single number, whether a given body of evidence permits exactly one rational credence or several, and how to update credences/beliefs. These are cases in which a (Bayesian) data scientist must make a choice (e.g. when choosing a prior), and cannot simply "do the math."
+Even if "everyone is a Bayesian," it would not settle the matter or eliminate the existence of subjective statistical worldviews. A particularly relevant dilemma is sometimes called the "problem of the priors" in Bayesian epistemology [@sep-epistemology-bayesian]. Bayesians may agree to treat probability as a degree of belief, but how exactly does one form a belief before data are available? Different camps of Bayesians (i.e. "subjective Bayesians" or "objective Bayesians") will have different answers to this question.
 
-All this is *not* to say the process is unscientific. There are well-justified norms, standards, and conventions throughout the data science lifecycle. But not every norm, standard, or convention is one that all data scientists agree upon. And whenever there is a lack of consensus, it is helpful to understand how people reach different viewpoints, and where one's own worldview fits in.
+Bayesians also disagree on a number of other questions [@sep-epistemology-bayesian], for example, about whether a prior/credence must be a single number (or a range), whether a given body of evidence permits exactly one rational "credence" (or several), and how to update credences/beliefs. These are cases in which a (Bayesian) data scientist must make a choice (e.g. when choosing a prior), and cannot simply "do the math."
 
-Even the rise of the causal inference paradigm described by @mcelreath_statistical_rethinking_2020 does not imply a conclusion to subjective decision-making in data science. Causal modeling may offer more regularity in asking questions (i.e., "what would happen after an intervention?") and helpful standards in structural modeling via causal graphs (specifically, directed acyclic graphs, or DAGs).
+This is *not* to say the process is unscientific. There are well-justified norms, standards, and conventions throughout the data science lifecycle, including the lifecycle itself. But not every norm, standard, or convention is one that all data scientists agree upon. And whenever there is a lack of consensus, it is helpful to understand how people reach different viewpoints which prevent the consensus.
 
-Causal inference offers more standardized structures for modeling [@sep-causal-models], but it can also open up additional cans of worms. Namely, what does it actually mean for one thing to "cause" another thing? Here are some common complications:
+In other words, the rise of the causal inference paradigm described by @mcelreath_statistical_rethinking_2020 does not imply a conclusion to subjective decision-making in data science. Causal modeling may offer more regularity in asking questions (i.e., "what would happen after an intervention?") and helpful standards in structural modeling via causal graphs (specifically, directed acyclic graphs, or DAGs) [@sep-causal-models]. But causal modeling also open up additional cans of worms and subjective decision-making. Namely, what does it actually mean for one thing to "cause" another thing? Here are some common complications in causal analysis:
 
 * **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not cause the sun to rise. How do we separate real causes from things that just consistently show up at the same time?
 	* (Structurally, this is a **fork**: some third factor drives two events without either causing the other.)
@@ -228,29 +228,38 @@ Causal inference offers more standardized structures for modeling [@sep-causal-m
 	* (Structurally, this is also a **fork**: the third factor points to both measured variables.)
 
 ::: {#fig-wisdom-fork}
-<img src="../assets/confounds/fork.svg" alt="Fork DAG: Z at the top with arrows pointing down to X on the left and Y on the right. Z is filled dark to mark the variable to split the data by." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/confounds/fork.svg" alt="Fork DAG: Z at the top with arrows pointing down to X on the left and Y on the right. Z is filled dark to mark the variable to split the data by." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 The fork: a common cause $Z$ (e.g., summer weather, or the Earth's rotation) drives both $X$ and $Y$, producing a correlation between them even though neither causes the other.
 :::
 
 * **Directionality**: A train's speedometer needle turns as the train goes faster, and the train goes faster as the speedometer needle turns. But of course, manually moving the needle will not speed up the train. How do we determine causal directionality in more complicated scenarios?
-	* (Structurally, this is a **pipe** read backwards: the needle is a downstream effect of the speed, not a cause of it.)
+	* (Structurally, this is a backwards **pipe**. The speedometer needle is a downstream effect of the speed, but the needle does not cause the speed to change.)
 * **Overdetermination**: Two people each empty a full bucket of water onto a campfire at the same moment, and either bucket alone may have been enough to put out the fire. Which bucket "caused" the fire to go out?
 	* (Structurally, this is also a **collider**: two independent causes converge on one effect.)
 
 ::: {#fig-wisdom-collider}
-<img src="../assets/confounds/collider.svg" alt="Collider DAG: X on the left and Y on the right both point up to Z. Z is filled orange to warn against splitting the data by it." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+<img src="../../assets/confounds/collider.svg" alt="Collider DAG: X on the left and Y on the right both point up to Z. Z is filled orange to warn against splitting the data by it." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
 
 The collider: independent causes $X$ and $Y$ (e.g., heat and fuel, or two buckets of water) both point into a shared effect $Z$, so conditioning on $Z$ (e.g., "there is a fire") can make $X$ and $Y$ appear associated even when they are not.
+:::
+
+* **Unmeasured causes**: Consider the gas grill described in [@sep-causal-models], where the size of the flame depends on the gas level and the igniter, and how well the meat cooks depends on the flame. Suppose nobody wrote down the flame, and the only record is how the meat came out. Can the doneness of the meat stand in for the flame? Unlike the complications above, this is not necessarily a question about which cause is the "real cause." The question is: when the thing we care about was never directly measured, how do we reason about a trace or proxy of that thing?
+	* (Structurally, this is a **descendant**: doneness $D$ is a side effect of the flame $Z$, so $D$ carries some of $Z$'s information but not all of it. Analyzing $D$ is a watered-down version of analyzing $Z$ — which means it also inherits a watered-down version of whatever problems $Z$ would have caused.)
+
+::: {#fig-wisdom-descendant}
+<img src="../../assets/confounds/descendant-collider.svg" alt="Descendant DAG: X on the upper left and Y on the upper right both point down to Z, which points down to D. Z and D are both filled orange to warn against splitting the data by either one." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
+
+The descendant: $D$ (e.g., how well the meat cooked) is a side effect of $Z$ (the flame), which in this case is itself a collider between $X$ and $Y$ (the gas level and the igniter). Because $D$ carries part of $Z$'s information, conditioning on $D$ partially conditions on $Z$, and so leaks in a partial version of the collider bias from @fig-wisdom-collider.
 :::
 
 For further discussion of these questions, see [@sep-causation-regularity]. And if you enjoy these kinds of philosophical puzzles, you are hopefully going to enjoy the next chapter. Also, the [Week 6 slides about causal graphs](../slides/week6.qmd) work through elemental confounds — fork, pipe, collider, and descendant — in more depth.
 
 ## Conclusion
 
-The purpose of this chapter is to introduce the DIKW pyramid, and describe what it means to "work toward wisdom" as a data scientist. And yet, as the epigraph of this chapter suggests, "wisdom" is not easily passed to a reader. The same goes for knowledge: one must do their own work in order to truly learn, to gain real *understanding*.
+The purpose of this chapter is to introduce the DIKW pyramid, and describe the meaning of "working toward wisdom" as a data scientist. And yet, as the epigraph of this chapter suggests, "wisdom" cannot necessarily be passed to a reader. The same goes for knowledge: one must do their own work in order to truly learn, to gain real *understanding*.
 
-This makes data science - the human process of assembling data and information into knowledge - a subjective process. The data science lifecycle is scientifically justified, yet it also has contingencies at every step: what data to collect, how to collect it, which statistical worldview to adopt, which analyses to apply, which findings to communicate, and so on. While wisdom cannot be directly transmitted, understanding these subjectivities and the resultant multiverse of data science is a crucial foundation.
+This makes data science - the human process of assembling data into information and knowledge - a subjective process. The data science lifecycle is scientifically justified, yet it also has contingencies at every step: what data to collect, how to collect it, which statistical worldview to adopt, which analyses to apply, which findings to communicate, and so on. While wisdom cannot be directly transmitted, understanding these subjectivities and the resultant multiverse of data science is a crucial foundation for the work that follows.
 
 ## References
 
