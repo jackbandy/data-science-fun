@@ -7,18 +7,20 @@ format:
     fig-height: 3.09  # golden ratio rectangle
     auto-stretch: false  # figures sized by .code-figure-slide instead
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 0</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week0.html">dodatascience.fun/slides/week0</a></span>'
+# Overrides slide-level: 1 in _quarto.yml. `#` opens a section divider slide and
+# the `##` slides after it nest under it in the nav menu (press M). Don't put a
+# `---` next to a `#` (emits a blank slide); write title subtitles as raw <h2>.
+slide-level: 2
 ---
 
 # Week 0 Slide Deck {.course-title}
 
-## An Experiment With Quarto
+<h2>Quarto Slide Demo</h2>
 
 Jack Bandy
 2026
 
 This is a demo slide deck for reference and experimentation.
-
----
 
 # Harold Washington Library {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
 
@@ -26,28 +28,48 @@ CS 418 · Week 0 · 🟠 Harold Washington Library 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
 
----
 
 # Common Slide Templates {.section-header}
 
+
+## Section Headers {.smaller}
+
+- `slide-level: 2` in the frontmatter turns every `#` into a section divider
+- the `##` slides that follow it nest underneath it in the navigation menu (press
+<kbd>M</kbd>) as an indented group
+
+``` markdown
+# Common Slide Templates {.section-header}
+
+## Content Slide
+
+## Incremental Bullets
+```
+
+::: {.note}
+Common issues: a `---` directly before or after a `#` emits a blank slide, and a
+title-slide subtitle must be written as raw `<h2>…</h2>` so it does not start a
+slide of its own.
+:::
+
 ---
 
-# Content Slide
+## Content Slide
 
 Testing content slide.
 
 - Lorem ipsum dolor sit amet
 - Consectetur adipiscing elit
 - Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-- Test quote
+- Test quote below
 
 > "The greatest value of a picture is when it forces us to notice what we never expected to see." — John Tukey
 
 ---
 
-# Tukey on Pictures {.quote-slide}
+## Tukey on Pictures {.quote-slide}
 
 > The greatest value of a picture is when it forces us to notice what we never expected to see.
 
@@ -56,12 +78,12 @@ John W. Tukey
 :::
 
 ::: {.quote-source}
-*Exploratory Data Analysis* (1977), p. vi. The `h1` above is hidden by the theme — it stays in the markdown so the slide still shows up in the outline and slide menu.
+*Exploratory Data Analysis* (1977), p. vi. (Note the `h1` above ("Tukey on Pictures") is hidden by the theme. It stays in the markdown so the slide still shows up in the outline and slide menu.)
 :::
 
 ---
 
-# Incremental Bullets
+## Incremental Bullets
 
 ::: {.incremental}
 * display this first
@@ -73,7 +95,7 @@ John W. Tukey
 
 ---
 
-# Fragments
+## Fragments
 
 Unlike `.incremental`, individual `.fragment` divs can be ordered and given
 their own animation, which is what the build slides below rely on.
@@ -101,9 +123,9 @@ view. It never renders on the slide itself.
 
 ---
 
-# Tabsets
+## Tabsets
 
-Drop a finger on a random spot of the spinning globe: **Water** or **Land**? About 75% of Earth's surface is water, so each toss is a coin flip weighted by `p`.
+Drop a finger on a random spot of the spinning globe: **Water** or **Land**? About 75% of Earth's surface is water, so each toss is a coin flip weighted by `p`. Here it is in four languages:
 
 ::: {.panel-tabset}
 
@@ -142,7 +164,7 @@ function globeToss(p = 0.75) {
 
 ---
 
-# Pretty Code
+## Pretty Code
 
 - Syntax highlighting works in revealjs slides
 - Code uses the theme's Courier stack
@@ -162,9 +184,9 @@ def summarize_ridership(stations: pl.DataFrame) -> pl.DataFrame:
 
 ---
 
-# Line Highlighting
+## Line Highlighting
 
-```{.python code-line-numbers="3-4|6|7-10|12"}
+```{.python code-line-numbers="1-2|4-5|7-11|13"}
 import numpy as np
 import polars as pl
 
@@ -182,7 +204,7 @@ print(by_access.with_columns(accessible_share=share))
 
 ---
 
-# Code + Figure {.code-figure-slide}
+## Code + Figure {.code-figure-slide}
 
 The globe toss from earlier: the proportion of water converges on `p`.
 
@@ -201,7 +223,7 @@ ax.set(xlabel="toss", ylabel="proportion water", ylim=(0, 1))
 
 ---
 
-# Code + Figure, Side by Side {.code-figure-side}
+## Code + Figure, Side by Side {.code-figure-side}
 
 Simulate 9 tosses at a time: how often does water come up 0, 1, ... 9 times?
 
@@ -228,7 +250,7 @@ ax.set(
 
 ---
 
-# Figure Only {.figure-slide}
+## Figure Only {.figure-slide}
 
 ```{python}
 #| echo: false
@@ -243,7 +265,7 @@ ax.set(xlabel="toss", ylabel="proportion water", ylim=(0, 1));
 
 ---
 
-# Building Up a Figure {.code-figure-slide .build-slide}
+## Building Up a Figure {.code-figure-slide .build-slide}
 
 ::: {.r-stack}
 
@@ -281,7 +303,7 @@ ax.set(xlabel="toss", ylabel="proportion water", ylim=(0, 1))
 
 ---
 
-# Text + Figure {.text-figure-slide}
+## Text + Figure {.text-figure-slide}
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -312,7 +334,7 @@ ax.set(xlabel="water in 9 tosses", ylabel="simulations", xticks=range(10));
 
 ---
 
-# Column Layout {.smaller}
+## Column Layout {.smaller}
 
 ::: columns
 ::: {.column width="42%"}
@@ -325,6 +347,8 @@ ax.set(xlabel="water in 9 tosses", ylabel="simulations", xticks=range(10));
 :::
 
 ::: {.column width="58%"}
+A little table
+
 | Week | Focus |
 |---:|---|
 | 0 | Setup and orientation |
@@ -337,7 +361,7 @@ ax.set(xlabel="water in 9 tosses", ylabel="simulations", xticks=range(10));
 
 ---
 
-# Auto-Animate {auto-animate="true" auto-animate-easing="ease-in-out"}
+## Auto-Animate {auto-animate="true" auto-animate-easing="ease-in-out"}
 
 ::: r-hstack
 ::: {data-id="box1" style="background: #f9461c; width: 260px; height: 56px; margin: 10px;"}
@@ -348,7 +372,7 @@ ax.set(xlabel="water in 9 tosses", ylabel="simulations", xticks=range(10));
 
 ---
 
-# Auto-Animate {auto-animate="true" auto-animate-easing="ease-in-out"}
+## Auto-Animate {auto-animate="true" auto-animate-easing="ease-in-out"}
 
 ::: r-stack
 ::: {data-id="box1" style="background: #f9461c; width: 360px; height: 360px; border-radius: 220px;"}
@@ -359,38 +383,32 @@ ax.set(xlabel="water in 9 tosses", ylabel="simulations", xticks=range(10));
 
 ---
 
-# Auto-Animate: Two Rules {.smaller}
+## Auto-Animate Notes {.smaller}
 
 ::: {style="font-size:0.8em; line-height:1.5;"}
-- **It takes two adjacent slides.** `auto-animate` on a lone slide animates nothing — the attribute is inert unless the *next* slide has it too.
-- **Give matched elements a `data-id`.** Reveal auto-matches text by content and images by `src`, but an explicit `data-id` wins and is what keeps a figure connected when its container changes (centered → column).
+- `auto-animate` on a lone slide animates nothing
+- needs back-to-back slide
+- **Give matched elements a `data-id`.**
+- Reveal auto-matches text by content and images by `src`
+- an explicit `data-id` wins and keeps a figure connected
 :::
 
 
----
 
 # Image & Embed Slides {.section-header}
 
----
 
-# Image Slide {.image-slide}
 
-<img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line with each station marked as a labeled stop">
-
----
-
-# Image Frame Slide {.image-frame-slide}
+## Image Frame Slide {.image-frame-slide}
 
 <img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line with each station marked as a labeled stop">
 
 ---
 
-# Standard Image Treatment {.smaller}
+## Standard Image Treatment {.smaller}
 
-Content images carry a **hairline border and a soft drop shadow**. The border
-gives a white-background image a definite edge against a white slide; the shadow
-lifts it slightly, so it reads as *a picture of something* rather than as part of
-the slide itself.
+Content images have a hairline border and a soft drop shadow as shown below. The border
+gives a white-background image an edge against a white slide and the shadow makes it appear as a picture of something (rather than as part of the slide itself).
 
 ::: {style="font-size:0.8em; line-height:1.5;"}
 - **Automatic** on `{.image-frame-slide}` and `{.image-slide}` — the theme styles the image, so add no inline style.
@@ -403,13 +421,13 @@ border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12)
 ```
 
 ::: {style="font-size:0.72em; color:#565a5c; margin-top:0.4em;"}
-Exception: line-art diagrams meant to float on the slide background (transparent
-SVGs) set `border:none; box-shadow:none; background:transparent;` on purpose.
+For exceptions meant to float on the slide background (transparent
+SVGs), set `border:none; box-shadow:none; background:transparent;`
 :::
 
 ---
 
-# Golden Rectangles {.smaller}
+## Golden Rectangles {.smaller}
 
 make figures/pictures/things **[golden rectangles](https://en.wikipedia.org/wiki/Golden_rectangle)** whenever possible !
 ( sides in the ratio 1 : φ, φ ≈ 1.618)
@@ -418,12 +436,13 @@ make figures/pictures/things **[golden rectangles](https://en.wikipedia.org/wiki
 - Consistent proportions mean figures sit at the same size slide to slide, instead of each one needing its own `max-height` nudge.
 - can be portrait or landscape rectangles
 - Ex. `00-triangle-best.svg` is **1600 × 989**,
+- Just a convention
 :::
 
 
 ---
 
-# Florence Nightingale's Mortality Diagram (1858) {.split data-auto-animate=""}
+## Florence Nightingale's Mortality Diagram (1858) {.split data-auto-animate=""}
 
 ::: {.split-content}
 
@@ -444,31 +463,50 @@ Used to advocate for sanitary reforms in military hospitals.
 
 ---
 
-# Split Slide, Auto-Animate Follow-Up {.split data-auto-animate=""}
+## Auto-Animate: Grow and Center {data-auto-animate=""}
+
+<img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" style="display: block; margin: 0 auto; max-height: 500px; max-width: 100%; object-fit: contain;" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)">
+
+---
+
+## Auto-Animate: Bring in a Caption {data-auto-animate=""}
+
+<img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" style="display: block; margin: 0 auto; max-height: 420px; max-width: 100%; object-fit: contain;" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)">
+
+::: {.caption}
+Blue: preventable disease · Red: wounds · Black: other causes.
+:::
+
+---
+
+## Auto-Animate: Cross the Slide {.split .smaller data-auto-animate=""}
 
 ::: {.split-content}
 
-::: {}
-
-- Lorem ipsum dolor sit amet,
-- consectetur adipiscing elit
-- Sed do eiusmod tempor incididunt
-- ut labore et dolore magna
-:::
-
 <img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858)">
 
+::: {}
+
+- Same element, different box
+- `data-id` on both copies matches them
+- Keep `object-fit` the same across the chain
+:::
+
 :::
 
 ---
 
-# Florence Nightingale's Mortality Diagram (1858) {.image-only data-state="image-only" data-auto-animate=""}
+## Image Only: Full-Bleed {.image-only data-state="image-only"}
 
-<img data-id="nightingale-img" src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart shown full-bleed, with only the footer overlaid">
+<!-- No data-id here on purpose: .image-only crops with object-fit: cover, and
+     object-fit is not animatable, so morphing into it from the contained
+     figures above snaps mid-flight. This slide cuts instead. -->
+
+<img src="../assets/slides-misc/Nightingale-mortality.jpg" alt="Florence Nightingale, &quot;Diagram of the causes of mortality in the army in the East&quot; (1858) — a polar area chart shown full-bleed, with only the footer overlaid">
 
 ---
 
-# University of Illinois Chicago {.iframe-slide}
+## University of Illinois Chicago {.iframe-slide}
 
 <iframe src="https://www.uic.edu" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
@@ -478,9 +516,10 @@ An `.iframe-caption` sits under the embed at small type — use it for a source 
 
 ---
 
-# Discussion Template w Timer {.split}
 
-::: {.split-content}
+## Discussion Template w Timer {.split}
+
+::: {.split-content .golden-columns}
 
 ::: {}
 
@@ -489,28 +528,16 @@ An `.iframe-caption` sits under the embed at small type — use it for a source 
 3. Demo question 3
 :::
 
-<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 520px; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+<!-- The golden ratio is in the column split (φ : 1), so the frame itself is
+     free to be whatever shape shows the timer best. -->
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
 :::
 
 ---
 
-# Format-Conditional Content
 
-`.content-visible` picks a different asset per output format — useful when an
-animated SVG works on the web but needs a static fallback in the PDF.
-
-::: {.content-visible when-format="html"}
-<img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line, shown in the HTML slides">
-:::
-
-::: {.content-visible when-format="pdf"}
-<img src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line, shown in the PDF export">
-:::
-
----
-
-# TODO Slide Template
+## TODO Slide Template
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
@@ -520,16 +547,12 @@ animated SVG works on the web but needs a static fallback in the PDF.
 ```
 :::
 
----
 
 # Sources {.sources}
 
-1. Nightingale, Florence. "Diagram of the causes of mortality in the army in the East." *Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army*, 1858. Image via Wikimedia Commons: <https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg>. Public domain.
-2. Tukey, John W. *Exploratory Data Analysis*. Addison-Wesley, 1977.
-
-::: {.credits}
-- GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week0.qmd>.
-- Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
-- Slide deck built with [Quarto](https://quarto.org/) revealjs.
-- Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
-:::
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week0.qmd>.
+2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+5. Nightingale, Florence. "Diagram of the causes of mortality in the army in the East." *Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army*, 1858. Image via Wikimedia Commons: <https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg>. Public domain.
+6. Tukey, John W. *Exploratory Data Analysis*. Addison-Wesley, 1977.

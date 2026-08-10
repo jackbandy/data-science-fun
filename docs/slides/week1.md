@@ -1,5 +1,8 @@
 ---
 title: "Week 1 (CS 418 @ UIC)"
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
 format:
   revealjs:
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 1</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week1.html">dodatascience.fun/slides/week1</a></span>'
@@ -7,7 +10,7 @@ format:
 
 # Week 1, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
 
-## Intro; Data Science Lifecycle
+<h2>Intro; Data Science Lifecycle</h2>
 
 Jack Bandy
 2026
@@ -15,20 +18,22 @@ Jack Bandy
 ---
 
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
 
 ---
 
-# Week 1
+## Week 1
 
 - Course introduction / syllabus overview
 - Data science lifecycle
 - The DIKW pyramid
 - Statistics review
 
----
 
-# Syllabus Overview {.iframe-slide}
+# Course Logistics {.section-header}
+
+
+## Syllabus Overview {.iframe-slide}
 
 <iframe src="../syllabus/" title="CS 418 syllabus" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
@@ -38,7 +43,7 @@ Full syllabus: <https://dodatascience.fun/syllabus/>
 
 ---
 
-# Attendance Policy
+## Attendance Policy
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{.eyebrow .todo}
@@ -51,7 +56,7 @@ Full syllabus: <https://dodatascience.fun/syllabus/>
 
 ---
 
-# In-Class Tech
+## In-Class Tech
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{.eyebrow .todo}
@@ -65,7 +70,7 @@ Full syllabus: <https://dodatascience.fun/syllabus/>
 
 ---
 
-# Let's Talk About It {.image-frame-slide}
+## Let's Talk About It {.image-frame-slide}
 
 <img src="../assets/teens-ai/pew-2026-teens-ai-chatbot-uses.png" alt="Bar chart titled 'More than half of teens say they have used AI chatbots for finding information, doing schoolwork'">
 
@@ -75,7 +80,7 @@ From Colleen McClain, Monica Anderson, Olivia Sidoti, and William Bishop, ["How 
 
 ---
 
-# The Benefits of Paper
+## The Benefits of Paper
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{.eyebrow .todo}
@@ -89,7 +94,7 @@ From Colleen McClain, Monica Anderson, Olivia Sidoti, and William Bishop, ["How 
 
 ---
 
-# Schedule Overview
+## Schedule Overview
 
 ::::: {.columns}
 
@@ -125,7 +130,7 @@ Schedule is on the course [home](https://dodatascience.fun/#schedule).
 
 ---
 
-# What to Expect in this Class
+## What to Expect in this Class
 
 ::::: {.columns}
 
@@ -187,7 +192,7 @@ THEMES
 
 ---
 
-# Do the Tools Matter?
+## Do the Tools Matter?
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{.eyebrow .todo}
@@ -199,11 +204,13 @@ THEMES
 
 <!-- TODO: Polars vs. pandas, Python vs. R, notebook vs. script; etc. -->
 
----
 
 
 
-# What is Data Science?
+# Defining Data Science {.section-header}
+
+
+## What is Data Science?
 
 [**Data science**]{style="color:#001E62;"} is an [**interdisciplinary**]{style="color:#f9461c;"} field that studies and applies tools and techniques for [**deriving useful insights from data**]{style="color:#f9461c;"}.
 
@@ -233,7 +240,7 @@ Source: Drew Conway, The Data Science Venn Diagram (2010)
 
 ---
 
-# What is Data Science? (A Venn Diagram) {.image-frame-slide}
+## What is Data Science? (A Venn Diagram) {.image-frame-slide}
 
 <img src="../assets/week1-intro-data-science/venn-rgb.svg" alt="Venn diagram: computer science, math and statistics, and domain knowledge overlapping at data science">
 
@@ -243,7 +250,7 @@ Source: Drew Conway, [The Data Science Venn Diagram](http://drewconway.com/zia/2
 
 ---
 
-# The Data Science Venn Diagram {.image-frame-slide}
+## The Data Science Venn Diagram {.image-frame-slide}
 
 <img src="../assets/data-science-venn/Data_Science_VD.png.webp" alt="Drew Conway's data science Venn diagram: three overlapping circles labeled Hacking Skills, Math &amp; Statistics Knowledge, and Substantive Expertise. The pairwise overlaps are labeled Machine Learning, Traditional Research, and Danger Zone!, with Data Science at the center.">
 
@@ -255,7 +262,7 @@ Drew Conway, [*The Data Science Venn Diagram*](http://drewconway.com/zia/2013/3/
 
 
 
-# A Data Science Elephant? {.image-frame-slide}
+## A Data Science Elephant? {.image-frame-slide}
 
 <img src="../assets/art/itcho_blind_monks_examining_elephant_1888.jpg" alt="Blind monks examining an elephant, each touching a different part and describing it differently, a 1888 woodblock print reproduction of a work by Hanabusa Itchō">
 
@@ -265,7 +272,7 @@ Hanabusa Itchō, *Blind Monks Examining an Elephant* (1888 woodblock print repro
 
 ---
 
-# My Take: The Data Science Elephantidae
+## My Take: The Data Science Elephantidae
 
 ::::: {.columns}
 
@@ -289,7 +296,7 @@ Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy
 
 ---
 
-# My Take: A Bigger Ecosystem
+## My Take: A Bigger Ecosystem
 
 ::::: {.columns}
 
@@ -313,7 +320,7 @@ Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy
 
 ---
 
-# Why Data Science?
+## Why Data Science?
 
 :::: {style="max-width:88%; margin:0 auto; height:100%; display:flex; flex-direction:column; justify-content:flex-start; padding-top:2%;"}
 
@@ -334,7 +341,7 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ---
 
-# Visualizing a Terabyte?
+## Visualizing a Terabyte?
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{.eyebrow .todo}
@@ -348,13 +355,13 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ---
 
-# What is Data Science? (A Hub of Fields) {.image-frame-slide}
+## What is Data Science? (A Hub of Fields) {.image-frame-slide}
 
 <img src="../assets/week1-intro-data-science/role-of-data-science.svg" alt="Hub-and-spoke diagram: data science at the center linked to healthcare, transportation, climate science, public safety, and scientific research" class="r-stretch figure-plain">
 
 ---
 
-# What is Data Science? (Yet Another Metaphor)
+## What is Data Science? (Yet Another Metaphor)
 
 <img class="figure figure-lg" src="../assets/week1-intro-data-science/role-of-data-science-cta-remix-v2.svg" alt="A transit map of data science. Grey rail lines are labelled journalism, politics, sports, art, design transportation, general scientific research, education, public health, and climate science; the Orange Line, still in color, is labelled data science, runs up into the Loop, and ends in the southwest at &quot;your own project(s)&quot;.">
 
@@ -366,7 +373,7 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ---
 
-# So what Do Data Scientists Do?
+## So what Do Data Scientists Do?
 
 ::: {.incremental}
 1. **Ask good questions** — turn a vague goal into something measurable
@@ -377,43 +384,41 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 :::
 
 
----
 
 # Asking Good Questions {.section-header}
 
----
 
-# Pasteur's Quadrant: Blank Grid {.image-frame-slide}
+## Pasteur's Quadrant: Blank Grid {.image-frame-slide}
 
 <img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step0.svg" alt="An empty two-by-two grid with no labels">
 
 ---
 
-# Pasteur's Quadrant: Considerations of Use? {.image-frame-slide}
+## Pasteur's Quadrant: Considerations of Use? {.image-frame-slide}
 
 <img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step1.svg" alt="The two-by-two grid with its columns labeled: 'considerations of use?' no on the left, yes on the right">
 
 ---
 
-# Pasteur's Quadrant: Fundamental Understanding? {.image-frame-slide}
+## Pasteur's Quadrant: Fundamental Understanding? {.image-frame-slide}
 
 <img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step2.svg" alt="The two-by-two grid with both axes labeled: columns are 'considerations of use?' no and yes; rows are 'quest for fundamental understanding?' yes on top and no on the bottom">
 
 ---
 
-# Pasteur's Quadrant: Bohr {.image-frame-slide}
+## Pasteur's Quadrant: Bohr {.image-frame-slide}
 
 <img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step3.svg" alt="The labeled grid with the top-left cell highlighted: Bohr, pure basic research — fundamental understanding yes, considerations of use no">
 
 ---
 
-# Pasteur's Quadrant: Edison {.image-frame-slide}
+## Pasteur's Quadrant: Edison {.image-frame-slide}
 
 <img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step4.svg" alt="The labeled grid with the bottom-right cell highlighted: Edison, pure applied research — considerations of use yes, fundamental understanding no; Bohr is still filled but no longer highlighted">
 
 ---
 
-# Pasteur's Quadrant: Pasteur {.image-frame-slide}
+## Pasteur's Quadrant: Pasteur {.image-frame-slide}
 
 <img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step5.svg" alt="The labeled grid with the top-right cell highlighted: Pasteur, use-inspired basic research — yes to both fundamental understanding and considerations of use; Bohr and Edison are filled but not highlighted, and the bottom-left cell stays empty">
 
@@ -423,7 +428,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-# Bohr's Quadrant: Curiosity
+## Bohr's Quadrant: Curiosity
 
 ::::: {.columns}
 
@@ -445,7 +450,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-# Edison's Quadrant: Use Only
+## Edison's Quadrant: Use Only
 
 ::::: {.columns}
 
@@ -469,7 +474,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-# Pasteur's Quadrant: Understanding and Use
+## Pasteur's Quadrant: Understanding and Use
 
 ::::: {.columns}
 
@@ -493,7 +498,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-# Example Questions
+## Example Questions
 
 ::: {.incremental}
 - Do guests like the new cold brew recipe?
@@ -506,49 +511,47 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 - (See mini-book, [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html)).
 :::
 
----
 
 # Data Science Lifecycle {.section-header}
 
----
 
-# The Data Science Lifecycle: Building Blocks {.image-frame-slide}
+## The Data Science Lifecycle: Building Blocks {.image-frame-slide}
 
 <img src="../assets/lifecycle-steps/ds-lifecycle-step0.svg" alt="Blank data science lifecycle scaffold: five unlabeled boxes connected by arrows in a cycle">
 
 ---
 
-# The Data Science Lifecycle: Ask a Question {.image-frame-slide}
+## The Data Science Lifecycle: Ask a Question {.image-frame-slide}
 
 <img src="../assets/lifecycle-steps/ds-lifecycle-step1.svg" alt="Data science lifecycle with the first stage highlighted and labeled 'ask a question'; the remaining boxes are still blank">
 
 ---
 
-# The Data Science Lifecycle: Obtain Data {.image-frame-slide}
+## The Data Science Lifecycle: Obtain Data {.image-frame-slide}
 
 <img src="../assets/lifecycle-steps/ds-lifecycle-step2.svg" alt="Data science lifecycle with the second stage highlighted and labeled 'obtain data'; 'ask a question' is labeled but no longer highlighted">
 
 ---
 
-# The Data Science Lifecycle: Understand the Data {.image-frame-slide}
+## The Data Science Lifecycle: Understand the Data {.image-frame-slide}
 
 <img src="../assets/lifecycle-steps/ds-lifecycle-step3.svg" alt="Data science lifecycle with the third stage highlighted and labeled 'understand the data'; the first two stages are labeled">
 
 ---
 
-# The Data Science Lifecycle: Understand the World {.image-frame-slide}
+## The Data Science Lifecycle: Understand the World {.image-frame-slide}
 
 <img src="../assets/lifecycle-steps/ds-lifecycle-step4.svg" alt="Data science lifecycle with the fourth stage highlighted and labeled 'understand the world'; the first three stages are labeled">
 
 ---
 
-# The Data Science Lifecycle: Communicate {.image-frame-slide}
+## The Data Science Lifecycle: Communicate {.image-frame-slide}
 
 <img src="../assets/lifecycle-steps/ds-lifecycle-step5.svg" alt="Data science lifecycle with the final stage highlighted and labeled 'reports, decisions, solutions'; all five stages are now labeled">
 
 ---
 
-# Source for the Lifecycle {.image-frame-slide}
+## Source for the Lifecycle {.image-frame-slide}
 
 <img src="../assets/lifecycle/ds-lifecycle.svg" alt="The data science lifecycle drawn with every connection shown: ask a question, obtain data, understand the data, and understand the world, linked by arrows running in both directions — including understanding the data sending you back to obtain more data, or back to the original question — with 'reports, decisions, solutions' as an output.">
 
@@ -558,7 +561,7 @@ Sam Lau, Joey Gonzalez, and Deb Nolan, ["The Data Science Lifecycle"](https://le
 
 ---
 
-# Related Cycles
+## Related Cycles
 
 ::: {.dense}
 - similar shapes, different vocabulary
@@ -568,7 +571,7 @@ Sam Lau, Joey Gonzalez, and Deb Nolan, ["The Data Science Lifecycle"](https://le
 
 ---
 
-# Another Data Science Cycle {.image-frame-slide}
+## Another Data Science Cycle {.image-frame-slide}
 
 <img src="../assets/lifecycle/belo-oneil-lifecycle-remix-v3.svg" alt="The data science process drawn as a larger chain: a problem in the world leads to data collection, data preparation, and clean data; clean data feeds both data exploration and data modeling and analysis; those lead to evaluation and presentation, then to decisions and a data product, which loop back to the world and to the original problem.">
 
@@ -578,7 +581,7 @@ Adapted from Cathy O'Neil and Rachel Schutt, *[Doing Data Science](https://www.o
 
 ---
 
-# Another Cycle: McElreath's Bayesian Workflow {.image-frame-slide}
+## Another Cycle: McElreath's Bayesian Workflow {.image-frame-slide}
 
 <img src="../assets/lifecycle/mcElreath-rethinking-remix.svg" alt="A statistical workflow diagram: a generative model and a set of estimands both feed into statistical models; the statistical models produce prior predictions and, once combined with data, produce estimates; the estimates in turn yield posterior predictions and causal effects.">
 
@@ -589,7 +592,7 @@ After Richard McElreath, *[Statistical Rethinking](https://xcelab.net/rm/statist
 ---
 
 
-# Another Cycle: Science {.image-frame-slide}
+## Another Cycle: Science {.image-frame-slide}
 
 <img src="../assets/lifecycle/scientific-method.png" alt="The scientific method drawn as a ring of six labeled steps with arrows running clockwise: observation/question, research topic area, hypothesis, test with experiment, analyse data, and report conclusions, which loops back to observation/question.">
 
@@ -599,7 +602,7 @@ From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework
 
 ---
 
-# Another Cycle: Inquiry Learning {.image-frame-slide}
+## Another Cycle: Inquiry Learning {.image-frame-slide}
 
 <img src="../assets/lifecycle/inquiry-learning.png" alt="Inquiry-based learning drawn as a ring of five labeled circles with arrows running clockwise: engage, explore, explain, elaborate, and evaluate, which loops back to engage.">
 
@@ -609,7 +612,7 @@ From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework
 
 ---
 
-# Another Cycle: Design {.image-frame-slide}
+## Another Cycle: Design {.image-frame-slide}
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{.eyebrow .todo}
@@ -627,21 +630,18 @@ From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework
 
 ---
 
-# Your Turn: Other Work Cycles {.prompt-slide}
+## Your Turn: Other Work Cycles {.prompt-slide}
 
 
 ::: {.prompt-question}
 Other work cycles have you seen or used?
 :::
 
----
 
 # The DIKW Pyramid {.section-header}
 
 
----
-
-# Pyramids {.image-frame-slide}
+## Pyramids {.image-frame-slide}
 
 <object type="image/svg+xml" data="../assets/pyramid/comparison-of-pyramids-smil.svg" aria-label="Profiles of well-known pyramid and near-pyramid structures — from the Great Pyramid of Giza and the Pyramid of Djoser to the Louvre Pyramid, the Transamerica Pyramid, and the Ryugyong Hotel — all drawn to a common scale with a height axis in metres." style="width:auto; height:452px; aspect-ratio:560/350; display:block; margin:0 auto; background:#fff; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);"></object>
 
@@ -651,43 +651,43 @@ Cmglee, [*Comparison of pyramids SMIL*](https://commons.wikimedia.org/wiki/File:
 
 ---
 
-# The DIKW Pyramid: Empty {.image-frame-slide}
+## The DIKW Pyramid: Empty {.image-frame-slide}
 
 <img src="../assets/pyramid/01-dikw-pyramid-blank.svg" alt="A blank pyramid outline for the data–information–knowledge–wisdom hierarchy">
 
 ---
 
-# The DIKW Pyramid: Four Layers {.image-frame-slide}
+## The DIKW Pyramid: Four Layers {.image-frame-slide}
 
 <img src="../assets/pyramid/02-dikw-pyramid-divided.svg" alt="The DIKW pyramid divided into four horizontal layers">
 
 ---
 
-# The DIKW Pyramid: Data {.image-frame-slide}
+## The DIKW Pyramid: Data {.image-frame-slide}
 
 <img src="../assets/pyramid/03-dikw-pyramid-data.svg" alt="The DIKW pyramid with the bottom 'data' layer labeled">
 
 ---
 
-# The DIKW Pyramid: Information {.image-frame-slide}
+## The DIKW Pyramid: Information {.image-frame-slide}
 
 <img src="../assets/pyramid/04-dikw-pyramid-data-info.svg" alt="The DIKW pyramid with the 'data' and 'information' layers labeled">
 
 ---
 
-# The DIKW Pyramid: Knowledge {.image-frame-slide}
+## The DIKW Pyramid: Knowledge {.image-frame-slide}
 
 <img src="../assets/pyramid/05-dikw-pyramid-data-info-knowledge.svg" alt="The DIKW pyramid with the 'data', 'information', and 'knowledge' layers labeled">
 
 ---
 
-# The DIKW Pyramid: Wisdom {.image-frame-slide}
+## The DIKW Pyramid: Wisdom {.image-frame-slide}
 
 <img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom">
 
 ---
 
-# Is the Pyramid Upside Down?
+## Is the Pyramid Upside Down?
 
 ::::: {.columns}
 
@@ -710,7 +710,7 @@ Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislav
 
 ---
 
-# So, Is the Pyramid Upside Down?
+## So, Is the Pyramid Upside Down?
 
 ::::: {.columns}
 
@@ -734,7 +734,7 @@ Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislav
 
 ---
 
-# Martin Frické {.quote-slide}
+## Martin Frické {.quote-slide}
 
 > [A data-first pyramid] encourages the mindless and meaningless collection of data in the hope that one day it will ascend to information.
 
@@ -748,13 +748,13 @@ Martin Frické
 
 ---
 
-# What else is Missing? {data-auto-animate=""}
+## What else is Missing? {data-auto-animate=""}
 
 <img class="figure" data-id="dikw-full" src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom">
 
 ---
 
-# What else is Missing? {data-auto-animate=""}
+## What else is Missing? {data-auto-animate=""}
 
 ::::: {.columns}
 
@@ -774,7 +774,7 @@ Martin Frické
 
 ---
 
-# Ursula K. Le Guin {.quote-slide}
+## Ursula K. Le Guin {.quote-slide}
 
 > What good are all the objects in the universe, if there is no subject?
 
@@ -788,28 +788,26 @@ Ursula K. Le Guin
 
 ---
 
-# Questions about the DIKW Pyramid? {.image-frame-slide}
+## Questions about the DIKW Pyramid? {.image-frame-slide}
 
 <img src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom">
 
----
 
 # The Treachery of Images {.section-header}
 
+
+## {.photo-only data-state="photo-only" background-image="../assets/art/belgium_2026_wide.webp" background-size="cover"}
+
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/art/belgium_2026_wide.webp" background-size="cover"}
-
----
-
-# What is this? {.image-frame-slide}
+## What is this? {.image-frame-slide}
 
 <img src="../assets/art/belgium_2026_away_jersey_collar_tag.jpg">
 
 
 ---
 
-# This is not a jersey {.image-frame-slide}
+## This is not a jersey {.image-frame-slide}
 
 <img src="../assets/art/belgium_2026_away_jersey_collar_tag.jpg" alt="Collar of Belgium's 2026 World Cup away jersey, reading 'Ceci n'est pas un maillot' (This is not a jersey), designed by adidas with the Royal Belgian Football Association as a tribute to Magritte">
 
@@ -819,7 +817,7 @@ Belgium's 2026 World Cup away jersey, "Ceci n'est pas un maillot." Photo via [Hy
 
 ---
 
-# This is not a pipe {.image-frame-slide}
+## This is not a pipe {.image-frame-slide}
 
 <img src="../assets/art/magritte_treachery_of_images_1929.webp" alt="René Magritte's painting of a pipe with the caption 'Ceci n'est pas une pipe' (This is not a pipe)">
 
@@ -829,7 +827,7 @@ René Magritte, *The Treachery of Images* (1929). [LACMA Collections](https://co
 
 ---
 
-# This is not a triangle {.image-frame-slide}
+## This is not a triangle {.image-frame-slide}
 
 <img src="../assets/triangles/00-triangle-best.svg" alt="An equilateral triangle on a golden-ratio canvas">
 
@@ -839,7 +837,7 @@ See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working
 
 ---
 
-# Zooming In (Powers of Ten) {.image-frame-slide}
+## Zooming In (Powers of Ten) {.image-frame-slide}
 
 <img src="../assets/triangles/01-triangle-frame.svg" alt="An equilateral triangle with a red rectangular frame around its left edge, marking the next crop">
 
@@ -849,7 +847,7 @@ The red frame is 1/10th the size of the original canvas (160px vs. 1600px).
 
 ---
 
-# 10× Zoom {.image-frame-slide}
+## 10× Zoom {.image-frame-slide}
 
 <img src="../assets/triangles/02-triangle-edge.svg" alt="A cropped and enlarged view of the triangle's left edge, showing a jagged rather than straight line">
 
@@ -859,7 +857,7 @@ The "straight" line is jagged: the only way to draw a line with square pixels.
 
 ---
 
-# Another 10× Zoom {.image-frame-slide}
+## Another 10× Zoom {.image-frame-slide}
 
 <img src="../assets/triangles/03-triangle-edge-frame.svg" alt="An enlarged view of the triangle's edge with a smaller red frame marking the next crop">
 
@@ -869,7 +867,7 @@ Again, the red frame marks where we zoom next.
 
 ---
 
-# 100× Zoom {.image-frame-slide}
+## 100× Zoom {.image-frame-slide}
 
 <img src="../assets/triangles/04-triangle-edge-zoom.svg" alt="A further enlarged crop of the triangle's edge, resolving into individual square blocks">
 
@@ -879,7 +877,7 @@ The pixels are there the whole time, but they are sometimes too small to see.
 
 ---
 
-# ...these are not pixels {.image-frame-slide}
+## ...these are not pixels {.image-frame-slide}
 
 <img src="../assets/subpixels/lcd-pixel-macro-2023-golden.jpg" alt="Microscopic close-up of an LCD display showing red, green, and blue subpixels">
 
@@ -889,7 +887,7 @@ Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia
 
 ---
 
-# Subpixels {.image-frame-slide}
+## Subpixels {.image-frame-slide}
 
 <img src="../assets/subpixels/lcd-pixel-macro-2023-golden-zoom-10x.jpg" alt="Ten-times zoomed view of the LCD subpixel pattern, showing rectangular red, green, and blue subpixels">
 
@@ -899,7 +897,7 @@ Jacek Halicki, [*2023 Mikroskopowy obraz matrycy LCD*](https://commons.wikimedia
 
 ---
 
-# One Subpixel {.image-frame-slide}
+## One Subpixel {.image-frame-slide}
 
 <img src="../assets/subpixels/lcd-pixel-macro-2023-golden-subpixel.jpg" alt="A single red subpixel, cropped from the LCD macro photo and enlarged until it fills the frame as a field of red">
 
@@ -910,7 +908,7 @@ One red subpixel, cropped from Jacek Halicki, [*2023 Mikroskopowy obraz matrycy 
 ---
 
 
-# From Subpixel to Triangle {.image-frame-slide}
+## From Subpixel to Triangle {.image-frame-slide}
 
 ::: {style="position:relative; flex:0 0 auto; width:810px; height:487px; margin:0.2em auto 0;"}
 <img class="photo-card" src="../assets/subpixels/lcd-pixel-macro-2023-golden-subpixel.jpg" alt="A single red subpixel, enlarged until it fills the frame as a field of red" style="position:absolute; top:0px; left:0px; width:480px; height:297px;">
@@ -929,7 +927,7 @@ One red subpixel, cropped from Jacek Halicki, [*2023 Mikroskopowy obraz matrycy 
 
 ---
 
-# Provenance {.image-frame-slide}
+## Provenance {.image-frame-slide}
 
 ::: {.dense-smaller}
 - Analogy: data scientists can explain *why* the figure was not a perfect triangle
@@ -948,7 +946,7 @@ See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working
 
 ---
 
-# Another Complication {.image-frame-slide}
+## Another Complication {.image-frame-slide}
 
 <img src="../assets/subpixels/pixel-geometries.jpg" alt="Microscopic photos comparing pixel geometries from CRT television, CRT monitor, and LCD displays">
 
@@ -956,23 +954,19 @@ See [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working
 Different types of screens have different pixel / sub pixel shapes. Source: Peter Halasz (Pengo), [*Pixel geometry 02*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 :::
 
----
 
 # Week 1, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
 
-## Statistics Review
+<h2>Statistics Review</h2>
 
 Jack Bandy and Elda Shatro
 2026
 
----
 
 # Statistics Review {.section-header}
 
 
----
-
-# Map
+## Map
 
 Four things we'll cover:
 
@@ -985,7 +979,7 @@ Four things we'll cover:
 
 ---
 
-# Statistics in Data Science
+## Statistics in Data Science
 
 ::: {.incremental}
 - Statistics: the science of learning from data under uncertainty.
@@ -996,7 +990,7 @@ Four things we'll cover:
 
 ---
 
-# Probability {.smaller}
+## Probability {.smaller}
 
 - **Probability** is a measure of the **likelihood** of an event occurring.
 - Probability is the language we use to quantify uncertainty in what the data tells us.
@@ -1031,7 +1025,7 @@ What is the probability of drawing a blue or red marble on the first draw?
 
 ---
 
-# Key Terminology
+## Key Terminology
 
 ::: {.dense}
 - **Experiment** — a process or action with an uncertain result
@@ -1043,7 +1037,7 @@ What is the probability of drawing a blue or red marble on the first draw?
 :::
 ---
 
-# Conditional Probability {.smaller}
+## Conditional Probability {.smaller}
 
 - **Conditional probability** is the probability of an event **given that another event has already happened**.
 - **P(A | B)** — "the probability of A given B."
@@ -1068,7 +1062,7 @@ $$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
 
 ---
 
-# Conditional Probability: An Example {.smaller}
+## Conditional Probability: An Example {.smaller}
 
 **Example:** A deck contains 15 distinct cards labeled 1 through 15. Two cards are drawn at random without replacement.
 
@@ -1122,7 +1116,7 @@ $$P(A \mid B) = \frac{n(A \cap B)}{n(B)} = \frac{28}{49} = \frac{4}{7}$$
 
 ---
 
-# Bayes' Theorem
+## Bayes' Theorem
 
 Conditional probabilities can be reversed using Bayes' theorem, which provides a systematic method for expressing one conditional probability in terms of another.
 
@@ -1132,7 +1126,7 @@ $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 
 ---
 
-# Coin Flip Odds
+## Coin Flip Odds
 
 ::::: {.columns}
 
@@ -1162,7 +1156,7 @@ Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://w
 
 ---
 
-# "Just Do the Math"
+## "Just Do the Math"
 
 ::: {.incremental}
 - **Frequentist**: probability = long-run frequency; judge procedures by error rates
@@ -1173,7 +1167,6 @@ Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://w
 - One of many examples in data science where there is not always a single correct option
 :::
 
----
 
 
 # Sources {.sources}
