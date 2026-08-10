@@ -96,6 +96,72 @@ $code-color: $ink !default;
   object-fit: contain;
 }
 
+// Full-height flex-column skeleton shared by every slide type that manages
+// its own vertical layout (prompt, quote, figure, iframe, text+figure).
+@mixin full-height-slide($padding: null) {
+  display: flex !important;
+  flex-direction: column;
+  height: 100% !important;
+  top: 0 !important;
+  box-sizing: border-box;
+  @if $padding { padding: $padding; }
+}
+
+// An image that fills whatever height its flex parent hands it.
+@mixin img-fill {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+// A cell output that grows to fill the leftover slide height, with its
+// figure scaled to fit.
+@mixin output-fill {
+  flex: 1;
+  min-height: 0;
+  > div, figure, p { height: 100%; min-height: 0; margin: 0; }
+  img { @include img-fill; }
+}
+
+// Orange underline shared by slide-title headings.
+@mixin heading-underline {
+  border-bottom: $heading-rule solid $orange;
+  padding-bottom: 9px;
+  margin-bottom: 24px;
+}
+
+// Small all-caps label: prompt eyebrow, quote attribution, eyebrow class.
+@mixin small-caps-label {
+  font-size: 1.05rem;
+  color: $muted;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+// Frosted-glass footer band over full-bleed photos: text, both badges, and
+// the slide number share one opacity so nothing stands out. Used by the
+// photo-title/photo-only states and (slightly more transparent) .image-only.
+@mixin photo-footer($opacity: 0.65) {
+  .reveal.reveal .footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    color: $text;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+
+    .footer-text { opacity: $opacity; }
+    img[alt="UIC logo"] { filter: none; opacity: $opacity; }
+    img[alt="CC BY-NC-SA"] { opacity: $opacity; }
+  }
+
+  .reveal.reveal .slide-number {
+    color: $text;
+    opacity: $opacity;
+  }
+}
+
 :root {
   --r-main-font: #{$theme-body-font};
   --r-heading-font: #{$theme-title-font};
@@ -113,13 +179,28 @@ $code-color: $ink !default;
 
   .slides {
     text-align: left;
-    section { box-sizing: border-box; padding: $slide-padding; background: $paper; }
+    // :where(.slide) skips the wrapper <section> that holds a slide-level-2
+    // stack — it would otherwise paint white over a photo slide's background
+    // image — without changing this rule's specificity.
+    section:where(.slide) { box-sizing: border-box; padding: $slide-padding; background: $paper; }
   }
 
-  h1 { border-bottom: $heading-rule solid $orange; padding-bottom: 9px; margin-bottom: 24px; }
+  h1 { @include heading-underline; }
   h2, h3, h4, .panel-tabset [role="tab"] { font-family: $theme-body-font; font-weight: 720; }
   h2 { color: $steel; }
   h3, h4, strong, .panel-tabset [role="tab"][aria-selected="true"] { color: $ink; }
+
+  // A deck with `slide-level: 2` (week1) titles its slides with `##`, keeping
+  // `#` for the section dividers that group them in the nav menu. Give that h2
+  // the h1 look; `:where()` keeps the specificity at `.reveal h1` so the
+  // per-slide-type overrides below still win.
+  :where(.level2) > h2 {
+    font-family: $presentation-heading-font;
+    font-weight: $presentation-heading-font-weight;
+    font-size: $presentation-h1-font-size;
+    color: $presentation-heading-color;
+    @include heading-underline;
+  }
   ul, ol { padding-left: 1.5em; line-height: 1.75; }
 
   blockquote {
@@ -147,28 +228,22 @@ $code-color: $ink !default;
   .panel-tabset [role="tablist"],
   .panel-tabset [role="tab"][aria-selected="true"] { border-bottom-color: $border; }
 
-  .slide-number-delimiter, .slide-number-b, .image-only h1, .quote-slide h1,
-  .prompt-slide h1 { display: none; }
+  .slide-number-delimiter, .slide-number-b,
+  .image-only h1, .image-only h2,
+  .quote-slide h1, .quote-slide h2,
+  .prompt-slide h1, .prompt-slide h2 { display: none; }
 
   // "Share your thoughts" prompt: one bold question, centered, nothing else.
   // Same skeleton as .quote-slide (hidden h1 kept for the outline), but the
   // question is centered rather than set as a pull quote.
   .slides section.prompt-slide {
-    display: flex !important;
-    flex-direction: column;
+    @include full-height-slide(48px 112px 92px);
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 100% !important;
-    top: 0 !important;
-    box-sizing: border-box;
-    padding: 48px 112px 92px;
 
     .prompt-eyebrow {
-      font-size: 1.05rem;
-      color: $muted;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      @include small-caps-label;
       margin-bottom: 0.9em;
     }
 
@@ -188,13 +263,8 @@ $code-color: $ink !default;
   // attribution beneath it. The h1 is kept in the markdown for the outline and
   // slide menu, then hidden above (same pattern as .image-only).
   .slides section.quote-slide {
-    display: flex !important;
-    flex-direction: column;
+    @include full-height-slide(48px 112px 92px);
     justify-content: center;
-    height: 100% !important;
-    top: 0 !important;
-    box-sizing: border-box;
-    padding: 48px 112px 92px;
 
     blockquote {
       border-left: none;
@@ -210,11 +280,8 @@ $code-color: $ink !default;
     }
 
     .attribution {
+      @include small-caps-label;
       margin-top: 0.9em;
-      font-size: 1.05rem;
-      color: $muted;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
     }
 
     .quote-source {
@@ -283,13 +350,13 @@ $code-color: $ink !default;
     justify-content: center;
     text-align: center;
     padding: 32px 64px 76px;
-    h1 { border-bottom: none; margin: 0 0 16px; }
+    h1, h2 { border-bottom: none; margin: 0 0 16px; }
     img {
-      max-height: 520px;
+      max-height: $figure-height;
       max-width: 100%;
       object-fit: contain;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+      border: $figure-border;
+      box-shadow: $figure-shadow;
     }
   }
 
@@ -305,7 +372,7 @@ $code-color: $ink !default;
     justify-content: center;
     text-align: left;
     padding: 32px 64px 76px;
-    h1 {
+    h1, h2 {
       border-bottom: $heading-rule solid $orange;
       margin: 0 0 20px;
       padding-bottom: 9px;
@@ -345,6 +412,12 @@ $code-color: $ink !default;
   }
   .split { display: grid !important; grid-template-rows: auto 1fr; align-items: center; }
   .split-content { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; align-items: center; }
+  // For a split whose second column is a small companion (a timer, a QR code)
+  // rather than a figure that needs half the slide.
+  .split-content.narrow-aside { grid-template-columns: 3fr 2fr; }
+  // The two columns themselves in the golden ratio (φ : 1), rather than the
+  // thing sitting in the second column.
+  .split-content.golden-columns { grid-template-columns: 1.618fr 1fr; }
   .split-content > p { display: flex; align-items: center; justify-content: center; }
   .split-content img { max-width: 100%; max-height: 540px; object-fit: contain; }
   // Slides with an echoed code cell and a computed figure (use with
@@ -357,31 +430,14 @@ $code-color: $ink !default;
   // figure is the only thing under the heading and should fill the slide.
   .slides section.code-figure-slide,
   .slides section.figure-slide {
-    display: flex !important;
-    flex-direction: column;
-    height: 100% !important;
-    top: 0 !important;
-    box-sizing: border-box;
-    padding: 32px 64px 56px;
+    @include full-height-slide(32px 64px 56px);
     div.cell {
       flex: 1;
       min-height: 0;
       display: flex;
       flex-direction: column;
     }
-    .cell-output-display {
-      flex: 1;
-      min-height: 0;
-      > div, figure, p { height: 100%; min-height: 0; margin: 0; }
-      img {
-        display: block;
-        height: 100%;
-        width: auto;
-        max-width: 100%;
-        margin: 0 auto;
-        object-fit: contain;
-      }
-    }
+    .cell-output-display { @include output-fill; }
   }
   // With no code cell above it, center the figure in the leftover height so a
   // figure whose aspect ratio is narrower than the slide is not top-heavy.
@@ -432,12 +488,7 @@ $code-color: $ink !default;
 
   // Side-by-side code (left) + figure (right) slide, 50/50 default split.
   .slides section.code-figure-side {
-    display: flex !important;
-    flex-direction: column;
-    height: 100% !important;
-    top: 0 !important;
-    box-sizing: border-box;
-    padding: 32px 64px 56px;
+    @include full-height-slide(32px 64px 56px);
     div.cell {
       flex: 1;
       min-height: 0;
@@ -458,14 +509,7 @@ $code-color: $ink !default;
       flex-direction: column;
       min-height: 0;
       > div, figure, p { flex: 1; min-height: 0; margin: 0; }
-      img {
-        display: block;
-        height: 100%;
-        width: auto;
-        max-width: 100%;
-        margin: 0 auto;
-        object-fit: contain;
-      }
+      img { @include img-fill; }
     }
   }
   // Full-height embed slide: header + iframe or img filling remaining space,
@@ -473,12 +517,7 @@ $code-color: $ink !default;
   // .slides section.iframe-slide has specificity (0,3,1) > .slides section (0,2,1)
   // so padding and other rules here override the base section rule.
   .slides section.iframe-slide {
-    display: flex !important;
-    flex-direction: column;
-    height: 100% !important;
-    top: 0 !important;
-    box-sizing: border-box;
-    padding: 48px 64px 56px;
+    @include full-height-slide(48px 64px 56px);
     iframe, img {
       flex: 1;
       min-height: 0;
@@ -501,11 +540,7 @@ $code-color: $ink !default;
   // Mirrors the .code-figure-slide flex-chain so the figure fills available
   // height without spilling behind the footer.
   .slides section.text-figure-slide {
-    display: flex !important;
-    flex-direction: column;
-    height: 100% !important;
-    top: 0 !important;
-    box-sizing: border-box;
+    @include full-height-slide;
 
     .columns {
       flex: 1;
@@ -528,22 +563,13 @@ $code-color: $ink !default;
       flex-direction: column;
     }
 
-    .column:last-child .cell-output-display {
-      flex: 1;
-      min-height: 0;
-      > div, figure, p { height: 100%; min-height: 0; margin: 0; }
-      img {
-        display: block;
-        height: 100%;
-        width: auto;
-        max-width: 100%;
-        object-fit: contain;
-        margin: 0 auto;
-      }
-    }
+    .column:last-child .cell-output-display { @include output-fill; }
   }
 
-  .sources h1 { font-size: $h1-size; }
+  .sources h1, .sources h2 { font-size: $h1-size; }
+  // As a slide-level-2 section divider .sources picks up reveal's `center`
+  // class; opt back out so the list starts at the top, as in the other decks.
+  .slides section.sources { height: 100% !important; top: 0 !important; }
   .sources ol,
   .sources #refs,
   .sources div.references,
@@ -637,37 +663,9 @@ html.reveal-print {
 }
 
 // On image-only slides the footer goes semi-transparent so the image runs
-// full-bleed behind it. Every footer element — text, both badges, and the
-// slide number — shares one opacity so nothing stands out. Activates when the
-// slide carries data-state="image-only" (reveal mirrors that as a body class).
-$image-only-footer-opacity: 0.6;
-
-.image-only {
-  .reveal.reveal .footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    color: $text;
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-
-    .footer-text {
-      opacity: $image-only-footer-opacity;
-    }
-
-    img[alt="UIC logo"] {
-      filter: none;
-      opacity: $image-only-footer-opacity;
-    }
-
-    img[alt="CC BY-NC-SA"] {
-      opacity: $image-only-footer-opacity;
-    }
-  }
-
-  .reveal.reveal .slide-number {
-    color: $text;
-    opacity: $image-only-footer-opacity;
-  }
-}
+// full-bleed behind it. Activates when the slide carries
+// data-state="image-only" (reveal mirrors that as a body class).
+.image-only { @include photo-footer(0.6); }
 
 // Photo title and photo-only slides: background-image fills the frame,
 // text goes white over the photo, footer gets a frosted-glass overlay.
@@ -692,7 +690,7 @@ $image-only-footer-opacity: 0.6;
 
   .photo-only {
     background: transparent !important;
-    h1 { display: none; }
+    h1, h2 { display: none; }
   }
 }
 
@@ -702,26 +700,6 @@ $image-only-footer-opacity: 0.6;
 // zooms out whenever the viewport is narrower than the photo.
 .photo-title-zoom .reveal .slide-background.present .slide-background-content {
   transform: scale(1.1);
-}
-
-$photo-footer-opacity: 0.65;
-
-@mixin photo-footer {
-  .reveal.reveal .footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    color: $text;
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-
-    .footer-text { opacity: $photo-footer-opacity; }
-    img[alt="UIC logo"] { filter: none; opacity: $photo-footer-opacity; }
-    img[alt="CC BY-NC-SA"] { opacity: $photo-footer-opacity; }
-  }
-
-  .reveal.reveal .slide-number {
-    color: $text;
-    opacity: $photo-footer-opacity;
-  }
 }
 
 .photo-title { @include photo-footer; }
