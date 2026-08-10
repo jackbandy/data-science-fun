@@ -126,6 +126,40 @@ Walk the numerator first: it is a sum of products of deviations, so it grows whe
 
 ---
 
+---
+
+# What is classification? {.smaller}
+Classification is the task of predicting the class label of an observation from a set of predictor variables.
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+::: {.incremental}
+- The response variable is categorical rather than continuous.
+- Predictor variables may be numeric, categorical, or a mixture.
+- The model is fitted on training observations with known labels.
+- Each new observation is assigned to one of the defined classes.
+:::
+
+:::
+
+::: {.column width="45%"}
+
+![](../assets/week8/classification-classes.svg)
+
+<p class="code-caption" style="margin-top:0.5em;">Two features from a labelled set of emails</p>
+
+:::
+
+::::
+
+::: {.notes}
+Anchor this against regression, which the class has just seen: the same structure of predictors and a response, but the response is now categorical. Fitting to known examples and predicting for new ones carries over unchanged.
+:::
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week8.md>.
