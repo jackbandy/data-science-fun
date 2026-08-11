@@ -297,12 +297,14 @@ $code-color: $ink !default;
   // Small text. Four roles, one size. Use these instead of inline styles.
   //
   //   .caption        credit or source line under a figure (centered)
-  //   .note           aside or pointer to a reading (left-aligned)
+  //   .aside-note     aside or pointer to a reading (left-aligned).
+  //                   Named to avoid collision with reveal's `.notes`
+  //                   (speaker notes), which is a different thing entirely.
   //   .eyebrow        all-caps orange label above a block
   //   .dense/.dense-smaller   shrink body copy in tight tables and lists
   // ---------------------------------------------------------------------
   .caption,
-  .note {
+  .aside-note {
     font-size: $small-size;
     line-height: 1.3;
     color: $steel;
@@ -311,7 +313,7 @@ $code-color: $ink !default;
   }
 
   .caption { text-align: center; }
-  .note { text-align: left; }
+  .aside-note { text-align: left; }
 
   .eyebrow {
     display: inline-block;

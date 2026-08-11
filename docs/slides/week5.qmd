@@ -1,5 +1,8 @@
 ---
 title: "Week 5 (CS 418 @ UIC)"
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
 engine: knitr
 # Some code in this file was generated with LLM assistance.
 # It is maintained and vetted by jxb@uic.edu.
@@ -30,59 +33,159 @@ matplotlib.use("Agg")
 
 # Week 5 Slide Deck {.course-title}
 
-## Visualizations
+<h2>Visualizations</h2>
 
 Jack Bandy
 2026
 
----
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
+# Visualization Basics {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
 
 CS 418 · Week 5 · 🟠 Clark/Lake 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
 
----
-
-# Demo Content Slide
+## Map
 
 Placeholder content for Week 5.
 
 - Visualization goals
+- Exploratory and Persuasive Visualization
+- Dimensionality
+- Basic chart types: pie, donut, bar, etc.
 - Encodings
 - Chart selection
 
 ---
 
-# Pie & Donut Charts {.section-header}
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
+
+
+# Dimensionality {.section-header}
 
 ---
 
-# Pie Charts Intuition
+
+## One Variable, Linear {.image-frame-slide}
+
+A single feature, and the score moves with it at a constant rate.
+
+<img src="../assets/barocas-inscrutability/fig-04-linear-remix.svg" alt="Line chart with Length of Employment on the x-axis and Credit Score on the y-axis. A straight orange line rises steadily from the origin to the top right." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## One Variable, Nonlinear {.image-frame-slide}
+
+Still one feature, but the rate of change is not constant.
+
+<img src="../assets/barocas-inscrutability/fig-05-nonlinear-remix.svg" alt="Line chart with Length of Employment on the x-axis and Credit Score on the y-axis. An orange curve stays nearly flat at first, then bends sharply upward toward the right." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## One Variable, Non-Monotonic {.image-frame-slide}
+
+"More X" does not alwasy mean "more Y."
+
+<img src="../assets/barocas-inscrutability/fig-06-non-monotonic-remix.svg" alt="Line chart with Length of Employment on the x-axis and Credit Score on the y-axis. An orange bell-shaped curve rises to a peak near the left of center, then falls back toward the baseline." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## Two Variables, Linear {.image-frame-slide}
+
+The relationship becomes a surface (i.e. a tilted plane).
+
+<img src="../assets/barocas-inscrutability/fig-07-multidimensional-linear-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. A flat orange plane tilts upward with income and downward with debts." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## Two Variables, Nonlinear {.image-frame-slide}
+
+Curved surface: the effect of one feature depends on where you are.
+
+<img src="../assets/barocas-inscrutability/fig-08-multidimensional-nonlinear-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. An orange bowl-shaped surface dips in the middle and rises toward all four corners." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## Two Variables, Non-Monotonic {.image-frame-slide}
+
+Interaction: income's effect on score depends on the level of debt.
+
+<img src="../assets/barocas-inscrutability/fig-09-multidimensional-non-monotonic-a-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. An orange saddle-shaped surface rises toward one corner and falls away toward another." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## Two Variables, Many Turns {.image-frame-slide}
+
+Same two features, a more tangled surface, hard to summarize in words.
+
+<img src="../assets/barocas-inscrutability/fig-10-multidimensional-non-monotonic-b-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. An orange surface with several ridges and valleys rises and falls repeatedly across the square." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## What a Neural Network Learns {.image-frame-slide}
+
+The output of an actual four-layer network over the same two features.
+
+<img src="../assets/barocas-inscrutability/fig-11-four-layer-neural-network-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. A craggy orange surface made of flat facets folds along sharp creases into irregular peaks and ridges." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+::: {.notes}
+Figures redrawn from Solon Barocas, "Understanding Inscrutability" (NYU ILI, 2017),
+which I came to by way of Meredith Broussard's *More Than a Glitch* (MIT Press, 2023) —
+she uses Barocas and Chandler May's version of this sequence to make the point that
+inscrutability is not a mystery, just more dimensions than we can draw.
+See assets/barocas-inscrutability/SOURCES.md.
+:::
+
+
+
+
+# Pie & Donut Charts {.section-header}
+
+
+## Pie Charts Intuition
 
 - A pie chart encodes **proportion** as **angle** (and area)
-- Works okay for "roughly half" or "roughly a quarter"
+- Works okay for simple comparisons, single data points
+- E.g. "roughly half" or "roughly a quarter"
 - Difficult to compare multiple slices
 
 ---
 
 
-# Pie vs. Bar: Three Comparisons {.image-frame-slide}
-
-::: {.content-visible when-format="html"}
-![](../assets/pi-donut-demos/Piecharts.svg)
-:::
-
-::: {.content-visible when-format="pdf"}
-![](../assets/pi-donut-demos/Piecharts.svg)
-:::
-
----
-
-# Pie vs. Bar Example {.image-frame-slide}
+## Pie vs. Bar Example {.image-frame-slide}
 
 ::: {.content-visible when-format="html"}
 ![](../assets/pi-donut-demos/piecharts-remix01.svg)
@@ -94,7 +197,7 @@ Placeholder content for Week 5.
 
 ---
 
-# Pie vs. Bar Example {.image-frame-slide}
+## Pie vs. Bar Example {.image-frame-slide}
 
 ::: {.content-visible when-format="html"}
 ![](../assets/pi-donut-demos/piecharts-remix02.svg)
@@ -106,17 +209,87 @@ Placeholder content for Week 5.
 
 ---
 
-# The Donut Chart
+## Pie vs. Bar: Three Comparisons {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/Piecharts.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/Piecharts.svg)
+:::
+
+::: {.caption}
+Schutz, [*Piecharts.svg*](https://commons.wikimedia.org/wiki/File:Piecharts.svg), Wikimedia Commons, 2008. [CC BY 1.0](https://creativecommons.org/licenses/by/1.0/)
+:::
+
+---
+
+## Never Do a 3D Pie Chart
+
+::: {.incremental}
+- Never ever ever ever ever ever ever do a 3D pie chart
+- Why?
+    - Perspective distorts angle and area
+    - Slices in the front (near the viewer) look larger
+    - The tilt  changes how big a slice appears (independent of  data)
+    - A 3D pie adds a dimension that carries no information
+:::
+
+---
+
+## 3D Pie Chart in the Wild: Steve Jobs at Macworld 2008 {.image-frame-slide}
+
+![](../assets/pi-donut-demos/dsc_0143-golden.png){fig-alt="Steve Jobs' infamous U.S. SmartPhone Marketshare slide showing a 3D pie chart tilted toward the viewer. Apple's green slice sits at the front with a thick extruded edge. Source line reads Gartner for CQ3."}
+
+::: {.caption}
+Macworld San Francisco, 15 January 2008 — [smartphone market share segment, 8:24 to 10:10](https://www.youtube.com/watch?v=i9XU6wk_mWY&t=504s)
+:::
+
+---
+
+## 3D Pie Chart in the Wild: Steve Jobs at Macworld 2008 {.image-frame-slide}
+
+<iframe src="https://www.youtube-nocookie.com/embed/i9XU6wk_mWY?start=504&end=610&rel=0" title="Macworld San Francisco 2008 keynote — US smartphone market share segment (8:24–10:10)" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+::: {.caption}
+Macworld San Francisco, 15 January 2008 — [smartphone market share segment, 8:24 to 10:10](https://www.youtube.com/watch?v=i9XU6wk_mWY&t=504s)
+:::
+
+---
+
+## Why did Steve Jobs make a 3D pie chart? {.split}
+
+:::: {.split-content}
+
+<img src="../assets/pi-donut-demos/macworld-pie-3d.svg" alt="Pie chart of US smartphone market share drawn in 3D perspective and tilted toward the viewer. Apple's 19.5% green slice sits at the front and reads nearly as large as RIM's 39.0% blue slice at the back.">
+
+<img class="fragment" src="../assets/pi-donut-demos/macworld-pie-2d.svg" alt="The same US smartphone market share data as a flat 2D pie chart. RIM's 39.0% blue slice is plainly twice the size of Apple's 19.5% green slice.">
+
+::::
+
+::: {.notes}
+Apple's 19.5% sits at the front of the tilted plate, where perspective stretches it
+and the extruded edge adds visible area; RIM's 39.0% sits at the back, where
+perspective shrinks it. Nothing in the data changed between the two panels — only the
+projection. This is the same lesson as the Dimensionality section, run backwards:
+a third dimension was added that carries no information at all.
+
+Comparison figure by Cmglee (CC BY-SA 4.0); traced from Edward
+Tufte's notebook page on pie charts.
+:::
+
+---
+
+## The Donut Chart
 
 - A **donut chart** is a pie chart with the center cut out
 - Keeps the "this is all part of a whole" message
-- Slices are still hard to compare
-- Common argument for donuts: the center space can carry a label or summary stat
-- Common argument against: harder to judge angles without the center reference point
+- Slices are still difficult to compare
 
 ---
 
-# Donut in the Wild: FIFA World Cup 2026 {.image-frame-slide}
+## Donut in the Wild: FIFA World Cup 2026 {.image-frame-slide}
 
 ::: {.content-visible when-format="html"}
 ![](../assets/pi-donut-demos/fifa-possession-example.jpeg)
@@ -128,7 +301,7 @@ Placeholder content for Week 5.
 
 ---
 
-# Recreating the FIFA Chart: Setup
+## Recreating the FIFA Chart: Setup
 
 ```{python}
 #| echo: true
@@ -144,7 +317,7 @@ fig, ax = plt.subplots(figsize=(4, 4))
 
 ---
 
-# Recreating the FIFA Chart: Draw {.code-figure-slide}
+## Recreating the FIFA Chart: Draw {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -159,7 +332,7 @@ plt.tight_layout()
 
 ---
 
-# Recreating the FIFA Chart {.code-figure-slide}
+## Recreating the FIFA Chart {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -181,7 +354,7 @@ ax.set_title('Possession', fontweight='bold');
 
 ---
 
-# Recreating the FIFA Chart: Polished
+## Recreating the FIFA Chart: Polished
 
 ```{python}
 #| echo: false
@@ -247,7 +420,84 @@ for i, (label, color, pct) in enumerate(zip(labels, colors, sizes)):
 
 ---
 
-# Recreating the FIFA Chart: R Setup
+## What do you think of this code? {.smaller .scrollable}
+
+```{python}
+#| echo: true
+#| output-location: column
+#| fig-format: svg
+#| fig-alt: "Donut chart styled after the FIFA World Cup 2026 broadcast graphic: Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with legend on the right inside a semi-transparent dark rounded rectangle."
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+from matplotlib.patches import FancyBboxPatch
+
+phi = (1 + 5**0.5) / 2  # golden ratio ≈ 1.618
+fig_h = 4.5
+fig_w = fig_h * phi
+
+fig = plt.figure(figsize=(fig_w, fig_h))
+fig.patch.set_alpha(0)
+
+bg = FancyBboxPatch(
+    (0.02, 0.03), 0.96, 0.94,
+    boxstyle="round,pad=0.03",
+    facecolor=(0, 0, 0, 0.72),
+    edgecolor="none",
+    transform=fig.transFigure,
+    zorder=0,
+)
+fig.add_artist(bg)
+
+gs = gridspec.GridSpec(
+    1, 2, width_ratios=[2, 3],
+    left=0.03, right=0.97, bottom=0.05, top=0.95, wspace=0,
+)
+ax_d = fig.add_subplot(gs[0])
+ax_l = fig.add_subplot(gs[1])
+for ax in (ax_d, ax_l):
+    ax.set_facecolor("none")
+
+sizes  = [63, 27, 10]
+labels = ["COL", "COD", "IN CONTEST"]
+colors = ["#fcd116", "#0057a8", "#00a896"]
+
+# startangle=-90 → Colombia starts at 6 o'clock, counterclock=False → runs clockwise to ~1 o'clock
+ax_d.pie(
+    sizes, colors=colors, startangle=-90, counterclock=False,
+    wedgeprops=dict(width=0.5, edgecolor="white", linewidth=2.5),
+)
+
+ax_l.axis("off")
+ax_l.set_xlim(0, 1)
+ax_l.set_ylim(0, 1)
+
+ax_l.text(0.08, 0.82, "POSSESSION", color="white", fontsize=19,
+          fontweight="bold", va="center")
+
+for i, (label, color, pct) in enumerate(zip(labels, colors, sizes)):
+    y = 0.60 - i * 0.20
+    # white ring behind colored fill
+    ax_l.plot(0.10, y, "o", color="white",  markersize=19, zorder=4)
+    ax_l.plot(0.10, y, "o", color=color,    markersize=14, zorder=5)
+    ax_l.text(0.22, y, label,      color="white", fontsize=16, va="center")
+    ax_l.text(0.72, y, f"{pct}%",  color="white", fontsize=16, va="center",
+              fontweight="bold");
+```
+
+::: {.notes}
+Open discussion slide. The code on the left is what drew the chart on the right —
+it runs, it is not a listing.
+Possible angles: how much of it is data versus styling; the pile of magic numbers
+(0.02, 0.03, 0.96, 0.94, 0.60, 0.20) with nothing naming them; the hand-placed
+legend that a real legend could have done; how it would hold up if a fourth
+category showed up, or if someone asked for the same chart for a different match.
+:::
+
+
+# ggplot demo {.section-header}
+
+
+## Recreating the FIFA Chart: R Setup
 
 ```{r}
 #| echo: true
@@ -266,7 +516,7 @@ df <- data.frame(
 
 ---
 
-# Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
 
 ```{r}
 #| echo: true
@@ -279,7 +529,7 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 
 ---
 
-# Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
 
 ```{r}
 #| echo: true
@@ -295,7 +545,7 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 
 ---
 
-# Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
 
 ```{r}
 #| echo: true
@@ -314,7 +564,7 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 
 ---
 
-# Recreating the FIFA Chart: R Polished
+## Recreating the FIFA Chart: R Polished
 
 ```{r}
 #| echo: false
@@ -354,7 +604,7 @@ legend_panel <- ggplot(legend_df, aes(y = y)) +
   geom_point(aes(x = 0.12, color = label), size = 7) +
   geom_text(aes(x = 0.24, label = label), color = "white",
             size = 5, hjust = 0) +
-  geom_text(aes(x = 0.80, label = pct), color = "white",
+  geom_text(aes(x = 0.95, label = pct), color = "white",
             size = 5, hjust = 1, fontface = "bold") +
   scale_color_manual(values = setNames(df$color, df$label)) +
   xlim(0, 1) + ylim(0, 1) +
@@ -369,7 +619,133 @@ donut + legend_panel +
 
 ---
 
-# Color Blindness
+## What do you think of this code? {.smaller .scrollable}
+
+```{r}
+#| echo: true
+#| output-location: column
+#| dev: svglite
+#| fig-alt: "Polished donut chart styled after FIFA broadcast graphic, made with ggplot2: dark background, Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with colored dot legend"
+library(ggplot2)
+library(ggtext)
+library(patchwork)
+
+sizes  <- c(63, 27, 10)
+labels <- c("COL", "COD", "IN CONTEST")
+colors <- c("#fcd116", "#0057a8", "#00a896")
+df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = sizes,
+  color = colors
+)
+
+donut <- ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1, color = "white", linewidth = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1) +
+  scale_fill_manual(values = setNames(df$color, df$label)) +
+  xlim(0.5, 2.5) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.background = element_rect(fill = NA, color = NA))
+
+legend_df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = paste0(sizes, "%"),
+  color = colors,
+  y     = c(0.65, 0.45, 0.25)
+)
+legend_panel <- ggplot(legend_df, aes(y = y)) +
+  annotate("text", x = 0.1, y = 0.85, label = "POSSESSION",
+           color = "white", size = 6, fontface = "bold", hjust = 0) +
+  geom_point(aes(x = 0.12, color = label), size = 7) +
+  geom_text(aes(x = 0.24, label = label), color = "white",
+            size = 5, hjust = 0) +
+  geom_text(aes(x = 0.95, label = pct), color = "white",
+            size = 5, hjust = 1, fontface = "bold") +
+  scale_color_manual(values = setNames(df$color, df$label)) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.background = element_rect(fill = NA, color = NA))
+
+donut + legend_panel +
+  plot_layout(widths = c(2, 3)) &
+  theme(plot.background = element_rect(fill = "#000000bb", color = NA))
+```
+
+::: {.notes}
+Same discussion, ggplot edition. Worth comparing against the matplotlib version:
+the chart itself is a stacked bar in polar coordinates, and the legend is still
+hand-built as a second plot glued on with patchwork. Which of the two is easier to
+change? Which one would you rather inherit?
+:::
+
+---
+
+## Comparing matplotlib and ggplot {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Python / matplotlib**
+
+```python
+import matplotlib.pyplot as plt
+
+sizes  = [63, 27, 10]
+labels = ['COL', 'COD', 'In Contest']
+colors = ['#fcd116', '#0057a8', '#00a896']
+
+# wedge order + label positions handled by pie()
+_, ax = plt.subplots()
+
+ax.pie(sizes, labels=labels, colors=colors,
+       autopct='%1.0f%%', pctdistance=0.75,
+       startangle=90, counterclock=False,
+       wedgeprops=dict(width=0.5))
+ax.set_title('Possession', fontweight='bold')
+```
+
+:::
+::: {.column width="50%"}
+
+**R / ggplot2**
+
+```r
+library(ggplot2)
+
+sizes  <- c(63, 27, 10)
+labels <- c("COL", "COD", "In Contest")
+colors <- c("#fcd116", "#0057a8", "#00a896")
+
+# wedge order + label positions computed by hand
+df <- data.frame(label = factor(labels, levels = labels),
+                 pct = sizes)
+df$pos <- cumsum(df$pct) - df$pct / 2
+
+ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1,
+           position = position_stack(reverse = TRUE)) +
+  geom_text(aes(x = 1.75, y = pos,
+                label = paste0(pct, "%"))) +
+  geom_text(aes(x = 2.75, y = pos, label = label)) +
+  coord_polar(theta = "y", start = 0, direction = 1) +
+  scale_fill_manual(values = setNames(colors, labels)) +
+  xlim(0.5, 3) +
+  labs(title = "Possession") +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold",
+                                  hjust = 0.5))
+```
+
+:::
+:::
+
+
+---
+
+## Color Blindness
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
@@ -383,12 +759,14 @@ donut + legend_panel +
 ```
 :::
 
----
 
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.qmd>.
 2. Pie vs. bar comparison: Schutz, [*Piecharts.svg*](https://commons.wikimedia.org/wiki/File:Piecharts.svg), Wikimedia Commons, 2008. [CC BY 1.0](https://creativecommons.org/licenses/by/1.0/).
-3. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
-4. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-5. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+3. Dimensionality figures redrawn from Solon Barocas, *Understanding Inscrutability*, presented at ["Algorithms and Explanations,"](https://www.law.nyu.edu/centers/ili/events/algorithms-and-explanations) Information Law Institute, NYU School of Law, 27–28 April 2017. Found by way of Meredith Broussard, *More Than a Glitch: Confronting Race, Gender, and Ability Bias in Tech* (MIT Press, 2023; ISBN 9780262047654, paperback 9780262548328), which cites Barocas and Chandler May on visualizing data relationships.
+4. 3D pie chart comparison: Cmglee, [*Misleading macworld 3d pie chart.svg*](https://commons.wikimedia.org/wiki/File:Misleading_macworld_3d_pie_chart.svg), Wikimedia Commons. [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0). Redrawn from the chart shown at Macworld 2008, via [Edward Tufte's notebook on pie charts](https://www.edwardtufte.com/notebook/pie-charts/).
+5. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+6. Macworld 2008 keynote clip: ["Macworld San Francisco 2008 Keynote Address (MacBook Air & iTunes Movie Rentals) by Steve Jobs"](https://www.youtube.com/watch?v=i9XU6wk_mWY), Apple Keynote Videos (YouTube); market share segment at 8:24–10:10.
+7. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+8. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

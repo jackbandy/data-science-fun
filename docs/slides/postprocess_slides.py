@@ -6,6 +6,7 @@ For .ipynb notebooks:
   1. Remove YAML frontmatter from the first markdown cell.
   2. Add <!-- slide N --> comment before each level-1 heading.
   3. Insert a compilation timestamp into the Sources slide.
+  4. Clear code-cell outputs, so the committed notebooks stay small.
 
 For .qmd / .md files:
   3. Insert a compilation timestamp into the Sources slide.
@@ -16,6 +17,7 @@ Usage:
   python3 postprocess_slides.py deck.qmd
 """
 import json
+import os
 import re
 import sys
 from datetime import datetime
@@ -205,10 +207,31 @@ def process_ipynb(path):
             _set_src(cell, '\n'.join(lines))
             break
 
+    # 4. Strip execution outputs. These notebooks are committed (see the
+    #    !docs/slides/*.ipynb negation in .gitignore) so students can download
+    #    them, and the decks render figures as SVG -- which Jupyter embeds as
+    #    inline markup, pushing a single notebook past 20 MB and writing a fresh
+    #    multi-megabyte blob into git on every rebuild. Shipping code-only
+    #    notebooks keeps them small and makes their diffs readable; students run
+    #    the cells to produce the output.
+    stripped = 0
+    for cell in cells:
+        if cell['cell_type'] != 'code':
+            continue
+        if cell.get('outputs'):
+            stripped += 1
+        cell['outputs'] = []
+        cell['execution_count'] = None
+
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(nb, f, ensure_ascii=False, indent=1)
 
-    print(f'[postprocess] {path}: {slide_num} slides', file=sys.stderr)
+    size_kb = os.path.getsize(path) / 1024
+    print(
+        f'[postprocess] {path}: {slide_num} slides, '
+        f'cleared outputs from {stripped} cells, {size_kb:.0f} KB',
+        file=sys.stderr,
+    )
 
 
 # ── entry point ───────────────────────────────────────────────────────────────

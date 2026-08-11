@@ -48,7 +48,7 @@ CS 418 · Week 0 · 🟠 Harold Washington Library 🟠
 ## Incremental Bullets
 ```
 
-::: {.note}
+::: {.aside-note}
 Common issues: a `---` directly before or after a `#` emits a blank slide, and a
 title-slide subtitle must be written as raw `<h2>…</h2>` so it does not start a
 slide of its own.
@@ -58,7 +58,7 @@ slide of its own.
 
 ## Content Slide
 
-Testing content slide.
+Here is a basic content slide.
 
 - Lorem ipsum dolor sit amet
 - Consectetur adipiscing elit
@@ -78,7 +78,7 @@ John W. Tukey
 :::
 
 ::: {.quote-source}
-*Exploratory Data Analysis* (1977), p. vi. (Note the `h1` above ("Tukey on Pictures") is hidden by the theme. It stays in the markdown so the slide still shows up in the outline and slide menu.)
+*Exploratory Data Analysis* (1977), p. vi. (Note the `h1` ("Tukey on Pictures") is hidden but stays in the markdown, so the slide still shows up in the outline and slide menu.)
 :::
 
 ---
@@ -386,10 +386,10 @@ A little table
 ## Auto-Animate Notes {.smaller}
 
 ::: {style="font-size:0.8em; line-height:1.5;"}
-- `auto-animate` on a lone slide animates nothing
-- needs back-to-back slide
+- `auto-animate` on a single slide will do nothing
+- needs back-to-back slides
 - **Give matched elements a `data-id`.**
-- Reveal auto-matches text by content and images by `src`
+- Reveal will auto-matche text by content and images by `src`
 - an explicit `data-id` wins and keeps a figure connected
 :::
 
@@ -436,7 +436,7 @@ make figures/pictures/things **[golden rectangles](https://en.wikipedia.org/wiki
 - Consistent proportions mean figures sit at the same size slide to slide, instead of each one needing its own `max-height` nudge.
 - can be portrait or landscape rectangles
 - Ex. `00-triangle-best.svg` is **1600 × 989**,
-- Just a convention
+- Just a convention / fingerprint / signature
 :::
 
 
@@ -545,6 +545,33 @@ An `.iframe-caption` sits under the embed at small type — use it for a source 
 ``` markdown
 <!-- TODO: what's missing  -->
 ```
+:::
+
+---
+
+## How to do Citations {.smaller}
+
+- `_quarto.yml` sets `bibliography: references.bib`, so Pandoc will resolve it
+- e.g. for parenthetical — `[@tukey1986collected]` will become: [@tukey1986collected]
+- In-text — `@brillinger2011eda` will become: @brillinger2011eda
+- There is also a catch-all 'sources' slide at the end of every week
+- Also add links in captions for figures/images
+- Suppress the author with `[-@key]`: [-@tukey1986collected]. Add a locator with
+`[@key, p. 806]`: [@tukey1986collected, p. 806].
+
+::: {.notes}
+Test slide: confirms citations resolve in the revealjs decks. The rest of the
+decks currently cite manually on a Sources slide instead, so this is currently the only
+place citeproc is exercised. Will polish soon, but low-priority since there are other ways to cite...
+:::
+
+---
+
+## References {.smaller}
+
+Anything cited above is collected here by the `#refs` div:
+
+::: {#refs}
 :::
 
 
