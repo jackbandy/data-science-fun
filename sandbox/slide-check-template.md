@@ -25,7 +25,7 @@ The theme defines these; avoid inline `font-size`. See
 | Class | Use for |
 |:--|:--|
 | `.caption` | credit or source line under a figure (centered) |
-| `.note` | aside or pointer to a reading (left-aligned, not under a figure) |
+| `.aside-note` | aside or pointer to a reading (left-aligned, not under a figure) |
 | `.eyebrow` | all-caps orange label above a block; add `.todo` for the boxed marker |
 | `.dense` / `.dense-smaller` | shrinking body copy in tight tables and lists |
 
