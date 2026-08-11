@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="-279 -264 558 536">
+ <title>Macworld 2008 pie chart data, flat 2D</title>
+ <desc>The same US smartphone market share data as a flat 2D pie chart. Panel from 'misleading macworld 3d pie chart' by Cmglee, Wikimedia Commons, CC BY-SA 4.0. Cropped, unaltered otherwise.</desc>
+ <style type="text/css">
+svg { font-family:'Liberation Sans',Helvetica,Arial,sans-serif; font-size:24px; text-anchor:middle; fill:#000; stroke:none; }
+.vs { font-size:40px; font-weight:bold; }
+ </style>
+ <circle cx="0" cy="0" r="99999" fill="#fff"/>
+ <circle cx="0" cy="0" r="256"/>
+ <g fill="#9cf">
+  <use xlink:href="#sector"             transform="rotate(60)"/>
+  <use xlink:href="#sector" fill="#0c0" transform="rotate(140.4)"/>
+  <use xlink:href="#sector" fill="#ff6" transform="rotate(210.6)"/>
+  <use xlink:href="#sector" fill="#fcc" transform="rotate(245.88)"/>
+  <use xlink:href="#sector" fill="#f9f" transform="rotate(272.52)"/>
+  <use xlink:href="#sector" fill="#c0f" transform="rotate(283.68)"/>
+  <path id="sector" d="M 0,0 H 255 A 255,255 0 0 0 0,-255"/>
+ </g>
+ <g id="label">
+  <text transform="translate( 130, -30)" x="0" y="-0.2ex"             >RIM<tspan x="0" dy="2ex">39.0%</tspan></text>
+  <text transform="translate(  10, 150)" x="0" y="-0.2ex" class="vs">Apple<tspan x="0" dy="2ex">19.5%</tspan></text>
+  <text transform="translate(-150, 120)" x="0" y="-0.2ex"            >Palm<tspan x="0" dy="2ex">9.8%</tspan></text>
+  <text transform="translate(-190,  30)" x="0" y="-0.2ex"        >Motorola<tspan x="0" dy="2ex">7.4%</tspan></text>
+  <text transform="translate(-180, -20)" x="0" y="-0.2ex"           >Nokia<tspan dx="0.5ex" dy="1ex">3.1%</tspan></text>
+  <text transform="translate(-100,-100)" x="0" y="-0.2ex" class="vs">Other<tspan x="0" dy="2ex">21.2%</tspan></text>
+ </g>
+</svg>
