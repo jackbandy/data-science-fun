@@ -25,18 +25,18 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Re-run the slide link generator
-        run: python3 docs/slides/sync_slide_links.py docs/slides
+      - name: Re-run the slide index generator
+        run: python3 docs/slides/sync_slide_index.py docs/slides
 
       - name: Check the result matches what's committed
         run: |
           if ! git diff --exit-code -- docs/slides/index.html; then
             echo ""
             echo "docs/slides/index.html is out of date."
-            echo "The diff above is what sync_slide_links.py would change."
+            echo "The diff above is what sync_slide_index.py would change."
             echo ""
             echo "Fix it by running this and committing the result:"
-            echo "  python3 docs/slides/sync_slide_links.py docs/slides"
+            echo "  python3 docs/slides/sync_slide_index.py docs/slides"
             exit 1
           fi
           echo "index.html matches the generator output."

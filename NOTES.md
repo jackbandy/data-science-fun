@@ -152,6 +152,7 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 * Include Christine Julien (Prof. & Head of CS, Virginia Tech), ["Stop Telling Students Computer Science Is Dying"](https://www.insidehighered.com/opinion/views/2026/07/28/stop-telling-students-computer-science-dying-opinion), *Inside Higher Ed*, July 28, 2026 — relevant to "what is data science" and visualization rhetoric
 	* h/t [Adam Koehler](https://cs.uic.edu/profiles/koehler-adam/)
 * Add color blindness material to visualization decks (week 5 / 6) — e.g. why the default red/green pairing fails, colorblind-safe palettes, etc.
+* Create guidelines for contributors.
 * Look into `raster=True` on the `geom_point` calls in the week 4 "Square Footage vs. Price" build-up. It is there purely for file size: 24,775 points as vector SVG is ~18 MB per figure, and that slide renders five of them (~90 MB) — with raster the whole deck's figures come to 1.8 MB.
 
 

@@ -75,7 +75,10 @@ BUILD_PDFS=true ./build_all_quarto.sh  # Include PDFs
 - HTML is required, PDF export is best-effort (non-blocking)
 - Jupyter-engine decks keep their executed notebook as `docs/slides/weekN.ipynb` - makes it easy to download and run the code
 	- **knitr**-engine decks (R + Python combos like Week 5) can't produce a notebook, so they link their `weekN.qmd` source instead
-- `sync_slide_links.py` rewrites the "Supporting … code" bullets in `docs/slides/index.html` after rendering (notebook link if one exists, else source link)
+- `sync_slide_index.py` rewrites the per-deck bullets in `docs/slides/index.html` after rendering
+	- one topic bullet per `{.section-header}` heading, deep-linked to that slide (add `.no-index` to a header to leave it off the list)
+	- plus the "Supporting … code" bullet (notebook link if one exists, else source link)
+	- edit the wording by editing the deck's section header, not `index.html` — `repo-checks.yml` fails on hand edits. The bullets it replaced are archived in `docs/slides/0-old-outline.md`
 - The workflow should copy `docs/slides/week*.qmd` into `_site/slides/` after Jekyll runs
 	- (`docs/_config.yml` excludes `slides/*.qmd` from Jekyll)
 

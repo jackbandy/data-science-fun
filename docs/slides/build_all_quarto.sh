@@ -185,9 +185,10 @@ for slide in "${SLIDE_FILES[@]}"; do
 done
 fi
 
-# Refresh the "Supporting Python code" links in index.html so every deck that
-# produced a notebook is linked (and any that stopped producing one is not).
-python3 "$SCRIPT_DIR/sync_slide_links.py" "$SCRIPT_DIR"
+# Rewrite the per-deck bullets in index.html: one topic link per section header
+# in each deck, plus the "Supporting Python code" link for every deck that
+# produced a notebook (and none for any that stopped producing one).
+python3 "$SCRIPT_DIR/sync_slide_index.py" "$SCRIPT_DIR"
 
 if [[ "$BUILD_PDFS" != "true" ]]; then
   echo "[quarto] Skipping PDF generation."
