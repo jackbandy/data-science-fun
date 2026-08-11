@@ -114,7 +114,7 @@ From Colleen McClain, Monica Anderson, Olivia Sidoti, and William Bishop, ["How 
 | **14–15** | Presentations |
 :::
 
-::: {.note}
+::: {.aside-note}
 Schedule is on the course [home](https://dodatascience.fun/#schedule).
 :::
 ::::
