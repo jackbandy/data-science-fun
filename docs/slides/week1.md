@@ -1222,6 +1222,66 @@ $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 
 ---
 
+## A Coin, 14 Flips, and a Bet {.image-frame-slide}
+
+<img src="../assets/coin-flip-worldviews/coin-flip-worldviews-blank.svg" alt="An empty chart. The y-axis is the estimated chance of heads from 0 to 100 percent; the x-axis has 16 slots for flips, each an empty circle with a question mark, and the last two sit in a shaded band labeled 'the bet'">
+
+::: {.caption}
+This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
+:::
+
+---
+
+## Before Any Flips {.image-frame-slide}
+
+<img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip0.svg" alt="The same chart with a single Bayesian point at 50 percent above the tick labeled 'prior'. The Bayesian line is labeled with its formula, (h + 1) / (n + 2). No frequentist estimate exists yet">
+
+::: {.caption}
+This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
+:::
+
+---
+
+## One Flip: Heads {.image-frame-slide}
+
+<img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip1.svg" alt="After one heads, the frequentist estimate appears at 100 percent while the Bayesian estimate has moved only from 50 to 67 percent">
+
+::: {.caption}
+This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
+:::
+
+---
+
+## Two Flips: Heads, Heads {.image-frame-slide}
+
+<img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip2.svg" alt="After two heads the frequentist estimate is still 100 percent; the Bayesian estimate has moved to 75 percent">
+
+::: {.caption}
+This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
+:::
+
+---
+
+## Three Flips: The First Tails {.image-frame-slide}
+
+<img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip3.svg" alt="After a tails on the third flip the frequentist estimate drops sharply from 100 to 67 percent, while the Bayesian estimate eases down from 75 to 60 percent">
+
+::: {.caption}
+This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
+:::
+
+---
+
+## All 14 Flips: 10 Heads, 4 Tails {.image-frame-slide}
+
+<img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip14.svg" alt="Both estimates across all 14 flips. The frequentist line lurches early and ends at 71.4 percent; the Bayesian line moves more gradually and ends at 68.8 percent. The two flips being bet on remain empty">
+
+::: {.caption}
+This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
+:::
+
+---
+
 ## Coin Flip Odds
 
 ::::: {.columns}
@@ -1249,6 +1309,68 @@ ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(36
 ::: {.caption}
 Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
 :::
+
+---
+
+## How Frequentists Get to 51% {.smaller}
+
+::::: {.columns}
+
+:::: {.column width="56%"}
+::: {.fragment}
+*p* is a **fixed, unknown constant** — estimate it from what we observed.
+:::
+
+::: {.fragment}
+$$\hat{p} = \frac{h}{n} = \frac{10}{14} \approx 0.714$$
+:::
+
+::: {.fragment}
+Given *p*, the two remaining flips are **independent** — so square the estimate.
+:::
+
+::: {.fragment}
+$$P(\text{two heads}) = \hat{p}^{\,2} = \left(\frac{10}{14}\right)^{2} \approx 0.51$$
+:::
+::::
+
+:::: {.column width="40%"}
+<img class="figure" src="../assets/slides-misc/coin-toss.jpg" alt="A coin in mid-air above a thumb that has just flipped it">
+::::
+
+:::::
+
+---
+
+## How Bayesians Get to 48.5% {.smaller}
+
+::::: {.columns}
+
+:::: {.column width="56%"}
+::: {.fragment}
+*p* is a **distribution**. Start with a uniform prior, $\text{Beta}(1,1)$ — every value of *p* equally plausible.
+:::
+
+::: {.fragment}
+10 heads and 4 tails update it to the posterior $\text{Beta}(11,5)$, whose mean is
+$$E[p] = \frac{h + 1}{n + 2} = \frac{11}{16} = 0.6875$$
+:::
+
+::: {.fragment}
+Bayesians don't just square it! The first flip is **evidence about *p*** that revises the belief used for the second.
+:::
+
+::: {.fragment}
+Average $p^2$ across the whole posterior (plausible values):
+$$P(\text{two heads}) = E[p^{2}] = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485$$
+:::
+::::
+
+:::: {.column width="40%"}
+<img class="figure" src="../assets/slides-misc/coin-toss.jpg" alt="A coin in mid-air above a thumb that has just flipped it">
+::::
+
+:::::
 
 ---
 
