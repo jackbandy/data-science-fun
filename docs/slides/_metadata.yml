@@ -4,3 +4,5 @@ format:
     include-after-body:
       - includes/slide-number-after-body.html
       - includes/iframe-caption.html
+      - includes/radio-player-after-body.html
+      - includes/sources-fit-after-body.html
