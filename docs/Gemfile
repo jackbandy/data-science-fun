@@ -1,5 +1,14 @@
 source "https://rubygems.org"
 
+# Requires Ruby 3.x locally (`brew install ruby@3.3`). github-pages depends on
+# commonmarker, which caps Ruby at < 4.0, so under Homebrew's default Ruby 4
+# Bundler silently resolves to the ancient github-pages 223 / Jekyll 3.9 and
+# the build dies reading _data/schedule.csv. Build with:
+#
+#   PATH="/opt/homebrew/opt/ruby@3.3/bin:$PATH" bundle install
+#   PATH="/opt/homebrew/opt/ruby@3.3/bin:$PATH" bundle exec jekyll serve
+ruby ">= 3.0", "< 4.0"
+
 # Matches what GitHub Pages runs, so a local `bundle exec jekyll serve` renders
 # the masthead the same way the deploy workflow does.
 gem "github-pages", group: :jekyll_plugins

@@ -139,21 +139,7 @@ https://www.youtube.com/watch?v=GIdwLrW2nNo
 	* total interventions vs soft interventions
 * 
 
-## Misc. TODO
 
-* Check overflow on slide templates (i.e. spilling into footer).
-* clean up ipynb headers
-* Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can download the code from the slides.
-* Validate CI notebook rendering and post-processing: push a change to a Python slide deck and confirm (a) the `.ipynb` is regenerated, (b) `postprocess_slides.py` runs on it, and (c) unchanged decks reuse their cached notebooks without re-rendering.
-* another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
-	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
-* ethics in data science mini-book - preregistration process - before "understanding"
-* check mobile slide rendering (low-priority)
-* Include Christine Julien (Prof. & Head of CS, Virginia Tech), ["Stop Telling Students Computer Science Is Dying"](https://www.insidehighered.com/opinion/views/2026/07/28/stop-telling-students-computer-science-dying-opinion), *Inside Higher Ed*, July 28, 2026 — relevant to "what is data science" and visualization rhetoric
-	* h/t [Adam Koehler](https://cs.uic.edu/profiles/koehler-adam/)
-* Add color blindness material to visualization decks (week 5 / 6) — e.g. why the default red/green pairing fails, colorblind-safe palettes, etc.
-* Create guidelines for contributors.
-* Look into `raster=True` on the `geom_point` calls in the week 4 "Square Footage vs. Price" build-up. It is there purely for file size: 24,775 points as vector SVG is ~18 MB per figure, and that slide renders five of them (~90 MB) — with raster the whole deck's figures come to 1.8 MB.
 
 
 ## Privacy topics
@@ -256,3 +242,21 @@ John Tukey 1962, [The Future of Data Analysis](https://www.jstor.org/stable/2237
 https://cs.uic.edu/undergraduate/data-science-major/
 
 https://www.techtimes.com/articles/322586/20260801/chatgpt-research-habit-cost-hank-green-accuracy-his-brand-was-built.htm
+
+
+## Misc. TODO
+
+* Check overflow on slide templates (i.e. spilling into footer).
+* Test slides at 16:10 (the classroom projector is 16:10) - check decks at that aspect ratio (letterboxing, footer position, slides that fill the full height).
+* clean up ipynb headers
+* Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can download the code from the slides.
+* Validate CI notebook rendering and post-processing: push a change to a Python slide deck and confirm (a) the `.ipynb` is regenerated, (b) `postprocess_slides.py` runs on it, and (c) unchanged decks reuse their cached notebooks without re-rendering.
+* another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb
+	* connection to design thinking / design workflow? https://www.nngroup.com/articles/design-thinking/
+* ethics in data science mini-book - preregistration process - before "understanding"
+* check mobile slide rendering (low-priority)
+* Include Christine Julien (Prof. & Head of CS, Virginia Tech), ["Stop Telling Students Computer Science Is Dying"](https://www.insidehighered.com/opinion/views/2026/07/28/stop-telling-students-computer-science-dying-opinion), *Inside Higher Ed*, July 28, 2026 — relevant to "what is data science" and visualization rhetoric
+	* h/t [Adam Koehler](https://cs.uic.edu/profiles/koehler-adam/)
+* Add color blindness material to visualization decks (week 5 / 6) — e.g. why the default red/green pairing fails, colorblind-safe palettes, etc.
+* Create guidelines for contributors.
+* Look into `raster=True` on the `geom_point` calls in the week 4 "Square Footage vs. Price" build-up. It is there purely for file size: 24,775 points as vector SVG is ~18 MB per figure, and that slide renders five of them (~90 MB); with raster the whole deck's figures come to 1.8 MB.

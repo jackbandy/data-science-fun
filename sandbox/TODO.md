@@ -1,7 +1,6 @@
 # Repository TODO
 
 - [ ] **Make a demo of Closeread.** Try out https://closeread.dev (Quarto extension for scrollytelling) and build a sample page
-
 ~~note to self - check mobile version of slides~~ (done — see mobile fix below)
 
 ---

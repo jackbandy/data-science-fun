@@ -77,7 +77,15 @@ jobs:
             echo "build_book=false" >> "$GITHUB_OUTPUT"
           fi
 
-          # Slides: collect base names of changed deck files (passed to RENDER_SLIDES)
+          # Slides: shared inputs (metadata, after-body includes, theme CSS, the
+          # build/postprocess scripts) affect every deck, so a change to any of
+          # them forces a full render — an empty RENDER_SLIDES means "all".
+          if echo "$CHANGED" | grep -qE '^docs/slides/(_metadata\.yml|_quarto\.yml|build_all_quarto\.sh|postprocess_slides\.py|stamp_source_note\.py|includes/|theme/)'; then
+            echo "render_slides=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Otherwise render only the decks whose source changed.
           SLIDES=$(echo "$CHANGED" \
             | grep -E '^docs/slides/[^/]+\.(qmd|md)$' \
             | sed 's|.*/||' \
@@ -144,7 +152,11 @@ jobs:
             docs/slides/week*.html
             docs/slides/week*_files
             docs/slides/_libs
-          key: slides-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/postprocess_slides.py', 'docs/slides/requirements.txt') }}
+          # The key must cover every input the rendered decks depend on: deck
+          # sources plus the shared metadata/includes/theme that inject footer
+          # scripts and CSS into all of them. Leaving those out meant a shared
+          # change hit the cache exactly and skipped the render entirely.
+          key: slides-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/_metadata.yml', 'docs/slides/_quarto.yml', 'docs/slides/includes/**', 'docs/slides/theme/**', 'docs/slides/build_all_quarto.sh', 'docs/slides/postprocess_slides.py', 'docs/slides/stamp_source_note.py', 'docs/slides/requirements.txt') }}
           restore-keys: slides-
 
       # HTML decks are required: if this fails, the deploy should fail
