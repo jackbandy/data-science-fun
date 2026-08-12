@@ -189,4 +189,6 @@ Especially when viewed as a family, the data science elephantidae are strong. A 
 
 In short, data scientists do not have a monopoly on human knowledge, even when viewed as a wide family. We would do well to collaborate with and learn from other families in the vast ecosystems of human knowledge and wisdom.
 
+::: {.content-visible when-format="html"}
 ## References
+:::

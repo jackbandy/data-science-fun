@@ -12,7 +12,7 @@ Many professional fields develop various fables, myths, stories, etc. that serve
 
 Although data science is in many ways still assembling its canon, there are some notable legends and case studies that I thought would be useful to compile here.
 
-## Facebook's Political Mobilization Experiment (2010)
+## Facebook's Voter Turnout Experiment (2010)
 
 Facebook randomized an "I Voted" social message across roughly 61 million users during the 2010 U.S. midterm elections, and reported that the treatment produced somewhere around 340,000 additional votes [@bond_social_influence_2012].
 
@@ -24,7 +24,7 @@ TK.
 * ability to influence turnout = ability to selectively influence turnout
 * Lifecycle stage: intervention and reporting — [Chapter 5](05-ethics-in-reporting-decisions-solutions.md) prediction as intervention.
 
-## Facebook's Emotional Contagion Study (2014)
+## Facebook's Emotional Contagion Experiment (2014)
 
 For one week, researchers modified the emotional valence of News Feed content for 689,003 users without their knowledge, then measured the valence of those users' own subsequent posts [@kramer_emotional_contagion_2014].
 
@@ -95,4 +95,6 @@ TK.
 * Seems to be an urban legend?
 * candidates — the "wolves versus huskies" snow-background classifier, the résumé screener that learned to prefer the name "Jared" and high-school lacrosse
 
+::: {.content-visible when-format="html"}
 ## References
+:::

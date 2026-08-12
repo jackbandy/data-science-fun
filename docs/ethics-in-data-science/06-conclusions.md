@@ -69,4 +69,6 @@ More TK.
 
 More TK.
 
+::: {.content-visible when-format="html"}
 ## References
+:::

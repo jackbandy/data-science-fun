@@ -34,4 +34,6 @@ TK
 * ubuntu ethics ("I am because we are")
 *
 
+::: {.content-visible when-format="html"}
 ## References
+:::

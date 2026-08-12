@@ -243,4 +243,6 @@ Differences:
 	* but also easiest to skip
 * the next chapter (Ch. 4) asks what these obtained data can and cannot be understood to mean
 
+::: {.content-visible when-format="html"}
 ## References
+:::

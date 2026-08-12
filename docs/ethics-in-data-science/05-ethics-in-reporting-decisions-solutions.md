@@ -313,4 +313,6 @@ Test citation for Retraction Watch [@van_noorden_2011_reality] (public database 
 
 Several well-known cases bear directly on reporting, decisions, and solutions: Facebook's political mobilization experiment, the emotional contagion study, Target's pregnancy prediction marketing, and Google Flu Trends. These are collected with the rest of the book's case studies in [Appendix C: Famous Case Studies](09-case-studies.md).
 
+::: {.content-visible when-format="html"}
 ## References
+:::

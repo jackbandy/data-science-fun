@@ -169,4 +169,6 @@ Test citations for understanding as situated, embodied interpretation: the Sierr
 
 Transition to communication / decisions / reporting.
 
+::: {.content-visible when-format="html"}
 ## References
+:::

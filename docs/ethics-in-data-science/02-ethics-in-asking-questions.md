@@ -235,4 +235,6 @@ Crafting a high-quality research question for the data science lifecycle can be 
 Test citations for question framing, rhetoric, and situated perspectives: the Stanford Encyclopedia overview of questions [@sep-questions] and *Data Feminism for Data Visualization* [@klein_dignazio_data_feminism_visualization].
 
 
+::: {.content-visible when-format="html"}
 ## References
+:::

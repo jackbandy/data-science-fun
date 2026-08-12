@@ -1,6 +1,8 @@
 # Preface {.unnumbered}
 
+::: {.content-visible when-format="html"}
 **[← Back to Course Homepage](../../index.html)**
+:::
 
 *This mini-book is a work-in-progress.*
 
@@ -21,7 +23,7 @@ Thus, the correspondence between @lau_learning_2023 and this book is as follows:
 ::: {tbl-colwidths="[55,45]"}
 | *Learning Data Science* | Corresponding material in this book |
 | --- | --- |
-|  | Introduction (this chapter) |
+|  | Preface (this chapter) |
 |  | [1 Working Toward Wisdom](01-working-toward-wisdom.md) |
 | [Ask a Question](https://learningds.org/ch/01/lifecycle_cycle.html) | [2 Ethics in Asking Questions](02-ethics-in-asking-questions.md) |
 | [Obtain Data](https://learningds.org/ch/01/lifecycle_cycle.html) | [3 Ethics in Obtaining Data](03-ethics-in-obtaining-data.md) |
@@ -64,4 +66,6 @@ I recommend that you do read them! Still, what is intended to be distinctly usef
 
 Before exploring ethical implications of these lifecycle stages and competencies through [Ethics in Asking Questions](02-ethics-in-asking-questions.md), [Ethics in Obtaining Data](03-ethics-in-obtaining-data.md), [Ethics in Understanding](04-ethics-in-understanding.md), and [Ethics in Reporting Decisions & Solutions](05-ethics-in-reporting-decisions-solutions.md), I have taken the liberty to include a framing chapter, [Working Toward Wisdom](01-working-toward-wisdom.md), which zooms out and considers a somewhat audacious question: why are we doing any of this at all?
 
+::: {.content-visible when-format="html"}
 ## References
+:::

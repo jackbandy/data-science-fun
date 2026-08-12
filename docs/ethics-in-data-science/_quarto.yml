@@ -23,6 +23,7 @@ book:
     - 07-glossary.md
     - 08-ethical-theories.md
     - 09-case-studies.md
+    - references.md
   page-footer:
     left: |
       <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
@@ -32,9 +33,14 @@ book:
 bibliography: references.bib
 license: "CC BY-NC-SA"
 
+filters:
+  - img-border.lua
+  - br-to-linebreak.lua
+
 format:
   html:
     theme: cosmo
+    css: styles.css
     toc: true
     toc-depth: 2
     number-sections: true
