@@ -26,6 +26,10 @@ CS 418 · Week 12 · 🟠 Western 🟠
 
 ---
 
+# Graphs and Relationships {.section-header}
+
+---
+
 # What is a Graph?
 
 :::: {.columns}
@@ -149,6 +153,10 @@ Graph types *(placeholder)*
 
 ---
 
+# Community Detection {.section-header}
+
+---
+
 # Community Detection
 
 :::: {.columns}
@@ -248,6 +256,10 @@ Community detection *(placeholder)*
 
 ---
 
+# Network Diffusion {.section-header}
+
+---
+
 # Network Diffusion
 
 :::: {.columns}
@@ -342,6 +354,10 @@ Distribution of cascade sizes and structural virality *(placeholder)*
 :::
 :::
 ::::
+
+---
+
+# Virus Propagation {.section-header}
 
 ---
 
@@ -536,6 +552,19 @@ Epidemic threshold visualization *(placeholder)*
 :::
 :::
 ::::
+
+---
+
+# Week 12, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
+
+<h2>Network Immunization</h2>
+
+Jack Bandy
+2026
+
+---
+
+# Network Immunization {.section-header}
 
 ---
 

@@ -24,13 +24,60 @@ CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
 
 ---
 
-# Demo Content Slide
+# Python Foundations {.section-header}
 
-Placeholder content for Week 2.
+---
 
-- Python basics
-- Dataframes and Polars
-- Obtaining data
+# Python Foundations
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
+
+---
+
+# Dataframes and Polars {.section-header}
+
+---
+
+# Dataframes and Polars
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
+
+---
+
+# Week 2, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
+
+<h2>Obtaining Data</h2>
+
+Jack Bandy
+2026
+
+---
+
+# Obtaining Data {.section-header}
+
+---
+
+# Obtaining Data
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
 
 ---
 

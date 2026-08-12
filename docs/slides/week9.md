@@ -24,13 +24,60 @@ CS 418 · Week 9 · 🟠 Halsted 🟠
 
 ---
 
-# Demo Content Slide
+# Decision Trees {.section-header}
 
-Placeholder content for Week 9.
+---
 
-- Decision trees
-- SVMs
-- Kernels
+# Decision Trees
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
+
+---
+
+# Week 9, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
+
+<h2>SVMs and Kernels</h2>
+
+Jack Bandy
+2026
+
+---
+
+# Support Vector Machines {.section-header}
+
+---
+
+# Support Vector Machines
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
+
+---
+
+# Kernels {.section-header}
+
+---
+
+# Kernels
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
 
 ---
 

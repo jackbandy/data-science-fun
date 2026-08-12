@@ -18,11 +18,16 @@ $slide-number-width: 104px;
 $slide-number-right: 20px;
 $title-rule: 12px;
 $heading-rule: 6px;
-// Small-text scale. Captions, notes and eyebrows share one absolute size so a
-// credit line reads the same whether it sits under a full-bleed figure or
-// inside a narrow column. The dense sizes stay relative: they shrink body copy
-// against whatever context it is in.
+// Small-text scale. Captions and notes share one absolute size so a credit line
+// reads the same whether it sits under a full-bleed figure or inside a narrow
+// column. The dense sizes stay relative: they shrink body copy against whatever
+// context it is in.
 $small-size: 0.5rem;
+// Eyebrows sit between the two: they label the block that follows rather than
+// crediting the one above, so they have to carry from the back of the room the
+// way a caption never does. Still well under the 1.05rem of the full-slide
+// prompt label in small-caps-label, which owns a slide on its own.
+$eyebrow-size: 0.7rem;
 $dense-size: 0.8em;
 $dense-smaller-size: 0.65em;
 // Figure sizing. One frame, three heights — use .figure-sm / .figure-lg rather
@@ -133,7 +138,8 @@ $code-color: $ink !default;
   margin-bottom: 24px;
 }
 
-// Small all-caps label: prompt eyebrow, quote attribution, eyebrow class.
+// Small all-caps label. Used by the prompt eyebrow, which owns a slide on its
+// own. Quote attributions and .eyebrow set their own sizes instead.
 @mixin small-caps-label {
   font-size: 1.05rem;
   color: $muted;
@@ -279,9 +285,16 @@ $code-color: $ink !default;
       p { margin: 0; }
     }
 
+    // The speaker's name. Same voice as the source line below it rather than
+    // an all-caps label: both are the quote's provenance, so they should read
+    // as one unit. Size is the only thing separating them -- the name first,
+    // the citation subordinate to it.
     .attribution {
-      @include small-caps-label;
       margin-top: 0.9em;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: $muted;
+      a { color: $steel; text-decoration: underline; }
     }
 
     .quote-source {
@@ -294,7 +307,8 @@ $code-color: $ink !default;
   }
 
   // ---------------------------------------------------------------------
-  // Small text. Four roles, one size. Use these instead of inline styles.
+  // Small text. Four roles: captions and notes share one size, eyebrows sit a
+  // step above them. Use these instead of inline styles.
   //
   //   .caption        credit or source line under a figure (centered)
   //   .aside-note     aside or pointer to a reading (left-aligned).
@@ -317,7 +331,7 @@ $code-color: $ink !default;
 
   .eyebrow {
     display: inline-block;
-    font-size: $small-size;
+    font-size: $eyebrow-size;
     font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -514,27 +528,50 @@ $code-color: $ink !default;
       img { @include img-fill; }
     }
   }
-  // Full-height embed slide: header + iframe or img filling remaining space,
-  // never overlapping the footer. Mirrors the .code-figure-slide layout pattern.
+  // Full-height embed slide: on these slides the embed *is* the argument, so
+  // every other element is trimmed to the least that stays legible — a compact
+  // title (a label for the embed, not a statement), a hairline caption, thin
+  // edge margins, and just enough bottom padding to clear the footer band.
+  // That leaves the frame ~77% of the slide, i.e. ~90% of the height that is
+  // actually spendable once the footer and a readable title are paid for.
   // .slides section.iframe-slide has specificity (0,3,1) > .slides section (0,2,1)
   // so padding and other rules here override the base section rule.
   .slides section.iframe-slide {
-    @include full-height-slide(48px 64px 56px);
+    @include full-height-slide(16px 40px ($footer-height + 4px));
+
+    // Titles here are set at roughly h3 scale with a thinner rule, rather than
+    // the 3.5rem display h1, which alone would eat a fifth of the slide.
+    h1, h2 {
+      flex: none;
+      font-size: 2rem;
+      line-height: 1.1;
+      color: $ink;
+      border-bottom: 3px solid $orange;
+      padding-bottom: 4px;
+      margin: 0 0 10px;
+    }
+
     iframe, img {
       flex: 1;
       min-height: 0;
       width: 100%;
       min-width: 0;
+      // Reveal gives embeds a bottom margin; here the caption owns that gap.
+      margin: 0;
       box-sizing: border-box;
     }
     img {
       object-fit: contain;
       display: block;
     }
-    // Same tier as .caption; only the flex behaviour differs.
+    // Same tier as .caption; the flex behaviour and tighter gap differ. The
+    // caption may be a bare <p> (added by includes/iframe-caption.html) or a
+    // div wrapping one, so the inner paragraph's default margins go too.
     .iframe-caption {
       @extend .caption;
       flex: none;
+      margin: 6px 0 0;
+      p { margin: 0; }
     }
   }
 

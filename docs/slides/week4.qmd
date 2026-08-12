@@ -53,13 +53,7 @@ CS 418 · Week 4 · 🟠 Washington/Wells 🟠
 
 ---
 
-# Demo Content Slide
-
-Placeholder content for Week 4.
-
-- Exploratory analysis
-- Descriptive statistics
-- Initial data questions
+# Exploratory Analysis {.section-header}
 
 ---
 
@@ -155,6 +149,19 @@ df = pl.read_csv('ages.csv')
 print(df.shape)
 # (3, 2)
 ```
+
+---
+
+# Week 4, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop04-washington-wells-b.jpg" background-size="cover"}
+
+<h2>Descriptive Statistics</h2>
+
+Jack Bandy
+2026
+
+---
+
+# Descriptive Statistics {.section-header}
 
 ---
 

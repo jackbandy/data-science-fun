@@ -24,13 +24,7 @@ CS 418 · Week 8 · 🟠 Roosevelt 🟠
 
 ---
 
-# Demo Content Slide
-
-Placeholder content for Week 8.
-
-- Linear regression
-- Prediction
-- Intro to classification
+# Linear Regression {.section-header}
 
 ---
 
@@ -125,6 +119,19 @@ Walk the numerator first: it is a sum of products of deviations, so it grows whe
 :::
 
 ---
+
+---
+
+# Week 8, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
+
+<h2>Intro to Classification</h2>
+
+Jack Bandy
+2026
+
+---
+
+# Intro to Classification {.section-header}
 
 ---
 

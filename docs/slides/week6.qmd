@@ -27,7 +27,7 @@ Jack Bandy
 
 ---
 
-# Demo Content Slide
+# Map
 
 Content for Week 6.
 
@@ -53,10 +53,10 @@ Content for Week 6.
 
 # Time Series Basics
 
-A **univariate time series** is simply a sequence of observations of the **same variable** collected over time
+A **univariate time series** is a sequence of observations of the **same variable** collected over time
 - not just a "bag of values"
 
-Two goals of time series analysis:
+Two common goals of time series analysis:
 
 ::: {.incremental}
 - **Understand** or explain processes that produced the data
@@ -72,7 +72,7 @@ Two goals of time series analysis:
 - Public transit ridership
 - Hourly/Daily/Monthly temperatures
 - Annual spending
-- Others you can think of?
+- Other time series you can think of?
 :::
 
 ---
@@ -82,10 +82,11 @@ Two goals of time series analysis:
 ::: {.incremental}
 Time series can contextualize (almost) any arbitrary datum
 
-- e.g. "UIC had XXXX graduates last year"
-- e.g. "Chicago's budget grew by $XXmillion last year"
-- e.g. "the mortgage interest rate is X.X%"
-- e.g. "XX people have died from the flu this year"
+- e.g. "UIC had $X$ graduates last year"
+- e.g. "Chicago's budget grew by \$$X$ million last year"
+- e.g. "the mortgage interest rate is $X.X$%"
+- e.g. "$X$ people have died from the flu this year"
+- e.g. "the U.S. spent \$$X$ on social security last year"
 :::
 
 ---
@@ -973,6 +974,15 @@ So far, the date was essentially the model. But ridership responds to factors (d
 
 ---
 
+# Week 6, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
+
+<h2>Moving Toward Causality</h2>
+
+Jack Bandy
+2026
+
+---
+
 # Moving Toward Causality {.section-header}
 
 ---
@@ -1249,45 +1259,3 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 
 ---
 
-# Appendix {.section-header}
-
----
-
-# ACF and PACF
-
-Use ACF and PACF plots to choose *p* and *q* from data.
-Two tools for choosing model order from data:
-
-::: {.incremental}
-- **ACF (Autocorrelation Function)** — correlation between $y_t$ and $y_{t-k}$ for each lag $k$. Use to choose MA order $q$: ACF "cuts off" after lag $q$.
-- **PACF (Partial Autocorrelation Function)** — correlation at lag $k$ after removing the effects explained by shorter lags. Use to choose AR order $p$: PACF "cuts off" after lag $p$.
-:::
-
----
-
-# Reading ACF and PACF Plots
-
-Each bar = correlation at that lag; shaded band = 95% confidence interval.
-
-::: {.incremental}
-- Bars **within** the band → not significant (treat as zero)
-- **ACF decays slowly** → series may not be stationary — try differencing first
-- **ACF cuts off** sharply after lag $q$ → suggests **MA($q$)**
-- **PACF cuts off** sharply after lag $p$ → suggests **AR($p$)**
-- **Both decay gradually** → suggests **ARMA($p$, $q$)** — compare with AIC / BIC
-:::
-
----
-
-# ACF and PACF: Airline Passengers {.code-figure-slide}
-
-```{python}
-#| echo: true
-#| fig-alt: "Two-panel ACF and PACF plot for airline passenger data. The ACF shows slow sinusoidal decay indicating non-stationarity, while the PACF shows a sharp cutoff after lag 1 suggesting an AR(1) structure in the differenced series."
-from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7, 4.3))
-plot_acf(values, lags=30, ax=ax1, title="ACF — Airline Passengers")
-plot_pacf(values, lags=30, ax=ax2, title="PACF — Airline Passengers")
-plt.tight_layout()
-```

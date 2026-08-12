@@ -24,13 +24,19 @@ CS 418 · Week 7 · 🟠 Adams/Wabash 🟠
 
 ---
 
-# Demo Content Slide
+# Hypothesis Testing {.section-header}
 
-Placeholder content for Week 7.
+---
 
-- Hypothesis testing
-- Estimation and sampling
-- Randomness
+# Hypothesis Testing
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
 
 ---
 
@@ -65,6 +71,47 @@ Placeholder content for Week 7.
 
 ::: {style="text-align:center; font-size:0.4em; color:#565a5c; margin-top:0.3em;"}
 Hanabusa Itchō, *Blind Monks Examining an Elephant* (1888 woodblock print reproduction), public domain. [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Blind_monks_examining_an_elephant.jpg).
+:::
+
+---
+
+# Week 7, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop08-adams-wabash-b.jpg" background-size="cover"}
+
+<h2>Estimation, Sampling, and Randomness</h2>
+
+Jack Bandy
+2026
+
+---
+
+# Estimation and Sampling {.section-header}
+
+---
+
+# Estimation and Sampling
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
+
+---
+
+# Randomness {.section-header}
+
+---
+
+# Randomness
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
 :::
 
 ---

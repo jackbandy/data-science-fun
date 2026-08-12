@@ -493,6 +493,15 @@ df.query("miles > 15 and hours < 1")
 
 ---
 
+# Week 3, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
+
+<h2>Data Formats</h2>
+
+Jack Bandy
+2026
+
+---
+
 # Data Formats {.section-header}
 
 ---

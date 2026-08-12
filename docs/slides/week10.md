@@ -216,6 +216,31 @@ _Photo: Minda Haas Kuhlmann, [CC BY 2.0](https://creativecommons.org/licenses/by
 
 ---
 
+# Week 10, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
+
+<h2>Model Evaluation</h2>
+
+Jack Bandy
+2026
+
+---
+
+# Model Evaluation {.section-header}
+
+---
+
+# Model Evaluation
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
+
+---
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week10.md>.

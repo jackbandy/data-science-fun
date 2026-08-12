@@ -28,16 +28,6 @@ CS 418 · Week 11 · 🟠 35th/Archer 🟠
 
 ---
 
-# Demo Content Slide
-
-Placeholder content for Week 11.
-
-- Recommendation systems
-- A/B testing
-- Evaluation metrics
-
----
-
 # Examples of Recommender Systems {.section-header}
 
 ---
@@ -182,6 +172,31 @@ For every (user, video) pair, YouTube can record a **utility**:
 | **Dev**     |     |     | 85% | 70% |     |
 
 Consider utility as **watch percentage** (blank = never clicked/watched)
+
+---
+
+# Week 11, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" background-size="cover"}
+
+<h2>A/B Testing</h2>
+
+Jack Bandy
+2026
+
+---
+
+# A/B Testing {.section-header}
+
+---
+
+# A/B Testing
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
 
 ---
 

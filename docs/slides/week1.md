@@ -156,17 +156,16 @@ TECHNIQUES
 
 ::: {.incremental}
 ::: {.dense-smaller}
-- Sampling
+- Sampling / randomness
 - Exploratory analysis
-- Chart/figure design
+- **Chart/figure design**
 - Confidence intervals
 - Linear regression
 - Classification methods
 - (trees, SVMs, etc.)
 - $k$-means clustering, PCA
-- A/B testing
-- Network analysis
-- Community detection
+- A/B testing, RCT setup
+- Network/community analysis
 :::
 :::
 ::::
@@ -208,6 +207,60 @@ THEMES
 
 
 # Defining Data Science {.section-header}
+
+
+## A Dictionary Definition
+
+[START WITH THE FIRST WORD]{.eyebrow}
+
+::: {.fragment .strike}
+What is data?
+:::
+
+::: {.fragment}
+What [**are**]{style="color:#f9461c;"} data?
+:::
+
+::: {.fragment}
+[**data**]{style="color:#001E62;"}: plural of [**datum**]{style="color:#001E62;"}, i.e. multiple datum, borrowed from Latin *data*, past participle of *dō*, "to give."
+:::
+
+::: {.fragment}
+A [**datum**]{style="color:#001E62;"} is "a single recorded phenomenon, especially obtained by scientific work" literally *a thing that is given*.
+:::
+
+::: {.caption}
+Definitions and etymology: Wiktionary, [*data*](https://en.wiktionary.org/wiki/data), [*datum*](https://en.wiktionary.org/wiki/datum) ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
+:::
+
+---
+
+
+## What is Science?
+
+[NOW THE SECOND WORD]{.eyebrow}
+
+::: {.fragment}
+[**science**]{style="color:#001E62;"} — from Latin *scientia*, "knowledge," from *scire*, "to know."
+:::
+
+::: {.fragment}
+"The collective discipline of study or learning acquired through the [**scientific method**]{style="color:#f9461c;"}; the sum of knowledge gained from such methods and discipline."
+:::
+
+::: {.fragment}
+What does that make [**data science**]{style="color:#001E62;"}? Not "the science of data," mores: [**knowing, by way of things/data we are given**]{style="color:#f9461c;"}.
+:::
+
+::: {.fragment}
+*Given* by whom? Chosen, measured, and recorded by a human being with situated knowledge (we'll come back to that).
+:::
+
+::: {.caption}
+Definitions and etymology: Wiktionary, [*science*](https://en.wiktionary.org/wiki/science) ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
+:::
+
+---
 
 
 ## What is Data Science?
@@ -392,35 +445,15 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 <img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step0.svg" alt="An empty two-by-two grid with no labels">
 
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
+
 ---
 
 ## Pasteur's Quadrant: Considerations of Use? {.image-frame-slide}
 
 <img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step1.svg" alt="The two-by-two grid with its columns labeled: 'considerations of use?' no on the left, yes on the right">
-
----
-
-## Pasteur's Quadrant: Fundamental Understanding? {.image-frame-slide}
-
-<img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step2.svg" alt="The two-by-two grid with both axes labeled: columns are 'considerations of use?' no and yes; rows are 'quest for fundamental understanding?' yes on top and no on the bottom">
-
----
-
-## Pasteur's Quadrant: Bohr {.image-frame-slide}
-
-<img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step3.svg" alt="The labeled grid with the top-left cell highlighted: Bohr, pure basic research — fundamental understanding yes, considerations of use no">
-
----
-
-## Pasteur's Quadrant: Edison {.image-frame-slide}
-
-<img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step4.svg" alt="The labeled grid with the bottom-right cell highlighted: Edison, pure applied research — considerations of use yes, fundamental understanding no; Bohr is still filled but no longer highlighted">
-
----
-
-## Pasteur's Quadrant: Pasteur {.image-frame-slide}
-
-<img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step5.svg" alt="The labeled grid with the top-right cell highlighted: Pasteur, use-inspired basic research — yes to both fundamental understanding and considerations of use; Bohr and Edison are filled but not highlighted, and the bottom-left cell stays empty">
 
 ::: {.caption}
 Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
@@ -428,13 +461,63 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-## Bohr's Quadrant: Curiosity
+## Pasteur's Quadrant: Fundamental Understanding? {.image-frame-slide}
+
+<img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step2.svg" alt="The two-by-two grid with both axes labeled: columns are 'considerations of use?' no and yes; rows are 'quest for fundamental understanding?' yes on top and no on the bottom">
+
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
+
+---
+
+## Pasteur's Quadrant: Bohr {.image-frame-slide}
+
+<img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step3.svg" alt="The labeled grid with the top-left cell highlighted: Bohr, pure basic research — fundamental understanding yes, considerations of use no">
+
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
+
+---
+
+## Pasteur's Quadrant: Edison {.image-frame-slide}
+
+<img src="../assets/pasteurs-quadrant/pasteurs-quadrant-step4.svg" alt="The labeled grid with the bottom-right cell highlighted: Edison, pure applied research — considerations of use yes, fundamental understanding no; Bohr is still filled but no longer highlighted">
+
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
+
+---
+
+## Pasteur's Quadrant: Pasteur {.image-frame-slide auto-animate=true}
+
+<img data-id="pq-grid" src="../assets/pasteurs-quadrant/pasteurs-quadrant-step5.svg" alt="The labeled grid with the top-right cell highlighted: Pasteur, use-inspired basic research — yes to both fundamental understanding and considerations of use; Bohr and Edison are filled but not highlighted, and the bottom-left cell stays empty">
+
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
+
+---
+
+## Full table from Donald E. Stokes {.image-frame-slide auto-animate=true}
+
+<img data-id="pq-grid" src="../assets/pasteurs-quadrant/pasteurs-quadrant-complete.svg" alt="Pasteur's quadrant with all four cells shown and none highlighted">
+
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
+
+---
+
+## Bohr's Quadrant: Curiosity {auto-animate=true}
 
 ::::: {.columns}
 
 :::: {.column width="46%"}
 ::: {.incremental}
-- Why does caffeine keep some people awake and not others?
+- What is the molecular structure of caffeine?
 - ...
 - Examples TK
 :::
@@ -443,7 +526,11 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 ::::
 
 :::: {.column width="50%"}
-<img class="figure" src="../assets/pasteurs-quadrant/pasteurs-quadrant-complete.svg" alt="Pasteur's quadrant with all four cells shown and none highlighted">
+<img data-id="pq-grid" class="figure" src="../assets/pasteurs-quadrant/pasteurs-quadrant-complete.svg" alt="Pasteur's quadrant with all four cells shown and none highlighted">
+
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
 ::::
 
 :::::
@@ -462,12 +549,16 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 :::
 
 ::: {.incremental}
-- **No "why."**
+- **Less about "why."**
 :::
 ::::
 
 :::: {.column width="50%"}
 <img class="figure" src="../assets/pasteurs-quadrant/pasteurs-quadrant-complete.svg" alt="Pasteur's quadrant with all four cells shown and none highlighted">
+
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
 ::::
 
 :::::
@@ -492,18 +583,23 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 :::: {.column width="50%"}
 <img class="figure" src="../assets/pasteurs-quadrant/pasteurs-quadrant-complete.svg" alt="Pasteur's quadrant with all four cells shown and none highlighted">
+
+::: {.caption}
+Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovation* (Brookings, 1997).
+:::
 ::::
 
 :::::
 
 ---
 
-## Example Questions
+## More Example Questions
 
 ::: {.incremental}
 - Do guests like the new cold brew recipe?
 - Is the running plan helping people run faster?
 - Do people sleep better with noise machines?
+- Does surveillance improve safety?
 - Did the advertising campaign make a difference?
 - 
 - **No real, curious human wants just "yes" or "no."**
