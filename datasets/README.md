@@ -6,11 +6,13 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
 
 - [chicago-air-quality](chicago-air-quality/) — every PM2.5 and NO2 measurement from the 283-sensor Open Air Chicago network during July 2026
 - [chicago-l-stations](chicago-l-stations/) — CTA L stop records with station names, service flags, and location data
+- [chicago-maps](chicago-maps/) — Chicago city and ward boundaries, water polygons, and ward-level ACS household income, as plain GeoJSON and CSV
 - [chicago-movies-in-parks](chicago-movies-in-parks/) — City of Chicago "Movies in the Parks" event listings
 - [chicago-street-names](chicago-street-names/) — Chicago street names with suffix and address range fields
 - [chicago-tall-buildings](chicago-tall-buildings/) — Buildings with 10 or more stories in Chicago
 - [cook-county-home-sales-2025](cook-county-home-sales-2025/) — Residential property sales recorded in Cook County during 2025, de-identified
 - [cta-ridership](cta-ridership/) — CTA annual ridership totals
+- [datasaurus-dozen](datasaurus-dozen/) — thirteen two-variable datasets with near-identical summary statistics and wildly different shapes (Matejka & Fitzmaurice, CHI 2017)
 - [fake-news-twitter-2016-election](fake-news-twitter-2016-election/) — Replication archive for Vosoughi et al., *Science* 2019 study on fake news spread on Twitter
 - [galton-vox-populi-1907](galton-vox-populi-1907/) — Quantile summary of 787 weight estimates from Galton's 1907 "wisdom of crowds" experiment
 - [icd-10-cm](icd-10-cm/) — FY2026 ICD-10-CM code descriptions from the CDC
