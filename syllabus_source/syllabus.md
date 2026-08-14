@@ -2,7 +2,7 @@
 title: "CS 418 Syllabus"
 course-title: "Introduction to Data Science (CS 418)"
 college: "UIC College of Engineering"
-credit-hours: "3 Undergraduate Hours, 4 graduate hours"
+credit-hours: "3 undergraduate hours, 4 graduate hours"
 ---
 
 # I. Instructor & Course Details
@@ -88,7 +88,7 @@ If we are successful, by the end of the semester, you will have proficiency in t
 - Creating descriptive visualizations for exploratory data analysis
 - Exploring data through summary statistics, tabulation, and aggregation techniques
 - Creating "persuasive" data visualizations to communicate specific patterns, trends, and/or insights from data
-- Developing models for data analysis (including.e. regression, classification, clustering)
+- Developing models for data analysis (i.e. regression, classification, clustering)
 - Evaluating models and understanding their structure, meaning, statistical significance, and limitations
 - Clearly communicating the results and implications of data analyses, and explaining how those results are connected to various decisions made in the data science lifecycle
 
@@ -171,7 +171,7 @@ TK *(final exam format and scheduling; see registrar's [schedule of final exams 
 
 ## [Policy for Missed or Late Work]{.underline}
 
-Due dates will be visible in Prairie Learn (or Canvas), and there is an automatic "sliding scale" that will deduct points based on how late you submitted the work, down to 50%.
+Due dates will be visible in PrairieLearn (or Canvas), and there is an automatic "sliding scale" that will deduct points based on how late you submitted the work, down to 50%.
 
 Anything submitted more than one week after the original due date will only receive 50% credit.
 
@@ -186,15 +186,32 @@ The activities we do during class are essential to your learning in this course,
 
 I recognize that illness, personal emergencies, university obligations, religious observances, and other circumstances may sometimes cause you to be late to class or prevent your attendance entirely.
 
-Because active participation in the course is one of the most important ways to learn, you will be assessed on your class engagement. Engagement looks a little different for everyone, but in general, an engaged student will come to class prepared, contribute regularly to class activities or discussions, listen attentively to peers and the instructor, stay on-task during class, complete their work in a timely manner, and reach out to the instructor if they have questions or start to fall behind. If you anticipate any barriers to your full engagement in the course, I encourage you to contact me so we can strategize about how you can best fulfill the course requirements.
+Because active participation in the course is one of the most important ways to learn, you will be assessed on your class engagement. I am very aware that participation looks a little different for everyone, and will evaluate your participation accordingly. Still, in general, an engaged student will:
+
+- stay on-task during class
+- listen attentively to peers and the instructor (no side conversations or unnecessary disruptions)
+- have an open mind and seek to understand (not judge and make assumptions)
+- assume goodwill in all interactions with peers, TAs, and the instructor
+- complete work in a timely manner
+- reach out to the instructor if they have questions or start to fall behind
+
+If you anticipate any barriers to your full engagement in the course, I encourage you to contact me so we can strategize about how you can best fulfill the course requirements.
 
 **Students who miss more than half of all class sessions will not be able to pass the course.**
+
+**Attendance-related accommodations**
+
+If you have a Letter of Accommodation from the Disability Resource Center that includes accommodations around attendance, those accommodations take precedence over the attendance and late work policies described here. Please share your LOA with me and we will work out how the accommodations apply to this course.
+
+**Student-athletes**
+
+UIC has an [[official missed class time policy]{.underline}](https://uicflames.com/sports/2020/10/26/advising-services) under which student-athletes provide formal documentation for class time missed due to NCAA or institutionally sanctioned events. Student Athlete Academic Services (SAAS) will provide you with that documentation; please bring it to me as early as you can so we can plan around it.
 
 **Tips for Success**
 
 TK
 
-## [Privacy Notification and Policy for Video Recording of Class Sessions]{.underline}
+## [Privacy Note on Recording in Class]{.underline}
 
 As of right now I do not plan to record class sessions this semester. If this changes, I will ask for your permission to record, and it will most likely be only audio.
 
@@ -208,7 +225,7 @@ This class meets twice a week for one hour and fifteen minutes, totaling 2.5 hou
 
 I remember the frustration and shock I felt in my first Computer Science course in college, when I learned that I was not allowed to use my computer. I have slowly realized that this policy was best for me as a student, and in most cases, is the best policy for an effective learning environment.
 
-In Summer 2026, I looked at peer-reviewed scientific evidence on the subject. As with other times I have explored the evidence, my impression was that **in-class device usage is detrimental for learning**, even when students feel accustomed to multitasking. Individual studies as well as meta-reviews continue to characterize devices in class as fundamentally distracting, with a negative influence on various measure of learning and performance.
+In Summer 2026, I looked at peer-reviewed scientific evidence on the subject. As with other times I have explored the evidence, my impression was that **in-class device usage is detrimental for learning**, even when students feel accustomed to multitasking. Individual studies as well as meta-reviews continue to characterize devices in class as fundamentally distracting, with a negative influence on various measures of learning and performance.
 
 Interestingly, while some students can multitask and still comprehend material *during* class time, those students experience significantly reduced long-term retention ([Glass & Kang, 2019](https://doi.org/10.1080/01443410.2018.1489046)).
 
@@ -258,7 +275,7 @@ While this class will eventually invite you to experiment with some LLM-based co
 
 Each exercise will have a red light, yellow light, or green light policy for AI usage. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
 
-More details TK - check [CATE Teaching Guide on Creating AI Policies for Teaching and Learning](https://teaching.uic.edu/cate-teaching-guides/digital-learning/creating-ai-policies-for-teaching-and-learning/))*
+More details TK - check the [CATE Teaching Guide on Creating AI Policies for Teaching and Learning](https://teaching.uic.edu/cate-teaching-guides/digital-learning/creating-ai-policies-for-teaching-and-learning/).
 
 ## [FERPA]{.underline}
 
@@ -317,7 +334,7 @@ TK
 
 This is my first time teaching a full-semester data science course, and I am confident that there will be many ways to improve the course experience. I will provide structured opportunities for you to share feedback, which I take seriously -- each semester I make changes based on feedback from previous students. I also try to make time in each class session for students to ask any questions they may have about the course.
 
-I also encourage you to make pull requests to the GitHub.
+You are also encouraged to edit the course site and submit fixes/improvements in [GitHub](https://github.com/jackbandy/data-science-fun).
 
 Details TK.
 
@@ -328,12 +345,13 @@ As a student at UIC, you may experience challenges such as struggles with academ
 - [[Current Student Resources]{.underline}](https://today.uic.edu/resources/current-student-resources) — a one-stop shop for links to resources in the following categories: General, Academic, Student Support, Student Life, Technology, Health and Safety, and Getting Around Campus
 - UIC [[Tutoring Resources]{.underline}](https://tutoring.uic.edu/)
 - UIC College of Engineering Tutoring Program
+- The [[UIC Library]{.underline}](https://library.uic.edu/) provides access to resources, study rooms, and research support both online via chat and in person; see also the subject-specific [[Research Guides]{.underline}](https://researchguides.uic.edu/)
 - Programs and initiatives supporting the UIC undergraduate experience and academic programs through the [[Student Success Initiative]{.underline}](https://studentsuccess.uic.edu/programs-and-supports/)
 - If you are experiencing personal hardships and need resources and assistance, please reach out to the [[Student Assistance]{.underline}](https://dos.uic.edu/student-assistance/) division, supported by UIC's Office of the Dean of Students.
 - [[Student Guide for Information Technology]{.underline}](https://uofi.app.box.com/s/0nyho51r24yo0pivafibb1nvqogjm401) — a comprehensive resource for UIC students describing the most commonly used IT services and tools supporting your success
 - [[Navigating Health Resources at UIC]{.underline}](https://publichealthinitiatives.uic.edu/health-hub/navigating-health-resources/) — explore the many resources on campus to support students' health and wellbeing and learn about how you can access them
 
-Importantly, if you are in immediate distress, please know the UIC Counseling Center has crisis intervention services available 24 hours a day, 7 days a week. You can walk into the Counseling Center during business hours to request to talk to a crisis counselor, or you can call the Counseling Center main line at (312) 996-3490. For immediate crisis support outside of UIC, call or text "9-8-8" any time, 24 hours a day, 7 days a week.
+Importantly, if you are in immediate distress, please know the UIC Counseling Center has crisis intervention services available 24 hours a day, 7 days a week. You can walk into the Counseling Center during business hours to request to talk to a crisis counselor, or you can call the Counseling Center main line at (312) 996-3490. If you are calling outside of business hours, select "2" during the automated greeting to be connected to a crisis counselor. You can find additional mental health resources and services on the [[Counseling Center website]{.underline}](https://counseling.uic.edu/) and in the [[Student's Guide to Accessing Behavioral Health Services at UIC]{.underline}](https://uofi.box.com/s/yh2aqt9sdhbkhx4xk6pkaat2ztm9nkvb). For immediate crisis support outside of UIC, call or text "9-8-8" any time, 24 hours a day, 7 days a week.
 
 **The Writing Center** offers friendly and supportive tutors who can help you with reading and writing in any of your courses, not just English. For more information and to schedule an appointment, visit the [[Writing Center website]{.underline}](https://writingcenter.uic.edu/).
 
@@ -343,7 +361,9 @@ Importantly, if you are in immediate distress, please know the UIC Counseling Ce
 
 **Supporting Parenting Students:** UIC supports parenting students by providing affordable, high-quality childcare, a wraparound care system, study-play areas, accessible lactation rooms, and family events through the Little Sparks Program. For more information, contact Melinda Young ([[mmcghe2@uic.edu]{.underline}](mailto:mmcghe2@uic.edu)) or visit the [[Little Sparks website]{.underline}](https://littlesparks.uic.edu).
 
-**Campus Safety:** Download the [[UIC Safe App]{.underline}](https://ready.uic.edu/toolkit/uic-safe-app/) for on-campus emergency contact with dispatchers and first responders. Emergency response guides can be found at the [[Office of Preparedness and Response]{.underline}](https://ready.uic.edu/). In an on-campus emergency, dial 5-5555 from a campus phone, or (312) 355-5555 from a cell phone.
+**Student Health Services** are available if you get sick during the semester. The Family Medicine Center has attending physicians, residents, and nurse practitioners on staff to provide the full range of primary health care services, and offers a limited set of services at no additional cost to students who pay the Student Health Service Fee (SHSF), including care for an acute or urgent illness (e.g. cold, strep throat, asthma attack, flu) or an injury. More information is on the [[Family Medicine Center's Student Health]{.underline}](https://hospital.uillinois.edu/primary-and-specialty-care/family-medicine/student-health) webpage.
+
+**Campus Safety:** The UIC Safe App ([[link to download]{.underline}](https://ready.uic.edu/toolkit/uic-safe-app/)) provides on-campus emergency contact with dispatchers and first responders. If you are uncomfortable traveling anywhere on campus, use the [[Walking Safety Escort]{.underline}](https://police.uic.edu/rides-and-escorts/student-patrol/) and/or [[Night Ride]{.underline}](https://transportation.uic.edu/night-ride/). Emergency response guides can be found at the [[Office of Preparedness and Response]{.underline}](https://ready.uic.edu/). In an on-campus emergency, dial 5-5555 from a campus phone, or (312) 355-5555 from a cell phone.
 
 **Title IX / Campus Advocacy Network:** For confidential victim services and advocacy, contact [[UIC's Campus Advocacy Network]{.underline}](https://can.uic.edu/) at 312-413-8206. To make a report to UIC's Title IX office, email [[TitleIX@uic.edu]{.underline}](mailto:TitleIX@uic.edu) or call (312) 996-8670.
 
