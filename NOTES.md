@@ -249,6 +249,7 @@ https://www.techtimes.com/articles/322586/20260801/chatgpt-research-habit-cost-h
 * Check overflow on slide templates (i.e. spilling into footer).
 * Test slides at 16:10 (the classroom projector is 16:10) - check decks at that aspect ratio (letterboxing, footer position, slides that fill the full height).
 * clean up ipynb headers
+* word count analysis dashboard, link analysis dashboard
 * Verify the slide notebooks (`docs/slides/week*.ipynb`) are accessible on the deployed site (e.g. `dodatascience.fun/slides/week0.ipynb`) so students can download the code from the slides.
 * Validate CI notebook rendering and post-processing: push a change to a Python slide deck and confirm (a) the `.ipynb` is regenerated, (b) `postprocess_slides.py` runs on it, and (c) unchanged decks reuse their cached notebooks without re-rendering.
 * another data science lifecycle - https://medium.com/swlh/complete-life-cycle-of-a-data-science-machine-learning-project-13df81bbd8eb

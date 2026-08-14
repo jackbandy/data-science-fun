@@ -120,21 +120,28 @@ data-science-fun/
 │   ├── index.html               # Landing page
 │   ├── faq.md                   # FAQ source (Jekyll renders it to /faq.html)
 │   ├── _config.yml              # Jekyll config
-│   ├── _data/                   # schedule.csv (the one copy) + stations.yml
+│   ├── _data/                   # Site data
+│   │   ├── schedule.csv         # The one copy of the course schedule
+│   │   └── stations.yml         # Orange Line stop metadata
 │   ├── _includes/               # The one copy of the site header/nav and footer
 │   ├── _layouts/default.html    # Layout for Markdown pages
 │   ├── Gemfile                  # Local Jekyll preview only
 │   ├── css/                     # Shared stylesheets
+│   ├── js/                      # Site scripts (schedule tooltips)
+│   ├── assets/                  # Images, figures, and figure-generating scripts
 │   ├── slides/                  # Quarto decks and archived Marp workflow
 │   ├── syllabus/                # Generated syllabus output (gitignored, built in CI)
 │   ├── worksheets/              # Generated worksheet PDFs
 │   ├── ethics-in-data-science/  # Quarto mini-book
+│   ├── timer/, spectogram/      # Small in-class web tools
+│   ├── security.md, robots.txt  # Privacy/security page and crawler rules
 │   └── CNAME                    # domain config
 ├── datasets/                    # Datasets used in class materials
 ├── syllabus_source/             # Syllabus markdown, pandoc templates, lua filters
 ├── worksheets_source/           # Worksheet source and build script
 ├── sandbox/                     # Quarantine for LLM-modified or experimental content
-├── source-materials/            # Reference and upstream source files
+├── CONTRIBUTING.md              # How to report issues / suggest changes
+├── LICENSE                      # CC BY-NC-SA 4.0
 ├── NOTES.md                     # Working notes and planning
 └── README.md                    # This file
 ```
