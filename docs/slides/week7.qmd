@@ -14,7 +14,7 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop08-adams-wabash-b.jpg" background-size="cover"}
+# Week 7, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop08-adams-wabash-b.jpg" background-size="cover"}
 
 CS 418 · Week 7 · 🟠 Adams/Wabash 🟠
 
@@ -23,6 +23,24 @@ CS 418 · Week 7 · 🟠 Adams/Wabash 🟠
 # {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop08-adams-wabash-b.jpg" background-size="cover"}
 
 ---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 7, Day 1]{.eyebrow}
+
+- Hypothesis Testing
+- The Trouble With p < .05
+:::
+
+![](../assets/orange-line-map-stops/stop08-adams-wabash.svg){.figure alt="Orange Line map with the Adams/Wabash stop marked, the Week 7 stop"}
+
+:::
+
+---
+
 
 # Hypothesis Testing {.section-header}
 
@@ -84,6 +102,24 @@ Jack Bandy
 
 ---
 
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 7, Day 2]{.eyebrow}
+
+- Estimation and Sampling
+- Randomness
+:::
+
+![](../assets/orange-line-map-stops/stop08-adams-wabash.svg){.figure alt="Orange Line map with the Adams/Wabash stop marked, the Week 7 stop"}
+
+:::
+
+---
+
+
 # Estimation and Sampling {.section-header}
 
 ---
@@ -118,7 +154,7 @@ Jack Bandy
 
 # Sources {.sources}
 
-1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week7.md>.
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week7.qmd>.
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

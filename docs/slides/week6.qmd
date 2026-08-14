@@ -23,20 +23,38 @@ Jack Bandy
 
 ---
 
+# Week 6, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
+
+<h2>Time Series; Communicating Uncertainty</h2>
+
+Jack Bandy
+2026
+
+---
+
 # {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
 
 ---
 
-# Map
+# Map {.split}
 
-Content for Week 6.
+::: {.split-content .narrow-aside}
 
-::: {.incremental}
-- Visualization refinement
-- Interaction
-- Time series
-- Communicating uncertainty
-- Sneak peek at modeling
+::: {}
+[Week 6, Day 1]{.eyebrow}
+
+- Time Series Visualization
+- Time Series Example: CTA Rides
+- A Different Station: Washington/Wabash
+- More Forecasting Models
+- Bayesian Time Series
+- Using the Model to Predict
+- Visualizing Intervals
+- Example: Hurricanes
+:::
+
+![](../assets/orange-line-map-stops/stop07-washington-wabash.svg){.figure alt="Orange Line map with the Washington/Wabash stop marked, the Week 6 stop"}
+
 :::
 
 ---
@@ -980,6 +998,22 @@ So far, the date was essentially the model. But ridership responds to factors (d
 
 Jack Bandy
 2026
+
+---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 6, Day 2]{.eyebrow}
+
+- Moving Toward Causality
+:::
+
+![](../assets/orange-line-map-stops/stop07-washington-wabash.svg){.figure alt="Orange Line map with the Washington/Wabash stop marked, the Week 6 stop"}
+
+:::
 
 ---
 

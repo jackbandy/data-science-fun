@@ -75,7 +75,7 @@ def headings(source_text):
     """Every ATX heading in order, as (raw_text, attrs), skipping non-prose.
 
     Front matter and code chunks are full of `#` comment lines that would
-    otherwise read as headings -- see the YAML comments atop week1.md and the
+    otherwise read as headings -- see the YAML comments atop week1.qmd and the
     R setup chunk in week5.qmd.
     """
     found = []

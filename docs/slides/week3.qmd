@@ -109,7 +109,7 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
+# Week 3, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
 
 CS 418 · Week 3 · 🟠 Quincy 🟠
 
@@ -118,6 +118,24 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
 # {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
 
 ---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 3, Day 1]{.eyebrow}
+
+- Data Wrangling
+- Data Filtering
+:::
+
+![](../assets/orange-line-map-stops/stop03-quincy.svg){.figure alt="Orange Line map with the Quincy stop marked, the Week 3 stop"}
+
+:::
+
+---
+
 
 # Data Wrangling {.section-header}
 
@@ -502,6 +520,23 @@ Jack Bandy
 
 ---
 
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 3, Day 2]{.eyebrow}
+
+- Data Formats
+:::
+
+![](../assets/orange-line-map-stops/stop03-quincy.svg){.figure alt="Orange Line map with the Quincy stop marked, the Week 3 stop"}
+
+:::
+
+---
+
+
 # Data Formats {.section-header}
 
 ---
@@ -802,7 +837,7 @@ variables:
 
 # Sources {.sources}
 
-1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.md>.
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.qmd>.
 2. NetCDF reference: Unidata netCDF documentation, <https://www.unidata.ucar.edu/software/netcdf/>.
 3. LearningDS chapter 14, "Web Data," netCDF discussion: <https://learningds.org/ch/14/web_netCDF.html>.
 4. Format examples adapted from Wikipedia and project documentation: [JSON](https://en.wikipedia.org/wiki/JSON), [XML](https://en.wikipedia.org/wiki/XML), [Comma-separated values](https://en.wikipedia.org/wiki/Comma-separated_values), [YAML](https://en.wikipedia.org/wiki/YAML), [Tab-separated values](https://en.wikipedia.org/wiki/Tab-separated_values), [Spreadsheet](https://en.wikipedia.org/wiki/Spreadsheet), and [Apache Parquet](https://parquet.apache.org/).

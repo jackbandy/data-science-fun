@@ -14,7 +14,7 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
+# Week 10, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
 
 CS 418 · Week 10 · 🟠 Ashland 🟠
 
@@ -23,6 +23,26 @@ CS 418 · Week 10 · 🟠 Ashland 🟠
 # {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
 
 ---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 10, Day 1]{.eyebrow}
+
+- Clustering
+- Cluster Evaluation
+- Hierarchical Clustering
+- Principal Component Analysis (PCA)
+:::
+
+![](../assets/orange-line-map-stops/stop11-ashland.svg){.figure alt="Orange Line map with the Ashland stop marked, the Week 10 stop"}
+
+:::
+
+---
+
 
 # Clustering {.section-header}
 
@@ -225,6 +245,23 @@ Jack Bandy
 
 ---
 
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 10, Day 2]{.eyebrow}
+
+- Model Evaluation
+:::
+
+![](../assets/orange-line-map-stops/stop11-ashland.svg){.figure alt="Orange Line map with the Ashland stop marked, the Week 10 stop"}
+
+:::
+
+---
+
+
 # Model Evaluation {.section-header}
 
 ---
@@ -243,7 +280,7 @@ Jack Bandy
 
 # Sources {.sources}
 
-1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week10.md>.
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week10.qmd>.
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

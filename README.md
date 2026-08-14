@@ -12,7 +12,7 @@ This repo holds the raw files (mostly markdown files) that are assembled and pub
 
 | What | Edit this | Shows up at |
 | --- | --- | --- |
-| Slides | `docs/slides/week*.md` / `week*.qmd` | [/slides/](https://dodatascience.fun/slides/) |
+| Slides | `docs/slides/week*.qmd` | [/slides/](https://dodatascience.fun/slides/) |
 | Syllabus text | `syllabus_source/syllabus.md` | [/syllabus/](https://dodatascience.fun/syllabus/) |
 | Week-by-week schedule | `docs/_data/schedule.csv` | homepage table + syllabus |
 | Ethics mini-book | `docs/ethics-in-data-science/*.qmd` | [/ethics-in-data-science/book/](https://dodatascience.fun/ethics-in-data-science/book/) |
@@ -144,7 +144,8 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 
 **Notes:**
 
-- The decks are `docs/slides/week0` through `docs/slides/week12`, some as `.md` and some as `.qmd` — both are rendered by Quarto, and each file carries its own Reveal.js configuration.
+- The decks are `docs/slides/week0.qmd` through `docs/slides/week12.qmd`, written in Quarto's extended markdown. Each file carries its own Reveal.js configuration.
+- Every deck opens each class day the same way: a `# Week N, Day 1` / `# Week N, Day 2` title slide, the full-bleed stop photo, then a `# Map {.split}` slide whose left column lists that day's `{.section-header}` topics and whose right column is the week's stop from `docs/assets/orange-line-map-stops/`.
 - Quarto revealjs HTML depends on the `*_files/` directories for styles to load properly on GitHub Pages.
 - Slides use SVGs and other vector formats whenever possible.
 - The previous Marp experiment is archived in `docs/slides/marp_archive/`. Run `docs/slides/marp_archive/build_all_marp.sh` to rebuild its HTML and PDF outputs.

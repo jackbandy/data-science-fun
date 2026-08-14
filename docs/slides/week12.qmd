@@ -16,7 +16,7 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
+# Week 12, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
 
 CS 418 · Week 12 · 🟠 Western 🟠
 
@@ -25,6 +25,26 @@ CS 418 · Week 12 · 🟠 Western 🟠
 # {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
 
 ---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 12, Day 1]{.eyebrow}
+
+- Graphs and Relationships
+- Community Detection
+- Network Diffusion
+- Virus Propagation
+:::
+
+![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
+
+:::
+
+---
+
 
 # Graphs and Relationships {.section-header}
 
@@ -564,6 +584,23 @@ Jack Bandy
 
 ---
 
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 12, Day 2]{.eyebrow}
+
+- Network Immunization
+:::
+
+![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
+
+:::
+
+---
+
+
 # Network Immunization {.section-header}
 
 ---
@@ -630,7 +667,7 @@ Community detection showing key nodes *(placeholder)*
 :::
 
 ::: {.credits}
-- GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week12.md>.
+- GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week12.qmd>.
 - Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart. Network analysis content heavily adapted from Gonzalo Bello's **CS 418 - Lecture Slides 20 - Network Analysis.pdf**.
 - Slide deck built with [Quarto](https://quarto.org/) revealjs.
 - Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

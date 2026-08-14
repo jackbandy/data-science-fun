@@ -14,7 +14,7 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
+# Week 9, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
 
 CS 418 · Week 9 · 🟠 Halsted 🟠
 
@@ -23,6 +23,23 @@ CS 418 · Week 9 · 🟠 Halsted 🟠
 # {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
 
 ---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 9, Day 1]{.eyebrow}
+
+- Decision Trees
+:::
+
+![](../assets/orange-line-map-stops/stop10-halsted.svg){.figure alt="Orange Line map with the Halsted stop marked, the Week 9 stop"}
+
+:::
+
+---
+
 
 # Decision Trees {.section-header}
 
@@ -48,6 +65,24 @@ Jack Bandy
 2026
 
 ---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 9, Day 2]{.eyebrow}
+
+- Support Vector Machines
+- Kernels
+:::
+
+![](../assets/orange-line-map-stops/stop10-halsted.svg){.figure alt="Orange Line map with the Halsted stop marked, the Week 9 stop"}
+
+:::
+
+---
+
 
 # Support Vector Machines {.section-header}
 
@@ -83,7 +118,7 @@ Jack Bandy
 
 # Sources {.sources}
 
-1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week9.md>.
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week9.qmd>.
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

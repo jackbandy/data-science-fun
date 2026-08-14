@@ -22,13 +22,28 @@ Jack Bandy
 
 ---
 
-## Week 1, Day 1
 
-- Course introduction / syllabus overview
-- Data science lifecycle
-- The DIKW pyramid
-- Statistics review
+## Map {.split}
 
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 1, Day 1]{.eyebrow}
+
+- Course Logistics
+- Defining Data Science
+- Asking Good Questions
+- Data Science Lifecycle
+- The DIKW Pyramid
+- The Treachery of Images
+- Your Quiz on Wednesday
+:::
+
+![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 1 stop"}
+
+:::
+
+---
 
 # Course Logistics {.section-header}
 
@@ -1197,21 +1212,27 @@ Jack Bandy and Elda Shatro
 2026
 
 
-# Statistics Review {.section-header}
 
+## Map {.split}
 
-## Map
+::: {.split-content .narrow-aside}
 
-Four things we'll cover:
+::: {}
+[Week 1, Day 2]{.eyebrow}
 
-::: {.incremental}
-1. **The role of statistics in data science**
-2. **Probability**
-3. **Distributions**
-4. **Sampling**
+- Statistics Review
+- Asking Questions
+:::
+
+![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 1 stop"}
+
 :::
 
 ---
+
+# Statistics Review {.section-header}
+
+
 
 ## Statistics in Data Science
 
@@ -1780,7 +1801,7 @@ Take a question you're curious about. What type is it? What does it presuppose? 
 
 # Sources {.sources}
 
-1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week1.md>.
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week1.qmd>.
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/), [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the [Berkeley DS 100 team](https://ds100.org/), [Marine Carpuat](https://www.cs.umd.edu/~marine/), and [Brian Ziebart](https://cs.uic.edu/profiles/brian-ziebart).
 3. [Elda Shatro](https://github.com/eldashatro4) contributed to these slides.
 4. Slide deck built with [Quarto](https://quarto.org/) revealjs.

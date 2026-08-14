@@ -14,7 +14,7 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
+# Week 8, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
 
 CS 418 · Week 8 · 🟠 Roosevelt 🟠
 
@@ -23,6 +23,23 @@ CS 418 · Week 8 · 🟠 Roosevelt 🟠
 # {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
 
 ---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 8, Day 1]{.eyebrow}
+
+- Linear Regression
+:::
+
+![](../assets/orange-line-map-stops/stop09-roosevelt.svg){.figure alt="Orange Line map with the Roosevelt stop marked, the Week 8 stop"}
+
+:::
+
+---
+
 
 # Linear Regression {.section-header}
 
@@ -131,6 +148,23 @@ Jack Bandy
 
 ---
 
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 8, Day 2]{.eyebrow}
+
+- Intro to Classification
+:::
+
+![](../assets/orange-line-map-stops/stop09-roosevelt.svg){.figure alt="Orange Line map with the Roosevelt stop marked, the Week 8 stop"}
+
+:::
+
+---
+
+
 # Intro to Classification {.section-header}
 
 ---
@@ -169,7 +203,7 @@ Anchor this against regression, which the class has just seen: the same structur
 
 # Sources {.sources}
 
-1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week8.md>.
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week8.qmd>.
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

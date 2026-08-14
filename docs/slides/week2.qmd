@@ -14,7 +14,7 @@ Jack Bandy
 
 ---
 
-# Topic Title Placeholder {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
+# Week 2, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
 
 CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
 
@@ -23,6 +23,24 @@ CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
 # {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
 
 ---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 2, Day 1]{.eyebrow}
+
+- Python Foundations
+- Dataframes and Polars
+:::
+
+![](../assets/orange-line-map-stops/stop02-lasalle-van-buren.svg){.figure alt="Orange Line map with the LaSalle/Van Buren stop marked, the Week 2 stop"}
+
+:::
+
+---
+
 
 # Python Foundations {.section-header}
 
@@ -65,6 +83,23 @@ Jack Bandy
 
 ---
 
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 2, Day 2]{.eyebrow}
+
+- Obtaining Data
+:::
+
+![](../assets/orange-line-map-stops/stop02-lasalle-van-buren.svg){.figure alt="Orange Line map with the LaSalle/Van Buren stop marked, the Week 2 stop"}
+
+:::
+
+---
+
+
 # Obtaining Data {.section-header}
 
 ---
@@ -83,7 +118,7 @@ Jack Bandy
 
 # Sources {.sources}
 
-1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week2.md>.
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week2.qmd>.
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

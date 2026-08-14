@@ -39,28 +39,36 @@ Jack Bandy
 2026
 
 
-# Visualization Basics {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
+# Week 5, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
+
+<h2>Visualization Basics</h2>
 
 CS 418 · Week 5 · 🟠 Clark/Lake 🟠
 
 ---
 
 
-## Map
-
-Placeholder content for Week 5.
-
-- Visualization goals
-- Exploratory and Persuasive Visualization
-- Dimensionality
-- Basic chart types: pie, donut, bar, etc.
-- Encodings
-- Chart selection
-
----
 
 ## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
 
+
+
+## Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 5, Day 1]{.eyebrow}
+
+- Dimensionality
+- Pie & Donut Charts
+:::
+
+![](../assets/orange-line-map-stops/stop05-clark-lake.svg){.figure alt="Orange Line map with the Clark/Lake stop marked, the Week 5 stop"}
+
+:::
+
+---
 
 # Dimensionality {.section-header}
 
@@ -502,6 +510,23 @@ Jack Bandy
 2026
 
 ---
+
+## Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 5, Day 2]{.eyebrow}
+
+- ggplot demo
+:::
+
+![](../assets/orange-line-map-stops/stop05-clark-lake.svg){.figure alt="Orange Line map with the Clark/Lake stop marked, the Week 5 stop"}
+
+:::
+
+---
+
 
 # ggplot demo {.section-header}
 

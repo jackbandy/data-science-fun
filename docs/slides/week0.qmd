@@ -22,7 +22,9 @@ Jack Bandy
 
 This is a demo slide deck for reference and experimentation.
 
-# Harold Washington Library {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
+# Week 0, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
+
+<h2>Harold Washington Library</h2>
 
 CS 418 · Week 0 · 🟠 Harold Washington Library 🟠
 
@@ -30,6 +32,22 @@ CS 418 · Week 0 · 🟠 Harold Washington Library 🟠
 
 ## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
 
+## Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 0, Day 1]{.eyebrow}
+
+- Common Slide Templates
+- Image & Embed Slides
+:::
+
+![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 0 stop"}
+
+:::
+
+---
 
 # Common Slide Templates {.section-header}
 
@@ -574,6 +592,33 @@ Anything cited above is collected here by the `#refs` div:
 ::: {#refs}
 :::
 
+
+# Week 0, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
+
+<h2>TODO</h2>
+
+Jack Bandy
+2026
+
+---
+
+## Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+[Week 0, Day 2]{.eyebrow}
+
+<!-- TODO: Day 2 has no content yet -- move this title slide and map to
+     wherever the split belongs, then fill in the agenda. -->
+- TODO
+:::
+
+![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 0 stop"}
+
+:::
+
+---
 
 # Sources {.sources}
 

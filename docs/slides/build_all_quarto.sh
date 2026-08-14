@@ -6,7 +6,7 @@ set -euo pipefail
 # If CHROME is set, it will be used as the Chrome/Chromium executable for PDF export.
 # Set BUILD_PDFS=true to also generate PDF files.
 # Set SKIP_HTML=true to skip HTML rendering and export PDFs from existing HTML.
-# Set RENDER_SLIDES="week1.md week5.qmd" to render only specific decks.
+# Set RENDER_SLIDES="week1.qmd week5.qmd" to render only specific decks.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTPUT_DIR="${1:-$SCRIPT_DIR}"
@@ -95,7 +95,7 @@ fi
 
 SLIDE_FILES=()
 if [[ -n "${RENDER_SLIDES:-}" ]]; then
-  # Selective build: RENDER_SLIDES is a space-separated list of filenames (e.g. "week1.md week5.qmd")
+  # Selective build: RENDER_SLIDES is a space-separated list of filenames (e.g. "week1.qmd week5.qmd")
   for name in $RENDER_SLIDES; do
     candidate="$SCRIPT_DIR/$name"
     if [[ -f "$candidate" ]]; then
