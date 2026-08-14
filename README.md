@@ -93,6 +93,19 @@ Files that were substantially modified by LLMs will say so in the header, e.g. `
 
 All other materials hand-typed with 🩵 in Chicago, IL.
 
+## License
+
+By default, the materials here are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/) (CC BY-NC-SA 4.0). The full legal code is in [`LICENSE`](LICENSE).
+
+Their purpose is to educate, so feel free to use them, remix them, teach with them, etc., given:
+
+- **Attribution** — credit the source, e.g. *"Data Science the Fun Way," https://github.com/jackbandy/data-science-fun*
+	- Of course, credit the upstream source if you're using something that this repo got from somewhere else
+- **NonCommercial** — not for commercial or profit-driven use. plz.
+- **ShareAlike** — distribute your adaptations under this license
+
+**Third-party material keeps its own terms.** The decks include some photos, figures, and diagrams from other people under their own licenses (various CC BY-SA versions, a few images used under fair use). Those are credited on each deck's Sources slide and are not covered by the blanket license above.
+
 ---
 
 # Technical details
