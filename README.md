@@ -221,6 +221,7 @@ push to main
 
 - **The schedule lives in one place: `docs/_data/schedule.csv`.** Jekyll reads it as `site.data.schedule` for the homepage table; `schedule.lua` expands the empty ` ```schedule ` block in `syllabus.md` into the same rows for Pandoc.
 	- There is no sync script and no generated table committed anywhere.
+	- **Add new columns only at the end.** `schedule.lua` validates the header positionally for the first five columns (`Week`, `Class Day`, `Topic`, `Before Class`, `In Class`) and renders only those; Jekyll addresses columns by name. Trailing columns like `Date` and `Notes` are carried in the CSV and ignored by both tables. Inserting a column before `In Class` fails the syllabus build.
 	- Week-to-station labels for the homepage dots are in `docs/_data/stations.yml`.
 - The text source is `syllabus_source/syllabus.md`. Its YAML block holds the header (course title, college, credit hours); the templates render it. `underline.lua` handles its `[...]{.underline}` spans.
 - The build needs `pandoc`, `xelatex`, and `rsvg-convert`. The workflow apt-installs them and caches `docs/syllabus/`, so unrelated pushes skip the TeX Live install and keep the existing "created" timestamp.

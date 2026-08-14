@@ -36,7 +36,7 @@ Jack Bandy
     - Data Science Lifecycle
     - The DIKW Pyramid
     - The Treachery of Images
-    - Your Quiz on Wednesday
+    - Answers to your Quiz on Wednesday
 :::
 
 ![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 1 stop"}
@@ -44,6 +44,25 @@ Jack Bandy
 :::
 
 ---
+
+## Meet Your Elbow Partner(s)! {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+Turn to the people on either side of you:
+
+1. Your name
+2. Favorite meal/food you ate in the last week
+3. Why you're at UIC
+4. Why you're in this class
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
 
 # Course Logistics {.section-header}
 
@@ -83,6 +102,10 @@ UIC's elevated walkways connected campus buildings at the second floor until the
 
 ## In-Class Tech
 
+::: {.caption}
+Evidence reviewed in the [syllabus](../syllabus/): [Flanigan et al. (2023)](https://doi.org/10.1007/s10648-023-09780-y); [Sana, Weston, & Cepeda (2013)](https://doi.org/10.1016/j.compedu.2012.10.003).
+:::
+
 [TLDR: NO PHONES, NO LAPTOPS — TAKE NOTES ON PAPER]{.eyebrow}
 
 ::::: {.columns}
@@ -90,34 +113,50 @@ UIC's elevated walkways connected campus buildings at the second floor until the
 :::: {.column width="56%"}
 ::: {.incremental}
 ::: {.dense-smaller}
-- The purpose of our meeting time is **to learn**
+- The purpose of our meeting time is to learn together
 - So **by default, all class periods are free from cell phones, laptops, and tablets**
 - I review the latest studies/evidence every year
-- I looked at the evidence in Summer 2026: in-class device use is **detrimental for learning**, even when you feel accustomed to multitasking
+- I looked at the evidence again in Summer 2026
 - Sometimes we *will* use devices for an activity, usually at the end of class
 - Using a phone/laptop has a **chain reaction** — it distracts the people around you too
-- You get a **worksheet** most sessions: guided notes, and a place to write down questions
-- I know this is werid/unusual
+- You will get a **worksheet** most sessions: guided notes, and a place to write down questions
+- I know this is weird/unusual
 - I will **revisit this policy** with you during the semester
 :::
 :::
 ::::
 
 :::: {.column width="40%"}
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO — IMAGE]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** — image goes here
-:::
-:::
+<img class="figure" src="../assets/lattice/question2.png" alt="A student in a lecture hall raising her hand over an open laptop, with classmates seated in the rows around her">
 ::::
 
 :::::
 
+---
+
+## Benefits of Paper
+
 ::: {.caption}
-Evidence reviewed in the [syllabus](../syllabus/): Flanigan et al. (2023); Sana, Weston, & Cepeda (2013).
+Craik & Lockhart (1972); Mueller & Oppenheimer (2014); Morehead, Dunlosky, & Rawson (2019). In-class device evidence is in the [syllabus](../syllabus/).
 :::
+
+
+::: {.incremental}
+::: {.dense-smaller}
+- To keep a memory, you have to **encode** it
+    - select, condense, connect it to what you already know
+- Handwriting is too slow to transcribe
+    - you are forced to decide **what matters**
+    - deciding is learning!
+    - deeper processing, more durable memory (Craik & Lockhart, 1972)
+- Your **worksheet** has a place for questions — ask them out loud; someone else is wondering too
+- A page has no notifications and no other tabs :-)
+- One famous longhand study (Mueller & Oppenheimer, 2014) did not fully replicate (Morehead et al., 2019)
+- But generally: distractions hurt learning
+    - writing/processing/thinking helps
+:::
+:::
+
 
 ---
 
@@ -165,19 +204,7 @@ You choose where it fits. Still reduced speed, full attention. Be ready to justi
 
 ---
 
-## The Benefits of Paper
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK**
-:::
-:::
-
-<!-- TODO: handwritten notes, worksheets, sketch charts first, etc. -->
-
----
 
 ## Schedule Overview
 
@@ -190,7 +217,7 @@ You choose where it fits. Still reduced speed, full attention. Be ready to justi
 | **1** | Intro; statistics review; the lifecycle |
 | **2–3** | Python, Polars, obtaining & wrangling data |
 | **4** | Exploratory analysis; descriptive statistics |
-| **5–6** | Visualization |
+| **5–6** | Visualization!!!! |
 | **7** | Hypothesis testing; estimation & sampling |
 | **8–9** | Regression; classification; trees; SVMs |
 | **10** | Clustering; PCA; model evaluation |
@@ -463,15 +490,15 @@ Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy
 
 ## Why Data Science?
 
+::: {.caption}
+Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-day)
+:::
+
 :::: {style="max-width:88%; margin:0 auto; height:100%; display:flex; flex-direction:column; justify-content:flex-start; padding-top:2%;"}
 
 ::: {style="background:#001E62; border-radius:20px; padding:1.2em 0.9em; text-align:center;"}
 [~400 million]{style="display:block; font-size:3em; font-weight:800; color:#f9461c; line-height:1.05;"}
 [terabytes of data created — every single day]{style="font-size:1.1em; color:#ffffff;"}
-:::
-
-::: {.caption}
-Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-day)
 :::
 
 ::: {.dense-smaller style="text-align:center; margin-top:0.6em;"}
@@ -607,7 +634,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 ::: {.incremental}
 - What determines the stability of atoms?
 - What is the molecular structure of caffeine?
-- Does P = NP?
+- Does $P = NP$?
 - "Pure basic research"
 :::
 
@@ -799,24 +826,6 @@ From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework
 
 ::: {.caption}
 From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework for Curriculum Transformation in Quantum Information Science and Technology Education"](https://doi.org/10.1088/1361-6404/ad7e60), *European Journal of Physics* 45(6), 2024.
-:::
-
----
-
-## Another Cycle: Design {.image-frame-slide}
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** — `../assets/lifecycle/design-thinking.webp`
-:::
-:::
-
-<!-- <img src="../assets/lifecycle/FILENAME" alt="TK"> -->
-
-::: {.caption}
-[TK — source]{style="color:#f9461c;"}
 :::
 
 ---
@@ -1228,7 +1237,6 @@ Jack Bandy and Elda Shatro
 
 :::
 
----
 
 # Statistics Review {.section-header}
 
@@ -1443,6 +1451,10 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 
 ## Coin Flip Odds
 
+::: {.caption}
+Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
+:::
+
 ::::: {.columns}
 
 :::: {.column width="56%"}
@@ -1464,10 +1476,6 @@ ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(36
 ::::
 
 :::::
-
-::: {.caption}
-Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
-:::
 
 ---
 
@@ -1882,3 +1890,4 @@ Discuss with your elbow partner(s):
 22. Bradley Efron, ["Why Isn't Everyone a Bayesian?"](https://doi.org/10.1080/00031305.1986.10475342), *The American Statistician* 40(1), 1986, pp. 1–5.
 23. UIC elevated walkway photo courtesy University of Illinois Chicago, via Hillary Bird, ["Walk through UIC's architectural history"](https://today.uic.edu/walk-through-uics-architectural-history/), *UIC Today*, June 9, 2025; the article prints no photographer credit, but the filename points to architectural photographer Orlando Cabanban.
 24. The "Asking Questions" section follows [Chapter 2: Ethics in Asking Questions](../ethics-in-data-science/book/02-ethics-in-asking-questions.html), which draws on the *[Stanford Encyclopedia of Philosophy](https://plato.stanford.edu/entries/questions/)* entry on questions, Charles B. Cross, ["Explanation and the Theory of Questions"](https://doi.org/10.1007/BF00385722), *Erkenntnis* 34(2), 1991, pp. 237–260, and Wayne C. Booth et al., *The Craft of Research*, 5th ed., University of Chicago Press, 2024.
+25. Note-taking evidence on "The Benefits of Paper": Fergus I. M. Craik and Robert S. Lockhart, ["Levels of Processing: A Framework for Memory Research"](https://doi.org/10.1016/S0022-5371(72)80001-X), *Journal of Verbal Learning and Verbal Behavior* 11(6), 1972, pp. 671–684; Pam A. Mueller and Daniel M. Oppenheimer, ["The Pen Is Mightier Than the Keyboard"](https://doi.org/10.1177/0956797614524581), *Psychological Science* 25(6), 2014, pp. 1159–1168; and Kayla Morehead, John Dunlosky, and Katherine A. Rawson, ["How Much Mightier Is the Pen than the Keyboard for Note-Taking? A Replication and Extension of Mueller and Oppenheimer (2014)"](https://doi.org/10.1007/s10648-019-09468-2), *Educational Psychology Review* 31(3), 2019, pp. 753–780.

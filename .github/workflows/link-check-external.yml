@@ -31,12 +31,18 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
+      # --exclude '^/' drops root-relative links (docs/security.md's
+      # "/.well-known/security.txt", and the masthead nav). They only resolve
+      # against the built site, and deploy-pages.yml already checks them there
+      # with --root-dir _site. Checked here they can only ever error. It is set
+      # here rather than in .lycheeignore because that file is shared with
+      # deploy-pages.yml, where these links must keep being checked.
+      #
       # Two of the --exclude-path entries below are not about link rot:
       #
       # docs/_includes/masthead.html is a Jekyll template whose nav links are
-      # root-relative ("/", "/slides/", "/faq.html"). They only resolve against
-      # the built site, and deploy-pages.yml already checks them there with
-      # --root-dir _site. Checked here they can only ever error.
+      # root-relative; it stays excluded because the file is otherwise all
+      # template syntax.
       #
       # docs/assets/fonts holds vendored upstream READMEs. Their links are the
       # font authors' (including a typo'd "cyreal.rog" that ships upstream),
@@ -54,6 +60,7 @@ jobs:
             --timeout 20
             --max-retries 2
             --accept 200..=299,403,429
+            --exclude '^/'
             --exclude-path docs/ethics-in-data-science/book
             --exclude-path docs/slides/marp_archive
             --exclude-path docs/slides/_libs

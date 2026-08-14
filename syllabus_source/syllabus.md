@@ -252,6 +252,17 @@ In case you are curious, here is some of the evidence I looked at during Summer 
 - Sana, Weston, & Cepeda (2013). Laptop multitasking hinders classroom learning for both users and nearby peers. *Computers & Education*. [doi.org/10.1016/j.compedu.2012.10.003](https://doi.org/10.1016/j.compedu.2012.10.003)
     - "...multitasking on a laptop poses a significant distraction to both users and fellow students and can be detrimental to comprehension of lecture content."
 
+A related (and somewhat separate) question is whether writing notes by hand is better than typing them, *even without* any distraction. The evidence is somewhat mixed:
+
+- Craik & Lockhart (1972). Levels of processing: A framework for memory research. *Journal of Verbal Learning and Verbal Behavior*. [doi.org/10.1016/S0022-5371(72)80001-X](https://doi.org/10.1016/S0022-5371(72)80001-X)
+    - The basic theory: what makes a memory durable is how deeply you processed the material
+- Mueller & Oppenheimer (2014). The pen is mightier than the keyboard: Advantages of longhand over laptop note taking. *Psychological Science*. [doi.org/10.1177/0956797614524581](https://doi.org/10.1177/0956797614524581)
+    - "...laptop note takers' tendency to transcribe lectures verbatim rather than processing information and reframing it in their own words is detrimental to learning."
+- Morehead, Dunlosky, & Rawson (2019). How much mightier is the pen than the keyboard for note-taking? A replication and extension of Mueller and Oppenheimer (2014). *Educational Psychology Review*. [doi.org/10.1007/s10648-019-09468-2](https://doi.org/10.1007/s10648-019-09468-2)
+    - A direct replication that did not fully reproduce the longhand advantage: "concluding which method is superior for improving the functions of note-taking seems premature."
+
+This is one reason I am open to you taking notes on a device, as long as it can sit flat on the table...
+
 
 ## [Academic Integrity]{.underline}
 
