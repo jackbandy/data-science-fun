@@ -22,7 +22,7 @@ Jack Bandy
 
 ---
 
-## Week 1
+## Week 1, Day 1
 
 - Course introduction / syllabus overview
 - Data science lifecycle
@@ -43,6 +43,16 @@ Full syllabus: <https://dodatascience.fun/syllabus/>
 
 ---
 
+## Things are Rarely Perfect on the First Attempt {.image-frame-slide}
+
+<img src="../assets/uic-walkways/Cabanban_20296_02.jpg" alt="UIC's elevated concrete walkway spine looking toward the Great Court, with center staircases and granite bollards, before the walkways were removed in the 1990s">
+
+::: {.caption}
+UIC's elevated walkways connected campus buildings at the second floor until they were removed in the 1990s. Photo courtesy University of Illinois Chicago, via [UIC Today](https://today.uic.edu/walk-through-uics-architectural-history/); likely by architectural photographer Orlando Cabanban.
+:::
+
+---
+
 ## Attendance Policy
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
@@ -58,15 +68,41 @@ Full syllabus: <https://dodatascience.fun/syllabus/>
 
 ## In-Class Tech
 
+[TLDR: NO PHONES, NO LAPTOPS — TAKE NOTES ON PAPER]{.eyebrow}
+
+::::: {.columns}
+
+:::: {.column width="56%"}
+::: {.incremental}
+::: {.dense-smaller}
+- The purpose of our meeting time is **to learn**
+- So **by default, all class periods are free from cell phones, laptops, and tablets**
+- I review the latest studies/evidence every year
+- I looked at the evidence in Summer 2026: in-class device use is **detrimental for learning**, even when you feel accustomed to multitasking
+- Sometimes we *will* use devices for an activity, usually at the end of class
+- Using a phone/laptop has a **chain reaction** — it distracts the people around you too
+- You get a **worksheet** most sessions: guided notes, and a place to write down questions
+- I know this is werid/unusual
+- I will **revisit this policy** with you during the semester
+:::
+:::
+::::
+
+:::: {.column width="40%"}
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+[TODO — IMAGE]{.eyebrow .todo}
 
 ::: {.dense}
-- **TK** — laptops, phones, etc. during class...
+- **TK** — image goes here
 :::
 :::
+::::
 
-<!-- TODO: when laptops are open vs. closed -->
+:::::
+
+::: {.caption}
+Evidence reviewed in the [syllabus](../syllabus/): Flanigan et al. (2023); Sana, Weston, & Cepeda (2013).
+:::
 
 ---
 
@@ -77,6 +113,40 @@ Full syllabus: <https://dodatascience.fun/syllabus/>
 ::: {.caption}
 From Colleen McClain, Monica Anderson, Olivia Sidoti, and William Bishop, ["How Teens Use and View AI"](https://www.pewresearch.org/internet/2026/02/24/how-teens-use-and-view-ai/), Pew Research Center, February 24, 2026.
 :::
+
+---
+
+## AI/LLM Use: Three Phases
+
+
+::::: {.columns}
+
+:::: {.column width="32%" .fragment}
+<img class="figure figure-sm" src="../assets/signals/signal-01-stop-stay.svg" alt="A CTA rail signal displaying two red lamps, one above the other: the double red aspect">
+
+::: {.dense-smaller}
+No AI/LLM use at all. Starting point/default.
+:::
+::::
+
+:::: {.column width="32%" .fragment}
+<img class="figure figure-sm" src="../assets/signals/signal-02-caution-main.svg" alt="A CTA rail signal displaying a red lamp above a yellow lamp: the red over yellow aspect">
+
+::: {.dense-smaller}
+Allowed for a specific, carefully-scoped set of tasks (not required). 
+:::
+::::
+
+:::: {.column width="32%" .fragment}
+<img class="figure figure-sm" src="../assets/signals/signal-09-caution-restricted.svg" alt="A CTA rail signal displaying two yellow lamps, one above the other: the double yellow aspect">
+
+::: {.dense-smaller}
+You choose where it fits. Still reduced speed, full attention. Be ready to justify/explain.
+:::
+::::
+
+:::::
+
 
 ---
 
@@ -211,7 +281,9 @@ THEMES
 
 ## A Dictionary Definition
 
-[START WITH THE FIRST WORD]{.eyebrow}
+::: {.caption}
+Definitions and etymology: Wiktionary, [*data*](https://en.wiktionary.org/wiki/data), [*datum*](https://en.wiktionary.org/wiki/datum) ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
+:::
 
 ::: {.fragment .strike}
 What is data?
@@ -229,36 +301,37 @@ What [**are**]{style="color:#f9461c;"} data?
 A [**datum**]{style="color:#001E62;"} is "a single recorded phenomenon, especially obtained by scientific work" literally *a thing that is given*.
 :::
 
-::: {.caption}
-Definitions and etymology: Wiktionary, [*data*](https://en.wiktionary.org/wiki/data), [*datum*](https://en.wiktionary.org/wiki/datum) ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
-:::
+
 
 ---
 
 
 ## What is Science?
 
-[NOW THE SECOND WORD]{.eyebrow}
+::: {.caption}
+Definitions and etymology: Wiktionary, [*science*](https://en.wiktionary.org/wiki/science) ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
+:::
 
 ::: {.fragment}
 [**science**]{style="color:#001E62;"} — from Latin *scientia*, "knowledge," from *scire*, "to know."
 :::
 
 ::: {.fragment}
-"The collective discipline of study or learning acquired through the [**scientific method**]{style="color:#f9461c;"}; the sum of knowledge gained from such methods and discipline."
+"The collective discipline of study or learning acquired through the [**scientific method**]{style="color:#f9461c;"}"
 :::
 
 ::: {.fragment}
-What does that make [**data science**]{style="color:#001E62;"}? Not "the science of data," mores: [**knowing, by way of things/data we are given**]{style="color:#f9461c;"}.
+"the sum of knowledge gained from such methods and discipline."
+:::
+
+::: {.fragment}
+What does that make [**data science**]{style="color:#001E62;"}? Not "the science of data," moreso: [**knowing, by way of things/data we are given**]{style="color:#f9461c;"}.
 :::
 
 ::: {.fragment}
 *Given* by whom? Chosen, measured, and recorded by a human being with situated knowledge (we'll come back to that).
 :::
 
-::: {.caption}
-Definitions and etymology: Wiktionary, [*science*](https://en.wiktionary.org/wiki/science) ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
-:::
 
 ---
 
@@ -288,7 +361,7 @@ It uses techniques from [**computer science**]{style="color:#c0392b;"} and [**st
 :::::
 
 ::: {.caption}
-Source: Drew Conway, The Data Science Venn Diagram (2010)
+Based on: Drew Conway, The Data Science Venn Diagram (2010)
 :::
 
 ---
@@ -298,7 +371,7 @@ Source: Drew Conway, The Data Science Venn Diagram (2010)
 <img src="../assets/week1-intro-data-science/venn-rgb.svg" alt="Venn diagram: computer science, math and statistics, and domain knowledge overlapping at data science">
 
 ::: {.caption}
-Source: Drew Conway, [The Data Science Venn Diagram](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram) (2010)
+Based on: Drew Conway, [The Data Science Venn Diagram](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram) (2010)
 :::
 
 ---
@@ -517,9 +590,10 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 :::: {.column width="46%"}
 ::: {.incremental}
+- What determines the stability of atoms?
 - What is the molecular structure of caffeine?
-- ...
-- Examples TK
+- Does P = NP?
+- "Pure basic research"
 :::
 
 
@@ -537,7 +611,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-## Edison's Quadrant: Use Only
+## Edison's Quadrant: Uses, Applications
 
 ::::: {.columns}
 
@@ -546,9 +620,6 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 - Which cold brew recipe do guests rate highest?
 - Which version of the headline gets more clicks?
 - What is the fastest route to CDRLC right now?
-:::
-
-::: {.incremental}
 - **Less about "why."**
 :::
 ::::
@@ -571,7 +642,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 :::: {.column width="46%"}
 ::: {.incremental}
-- Do noise machines help people sleep? What is it about the noise that does it?
+- Do noise machines help people sleep? Why or why not?
 - How does the running plan influence people's performance?
 - Which bus stops have the longest wait times?
 :::
@@ -605,6 +676,15 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 - **No real, curious human wants just "yes" or "no."**
 - Data scientists can *explain* answers in detail.
 - (See mini-book, [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html)).
+:::
+
+---
+
+## Your Turn: Questions You're Curious About {.prompt-slide}
+
+
+::: {.prompt-question}
+What other questions are you curious about that you think could be answered/addressed with data?
 :::
 
 
@@ -669,7 +749,7 @@ Sam Lau, Joey Gonzalez, and Deb Nolan, ["The Data Science Lifecycle"](https://le
 
 ## Another Data Science Cycle {.image-frame-slide}
 
-<img src="../assets/lifecycle/belo-oneil-lifecycle-remix-v3.svg" alt="The data science process drawn as a larger chain: a problem in the world leads to data collection, data preparation, and clean data; clean data feeds both data exploration and data modeling and analysis; those lead to evaluation and presentation, then to decisions and a data product, which loop back to the world and to the original problem.">
+<img src="../assets/lifecycle/belo-oneil-lifecycle-remix-v4.svg" alt="The data science process drawn as a larger chain: a problem in the world leads to data collection, data preparation, and clean data; clean data feeds both data exploration and data modeling and analysis; those lead to evaluation and presentation, then to decisions and a data product, which loop back to the world and to the original problem.">
 
 ::: {.caption}
 Adapted from Cathy O'Neil and Rachel Schutt, *[Doing Data Science](https://www.oreilly.com/library/view/doing-data-science/9781449363871/)* (O'Reilly, 2013), and from Gonzalo Bello Lander.
@@ -730,7 +810,7 @@ From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework
 
 
 ::: {.prompt-question}
-Other work cycles have you seen or used?
+Other work cycles have you seen or used in work/life?
 :::
 
 
@@ -1051,9 +1131,67 @@ Different types of screens have different pixel / sub pixel shapes. Source: Pete
 :::
 
 
+# Your Quiz on Wednesday {.section-header}
+
+
+## Your Quiz on Wednesday
+
+::: {.incremental}
+- A "systems check" for PrairieLearn
+- **Ten questions**
+- Two sections
+	- **course logistics**
+	- **data science basics**
+- Mostly true/false, one "select all that apply," one fill-in-the-blank, one short answer
+- **Everything on it was covered today.**
+:::
+
+
+---
+
+## Section 1: Course Logistics
+
+::: {.dense-smaller}
+| You should be able to say... | We covered it under... |
+|:--|:--|
+| whether laptops are always allowed in class | In-Class Tech |
+| whether AI/LLM use is allowed on every exercise | Syllabus Overview |
+| whether you are encouraged to ask questions in class | The Benefits of Paper |
+:::
+
+::: {.aside-note}
+All three are in the [syllabus](../syllabus/) and the [FAQ](../faq.html) too.
+:::
+
+---
+
+## Section 2: Data Science Basics
+
+::: {.dense-smaller}
+| You should be able to say... | We covered it under... |
+|:--|:--|
+| whether "data" is singular or plural | A Dictionary Definition |
+| how data science treats domain knowledge | What is Data Science? |
+| whether the lifecycle only moves forward | Source for the Lifecycle |
+| which regions are labeled in Conway's Venn diagram | The Data Science Venn Diagram |
+| the one word for tracing data back to its sources | Provenance |
+| the axes of the 2×2 matrix, explain one quadrant | Pasteur's Quadrant |
+:::
+
+---
+
+
+## Your Turn: Questions about the Quiz? {.prompt-slide}
+
+
+::: {.prompt-question}
+Anything you want to go over before Wednesday?
+:::
+
+
 # Week 1, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop01-harold-washington-library-a.jpg" background-size="cover"}
 
-<h2>Statistics Review</h2>
+<h2>Statistics Review &amp; Asking Questions</h2>
 
 Jack Bandy and Elda Shatro
 2026
@@ -1381,10 +1519,263 @@ $$P(\text{two heads}) = E[p^{2}] = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485
 - **Bayesian**: probability = degree of belief, updated as evidence arrives
 - Efron (1986) asked "Why Isn't Everyone a Bayesian?" — an active contest at the time
 - McElreath (2020): the debate has largely been **subsumed by causal inference**
-- Even so: you still have to choose a prior.
+- Even so: you still have to choose prior belief(s)
 - One of many examples in data science where there is not always a single correct option
 :::
 
+
+# Asking Questions {.section-header}
+
+
+## Carl Sagan {.quote-slide}
+
+> There are naïve questions, tedious questions, ill-phrased questions, questions put after inadequate self-criticism. But every question is a cry to understand the world.
+
+::: {.attribution}
+Carl Sagan
+:::
+
+::: {.quote-source}
+*The Demon-Haunted World: Science as a Candle in the Dark* (1995).
+:::
+
+---
+
+## Susanne Langer {.quote-slide}
+
+> The way a question is asked limits and disposes the ways in which any answer to it — right or wrong — may be given.
+
+::: {.attribution}
+Susanne Langer
+:::
+
+::: {.quote-source}
+*Philosophy in a New Key* (1942).
+:::
+
+---
+
+## Which Question is Better?
+::: {.caption}
+Examples from Booth et al., *The Craft of Research* (2024).
+:::
+
+::: {.incremental}
+- "Are there ultimate particles?"
+- "Was Abraham Lincoln's right thumb longer than his nose?"
+- Both are concrete and answerable
+- One leaves a **problem** unsolved if we skip it.
+:::
+
+
+
+---
+
+## Where Questions Come From
+
+::: {.incremental}
+- "Ask a question" is one of two entry points to the lifecycle (the other: obtain data)
+- Research questions often start with a "mental itch"
+- A **topic** only becomes research when it provokes a specific **question**
+- Four arrows point back to "ask a question": you will revise it
+- TODO: add lifecycle diagram with "ask a question" highlighted
+:::
+
+---
+
+## Basic Types of Questions
+
+::: {.caption}
+Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
+:::
+
+::: {.incremental}
+- **"Whether"** — a finite set of direct answers (yes/no, multiple choice)
+- **"Which"** — seeks a person, thing, or value; possibly infinite answers
+- **"Why"** — asks for an explanation, not just a fact
+- **Indirect ("embedded")** — implied by a larger statement ("Bob knows who spoke to Mary")
+- TODO: build out the full table with examples and answer spaces
+:::
+
+
+
+---
+
+## What About "How" Questions?
+
+::: {.incremental}
+- Paraphrase test: if "how" can be reworded as "**in what way**," it is explanation-seeking (a "why" question)
+- Otherwise it asks for a value (a "which" question)
+- "How far is it to Cleveland?" (a distance)
+- "How does screen time influence mental health?" (an explanation)
+- TODO: add Cross's seven "ways" (by what road, in what manner, by what method, ...)
+:::
+
+---
+
+## Presuppositions
+
+::: {.incremental}
+- A **presupposition** is a background claim that must be true for the question to have a meaningful answer
+- "Who was the Roman emperor in 2020?"
+- Presupposes an active Roman Empire
+- Name your presuppositions!
+:::
+
+---
+
+## Contrast Classes
+
+::: {.incremental}
+- Explanatory questions often presuppose a set of alternatives
+	- "compared to **what**?"
+- "How do DNA molecules (vs. benzene and hexane) replicate?"
+	- only one is true
+- "How do reptiles (vs. mammals and birds) reproduce?"
+	- every member is true
+- Each "contrast class" implies a different comparison group, study design, and dataset
+- TODO: an example question from the class w/ contrast classes
+:::
+
+---
+
+## Common Pitfalls
+
+::: {.incremental}
+- Naïve
+- Ill-phrased
+- Leading
+- Tedious
+- Settled, speculative, or dead-end
+- Invasive
+:::
+
+---
+
+## Naïve Questions
+
+::: {.incremental}
+- Naïve about a particular context or setting
+- Can also reveal assumptions "experts" have stopped considering
+- e.g. "Which NBA players are the best scorers?"
+	- points per game vs. efficiency, possession context
+:::
+
+---
+
+## Ill-Phrased Questions
+
+::: {.incremental}
+- Terms, scope, or possible answers are unclear
+- "Are students doing better this year?"
+	- which students, compared with when, by what measure?
+- "Is our museum's collection diverse?"
+	- diverse in who/what/when, counted how?
+- "Is news coverage biased?"
+	- in story selection, sourcing, or word choice?
+:::
+
+---
+
+## Leading Questions
+
+::: {.incremental}
+- Implies a preferred answer
+- "How much did the tutoring program raise test scores?"
+- "Everything tasting good over here?"
+:::
+
+---
+
+## Tedious Questions
+
+::: {.incremental}
+- Effort to answer is disproportionate to the value of the answer
+- Measurable details are not always meaningful
+- "How many times did each council member say the word 'budget'?"
+	- (e.g. but ignoring how they actually voted)
+- Compare: the triangle/pixel zoom from Day 1
+:::
+
+---
+
+## Settled, Speculative, and Dead-End Questions
+
+::: {.incremental}
+- **Settled** — already answered "well enough"
+	- replication still valuable
+- **Speculative** — no evidence could realistically settle it
+	- ("what if I-90 had never been built?")
+- **Dead end** — answerable and precise, but nothing follows
+	- ("how many bus stops face north?")
+:::
+
+---
+
+## Invasive Questions
+
+::: {.incremental}
+- Asks for information
+- Information sensitivity exceeds the context of the interaction
+- E.g. Weight at a job interview vs. weight at the DMV
+- Can become coercive when answers gate grades, jobs, housing, healthcare
+- Ask for the **least sensitive** data that can address the question
+- More on this when we get to obtaining data
+:::
+
+---
+
+## Temporality in Questions
+
+::: {.incremental}
+- **Descriptive** — what is happening?
+- **Predictive** — what will happen?
+- **Counterfactual** — what would have happened?
+:::
+
+---
+
+## Framing and Rhetoric
+
+::: {.incremental}
+- Questions embed values and narratives
+- "Objective" analysis is still rhetorical
+- The rhetoric of "just asking questions"
+- Data hubris: assume you might have missed something
+- TODO: ethos / pathos / logos
+:::
+
+---
+
+
+## The Question can be the Hard Part {.quote-slide}
+
+> In my opinion, the social sciences are the hard sciences.
+
+::: {.attribution}
+Michael Shermer
+:::
+
+::: {.quote-source}
+*The Mind of the Market* (2008).
+:::
+
+---
+
+## Your Turn: Revise a Question {.prompt-slide}
+
+
+::: {.prompt-question}
+Take a question you're curious about. What type is it? What does it presuppose? Which pitfall is it closest to?
+:::
+
+
+--
+
+## Quiz Time!
+
+- PrairieLearn
+- Week1 Quiz
 
 
 # Sources {.sources}
@@ -1411,3 +1802,5 @@ $$P(\text{two heads}) = E[p^{2}] = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485
 20. Pixel geometry comparison by Peter Halasz (Pengo), [*Pixel geometry 02*](https://commons.wikimedia.org/wiki/File:Pixel_geometry_02_Pengo.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 21. Coin toss photo by ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).
 22. Bradley Efron, ["Why Isn't Everyone a Bayesian?"](https://doi.org/10.1080/00031305.1986.10475342), *The American Statistician* 40(1), 1986, pp. 1–5.
+23. UIC elevated walkway photo courtesy University of Illinois Chicago, via Hillary Bird, ["Walk through UIC's architectural history"](https://today.uic.edu/walk-through-uics-architectural-history/), *UIC Today*, June 9, 2025; the article prints no photographer credit, but the filename points to architectural photographer Orlando Cabanban.
+24. The "Asking Questions" section follows [Chapter 2: Ethics in Asking Questions](../ethics-in-data-science/book/02-ethics-in-asking-questions.html), which draws on the *[Stanford Encyclopedia of Philosophy](https://plato.stanford.edu/entries/questions/)* entry on questions, Charles B. Cross, ["Explanation and the Theory of Questions"](https://doi.org/10.1007/BF00385722), *Erkenntnis* 34(2), 1991, pp. 237–260, and Wayne C. Booth et al., *The Craft of Research*, 5th ed., University of Chicago Press, 2024.
