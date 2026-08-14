@@ -28,15 +28,15 @@ Jack Bandy
 ::: {.split-content .narrow-aside}
 
 ::: {}
-[Week 1, Day 1]{.eyebrow}
-
-- Course Logistics
-- Defining Data Science
-- Asking Good Questions
-- Data Science Lifecycle
-- The DIKW Pyramid
-- The Treachery of Images
-- Your Quiz on Wednesday
+- Week 1: Harold Washington Library
+- Day 1
+    - Course Logistics
+    - Defining Data Science
+    - Pasteur's Quadrant
+    - Data Science Lifecycle
+    - The DIKW Pyramid
+    - The Treachery of Images
+    - Your Quiz on Wednesday
 :::
 
 ![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 1 stop"}
@@ -526,7 +526,7 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 
 
-# Asking Good Questions {.section-header}
+# Pasteur's Quadrant {.section-header}
 
 
 ## Pasteur's Quadrant: Blank Grid {.image-frame-slide}
@@ -1218,10 +1218,10 @@ Jack Bandy and Elda Shatro
 ::: {.split-content .narrow-aside}
 
 ::: {}
-[Week 1, Day 2]{.eyebrow}
-
-- Statistics Review
-- Asking Questions
+- Week 1: Harold Washington Library
+- Day 2
+    - Statistics Review
+    - Asking Questions
 :::
 
 ![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 1 stop"}
@@ -1584,27 +1584,19 @@ Examples from Booth et al., *The Craft of Research* (2024).
 ::: {.incremental}
 - "Are there ultimate particles?"
 - "Was Abraham Lincoln's right thumb longer than his nose?"
-- Both are concrete and answerable
-- One leaves a **problem** unsolved if we skip it.
+- Both are concrete and answerable!
 :::
 
 
 
 ---
 
-## Where Questions Come From
 
-::: {.incremental}
-- "Ask a question" is one of two entry points to the lifecycle (the other: obtain data)
-- Research questions often start with a "mental itch"
-- A **topic** only becomes research when it provokes a specific **question**
-- Four arrows point back to "ask a question": you will revise it
-- TODO: add lifecycle diagram with "ask a question" highlighted
-:::
+## Basic Types of Questions {.split}
 
----
+::: {.split-content .narrow-aside}
 
-## Basic Types of Questions
+::: {}
 
 ::: {.caption}
 Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
@@ -1616,6 +1608,12 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - **"Why"** — asks for an explanation, not just a fact
 - **Indirect ("embedded")** — implied by a larger statement ("Bob knows who spoke to Mary")
 - TODO: build out the full table with examples and answer spaces
+:::
+
+:::
+
+![](../assets/lattice/question2.png){.figure alt="A student in a lecture hall raising her hand, with classmates seated in the rows around her"}
+
 :::
 
 
@@ -1660,15 +1658,26 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 
 ---
 
-## Common Pitfalls
+## Common Pitfalls {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
 
 ::: {.incremental}
-- Naïve
-- Ill-phrased
-- Leading
-- Tedious
+- Naïve questions
+- Tedious questions
+- ill-phrased questions
+- Leading questions
 - Settled, speculative, or dead-end
-- Invasive
+- Invasive questions
+- "Gotcha" questions
+:::
+
+:::
+
+![](../assets/lattice/question2.png){.figure alt="A student in a lecture hall raising her hand, with classmates seated in the rows around her"}
+
 :::
 
 ---
@@ -1678,13 +1687,29 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 ::: {.incremental}
 - Naïve about a particular context or setting
 - Can also reveal assumptions "experts" have stopped considering
+- e.g. "Was Michael Jordan good at basketball?"
 - e.g. "Which NBA players are the best scorers?"
 	- points per game vs. efficiency, possession context
 :::
 
+
+
 ---
 
-## Ill-Phrased Questions
+## Tedious Questions
+
+::: {.incremental}
+- Effort to answer is disproportionate to the value of the answer
+- Measurable details are not always meaningful
+- "How many times did each council member say the word 'budget'?"
+    - (e.g. but ignoring how they actually voted)
+- Compare: the triangle/pixel zoom from Day 1
+:::
+
+---
+
+
+## ill-Phrased Questions
 
 ::: {.incremental}
 - Terms, scope, or possible answers are unclear
@@ -1704,27 +1729,18 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - Implies a preferred answer
 - "How much did the tutoring program raise test scores?"
 - "Everything tasting good over here?"
+- Other examples?
 :::
 
 ---
 
-## Tedious Questions
 
-::: {.incremental}
-- Effort to answer is disproportionate to the value of the answer
-- Measurable details are not always meaningful
-- "How many times did each council member say the word 'budget'?"
-	- (e.g. but ignoring how they actually voted)
-- Compare: the triangle/pixel zoom from Day 1
-:::
-
----
 
 ## Settled, Speculative, and Dead-End Questions
 
 ::: {.incremental}
 - **Settled** — already answered "well enough"
-	- replication still valuable
+	- although replication studies can change this!
 - **Speculative** — no evidence could realistically settle it
 	- ("what if I-90 had never been built?")
 - **Dead end** — answerable and precise, but nothing follows
@@ -1736,9 +1752,10 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 ## Invasive Questions
 
 ::: {.incremental}
-- Asks for information
-- Information sensitivity exceeds the context of the interaction
-- E.g. Weight at a job interview vs. weight at the DMV
+- All questions ask for information
+- But information sensitivity can exceeds the context
+    - "Contextual integrity"
+- E.g. Asking weight at a job interview vs. at the DMV
 - Can become coercive when answers gate grades, jobs, housing, healthcare
 - Ask for the **least sensitive** data that can address the question
 - More on this when we get to obtaining data
@@ -1746,27 +1763,41 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 
 ---
 
+## "Gotcha" Questions {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+
+::: {.incremental}
+- Asked to catch someone out, not to learn something
+- The asker already has the answer they want
+- Compare: a **leading** question implies its answer; a gotcha question sets a trap
+- "So you admit the program failed?"
+- "What's the standard error on that?" (asked to embarrass, not to check)
+- Analytic version: run the test you know will fail, then report only that one
+- Ask so a surprising answer would still be welcome
+:::
+
+:::
+
+![](../assets/lattice/question2.png){.figure alt="A student in a lecture hall raising her hand, with classmates seated in the rows around her"}
+
+:::
+
+---
+
 ## Temporality in Questions
 
 ::: {.incremental}
-- **Descriptive** — what is happening?
-- **Predictive** — what will happen?
+- Past/Present/Future
 - **Counterfactual** — what would have happened?
+- **Descriptive** — what is happening now?
+- **Predictive** — what might happen in the future?
 :::
 
 ---
 
-## Framing and Rhetoric
-
-::: {.incremental}
-- Questions embed values and narratives
-- "Objective" analysis is still rhetorical
-- The rhetoric of "just asking questions"
-- Data hubris: assume you might have missed something
-- TODO: ethos / pathos / logos
-:::
-
----
 
 
 ## The Question can be the Hard Part {.quote-slide}
@@ -1783,15 +1814,41 @@ Michael Shermer
 
 ---
 
-## Your Turn: Revise a Question {.prompt-slide}
+## Your Turn: What Questions do you wonder about? {.split}
 
+::: {.split-content .golden-columns}
 
-::: {.prompt-question}
-Take a question you're curious about. What type is it? What does it presuppose? Which pitfall is it closest to?
+::: {}
+
+- Write down as many questions as come to mind
+- Anything you are curious about
+- Ideally, questions that could be addressed with data
 :::
 
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
---
+:::
+
+---
+
+## Your Turn: Analyze Your Questions {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+Discuss with your elbow partner(s):
+
+1. What type is it? (whether, which, why, indirect)
+2. What does it presuppose?
+3. Which pitfall is it closest to? (naïve, tedious, ill-phrased, leading, settled/speculative/dead-end, invasive, "gotcha")
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
 
 ## Quiz Time!
 
