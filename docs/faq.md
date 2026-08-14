@@ -105,15 +105,29 @@ My ideas/opinions on this topic continue to evolve - I would love to hear your t
 
 ## Student AI Use
 
-**Q: Will students be allowed to use AI in this class?**
+**Q: Will students be allowed to use AI/LLM-based tools in this class?**
 
-A: As of right now (August 1, 2026), I am planning three phases of the class: (1) a no-AI phase, (2) a "guided AI usage" phase, and (3) a "choose your own AI adventure" phase. I have also seen these phases called red light, yellow light, green light, but that could ruin the rail metaphors...
+A: As of right now (August 1, 2026), I am planning three phases of the class, borrowed from CTA rail signal aspects rather than the usual red-yellow-green traffic light (see [`assets/signals`](assets/signals/) for the source rulebook page): (1) double red, (2) red/yellow, and (3) double yellow.
 
-Basically, in my view and the view of many other educators, there are some concepts that should be fully learned and absorbed. As with many other tools, one needs a foundational understanding of some domain in order to have the [discernment necessary for effectively using AI](https://pluralistic.net/2026/07/28/hitl-ers/). Hence the "red light" phase - a few weeks with no AI usage (although I have no means or intent to police this).
+### Double red: no AI/LLM-based tools
 
-Then, the yellow light phase. Go ahead and try it out for a few carefully-scoped tasks. Take the marshmallow test and see how you do. See how the tool fails, and decide if/when you find it useful, and pay close attention!
+![Double red signal](assets/signals/signal-01-stop-stay.svg)
 
-Finally, it's the green light phase: do whatever you want, and be prepared to justify it. This phase is important because it seems to be the default setup in the real-world. It thus seems important to have some experience with the free-for-all in a communal learning environment - let's talk about it and think about it together before you go out into the real world.
+"Stop and stay." A few weeks with no AI usage at all (although I have no means to really police this). In my view and the view of many other educators, there are some concepts that should be fully learned and absorbed before you reach for a tool that will help you. As with many other tools, one needs a foundational understanding of some domain in order to have the [discernment necessary for effectively using AI](https://pluralistic.net/2026/07/28/hitl-ers/).
+
+### Red/yellow: limited, specific use of AI/LLM-based tools
+
+![Red over yellow signal](assets/signals/signal-02-caution-main.svg)
+
+"Proceed with caution on main route, prepared to stop at next signal." A specific, carefully-scoped set of tasks where use of AI/LLM-based tools is allowed (but not required). Take the marshmallow test and see how you do. See how the tool fails, and decide if/when you find it useful, and pay close attention!
+
+### Double yellow: choose carefully where you use it, use it carefully
+
+![Yellow over yellow signal](assets/signals/signal-09-caution-restricted.svg)
+
+"Proceed with caution at restricted speed." You choose where AI/LLM-based tools fit into your own workflow. Every use is still at "reduced speed and full attention," and you should be prepared to justify it.
+
+This phase is important because it seems to be the default setup in the real world -- you will eventually choose your own adventure. It thus seems important to have some experience with this kind of open-ended judgment call in a communal learning environment - let's talk about it and think about it together before you go out into the real world.
 
 As with the "instructor AI use" section, my ideas/opinions on this topic continue to evolve, and I am especially curious about any evidence-based viewpoints on this one.
 

@@ -271,11 +271,15 @@ This does not mean you need to complete all work in a bunker. You are encouraged
 
 **TLDR:** wait until later in the semester.
 
-While this class will eventually invite you to experiment with some LLM-based coding tools, we will be working up to that point. Generally, early assignments will be "red light" (no AI usage allowed). A few weeks into the semester, we will experiment with specific use cases for these tools ("yellow light"), and eventually some exercises will allow you to use them at your own judgment ("green light").
+While this class will eventually invite you to experiment with some LLM-based coding tools, we will be working up to that point. The class moves through three phases, named after CTA rail signal aspects rather than the usual traffic light:
 
-Each exercise will have a red light, yellow light, or green light policy for AI usage. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
+- **Double red** ("stop and stay") — no AI/LLM use at all. Some concepts should be fully learned and absorbed before you reach for a tool that will help you; you need a foundational understanding of a domain in order to have the discernment necessary for using AI well. The first few weeks of the semester are double red.
+- **Red/yellow** ("proceed with caution on main route, prepared to stop at next signal") — a specific, carefully-scoped set of tasks where AI/LLM use is allowed, but not required. See how the tool fails, decide if and when you find it useful, and pay close attention.
+- **Double yellow** ("proceed with caution at restricted speed") — you choose where AI/LLM tools fit into your own workflow. Every use is still at reduced speed and full attention, and you should be prepared to justify it.
 
-More details TK - check the [CATE Teaching Guide on Creating AI Policies for Teaching and Learning](https://teaching.uic.edu/cate-teaching-guides/digital-learning/creating-ai-policies-for-teaching-and-learning/).
+Each exercise will indicate which of these three aspects applies. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
+
+More details on the three phases, including the signal diagrams they are named after, are in the [course FAQ](https://dodatascience.fun/faq.html). See also the [CATE Teaching Guide on Creating AI Policies for Teaching and Learning](https://teaching.uic.edu/cate-teaching-guides/digital-learning/creating-ai-policies-for-teaching-and-learning/).
 
 ## [FERPA]{.underline}
 

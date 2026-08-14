@@ -310,7 +310,9 @@ $code-color: $ink !default;
   // Small text. Four roles: captions and notes share one size, eyebrows sit a
   // step above them. Use these instead of inline styles.
   //
-  //   .caption        credit or source line under a figure (centered)
+  //   .caption        credit or source line. Left-aligned by default; centered
+  //                   only when it sits directly under an image or embed, so a
+  //                   source note under body text lines up with that text.
   //   .aside-note     aside or pointer to a reading (left-aligned).
   //                   Named to avoid collision with reveal's `.notes`
   //                   (speaker notes), which is a different thing entirely.
@@ -326,8 +328,27 @@ $code-color: $ink !default;
     a { color: $steel; text-decoration: underline; }
   }
 
-  .caption { text-align: center; }
+  // A caption under a figure reads as part of the figure, so it stays centered
+  // on it. A caption under prose is a source line for that prose, and centering
+  // it there just leaves a stray ragged line under a left-aligned block.
+  .caption { text-align: left; }
   .aside-note { text-align: left; }
+
+  // Centered again wherever the caption directly follows a figure: a bare
+  // image, an image pandoc wrapped in its own paragraph, an embed, or a
+  // columns row that holds images. .image-frame-slide is image-first by
+  // definition, so every caption on one of those slides is a figure caption.
+  img + .caption,
+  svg + .caption,
+  object + .caption,
+  iframe + .caption,
+  p:has(> img) + .caption,
+  p:has(> svg) + .caption,
+  p:has(> object) + .caption,
+  .columns:has(img) + .caption,
+  .image-frame-slide .caption {
+    text-align: center;
+  }
 
   .eyebrow {
     display: inline-block;
