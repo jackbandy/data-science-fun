@@ -54,9 +54,24 @@ jobs:
           curl -fsSL -o "$ASSET" "$base/$ASSET"
           curl -fsSL -o "$ASSET.sha256" "$base/$ASSET.sha256"
           sha256sum -c "$ASSET.sha256"
-          tar -xzf "$ASSET" lychee
-          sudo install -m 755 lychee /usr/local/bin/lychee
-          rm -f lychee "$ASSET" "$ASSET.sha256"
+
+          # The binary is nested inside a per-target directory
+          # (lychee-x86_64-unknown-linux-gnu/lychee), not at the archive root,
+          # and that layout is not part of any promise the project makes. So
+          # unpack the whole thing and go find the binary rather than naming a
+          # path that a future release can quietly rearrange. The completion
+          # scripts alongside it are _lychee, lychee.fish, and so on, so an
+          # exact-name match picks out the one real executable.
+          mkdir -p lychee-unpack
+          tar -xzf "$ASSET" -C lychee-unpack
+          binary="$(find lychee-unpack -type f -name lychee | head -n 1)"
+          if [[ -z "$binary" ]]; then
+            echo "No lychee binary found in $ASSET; archive contains:" >&2
+            tar -tzf "$ASSET" >&2
+            exit 1
+          fi
+          sudo install -m 755 "$binary" /usr/local/bin/lychee
+          rm -rf lychee-unpack "$ASSET" "$ASSET.sha256"
           lychee --version
 
       # The English baseline for the "Unusual words" section. build_data.py
