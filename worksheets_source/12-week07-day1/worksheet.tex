@@ -1,0 +1,83 @@
+% CS 418: Intro to Data Science — Worksheet 12 (12-week07-day1)
+% Week 7, Monday 2026-10-05
+% Compile with: latexmk -pdf worksheet.tex
+
+\documentclass[11pt]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{mdframed}
+\usepackage{array}
+
+% ── Page style ────────────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{CS 418: Intro to Data Science}}
+\rhead{UIC, Fall 2026}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\setlength{\headheight}{12pt}
+\setlength{\headsep}{0.4cm}
+
+% ── Hyperlinks ────────────────────────────────────────────────────────────────
+\hypersetup{colorlinks=false, hidelinks}
+
+% ── Convenience environments ──────────────────────────────────────────────────
+\newenvironment{problem}[1]{%
+  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
+  \textbf{Problem #1.}
+}{%
+  \end{mdframed}\vspace{0.5em}
+}
+
+\newenvironment{hint}{%
+  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
+  \textit{Hint:}
+}{%
+  \end{mdframed}\vspace{0.3em}
+}
+
+% Usage: \workspace{6cm}  — blank area for hand-written work
+\newcommand{\workspace}[1]{%
+  \vspace{0.3em}
+  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
+  \begin{minipage}[t][#1][t]{\linewidth}
+  \end{minipage}\\
+  \noindent\rule{\linewidth}{0.4pt}
+  \vspace{0.3em}
+}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title block: topic left, info box right ───────────────────────────────────
+\noindent
+\begin{minipage}[t]{0.55\textwidth}
+  \vspace{0pt}
+  {\LARGE \textbf{Worksheet \#\,12}} \\[0.3em]
+  {\large \textit{Hypothesis testing}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+  \vspace{0pt}
+  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
+    \small
+    \vspace{0.4cm}
+    Name: \underline{\hspace{4.5cm}} \\[1em]
+    NetID: \underline{\hspace{4.3cm}} \\[1em]
+    Date: \underline{\hspace{4.4cm}} \\
+  \end{mdframed}
+\end{minipage}
+
+\vspace{1em}
+\noindent\rule{\linewidth}{1pt}
+\vspace{0.2em}
+
+\end{document}
