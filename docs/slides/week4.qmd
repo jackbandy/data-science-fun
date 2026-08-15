@@ -1,4 +1,6 @@
 ---
+# NOTICE: Some code in this slide deck (i.e. in the figure cells) was generated
+# with LLM-based coding tools. It is maintained, reviewed, and vetted by humans
 title: "Week 4 (CS 418 @ UIC)"
 # Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
 # that group the `##` slides beneath them into the navigation menu (press M).
@@ -659,6 +661,151 @@ With a polars DataFrame, each measure is one method call:
 
 ---
 
+
+## Another Mean: The Geometric Mean
+
+::: {.incremental}
+- Two values: **10** and **10,000**.
+- **Arithmetic mean** — add and divide: $(10 + 10{,}000)/2 = 5{,}005$
+- **Geometric mean** — multiply and take the root: $\sqrt{10 \times 10{,}000} \approx 316$.
+- Which one is "in the middle"? depends on the scale
+:::
+
+---
+
+## Where Is the Middle? {.figure-slide}
+
+```{python}
+#| echo: false
+# PLACEHOLDER figure: builds up the arithmetic vs. geometric mean number line.
+A, B = 10, 10_000
+AM = (A + B) / 2            # 5005
+GM = (A * B) ** 0.5         # ~316.23
+TEAL = "#1f8a9b"            # the deck's secondary accent
+
+def number_line(positions, labels, marks, title, xmax):
+    """A bare horizontal axis with tick labels and annotated marks.
+
+    `marks` is a list of (position, label, color, level) drawn as a dot with a
+    caption on a stem above it; `level` 0 or 1 picks the stem height so that
+    labels for values close together don't collide. Every stage draws the same
+    axis and the same limits, so the .r-stack fragments swap without the
+    layout shifting.
+    """
+    pad = 0.14 * xmax           # room for labels that overhang the ends
+    axis = pl.DataFrame({"x": [0.0], "y": [0.0]})
+    p = (ggplot(axis, aes("x", "y"))
+         + annotate("segment", x=0, xend=xmax, y=0, yend=0, color=INK, size=1)
+         + theme_void()
+         + theme(figure_size=(10, 3.4)))
+    for pos, lab in zip(positions, labels):
+        p = (p
+             + annotate("segment", x=pos, xend=pos, y=-0.08, yend=0.08, color=INK)
+             + note(pos, -0.3, lab, ha="center", size=12))
+    for pos, lab, col, level in marks:
+        top = 0.5 + 0.6 * level
+        p = (p
+             + annotate("point", x=pos, y=0, color=col, size=5)
+             + annotate("segment", x=pos, xend=pos, y=0.14, yend=top, color=col)
+             + note(pos, top + 0.12, lab, ha="center", color=col, size=13))
+    return (p
+            + note(xmax / 2, 2.0, title, ha="center", size=15)
+            + scale_x_continuous(limits=(-pad, xmax + pad))
+            + scale_y_continuous(limits=(-0.55, 2.2)))
+
+lin_ticks = [0, 2500, 5000, 7500, 10000]
+lin_labels = ["0", "2,500", "5,000", "7,500", "10,000"]
+lin_data = [(A, "10", ORANGE, 0), (B, "10,000", ORANGE, 0)]
+
+log_ticks = [1, 2, 3, 4]
+log_labels = ["10", "100", "1,000", "10,000"]
+log_data = [(1, "10", ORANGE, 0), (4, "10,000", ORANGE, 0)]
+```
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-alt: "A linear number line from 0 to 10,000 with two orange points, one at 10 near the far left and one at 10,000 at the right end"
+number_line(lin_ticks, lin_labels, lin_data, "Two values on a linear scale", 10000)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-alt: "The same linear number line with the arithmetic mean of 5,005 marked at the halfway point, far from both data values"
+number_line(lin_ticks, lin_labels,
+            lin_data + [(AM, "arithmetic mean\n5,005", DARK, 0)],
+            "Arithmetic mean: the middle of the linear scale", 10000)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-alt: "The same linear number line with the geometric mean of about 316 marked close to the left end, and the arithmetic mean still at 5,005"
+number_line(lin_ticks, lin_labels,
+            lin_data + [(AM, "arithmetic mean\n5,005", DARK, 0),
+                        (GM, "geometric mean\n≈ 316", TEAL, 1)],
+            "Geometric mean: squashed to the left on this scale", 10000)
+```
+:::
+
+::: {.fragment fragment-index=3}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-alt: "The same two values redrawn on a logarithmic number line with ticks at 10, 100, 1,000 and 10,000; the geometric mean of about 316 now sits exactly halfway between the points, while the arithmetic mean of 5,005 sits far to the right"
+number_line(log_ticks, log_labels,
+            log_data + [(np.log10(AM), "arithmetic mean\n5,005", DARK, 1),
+                        (np.log10(GM), "geometric mean\n≈ 316", TEAL, 0)],
+            "Same values, log₁₀ scale — now the geometric mean is the middle",
+            4.6)
+```
+:::
+
+::::
+
+---
+
+## Two "Middles" via Two Scales
+
+$$\text{GM}(a, b) = \sqrt{ab}
+\qquad\Longleftrightarrow\qquad
+\log \text{GM} = \frac{\log a + \log b}{2}$$
+
+::: {.incremental}
+- **Arithmetic** is the middle on a **linear** scale.
+- **Geometric** is the middle on an **exponent-of-10** scale (arithmetic mean of the logarithms)
+- When is this useful? When values are:
+  - ratios
+  - rates of growth
+  - spread across orders of magnitude
+:::
+
+---
+
+## Many Other Means! {.iframe-slide}
+
+Harmonic, quadratic (RMS), trimmed, weighted, Winsorized — each is "the average" under a different definition of middle.
+
+<iframe src="https://en.wikipedia.org/wiki/Average#Central_tendency" title="Wikipedia: Average — Central tendency section" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+::: {.iframe-caption}
+<https://en.wikipedia.org/wiki/Average#Central_tendency>
+:::
+
+---
+
 ## Measures of Spread
 
 :::: {.columns}
@@ -832,6 +979,304 @@ box = pl.DataFrame({"x": np.zeros(len(vals)), "v": vals})
  + theme_void()
  + theme(figure_size=(10, 4.4)))
 ```
+
+---
+
+# Why Visualization? {.section-header}
+
+---
+
+```{python}
+#| echo: false
+# Setup for the Anscombe slides. The quartet ships with plotnine.
+from plotnine.data import anscombe_quartet
+
+anscombe = pl.from_pandas(anscombe_quartet)
+ANSCOMBE_SETS = ["I", "II", "III", "IV"]
+
+def trim(v):
+    """Round to two decimals, then drop trailing zeros: 0.50 -> 0.5, 3.00 -> 3."""
+    return f"{v:.2f}".rstrip("0").rstrip(".")
+
+def anscombe_stats(name):
+    """The summary numbers for one dataset, computed from the data itself.
+
+    Every slide in this run prints its own numbers rather than reusing a
+    hard-coded table, so the punchline — they are all the same — is something
+    the deck demonstrates instead of asserts.
+    """
+    s = anscombe.filter(pl.col("dataset") == name)
+    x = s["x"].to_numpy().astype(float)
+    y = s["y"].to_numpy().astype(float)
+    slope, intercept = np.polyfit(x, y, 1)
+    return [
+        ("n", f"{len(x)}"),
+        ("mean of x", f"{x.mean():.2f}"),
+        ("mean of y", f"{y.mean():.2f}"),
+        ("sd of x", f"{x.std(ddof=1):.2f}"),
+        ("sd of y", f"{y.std(ddof=1):.2f}"),
+        ("correlation", f"{np.corrcoef(x, y)[0, 1]:.2f}"),
+        ("fitted line", f"{trim(slope)}x + {trim(intercept)}"),
+    ]
+
+def stats_table(*names):
+    """Print the deck's orange summary table, one column per dataset so far.
+
+    Each Anscombe slide keeps the columns from the slides before it, so the
+    identical numbers pile up side by side instead of having to be remembered.
+    """
+    cell = "border:2px solid #f9461c; padding:4px 10px; white-space:nowrap;"
+    columns = [anscombe_stats(name) for name in names]
+    header = "".join(
+        f'<th style="{cell} background:#f9461c; color:#fff; text-align:center;">{name}</th>'
+        for name in names
+    )
+    rows = ""
+    for i, (label, _) in enumerate(columns[0]):
+        values = "".join(
+            f'<td style="{cell} text-align:right; font-weight:bold; color:#1a1a1a;">'
+            f"{col[i][1]}</td>"
+            for col in columns
+        )
+        rows += f'<tr><td style="{cell}">{label}</td>{values}</tr>'
+    # Each added column has to fit in the same 36% column without touching the
+    # figure beside it, so the type steps down as columns pile up.
+    size = 0.62 - 0.07 * (len(names) - 1)
+    print(
+        f'<table style="border-collapse:collapse; margin:0.2em auto 0; font-size:{size:.2f}em;">'
+        f'<tr><td style="{cell} border-color:transparent;"></td>{header}</tr>{rows}</table>'
+    )
+
+def anscombe_plot(name):
+    """One panel of the quartet, on axes shared by all four.
+
+    The least-squares line is steel and the points are orange: the line is the
+    thing that is identical everywhere, the points are the thing that is not.
+    """
+    s = anscombe.filter(pl.col("dataset") == name)
+    return (ggplot(s, aes("x", "y"))
+     + geom_abline(intercept=3.0, slope=0.5, color="#565a5c", linetype="dashed", size=0.9)
+     + geom_point(color=ORANGE, size=3.5, alpha=0.9)
+     + scale_x_continuous(limits=(3, 20))
+     + scale_y_continuous(limits=(2, 14))
+     + labs(x="x", y="y")
+     + theme_minimal(base_size=15)
+     # Upright y label: a one-character axis title reads better standing up
+     # than lying on its side. Alignment is left at its default -- overriding
+     # ha/va pushes the glyph out of the margin plotnine reserved for it and
+     # the browser clips it to a sliver.
+     + theme(figure_size=(5.3, 4.6),
+             axis_title_y=element_text(rotation=0)))
+```
+
+## Anscombe's Quartet
+
+::: {.incremental}
+- In 1973, the statistician **Francis Anscombe** published four small datasets of 11 $(x, y)$ pairs each.
+- They were built to share the same mean of $x$, mean of $y$, standard deviation of both, correlation, and least-squares regression line.
+- Anscombe's target: the habit of *computing* a dataset and never *looking* at it.
+:::
+
+::: {.fragment style="font-size:0.85em; margin-top:0.8em;"}
+The dashed line on the next four slides is the same fitted line every time: $y = 0.5x + 3$.
+:::
+
+---
+
+## Anscombe I
+
+:::: {.columns}
+::: {.column width="36%"}
+::: {.fragment fragment-index=1 style="padding-right:28px;"}
+```{python}
+#| echo: false
+#| output: asis
+stats_table("I")
+```
+:::
+:::
+::: {.column width="64%"}
+```{python}
+#| echo: false
+#| fig-alt: "Scatter plot of Anscombe's first dataset: eleven points scattered loosely around an upward-sloping dashed line, the way ordinary noisy linear data looks"
+anscombe_plot("I")
+```
+:::
+::::
+
+::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
+A noisy but genuinely linear relationship — the summary describes it well.
+:::
+
+---
+
+## Anscombe II
+
+:::: {.columns}
+::: {.column width="36%"}
+::: {.fragment fragment-index=1 style="padding-right:28px;"}
+```{python}
+#| echo: false
+#| output: asis
+stats_table("I", "II")
+```
+:::
+:::
+::: {.column width="64%"}
+```{python}
+#| echo: false
+#| fig-alt: "Scatter plot of Anscombe's second dataset: eleven points tracing a smooth downward-opening curve that crosses the dashed straight line three times"
+anscombe_plot("II")
+```
+:::
+::::
+
+::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
+A perfect curve. The relationship is exact — and it is not a line.
+:::
+
+---
+
+## Anscombe III
+
+:::: {.columns}
+::: {.column width="36%"}
+::: {.fragment fragment-index=1 style="padding-right:28px;"}
+```{python}
+#| echo: false
+#| output: asis
+stats_table("I", "II", "III")
+```
+:::
+:::
+::: {.column width="64%"}
+```{python}
+#| echo: false
+#| fig-alt: "Scatter plot of Anscombe's third dataset: ten points lying exactly on a straight line, plus one far above it that pulls the dashed fitted line off the others"
+anscombe_plot("III")
+```
+:::
+::::
+
+::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
+Ten points on a perfect line, and one outlier that drags the fit off them.
+:::
+
+---
+
+## Anscombe IV
+
+:::: {.columns}
+::: {.column width="36%"}
+::: {.fragment fragment-index=1 style="padding-right:28px;"}
+```{python}
+#| echo: false
+#| output: asis
+stats_table("I", "II", "III", "IV")
+```
+:::
+:::
+::: {.column width="64%"}
+```{python}
+#| echo: false
+#| fig-alt: "Scatter plot of Anscombe's fourth dataset: ten points stacked vertically at one x value and a single point far to the right, which alone determines the dashed fitted line"
+anscombe_plot("IV")
+```
+:::
+::::
+
+::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
+Every $x$ is the same but one. That single point *is* the slope.
+:::
+
+---
+
+## The Full Quartet{.figure-slide}
+
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| fig-alt: "The four Anscombe datasets in one row, each with the same dashed fitted line: noisy linear, a smooth curve, a line with one outlier, and a vertical stack with one distant point"
+(ggplot(anscombe.with_columns(pl.col("dataset").cast(pl.Enum(ANSCOMBE_SETS))),
+        aes("x", "y"))
+ + geom_abline(intercept=3.0, slope=0.5, color="#565a5c", linetype="dashed", size=0.9)
+ + geom_point(color=ORANGE, size=2.8, alpha=0.9)
+ + facet_wrap("dataset", nrow=1)
+ + theme_minimal(base_size=14)
+ + theme(strip_text=element_text(size=15, weight="bold", color=INK),
+         axis_title_y=element_text(rotation=0),
+         panel_spacing=0.05, figure_size=(10, 4.2)))
+```
+
+::: {style="text-align:center; font-size:0.72em; margin-top:0.2em;"}
+Identical in all four: n = 11, mean of x = 9.00, mean of y = 7.50, sd of x = 3.32, sd of y = 2.03, r = 0.82, fitted line y = 0.5x + 3
+:::
+
+
+---
+
+## The Datasaurus Dozen {.image-frame-slide auto-animate=true}
+
+::: {.fragment}
+<img data-id="dozen" data-gif-src="../assets/datasaurus/datasaurus-dozen.gif" class="figure-plain" alt="Animation of thirteen datasets morphing into one another — a dinosaur, a star, horizontal stripes, a circle, an X, vertical stripes, a bullseye, slanted lines, dots, and more — while the summary statistics printed above the plot never change">
+:::
+
+<script>
+// Hold the GIF until the fragment is clicked. A looping animation that loads
+// with the slide is already halfway through by the time anyone looks at it;
+// swapping the src on reveal means the dinosaur is always the first thing you
+// see. Clearing it again on the way back re-arms the slide.
+document.addEventListener("fragmentshown", (e) => {
+  e.fragment.querySelectorAll("img[data-gif-src]").forEach((img) => {
+    img.src = img.dataset.gifSrc;
+  });
+});
+document.addEventListener("fragmenthidden", (e) => {
+  e.fragment.querySelectorAll("img[data-gif-src]").forEach((img) => {
+    img.removeAttribute("src");
+  });
+});
+</script>
+
+---
+
+## The Datasaurus Dozen {auto-animate=true}
+
+:::: {.columns}
+::: {.column width="52%"}
+::: {.incremental style="font-size:0.72em;"}
+- Matejka & Fitzmaurice (CHI 2017) took Alberto Cairo's "Datasaurus" and generated **twelve more datasets** from it.
+- Each is nudged point by point toward a target shape, using only moves that leave the summary statistics alone.
+- All thirteen agree on mean, standard deviation, and correlation **to two decimals**.
+- Summary statistics are a *lossy compression*. Visualization is how you find out what got thrown away.
+:::
+:::
+::: {.column width="48%"}
+
+<img data-id="dozen" src="../assets/datasaurus/datasaurus-dozen-panel.svg" class="figure-plain" style="max-height:50vh; margin:0 auto;" alt="All thirteen Datasaurus Dozen datasets as small multiples: dino, star, h_lines, circle, x_shape, v_lines, bullseye, slant_up, dots, slant_down, high_lines, wide_lines, and away">
+
+```{python}
+#| echo: false
+#| output: asis
+dino = pl.read_csv("../../datasets/datasaurus-dozen/datasaurus-dozen.csv")
+agg = dino.group_by("dataset").agg(
+    pl.col("x").mean().alias("mx"), pl.col("y").mean().alias("my"),
+    pl.col("x").std().alias("sx"), pl.col("y").std().alias("sy"),
+    pl.corr("x", "y").alias("r"))
+# U+2212 minus, since a hyphen next to a digit reads as a dash on a slide.
+r_bar = f'{agg["r"].mean():.2f}'.replace("-", "−")
+print(
+    '<div style="text-align:center; font-size:0.55em; color:#565a5c; margin-top:0.3em;">'
+    f'across all {agg.height} datasets — '
+    f'mean(x) {agg["mx"].mean():.2f} · mean(y) {agg["my"].mean():.2f} · '
+    f'sd(x) {agg["sx"].mean():.2f} · sd(y) {agg["sy"].mean():.2f} · '
+    f'r {r_bar}</div>'
+)
+```
+
+:::
+::::
 
 ---
 
@@ -1397,303 +1842,6 @@ The plot above also hides 393 sales — those above \$2M or over 6,000 sq. ft. �
 
 ---
 
-# Why Visualization? {.section-header}
-
----
-
-```{python}
-#| echo: false
-# Setup for the Anscombe slides. The quartet ships with plotnine.
-from plotnine.data import anscombe_quartet
-
-anscombe = pl.from_pandas(anscombe_quartet)
-ANSCOMBE_SETS = ["I", "II", "III", "IV"]
-
-def trim(v):
-    """Round to two decimals, then drop trailing zeros: 0.50 -> 0.5, 3.00 -> 3."""
-    return f"{v:.2f}".rstrip("0").rstrip(".")
-
-def anscombe_stats(name):
-    """The summary numbers for one dataset, computed from the data itself.
-
-    Every slide in this run prints its own numbers rather than reusing a
-    hard-coded table, so the punchline — they are all the same — is something
-    the deck demonstrates instead of asserts.
-    """
-    s = anscombe.filter(pl.col("dataset") == name)
-    x = s["x"].to_numpy().astype(float)
-    y = s["y"].to_numpy().astype(float)
-    slope, intercept = np.polyfit(x, y, 1)
-    return [
-        ("n", f"{len(x)}"),
-        ("mean of x", f"{x.mean():.2f}"),
-        ("mean of y", f"{y.mean():.2f}"),
-        ("sd of x", f"{x.std(ddof=1):.2f}"),
-        ("sd of y", f"{y.std(ddof=1):.2f}"),
-        ("correlation", f"{np.corrcoef(x, y)[0, 1]:.2f}"),
-        ("fitted line", f"{trim(slope)}x + {trim(intercept)}"),
-    ]
-
-def stats_table(*names):
-    """Print the deck's orange summary table, one column per dataset so far.
-
-    Each Anscombe slide keeps the columns from the slides before it, so the
-    identical numbers pile up side by side instead of having to be remembered.
-    """
-    cell = "border:2px solid #f9461c; padding:4px 10px; white-space:nowrap;"
-    columns = [anscombe_stats(name) for name in names]
-    header = "".join(
-        f'<th style="{cell} background:#f9461c; color:#fff; text-align:center;">{name}</th>'
-        for name in names
-    )
-    rows = ""
-    for i, (label, _) in enumerate(columns[0]):
-        values = "".join(
-            f'<td style="{cell} text-align:right; font-weight:bold; color:#1a1a1a;">'
-            f"{col[i][1]}</td>"
-            for col in columns
-        )
-        rows += f'<tr><td style="{cell}">{label}</td>{values}</tr>'
-    # Each added column has to fit in the same 36% column without touching the
-    # figure beside it, so the type steps down as columns pile up.
-    size = 0.62 - 0.07 * (len(names) - 1)
-    print(
-        f'<table style="border-collapse:collapse; margin:0.2em auto 0; font-size:{size:.2f}em;">'
-        f'<tr><td style="{cell} border-color:transparent;"></td>{header}</tr>{rows}</table>'
-    )
-
-def anscombe_plot(name):
-    """One panel of the quartet, on axes shared by all four.
-
-    The least-squares line is steel and the points are orange: the line is the
-    thing that is identical everywhere, the points are the thing that is not.
-    """
-    s = anscombe.filter(pl.col("dataset") == name)
-    return (ggplot(s, aes("x", "y"))
-     + geom_abline(intercept=3.0, slope=0.5, color="#565a5c", linetype="dashed", size=0.9)
-     + geom_point(color=ORANGE, size=3.5, alpha=0.9)
-     + scale_x_continuous(limits=(3, 20))
-     + scale_y_continuous(limits=(2, 14))
-     + labs(x="x", y="y")
-     + theme_minimal(base_size=15)
-     # Upright y label: a one-character axis title reads better standing up
-     # than lying on its side. Alignment is left at its default -- overriding
-     # ha/va pushes the glyph out of the margin plotnine reserved for it and
-     # the browser clips it to a sliver.
-     + theme(figure_size=(5.3, 4.6),
-             axis_title_y=element_text(rotation=0)))
-```
-
-## Anscombe's Quartet
-
-::: {.incremental}
-- In 1973, the statistician **Francis Anscombe** published four small datasets of 11 $(x, y)$ pairs each.
-- They were built to share the same mean of $x$, mean of $y$, standard deviation of both, correlation, and least-squares regression line.
-- Anscombe's target: the habit of *computing* a dataset and never *looking* at it.
-:::
-
-::: {.fragment style="font-size:0.85em; margin-top:0.8em;"}
-The dashed line on the next four slides is the same fitted line every time: $y = 0.5x + 3$.
-:::
-
----
-
-## Anscombe I
-
-:::: {.columns}
-::: {.column width="36%"}
-::: {.fragment fragment-index=1 style="padding-right:28px;"}
-```{python}
-#| echo: false
-#| output: asis
-stats_table("I")
-```
-:::
-:::
-::: {.column width="64%"}
-```{python}
-#| echo: false
-#| fig-alt: "Scatter plot of Anscombe's first dataset: eleven points scattered loosely around an upward-sloping dashed line, the way ordinary noisy linear data looks"
-anscombe_plot("I")
-```
-:::
-::::
-
-::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
-A noisy but genuinely linear relationship — the summary describes it well.
-:::
-
----
-
-## Anscombe II
-
-:::: {.columns}
-::: {.column width="36%"}
-::: {.fragment fragment-index=1 style="padding-right:28px;"}
-```{python}
-#| echo: false
-#| output: asis
-stats_table("I", "II")
-```
-:::
-:::
-::: {.column width="64%"}
-```{python}
-#| echo: false
-#| fig-alt: "Scatter plot of Anscombe's second dataset: eleven points tracing a smooth downward-opening curve that crosses the dashed straight line three times"
-anscombe_plot("II")
-```
-:::
-::::
-
-::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
-A perfect curve. The relationship is exact — and it is not a line.
-:::
-
----
-
-## Anscombe III
-
-:::: {.columns}
-::: {.column width="36%"}
-::: {.fragment fragment-index=1 style="padding-right:28px;"}
-```{python}
-#| echo: false
-#| output: asis
-stats_table("I", "II", "III")
-```
-:::
-:::
-::: {.column width="64%"}
-```{python}
-#| echo: false
-#| fig-alt: "Scatter plot of Anscombe's third dataset: ten points lying exactly on a straight line, plus one far above it that pulls the dashed fitted line off the others"
-anscombe_plot("III")
-```
-:::
-::::
-
-::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
-Ten points on a perfect line, and one outlier that drags the fit off them.
-:::
-
----
-
-## Anscombe IV
-
-:::: {.columns}
-::: {.column width="36%"}
-::: {.fragment fragment-index=1 style="padding-right:28px;"}
-```{python}
-#| echo: false
-#| output: asis
-stats_table("I", "II", "III", "IV")
-```
-:::
-:::
-::: {.column width="64%"}
-```{python}
-#| echo: false
-#| fig-alt: "Scatter plot of Anscombe's fourth dataset: ten points stacked vertically at one x value and a single point far to the right, which alone determines the dashed fitted line"
-anscombe_plot("IV")
-```
-:::
-::::
-
-::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
-Every $x$ is the same but one. That single point *is* the slope.
-:::
-
----
-
-## The Full Quartet{.figure-slide}
-
-```{python}
-#| echo: false
-#| fig-width: 10
-#| fig-height: 4.2
-#| fig-alt: "The four Anscombe datasets in one row, each with the same dashed fitted line: noisy linear, a smooth curve, a line with one outlier, and a vertical stack with one distant point"
-(ggplot(anscombe.with_columns(pl.col("dataset").cast(pl.Enum(ANSCOMBE_SETS))),
-        aes("x", "y"))
- + geom_abline(intercept=3.0, slope=0.5, color="#565a5c", linetype="dashed", size=0.9)
- + geom_point(color=ORANGE, size=2.8, alpha=0.9)
- + facet_wrap("dataset", nrow=1)
- + theme_minimal(base_size=14)
- + theme(strip_text=element_text(size=15, weight="bold", color=INK),
-         axis_title_y=element_text(rotation=0),
-         panel_spacing=0.05, figure_size=(10, 4.2)))
-```
-
-::: {style="text-align:center; font-size:0.72em; margin-top:0.2em;"}
-Identical in all four: n = 11, mean of x = 9.00, mean of y = 7.50, sd of x = 3.32, sd of y = 2.03, r = 0.82, fitted line y = 0.5x + 3
-:::
-
-
----
-
-## The Datasaurus Dozen {.image-frame-slide auto-animate=true}
-
-::: {.fragment}
-<img data-id="dozen" data-gif-src="../assets/datasaurus/datasaurus-dozen.gif" class="figure-plain" alt="Animation of thirteen datasets morphing into one another — a dinosaur, a star, horizontal stripes, a circle, an X, vertical stripes, a bullseye, slanted lines, dots, and more — while the summary statistics printed above the plot never change">
-:::
-
-<script>
-// Hold the GIF until the fragment is clicked. A looping animation that loads
-// with the slide is already halfway through by the time anyone looks at it;
-// swapping the src on reveal means the dinosaur is always the first thing you
-// see. Clearing it again on the way back re-arms the slide.
-document.addEventListener("fragmentshown", (e) => {
-  e.fragment.querySelectorAll("img[data-gif-src]").forEach((img) => {
-    img.src = img.dataset.gifSrc;
-  });
-});
-document.addEventListener("fragmenthidden", (e) => {
-  e.fragment.querySelectorAll("img[data-gif-src]").forEach((img) => {
-    img.removeAttribute("src");
-  });
-});
-</script>
-
----
-
-## The Datasaurus Dozen {auto-animate=true}
-
-:::: {.columns}
-::: {.column width="52%"}
-::: {.incremental style="font-size:0.72em;"}
-- Matejka & Fitzmaurice (CHI 2017) took Alberto Cairo's "Datasaurus" and generated **twelve more datasets** from it.
-- Each is nudged point by point toward a target shape, using only moves that leave the summary statistics alone.
-- All thirteen agree on mean, standard deviation, and correlation **to two decimals**.
-- Summary statistics are a *lossy compression*. Visualization is how you find out what got thrown away.
-:::
-:::
-::: {.column width="48%"}
-
-<img data-id="dozen" src="../assets/datasaurus/datasaurus-dozen-panel.svg" class="figure-plain" style="max-height:50vh; margin:0 auto;" alt="All thirteen Datasaurus Dozen datasets as small multiples: dino, star, h_lines, circle, x_shape, v_lines, bullseye, slant_up, dots, slant_down, high_lines, wide_lines, and away">
-
-```{python}
-#| echo: false
-#| output: asis
-dino = pl.read_csv("../../datasets/datasaurus-dozen/datasaurus-dozen.csv")
-agg = dino.group_by("dataset").agg(
-    pl.col("x").mean().alias("mx"), pl.col("y").mean().alias("my"),
-    pl.col("x").std().alias("sx"), pl.col("y").std().alias("sy"),
-    pl.corr("x", "y").alias("r"))
-# U+2212 minus, since a hyphen next to a digit reads as a dash on a slide.
-r_bar = f'{agg["r"].mean():.2f}'.replace("-", "−")
-print(
-    '<div style="text-align:center; font-size:0.55em; color:#565a5c; margin-top:0.3em;">'
-    f'across all {agg.height} datasets — '
-    f'mean(x) {agg["mx"].mean():.2f} · mean(y) {agg["my"].mean():.2f} · '
-    f'sd(x) {agg["sx"].mean():.2f} · sd(y) {agg["sy"].mean():.2f} · '
-    f'r {r_bar}</div>'
-)
-```
-
-:::
-::::
-
----
 
 ## Concluding Notes
 ::: {.fragment}
