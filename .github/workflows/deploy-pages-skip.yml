@@ -19,6 +19,7 @@ on:
     paths-ignore:
       - "docs/**"
       - "syllabus_source/**"
+      - "meta_analytics_source/**"
       - ".github/workflows/deploy-pages.yml"
 
 permissions:
