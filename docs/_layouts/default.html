@@ -6,6 +6,13 @@
   {% seo %}
   <link rel="stylesheet" href="{{ '/css/index.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/css/masthead.css' | relative_url }}">
+{%- comment -%}
+  Pages needing their own stylesheet list it in front matter as `extra_css:`
+  (a list of site-root-relative paths), rather than inlining a <style> block.
+{%- endcomment -%}
+{% for sheet in page.extra_css %}
+  <link rel="stylesheet" href="{{ sheet | relative_url }}">
+{% endfor %}
 </head>
 <body>
   {% include masthead.html %}

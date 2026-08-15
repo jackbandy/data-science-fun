@@ -1,0 +1,146 @@
+---
+layout: default
+title: Meta-Analytics
+description: What this course site is made of — where its outbound links point, how its words are distributed, which words it barely uses, and which ones it uses unlike anyone else.
+extra_css:
+  - /css/meta-analytics.css
+---
+<!-- NOTICE: This file was modified by an LLM coding system on 2026-08-15. -->
+
+<h1>Meta-Analytics</h1>
+
+<p>
+  This page is an attempt to analyze the links and words in the repo. Every chart here is rebuiltfrom the repository by
+  <a href="https://github.com/jackbandy/data-science-fun/blob/main/meta_analytics_source/build_data.py">a
+  script</a>,.
+</p>
+
+<section class="meta-section" id="links">
+  <h2>Outbound links</h2>
+  <p>
+    Every <code>http</code> and <code>https</code> link in the source files, found by
+    <a href="https://lychee.cli.rs/">lychee</a> — the same tool that checks these
+    links for rot every Thursday. Each dot is one domain. Hover to see which.
+  </p>
+
+  <dl class="meta-figures">
+    <div><dt>Links</dt><dd id="links-count">—</dd></div>
+    <div><dt>Domains</dt><dd id="links-domains">—</dd></div>
+    <div><dt>Distinct URLs</dt><dd id="links-unique">—</dd></div>
+  </dl>
+
+  <div id="links-plot" class="meta-loading">Loading link data…</div>
+
+  <p class="meta-note">
+    Counted from the same files the weekly link check reads, so a link written
+    twice counts twice. Links to this site itself are left out, as is the
+    generated syllabus HTML (those )links are already counted in its Markdown
+    source). Last built <span id="links-generated">—</span>.
+  </p>
+</section>
+
+<section class="meta-section" id="words">
+  <h2>Word frequencies</h2>
+  <p>
+    Every word in the repository's prose, including the <code>.md</code>, <code>.qmd</code>,
+    and <code>.txt</code> files, with code blocks, URLs, math, and HTML stripped
+    out first. Each dot is one word, plotted at its frequency against its
+    frequency rank on log–log axes. The dashed line is the ideal
+    <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipf's law</a>: the word
+    at rank <i>r</i> appears <i>1/r</i> as often as the most common one. Hover a
+    dot for the word and its count.
+  </p>
+
+  <dl class="meta-figures">
+    <div><dt>Words</dt><dd id="words-total">—</dd></div>
+    <div><dt>Distinct</dt><dd id="words-unique">—</dd></div>
+    <div><dt>Files</dt><dd id="words-files">—</dd></div>
+  </dl>
+
+  <div id="words-plot" class="meta-loading">Loading word data…</div>
+
+  <p class="meta-note">
+    Four things are left out: (1)
+    <code>sandbox/</code>, which holds unreviewed drafts and scraped material; (2)
+    raw data files, e.g. since the ICD-10-CM tables in <code>datasets/</code> alone
+    are 21 MB of billing codes
+    (their READMEs are kept); (3) image-attribution manifests under
+    <code>assets/</code>, which are credits and file names rather than writing;
+    and (4) this page, so it cannot count itself. File names are stripped wherever
+    they appear, so <code>orange-line-trace.png</code> does not
+    contribute the word <i>orange</i>. Last built
+    <span id="words-generated">—</span>.
+  </p>
+</section>
+
+<section class="meta-section" id="hapax">
+  <h2>Hapax legomena</h2>
+  <p>
+    A <i>hapax legomenon</i> is a word that appears exactly once in a corpus —
+    the flat tail along the bottom of the plot above. There are
+    <span data-rare-total="1">—</span> of them here, which is the ordinary result:
+    in most bodies of text, roughly half the vocabulary is used a single time.
+    The two tiers below it — words used exactly twice and exactly three times —
+    are the next steps up that tail. Common words / "stop words" are filtered out.
+  </p>
+
+  <details class="meta-details">
+    <summary>
+      Used once — <span data-rare-shown="1">—</span> words
+      (of <span data-rare-total="1">—</span> before stop words  removed)
+    </summary>
+    <ul class="meta-words" id="rare-1-list">
+      <li class="meta-loading">Loading…</li>
+    </ul>
+  </details>
+
+  <details class="meta-details">
+    <summary>
+      Used twice — <span data-rare-shown="2">—</span> words
+      (of <span data-rare-total="2">—</span>)
+    </summary>
+    <ul class="meta-words" id="rare-2-list">
+      <li class="meta-loading">Loading…</li>
+    </ul>
+  </details>
+
+  <details class="meta-details">
+    <summary>
+      Used three times — <span data-rare-shown="3">—</span> words
+      (of <span data-rare-total="3">—</span>)
+    </summary>
+    <ul class="meta-words" id="rare-3-list">
+      <li class="meta-loading">Loading…</li>
+    </ul>
+  </details>
+</section>
+
+<section class="meta-section" id="unusual">
+  <h2>Unusual words</h2>
+  <p>
+    Which words does this site use at a rate unlike ordinary English? For every
+    word used at least <span id="unusual-min">—</span> times here, its rate —
+    occurrences per million words — is divided by its rate in a large corpus of
+    English. Above 1 the word is over-used, below 1 under-used, and the same
+    number is used for both charts below. <span id="unusual-compared">—</span> words qualified.
+    Hover a row for the exact figures.
+  </p>
+
+  <div id="unusual-over-plot" class="meta-loading">Loading word data…</div>
+  <div id="unusual-under-plot" class="meta-loading"></div>
+
+  <p class="meta-note">
+    The baseline is Peter Norvig's
+    <a href="https://norvig.com/ngrams/">word-frequency list</a> of the 333,333
+    most common English words, published with the "Natural Language Corpus Data"
+    chapter of <i>Beautiful Data</i> (O'Reilly, 2009) and derived from Google's
+    Web&nbsp;1T corpus (Brants and Franz, LDC2006T13, 2006). This is just a starting point - it's only <i>web pages</i>, so navigation and
+    storefront words like <i>home</i>, <i>contact</i>, <i>free</i>, <i>price</i>, etc.
+    are far more common than in normal English written prose. The "under-used" words are mostly artifacts of the 2006 web. And it is <i>from 2006</i>, so words that
+    postdate it — <i>llms</i>, <i>agentic</i>, <i>github</i> — are absent
+    entirely and are excluded rather than reported as infinitely over-used. Again, will have to look for a better sample at some point...
+    Last built <span id="unusual-generated">—</span>.
+  </p>
+</section>
+
+<script src="{{ '/js/meta-analytics.js' | relative_url }}" defer></script>
