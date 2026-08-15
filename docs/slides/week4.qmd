@@ -1069,19 +1069,7 @@ def anscombe_plot(name):
              axis_title_y=element_text(rotation=0)))
 ```
 
-## Anscombe's Quartet
 
-::: {.incremental}
-- In 1973, the statistician **Francis Anscombe** published four small datasets of 11 $(x, y)$ pairs each.
-- They were built to share the same mean of $x$, mean of $y$, standard deviation of both, correlation, and least-squares regression line.
-- Anscombe's target: the habit of *computing* a dataset and never *looking* at it.
-:::
-
-::: {.fragment style="font-size:0.85em; margin-top:0.8em;"}
-The dashed line on the next four slides is the same fitted line every time: $y = 0.5x + 3$.
-:::
-
----
 
 ## Anscombe I
 
@@ -1105,7 +1093,7 @@ anscombe_plot("I")
 ::::
 
 ::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
-A noisy but genuinely linear relationship — the summary describes it well.
+A slightly noisy but linear relationship.
 :::
 
 ---
@@ -1132,7 +1120,7 @@ anscombe_plot("II")
 ::::
 
 ::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
-A perfect curve. The relationship is exact — and it is not a line.
+A perfect curve. The relationship is exact and is not a line.
 :::
 
 ---
@@ -1159,7 +1147,7 @@ anscombe_plot("III")
 ::::
 
 ::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
-Ten points on a perfect line, and one outlier that drags the fit off them.
+Ten points on a perfect line, and one outlier that drags the fit.
 :::
 
 ---
@@ -1186,7 +1174,7 @@ anscombe_plot("IV")
 ::::
 
 ::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
-Every $x$ is the same but one. That single point *is* the slope.
+Every $x$ is the same but one point that creates the slope.
 :::
 
 ---
@@ -1214,7 +1202,24 @@ Identical in all four: n = 11, mean of x = 9.00, mean of y = 7.50, sd of x = 3.3
 :::
 
 
+
+
 ---
+
+## Anscombe's Quartet
+
+::: {.incremental}
+- In 1973, the statistician **Francis Anscombe** published four small datasets
+- They all share the same mean of $x$, mean of $y$, standard deviation, correlation, and least-squares regression line.
+- Anscombe's target: the habit of *computing* a dataset and never *looking* at it.
+:::
+
+::: {.fragment style="font-size:0.85em; margin-top:0.8em;"}
+The dashed line on the next four slides is the same fitted line every time: $y = 0.5x + 3$.
+:::
+
+---
+
 
 ## The Datasaurus Dozen {.image-frame-slide auto-animate=true}
 
@@ -1248,8 +1253,9 @@ document.addEventListener("fragmenthidden", (e) => {
 ::: {.incremental style="font-size:0.72em;"}
 - Matejka & Fitzmaurice (CHI 2017) took Alberto Cairo's "Datasaurus" and generated **twelve more datasets** from it.
 - Each is nudged point by point toward a target shape, using only moves that leave the summary statistics alone.
-- All thirteen agree on mean, standard deviation, and correlation **to two decimals**.
-- Summary statistics are a *lossy compression*. Visualization is how you find out what got thrown away.
+- All thirteen have the same mean, standard deviation, and correlation (to two decimals!)
+- Summary statistics are a "*lossy compression*"
+- Visualization helps
 :::
 :::
 ::: {.column width="48%"}
@@ -1269,8 +1275,8 @@ r_bar = f'{agg["r"].mean():.2f}'.replace("-", "−")
 print(
     '<div style="text-align:center; font-size:0.55em; color:#565a5c; margin-top:0.3em;">'
     f'across all {agg.height} datasets — '
-    f'mean(x) {agg["mx"].mean():.2f} · mean(y) {agg["my"].mean():.2f} · '
-    f'sd(x) {agg["sx"].mean():.2f} · sd(y) {agg["sy"].mean():.2f} · '
+    f'mean(x) {agg["mx"].mean():.2f}, mean(y) {agg["my"].mean():.2f}, '
+    f'sd(x) {agg["sx"].mean():.2f}, sd(y) {agg["sy"].mean():.2f}, '
     f'r {r_bar}</div>'
 )
 ```
@@ -1292,7 +1298,7 @@ print(
 :::
 
 ::: {.fragment style="margin-top:1em;"}
-This week is mostly about exploratory visualization.
+We will start with exploratory/descriptive visualization, then move to persuasive visualization ("visualization rhetoric")
 :::
 
 ---
