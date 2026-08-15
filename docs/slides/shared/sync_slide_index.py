@@ -332,6 +332,9 @@ def schedule_topics(slides_dir):
     what the table reports -- deliberately a coarser view than the per-deck
     section headers listed above it. Both class days of a week collapse into one
     cell, keeping their order; days with no topic (holidays) contribute nothing.
+    Holidays are written "n/a" in the Topic column rather than left blank, so
+    that the schedule table on the syllabus has something to show; treat that
+    the same as an empty cell here.
     """
     path = os.path.normpath(os.path.join(slides_dir, SCHEDULE_CSV))
     if not os.path.exists(path):
@@ -340,7 +343,7 @@ def schedule_topics(slides_dir):
     with open(path, encoding='utf-8', newline='') as fh:
         for row in csv.DictReader(fh):
             week, topic = (row.get('Week') or '').strip(), (row.get('Topic') or '').strip()
-            if not week.isdigit() or not topic:
+            if not week.isdigit() or not topic or topic.lower() == 'n/a':
                 continue
             seen = by_week.setdefault(int(week), [])
             if topic not in seen:
