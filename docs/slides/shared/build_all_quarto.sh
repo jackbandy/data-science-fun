@@ -8,9 +8,12 @@ set -euo pipefail
 # Set SKIP_HTML=true to skip HTML rendering and export PDFs from existing HTML.
 # Set RENDER_SLIDES="week1.qmd week5.qmd" to render only specific decks.
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-OUTPUT_DIR="${1:-$SCRIPT_DIR}"
-SERVER_ROOT="${QUARTO_SERVER_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
+# This script lives in docs/slides/shared/ alongside the other build tooling;
+# the decks it renders live one level up in docs/slides/.
+SHARED_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SLIDES_DIR="$(cd "$SHARED_DIR/.." && pwd)"
+OUTPUT_DIR="${1:-$SLIDES_DIR}"
+SERVER_ROOT="${QUARTO_SERVER_ROOT:-$(cd "$SLIDES_DIR/.." && pwd)}"
 QUARTO_CMD="${QUARTO_CMD:-quarto}"
 PORT="${QUARTO_PORT:-}"
 # BUILD_PDFS: env var wins; otherwise prompt when running interactively.
@@ -29,7 +32,7 @@ if [[ -z "${BUILD_PDFS:-}" ]]; then
   fi
 fi
 HAD_GITIGNORE=0
-if [[ -e "$SCRIPT_DIR/.gitignore" ]]; then
+if [[ -e "$SLIDES_DIR/.gitignore" ]]; then
   HAD_GITIGNORE=1
 fi
 
@@ -44,11 +47,11 @@ fi
 if [[ "${SKIP_VENV:-false}" == "true" ]]; then
   echo "[quarto] SKIP_VENV=true: using the already-active Python environment"
 elif command -v uv >/dev/null 2>&1; then
-  VENV="$SCRIPT_DIR/.venv"
-  if [[ -f "$SCRIPT_DIR/requirements.txt" ]]; then
+  VENV="$SLIDES_DIR/.venv"
+  if [[ -f "$SHARED_DIR/requirements.txt" ]]; then
     echo "[quarto] Installing Python dependencies with uv..."
     [[ -d "$VENV" ]] || uv venv --quiet "$VENV"
-    uv pip install --quiet --python "$VENV" -r "$SCRIPT_DIR/requirements.txt"
+    uv pip install --quiet --python "$VENV" -r "$SHARED_DIR/requirements.txt"
   fi
   export VIRTUAL_ENV="$VENV"
   export PATH="$VENV/bin:$PATH"
@@ -97,7 +100,7 @@ SLIDE_FILES=()
 if [[ -n "${RENDER_SLIDES:-}" ]]; then
   # Selective build: RENDER_SLIDES is a space-separated list of filenames (e.g. "week1.qmd week5.qmd")
   for name in $RENDER_SLIDES; do
-    candidate="$SCRIPT_DIR/$name"
+    candidate="$SLIDES_DIR/$name"
     if [[ -f "$candidate" ]]; then
       SLIDE_FILES+=("$candidate")
     else
@@ -110,10 +113,10 @@ else
     if [[ "$candidate" == *.qmd ]] || grep -Eq '^[[:space:]]*revealjs:' "$candidate"; then
       SLIDE_FILES+=("$candidate")
     fi
-  done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f \( -name "*.qmd" -o -name "*.md" \) | sort)
+  done < <(find "$SLIDES_DIR" -maxdepth 1 -type f \( -name "*.qmd" -o -name "*.md" \) | sort)
 fi
 if [[ "${#SLIDE_FILES[@]}" -eq 0 ]]; then
-  echo "[quarto] No Quarto slide files found in $SCRIPT_DIR"
+  echo "[quarto] No Quarto slide files found in $SLIDES_DIR"
   exit 0
 fi
 
@@ -121,7 +124,7 @@ SERVER_PID=""
 TMP_DIR=""
 cleanup() {
   # Restore any deck source left stamped if a render was interrupted.
-  for backup in "$SCRIPT_DIR"/*.stampbak; do
+  for backup in "$SLIDES_DIR"/*.stampbak; do
     [[ -e "$backup" ]] || continue
     mv -f "$backup" "${backup%.stampbak}"
   done
@@ -132,10 +135,10 @@ cleanup() {
   if [[ -n "$TMP_DIR" && -d "$TMP_DIR" ]]; then
     rm -rf "$TMP_DIR"
   fi
-  if [[ "$HAD_GITIGNORE" -eq 0 && -f "$SCRIPT_DIR/.gitignore" ]]; then
-    local_gitignore_content="$(cat "$SCRIPT_DIR/.gitignore")"
+  if [[ "$HAD_GITIGNORE" -eq 0 && -f "$SLIDES_DIR/.gitignore" ]]; then
+    local_gitignore_content="$(cat "$SLIDES_DIR/.gitignore")"
     if [[ "$local_gitignore_content" == $'/.quarto/\n**/*.quarto_ipynb' ]]; then
-      rm -f "$SCRIPT_DIR/.gitignore"
+      rm -f "$SLIDES_DIR/.gitignore"
     fi
   fi
 }
@@ -158,29 +161,37 @@ for slide in "${SLIDE_FILES[@]}"; do
   echo "[quarto] Generating HTML: $html_out from $slide"
   # Stamp the compile time into the Sources slide of a throwaway copy, render,
   # then restore the pristine source so the timestamp never gets committed.
-  src_file="$SCRIPT_DIR/$(basename "$slide")"
+  src_file="$SLIDES_DIR/$(basename "$slide")"
   cp "$src_file" "$src_file.stampbak"
-  python3 "$SCRIPT_DIR/postprocess_slides.py" "$src_file" \
+  python3 "$SHARED_DIR/postprocess_slides.py" "$src_file" \
     || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
   # keep-ipynb: true comes from _metadata.yml, which applies to every deck in
   # this directory — no per-deck frontmatter edit needed.
+  #
+  # Quarto refuses to overwrite an existing .quarto_ipynb and falls back to
+  # .quarto_ipynb_1, _2, ... instead. The executed notebook is only renamed to
+  # $base.ipynb after a *successful* render, so every failed render strands one
+  # and the suffixes climb from there. Clear both the plain name and any numbered
+  # leftovers first, so this render always lands on the name the move below reads.
+  # -f makes the unmatched glob a silent no-op when there is nothing to clear.
+  rm -f "$SLIDES_DIR/$base.quarto_ipynb" "$SLIDES_DIR/$base.quarto_ipynb_"*
   (
-    cd "$SCRIPT_DIR"
+    cd "$SLIDES_DIR"
     "$QUARTO_CMD" render "$(basename "$slide")" --to revealjs --output "$base.html"
   ) || { mv -f "$src_file.stampbak" "$src_file"; exit 1; }
   mv -f "$src_file.stampbak" "$src_file"
-  if [[ "$OUTPUT_DIR" != "$SCRIPT_DIR" ]]; then
-    mv "$SCRIPT_DIR/$base.html" "$html_out"
-    if [[ -d "$SCRIPT_DIR/${base}_files" ]]; then
+  if [[ "$OUTPUT_DIR" != "$SLIDES_DIR" ]]; then
+    mv "$SLIDES_DIR/$base.html" "$html_out"
+    if [[ -d "$SLIDES_DIR/${base}_files" ]]; then
       rm -rf "$OUTPUT_DIR/${base}_files"
-      mv "$SCRIPT_DIR/${base}_files" "$OUTPUT_DIR/${base}_files"
+      mv "$SLIDES_DIR/${base}_files" "$OUTPUT_DIR/${base}_files"
     fi
   fi
-  ipynb_src="$SCRIPT_DIR/$base.quarto_ipynb"
+  ipynb_src="$SLIDES_DIR/$base.quarto_ipynb"
   if [[ -f "$ipynb_src" ]]; then
-    mv -f "$ipynb_src" "$SCRIPT_DIR/$base.ipynb"
-    python3 "$SCRIPT_DIR/postprocess_slides.py" "$SCRIPT_DIR/$base.ipynb"
-    echo "[quarto] Saved notebook: $SCRIPT_DIR/$base.ipynb"
+    mv -f "$ipynb_src" "$SLIDES_DIR/$base.ipynb"
+    python3 "$SHARED_DIR/postprocess_slides.py" "$SLIDES_DIR/$base.ipynb"
+    echo "[quarto] Saved notebook: $SLIDES_DIR/$base.ipynb"
   fi
 done
 fi
@@ -188,7 +199,7 @@ fi
 # Rewrite the per-deck bullets in index.html: one topic link per section header
 # in each deck, plus the "Supporting Python code" link for every deck that
 # produced a notebook (and none for any that stopped producing one).
-python3 "$SCRIPT_DIR/sync_slide_index.py" "$SCRIPT_DIR"
+python3 "$SHARED_DIR/sync_slide_index.py" "$SLIDES_DIR"
 
 if [[ "$BUILD_PDFS" != "true" ]]; then
   echo "[quarto] Skipping PDF generation."

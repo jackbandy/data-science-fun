@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Re-run the slide index generator
-        run: python3 docs/slides/sync_slide_index.py docs/slides
+        run: python3 docs/slides/shared/sync_slide_index.py docs/slides
 
       - name: Check the result matches what's committed
         run: |
@@ -36,7 +36,7 @@ jobs:
             echo "The diff above is what sync_slide_index.py would change."
             echo ""
             echo "Fix it by running this and committing the result:"
-            echo "  python3 docs/slides/sync_slide_index.py docs/slides"
+            echo "  python3 docs/slides/shared/sync_slide_index.py docs/slides"
             exit 1
           fi
           echo "index.html matches the generator output."
@@ -63,11 +63,10 @@ jobs:
         run: ruff check --select=E9,F63,F7,F82 --exclude=sandbox .
 
       # shellcheck comes preinstalled on GitHub's Ubuntu runners.
-      # sandbox/ is scratch work and marp_archive/ is a retired experiment,
-      # so neither is worth gating on.
+      # sandbox/ is scratch work, so it is not worth gating on.
       - name: Check shell scripts
         run: |
-          scripts=$(git ls-files '*.sh' | grep -v '^sandbox/' | grep -v marp_archive)
+          scripts=$(git ls-files '*.sh' | grep -v '^sandbox/')
           echo "Checking:"; echo "$scripts"
           # --severity=error catches real bugs (bad syntax, unset variables in
           # dangerous spots) while ignoring style suggestions.

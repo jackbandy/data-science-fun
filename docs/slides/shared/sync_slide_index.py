@@ -29,7 +29,7 @@ Because the script owns the whole nested <ul>, it rewrites that block outright
 instead of tracking individual lines, which makes re-runs idempotent by
 construction. Weeks with no entry in the index (e.g. week 0, linked from the
 intro paragraph instead) are skipped. The hand-written bullets this replaced are
-archived in 0-old-outline.md.
+archived in shared/0-old-outline.md.
 
 Anchors are derived from the source rather than read out of the built HTML,
 because docs/slides/*.html is gitignored -- the CI drift check (repo-checks.yml)
@@ -430,4 +430,7 @@ def main(slides_dir):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.abspath(__file__)))
+    # This script lives in docs/slides/shared/; the decks and index.html it
+    # reads are one level up, so default to the parent directory.
+    default_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    main(sys.argv[1] if len(sys.argv) > 1 else default_dir)

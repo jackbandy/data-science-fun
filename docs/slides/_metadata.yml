@@ -1,8 +1,8 @@
 format:
   revealjs:
-    css: theme/responsive-footer.css
+    css: shared/theme/responsive-footer.css
     include-after-body:
-      - includes/slide-number-after-body.html
-      - includes/iframe-caption.html
-      - includes/radio-player-after-body.html
-      - includes/sources-fit-after-body.html
+      - shared/includes/slide-number-after-body.html
+      - shared/includes/iframe-caption.html
+      - shared/includes/radio-player-after-body.html
+      - shared/includes/sources-fit-after-body.html

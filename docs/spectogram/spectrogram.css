@@ -45,7 +45,7 @@ body {
 
 .pageHeading .title {
   /* Big Shoulders: the repo's heading face (assets/STYLE.md), also the slide
-     title font in slides/theme/uic-orange-reveal.scss. */
+     title font in slides/shared/theme/uic-orange-reveal.scss. */
   font-family: 'Big Shoulders', 'Arial Narrow', Arial, sans-serif;
   font-size: 34px;
   letter-spacing: 0.02em;

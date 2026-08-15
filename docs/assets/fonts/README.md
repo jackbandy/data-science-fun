@@ -1,6 +1,6 @@
 # Fonts
 
-Self-hosted fonts used by the slide theme (`docs/slides/theme/uic-orange-reveal.scss`),
+Self-hosted fonts used by the slide theme (`docs/slides/shared/theme/uic-orange-reveal.scss`),
 the site CSS (`docs/css/`), and the figure generators under `docs/assets/`.
 
 - **Big Shoulders** (`big-shoulders/BigShoulders.woff2`): downloaded from the upstream XO Type Co repository: https://github.com/xotypeco/big_shoulders. Additional non-Google references: https://bigshoulders.me/ and https://design.chicago.gov/typography/. Copyright 2019 The Big Shoulders Project Authors, licensed under the SIL Open Font License (`big-shoulders/OFL.txt`). Used as the slide/heading face.

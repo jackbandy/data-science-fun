@@ -11,7 +11,7 @@ source paper; filenames follow `<first-author>-et-al-<venue>-<year>-fig<n><panel
   Moritz Hardt
 - *Proceedings of the National Academy of Sciences* 119(1), e2025334119 (2022;
   published online 21 Dec 2021) — [doi:10.1073/pnas.2025334119](https://doi.org/10.1073/pnas.2025334119)
-- BibTeX key in `docs/slides/references.bib`: `huszar2022`
+- BibTeX key in `docs/slides/shared/references.bib`: `huszar2022`
 
 ### Files
 
@@ -37,7 +37,7 @@ the PNAS version of record is CC BY-NC-ND.
 - Lace M. Padilla, Ian T. Ruginski, Sarah H. Creem-Regehr
 - *Cognitive Research: Principles and Implications* 2(1), 40 (2017) —
   [doi:10.1186/s41235-017-0076-1](https://doi.org/10.1186/s41235-017-0076-1)
-- BibTeX key in `docs/slides/references.bib`: `padilla2017ensemble`
+- BibTeX key in `docs/slides/shared/references.bib`: `padilla2017ensemble`
 - Licensed **CC BY 4.0** (version of record), so these are redistributable with
   attribution. Downloaded at published resolution from the SpringerOpen article;
   no rescaling other than the panel crop noted below.
@@ -60,7 +60,7 @@ the PNAS version of record is CC BY-NC-ND.
 - Jessica Hullman, Paul Resnick, Eytan Adar
 - *PLOS ONE* 10(11), e0142444 (2015) —
   [doi:10.1371/journal.pone.0142444](https://doi.org/10.1371/journal.pone.0142444)
-- BibTeX key in `docs/slides/references.bib`: `hullman2015hops`
+- BibTeX key in `docs/slides/shared/references.bib`: `hullman2015hops`
 - Licensed **CC BY 4.0**, so redistributable with attribution. Downloaded at
   "large" size from the PLOS figure endpoint; not otherwise modified.
 

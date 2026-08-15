@@ -40,8 +40,8 @@ Build the slides:
 
 ```bash
 cd docs/slides
-./build_all_quarto.sh                   # HTML only
-BUILD_PDFS=true ./build_all_quarto.sh   # include PDFs
+shared/build_all_quarto.sh                   # HTML only
+BUILD_PDFS=true shared/build_all_quarto.sh   # include PDFs
 ```
 
 Quarto output (slides, mini-book) is served as-is, so `quarto preview` works for those.
@@ -49,7 +49,7 @@ Quarto output (slides, mini-book) is served as-is, so `quarto preview` works for
 A few conventions worth knowing before you edit:
 
 - **The `.qmd` is the slide source.** Don't edit `docs/slides/week*.html` (it is generated and gitignored)
-- **Parts of `docs/slides/index.html` are generated.** The per-deck bullets and the slide-count table are written by `docs/slides/sync_slide_index.py`. To change a topic's wording, edit that deck's `{.section-header}` heading, and it will get propagated.
+- **Parts of `docs/slides/index.html` are generated.** The per-deck bullets and the slide-count table are written by `docs/slides/shared/sync_slide_index.py`. To change a topic's wording, edit that deck's `{.section-header}` heading, and it will get propagated.
 - **The schedule lives in just one place:** `docs/_data/schedule.csv`. Both the homepage table and the syllabus read from it. Add new columns only at the end — the first five are matched positionally by `schedule.lua`, and trailing ones (`Date`, `Notes`) are ignored by both tables.
 - **Check citations against a primary source.** For anything with a DOI, `https://api.crossref.org/works/<doi>`; otherwise the publisher or proceedings page.
 

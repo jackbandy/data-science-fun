@@ -129,7 +129,7 @@ data-science-fun/
 │   ├── css/                     # Shared stylesheets
 │   ├── js/                      # Site scripts (schedule tooltips)
 │   ├── assets/                  # Images, figures, and figure-generating scripts
-│   ├── slides/                  # Quarto decks and archived Marp workflow
+│   ├── slides/                  # Quarto decks (week*.qmd) + shared/ build tooling and theme
 │   ├── syllabus/                # Generated syllabus output (gitignored, built in CI)
 │   ├── worksheets/              # Generated worksheet PDFs
 │   ├── ethics-in-data-science/  # Quarto mini-book
@@ -168,16 +168,15 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 - Every deck opens each class day the same way: a `# Week N, Day 1` / `# Week N, Day 2` title slide, the full-bleed stop photo, then a `# Map {.split}` slide whose left column lists that day's `{.section-header}` topics and whose right column is the week's stop from `docs/assets/orange-line-map-stops/`.
 - Quarto revealjs HTML depends on the `*_files/` directories for styles to load properly on GitHub Pages.
 - Slides use SVGs and other vector formats whenever possible.
-- The previous Marp experiment is archived in `docs/slides/marp_archive/`. Run `docs/slides/marp_archive/build_all_marp.sh` to rebuild its HTML and PDF outputs.
 - More complicated than Google Slides? Yes. Worth it for freedom, portability, accessibility, etc.? For now, yes.
 - `deploy-pages.yml` renders the decks on every push (cache output and re-render only changed sources)
 - Each compiled deck produces an HTML file, a `_files/` support directory (CSS, JavaScript, other assets), and usually a PDF: HTML is required, PDF export is best-effort (non-blocking)
 - Jupyter-engine decks keep their executed notebook as `docs/slides/weekN.ipynb` - makes it easy to download and run the code
 	- **knitr**-engine decks (R + Python combos like Week 5) can't produce a notebook, so they link their `weekN.qmd` source instead
-- `sync_slide_index.py` rewrites the per-deck bullets in `docs/slides/index.html` after rendering
+- `shared/sync_slide_index.py` rewrites the per-deck bullets in `docs/slides/index.html` after rendering
 	- one topic bullet per `{.section-header}` heading, deep-linked to that slide (add `.no-index` to a header to leave it off the list)
 	- plus the "Supporting … code" bullet (notebook link if one exists, else source link)
-	- edit the wording by editing the deck's section header, not `index.html` — `repo-checks.yml` fails on hand edits. The bullets it replaced are archived in `docs/slides/0-old-outline.md`
+	- edit the wording by editing the deck's section header, not `index.html` — `repo-checks.yml` fails on hand edits. The bullets it replaced are archived in `docs/slides/shared/0-old-outline.md`
 - The workflow should copy `docs/slides/week*.qmd` into `_site/slides/` after Jekyll runs
 	- (`docs/_config.yml` excludes `slides/*.qmd` from Jekyll)
 
@@ -185,8 +184,8 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 
 ```bash
 cd docs/slides
-./build_all_quarto.sh       # HTML only (default)
-BUILD_PDFS=true ./build_all_quarto.sh  # Include PDFs
+shared/build_all_quarto.sh       # HTML only (default)
+BUILD_PDFS=true shared/build_all_quarto.sh  # Include PDFs
 ```
 
 **Slide Theme:**

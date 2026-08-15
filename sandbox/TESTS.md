@@ -47,7 +47,7 @@ Student materials should meet WCAG 2.1 AA; UIC also has institutional accessibil
 - Reveal.js decks need special handling: audit with `pa11y --runner axe` and expect noise from off-screen slides. Start with a scoped ruleset — color contrast, image alt text, heading order, document language — rather than the full WCAG set.
 - **Highest-value early wins to enforce:**
   - every `<img>` has meaningful `alt` text (slides are image-heavy; hand-drawn exercises especially need descriptions),
-  - color contrast on the custom slide theme (`docs/slides/theme/`) and `syllabus.css`,
+  - color contrast on the custom slide theme (`docs/slides/shared/theme/`) and `syllabus.css`,
   - `<html lang="en">` present on all generated pages (worth verifying the pandoc and Quarto templates emit it).
 - PDFs: automated PDF/UA checking is weak everywhere; as a proxy, keep the HTML versions canonical and label PDFs as "print version" on the site. (A future manual pass with [veraPDF](https://verapdf.org/) is the open-source option if PDF accessibility becomes a requirement.)
 

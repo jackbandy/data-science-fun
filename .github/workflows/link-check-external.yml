@@ -62,7 +62,6 @@ jobs:
             --accept 200..=299,403,429
             --exclude '^/'
             --exclude-path docs/ethics-in-data-science/book
-            --exclude-path docs/slides/marp_archive
             --exclude-path docs/slides/_libs
             --exclude-path docs/syllabus
             --exclude-path docs/_includes/masthead.html

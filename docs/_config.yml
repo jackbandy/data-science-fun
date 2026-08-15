@@ -18,7 +18,6 @@ exclude:
   # Slide sources -- Quarto compiles these into slides/week*.html
   - slides/*.md
   - slides/*.qmd
-  - slides/marp_archive/*.md
   # Quarto book sources (published HTML lives in `ethics-in-data-science/book/`)
   - ethics-in-data-science/*.md
   - ethics-in-data-science/_quarto.yml

@@ -8,7 +8,7 @@ Visual conventions for figures, diagrams, and slide assets. Mirrors the guide in
 
 ## Colors
 
-From `docs/slides/theme/uic-orange-reveal.scss`. Orange = brand accent; rest is neutral.
+From `docs/slides/shared/theme/uic-orange-reveal.scss`. Orange = brand accent; rest is neutral.
 
 - `#f9461c` — orange (brand / links) · `$orange`
 - `#c83214` — orange dark (hover / emphasis) · `$orange-dark`

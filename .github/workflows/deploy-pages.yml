@@ -80,7 +80,7 @@ jobs:
           # Slides: shared inputs (metadata, after-body includes, theme CSS, the
           # build/postprocess scripts) affect every deck, so a change to any of
           # them forces a full render — an empty RENDER_SLIDES means "all".
-          if echo "$CHANGED" | grep -qE '^docs/slides/(_metadata\.yml|_quarto\.yml|build_all_quarto\.sh|postprocess_slides\.py|stamp_source_note\.py|includes/|theme/)'; then
+          if echo "$CHANGED" | grep -qE '^docs/slides/(_metadata\.yml|_quarto\.yml|shared/)'; then
             echo "render_slides=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -109,7 +109,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install uv
-          uv pip install --system -r docs/slides/requirements.txt
+          uv pip install --system -r docs/slides/shared/requirements.txt
 
       # week5.qmd uses `engine: knitr`, which shells out to Rscript. Quarto's
       # setup action does not bundle R, so it must be installed separately.
@@ -156,7 +156,7 @@ jobs:
           # sources plus the shared metadata/includes/theme that inject footer
           # scripts and CSS into all of them. Leaving those out meant a shared
           # change hit the cache exactly and skipped the render entirely.
-          key: slides-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/_metadata.yml', 'docs/slides/_quarto.yml', 'docs/slides/includes/**', 'docs/slides/theme/**', 'docs/slides/build_all_quarto.sh', 'docs/slides/postprocess_slides.py', 'docs/slides/stamp_source_note.py', 'docs/slides/requirements.txt') }}
+          key: slides-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/_metadata.yml', 'docs/slides/_quarto.yml', 'docs/slides/shared/**') }}
           restore-keys: slides-
 
       # HTML decks are required: if this fails, the deploy should fail
@@ -168,7 +168,7 @@ jobs:
           RENDER_SLIDES: ${{ steps.changed.outputs.render_slides }}
         run: |
           cd docs/slides
-          bash ./build_all_quarto.sh
+          bash shared/build_all_quarto.sh
 
       # PDF export is a bonus - it needs a headless browser plus Node >=22 
       # The steps below are non-blocking: if the browser, Node, or any deck's export fails,
@@ -197,7 +197,7 @@ jobs:
           CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: |
           cd docs/slides
-          bash ./build_all_quarto.sh
+          bash shared/build_all_quarto.sh
 
       # The syllabus is built here rather than committed, so it must exist on
       # every run. Cache it on an exact key only: a hit skips both the ~1 GB

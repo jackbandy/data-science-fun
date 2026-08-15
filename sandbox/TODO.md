@@ -32,7 +32,7 @@ Scope: general setup, performance, and workflow simplification (slides/syllabus 
 - [x] **Slides cache can restore stale sources over the fresh checkout.** *(July 2, 2026: cache path narrowed to outputs only — `docs/slides/week*.html`, `week*_files`, `_libs` — so tracked sources can no longer be clobbered by a stale restore.)*
 - [x] **Stop cloning full history on every deploy.** *(July 2, 2026: added `filter: blob:none` to the checkout step; full commit graph is kept for the changed-files diff but historic blobs are no longer downloaded.)*
 - [x] **Python deps installed twice in CI.** *(July 2, 2026: `build_all_quarto.sh` now honors `SKIP_VENV=true`, and both CI render steps set it, so CI uses the system-wide `uv pip install` only.)*
-- [ ] **Pin `docs/slides/requirements.txt`.** Only two loose upper bounds (`matplotlib<3.9`, `arviz<0.20`); everything else floats, so CI renders can drift between runs. Pin exact versions (or commit a `uv lock` / `requirements.lock`) for reproducible deck output.
+- [ ] **Pin `docs/slides/shared/requirements.txt`.** Only two loose upper bounds (`matplotlib<3.9`, `arviz<0.20`); everything else floats, so CI renders can drift between runs. Pin exact versions (or commit a `uv lock` / `requirements.lock`) for reproducible deck output.
 - [ ] **Bump actions off deprecated Node.js 20.** `actions/cache@v4`, `actions/checkout@v4`, `actions/configure-pages@v5`, `actions/deploy-pages@v4`, `actions/setup-node@v4`, `actions/setup-python@v5`, `actions/upload-artifact@v4`, and `browser-actions/setup-chrome@v1` all target Node 20, which GitHub is deprecating; they're currently being force-run on Node 24. Upgrade to the latest major versions that target Node 24 before GitHub stops forcing the runtime. See https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/ *(July 28, 2026: Dependabot now watches `.github/workflows/` weekly and will open these bumps as PRs, but major-version bumps still need a human to review and merge.)*
 
 ---
@@ -54,7 +54,7 @@ external link check that files a tracking issue, Dependabot, and `repo-checks.ym
 
 ### Simplification / cruft
 
-- [ ] **Retire the Marp dependency.** `package.json`'s only dependency is `@marp-team/marp-cli` (124 MB `node_modules`), used solely by the archived `docs/slides/marp_archive/build_all_marp.sh`. Remove `package.json`/`package-lock.json`/`node_modules` and document `npx @marp-team/marp-cli` in the archive README for the rare rebuild. Also consider moving `marp_archive/` (11 MB, tracked) out of `docs/` so it stops deploying to the public site.
+- [x] **Retire the Marp dependency.** *(August 15, 2026: `package.json`/`node_modules` were already gone, and `docs/slides/marp_archive/` is now deleted — it is still in git history if the retired experiment is ever wanted back.)*
 - [ ] **Fix stale README claims.** README says "All slide builds are now manual (CI pipeline removed)" and that notebooks go to `code_from_slides/` — but `deploy-pages.yml` renders slides on push, and notebooks are saved as `docs/slides/week*.ipynb`. The layout diagram also lists `source-materials/`, which doesn't exist.
 - [ ] **Local disk reclaim (not git).** `sandbox/stanford-109-questions/` downloads are 3.7 GB and `docs/slides/.venv` is 717 MB — both gitignored and regenerable; delete whenever disk pressure matters.
 - [ ] **Resolve the CI notebook-reachability TODO.** The prune step in `deploy-pages.yml` carries a TODO to verify `dodatascience.fun/slides/week0.ipynb` is reachable after deploy. Check once and delete the comment.
