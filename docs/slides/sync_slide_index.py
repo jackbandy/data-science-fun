@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 # NOTICE: Modified by an LLM coding agent.
-"""Generate the per-deck detail bullets in the slides index.
+"""Generate the per-deck title line and detail bullets in the slides index.
 
-Everything nested under the "Week N Slide Deck" title link in index.html is
-written by this script, from the deck sources sitting next to it. Two kinds of
-bullet:
+The "Week N Slide Deck" title line and everything nested under it in index.html
+are written by this script, from the deck sources sitting next to it.
+
+The title line is the deck link followed by the week's schedule topics in
+parentheses -- the same wording the summary table's Topics column uses, read
+from ../_data/schedule.csv. The parenthetical sits outside the <a> so only the
+title itself is clickable, and a week the schedule says nothing about gets no
+parenthetical at all.
+
+Under the title line, two kinds of bullet:
 
   * Topics -- one per `{.section-header}` heading, linked to that slide. Those
     headings are already the deck's table of contents, so the deck source stays
@@ -42,7 +49,9 @@ Appendix. Decks with no indexable section headers keep a placeholder bullet.
 
 The script also owns the slide-count table at the bottom of the page, between
 the SUMMARY_BEGIN/SUMMARY_END markers. That one covers every weekN deck source
-found, week 0 included, so it is a wider list than the deck bullets above it.
+found, week 0 included, so it is a wider list than the deck bullets above it. Its
+Topics column comes from ../_data/schedule.csv, so week 0 -- which is not on the
+schedule -- leaves that cell empty.
 
 Note the .qmd download resolves only because the Pages workflow copies slide
 sources into _site after Jekyll runs -- docs/_config.yml deliberately excludes
@@ -51,6 +60,7 @@ slides/*.qmd so Jekyll cannot render one over the real deck.
 Usage:
   python3 sync_slide_index.py [slides-dir]
 """
+import csv
 import os
 import re
 import sys
@@ -62,6 +72,9 @@ PLACEHOLDER = 'Topic details in-progress'
 REPO_BLOB = 'https://github.com/jackbandy/data-science-fun/blob/main/docs/slides'
 # _quarto.yml sets slide-level for every deck that does not override it.
 DEFAULT_SLIDE_LEVEL = 1
+
+# The course schedule, one row per class day, two rows per week.
+SCHEDULE_CSV = os.path.join('..', '_data', 'schedule.csv')
 
 HEADING_RE = re.compile(r'^(#{1,6})\s+(.*?)\s*$')
 # A trailing pandoc attribute block: {#explicit-id .class key="value"}
@@ -296,8 +309,48 @@ def replace_block(text, week, build):
     return text[:body_start] + '\n'.join(build(indent)) + '\n' + text[body_end:], True
 
 
+def replace_title(text, week, topic):
+    """Rewrite the tail of week N's title line as the schedule topics.
+
+    The line is left as `<a ...>Week N Slide Deck</a> (topics)`: the anchor is
+    untouched, so only the title links the deck, and the parenthetical is plain
+    text after it. Any existing tail is replaced rather than appended to, which
+    keeps re-runs idempotent and lets a schedule edit propagate here.
+    """
+    line = re.compile(
+        rf'^([ \t]*(?:<a [^>]*>)?Week {week} Slide Deck(?:</a>)?)[^\n]*$',
+        re.MULTILINE)
+    tail = f' ({escape(topic)})' if topic else ''
+    new_text, n = line.subn(lambda m: m.group(1) + tail, text, count=1)
+    return new_text, bool(n)
+
+
+def schedule_topics(slides_dir):
+    """{week: "topic; topic"} from the course schedule, blanks and repeats dropped.
+
+    The schedule is the syllabus's own wording for what a week covers, so it is
+    what the table reports -- deliberately a coarser view than the per-deck
+    section headers listed above it. Both class days of a week collapse into one
+    cell, keeping their order; days with no topic (holidays) contribute nothing.
+    """
+    path = os.path.normpath(os.path.join(slides_dir, SCHEDULE_CSV))
+    if not os.path.exists(path):
+        return {}
+    by_week = {}
+    with open(path, encoding='utf-8', newline='') as fh:
+        for row in csv.DictReader(fh):
+            week, topic = (row.get('Week') or '').strip(), (row.get('Topic') or '').strip()
+            if not week.isdigit() or not topic:
+                continue
+            seen = by_week.setdefault(int(week), [])
+            if topic not in seen:
+                seen.append(topic)
+    return {week: '; '.join(topics) for week, topics in by_week.items()}
+
+
 def summary_table(slides_dir, weeks):
     """The whole slide-count table, one row per deck."""
+    topics_by_week = schedule_topics(slides_dir)
     rows = []
     for week in weeks:
         found = deck_source(slides_dir, week)
@@ -305,14 +358,15 @@ def summary_table(slides_dir, weeks):
             continue
         rows.append(
             f'      <tr><td><a href="week{week}.html">Week {week} Slide Deck</a></td>'
-            f'<td>{slide_count(found[1])}</td></tr>'
+            f'<td>{slide_count(found[1])}</td>'
+            f'<td>{escape(topics_by_week.get(week, ""))}</td></tr>'
         )
     return [
         SUMMARY_BEGIN,
         '<div class="schedule-table-wrap">',
         '  <table class="schedule-table">',
         '    <thead>',
-        '      <tr><th>Slide Deck</th><th>Slides</th></tr>',
+        '      <tr><th>Slide Deck</th><th>Slides</th><th>Topics</th></tr>',
         '    </thead>',
         '    <tbody>',
         *rows,
@@ -345,8 +399,11 @@ def main(slides_dir):
     )
 
     text = original
+    topics_by_week = schedule_topics(slides_dir)
     written, skipped = [], []
     for week in weeks:
+        text, _titled = replace_title(text, week, topics_by_week.get(week, ''))
+
         # Indent is only known once the week's <ul> is located, so pass a builder.
         stats = {}
 
