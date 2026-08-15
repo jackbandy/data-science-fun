@@ -67,35 +67,37 @@ Provides an in-depth overview of data science in engineering. Topics include mod
 
 **Section-Specific Description**
 
-Although it may or may not be the "[sexiest job of the 21st century](https://hbr.org/2022/07/is-data-scientist-still-the-sexiest-job-of-the-21st-century)," data science remains critically important for knowledge work, decision-making, planning, and collaboration across society. The purpose of this course is to introduce the "data science lifecycle" and how to navigate it effectively. The data science lifecycle includes: asking good questions, obtaining and stewarding data, making sense of data, understanding the world based on data, and communicating insights. "Data science" is a broad and ever-expanding family of topics, but we will work together in this class to develop the skills and knowledge needed for effective data science work.
+Although it may or may not be the "[sexiest job of the 21st century](https://hbr.org/2022/07/is-data-scientist-still-the-sexiest-job-of-the-21st-century)," data science remains critically important for knowledge work, evidence-based decision-making, planning, and collaboration across society. The purpose of this course is to become acquainted with the "data science lifecycle" and practice navigating it effectively. The data science lifecycle includes: asking good questions, obtaining and stewarding data, making sense of data, understanding the world based on data, and communicating insights from data. "Data science" is a broad and ever-expanding family of topics, many of which can be technically complex and challenging. We will work together in this class to develop the skills and knowledge needed for effective data science work, including a "growth mindset" -- an attitude that will allow you to continue learning.
 
 
 ## [Welcome!]{.underline}
 
-Data are fun, and data science can be even more fun! This class will... TK
+Data are fun, and data science can be even more fun! Although I have taught basically every individual topic in this course at one point or another, this is my first time teaching them all under the umbrella of a full-semester data science course. This means there will probably be a few hiccups and things to iron out - thank you in advance for your patience and your feedback to help me improve the class for future semesters!
 
 ***Growth Mindset:***
 
 Course materials and assignments can be complex and challenging, but they are crucial to your intellectual and personal growth and development. Just like a challenging weight-lifting exercise is intended to strengthen your body, a challenging class exercise is intended to strengthen your mind.
 
-If and when you need help...
+As will be discussed in class, I try to keep exercises in the "zone of proximal development." This is a concept from educational psychology which basically says an exercise should not be too easy or too difficult. Again, this is kind of analogous to weight-lifting exercises: there is a "goldilocks" zone that is challenging enough to help you grow, but not so challenging as to discourage you.
 
-## [Course Goals and Learning Outcomes]{.underline}
+If and when you need help, please reach out sooner rather than later! Your feedback is the best way for me to know if we are in the "zone of proximal development," or if something is too easy or too difficult.
+
+## [Learning Priorities (i.e. Course Goals)]{.underline}
 
 
 If we are successful, by the end of the semester, you will have proficiency in the following:
 - Obtaining and preparing data for exploratory data analysis, including intentional selection of data storage formats
+- Techniques for exploratory data analysis (EDA), including summary statistics, tabulation, aggregation
 - Creating descriptive visualizations for exploratory data analysis
-- Exploring data through summary statistics, tabulation, and aggregation techniques
 - Creating "persuasive" data visualizations to communicate specific patterns, trends, and/or insights from data
 - Developing models for data analysis (i.e. regression, classification, clustering)
-- Evaluating models and understanding their structure, meaning, statistical significance, and limitations
-- Clearly communicating the results and implications of data analyses, and explaining how those results are connected to various decisions made in the data science lifecycle
+- Evaluating a model's performance and understanding its structure, meaning, statistical significance, and limitations
+- Communicating the results and implications of data analyses, and explaining how those results are connected to various decisions made throughout the data science lifecycle
 
 
 ## [Course Topics]{.underline}
 
-- Course introduction, statistics review, and the data science lifecycle
+- Course introduction, the data science lifecycle, statistics review
 - Python foundations, dataframes, Polars, and obtaining data
 - Data wrangling, filtering, and data formats
 - Exploratory analysis and descriptive statistics
@@ -109,7 +111,7 @@ If we are successful, by the end of the semester, you will have proficiency in t
 
 ## [Course Texts and Materials]{.underline}
 
-TK
+For Fall 2026, supporting texts and materials will be open-source and freely available. 
 
 **Required Technology:** TK
 
@@ -124,11 +126,11 @@ Please protect the integrity of other course materials and content: as a general
 
 **Content Notices**
 
-This is a 400-level University course; as such, we will aim to discuss topics with maturity, dignity, humanity, rigor, and respect for scholarly inquiry.
+This is a 400-level University course; as such, we will aim to discuss all topics with maturity, dignity, humanity, rigor, and respect.
 
-Data science touches many different topics, and some materials will address sickness, death, war, politics, discrimination, surveillance, sex, violence, and related subjects which may be distressing. Please know that the goal is never to cause distress, but to meaningfully engage with real-world issues.
+Data science is interdisciplinary and touches many different topics; some materials will address sickness, death, war, politics, discrimination, surveillance, sex, violence, and related subjects which may be distressing. Please know that the goal is never to cause distress, but to meaningfully engage with real-world issues.
 
-Furthermore, some readings and other content may expose you to ideas, subjects, or views that may challenge you, cause you discomfort, or recall past negative experiences or traumas. I try to include content notices whenever appropriate. If you have suggested changes (i.e. if there is a place where you recommend adding a content notice), or you would like me to be aware of a specific topic of concern, please email or visit me during office hours.
+Furthermore, some readings and other materials may expose you to ideas, subjects, or views that challenge you, cause you discomfort, or recall past negative experiences or traumas. I try to include content notices whenever appropriate. If you have suggested changes (i.e. if there is a place where you recommend adding a content notice), or you would like me to be aware of a specific topic of concern, please email or visit me during office hours.
 
 
 # III. Course Policies & Classroom Expectations
@@ -148,9 +150,9 @@ Details TK
 
 **Grading Scale**
 
-Final grades use the following scale: A = 90–100%, B = 80–89%, C = 70–79%, D = 60–69%, and F = below 60%.
+Final grades use the following scale: A = 90–100%, B = 80–89%, C = 70–79%, D = 60–69%, and F = 59% or below.
 
-You can expect the following correspondence between your percentage grade in the course and your final letter grade, and the "equivalent" description from the registrar.
+In other words, you can expect the following correspondence between your percentage grade in the course and your final letter grade, and the "equivalent" description from the registrar.
 
 | **F** | **D** | **C** | **B** | **A** |
 |:--|:--|:--|:--|:--|
@@ -171,7 +173,7 @@ TK *(final exam format and scheduling; see registrar's [schedule of final exams 
 
 ## [Policy for Missed or Late Work]{.underline}
 
-Due dates will be visible in PrairieLearn (or Canvas), and there is an automatic "sliding scale" that will deduct points based on how late you submitted the work, down to 50%.
+Due dates will be visible in PrairieLearn (Homework Questions) or Canvas (Coding Exercises, Project Scaffolding), and highlighted in class. There is an automatic "sliding scale" that will deduct points based on how late you submitted the work, down to 50%.
 
 Anything submitted more than one week after the original due date will only receive 50% credit.
 
@@ -197,7 +199,6 @@ Because active participation in the course is one of the most important ways to 
 
 If you anticipate any barriers to your full engagement in the course, I encourage you to contact me so we can strategize about how you can best fulfill the course requirements.
 
-**Students who miss more than half of all class sessions will not be able to pass the course.**
 
 **Attendance-related accommodations**
 
@@ -207,9 +208,7 @@ If you have a Letter of Accommodation from the Disability Resource Center that i
 
 UIC has an [[official missed class time policy]{.underline}](https://uicflames.com/sports/2020/10/26/advising-services) under which student-athletes provide formal documentation for class time missed due to NCAA or institutionally sanctioned events. Student Athlete Academic Services (SAAS) will provide you with that documentation; please bring it to me as early as you can so we can plan around it.
 
-**Tips for Success**
 
-TK
 
 ## [Privacy Note on Recording in Class]{.underline}
 
@@ -223,15 +222,15 @@ Similarly, please do not record any video or audio from class without permission
 
 This class meets twice a week for one hour and fifteen minutes, totaling 2.5 hours per week. The purpose of our meeting time is to learn, and the following policies are written with that purpose in mind. Outside of our meeting times, of course, you are free to use your devices however you choose.
 
-I remember the frustration and shock I felt in my first Computer Science course in college, when I learned that I was not allowed to use my computer. I have slowly realized that this policy was best for me as a student, and in most cases, is the best policy for an effective learning environment.
+I remember the frustration and shock I felt in my first Computer Science course in college, when I learned that students were not allowed to use computers in class. I have slowly realized that this policy was best for me as a student, and in most cases, it is the best policy for an effective learning environment.
 
-In Summer 2026, I looked at peer-reviewed scientific evidence on the subject. As with other times I have explored the evidence, my impression was that **in-class device usage is detrimental for learning**, even when students feel accustomed to multitasking. Individual studies as well as meta-reviews continue to characterize devices in class as fundamentally distracting, with a negative influence on various measures of learning and performance.
+In Summer 2026, I looked at peer-reviewed scientific evidence on the subject. As with other times I have explored the evidence, my impression was that **in-class device usage is detrimental for learning**, even when students feel accustomed to multitasking. Individual studies as well as meta-reviews continue to characterize devices in class (mainly phones and laptops) as fundamentally distracting, with a negative influence on various measures of learning and performance.
 
 Interestingly, while some students can multitask and still comprehend material *during* class time, those students experience significantly reduced long-term retention ([Glass & Kang, 2019](https://doi.org/10.1080/01443410.2018.1489046)).
 
-For these reasons, **by default, all class periods will be free from cell phones, laptops, and tablets**. In some cases, we will use devices for activities, usually for a few minutes at the end of class.
+For these reasons and others, **by default, all class periods will be free from cell phones, laptops, and tablets**. In some cases, we will use devices for activities, usually at the end of class.
 
-This policy is intended for your own benefit as well as the benefit of your classmates, as using a phone/laptop often has a chain reaction of distracting other students.
+The no-phone, no-laptop policy is intended for your own benefit as well as the benefit of your classmates, as using a phone/laptop often has a chain reaction of distracting other students.
 
 For most class sessions, you will be provided a worksheet to take guided notes and write down questions that arise or factoids you wish to research after class. You are always encouraged to ask about factoids that you might otherwise look up on your device - someone in the class might know the answer, or at least have some insight!
 
@@ -259,9 +258,9 @@ A related (and somewhat separate) question is whether writing notes by hand is b
 - Mueller & Oppenheimer (2014). The pen is mightier than the keyboard: Advantages of longhand over laptop note taking. *Psychological Science*. [doi.org/10.1177/0956797614524581](https://doi.org/10.1177/0956797614524581)
     - "...laptop note takers' tendency to transcribe lectures verbatim rather than processing information and reframing it in their own words is detrimental to learning."
 - Morehead, Dunlosky, & Rawson (2019). How much mightier is the pen than the keyboard for note-taking? A replication and extension of Mueller and Oppenheimer (2014). *Educational Psychology Review*. [doi.org/10.1007/s10648-019-09468-2](https://doi.org/10.1007/s10648-019-09468-2)
-    - A direct replication that did not fully reproduce the longhand advantage: "concluding which method is superior for improving the functions of note-taking seems premature."
+    - A replication that did not fully reproduce the benefits of handwriting: "concluding which method is superior for improving the functions of note-taking seems premature."
 
-This is one reason I am open to you taking notes on a device, as long as it can sit flat on the table...
+This is one reason I am open to you taking notes on a device :-)
 
 
 ## [Academic Integrity]{.underline}
@@ -282,13 +281,13 @@ This does not mean you need to complete all work in a bunker. You are encouraged
 
 **TLDR:** wait until later in the semester.
 
-While this class will eventually invite you to experiment with some LLM-based coding tools, we will be working up to that point. The class moves through three phases, named after CTA rail signal aspects rather than the usual traffic light:
+While this class will eventually invite you to experiment with some LLM-based coding tools, we will be working up to that point. The class moves through three phases, named after CTA rail signals:
 
-- **Double red** ("stop and stay") — no AI/LLM use at all. Some concepts should be fully learned and absorbed before you reach for a tool that will help you; you need a foundational understanding of a domain in order to have the discernment necessary for using AI well. The first few weeks of the semester are double red.
-- **Red/yellow** ("proceed with caution on main route, prepared to stop at next signal") — a specific, carefully-scoped set of tasks where AI/LLM use is allowed, but not required. See how the tool fails, decide if and when you find it useful, and pay close attention.
+- **Double red** ("stop and stay") — no AI/LLM use at all. Some concepts should be fully learned and absorbed before you reach for a tool. The first few weeks of the semester are double red, with the goal of developing a foundational understanding and discernment.
+- **Red/yellow** ("proceed with caution on main route, prepared to stop at next signal") — a specific, carefully-scoped set of tasks where AI/LLM use is allowed, but not required, for parts of an exercise. See how the tool fails, decide if and when you find it useful, and pay close attention.
 - **Double yellow** ("proceed with caution at restricted speed") — you choose where AI/LLM tools fit into your own workflow. Every use is still at reduced speed and full attention, and you should be prepared to justify it.
 
-Each exercise will indicate which of these three aspects applies. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
+Each exercise will indicate which of these three phases applies. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
 
 More details on the three phases, including the signal diagrams they are named after, are in the [course FAQ](https://dodatascience.fun/faq.html). See also the [CATE Teaching Guide on Creating AI Policies for Teaching and Learning](https://teaching.uic.edu/cate-teaching-guides/digital-learning/creating-ai-policies-for-teaching-and-learning/).
 
@@ -349,13 +348,11 @@ TK
 
 This is my first time teaching a full-semester data science course, and I am confident that there will be many ways to improve the course experience. I will provide structured opportunities for you to share feedback, which I take seriously -- each semester I make changes based on feedback from previous students. I also try to make time in each class session for students to ask any questions they may have about the course.
 
-You are also encouraged to edit the course site and submit fixes/improvements in [GitHub](https://github.com/jackbandy/data-science-fun).
-
-Details TK.
+You are also encouraged to edit the course site by submitting fixes/improvements directly in [GitHub](https://github.com/jackbandy/data-science-fun), or opening an issue on the GitHub page. For details about contributing, see the CONTRIBUTING.md file.
 
 ## [UIC Resources]{.underline}
 
-As a student at UIC, you may experience challenges such as struggles with academics, finances, student life, or your personal well-being. Please know this is completely normal and that you shouldn't hesitate to ask for help. Come to me, or if it is about an issue beyond the scope of this class, please contact your college advisors, or get help from any number of other support services and resources available to all UIC students:
+As a student at UIC, you may experience challenges related to academics, finances, student life, and/or your personal well-being. Please know this is completely normal and that you shouldn't hesitate to ask for help. You are welcome to come to me, your college advisors, or any number of other support services and resources available to all UIC students:
 
 - [[Current Student Resources]{.underline}](https://today.uic.edu/resources/current-student-resources) — a one-stop shop for links to resources in the following categories: General, Academic, Student Support, Student Life, Technology, Health and Safety, and Getting Around Campus
 - UIC [[Tutoring Resources]{.underline}](https://tutoring.uic.edu/)
@@ -386,6 +383,6 @@ Importantly, if you are in immediate distress, please know the UIC Counseling Ce
 
 # VIII. Disclaimer
 
-This syllabus is intended to give guidance on what may be covered during the semester and will be followed as closely as possible. However, as the instructor, I reserve the right to modify, supplement, and make changes as course needs arise. I will communicate such changes in advance as in-class announcements and in writing via Canvas Announcements.
+This syllabus is intended to give guidance on what may be covered during the semester and will be followed as closely as possible. However, the instructor reserves the right to modify, supplement, and make changes as course needs arise. Significant changes will be communicated in advance as in-class announcements and in writing via Canvas Announcements and email.
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
