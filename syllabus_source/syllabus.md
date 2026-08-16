@@ -148,6 +148,24 @@ Details TK
 | *TK* | *TK%* |
 | *TK* | *TK%* |
 
+
+* Worksheets
+* Homeworks
+* Quizzes
+* Coding exercises
+* Attendance
+* Group project
+	- question memo
+	- data acquisition
+	- EDA checkpoint
+	- data documentation
+	- rhetorical analysis
+	- public repository
+	- written report
+	- presentation
+	- peer assessment
+
+
 **Grading Scale**
 
 Final grades use the following scale: A = 90–100%, B = 80–89%, C = 70–79%, D = 60–69%, and F = 59% or below.
