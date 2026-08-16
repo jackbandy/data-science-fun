@@ -5,6 +5,29 @@
 
 ---
 
+## Social preview cards (August 16, 2026)
+
+Jekyll-rendered pages now carry the full Open Graph + Twitter Card set, icons, manifest and
+`theme-color`, via `docs/_includes/social-meta.html` and `docs/_includes/icons.html`. Pages
+built by other toolchains get none of it, because no Jekyll include reaches them:
+
+- [ ] **Syllabus.** Add the tags to `syllabus_source/template.html`, then rerun
+  `syllabus_source/build.sh` (needs pandoc + xelatex + rsvg-convert; also regenerates the PDF).
+- [ ] **Slide decks (`docs/slides/week*.html`, 13 of them).** Add an `include-in-header` to the
+  Quarto deck config and re-render. Shared deck links currently unfurl bare.
+- [ ] **Ethics mini-book (`docs/ethics-in-data-science/book/`).** Same fix in the book's
+  `_quarto.yml`, then re-render.
+
+Copy the tag block from a built page (`_site/timer/index.html` is the smallest example); the
+image URLs are absolute, so it is portable as static HTML with no Liquid.
+
+Also worth doing once the above is live:
+
+- [ ] **Re-scrape the previews** so the platforms drop their cached copies of the old card:
+  Facebook Sharing Debugger, LinkedIn Post Inspector, and posting the link once in Slack.
+
+---
+
 ## LLM audit performed July 2, 2026
 
 Scope: general setup, performance, and workflow simplification (slides/syllabus content excluded).

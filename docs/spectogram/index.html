@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <!-- NOTICE: This file was substantially generated/modified by an LLM.
      Live microphone spectrogram, styled after the Merlin Bird ID Sound ID view. -->
@@ -7,7 +9,6 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
   <meta name="description" content="A live black-and-white spectrogram of your microphone, drawn in the browser. Time scrolls under a moving cursor, frequency runs up the side, darkness is loudness.">
   <title>Live Spectrogram — Introduction to Data Science</title>
   <link rel="canonical" href="https://dodatascience.fun/spectogram/">
@@ -15,7 +16,8 @@
   <meta property="og:description" content="A live black-and-white spectrogram of your microphone, drawn in the browser. Nothing is recorded or uploaded.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dodatascience.fun/spectogram/">
-  <meta name="twitter:card" content="summary">
+  {% include social-meta.html primary=true %}
+  {% include icons.html theme_color='#ffffff' %}
   <link rel="stylesheet" href="spectrogram.css">
   <script>
     // Same trick as the class timer: inside an iframe (the course slides) the

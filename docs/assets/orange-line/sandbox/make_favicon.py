@@ -13,6 +13,7 @@ Writes, relative to docs/:
     favicon.ico                        16/32/48/64/128 px, transparent
     assets/orange-line/loop-icon.svg   vector favicon for browsers that take one
     assets/orange-line/apple-touch-icon.png   180px, on white (iOS ignores alpha)
+    assets/orange-line/icon-192.png, icon-512.png   Android/PWA, named in site.webmanifest
 """
 
 import argparse
@@ -31,6 +32,7 @@ DOCS = HERE.parents[2]
 # stroke and the r=22 transfer markers push the ink out to roughly 323..629 / 161..514.
 LOOP_BOX = (323, 161, 306, 353)  # x, y, w, h
 ICO_SIZES = (16, 32, 48, 64, 128)
+PWA_SIZES = (192, 512)
 
 
 def loop_svg(pad: float = 10.0) -> str:
@@ -79,9 +81,17 @@ def main():
                     append_images=layers)
 
     touch_path = assets / "apple-touch-icon.png"
-    render(markup, 180, bg="#ffffff").convert("RGB").save(touch_path)
+    render(markup, 180, bg="#ffffff").convert("RGB").save(touch_path, optimize=True)
 
-    for p in (svg_path, ico_path, touch_path):
+    # Android/PWA icons named in site.webmanifest. On white, since Android composites
+    # home-screen icons on its own plate and a transparent one can vanish on a dark wall.
+    pwa_paths = []
+    for size in PWA_SIZES:
+        p = assets / f"icon-{size}.png"
+        render(markup, size, bg="#ffffff").convert("RGB").save(p, optimize=True)
+        pwa_paths.append(p)
+
+    for p in (svg_path, ico_path, touch_path, *pwa_paths):
         print(f"wrote {p.relative_to(args.docs)} ({p.stat().st_size/1024:.1f} KB)")
 
 

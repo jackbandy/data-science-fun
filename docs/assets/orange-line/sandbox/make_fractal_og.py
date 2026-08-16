@@ -172,8 +172,8 @@ def main():
     ap.add_argument("--svg", type=Path, default=DEFAULT_SVG)
     ap.add_argument("--out-prefix", type=Path, default=HERE / "orange-line-fractal-og",
                     help="output stem; each variant appends its own suffix and .gif")
-    ap.add_argument("--variants", nargs="+", default=["zoom-in", "zoom-out", "bounce"],
-                    choices=("zoom-in", "zoom-out", "bounce"))
+    ap.add_argument("--variants", nargs="+", default=["zoom-in", "zoom-out", "bounce", "poster"],
+                    choices=("zoom-in", "zoom-out", "bounce", "poster"))
     ap.add_argument("--width", type=int, default=800)
     ap.add_argument("--height", type=int, default=420)
     ap.add_argument("--duration", type=float, default=10.0, help="seconds for one full loop")
@@ -251,6 +251,15 @@ def main():
               f"{len(frames) * delay / 1000:.1f}s, {path.stat().st_size/1e6:.2f} MB")
 
     want = set(args.variants)
+    if "poster" in want:
+        # Static fallback for anything that will not take a multi-megabyte GIF. t=0 is the
+        # whole map, and is also frame 0 of the zoom-out GIF, so the still and the animation
+        # agree wherever a platform shows only the first frame.
+        path = args.out_prefix.with_name(args.out_prefix.name + "-poster.png")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        render(build_frame_svg(0.0, cfg), W, H, args.supersample).save(path, optimize=True)
+        print(f"wrote {path.name}: {W}x{H}, {path.stat().st_size/1024:.0f} KB")
+
     forward = None
     if want & {"zoom-in", "zoom-out"}:
         forward = render_track([i / n_frames for i in range(n_frames)], "zoom-in")

@@ -10,6 +10,36 @@ include:
 title: Introduction to Data Science
 description: Materials for CS 418 - Intro to Data Science at UIC
 
+# Preview card. Ownership is split so no tag is emitted twice with two different values:
+# jekyll-seo-tag emits og:image, twitter:image and twitter:card, and
+# _includes/social-meta.html adds only what seo-tag has no opinion about (secure_url,
+# type, dimensions, alt text, and the static PNG fallback).
+#
+# The image has to arrive as *page* front matter, hence the `defaults` block rather than a
+# top-level `image:` key: seo-tag 2.7.1 reads page["image"] and never looks at site.image,
+# so a site-level key is silently ignored and every page ships twitter:card=summary with
+# no picture at all. Jekyll's defaults inject it into each page's front matter, where
+# seo-tag does see it. index.html has no {% seo %} and so includes social-meta.html with
+# `primary=true` to emit the base tags itself.
+#
+# The `twitter:` block must keep its `username`: seo-tag renders `twitter:site` from the
+# mere presence of the block, so dropping the key ships a literal `content="@"`.
+twitter:
+  username: jackbandy
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/orange-line/orange-line-fractal-og.gif
+social:
+  image: /assets/orange-line/orange-line-fractal-og.gif
+  image_fallback: /assets/orange-line/orange-line-fractal-og-poster.png
+  image_width: 1200
+  image_height: 630
+  image_alt: >-
+    The Chicago Orange Line map, pulling back to reveal it was inside one of its own
+    stops, over and over.
+
 # Jekyll renders any file with YAML front matter, whatever its extension. The
 # Quarto sources below all have it, so without these entries Jekyll would render
 # e.g. slides/week0.qmd over the real Reveal.js deck Quarto built there. Quarto's

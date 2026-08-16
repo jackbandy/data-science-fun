@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <!-- NOTICE: This file was substantially generated/modified by an LLM.
      Adapted from jackbandy.com/extras/cta-style-timer, reworked for the Orange Line. -->
@@ -7,7 +9,6 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#F9461C">
   <meta name="description" content="A simple distraction-free countdown timer styled after the CTA Orange Line train tracker. Set the minutes and go — no sounds, no seconds, no frills.">
   <title>Class Timer — Introduction to Data Science</title>
   <link rel="canonical" href="https://dodatascience.fun/timer/">
@@ -15,7 +16,8 @@
   <meta property="og:description" content="A distraction-free countdown timer that displays minutes only. Styled after the CTA Orange Line train tracker.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dodatascience.fun/timer/">
-  <meta name="twitter:card" content="summary">
+  {% include social-meta.html primary=true %}
+  {% include icons.html %}
   <link rel="stylesheet" href="timer.css">
   <script>
     // Embedded in an iframe (the course slides) the attribution footer is noise,

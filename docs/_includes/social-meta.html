@@ -1,0 +1,56 @@
+{%- comment -%}
+Preview-card image tags, shared by _layouts/default.html and index.html.
+
+Open Graph plus Twitter Cards is the whole convention -- Facebook, LinkedIn, Slack, Discord,
+Signal, Telegram, WhatsApp, iMessage, Mastodon, Bluesky, Teams and Pinterest all read one or
+both. There is no third vocabulary worth carrying.
+
+Call it with `primary=true` only where nothing else emits the base tags -- index.html,
+timer/ and spectogram/, which write their own heads. On {% seo %} pages jekyll-seo-tag
+already emits og:image, twitter:image, twitter:card and twitter:site, and repeating them
+here with different values would leave scrapers picking between two answers.
+
+Two images are declared, in order:
+  1. the animated GIF, for readers that show motion (Slack, Discord, Telegram)
+  2. a 20KB PNG still of the same first frame, for everything with a size ceiling --
+     WhatsApp in particular drops thumbnails over a few hundred KB, and a 3.9MB GIF is
+     far past that.
+Most scrapers take the first og:image and ignore the rest; ones that skip what they cannot
+render fall to the PNG. Either way the picture is the same map.
+
+Per-page overrides: `image:` (site-root-relative) and `image_alt:` in front matter, plus
+`image_width`/`image_height` if the override is not 1200x630.
+{%- endcomment -%}
+{%- assign img = page.image | default: site.social.image -%}
+{%- assign img_alt = page.image_alt | default: site.social.image_alt -%}
+{%- assign img_url = img | absolute_url -%}
+{%- assign img_w = page.image_width | default: site.social.image_width -%}
+{%- assign img_h = page.image_height | default: site.social.image_height -%}
+{%- assign fallback_url = site.social.image_fallback | absolute_url -%}
+{%- if include.primary %}
+<meta property="og:image" content="{{ img_url }}">
+{%- endif %}
+<meta property="og:image:secure_url" content="{{ img_url }}">
+{%- if img contains '.gif' %}
+<meta property="og:image:type" content="image/gif">
+{%- elsif img contains '.png' %}
+<meta property="og:image:type" content="image/png">
+{%- endif %}
+<meta property="og:image:width" content="{{ img_w }}">
+<meta property="og:image:height" content="{{ img_h }}">
+<meta property="og:image:alt" content="{{ img_alt }}">
+{%- if fallback_url and img_url != fallback_url %}
+<meta property="og:image" content="{{ fallback_url }}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="{{ site.social.image_width }}">
+<meta property="og:image:height" content="{{ site.social.image_height }}">
+<meta property="og:image:alt" content="{{ img_alt }}">
+{%- endif %}
+{%- if include.primary %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{ img_url }}">
+{%- if site.twitter.username %}
+<meta name="twitter:site" content="@{{ site.twitter.username | remove: '@' }}">
+{%- endif %}
+{%- endif %}
+<meta name="twitter:image:alt" content="{{ img_alt }}">

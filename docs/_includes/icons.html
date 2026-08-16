@@ -1,0 +1,16 @@
+{%- comment -%}
+Tab identity: the Loop, cropped out of the same map the masthead and og image use.
+Built by assets/orange-line/sandbox/make_favicon.py -- edit the SVG source and re-run it,
+don't hand-edit favicon.ico or apple-touch-icon.png.
+
+Browsers that understand an SVG icon take loop-icon.svg and stay sharp at any density;
+the rest fall back to favicon.ico (16/32/48/64/128px, each rendered from the vector).
+The icon is the track path alone -- station markers read as grit at this size.
+theme-color tints the browser chrome CTA orange to match; a page whose own ground is a
+different color passes `theme_color="#..."` rather than emitting a second tag.
+{%- endcomment -%}
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="32x32">
+<link rel="icon" href="{{ '/assets/orange-line/loop-icon.svg' | relative_url }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ '/assets/orange-line/apple-touch-icon.png' | relative_url }}">
+<link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+<meta name="theme-color" content="{{ include.theme_color | default: '#f9461c' }}">
