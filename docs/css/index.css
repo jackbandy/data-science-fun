@@ -198,6 +198,23 @@ h1 a:hover {
   margin-bottom: 16px;
 }
 
+/* The `*` reset above strips list indent and spacing, so prose lists need it
+   back explicitly. Indent matches `.sources ul`; rhythm matches `.container p`. */
+.container ul,
+.container ol {
+  padding-left: 1.4rem;
+  margin-bottom: 16px;
+}
+
+.container li {
+  line-height: 1.75;
+  margin-bottom: 8px;
+}
+
+.container li:last-child {
+  margin-bottom: 0;
+}
+
 .container hr {
   border: none;
   border-top: 1px solid #e5e5e5;

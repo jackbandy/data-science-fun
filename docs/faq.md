@@ -3,6 +3,8 @@ layout: default
 title: FAQ
 nav: faq
 show_last_updated: true
+extra_css:
+  - /css/faq.css
 ---
 
 # FAQ
@@ -79,22 +81,22 @@ I think if organizations truly want evidence-based, data-informed decisions, the
 
 ---
 
-## Instructor AI Use
+## Instructor AI/LLM Use
 
-**Q: Did the instructor(s) use AI to make these materials?**
+**Q: Did the instructor(s) use AI/LLM to make these materials?**
 
-A: My philosophy on AI usage is [here](https://jackbandy.com/text/llm-code-philosophy.html).
+A: My philosophy on AI/LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html).
 
-Although I have many concerns about large technology companies, their owners, and the future(s) they are trying to create, I do not consider myself "anti-AI." I also don't consider myself "pro-autotune" or "anti-autotune," and I don't consider myself "pro-autofocus" or "anti-autofocus." In high school I drove a manual transmission car, and even then I did not identify as "pro-auto-transmission" or "anti-auto-transmission."
+Although I have many concerns about large technology companies, their owners, and the future(s) they are trying to create, I do not consider myself "anti-AI." I also don't consider myself "pro-autotune" or "anti-autotune," and I don't consider myself "pro-autofocus" or "anti-autofocus." In high school I drove a manual transmission car, and I did not identify as "pro-auto-transmission" or "anti-auto-transmission."
 
-This is because I find some automation quite useful, which is perhaps unsurprising given my training in computer science. And while I do not find LLMs at all useful for generating material out of thin air, when I have something in mind to convert or translate or build out, I have found LLMs helpful. And yes, I have used various LLM-based tools to draft and modify some of the materials in this repo.
+This is because I find some automation quite useful, which is perhaps unsurprising given my training in computer science. And while I do not find LLMs at all useful for generating material from scratch, when I have a specific design in mind to convert or translate or build out, I have found LLMs helpful. And yes, I have used various LLM-based tools to draft and modify some of the materials in this repo.
 
 To give an idea of what this look like in practice, here are some examples of the kinds of prompts I sometimes give to LLM coding tools:
 * "draft a quarto markdown slide based on slide X from my other class"
 * "add three placeholder slides about linear regression after slide X"
-* "write code to recreate this figure in ggplot, plotting, and matplotlib" 
+* "write code to recreate this figure in ggplot, plotnine, and matplotlib" 
 * "extract Figure 2 from this pdf and save it in the assets folder"
-* "draft a slide template based on week X, slide Y, and save it in week0"
+* "draft a slide template based on the layout of week X, slide Y, and save it in week0"
 * "draft the alt-text for the figure in slide X"
 
 Importantly, I take responsibility for everything in the repo, and I make a sincere effort to ensure that I can explain, modify, and/or fix things myself. I also deliberately avoid using LLMs for "writing" material (such as this FAQ answer).
@@ -111,21 +113,30 @@ A: As of right now (August 1, 2026), I am planning three phases of the class, bo
 
 ### Double red: no AI/LLM-based tools
 
+<div class="signal-aspect" markdown="1">
 ![Double red signal](assets/signals/signal-01-stop-stay.svg)
-
+<div class="signal-aspect-body" markdown="1">
 "Stop and stay." A few weeks with no AI usage at all (although I have no means to really police this). In my view and the view of many other educators, there are some concepts that should be fully learned and absorbed before you reach for a tool that will help you. As with many other tools, one needs a foundational understanding of some domain in order to have the [discernment necessary for effectively using AI](https://pluralistic.net/2026/07/28/hitl-ers/).
+</div>
+</div>
 
 ### Red/yellow: limited, specific use of AI/LLM-based tools
 
+<div class="signal-aspect" markdown="1">
 ![Red over yellow signal](assets/signals/signal-02-caution-main.svg)
-
+<div class="signal-aspect-body" markdown="1">
 "Proceed with caution on main route, prepared to stop at next signal." A specific, carefully-scoped set of tasks where use of AI/LLM-based tools is allowed (but not required). Take the marshmallow test and see how you do. See how the tool fails, and decide if/when you find it useful, and pay close attention!
+</div>
+</div>
 
 ### Double yellow: choose carefully where you use it, use it carefully
 
+<div class="signal-aspect" markdown="1">
 ![Yellow over yellow signal](assets/signals/signal-09-caution-restricted.svg)
-
+<div class="signal-aspect-body" markdown="1">
 "Proceed with caution at restricted speed." You choose where AI/LLM-based tools fit into your own workflow. Every use is still at "reduced speed and full attention," and you should be prepared to justify it.
+</div>
+</div>
 
 This phase is important because it seems to be the default setup in the real world -- you will eventually choose your own adventure. It thus seems important to have some experience with this kind of open-ended judgment call in a communal learning environment - let's talk about it and think about it together before you go out into the real world.
 
