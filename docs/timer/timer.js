@@ -1,3 +1,5 @@
+---
+---
 /* NOTICE: This file was substantially generated/modified by an LLM.
    Adapted from jackbandy.com/extras/cta-style-timer, reworked for the Orange Line. */
 
@@ -17,7 +19,39 @@
     "State/Lake": "Closed for reconstruction"
   };
 
-  var DEFAULT_STATION = 'Halsted';
+  // Class date -> station, from _data/schedule.csv and _data/stations.yml
+  // (the same source the homepage schedule table renders from). Used below
+  // to default the picker to whichever stop is nearest to today.
+  var scheduleStations = [
+    {%- for row in site.data.schedule -%}
+    {%- assign station = site.data.stations[row.Week] -%}
+    { date: "{{ row.Date }}", station: "{{ station }}" }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ];
+
+  // When today is more than this many days from the nearest class date
+  // (e.g. over a break, or before/after the semester), fall back to the
+  // Orange Line's last stop rather than guessing at a class week.
+  var FALLBACK_STATION = 'Midway';
+  var FALLBACK_THRESHOLD_DAYS = 16;
+
+  function nearestScheduledStation() {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var bestStation = null;
+    var bestDiffDays = Infinity;
+    scheduleStations.forEach(function(entry) {
+      var diffDays = Math.abs(new Date(entry.date + 'T00:00:00') - today) / 86400000;
+      if (diffDays < bestDiffDays) {
+        bestDiffDays = diffDays;
+        bestStation = entry.station;
+      }
+    });
+    if (bestStation === null || bestDiffDays > FALLBACK_THRESHOLD_DAYS) return FALLBACK_STATION;
+    return bestStation;
+  }
+
+  var DEFAULT_STATION = nearestScheduledStation();
 
   var select = document.getElementById('minuteSelect');
   var customWrapper = document.getElementById('customMinutesWrapper');
@@ -54,6 +88,8 @@
     });
     stationPicker.appendChild(btn);
   });
+
+  stationName.textContent = DEFAULT_STATION;
 
   infoBtn.addEventListener('click', function() {
     if (!running) stationPicker.classList.toggle('visible');
