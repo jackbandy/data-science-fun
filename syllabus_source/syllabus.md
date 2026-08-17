@@ -72,13 +72,13 @@ Although it may or may not be the "[sexiest job of the 21st century](https://hbr
 
 ## [Welcome!]{.underline}
 
-Data are fun, and data science can be even more fun! Although I have taught basically every individual topic in this course at one point or another, this is my first time teaching them all under the umbrella of a full-semester data science course. This means there will probably be a few hiccups and things to iron out - thank you in advance for your patience and your feedback to help me improve the class for future semesters!
+Data are fun, and data science can be even more fun! Although I have taught basically every individual topic in this course at one point or another, this is my first time teaching them all under the umbrella of a full-semester data science course. This means there will probably be a few hiccups and wrinkles to iron out this semester - thank you in advance for your patience and your feedback to help me improve the class for future semesters!
 
 ***Growth Mindset:***
 
-Course materials and assignments can be complex and challenging, but they are crucial to your intellectual and personal growth and development. Just like a challenging weight-lifting exercise is intended to strengthen your body, a challenging class exercise is intended to strengthen your mind.
+Course materials and exercises might be complex and challenging, but they are crucial to your intellectual and personal growth and development. Just like a challenging weight-lifting exercise is intended to strengthen your body, a challenging class exercise is intended to strengthen your mind.
 
-As will be discussed in class, I try to keep exercises in the "zone of proximal development." This is a concept from educational psychology which basically says an exercise should not be too easy or too difficult. Again, this is kind of analogous to weight-lifting exercises: there is a "goldilocks" zone that is challenging enough to help you grow, but not so challenging as to discourage you.
+As will be discussed in class, I try to keep exercises in the "zone of proximal development." This is a concept from educational psychology which basically says an exercise should not be too easy or too difficult. Again, this is kind of analogous to weight-lifting exercises: there is a "goldilocks" zone that is challenging enough to help you learn and grow, but not so challenging as to discourage you.
 
 If and when you need help, please reach out sooner rather than later! Your feedback is the best way for me to know if we are in the "zone of proximal development," or if something is too easy or too difficult.
 
@@ -86,9 +86,8 @@ If and when you need help, please reach out sooner rather than later! Your feedb
 
 
 If we are successful, by the end of the semester, you will have proficiency in the following:
-- Obtaining and preparing data for exploratory data analysis, including intentional selection of data storage formats
-- Techniques for exploratory data analysis (EDA), including summary statistics, tabulation, aggregation
-- Creating descriptive visualizations for exploratory data analysis
+- Obtaining and preparing data for exploratory data analysis, including intentional selection of data storage formats and "data minimization" techniques
+- Techniques for exploratory data analysis (EDA), including summary statistics, tabulation, aggregation, and descriptive visualizations
 - Creating "persuasive" data visualizations to communicate specific patterns, trends, and/or insights from data
 - Developing models for data analysis (i.e. regression, classification, clustering)
 - Evaluating a model's performance and understanding its structure, meaning, statistical significance, and limitations
@@ -101,7 +100,7 @@ If we are successful, by the end of the semester, you will have proficiency in t
 - Python foundations, dataframes, Polars, and obtaining data
 - Data wrangling, filtering, and data formats
 - Exploratory analysis and descriptive statistics
-- Visualization basics, chart choice, visual encodings, visualization design, communication, and critique
+- Visualization basics, chart choice, visual encodings, design, communication, and critique
 - Hypothesis testing, estimation, sampling, and randomness
 - Linear regression and classification
 - Decision trees, support vector machines, and kernels
