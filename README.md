@@ -14,7 +14,8 @@ This repo holds the raw files (mostly markdown files) that are assembled and pub
 | --- | --- | --- |
 | Slides | `docs/slides/week*.qmd` | [/slides/](https://dodatascience.fun/slides/) |
 | Syllabus text | `syllabus_source/syllabus.md` | [/syllabus/](https://dodatascience.fun/syllabus/) |
-| Week-by-week schedule | `docs/_data/schedule.csv` | homepage table + syllabus |
+| Week-by-week schedule | `docs/_data/schedule.csv` | homepage table + syllabus + [/schedule.html](https://dodatascience.fun/schedule.html) |
+| What happens each day, and its source materials | `docs/_includes/schedule-topics.md` | [/schedule.html](https://dodatascience.fun/schedule.html) |
 | Ethics mini-book | `docs/ethics-in-data-science/*.qmd` | [/ethics-in-data-science/book/](https://dodatascience.fun/ethics-in-data-science/book/) |
 | FAQ | `docs/faq.md` | [/faq.html](https://dodatascience.fun/faq.html) |
 | Worksheets | `worksheets_source/*/worksheet.tex` | `/worksheets/` |
@@ -79,7 +80,7 @@ Still working on this 🙂 there are too many possibilities... But main units wi
 	* Network-based recommendation systems
 * Group presentations (weeks 14-15)
 
-The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](docs/_data/schedule.csv) — see the Syllabus build section below.
+The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](docs/_data/schedule.csv) — see the Syllabus build section below. What happens on each individual day, including links to source materials, lives beside it in [`docs/_includes/schedule-topics.md`](docs/_includes/schedule-topics.md) and is published at [/schedule.html](https://dodatascience.fun/schedule.html).
 
 ## Note on LLM use
 
@@ -120,11 +121,14 @@ data-science-fun/
 │   ├── index.html               # Landing page
 │   ├── faq.md                   # FAQ source (Jekyll renders it to /faq.html)
 │   ├── _config.yml              # Jekyll config
-│   ├── _data/                   # Site data
-│   │   ├── schedule.csv         # The one copy of the course schedule
+│   ├── schedule.md              # Full-schedule page (Jekyll renders it to /schedule.html)
+│   ├── _data/                   # Site data: files Jekyll parses, addressed as site.data.*
+│   │   ├── schedule.csv         # The one copy of the course schedule, incl. the unit each day belongs to
 │   │   └── stations.yml         # Orange Line stop metadata
-│   ├── _includes/               # The one copy of the site header/nav and footer
+│   ├── _includes/               # Site header/nav and footer, plus files pasted in as raw text
+│   │   └── schedule-topics.md   # Per-day topics and source materials for /schedule.html
 │   ├── _layouts/default.html    # Layout for Markdown pages
+│   ├── _layouts/schedule.html   # Layout for /schedule.html
 │   ├── Gemfile                  # Local Jekyll preview only
 │   ├── css/                     # Shared stylesheets
 │   ├── js/                      # Site scripts (schedule tooltips)
@@ -219,16 +223,23 @@ push to main
      |
      |  2. jekyll build docs/ -> _site/
      |       [docs/_data/schedule.csv] --(Liquid loop)--> homepage schedule table
+     |
+     |       [docs/_data/schedule.csv] -------------+
+     |                                              +--(Liquid loop)--> /schedule.html
+     |       [docs/_includes/schedule-topics.md] ---+
+     |
      |       [docs/syllabus/index.html] -> masthead include expanded in place
      |
      v
 [upload _site/ -> GitHub Pages]
 ```
 
-- **The schedule lives in one place: `docs/_data/schedule.csv`.** Jekyll reads it as `site.data.schedule` for the homepage table; `schedule.lua` expands the empty ` ```schedule ` block in `syllabus.md` into the same rows for Pandoc.
+- **The schedule lives in one place: `docs/_data/schedule.csv`.** Jekyll reads it as `site.data.schedule` for the homepage table and for /schedule.html; `schedule.lua` expands the empty ` ```schedule ` block in `syllabus.md` into the same rows for Pandoc.
 	- There is no sync script and no generated table committed anywhere.
-	- **Add new columns only at the end.** `schedule.lua` validates the header positionally for the first five columns (`Week`, `Class Day`, `Topic`, `Before Class`, `In Class`) and renders only those; Jekyll addresses columns by name. Trailing columns like `Date` and `Notes` are carried in the CSV and ignored by both tables. Inserting a column before `In Class` fails the syllabus build.
-	- Week-to-station labels for the homepage dots are in `docs/_data/stations.yml`.
+	- **Add new columns only at the end.** `schedule.lua` validates the header positionally for the first five columns (`Week`, `Class Day`, `Topic`, `Before Class`, `In Class`) and renders only those; Jekyll addresses columns by name. Trailing columns like `Date`, `Notes`, and `Unit` are carried in the CSV and ignored by both tables (they feed /schedule.html instead). Inserting a column before `In Class` fails the syllabus build.
+	- Week-to-station labels for the homepage dots (and the /schedule.html week headings) are in `docs/_data/stations.yml`.
+	- **Units come from the CSV's `Unit` column,** one value per class day. /schedule.html groups weeks under a heading per unit and lists each unit's week span at the top of the page; both are derived from the column, so moving a unit boundary is a CSV edit.
+	- **The two schedule sources sit in different folders on purpose.** `_data/` is for files Jekyll parses for you: it reads `schedule.csv` and `stations.yml` into `site.data.schedule` and `site.data.stations`, which is why no template has to split CSV lines or read YAML by hand. `_includes/` is for files pasted in as raw text, which is the only way a template can get at the *unrendered* markdown of `schedule-topics.md` — Jekyll's data loader ignores `.md` outright. Moving either file into the other folder means hand-parsing it in Liquid, so they stay put.
 - The text source is `syllabus_source/syllabus.md`. Its YAML block holds the header (course title, college, credit hours); the templates render it. `underline.lua` handles its `[...]{.underline}` spans.
 - The build needs `pandoc`, `xelatex`, and `rsvg-convert`. The workflow apt-installs them and caches `docs/syllabus/`, so unrelated pushes skip the TeX Live install and keep the existing "created" timestamp.
 - The UIC logo comes from `docs/assets/branding/uic-black-logo.svg`, converted to PDF for the LaTeX header at build time.

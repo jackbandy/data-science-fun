@@ -1,6 +1,6 @@
 {%- comment -%}
 Canonical site header and nav. Pages set `nav:` in front matter (home/slides/
-syllabus/faq/timer/book; omit for none) to mark the active link. Links marked
+schedule/syllabus/faq/timer/book; omit for none) to mark the active link. Links marked
 `is-external` open in a new tab and get the arrow-out-of-box icon.
 {%- endcomment -%}
 <hr class="orange-line">
@@ -9,6 +9,7 @@ syllabus/faq/timer/book; omit for none) to mark the active link. Links marked
   <nav class="site-nav" aria-label="Main">
     <a href="/"{% if page.nav == 'home' %} aria-current="page"{% endif %}>Home</a>
     <a href="/slides/"{% if page.nav == 'slides' %} aria-current="page"{% endif %}>Slides</a>
+    <a href="/schedule.html"{% if page.nav == 'schedule' %} aria-current="page"{% endif %}>Schedule</a>
     <a href="/syllabus/"{% if page.nav == 'syllabus' %} aria-current="page"{% endif %}>Syllabus</a>
     <a href="/faq.html"{% if page.nav == 'faq' %} aria-current="page"{% endif %}>FAQ</a>
     <a class="is-external" href="/timer/" target="_blank" rel="noopener"{% if page.nav == 'timer' %} aria-current="page"{% endif %}>Timer</a>
