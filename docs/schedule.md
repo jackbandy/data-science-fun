@@ -2,8 +2,8 @@
 layout: schedule
 title: Full Schedule
 nav: schedule
-description: Day-by-day schedule for Introduction to Data Science (CS 418), Fall 2026 — one stop per class meeting, with slides, worksheets, and source materials.
-subtitle: Fall 2026 — one stop per class meeting. Each stop links to its slides, worksheet, and source materials.
+description: Day-by-day schedule for Introduction to Data Science (CS 418), Fall 2026 — one stop per week, with slides, worksheets, and source materials.
+subtitle: Fall 2026 — one stop per week. Each stop links to its slides, and every class meeting to its worksheet and source materials.
 extra_css:
   - /css/schedule.css
 ---

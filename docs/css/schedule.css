@@ -3,9 +3,9 @@
    the `.container` wrapper, and the footer.
 
    The visual scheme reads the semester as an Orange Line trip, the same way the
-   homepage map does: each week is a station, each class meeting a stop on the
-   way. So the day list hangs off a vertical orange rail with a dot per meeting,
-   and the station names — written as `code` spans by the layout — render as
+   homepage map does: each week is a station — one stop per week, whatever the
+   number of meetings. So the weeks hang off a vertical orange rail with a dot
+   per week, and the station names — written as `code` spans by the layout — render as
    CTA-style station plaques.
 
    Note: this file was largely written by an LLM (Claude Code). */
@@ -55,6 +55,7 @@
 
 /* ── Week headings ── */
 .schedule-body h4 {
+  position: relative;
   font-size: 1.15rem;
   font-weight: 800;
   color: #a8340f;
@@ -83,7 +84,7 @@
 /* ── The rail ── */
 /* One continuous Orange Line running the length of the semester, the same
    #F9461C bar as the horizontal rules in the masthead, with a station dot per
-   class meeting sitting on top of it. Every week lives inside the single
+   week sitting on top of it. Every week lives inside the single
    <div class="rail"> the layout emits, so the bar is one element rather than
    one segment per week. */
 .rail {
@@ -119,12 +120,13 @@
 }
 
 /* The station dot, centred on the rail (its centre line is 6px from the left
-   edge of .rail, and the list content starts 58px in). */
-.rail > ul > li::before {
+   edge of .rail, and the content starts 58px in). One stop per week, so the dot
+   hangs off the week heading rather than off each class meeting. */
+.rail > h4::before {
   content: "";
   position: absolute;
   left: -65px;
-  top: 0.15em;
+  top: 0.05em;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -210,7 +212,7 @@
     padding-left: 44px;
   }
 
-  .rail > ul > li::before {
+  .rail > h4::before {
     left: -49px;
     width: 22px;
     height: 22px;
