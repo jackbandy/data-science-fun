@@ -74,6 +74,7 @@ jobs:
              ! git cat-file -e "$BEFORE" 2>/dev/null; then
             echo "build_book=true" >> "$GITHUB_OUTPUT"
             echo "render_slides="  >> "$GITHUB_OUTPUT"
+            echo "needs_r=true"    >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -93,6 +94,7 @@ jobs:
           # them forces a full render — an empty RENDER_SLIDES means "all".
           if echo "$CHANGED" | grep -qE '^docs/slides/(_metadata\.yml|_quarto\.yml|shared/)'; then
             echo "render_slides=" >> "$GITHUB_OUTPUT"
+            echo "needs_r=true"   >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -103,6 +105,15 @@ jobs:
             | tr '\n' ' ' \
             | sed 's/ *$//')
           echo "render_slides=$SLIDES" >> "$GITHUB_OUTPUT"
+
+          # R is only needed by week5.qmd (the one deck using `engine: knitr`).
+          # Setting R up takes ~7 minutes, so skip it unless week5 is actually
+          # in the render set. If another deck ever grows R chunks, add it here.
+          if echo "$SLIDES" | grep -qw 'week5.qmd'; then
+            echo "needs_r=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_r=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v7
@@ -121,24 +132,6 @@ jobs:
         run: |
           pip install uv
           uv pip install --system -r docs/slides/shared/requirements.txt
-
-      # week5.qmd uses `engine: knitr`, which shells out to Rscript. Quarto's
-      # setup action does not bundle R, so it must be installed separately.
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: release
-          use-public-rspm: true
-
-      - name: Cache R packages
-        uses: actions/cache@v6
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: r-pkgs-${{ hashFiles('.github/workflows/deploy-pages.yml') }}
-          restore-keys: r-pkgs-
-
-      - name: Install R dependencies
-        run: Rscript -e 'pkgs <- c("knitr", "rmarkdown", "reticulate", "here", "ggplot2", "ggtext", "patchwork", "svglite"); install.packages(setdiff(pkgs, rownames(installed.packages())))'
 
       # Cache the rendered book output
       - name: Restore Quarto book cache
@@ -162,13 +155,56 @@ jobs:
           path: |
             docs/slides/week*.html
             docs/slides/week*_files
+            docs/slides/week*.pdf
             docs/slides/_libs
           # The key must cover every input the rendered decks depend on: deck
           # sources plus the shared metadata/includes/theme that inject footer
           # scripts and CSS into all of them. Leaving those out meant a shared
           # change hit the cache exactly and skipped the render entirely.
-          key: slides-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/_metadata.yml', 'docs/slides/_quarto.yml', 'docs/slides/shared/**') }}
-          restore-keys: slides-
+          #
+          # The v2 prefix is a one-time invalidation. Caches written before the
+          # PDFs joined the paths above hold HTML only, and an exact key hit
+          # skips the save step -- so without the bump every run would re-export
+          # all 13 PDFs and then throw them away again.
+          key: slides-v2-${{ hashFiles('docs/slides/*.qmd', 'docs/slides/*.md', 'docs/slides/_metadata.yml', 'docs/slides/_quarto.yml', 'docs/slides/shared/**') }}
+          # Falling back past the v2 prefix lets the first run after the bump
+          # restore the old HTML and re-render only what changed, instead of
+          # rebuilding all 13 decks from cold. The v1 entries age out on their
+          # own; this line can be dropped once they have.
+          restore-keys: |
+            slides-v2-
+            slides-
+
+      # week5.qmd uses `engine: knitr`, which shells out to Rscript. Quarto's
+      # setup action does not bundle R, so it must be installed separately.
+      #
+      # These three steps sit AFTER the slides cache restore, and are gated on
+      # it, because setting R up costs ~7 minutes — by far the biggest single
+      # cost in this workflow — and it is wasted whenever the slide render is
+      # skipped entirely or renders only decks that have no R in them. The
+      # `needs_r` output is the deck-level half of that test; see the "Detect
+      # changed files" step above. Note `!= 'false'` rather than `== 'true'`:
+      # the detect step exits early on some paths without setting the output,
+      # and an unset value has to mean "install it" so a render never lands on
+      # a runner with no Rscript.
+      - name: Set up R
+        if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+
+      - name: Cache R packages
+        if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: r-pkgs-${{ hashFiles('.github/workflows/deploy-pages.yml') }}
+          restore-keys: r-pkgs-
+
+      - name: Install R dependencies
+        if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
+        run: Rscript -e 'pkgs <- c("knitr", "rmarkdown", "reticulate", "here", "ggplot2", "ggtext", "patchwork", "svglite"); install.packages(setdiff(pkgs, rownames(installed.packages())))'
 
       # HTML decks are required: if this fails, the deploy should fail
       - name: Render Quarto slides (HTML — required)
@@ -198,6 +234,19 @@ jobs:
         continue-on-error: true
         uses: browser-actions/setup-chrome@v2
 
+      # Exporting all 13 decks takes ~2.5 minutes, so only the decks that need
+      # a PDF get one. Two things put a deck on that list:
+      #
+      #   1. Its source changed on this push (steps.changed.outputs.render_slides).
+      #   2. It has no PDF on disk. The cache above carries PDFs between runs,
+      #      but a cold cache, a restore-keys partial hit, or a cache written by
+      #      a PR run (where this step is skipped) all leave some or all of them
+      #      missing. Checking the filesystem covers every one of those without
+      #      having to reason about which happened.
+      #
+      # An empty list means every PDF is already present and current, so the
+      # export is skipped outright — RENDER_SLIDES="" would mean "all decks" to
+      # the build script, which is the opposite of what we want here.
       - name: Render slide PDFs (bonus — non-blocking)
         if: github.event_name != 'pull_request'
         continue-on-error: true
@@ -206,9 +255,41 @@ jobs:
           SKIP_HTML: "true"
           SKIP_VENV: "true"
           CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
+          CHANGED_SLIDES: ${{ steps.changed.outputs.render_slides }}
+          SLIDES_CACHE_HIT: ${{ steps.slides-cache.outputs.cache-hit }}
         run: |
           cd docs/slides
-          bash shared/build_all_quarto.sh
+
+          # An empty CHANGED_SLIDES is ambiguous on its own: the detect step
+          # writes it both for "a shared input changed, so rebuild everything"
+          # and for "no slide source changed at all". The slides cache tells
+          # the two apart. Its key covers exactly the files the detect step
+          # looks at, so an exact hit can only mean nothing slide-related
+          # changed — which is also why the HTML render step above can get away
+          # with testing the cache alone.
+          if [[ -z "${CHANGED_SLIDES// }" && "$SLIDES_CACHE_HIT" != "true" ]]; then
+            NEEDED=$(ls week*.qmd week*.md 2>/dev/null | tr '\n' ' ')
+          else
+            NEEDED="$CHANGED_SLIDES"
+            for src in week*.qmd week*.md; do
+              [[ -e "$src" ]] || continue
+              base="${src%.*}"
+              if [[ ! -f "$base.pdf" ]]; then
+                NEEDED="$NEEDED $src"
+              fi
+            done
+          fi
+
+          # Collapse duplicates (a changed deck with no PDF is listed twice).
+          NEEDED=$(echo "$NEEDED" | tr ' ' '\n' | grep -v '^$' | sort -u | tr '\n' ' ')
+
+          if [[ -z "${NEEDED// }" ]]; then
+            echo "Every slide PDF is present and up to date; skipping export."
+            exit 0
+          fi
+
+          echo "Exporting PDFs for: $NEEDED"
+          RENDER_SLIDES="$NEEDED" bash shared/build_all_quarto.sh
 
       # The syllabus is built here rather than committed, so it must exist on
       # every run. Cache it on an exact key only: a hit skips both the ~1 GB
