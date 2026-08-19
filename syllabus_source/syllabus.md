@@ -96,8 +96,8 @@ If we are successful, by the end of the semester, you will have proficiency in t
 
 ## [Course Topics]{.underline}
 
-- Course introduction, the data science lifecycle, statistics review
-- Python foundations, dataframes, Polars, and obtaining data
+- Course introduction, the data science lifecycle, asking questions
+- Statistics review, Python foundations, dataframes, Polars, and obtaining data
 - Data wrangling, filtering, and data formats
 - Exploratory analysis and descriptive statistics
 - Visualization basics, chart choice, visual encodings, design, communication, and critique
