@@ -30,21 +30,13 @@ extra_css:
 
 <ol class="exercise-list">
 {% for e in exercises %}
-  <li class="exercise-stop">
-    <a class="exercise-card" href="/exercises/{{ e.slug }}/">
-      <span class="exercise-number" aria-hidden="true">{{ e.number }}</span>
-      <span class="exercise-card-body">
-        <span class="exercise-card-topic">{{ e.topic }}</span>
-        <span class="exercise-card-title">{{ e.title }}</span>
-        <span class="exercise-card-summary">{{ e.summary }}</span>
-        <span class="exercise-card-meta">
-          {% assign signal = signals[e.ai_policy] %}
-          {% if signal.image %}<img class="signal-badge" src="{{ signal.image }}" alt="">{% endif %}
-          <span class="visually-hidden">AI/LLM phase: {{ signal.label }}. </span>
-          <span aria-hidden="true">{{ signal.label }}</span> &middot; Due {{ e.due }}
-        </span>
-      </span>
-    </a>
+  {%- assign signal = signals[e.ai_policy] -%}
+  <li class="exercise-item">
+    <a class="exercise-item-title" href="/exercises/{{ e.slug }}/">{{ e.title }}</a>
+    <p class="exercise-item-summary">{{ e.summary }}</p>
+    <p class="exercise-item-meta">{{ e.topic }}</p>
+    <p class="exercise-item-meta">AI/LLM phase: {{ signal.label }}</p>
+    <p class="exercise-item-meta">Due {{ e.due }}</p>
   </li>
 {% endfor %}
 </ol>

@@ -2,11 +2,9 @@
    Loaded after index.css and masthead.css, which supply the fonts, the reset, the
    `.container` wrapper, and the footer.
 
-   The scheme follows the site's Orange Line reading of the course: the schedule is a
-   line of weekly stops, so the five exercises are a short branch off it — a vertical
-   orange rail with one numbered stop per exercise. The AI/LLM policy renders as a
-   round rail signal in the actual signal colors (green/yellow/red), which is how the
-   syllabus already describes it, so the badge is the metaphor rather than decoration.
+   The index is a plain numbered list. On a single exercise page the AI/LLM policy
+   renders as a rail signal drawing, which is how the syllabus already describes it,
+   so the badge there is the metaphor rather than decoration.
 
    Note: this file was largely written by an LLM. It was tested and reviewed before being published. */
 
@@ -47,109 +45,52 @@
 .exercises-about p { margin-bottom: 12px; }
 .exercises-about p:last-child { margin-bottom: 0; }
 
-/* ── The branch: five numbered stops on one rail ── */
+/* ── The index list ── */
 .exercise-list {
-  list-style: none;
+  /* padding, not margin: the `*` reset in index.css zeroes both, and the
+     markers hang in the padding. */
+  list-style: decimal;
   margin: 0 0 48px;
-  padding: 0 0 0 34px;
-  position: relative;
+  padding-left: 1.8rem;
 }
 
-.exercise-list::before {
-  content: "";
-  position: absolute;
-  left: 13px;
-  top: 22px;
-  bottom: 22px;
-  width: 6px;
-  background: #f9461c;
-  border-radius: 3px;
+.exercise-item {
+  margin-bottom: 24px;
+  padding-left: 4px;
 }
 
-.exercise-stop {
-  position: relative;
-  margin-bottom: 18px;
-}
-
-.exercise-card {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  border: 2px solid #e2e2e2;
-  border-radius: 6px;
-  padding: 16px 18px;
-  text-decoration: none;
+.exercise-item-title {
+  font-size: 1.15rem;
+  font-weight: 800;
   color: inherit;
-  background: #fff;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  text-decoration: none;
 }
 
-.exercise-card:hover,
-.exercise-card:focus-visible {
-  border-color: #f9461c;
-  transform: translateX(2px);
+.exercise-item-title:hover,
+.exercise-item-title:focus-visible {
+  color: #f9461c;
+  text-decoration: underline;
 }
 
-/* The stop marker sits on the rail, half outside the card. */
-.exercise-number {
-  position: absolute;
-  left: -34px;
-  top: 18px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #fff;
-  border: 5px solid #f9461c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 0.95rem;
-}
-
-.exercise-card-body { display: block; }
-
-.exercise-card-topic,
-.exercise-card-title,
-.exercise-card-summary,
-.exercise-card-meta {
-  display: block;
-}
-
-.exercise-card-topic {
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #777;
-  margin-bottom: 4px;
-}
-
-.exercise-card-title {
-  font-size: 1.2rem;
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-
-.exercise-card-summary {
+.exercise-item-summary {
   font-size: 0.98rem;
   line-height: 1.55;
   color: #444;
-  margin-bottom: 8px;
+  margin: 4px 0 6px;
 }
 
-.exercise-card-meta {
+/* One fact per line, so nothing needs a separator between them. */
+.exercise-item-meta {
   font-size: 0.85rem;
+  line-height: 1.5;
   color: #666;
+  margin: 0;
 }
 
-/* ── The signal ──
+/* ── The signal (single exercise pages) ──
    The AI/LLM phase is a CTA signal *aspect*, not a traffic light: two lamps read
-   together (double red, red/yellow, double yellow). So the badge is the same
-   rulebook drawing the FAQ shows, shrunk to trackside size, rather than a single
-   coloured dot -- a dot would quietly re-introduce the red/yellow/green reading
-   the course explicitly does not use. The hairline border stands in for the
-   signal's backing plate, matching .signal-aspect in faq.css. */
+   together, so the badge is the FAQ's rulebook drawing rather than a coloured dot.
+   The hairline border is the signal's backing plate, matching faq.css. */
 .signal-badge {
   height: 1.55em;
   width: auto;
@@ -297,18 +238,6 @@
   color: inherit;
   font-size: 0.88rem;
   line-height: 1.55;
-}
-
-@media (max-width: 520px) {
-  .exercise-list { padding-left: 26px; }
-  .exercise-list::before { left: 9px; }
-  .exercise-number {
-    left: -26px;
-    width: 26px;
-    height: 26px;
-    border-width: 4px;
-    font-size: 0.82rem;
-  }
 }
 
 /* ── Notebook preview ──

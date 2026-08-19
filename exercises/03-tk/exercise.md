@@ -1,11 +1,11 @@
 ---
-summary: TK — one line describing this exercise, shown on the index card.
+summary: TK — one line describing this exercise.
 topic: TK
 due: TK
 ai_policy: tk
 ---
 
-# TK
+# Exercise Three - TK
 
 TK — one or two sentences framing the exercise: what the student is doing, and why it matters for the question they are trying to answer.
 
