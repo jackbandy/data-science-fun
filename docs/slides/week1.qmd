@@ -32,8 +32,8 @@ Jack Bandy
 - Day 1
     - Course Logistics
     - Defining Data Science
-    - Pasteur's Quadrant
     - Data Science Lifecycle
+    - Pasteur's Quadrant
     - The DIKW Pyramid
     - The Treachery of Images
     - Answers to your Quiz on Wednesday
@@ -618,6 +618,114 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 
 
+# Data Science Lifecycle {.section-header}
+
+
+## The Data Science Lifecycle: Building Blocks {.image-frame-slide}
+
+<img src="../assets/lifecycle-steps/ds-lifecycle-step0.svg" alt="Blank data science lifecycle scaffold: five unlabeled boxes connected by arrows in a cycle">
+
+---
+
+## The Data Science Lifecycle: Ask a Question {.image-frame-slide}
+
+<img src="../assets/lifecycle-steps/ds-lifecycle-step1.svg" alt="Data science lifecycle with the first stage highlighted and labeled 'ask a question'; the remaining boxes are still blank">
+
+---
+
+## The Data Science Lifecycle: Obtain Data {.image-frame-slide}
+
+<img src="../assets/lifecycle-steps/ds-lifecycle-step2.svg" alt="Data science lifecycle with the second stage highlighted and labeled 'obtain data'; 'ask a question' is labeled but no longer highlighted">
+
+---
+
+## The Data Science Lifecycle: Understand the Data {.image-frame-slide}
+
+<img src="../assets/lifecycle-steps/ds-lifecycle-step3.svg" alt="Data science lifecycle with the third stage highlighted and labeled 'understand the data'; the first two stages are labeled">
+
+---
+
+## The Data Science Lifecycle: Understand the World {.image-frame-slide}
+
+<img src="../assets/lifecycle-steps/ds-lifecycle-step4.svg" alt="Data science lifecycle with the fourth stage highlighted and labeled 'understand the world'; the first three stages are labeled">
+
+---
+
+## The Data Science Lifecycle: Communicate {.image-frame-slide}
+
+<img src="../assets/lifecycle-steps/ds-lifecycle-step5.svg" alt="Data science lifecycle with the final stage highlighted and labeled 'reports, decisions, solutions'; all five stages are now labeled">
+
+---
+
+## Source for the Lifecycle {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle.svg" alt="The data science lifecycle drawn with every connection shown: ask a question, obtain data, understand the data, and understand the world, linked by arrows running in both directions — including understanding the data sending you back to obtain more data, or back to the original question — with 'reports, decisions, solutions' as an output.">
+
+::: {.caption}
+Sam Lau, Joey Gonzalez, and Deb Nolan, ["The Data Science Lifecycle"](https://learningds.org/ch/01/lifecycle_intro.html), in *[Learning Data Science](https://learningds.org/)*.
+:::
+
+---
+
+## Related Cycles
+
+::: {.dense}
+- similar shapes, different vocabulary
+- design thinking, science, etc.
+- learning + making = some version of this loop
+:::
+
+---
+
+## Another Data Science Cycle {.image-frame-slide}
+
+<img src="../assets/lifecycle/belo-oneil-lifecycle-remix-v4.svg" alt="The data science process drawn as a larger chain: a problem in the world leads to data collection, data preparation, and clean data; clean data feeds both data exploration and data modeling and analysis; those lead to evaluation and presentation, then to decisions and a data product, which loop back to the world and to the original problem.">
+
+::: {.caption}
+Adapted from Cathy O'Neil and Rachel Schutt, *[Doing Data Science](https://www.oreilly.com/library/view/doing-data-science/9781449363871/)* (O'Reilly, 2013), and from Gonzalo Bello Lander.
+:::
+
+---
+
+## Another Cycle: McElreath's Bayesian Workflow {.image-frame-slide}
+
+<img src="../assets/lifecycle/mcElreath-rethinking-remix.svg" alt="A statistical workflow diagram: a generative model and a set of estimands both feed into statistical models; the statistical models produce prior predictions and, once combined with data, produce estimates; the estimates in turn yield posterior predictions and causal effects.">
+
+::: {.caption}
+After Richard McElreath, *[Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/)* and the [Statistical Rethinking lecture series](https://github.com/rmcelreath/stat_rethinking_2026).
+:::
+
+---
+
+
+## Another Cycle: Science {.image-frame-slide}
+
+<img src="../assets/lifecycle/scientific-method.png" alt="The scientific method drawn as a ring of six labeled steps with arrows running clockwise: observation/question, research topic area, hypothesis, test with experiment, analyse data, and report conclusions, which loops back to observation/question.">
+
+::: {.caption}
+From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework for Curriculum Transformation in Quantum Information Science and Technology Education"](https://doi.org/10.1088/1361-6404/ad7e60), *European Journal of Physics* 45(6), 2024.
+:::
+
+---
+
+## Another Cycle: Inquiry Learning {.image-frame-slide}
+
+<img src="../assets/lifecycle/inquiry-learning.png" alt="Inquiry-based learning drawn as a ring of five labeled circles with arrows running clockwise: engage, explore, explain, elaborate, and evaluate, which loops back to engage.">
+
+::: {.caption}
+From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework for Curriculum Transformation in Quantum Information Science and Technology Education"](https://doi.org/10.1088/1361-6404/ad7e60), *European Journal of Physics* 45(6), 2024.
+:::
+
+---
+
+## Your Turn: Other Work Cycles {.prompt-slide}
+
+
+::: {.prompt-question}
+Other work cycles have you seen or used in work/life?
+:::
+
+
 # Pasteur's Quadrant {.section-header}
 
 
@@ -792,114 +900,6 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ::: {.prompt-question}
 What other questions are you curious about that you think could be answered/addressed with data?
-:::
-
-
-# Data Science Lifecycle {.section-header}
-
-
-## The Data Science Lifecycle: Building Blocks {.image-frame-slide}
-
-<img src="../assets/lifecycle-steps/ds-lifecycle-step0.svg" alt="Blank data science lifecycle scaffold: five unlabeled boxes connected by arrows in a cycle">
-
----
-
-## The Data Science Lifecycle: Ask a Question {.image-frame-slide}
-
-<img src="../assets/lifecycle-steps/ds-lifecycle-step1.svg" alt="Data science lifecycle with the first stage highlighted and labeled 'ask a question'; the remaining boxes are still blank">
-
----
-
-## The Data Science Lifecycle: Obtain Data {.image-frame-slide}
-
-<img src="../assets/lifecycle-steps/ds-lifecycle-step2.svg" alt="Data science lifecycle with the second stage highlighted and labeled 'obtain data'; 'ask a question' is labeled but no longer highlighted">
-
----
-
-## The Data Science Lifecycle: Understand the Data {.image-frame-slide}
-
-<img src="../assets/lifecycle-steps/ds-lifecycle-step3.svg" alt="Data science lifecycle with the third stage highlighted and labeled 'understand the data'; the first two stages are labeled">
-
----
-
-## The Data Science Lifecycle: Understand the World {.image-frame-slide}
-
-<img src="../assets/lifecycle-steps/ds-lifecycle-step4.svg" alt="Data science lifecycle with the fourth stage highlighted and labeled 'understand the world'; the first three stages are labeled">
-
----
-
-## The Data Science Lifecycle: Communicate {.image-frame-slide}
-
-<img src="../assets/lifecycle-steps/ds-lifecycle-step5.svg" alt="Data science lifecycle with the final stage highlighted and labeled 'reports, decisions, solutions'; all five stages are now labeled">
-
----
-
-## Source for the Lifecycle {.image-frame-slide}
-
-<img src="../assets/lifecycle/ds-lifecycle.svg" alt="The data science lifecycle drawn with every connection shown: ask a question, obtain data, understand the data, and understand the world, linked by arrows running in both directions — including understanding the data sending you back to obtain more data, or back to the original question — with 'reports, decisions, solutions' as an output.">
-
-::: {.caption}
-Sam Lau, Joey Gonzalez, and Deb Nolan, ["The Data Science Lifecycle"](https://learningds.org/ch/01/lifecycle_intro.html), in *[Learning Data Science](https://learningds.org/)*.
-:::
-
----
-
-## Related Cycles
-
-::: {.dense}
-- similar shapes, different vocabulary
-- design thinking, science, etc.
-- learning + making = some version of this loop
-:::
-
----
-
-## Another Data Science Cycle {.image-frame-slide}
-
-<img src="../assets/lifecycle/belo-oneil-lifecycle-remix-v4.svg" alt="The data science process drawn as a larger chain: a problem in the world leads to data collection, data preparation, and clean data; clean data feeds both data exploration and data modeling and analysis; those lead to evaluation and presentation, then to decisions and a data product, which loop back to the world and to the original problem.">
-
-::: {.caption}
-Adapted from Cathy O'Neil and Rachel Schutt, *[Doing Data Science](https://www.oreilly.com/library/view/doing-data-science/9781449363871/)* (O'Reilly, 2013), and from Gonzalo Bello Lander.
-:::
-
----
-
-## Another Cycle: McElreath's Bayesian Workflow {.image-frame-slide}
-
-<img src="../assets/lifecycle/mcElreath-rethinking-remix.svg" alt="A statistical workflow diagram: a generative model and a set of estimands both feed into statistical models; the statistical models produce prior predictions and, once combined with data, produce estimates; the estimates in turn yield posterior predictions and causal effects.">
-
-::: {.caption}
-After Richard McElreath, *[Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/)* and the [Statistical Rethinking lecture series](https://github.com/rmcelreath/stat_rethinking_2026).
-:::
-
----
-
-
-## Another Cycle: Science {.image-frame-slide}
-
-<img src="../assets/lifecycle/scientific-method.png" alt="The scientific method drawn as a ring of six labeled steps with arrows running clockwise: observation/question, research topic area, hypothesis, test with experiment, analyse data, and report conclusions, which loops back to observation/question.">
-
-::: {.caption}
-From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework for Curriculum Transformation in Quantum Information Science and Technology Education"](https://doi.org/10.1088/1361-6404/ad7e60), *European Journal of Physics* 45(6), 2024.
-:::
-
----
-
-## Another Cycle: Inquiry Learning {.image-frame-slide}
-
-<img src="../assets/lifecycle/inquiry-learning.png" alt="Inquiry-based learning drawn as a ring of five labeled circles with arrows running clockwise: engage, explore, explain, elaborate, and evaluate, which loops back to engage.">
-
-::: {.caption}
-From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework for Curriculum Transformation in Quantum Information Science and Technology Education"](https://doi.org/10.1088/1361-6404/ad7e60), *European Journal of Physics* 45(6), 2024.
-:::
-
----
-
-## Your Turn: Other Work Cycles {.prompt-slide}
-
-
-::: {.prompt-question}
-Other work cycles have you seen or used in work/life?
 :::
 
 
@@ -1274,11 +1274,11 @@ You should be able to say...
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- **Ten questions**
+- **Ten questions**, only homework that will be due on a Wednesday
 - A "systems check" to make sure you're in PrairieLearn
-- Basic stats -- hopefully you remember these!
-- Some variants of the same questions will be on the quiz on Wednesday
-- Retake up to **X** times
+- Basic probability review (chain rule / product rule)
+- Variants of the same questions will be on the quiz on Wednesday
+- Unlimited retakes!
 :::
 
 ![](../assets/prairielearn/PL-logo-white-on-blue.svg){.figure .figure-sm alt="The PrairieLearn logo, a white line drawing of a purple coneflower on a dark blue panel"}
@@ -1382,7 +1382,6 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - **"Which"** — seeks a person, thing, or value; possibly infinite answers
 - **"Why"** — asks for an explanation, not just a fact
 - **Indirect ("embedded")** — implied by a larger statement ("Bob knows who spoke to Mary")
-- TODO: build out the full table with examples and answer spaces
 :::
 
 :::
