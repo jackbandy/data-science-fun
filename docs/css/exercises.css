@@ -1,0 +1,418 @@
+/* Styles for the coding-exercise pages (docs/exercises.html, _layouts/exercise.html).
+   Loaded after index.css and masthead.css, which supply the fonts, the reset, the
+   `.container` wrapper, and the footer.
+
+   The scheme follows the site's Orange Line reading of the course: the schedule is a
+   line of weekly stops, so the five exercises are a short branch off it — a vertical
+   orange rail with one numbered stop per exercise. The AI/LLM policy renders as a
+   round rail signal in the actual signal colors (green/yellow/red), which is how the
+   syllabus already describes it, so the badge is the metaphor rather than decoration.
+
+   Note: this file was largely written by an LLM (Claude Code). */
+
+.exercises-title {
+  font-size: 2.4rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.exercises-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #555;
+  max-width: 46rem;
+  margin-bottom: 24px;
+}
+
+.read-more-toggle {
+  font: inherit;
+  font-weight: 700;
+  color: #f9461c;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.exercises-about {
+  border-left: 6px solid #f9461c;
+  background: #fafafa;
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.exercises-about p { margin-bottom: 12px; }
+.exercises-about p:last-child { margin-bottom: 0; }
+
+/* ── The branch: five numbered stops on one rail ── */
+.exercise-list {
+  list-style: none;
+  margin: 0 0 48px;
+  padding: 0 0 0 34px;
+  position: relative;
+}
+
+.exercise-list::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 22px;
+  bottom: 22px;
+  width: 6px;
+  background: #f9461c;
+  border-radius: 3px;
+}
+
+.exercise-stop {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.exercise-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  border: 2px solid #e2e2e2;
+  border-radius: 6px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: inherit;
+  background: #fff;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.exercise-card:hover,
+.exercise-card:focus-visible {
+  border-color: #f9461c;
+  transform: translateX(2px);
+}
+
+/* The stop marker sits on the rail, half outside the card. */
+.exercise-number {
+  position: absolute;
+  left: -34px;
+  top: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: 5px solid #f9461c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.95rem;
+}
+
+.exercise-card-body { display: block; }
+
+.exercise-card-topic,
+.exercise-card-title,
+.exercise-card-summary,
+.exercise-card-meta {
+  display: block;
+}
+
+.exercise-card-topic {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.exercise-card-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.exercise-card-summary {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.exercise-card-meta {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* ── The signal ──
+   The AI/LLM phase is a CTA signal *aspect*, not a traffic light: two lamps read
+   together (double red, red/yellow, double yellow). So the badge is the same
+   rulebook drawing the FAQ shows, shrunk to trackside size, rather than a single
+   coloured dot -- a dot would quietly re-introduce the red/yellow/green reading
+   the course explicitly does not use. The hairline border stands in for the
+   signal's backing plate, matching .signal-aspect in faq.css. */
+.signal-badge {
+  height: 1.55em;
+  width: auto;
+  vertical-align: -0.45em;
+  margin-right: 0.4em;
+  border: 1px solid #565a5c; /* CTA Sign Grey */
+  border-radius: 2px;
+}
+
+.exercise-meta .signal-badge {
+  height: 2.4em;
+  vertical-align: -0.9em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── A single exercise page ── */
+.exercise-breadcrumb {
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.exercise-breadcrumb a {
+  color: #f9461c;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.exercise-breadcrumb a:hover { text-decoration: underline; }
+
+.exercise-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 6px;
+}
+
+.exercise-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.exercise-summary {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #555;
+  max-width: 44rem;
+  margin-bottom: 20px;
+}
+
+.exercise-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  padding: 14px 18px;
+  border-top: 4px solid #f9461c;
+  background: #fafafa;
+  margin-bottom: 16px;
+  font-size: 0.92rem;
+}
+
+.exercise-meta dt {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 2px;
+}
+
+.exercise-meta dd { font-weight: 600; }
+
+.exercise-starter {
+  font-size: 0.95rem;
+  margin-bottom: 28px;
+}
+
+.exercise-starter a { color: #f9461c; font-weight: 700; }
+
+.exercise-body {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.exercise-body h2 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  margin: 36px 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid #eee;
+}
+
+.exercise-body h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 24px 0 8px;
+}
+
+.exercise-body p { margin-bottom: 14px; }
+
+.exercise-body ul,
+.exercise-body ol {
+  margin: 0 0 16px 1.3rem;
+  line-height: 1.75;
+}
+
+.exercise-body blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 14px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.exercise-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: #f4f4f4;
+  padding: 0.12em 0.35em;
+  border-radius: 3px;
+}
+
+.exercise-body pre {
+  background: #1f1f1f;
+  color: #f4f4f4;
+  padding: 16px 18px;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin-bottom: 18px;
+}
+
+.exercise-body pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 520px) {
+  .exercise-list { padding-left: 26px; }
+  .exercise-list::before { left: 9px; }
+  .exercise-number {
+    left: -26px;
+    width: 26px;
+    height: 26px;
+    border-width: 4px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ── Notebook preview ──
+   The starter notebook rendered inline by exercises/build-exercises-data.py, so
+   students can read it before downloading and without a trip to Colab or
+   nbviewer. Code cells keep Jupyter's left rule -- the one bit of the notebook
+   chrome that carries meaning here, marking where the input begins -- but not
+   its In[ ]/Out[ ] prompt numbers, which say nothing about an unrun starter.
+   Collapsed by default: the prompt is the point of the page, the preview is a
+   reference. */
+
+.notebook-preview {
+  margin: 40px 0 8px;
+}
+
+.notebook-preview summary {
+  cursor: pointer;
+  font-weight: 800;
+  padding: 10px 14px;
+  border: 2px solid #e2e2e2;
+  border-radius: 5px;
+}
+
+.notebook-preview summary:hover {
+  border-color: #f9461c;
+}
+
+.notebook-preview[open] summary {
+  border-radius: 5px 5px 0 0;
+  border-bottom-color: #f9461c;
+}
+
+.notebook-preview summary code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.nb {
+  border: 2px solid #e2e2e2;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  padding: 18px;
+  background: #fff;
+}
+
+.nb-cell {
+  margin-bottom: 14px;
+}
+
+.nb-cell:last-child {
+  margin-bottom: 0;
+}
+
+.nb-markdown {
+  font-size: 0.97rem;
+  line-height: 1.65;
+}
+
+.nb-markdown h1 { font-size: 1.3rem; margin-bottom: 8px; }
+.nb-markdown h2 { font-size: 1.1rem; margin-bottom: 6px; }
+.nb-markdown p  { margin-bottom: 10px; }
+.nb-markdown p:last-child { margin-bottom: 0; }
+
+.nb-source,
+.nb-stream,
+.nb-result,
+.nb-error {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  padding: 12px 14px;
+  border-radius: 4px;
+}
+
+.nb-source {
+  background: #f6f6f6;
+  border-left: 4px solid #ccc;
+  color: #1f1f1f;
+}
+
+.nb-source code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Outputs sit under their input, indented past the rule the way Jupyter does. */
+.nb-stream,
+.nb-result {
+  background: #fff;
+  border-left: 4px solid #f9461c;
+  margin-top: 4px;
+}
+
+.nb-error {
+  background: #fff4f4;
+  border-left: 4px solid #C60C30;
+  margin-top: 4px;
+}
+
+.nb-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 8px;
+}

@@ -1,0 +1,26 @@
+# The three AI/LLM phases of the course, named after CTA rail signal aspects
+# (see the syllabus and the FAQ). Kept here in one place so the exercise pages
+# and the exercises index can never label an aspect differently, and so the
+# drawings shown are the same rulebook drawings the FAQ uses.
+#
+# `tk` is not an aspect; it is the placeholder for an exercise whose phase has
+# not been decided yet.
+double-red:
+  label: "Double red"
+  meaning: "Stop and stay — no AI/LLM use at all."
+  image: /assets/signals/signal-01-stop-stay.svg
+  faq: /faq.html#double-red-no-aillm-based-tools
+red-yellow:
+  label: "Red/yellow"
+  meaning: "Proceed with caution on main route — scoped, optional AI/LLM use."
+  image: /assets/signals/signal-02-caution-main.svg
+  faq: /faq.html#redyellow-limited-specific-use-of-aillm-based-tools
+double-yellow:
+  label: "Double yellow"
+  meaning: "Proceed with caution at restricted speed — you choose where the tools fit."
+  image: /assets/signals/signal-09-caution-restricted.svg
+  faq: /faq.html#double-yellow-choose-carefully-where-you-use-it-use-it-carefully
+tk:
+  label: "TK"
+  meaning: "Phase not set yet."
+  faq: /faq.html#double-red-no-aillm-based-tools

@@ -1,0 +1,38 @@
+---
+layout: default
+---
+{%- comment -%}
+  Layout for a single coding exercise page (/exercises/<slug>/).
+
+  The page itself is generated — edit exercises/<slug>/exercise.md and rerun
+  exercises/build-exercises-data.py. This file only frames what that build
+  produces: the header strip, the starter-code links, and the AI signal.
+
+  Note: this file was largely written by an LLM (Claude Code).
+{%- endcomment -%}
+{%- assign signals = site.data.ai_signals -%}
+<p class="exercise-breadcrumb"><a href="/exercises.html">&larr; All exercises</a></p>
+
+<article class="exercise">
+  <p class="exercise-eyebrow">Exercise {{ page.number }} &middot; {{ page.topic }}</p>
+  <h1 class="exercise-title">{{ page.title }}</h1>
+  <p class="exercise-summary">{{ page.summary }}</p>
+
+  <dl class="exercise-meta">
+    <div><dt>Due</dt><dd>{{ page.due }}</dd></div>
+    <div><dt>AI/LLM use</dt>
+      <dd>{% assign signal = signals[page.ai_policy] %}
+        {% if signal.image %}<img class="signal-badge" src="{{ signal.image }}" alt="">{% endif %}
+        <a href="{{ signal.faq }}">{{ signal.label }}</a> &mdash; {{ signal.meaning }}</dd></div>
+  </dl>
+
+{% if page.starter %}
+  <p class="exercise-starter">Starter code:
+    {% for file in page.starter %}<a href="{{ page.url }}starter/{{ file }}"><code>{{ file }}</code></a>{% unless forloop.last %}, {% endunless %}{% endfor %}
+  </p>
+{% endif %}
+
+  <div class="exercise-body">
+    {{ content }}
+  </div>
+</article>
