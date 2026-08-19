@@ -12,7 +12,8 @@
 
 ## Week 1, Day 1 (2026-08-24)
 
-* Course introduction; data science lifecycle
+* Course introduction
+* Data science lifecycle
 
 ### Sources
 
@@ -30,10 +31,13 @@
 
 * *The Art of Data Science*, [Chapter 3: Stating and Refining the Question](https://bookdown.org/rdpeng/artofdatascience/chapter-question.html)
 * *Ethics in Data Science* (course mini-book), [Chapter 2: Ethics in Asking Questions](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* Leek & Peng (2015), ["What is the question?"](https://www.science.org/doi/abs/10.1126/science.aaa6146), *Science* 347(6228), 1314-1315
 
 ## Week 2, Day 1 (2026-08-31)
 
-* Statistics review; Python foundations; dataframes and Polars
+* Statistics review
+* Python foundations
+* Dataframes and Polars
 
 ### Sources
 
@@ -57,7 +61,8 @@
 
 ## Week 3, Day 2 (2026-09-09)
 
-* Data formats, wrangling
+* Data formats
+* Wrangling
 
 ### Sources
 
@@ -88,7 +93,7 @@
 
 ## Week 5, Day 1 (2026-09-21)
 
-* Descriptive Visualization
+* Descriptive visualization
 
 ### Sources
 
@@ -98,7 +103,7 @@
 
 ## Week 5, Day 2 (2026-09-23)
 
-* Descriptive Visualization
+* Descriptive visualization
 
 ### Sources
 
@@ -109,7 +114,7 @@
 
 ## Week 6, Day 1 (2026-09-28)
 
-* Visualization Rhetoric
+* Visualization rhetoric
 
 ### Sources
 
@@ -121,7 +126,7 @@
 
 ## Week 6, Day 2 (2026-09-30)
 
-* Visualization Rhetoric
+* Visualization rhetoric
 
 ### Sources
 
@@ -143,7 +148,9 @@
 
 ## Week 7, Day 2 (2026-10-07)
 
-* Estimation and sampling; randomness
+* Estimation
+* Sampling
+* Randomness
 * **Asynchronous (no in-person meeting)**
 
 ### Sources
@@ -166,7 +173,7 @@
 
 ## Week 8, Day 2 (2026-10-14)
 
-* Intro to classification
+* Classification
 
 ### Sources
 
@@ -187,7 +194,8 @@
 
 ## Week 9, Day 2 (2026-10-21)
 
-* Support vector machines; kernels
+* Support vector machines
+* Kernels
 
 ### Sources
 
@@ -197,7 +205,8 @@
 
 ## Week 10, Day 1 (2026-10-26)
 
-* Clustering; principal component analysis
+* Clustering
+* Principal component analysis
 
 ### Sources
 
@@ -247,7 +256,8 @@
 
 ## Week 12, Day 2 (2026-11-11)
 
-* Graphs and relationships; network measures
+* Graphs
+* Network measures
 
 ### Sources
 
@@ -264,7 +274,7 @@
 
 ## Week 14, Day 1 (2026-11-23)
 
-* Project Presentations
+* Project presentations
 
 ### Sources
 
@@ -277,7 +287,7 @@
 
 ## Week 15, Day 1 (2026-11-30)
 
-* Project Presentations
+* Project presentations
 
 ### Sources
 
@@ -286,7 +296,7 @@
 
 ## Week 15, Day 2 (2026-12-02)
 
-* Project Presentations
+* Project presentations
 
 ### Sources
 

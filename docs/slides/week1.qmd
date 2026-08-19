@@ -87,6 +87,16 @@ UIC's elevated walkways connected campus buildings at the second floor until the
 
 ---
 
+## help improve the class! {.image-frame-slide}
+
+<img src="../assets/github-workflow-visuals/gh-docs-pr-conversation-example.png" alt="A merged GitHub pull request titled 'Fix typo' — the Merged badge, the Conversation, Commits, Checks and Files changed tabs, an approving reviewer, and a short description of why the change was made">
+
+::: {.caption}
+Spot a typo, a broken link, a confusing sentence? Open a pull request on the course repo. Small fixes count. Image: [GitHub Docs](https://github.com/github/docs), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+:::
+
+---
+
 ## Attendance Policy
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
@@ -94,6 +104,40 @@ UIC's elevated walkways connected campus buildings at the second floor until the
 
 ::: {.dense}
 - **TK**
+:::
+:::
+
+
+---
+
+## Attendance Policy: An Audacious Experiment
+
+::: columns
+::: {.column width="48%"}
+### The experiment
+
+::: {.incremental}
+::: {.dense}
+- Random roll call!
+- 10 names per class
+- live random numbers via random.org
+- called after agenda slide each day
+- everyone gets the same grade for the day
+:::
+:::
+:::
+
+::: {.column width="48%"}
+### Why try it
+
+::: {.incremental}
+::: {.dense}
+- helps me collect attendance data
+- class should be worth attending
+- if it's not, let's discuss why
+- it's only 1% of your grade
+:::
+:::
 :::
 :::
 
@@ -149,7 +193,7 @@ Craik & Lockhart (1972); Mueller & Oppenheimer (2014); Morehead, Dunlosky, & Raw
     - you are forced to decide **what matters**
     - deciding is learning!
     - deeper processing, more durable memory (Craik & Lockhart, 1972)
-- Your **worksheet** has a place for questions — ask them out loud; someone else is wondering too
+- Ask questions out loud - someone else might be wondering too
 - A page has no notifications and no other tabs :-)
 - One famous longhand study (Mueller & Oppenheimer, 2014) did not fully replicate (Morehead et al., 2019)
 - But generally: distractions hurt learning
@@ -166,6 +210,16 @@ Craik & Lockhart (1972); Mueller & Oppenheimer (2014); Morehead, Dunlosky, & Raw
 
 ::: {.caption}
 From Colleen McClain, Monica Anderson, Olivia Sidoti, and William Bishop, ["How Teens Use and View AI"](https://www.pewresearch.org/internet/2026/02/24/how-teens-use-and-view-ai/), Pew Research Center, February 24, 2026.
+:::
+
+---
+
+## Let's Talk About It, Continued {.image-frame-slide}
+
+<img src="../assets/teens-ai/gallup-2026-college-students-ai-frequency.png" alt="Stacked bar chart titled 'Majority of College Students Use AI in Coursework Weekly or Daily', showing 21% of all enrolled college students use AI daily and 36% weekly, broken out by degree program, gender, and major field of study">
+
+::: {.caption}
+From Stephanie Marken, ["AI Is Routine for College Students, Despite Campus Limits"](https://news.gallup.com/poll/704090/routine-college-students-despite-campus-limits.aspx), Gallup, April 2, 2026. Lumina Foundation-Gallup 2026 State of Higher Education study; 1,433 U.S. students surveyed Oct. 2–31, 2025.
 :::
 
 ---
@@ -214,18 +268,16 @@ You choose where it fits. Still reduced speed, full attention. Be ready to justi
 
 :::: {.column width="60%"}
 ::: {.dense-smaller}
-| Weeks | Topic |
-|:--|:--|
-| **1** | Intro; the lifecycle; asking questions |
-| **2–3** | Statistics review; Python, Polars, obtaining & wrangling data |
-| **4** | Exploratory analysis; descriptive statistics |
-| **5–6** | Visualization!!!! |
-| **7** | Hypothesis testing; estimation & sampling |
-| **8–9** | Regression; classification; trees; SVMs |
-| **10** | Clustering; PCA; model evaluation |
-| **11** | Recommendation systems; A/B testing |
-| **12** | Network analysis; graphs |
-| **14–15** | Presentations |
+- **Week 1** — intro; the lifecycle; asking questions
+- **Weeks 2–3** — statistics review; Python, Polars, obtaining & wrangling data
+- **Week 4** — exploratory analysis; descriptive statistics
+- **Weeks 5–6** — visualization!!!!
+- **Week 7** — hypothesis testing; estimation & sampling
+- **Weeks 8–9** — regression; classification; trees; SVMs
+- **Week 10** — clustering; PCA; model evaluation
+- **Week 11** — recommendation systems; A/B testing
+- **Week 12** — network analysis; graphs
+- **Weeks 14–15** — presentations
 :::
 
 ::: {.aside-note}
@@ -241,6 +293,39 @@ Schedule is on the course [home](https://dodatascience.fun/#schedule).
 ::::
 
 :::::
+
+---
+
+## Grading Breakdown
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- In-Class Worksheets — **20%%**
+- In-Class Quizzes — **20%**
+- Group Project — **20%%**
+- PrairieLearn Homeworks — **15%%**
+- Coding Exercises — **15%**
+- Final Exam — **9%**
+- Collective Attendance — **1%**
+- **Total — 100%**
+:::
+:::
+
+::: {.aside-note}
+Weights are in the [syllabus](../syllabus/).
+:::
+
+---
+
+## Late Homeworks {.image-frame-slide}
+
+<img src="../assets/grading-visuals/late-penalty-curve.svg" alt="Line chart of the most credit a late submission can earn: 100% on the due date and through a one-day grace day, then 10 points off per day down to a 50% floor at day 6, level at 50% through the day-30 cutoff">
+
+::: {.caption}
+One grace day, then 10 points a day down to 50%. Nothing drops below 50%, and nothing is accepted after day 30 — see the [syllabus](../syllabus/).
+:::
 
 ---
 
@@ -1177,16 +1262,16 @@ Different types of screens have different pixel / sub pixel shapes. Source: Pete
 
 ## Section 1: Course Logistics
 
-::: {.dense-smaller}
-| You should be able to say... | We covered it under... |
-|:--|:--|
-| whether laptops are always allowed in class | In-Class Tech |
-| whether AI/LLM use is allowed on every exercise | Syllabus Overview |
-| whether you are encouraged to ask questions in class | The Benefits of Paper |
-:::
-
 ::: {.aside-note}
 All three are in the [syllabus](../syllabus/) and the [FAQ](../faq.html) too.
+:::
+
+::: {.dense-smaller}
+You should be able to say...
+
+- whether laptops are always allowed in class
+- whether AI/LLM use is allowed on every exercise
+- whether you are encouraged to ask questions in class
 :::
 
 ---
@@ -1194,14 +1279,14 @@ All three are in the [syllabus](../syllabus/) and the [FAQ](../faq.html) too.
 ## Section 2: Data Science Basics
 
 ::: {.dense-smaller}
-| You should be able to say... | We covered it under... |
-|:--|:--|
-| whether "data" is singular or plural | A Dictionary Definition |
-| how data science treats domain knowledge | What is Data Science? |
-| whether the lifecycle only moves forward | Source for the Lifecycle |
-| which regions are labeled in Conway's Venn diagram | The Data Science Venn Diagram |
-| the one word for tracing data back to its sources | Provenance |
-| the axes of the 2×2 matrix, explain one quadrant | Pasteur's Quadrant |
+You should be able to say...
+
+- whether "data" is singular or plural
+- how data science treats domain knowledge
+- whether the lifecycle only moves forward
+- which regions are labeled in Conway's Venn diagram
+- the one word for tracing data back to its sources
+- the axes of the 2×2 matrix, explain one quadrant
 :::
 
 ---
