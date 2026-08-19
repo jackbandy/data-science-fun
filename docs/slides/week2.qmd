@@ -2,6 +2,17 @@
 title: "Week 2 (CS 418 @ UIC)"
 format:
   revealjs:
+    include-in-header:
+      text: |
+        <style>
+        /* On .plain-code slides the library and type names read as prose, so
+           drop the inline-code background from the theme. Fenced blocks are
+           untouched -- :not(pre) > code only matches inline code. */
+        .reveal .plain-code :not(pre) > code {
+          background: transparent;
+          padding: 0;
+        }
+        </style>
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 2</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week2.html">dodatascience.fun/slides/week2</a></span>'
 ---
 
@@ -374,7 +385,7 @@ $$P(\text{two heads}) = E[p^{2}] = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485
 
 ---
 
-# Why Python for this Course {.smaller}
+# Why Python for this Course {.smaller .plain-code}
 
 You already know Python from previous classes. Reasons it is useful for data science:
 
@@ -398,9 +409,9 @@ You already know Python from previous classes. Reasons it is useful for data sci
 
 ---
 
-# Types in Python {.smaller}
+# Types in Python {.smaller .plain-code}
 
-Every value in Python has a type, and the type decides what you can do with it. These are the built-ins — you will  use six of them constantly
+Every value in Python has a type, and the type decides what you can do with it.
 
 :::: {.columns}
 
@@ -445,9 +456,9 @@ Every value in Python has a type, and the type decides what you can do with it. 
 
 ---
 
-# Lists {.smaller}
+# Lists {.smaller .plain-code}
 
-A list holds several values in one variable, in order. It is the most common container in Python — and the shape almost every web API hands back.
+A list holds several values in one variable, in order.
 
 :::: {.columns}
 
@@ -489,6 +500,46 @@ grades               # [88, 92, 85, 92, 65, 100]
 - Mutable: `append` adds a sixth score, `grades[2] = 85` regrades one in place
 - Nothing new is created, which matters when two names refer to the same list
 - A list of dicts is the shape almost every web API returns — why we spend time here
+:::
+
+---
+
+# Where are lists mostly used? {.smaller}
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Handling collections of data** — any group of values that you work together such as stations grades, names, scores
+- **Managing request and response payloads** — a web API answers with a JSON array, which arrives as a list of dictionaries
+- **Processing database results** — a query hands back one row per result, in order, ready to loop over
+:::
+
+::: {.column width="58%"}
+```python
+# 1. a collection you build yourself
+grades = [88, 92, 79]
+grades.append(95)
+sum(grades) / len(grades)
+
+# 2. a web API response
+data = requests.get(url).json()
+data[0]['stationname']
+
+# 3. a database query result
+rows = cur.fetchall()
+rows[0][1]
+```
+:::
+
+::::
+
+::: {.notes}
+- A list is what several values look like while they are in transit
+- Case 1: data you built yourself
+- Case 2: a JSON array becomes a Python list, each element a dict — the list-of-dicts shape from the dictionaries slide, and literally what happens on Day 2 with the Chicago Data Portal API
+- Case 3: `fetchall()` gives one tuple per row — a list of tuples, not dicts
+- Examples 2 and 3 are fragments (assume `requests` imported, cursor exists) — do not run as written
+- Say it out loud: in all three the list is only the container, and all three are one step from a dataframe — `read_csv`, `pl.DataFrame(data)`, `pl.DataFrame(rows)`
 :::
 
 ---
