@@ -7,6 +7,7 @@ on:
       - "docs/**"
       - "syllabus_source/**"
       - "meta_analytics_source/**"
+      - "exercises/**"
       - ".github/workflows/deploy-pages.yml"
   # build on pull requests, so mistakes show up before the site goes live
   pull_request:
@@ -15,6 +16,7 @@ on:
       - "docs/**"
       - "syllabus_source/**"
       - "meta_analytics_source/**"
+      - "exercises/**"
       - ".github/workflows/deploy-pages.yml"
   # The meta-analytics counts are rebuilt during this build rather than
   # committed, and they drift as links and prose change. This refreshes them
@@ -288,6 +290,16 @@ jobs:
 
       - name: Rebuild meta-analytics data
         run: python3 meta_analytics_source/build_data.py
+
+      # The coding exercises are generated from exercises/*/exercise.md into the
+      # working tree and published from _site, for the same reason as the
+      # meta-analytics counts above: a bot push to main is blocked by the
+      # required "build" status check, and the deployed site only needs these
+      # files to exist at build time, not in the repo. Stdlib only, so there is
+      # nothing to install. Writes docs/_data/exercises.yml, docs/exercises/,
+      # and docs/_includes/exercises-about.html, all of which are gitignored.
+      - name: Build coding exercises
+        run: python3 exercises/build-exercises-data.py
 
       # Strip dev/build cruft so we don't ship venvs and caches to GitHub Pages.
       # TODO: Verify the slide notebooks (docs/slides/week*.ipynb)

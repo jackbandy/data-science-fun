@@ -40,11 +40,12 @@ regenerates:
 - `docs/exercises/<slug>/starter/…` — copies of the starter files (`.ipynb_checkpoints/`, `__pycache__/`, `.DS_Store` and `.pyc` are skipped)
 - `docs/_includes/exercises-about.html` — the "Read more" blurb, from `exercises-about.md`
 
-Any `.ipynb` in `starter/` is also rendered to a static HTML preview, appended to its exercise page inside a collapsed `<details>`. A student can then read the starter before downloading it, with no trip to Colab or nbviewer and no JavaScript. Markdown cells go through the same converter as the prompt; code cells, stream/text/image outputs, and tracebacks are rendered as-is. A notebook that fails to parse is skipped with a warning rather than breaking the build.
+Any `.ipynb` in `starter/` is also rendered to a static HTML preview, appended to its exercise page inside a collapsed `<details>`. A student can then read the starter without downloading it.
 
-The index page itself, `docs/exercises.html`, is hand-written and reads the generated data file.
+ `docs/exercises.html`, is hand-written index page 
 
-`.github/workflows/build-exercises.yml` runs the same command on every push that touches this folder and commits the result.
+The generated files are not committed - they are gitignored. The Pages workflow (`.github/workflows/deploy-pages.yml`) runs this script on every build, so the deployed site always matches the sources here. Run with `jekyll serve` for a local preview.
+
 
 ## Markdown support
 

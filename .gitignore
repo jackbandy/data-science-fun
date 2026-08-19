@@ -75,3 +75,14 @@ docs/vendor/
 # English frequency baseline for the meta-analytics page: downloaded on demand,
 # not redistributed (see meta_analytics_source/english_frequencies.md)
 meta_analytics_source/.cache/
+
+# Coding exercises: generated from exercises/*/exercise.md by
+# exercises/build-exercises-data.py, which the Pages workflow runs on every
+# build. Not committed -- a bot push to main is blocked by the required "build"
+# status check, and the deployed site only needs these files to exist at build
+# time. Run the script locally before `jekyll serve` to preview them.
+# (docs/exercises.html, the hand-written index, is NOT generated -- the trailing
+# slash below keeps it out of this.)
+docs/_data/exercises.yml
+docs/_includes/exercises-about.html
+docs/exercises/
