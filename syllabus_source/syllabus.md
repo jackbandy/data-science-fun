@@ -205,16 +205,7 @@ The activities we do during class are essential to your learning in this course,
 
 I recognize that illness, personal emergencies, university obligations, religious observances, and other circumstances may sometimes cause you to be late to class or prevent your attendance entirely.
 
-Because active participation in the course is one of the most important ways to learn, you will be assessed on your class engagement. I am very aware that participation looks a little different for everyone, and will evaluate your participation accordingly. Still, in general, an engaged student will:
-
-- stay on-task during class
-- listen attentively to peers and the instructor (no side conversations or unnecessary disruptions)
-- have an open mind and seek to understand (not judge and make assumptions)
-- assume goodwill in all interactions with peers, TAs, and the instructor
-- complete work in a timely manner
-- reach out to the instructor if they have questions or start to fall behind
-
-If you anticipate any barriers to your full engagement in the course, I encourage you to contact me so we can strategize about how you can best fulfill the course requirements.
+Details TK
 
 
 **Attendance-related accommodations**
