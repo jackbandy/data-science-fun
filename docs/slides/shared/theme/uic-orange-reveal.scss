@@ -655,6 +655,16 @@ $code-color: $ink !default;
     .column { flex: 0 0 auto; }
     .column:first-child { width: 50%; }
     .column:last-child { width: 46%; }
+
+    // The near-even split above assumes the figure carries as much of the
+    // argument as the prose. When it only illustrates a point the text is
+    // making, add .golden: the columns go to phi : 1, the same ratio the deck
+    // asks of its figures, and the text gets the room it was already using.
+    &.golden {
+      .columns { gap: 3%; }
+      .column:first-child { width: 59.9%; }
+      .column:last-child { width: 37.1%; }
+    }
   }
 
   // Two or three parallel options set side by side, no column privileged over
@@ -665,7 +675,9 @@ $code-color: $ink !default;
   .compare-columns {
     display: flex;
     align-items: flex-start;
-    gap: 4%;
+    // Narrow on purpose: with three columns a wider gutter comes straight out
+    // of the text, and these slides are already the tightest in the deck.
+    gap: 2%;
     > .column { flex: 1 1 0; width: auto; }
   }
 

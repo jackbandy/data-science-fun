@@ -692,6 +692,11 @@ Use `.figure-sm` or `.figure-lg` alongside `.figure` when one image needs to run
 shorter or taller than the 520px default — not a bespoke `max-height`.
 :::
 
+::: {.aside-note}
+Add `.golden` (`{.figure-aside .golden}`) when the figure only illustrates a
+point the text is making rather. The columns go to φ : 1 — the
+:::
+
 ---
 
 ## Two Parallel Columns
