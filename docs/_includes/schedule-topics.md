@@ -12,27 +12,28 @@
 
 ## Week 1, Day 1 (2026-08-24)
 
-* Course introduction; statistics review
+* Course introduction; data science lifecycle
 
 ### Sources
 
 * *The Art of Data Science*, [Chapter 1: Data Analysis as Art](https://bookdown.org/rdpeng/artofdatascience/index.html)
 * *Ethics in Data Science* (course mini-book), [Chapter 1: Working Toward Wisdom](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
 * *Computational and Inferential Thinking*, [Chapter 1: What is Data Science?](https://inferentialthinking.com/chapters/01/what-is-data-science)
+* *Learning Data Science*, [Chapter 1: The Data Science Lifecycle](https://learningds.org/ch/01/lifecycle_intro.html)
+* *The Art of Data Science*, [Chapter 2: Epicycles of Analysis](https://bookdown.org/rdpeng/artofdatascience/epicycles-of-analysis.html)
 
 ## Week 1, Day 2 (2026-08-26)
 
-* Data science lifecycle
+* Asking questions
 
 ### Sources
 
-* *Learning Data Science*, [Chapter 1: The Data Science Lifecycle](https://learningds.org/ch/01/lifecycle_intro.html)
-* *The Art of Data Science*, [Chapter 2: Epicycles of Analysis](https://bookdown.org/rdpeng/artofdatascience/epicycles-of-analysis.html)
 * *The Art of Data Science*, [Chapter 3: Stating and Refining the Question](https://bookdown.org/rdpeng/artofdatascience/chapter-question.html)
+* *Ethics in Data Science* (course mini-book), [Chapter 2: Ethics in Asking Questions](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
 
 ## Week 2, Day 1 (2026-08-31)
 
-* Python foundations; dataframes and Polars
+* Statistics review; Python foundations; dataframes and Polars
 
 ### Sources
 

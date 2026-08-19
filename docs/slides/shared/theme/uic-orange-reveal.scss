@@ -27,7 +27,7 @@ $small-size: 0.5rem;
 // crediting the one above, so they have to carry from the back of the room the
 // way a caption never does. Still well under the 1.05rem of the full-slide
 // prompt label in small-caps-label, which owns a slide on its own.
-$eyebrow-size: 0.7rem;
+$eyebrow-size: 0.8rem;
 $dense-size: 0.8em;
 $dense-smaller-size: 0.65em;
 // Figure sizing. One frame, three heights — use .figure-sm / .figure-lg rather
@@ -316,7 +316,7 @@ $code-color: $ink !default;
   //   .aside-note     aside or pointer to a reading (left-aligned).
   //                   Named to avoid collision with reveal's `.notes`
   //                   (speaker notes), which is a different thing entirely.
-  //   .eyebrow        all-caps orange label above a block
+  //   .eyebrow        orange label above a block
   //   .dense/.dense-smaller   shrink body copy in tight tables and lists
   // ---------------------------------------------------------------------
   .caption,
@@ -355,7 +355,6 @@ $code-color: $ink !default;
     font-size: $eyebrow-size;
     font-weight: bold;
     letter-spacing: 2px;
-    text-transform: uppercase;
     color: $orange;
 
     // Boxed variant for drafting markers.
