@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Compiles all worksheet.tex files and copies PDFs to docs/worksheets/.
-# Run from anywhere in the repo: ./worksheets_source/build.sh
+# Compiles worksheet.tex files and copies PDFs to docs/worksheets/.
+# Run from anywhere in the repo: ./worksheets_source/build.sh [folder_name]
+# With no argument, builds all worksheets. With a folder name (e.g. 02-week01-day2),
+# builds just that one.
 
 set -uo pipefail
 
@@ -15,10 +17,20 @@ if ! command -v latexmk &>/dev/null; then
   exit 1
 fi
 
+if [[ $# -gt 0 ]]; then
+  if [[ ! -f "$SCRIPT_DIR/$1/worksheet.tex" ]]; then
+    echo "Error: $SCRIPT_DIR/$1/worksheet.tex not found." >&2
+    exit 1
+  fi
+  TEX_FILES=("$SCRIPT_DIR/$1/worksheet.tex")
+else
+  TEX_FILES=("$SCRIPT_DIR"/*/worksheet.tex)
+fi
+
 SUCCESS=0
 FAIL=0
 
-for tex_file in "$SCRIPT_DIR"/*/worksheet.tex; do
+for tex_file in "${TEX_FILES[@]}"; do
   folder_name="$(basename "$(dirname "$tex_file")")"
   tex_dir="$(dirname "$tex_file")"
   pdf_name="${folder_name}.pdf"
