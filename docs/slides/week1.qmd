@@ -87,24 +87,12 @@ UIC's elevated walkways connected campus buildings at the second floor until the
 
 ---
 
-## help improve the class! {.image-frame-slide}
+## Help improve the class! {.image-frame-slide}
 
 <img src="../assets/github-workflow-visuals/gh-docs-pr-conversation-example.png" alt="A merged GitHub pull request titled 'Fix typo' — the Merged badge, the Conversation, Commits, Checks and Files changed tabs, an approving reviewer, and a short description of why the change was made">
 
 ::: {.caption}
-Spot a typo, a broken link, a confusing sentence? Open a pull request on the course repo. Small fixes count. Image: [GitHub Docs](https://github.com/github/docs), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-:::
-
----
-
-## Attendance Policy
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK**
-:::
+Open a pull request on the course repo to fix a typo, a broken link, a confusing sentence, etc. Image: [GitHub Docs](https://github.com/github/docs), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 :::
 
 
@@ -112,9 +100,9 @@ Spot a typo, a broken link, a confusing sentence? Open a pull request on the cou
 
 ## Attendance Policy: An Audacious Experiment
 
-::: columns
-::: {.column width="48%"}
-### The experiment
+::: {.columns .compare-columns}
+::: {.column}
+[THE EXPERIMENT]{.eyebrow}
 
 ::: {.incremental}
 ::: {.dense}
@@ -127,8 +115,8 @@ Spot a typo, a broken link, a confusing sentence? Open a pull request on the cou
 :::
 :::
 
-::: {.column width="48%"}
-### Why try it
+::: {.column}
+[WHY TRY IT]{.eyebrow}
 
 ::: {.incremental}
 ::: {.dense}
@@ -144,7 +132,7 @@ Spot a typo, a broken link, a confusing sentence? Open a pull request on the cou
 
 ---
 
-## In-Class Tech
+## In-Class Tech {.figure-aside .golden}
 
 ::: {.caption}
 Evidence reviewed in the [syllabus](../syllabus/): [Flanigan et al. (2023)](https://doi.org/10.1007/s10648-023-09780-y); [Sana, Weston, & Cepeda (2013)](https://doi.org/10.1016/j.compedu.2012.10.003).
@@ -154,7 +142,7 @@ Evidence reviewed in the [syllabus](../syllabus/): [Flanigan et al. (2023)](http
 
 ::::: {.columns}
 
-:::: {.column width="56%"}
+:::: {.column}
 ::: {.incremental}
 ::: {.dense-smaller}
 - The purpose of our meeting time is to learn together
@@ -170,7 +158,7 @@ Evidence reviewed in the [syllabus](../syllabus/): [Flanigan et al. (2023)](http
 :::
 ::::
 
-:::: {.column width="40%"}
+:::: {.column}
 <img class="figure" src="../assets/lattice/question2.png" alt="A student in a lecture hall raising her hand over an open laptop, with classmates seated in the rows around her">
 ::::
 
@@ -227,9 +215,9 @@ From Stephanie Marken, ["AI Is Routine for College Students, Despite Campus Limi
 ## AI/LLM Use: Three Phases
 
 
-::::: {.columns}
+::::: {.columns .compare-columns}
 
-:::: {.column width="32%" .fragment}
+:::: {.column .fragment}
 <img class="figure figure-sm" src="../assets/signals/signal-01-stop-stay.svg" alt="A CTA rail signal displaying two red lamps, one above the other: the double red aspect">
 
 ::: {.dense-smaller}
@@ -237,7 +225,7 @@ No AI/LLM use at all. Starting point/default.
 :::
 ::::
 
-:::: {.column width="32%" .fragment}
+:::: {.column .fragment}
 <img class="figure figure-sm" src="../assets/signals/signal-02-caution-main.svg" alt="A CTA rail signal displaying a red lamp above a yellow lamp: the red over yellow aspect">
 
 ::: {.dense-smaller}
@@ -245,7 +233,7 @@ Allowed for a specific, carefully-scoped set of tasks (not required).
 :::
 ::::
 
-:::: {.column width="32%" .fragment}
+:::: {.column .fragment}
 <img class="figure figure-sm" src="../assets/signals/signal-09-caution-restricted.svg" alt="A CTA rail signal displaying two yellow lamps, one above the other: the double yellow aspect">
 
 ::: {.dense-smaller}
@@ -260,13 +248,13 @@ You choose where it fits. Still reduced speed, full attention. Be ready to justi
 
 
 
-## Schedule Overview
+## Schedule Overview {.figure-aside .golden}
 
 [Four units: wrangling, exploring, modeling, adventuring]{.eyebrow}
 
 ::::: {.columns}
 
-:::: {.column width="60%"}
+:::: {.column}
 ::: {.dense-smaller}
 - **Week 1** — intro; the lifecycle; asking questions
 - **Weeks 2–3** — statistics review; Python, Polars, obtaining & wrangling data
@@ -285,11 +273,8 @@ Schedule is on the course [home](https://dodatascience.fun/#schedule).
 :::
 ::::
 
-:::: {.column width="36%"}
+:::: {.column}
 <img class="figure" src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Trace of the CTA Orange Line with its stops marked, standing in for the sequence of weeks in the course">
-
-::: {.caption}
-:::
 ::::
 
 :::::
@@ -298,19 +283,16 @@ Schedule is on the course [home](https://dodatascience.fun/#schedule).
 
 ## Grading Breakdown
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
 
 ::: {.dense}
-- In-Class Worksheets — **20%%**
+- In-Class Worksheets — **20%**
 - In-Class Quizzes — **20%**
-- Group Project — **20%%**
-- PrairieLearn Homeworks — **15%%**
+- Group Project — **20%**
+- PrairieLearn Homeworks — **15%**
 - Coding Exercises — **15%**
 - Final Exam — **9%**
 - Collective Attendance — **1%**
 - **Total — 100%**
-:::
 :::
 
 ::: {.aside-note}
@@ -331,10 +313,10 @@ One grace day, then 10 points a day down to 50%. Nothing drops below 50%, and no
 
 ## What to Expect in this Class
 
-::::: {.columns}
+::::: {.columns .compare-columns}
 
-:::: {.column width="32%"}
-TOOLING
+:::: {.column}
+[TOOLING]{.eyebrow}
 
 ::: {.incremental}
 ::: {.dense-smaller}
@@ -350,8 +332,8 @@ TOOLING
 :::
 ::::
 
-:::: {.column width="32%"}
-TECHNIQUES
+:::: {.column}
+[TECHNIQUES]{.eyebrow}
 
 ::: {.incremental}
 ::: {.dense-smaller}
@@ -369,8 +351,8 @@ TECHNIQUES
 :::
 ::::
 
-:::: {.column width="32%"}
-THEMES
+:::: {.column}
+[THEMES]{.eyebrow}
 
 ::: {.incremental}
 ::: {.dense-smaller}
@@ -419,15 +401,15 @@ What is data?
 :::
 
 ::: {.fragment}
-What [**are**]{style="color:#f9461c;"} data?
+What [are]{.key} data?
 :::
 
 ::: {.fragment}
-[**data**]{style="color:#001E62;"}: plural of [**datum**]{style="color:#001E62;"}, i.e. multiple datum, borrowed from Latin *data*, past participle of *dō*, "to give."
+[data]{.term}: plural of [datum]{.term}, i.e. multiple datum, borrowed from Latin *data*, past participle of *dō*, "to give."
 :::
 
 ::: {.fragment}
-A [**datum**]{style="color:#001E62;"} is "a single recorded phenomenon, especially obtained by scientific work" literally *a thing that is given*.
+A [datum]{.term} is "a single recorded phenomenon, especially obtained by scientific work" literally *a thing that is given*.
 :::
 
 
@@ -442,11 +424,11 @@ Definitions and etymology: Wiktionary, [*science*](https://en.wiktionary.org/wik
 :::
 
 ::: {.fragment}
-[**science**]{style="color:#001E62;"} — from Latin *scientia*, "knowledge," from *scire*, "to know."
+[science]{.term} — from Latin *scientia*, "knowledge," from *scire*, "to know."
 :::
 
 ::: {.fragment}
-"The collective discipline of study or learning acquired through the [**scientific method**]{style="color:#f9461c;"}"
+"The collective discipline of study or learning acquired through the [scientific method]{.key}"
 :::
 
 ::: {.fragment}
@@ -454,7 +436,7 @@ Definitions and etymology: Wiktionary, [*science*](https://en.wiktionary.org/wik
 :::
 
 ::: {.fragment}
-What does that make [**data science**]{style="color:#001E62;"}? Not "the science of data," moreso: [**knowing, by way of things/data we are given**]{style="color:#f9461c;"}.
+What does that make [data science]{.term}? Not "the science of data," moreso: [knowing, by way of things/data we are given]{.key}.
 :::
 
 ::: {.fragment}
@@ -467,13 +449,13 @@ What does that make [**data science**]{style="color:#001E62;"}? Not "the science
 
 ## What is Data Science?
 
-[**Data science**]{style="color:#001E62;"} is an [**interdisciplinary**]{style="color:#f9461c;"} field that studies and applies tools and techniques for [**deriving useful insights from data**]{style="color:#f9461c;"}.
+[Data science]{.term} is an [interdisciplinary]{.key} field that studies and applies tools and techniques for [deriving useful insights from data]{.key}.
 
 ::::: {.columns}
 
 :::: {.column width="26%"}
 ::: {.dense-smaller style="text-align:center; margin-top:1.4em;"}
-It uses techniques from [**computer science**]{style="color:#c0392b;"} and [**statistics**]{style="color:#c0392b;"}…
+It uses techniques from [computer science]{.term} and [statistics]{.term}…
 :::
 ::::
 
@@ -483,7 +465,7 @@ It uses techniques from [**computer science**]{style="color:#c0392b;"} and [**st
 
 :::: {.column width="26%"}
 ::: {.dense-smaller style="text-align:center; margin-top:1.4em;"}
-…to find patterns and explain relationships using data from different [**domains**]{style="color:#c0392b;"}.
+…to find patterns and explain relationships using data from different [domains]{.term}.
 :::
 ::::
 
@@ -527,11 +509,11 @@ Hanabusa Itchō, *Blind Monks Examining an Elephant* (1888 woodblock print repro
 
 ---
 
-## My Take: The Data Science Elephantidae
+## My Take: The Data Science Elephantidae {.figure-aside}
 
 ::::: {.columns}
 
-:::: {.column width="48%"}
+:::: {.column}
 ::: {.incremental}
 - Data scientists often define the field by the part they touched
 - **Elephantidae**: biological family including elephants, mammoths, mastodons
@@ -539,7 +521,7 @@ Hanabusa Itchō, *Blind Monks Examining an Elephant* (1888 woodblock print repro
 :::
 ::::
 
-:::: {.column width="48%"}
+:::: {.column}
 <img class="figure figure-lg" src="../assets/phylogeny/elephantidae-cladogram.svg" alt="Cladogram of Elephantidae within Proboscidea, showing Loxodonta and Palaeoloxodon as sister genera, and Mammuthus and Elephas as sister genera">
 
 ::: {.caption}
@@ -551,11 +533,11 @@ Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy
 
 ---
 
-## My Take: A Bigger Ecosystem
+## My Take: A Bigger Ecosystem {.figure-aside}
 
 ::::: {.columns}
 
-:::: {.column width="48%"}
+:::: {.column}
 ::: {.incremental}
 - The family runs deeper than a single member
 - Data scientists do not have a monopoly on knowledge 
@@ -563,7 +545,7 @@ Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy
 :::
 ::::
 
-:::: {.column width="48%"}
+:::: {.column}
 <img class="figure figure-lg" src="../assets/phylogeny/elephantidae-cladogram.svg" alt="Cladogram of Elephantidae within Proboscidea, showing Loxodonta and Palaeoloxodon as sister genera, and Mammuthus and Elephas as sister genera">
 
 ::: {.caption}
@@ -581,18 +563,14 @@ Based on [Wikipedia, "Elephant"](https://en.wikipedia.org/wiki/Elephant#Taxonomy
 Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-day)
 :::
 
-:::: {style="max-width:88%; margin:0 auto; height:100%; display:flex; flex-direction:column; justify-content:flex-start; padding-top:2%;"}
-
-::: {style="background:#001E62; border-radius:20px; padding:1.2em 0.9em; text-align:center;"}
-[~400 million]{style="display:block; font-size:3em; font-weight:800; color:#f9461c; line-height:1.05;"}
-[terabytes of data created — every single day]{style="font-size:1.1em; color:#ffffff;"}
+::: {.stat-callout}
+[~400 million]{.stat-number}
+[terabytes of data created — every single day]{.stat-label}
 :::
 
 ::: {.dense-smaller style="text-align:center; margin-top:0.6em;"}
 **Data science can help turn the flood of data into information and knowledge**
 :::
-
-::::
 
 ---
 
@@ -713,11 +691,11 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-## Bohr's Quadrant: Curiosity {auto-animate=true}
+## Bohr's Quadrant: Curiosity {.figure-aside auto-animate=true}
 
 ::::: {.columns}
 
-:::: {.column width="46%"}
+:::: {.column}
 ::: {.incremental}
 - What determines the stability of atoms?
 - What is the molecular structure of caffeine?
@@ -728,7 +706,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ::::
 
-:::: {.column width="50%"}
+:::: {.column}
 <img data-id="pq-grid" class="figure" src="../assets/pasteurs-quadrant/pasteurs-quadrant-complete.svg" alt="Pasteur's quadrant with all four cells shown and none highlighted">
 
 ::: {.caption}
@@ -740,11 +718,11 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-## Edison's Quadrant: Uses, Applications
+## Edison's Quadrant: Uses, Applications {.figure-aside}
 
 ::::: {.columns}
 
-:::: {.column width="46%"}
+:::: {.column}
 ::: {.incremental}
 - Which cold brew recipe do guests rate highest?
 - Which version of the headline gets more clicks?
@@ -753,7 +731,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 :::
 ::::
 
-:::: {.column width="50%"}
+:::: {.column}
 <img class="figure" src="../assets/pasteurs-quadrant/pasteurs-quadrant-complete.svg" alt="Pasteur's quadrant with all four cells shown and none highlighted">
 
 ::: {.caption}
@@ -765,11 +743,11 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ---
 
-## Pasteur's Quadrant: Understanding and Use
+## Pasteur's Quadrant: Understanding and Use {.figure-aside}
 
 ::::: {.columns}
 
-:::: {.column width="46%"}
+:::: {.column}
 ::: {.incremental}
 - Do noise machines help people sleep? Why or why not?
 - How does the running plan influence people's performance?
@@ -781,7 +759,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 :::
 ::::
 
-:::: {.column width="50%"}
+:::: {.column}
 <img class="figure" src="../assets/pasteurs-quadrant/pasteurs-quadrant-complete.svg" alt="Pasteur's quadrant with all four cells shown and none highlighted">
 
 ::: {.caption}
@@ -974,18 +952,18 @@ Cmglee, [*Comparison of pyramids SMIL*](https://commons.wikimedia.org/wiki/File:
 
 ---
 
-## Is the Pyramid Upside Down?
+## Is the Pyramid Upside Down? {.figure-aside}
 
 ::::: {.columns}
 
-:::: {.column width="52%"}
+:::: {.column}
 ::: {.incremental}
 - Tuomi (1999): "data emerges only after we have information...  information emerges only after we already have knowledge"
 - You need knowledge to decide what is even worth measuring
 :::
 ::::
 
-:::: {.column width="44%"}
+:::: {.column}
 <img class="figure" src="../assets/pyramid/upside-down-pyramid-bratislava.jpg" alt="The Slovak Radio Building in Bratislava, an inverted pyramid resting on its point">
 
 ::: {.caption}
@@ -997,11 +975,11 @@ Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislav
 
 ---
 
-## So, Is the Pyramid Upside Down?
+## So, Is the Pyramid Upside Down? {.figure-aside}
 
 ::::: {.columns}
 
-:::: {.column width="52%"}
+:::: {.column}
 ::: {.incremental}
 - Does wisdom sit at the top of the pyramid?
 - Or does wisdom hold up the whole thing?
@@ -1009,7 +987,7 @@ Slovak Radio Building, Bratislava. Thomas Ledl, [*Upside down Pyramid, Bratislav
 :::
 ::::
 
-:::: {.column width="44%"}
+:::: {.column}
 <img class="figure" src="../assets/pyramid/upside-down-pyramid-bratislava.jpg" alt="The Slovak Radio Building in Bratislava, an inverted pyramid resting on its point">
 
 ::: {.caption}
@@ -1041,11 +1019,11 @@ Martin Frické
 
 ---
 
-## What else is Missing? {data-auto-animate=""}
+## What else is Missing? {.figure-aside data-auto-animate=""}
 
 ::::: {.columns}
 
-:::: {.column width="52%"}
+:::: {.column}
 ::: {.incremental}
 - **Understanding** — no layer in the pyramid 
 - The pyramid does not build itself
@@ -1053,7 +1031,7 @@ Martin Frické
 :::
 ::::
 
-:::: {.column width="44%"}
+:::: {.column}
 <img class="figure" data-id="dikw-full" src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The full DIKW pyramid with all four layers labeled: data, information, knowledge, and wisdom">
 ::::
 
