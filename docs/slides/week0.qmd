@@ -558,11 +558,17 @@ An `.iframe-caption` sits under the embed at small type — use it for a source 
 ## TODO Slide Template
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{style="background:#f9461c; color:#fff; font-weight:bold; letter-spacing:2px; font-size:0.55em; border-radius:4px; padding:2px 10px;"}
+[TODO]{.eyebrow .todo}
 
 ``` markdown
 <!-- TODO: what's missing  -->
 ```
+:::
+
+::: {.aside-note}
+`.eyebrow .todo` is the theme's boxed drafting marker — use it instead of an
+inline `style` so every unfinished slide in every deck looks the same and is
+greppable.
 :::
 
 ---
@@ -619,6 +625,277 @@ Jack Bandy
 :::
 
 ---
+
+# Appendix: More Template Slides {.section-header}
+
+## What's in the Appendix {.smaller}
+
+The templates above cover the shapes a slide deck needs when it is mostly code
+and figures. These are the shapes the content weeks actually reach for: a static
+figure next to prose, parallel columns, a definition built up in fragments, a
+single number, and the small-text vocabulary that goes with all of them.
+
+::: {.dense-smaller}
+- **`.figure-aside`** — text left, static figure + credit right
+- **`.compare-columns`** — two or three parallel columns, evenly split
+- **`.prompt-slide`** — a question that owns the whole slide
+- **`.stat-callout`** — one number as the whole argument
+- **`.term` / `.key` / `.strike`** — inline emphasis with fixed meanings
+- **`.eyebrow` / `.dense` / `.dense-smaller` / `.caption`** — the small-text scale
+:::
+
+---
+
+## Text + Figure {.figure-aside}
+
+::: {.columns}
+::: {.column}
+::: {.incremental}
+- Prose on the left, a **static** figure on the right
+- Different from `.text-figure-slide`, which wraps a computed `{python}` cell
+- The right column has room for a `.caption` credit line
+- Column widths come from the theme — do not set `width=` here
+:::
+:::
+::: {.column}
+<img class="figure" src="../assets/orange-line/orange-line-trace-with-stops.svg" alt="Simplified trace of the CTA Orange Line with each station marked as a labeled stop">
+
+::: {.caption}
+Source line goes here, under the figure it credits.
+:::
+:::
+:::
+
+---
+
+## Text + Figure: the markup {.smaller}
+
+``` markdown
+## Slide Title {.figure-aside}
+
+::: {.columns}
+::: {.column}
+- bullets on the left
+:::
+::: {.column}
+<img class="figure" src="..." alt="...">
+
+::: {.caption}
+Credit line.
+:::
+:::
+:::
+```
+
+::: {.aside-note}
+Use `.figure-sm` or `.figure-lg` alongside `.figure` when one image needs to run
+shorter or taller than the 520px default — not a bespoke `max-height`.
+:::
+
+---
+
+## Two Parallel Columns
+
+::: {.columns .compare-columns}
+
+::: {.column}
+[THE CLAIM]{.eyebrow}
+
+::: {.dense}
+- Neither column is the main one
+- So neither gets the wider half
+- `.compare-columns` splits the row evenly
+:::
+:::
+
+::: {.column}
+[THE CATCH]{.eyebrow}
+
+::: {.dense}
+- Add or drop a column and nothing needs re-measuring
+- The class goes on the `.columns` row, not on the slide
+- `.eyebrow` labels each column
+:::
+:::
+
+:::
+
+---
+
+## Three Parallel Columns
+
+::: {.columns .compare-columns}
+
+::: {.column}
+[ONE]{.eyebrow}
+
+::: {.dense-smaller}
+Same class, three children. The row splits into thirds on its own.
+:::
+:::
+
+::: {.column}
+[TWO]{.eyebrow}
+
+::: {.dense-smaller}
+Use `.dense-smaller` in narrow columns so the text still fits without a per-slide font size.
+:::
+:::
+
+::: {.column}
+[THREE]{.eyebrow}
+
+::: {.dense-smaller}
+Works with images too — give each one `.figure .figure-sm` and let the column set the width.
+:::
+:::
+
+:::
+
+---
+
+## Parallel Columns: the markup {.smaller}
+
+``` markdown
+::: {.columns .compare-columns}
+
+::: {.column}
+[LABEL]{.eyebrow}
+
+::: {.dense}
+- points
+:::
+:::
+
+::: {.column}
+[OTHER LABEL]{.eyebrow}
+
+::: {.dense}
+- other points
+:::
+:::
+
+:::
+```
+
+---
+
+## Building Up a Definition
+
+::: {.caption}
+A source line at the *top* of a slide credits the content below it, not a figure.
+:::
+
+::: {.fragment .strike}
+The phrasing we are about to correct.
+:::
+
+::: {.fragment}
+The corrected phrasing, with the [operative word]{.key} carried in orange.
+:::
+
+::: {.fragment}
+[term]{.term}: the thing being named sits in navy, so a highlight means the same
+thing on every slide.
+:::
+
+::: {.fragment}
+So what does that leave us with? [The sentence worth remembering.]{.key}
+:::
+
+::: {.notes}
+`.term` and `.key` both set their own bold, so write `[data]{.term}` — not
+`[**data**]{.term}`.
+:::
+
+---
+
+## One Number
+
+::: {.stat-callout}
+[~400 million]{.stat-number}
+[terabytes of data created — every single day]{.stat-label}
+:::
+
+::: {.dense-smaller style="text-align:center; margin-top:0.6em;"}
+A short line underneath says why the number matters.
+:::
+
+::: {.caption}
+Credit the number. A statistic without a source is a rumor.
+:::
+
+---
+
+## One Number: the markup {.smaller}
+
+``` markdown
+::: {.stat-callout}
+[~400 million]{.stat-number}
+[terabytes of data created — every single day]{.stat-label}
+:::
+```
+
+::: {.dense}
+- The number is set in the title face, at display size, in orange
+- The navy panel sets it apart the way `.quote-slide` sets apart a quotation
+- One number per slide — a second one is a table, not a callout
+:::
+
+---
+
+## Your Turn: What Should This Deck Add? {.prompt-slide}
+
+::: {.prompt-eyebrow}
+Discuss
+:::
+
+::: {.prompt-question}
+Which slide shape did you reach for that this deck does not have?
+:::
+
+---
+
+## The Prompt Slide {.smaller}
+
+``` markdown
+## Slide Title (hidden on the slide) {.prompt-slide}
+
+::: {.prompt-eyebrow}
+Discuss
+:::
+
+::: {.prompt-question}
+The question, set large enough to read from the back.
+:::
+```
+
+::: {.aside-note}
+The `##` title is hidden but kept in the markdown so the slide still appears in
+the outline and the slide menu (<kbd>M</kbd>) — the same trick `.quote-slide`
+uses.
+:::
+
+---
+
+## The Small-Text Scale {.smaller}
+
+::: {.dense}
+| Class | Role | Where it sits |
+|---|---|---|
+| `.caption` | credit or source | under a figure, or atop a body of prose |
+| `.aside-note` | pointer to a reading or a caveat | after the content it qualifies |
+| `.eyebrow` | label for the block below | above a column or a panel |
+| `.eyebrow .todo` | drafting marker | on unfinished slides |
+| `.dense` | tighten body copy | lists and tables |
+| `.dense-smaller` | tighten it further | narrow columns |
+:::
+
+::: {.aside-note}
+All six are theme classes. Reach for one of them before writing an inline
+`style=`; if none of them fits, that is a sign the theme is missing something.
+:::
+
 
 # Sources {.sources}
 

@@ -39,6 +39,9 @@ $figure-border: 1px solid rgba(0, 0, 0, 0.12);
 $figure-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 $orange: #f9461c;
 $orange-dark: #c83214;
+// UIC navy. The steady institutional color, used where orange would be the
+// wrong emphasis: the term being defined rather than the point being made.
+$navy: #001e62;
 $ink: #1a1a1a;
 $text: #444;
 $steel: #565a5c;
@@ -369,6 +372,23 @@ $code-color: $ink !default;
   .dense { font-size: $dense-size; line-height: 1.45; }
   .dense-smaller { font-size: $dense-smaller-size; line-height: 1.35; }
 
+  // ---------------------------------------------------------------------
+  // Inline emphasis. Two colors with fixed meanings, so a highlight means the
+  // same thing on every slide instead of being re-chosen each time:
+  //
+  //   .term    the thing being named or defined — navy, the institutional
+  //            color, which sits still on the page
+  //   .key     the phrase to walk away with — orange, the accent that moves
+  //   .strike  the wrong phrasing, kept visible and crossed out so the
+  //            correction that follows has something to land against
+  //
+  // Both emphasis classes carry their own weight, so write `[data]{.term}`
+  // rather than bolding around them.
+  // ---------------------------------------------------------------------
+  .term { color: $navy; font-weight: bold; }
+  .key { color: $orange; font-weight: bold; }
+  .strike { text-decoration: line-through; text-decoration-color: $orange; }
+
   section.course-title {
     display: flex !important;
     flex-direction: column;
@@ -623,6 +643,52 @@ $code-color: $ink !default;
     }
 
     .column:last-child .cell-output-display { @include output-fill; }
+  }
+
+  // Text on the left, a static figure and its credit on the right. The most
+  // common shape in the content decks, and the one .text-figure-slide does not
+  // cover: that one is built around a computed cell and has no room for a
+  // source line. Widths live here so no slide has to restate them and the
+  // text/figure boundary lands in the same place deck to deck.
+  .slides section.figure-aside {
+    .columns { display: flex; align-items: flex-start; gap: 4%; }
+    .column { flex: 0 0 auto; }
+    .column:first-child { width: 50%; }
+    .column:last-child { width: 46%; }
+  }
+
+  // Two or three parallel options set side by side, no column privileged over
+  // the others. Flex splits the row evenly, so adding or dropping a column
+  // needs no width edits. Goes on the columns row itself
+  // (`::: {.columns .compare-columns}`), not on the slide, and pairs with
+  // .eyebrow for the label above each column.
+  .compare-columns {
+    display: flex;
+    align-items: flex-start;
+    gap: 4%;
+    > .column { flex: 1 1 0; width: auto; }
+  }
+
+  // One number big enough to be the whole argument. The navy panel sets it
+  // apart from body copy the way a pull quote does, the figure itself is
+  // orange because it is the thing to remember, and it is set in the display
+  // face rather than the body face for the same reason a headline is.
+  .stat-callout {
+    background: $navy;
+    border-radius: 20px;
+    padding: 1.1em 0.9em;
+    text-align: center;
+
+    .stat-number {
+      display: block;
+      font-family: $theme-title-font;
+      font-size: 3.4em;
+      font-weight: 800;
+      line-height: 1.05;
+      color: $orange;
+    }
+
+    .stat-label { display: block; font-size: 1.05em; color: $paper; }
   }
 
   .sources h1, .sources h2 { font-size: $h1-size; }
