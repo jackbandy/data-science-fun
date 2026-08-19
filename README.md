@@ -71,6 +71,44 @@ Their purpose is to educate, so feel free to use them, remix them, teach with th
 # Technical details
 
 <details>
+<summary><strong>Dependencies (and who installs them)</strong></summary>
+
+Nothing here is vendored: every build tool is installed by `.github/workflows/deploy-pages.yml`
+on each run, so that workflow is the ground truth for versions. This table restates it.
+
+| Tool | Version pinned in CI | Needed for | Declared in |
+| --- | --- | --- | --- |
+| Ruby | `>= 3.0, < 4.0` | Jekyll site build | `docs/Gemfile` |
+| Jekyll (via `github-pages` gem) | whatever `github-pages` resolves to | masthead/includes, `/schedule.html`, homepage table | `docs/Gemfile` |
+| Python | 3.12 | executing slide code chunks | `deploy-pages.yml`, `repo-checks.yml` |
+| Python packages | see file (several deliberate caps) | slide figures and models | `docs/slides/shared/requirements.txt` |
+| `uv` | latest | installs the Python packages | `deploy-pages.yml`, `shared/build_all_quarto.sh` |
+| Quarto | `release` (latest) | renders every deck and the mini-book | `deploy-pages.yml` |
+| R | `release` | **week 5 only** — it uses `engine: knitr` and shells out to `Rscript` | `deploy-pages.yml` |
+| R packages | unpinned, latest | `knitr`, `rmarkdown`, `reticulate`, `here`, `ggplot2`, `ggtext`, `patchwork`, `svglite` | `deploy-pages.yml` (inline `Rscript -e`) |
+| Node | 22 | Quarto tooling | `deploy-pages.yml` |
+| Chromium | latest | slide PDF export only — non-blocking, `continue-on-error` | `deploy-pages.yml` |
+| pandoc, `librsvg2-bin`, fontconfig, `fonts-liberation`, `texlive-xetex`, `texlive-latex-recommended`, `texlive-latex-extra`, `texlive-fonts-recommended`, `texlive-plain-generic` | Ubuntu runner's apt | syllabus HTML + PDF | `deploy-pages.yml` (apt-get step) |
+| `latexmk` | local install | worksheet PDFs — **not built in CI**, run by hand | `worksheets_source/build.sh` |
+| `ruff` | latest | lint check (`E9,F63,F7,F82`, `sandbox/` excluded) | `repo-checks.yml` |
+| `lychee` | `lycheeverse/lychee-action@v2` | link checking | `deploy-pages.yml`, `link-check-external.yml` |
+
+**Notes:**
+
+- The Python caps in `requirements.txt` are load-bearing and commented in place: `numpy<2.5`
+  (numba/arviz), `matplotlib<3.11` (arviz's `style.core` import), `arviz<1.3`. Lifting one
+  without reading its comment will break a slide render.
+- R is the odd one out. Quarto's setup action does not bundle it, and only week 5 needs it —
+  `build_all_quarto.sh` *skips* any knitr deck when `Rscript` is missing rather than failing,
+  so a local build without R silently produces one fewer deck.
+- Locally, `build_all_quarto.sh` makes its own `docs/slides/.venv` with `uv`. CI sets
+  `SKIP_VENV=true` and installs into the runner's Python instead.
+- Worksheets are the one output with no CI path: `worksheets_source/build.sh` runs on your
+  machine and the PDFs under `docs/worksheets/` are committed.
+
+</details>
+
+<details>
 <summary><strong>Repository layout</strong></summary>
 
 ```text
@@ -136,10 +174,13 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 - Each compiled deck produces an HTML file, a `_files/` support directory (CSS, JavaScript, other assets), and usually a PDF: HTML is required, PDF export is best-effort (non-blocking)
 - Jupyter-engine decks keep their executed notebook as `docs/slides/weekN.ipynb` - makes it easy to download and run the code
 	- **knitr**-engine decks (R + Python combos like Week 5) can't produce a notebook, so they link their `weekN.qmd` source instead
-- `shared/sync_slide_index.py` rewrites the per-deck bullets in `docs/slides/index.html` after rendering
-	- one topic bullet per `{.section-header}` heading, deep-linked to that slide (add `.no-index` to a header to leave it off the list)
-	- plus the "Supporting … code" bullet (notebook link if one exists, else source link)
-	- edit the wording by editing the deck's section header, not `index.html` — `repo-checks.yml` fails on hand edits. The bullets it replaced are archived in `docs/slides/shared/0-old-outline.md`
+- `shared/sync_slide_index.py` owns three regions of `docs/slides/index.html`, and pulls each from a different source. **Nothing it writes should ever be hand-edited** — `repo-checks.yml` re-runs the script and fails the build on any drift.
+	- **the topic bullets** ← the deck's own `{.section-header}` headings, one bullet each, deep-linked to that slide (add `.no-index` to a header to leave it off the list)
+	- **the "More:" bullet** ← the PDF, plus a notebook link if one exists, else the deck source
+	- **the parenthetical after each "Week N Slide Deck" title, and the Topics column of the slide-count table** ← `docs/_data/schedule.csv`, *not* the deck. This catches people out: to reword a deck's parenthetical you edit the CSV's `Topic` cells, and a stale `index.html` will look like the script is inventing changes when it is really just propagating a CSV edit you already made.
+	- the slide counts in that table are counted from the deck sources, so they move whenever you add or remove a slide
+	- run it after editing any deck heading **or** `schedule.csv`: `python3 docs/slides/shared/sync_slide_index.py docs/slides`
+	- the hand-written bullets it replaced are archived in `docs/slides/shared/0-old-outline.md`
 - The workflow should copy `docs/slides/week*.qmd` into `_site/slides/` after Jekyll runs
 	- (`docs/_config.yml` excludes `slides/*.qmd` from Jekyll)
 
@@ -194,7 +235,7 @@ push to main
 ```
 
 - **The schedule lives in one place: `docs/_data/schedule.csv`.** Jekyll reads it as `site.data.schedule` for the homepage table and for /schedule.html; `schedule.lua` expands the empty ` ```schedule ` block in `syllabus.md` into the same rows for Pandoc.
-	- There is no sync script and no generated table committed anywhere.
+	- Jekyll and the syllabus read it at build time, so neither commits a generated table. The one exception is `docs/slides/index.html`, where `sync_slide_index.py` bakes the `Topic` cells into committed HTML — so a `schedule.csv` edit is not fully propagated until that script is re-run.
 	- **Add new columns only at the end.** `schedule.lua` validates the header positionally for the first five columns (`Week`, `Class Day`, `Topic`, `Before Class`, `In Class`) and renders only those; Jekyll addresses columns by name. Trailing columns like `Date`, `Notes`, and `Unit` are carried in the CSV and ignored by both tables (they feed /schedule.html instead). Inserting a column before `In Class` fails the syllabus build.
 	- Week-to-station labels for the homepage dots (and the /schedule.html week headings) are in `docs/_data/stations.yml`.
 	- **Units come from the CSV's `Unit` column,** one value per class day. /schedule.html groups weeks under a heading per unit and lists each unit's week span at the top of the page; both are derived from the column, so moving a unit boundary is a CSV edit.
