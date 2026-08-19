@@ -1,7 +1,8 @@
 /* Styles for docs/_includes/masthead.html. Separate from index.css so the
-   syllabus, which brings its own stylesheet, can wear the masthead alone.
-   The @font-face is repeated from index.css for that reason; same URL, so the
-   browser still fetches the file once. */
+   syllabus, which brings its own stylesheet, can wear the masthead alone —
+   hence the @font-face repeated here (same URL, so still one fetch).
+
+   Note: this file was largely written by an LLM. It was tested and reviewed before being published. */
 @font-face {
   font-family: 'Libre Franklin';
   src: url('../assets/fonts/libre-franklin/LibreFranklin.woff2') format('woff2-variations');
@@ -10,12 +11,9 @@
   font-display: swap;
 }
 
-/* CTA rail line colors are listed in index.css. */
-/* `margin: 0` is load-bearing, not redundant: index.css zeroes it via a `*`
-   reset, but the syllabus has no such reset, so without this the browser's
-   default `hr` margin appears there and the masthead sits lower. Every rule
-   below likewise avoids inheriting from the host page, so the masthead renders
-   identically wherever it is included. */
+/* CTA rail line colors are listed in index.css. `margin: 0` :
+   the syllabus has no `*` reset, so the default `hr` margin would show there.
+   Every rule below likewise avoids inheriting from the host page. */
 .orange-line {
   box-sizing: border-box;
   border: none;
@@ -26,11 +24,12 @@
   width: 100%;
 }
 
-/* Wider than the 700px body column below it: at 700px the menu could not fit
-   on one line, and the nav row is what sets this width. */
+/* Wider than the 700px body column below it: the nav row sets this width and
+   needs ~732px of link track. At 760px it overflowed and every desktop width
+   fell back to the hamburger. */
 .site-masthead {
   box-sizing: border-box;
-  max-width: 760px;
+  max-width: 800px;
   margin: 48px auto;
   padding: 0 24px;
 }
@@ -60,9 +59,8 @@
   padding: 0;
 }
 
-/* One line, no shrinking: this is what makes the width measurement in
-   _includes/masthead-nav.html meaningful. Applied only once that script has
-   run, so with scripting off the nav keeps its old wrapping behavior. */
+/* One line, no shrinking: what makes the measurement in masthead-nav.html
+   meaningful. Applied by that script, so the nav still wraps without JS. */
 .site-masthead.has-js-nav .site-nav {
   flex-wrap: nowrap;
 }
@@ -88,8 +86,8 @@
   color: #f9461c;
 }
 
-/* Arrow-out-of-box icon, same glyph as jackbandy.com's external links. Drawn as
-   a mask rather than a background so it inherits the link's current color. */
+/* Arrow-out-of-box icon, same glyph as jackbandy.com. A mask, not a
+   background, so it inherits the link's current color. */
 .site-nav a.is-external::after {
   content: "";
   display: inline-block;
@@ -109,9 +107,8 @@
 }
 
 /* --- The title row and its hamburger ------------------------------------
-   On a wide screen this is just the title: the button is hidden, so the h1
-   fills the row exactly as it did before. In the compact state the title
-   shrinks to sit beside a small round button on the right. */
+   Wide: just the title, button hidden. Compact: the title shrinks to sit
+   beside a small round button on the right. */
 .site-masthead-bar {
   display: flex;
   align-items: center;
@@ -188,7 +185,7 @@
 .site-masthead.is-compact h1 {
   font-size: 22px;
   margin: 0;
-  /* Long course titles wrap rather than shoving the button off the edge. */
+  /* Long titles wrap instead of shoving the button off the edge. */
   min-width: 0;
 }
 

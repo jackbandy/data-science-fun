@@ -8,7 +8,7 @@
    per week, and the station names — written as `code` spans by the layout — render as
    CTA-style station plaques.
 
-   Note: this file was largely written by an LLM (Claude Code). */
+   Note: this file was largely written by an LLM. It was tested and reviewed before being published. */
 
 .schedule-title {
   font-size: 2.4rem;
