@@ -35,52 +35,9 @@ Technical details of each build are in the collapsible sections below.
 
 ## Course topics
 
-Still working on this 🙂 there are too many possibilities... But main units will probably include:
-* Basic prob/stats/sampling/distributions
-	* Data science lifecycle
-	* common distributions: Bernoulli, binomial, Poisson, normal, exponential
-	* Central Limit Theorem
-	* Estimation, sampling, and randomness
-	* Simple random samples
-* Data frame fundamentals
-	* Python foundations and polars
-	* Obtaining data; data formats
-	* Data types
-	* Wrangling and filtering
-	* Joining/merging datasets
-	* Wide data vs long data
-* Exploratory analysis and descriptive stats
-	* Anscombe's quartet / datasaurus dozen
-* Visualizations (weeks 5-6)
-* Hypothesis testing
-	* statistical significance 
-	* Uncertainty (i.e. confidence intervals, errors, confidence levels, etc.)
-	* More on estimation/sampling/randomness
-		* stratified samples
-		* systematic sampling
-		* cluster sampling
-		* voluntary sampling
-		* snowball sampling
-	* determining sample size
-* Linear modeling (week 8)
-	* Simple and multiple linear regression
-	* Bayesian linear regression
-* Machine-learning models (weeks 8-11)
-	* Classification
-	* Decision trees
-	* SVMs and kernels
-	* Clustering and PCA
-	* Train/test splits
-	* Evaluation metrics
-	* Feature-based recommendation systems
-	* A/B testing
-* Network analysis (week 12)
-	* Matrices as networks
-	* Network measures
-	* Network-based recommendation systems
-* Group presentations (weeks 14-15)
+The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](docs/_data/schedule.csv).
 
-The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](docs/_data/schedule.csv) — see the Syllabus build section below. What happens on each individual day, including links to source materials, lives beside it in [`docs/_includes/schedule-topics.md`](docs/_includes/schedule-topics.md) and is published at [/schedule.html](https://dodatascience.fun/schedule.html).
+What happens on each individual day, including links to source materials, is in [`docs/_includes/schedule-topics.md`](docs/_includes/schedule-topics.md) and is published at [/schedule.html](https://dodatascience.fun/schedule.html).
 
 ## Note on LLM use
 
