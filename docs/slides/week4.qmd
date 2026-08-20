@@ -179,63 +179,11 @@ print(df.shape)
 
 ```{python}
 #| echo: false
-# Setup for the "elements of visualization" slides: the Chicago map layers and a
-# pair of tiny helpers for the abstract mark demos.
-import csv, json
+# Setup for the "elements of visualization" slides: one tiny helper for the
+# abstract mark demos. The three Chicago map figures (texture, color, value) are
+# built ahead of time by datasets/chicago-maps/make_bertin_figures.py and read in
+# as SVGs, so this deck no longer loads the geojson.
 import matplotlib.pyplot as plt
-from matplotlib.collections import PatchCollection
-from matplotlib.patches import Polygon as MplPolygon
-
-MAPS = "../../datasets/chicago-maps"
-TEAL = "#1f8a9b"
-SAND = "#efe7d8"
-plt.rcParams["hatch.linewidth"] = 0.5
-
-
-def _thin(ring, tol):
-    """Drop points closer than `tol` degrees to the last one kept.
-
-    The city files are surveyor-accurate; at slide size that detail is invisible
-    but it inflates the embedded SVG, so every ring is decimated on load.
-    """
-    out = [ring[0]]
-    for x, y in ring[1:-1]:
-        px, py = out[-1]
-        if abs(x - px) > tol or abs(y - py) > tol:
-            out.append((x, y))
-    out.append(ring[0])
-    return out if len(out) > 3 else ring
-
-
-def rings(name, tol=0.0009):
-    """(properties, exterior ring) for every polygon in a GeoJSON file."""
-    out = []
-    for f in json.load(open(f"{MAPS}/{name}"))["features"]:
-        g = f["geometry"]
-        polys = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
-        for p in polys:
-            out.append((f["properties"], _thin([tuple(c) for c in p[0]], tol)))
-    return out
-
-
-CITY = rings("chicago-city.geojson")
-WARDS = rings("chicago-wards.geojson")
-# Keep the lake, the river, the canals and the harbors; drop the retention ponds.
-WATER = [(p, r) for p, r in rings("chicago-water.geojson")
-         if int(p["AREAWATER"]) >= 250_000]
-INCOME = {int(r["ward"]): int(r["median_household_income_est"])
-          for r in csv.DictReader(open(f"{MAPS}/chicago-ward-income.csv"))}
-
-
-def chicago_axes(ax):
-    """The city plus the near-shore strip of Lake Michigan."""
-    ax.set(xlim=(-87.95, -87.505), ylim=(41.63, 42.03))
-    ax.set_aspect(1 / 0.745)  # Mercator correction at ~41.9 degrees north
-    ax.axis("off")
-
-
-def layer(ax, shapes, **kw):
-    ax.add_collection(PatchCollection([MplPolygon(r) for _, r in shapes], **kw))
 
 
 def mark_axes(ax, xlim=(0, 10), ylim=(0, 6)):
@@ -328,16 +276,7 @@ down with it, so size is never free.
 :::
 :::
 ::: {.column width="54%"}
-```{python}
-#| echo: false
-#| fig-width: 4.6
-#| fig-height: 5.0
-#| fig-alt: "Map of Chicago drawn only in black and white: the land is filled with a coarse dot pattern and Lake Michigan and the rivers with a much finer dot pattern"
-fig, ax = plt.subplots()
-layer(ax, CITY, facecolor="white", edgecolor=INK, lw=0.8, hatch="..")
-layer(ax, WATER, facecolor="white", edgecolor=INK, lw=0.3, hatch="......")
-chicago_axes(ax)
-```
+![](../assets/bertin-maps/bertin-texture.svg){.figure alt="Map of Chicago drawn only in black and white: the land is filled with a coarse dot pattern and Lake Michigan and the rivers with a much finer dot pattern"}
 :::
 :::
 
@@ -362,16 +301,7 @@ competes with orientation (hatching is both at once)
 :::
 :::
 ::: {.column width="54%"}
-```{python}
-#| echo: false
-#| fig-width: 4.6
-#| fig-height: 5.0
-#| fig-alt: "The same map of Chicago, now with land filled in sand and Lake Michigan and the rivers filled in teal"
-fig, ax = plt.subplots()
-layer(ax, CITY, facecolor=SAND, edgecolor=INK, lw=0.8)
-layer(ax, WATER, facecolor=TEAL, edgecolor="none")
-chicago_axes(ax)
-```
+![](../assets/bertin-maps/bertin-color.svg){.figure alt="The same map of Chicago, now with land filled in sand and Lake Michigan and the rivers filled in teal"}
 :::
 :::
 
@@ -393,25 +323,7 @@ chicago_axes(ax)
 :::
 :::
 ::: {.column width="54%"}
-```{python}
-#| echo: false
-#| fig-width: 4.6
-#| fig-height: 5.0
-#| fig-alt: "Choropleth map of Chicago's 50 wards shaded from pale grey to near-black by estimated median household income, with the darkest wards along the north lakefront"
-fig, ax = plt.subplots()
-vals = [INCOME[int(p["ward"])] for p, _ in WARDS]
-pc = PatchCollection([MplPolygon(r) for _, r in WARDS],
-                     edgecolor="white", lw=0.5, cmap="Greys")
-pc.set_array(np.array(vals))
-pc.set_clim(30_000, 190_000)
-ax.add_collection(pc)
-chicago_axes(ax)
-cb = fig.colorbar(pc, ax=ax, fraction=0.035, pad=0.0, shrink=0.75)
-cb.set_ticks([50_000, 100_000, 150_000])
-cb.set_ticklabels(["$50k", "$100k", "$150k"])
-cb.ax.tick_params(labelsize=7, length=2)
-cb.outline.set_visible(False)
-```
+![](../assets/bertin-maps/bertin-value.svg){.figure alt="Choropleth map of Chicago's 50 wards shaded from pale grey to near-black by estimated median household income, with the darkest wards along the north lakefront"}
 :::
 :::
 
@@ -482,6 +394,31 @@ for x, m in zip([1.4, 3.2, 5.0, 6.8, 8.6], ["o", "s", "^", "D", "X"]):
 mark_axes(ax)
 ```
 :::
+:::
+
+
+---
+
+## Shape Anecdote {.image-frame-slide}
+
+::: {style="position:relative; flex:0 0 auto; width:798px; height:432px; margin:0.2em auto 1.1em;"}
+
+<img class="photo-card" src="../assets/abstraction/0-shapes.svg" alt="Five plain flat shapes in a row on a cream field: a yellow eight-pointed star, a red rounded square, a blue heart, a green tree and a purple lightning bolt" style="position:absolute; top:0px; left:0px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/1-abstract-thought-inside-out_monster-verse.jpg" alt="Six pastel shapes drawn in a row on paper: a pink curved wedge, a yellow starburst, a blue blob, a purple squiggle, an orange rectangle and a green lollipop form" style="position:absolute; top:22.2px; left:57.6px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/2-wiki-fandom-abstract.jpeg" alt="The same vocabulary of shapes, now overlapping in one composition: an orange squiggle, a red square, a navy hook, a green triangle, a yellow starburst on a magenta circle, a blue blob and a purple curl" style="position:absolute; top:44.4px; left:115.2px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/3-abstract-thought-flat-shapes_animated-antic.jpeg" alt="Three flat shapes on white in the film: a yellow starburst, a pink curved wedge and a blue oval, with a hint of face parts inside the starburst" style="position:absolute; top:66.6px; left:172.8px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/4-abstract-thought-textured-collage_animated-antic.jpeg" alt="The same three forms as flat cut-paper collage figures, with eyes, mouths and limbs assembled from textured scraps, reading as three characters" style="position:absolute; top:88.8px; left:230.4px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/5-abstract-thought-blocky-shapes_animated-antic.jpeg" alt="The three characters as blocky, faceted three-dimensional figures, recognizable as Bing Bong, Joy and Sadness, with folded-paper objects tumbling around them" style="position:absolute; top:111px; left:288px; width:510px; height:315px;">
+
+:::
+
+::: {.caption}
+See [GitHub](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/abstraction) for sources.
 :::
 
 
@@ -1881,5 +1818,6 @@ The plot above also hides 393 sales — those above \$2M or over 6,000 sq. ft. �
 4. Visual variables: Jacques Bertin, *Sémiologie graphique: Les diagrammes, les réseaux, les cartes* (Gauthier-Villars, 1967); English translation *Semiology of Graphics: Diagrams, Networks, Maps*, trans. William J. Berg (University of Wisconsin Press, 1983; reissued by Esri Press, 2010).
 5. Channels and the effectiveness ranking: Tamara Munzner, *Visualization Analysis & Design* (CRC Press, 2014), ch. 5. Open companion site: <https://www.cs.ubc.ca/~tmm/vadbook/>.
 6. Chicago map layers: [chicago-maps](https://github.com/jackbandy/data-science-fun/tree/main/datasets/chicago-maps) — city and ward boundaries and ward-level ACS income from the [Chicago Data Portal](https://data.cityofchicago.org/); water polygons from U.S. Census Bureau [TIGERweb](https://tigerweb.geo.census.gov/) areal hydrography.
-7. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-8. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+7. Shape anecdote: Pete Docter on designing characters from basic geometry, in [*Pete Docter | Geometry of Characters*](https://youtu.be/i2tkCBFlXyc?t=398) (Any-mation, 2016), from 6:38. Images in the build: [docs/assets/abstraction](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/abstraction) — see that folder's `SOURCES.md` for per-image credits.
+8. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+9. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).

@@ -21,6 +21,11 @@ Python's standard library.
   `households_75k_to_125k`, `households_125k_plus`), `households_total`,
   `pct_households_125k_plus`, and `median_household_income_est`.
 - `fetch_chicago_maps.py` — the script that rebuilds all four files from source.
+- `make_bertin_figures.py` — draws the three visual-variable maps used in the
+  Week 4 slide deck (texture, color, value) from the files above. It writes
+  `bertin-texture.svg`, `bertin-color.svg` and `bertin-value.svg` into
+  `docs/assets/bertin-maps/`, not here: the site is built from `docs/`, so a
+  figure has to live under it to be published. Re-run after changing the data.
 
 ### A caveat about the income column
 
