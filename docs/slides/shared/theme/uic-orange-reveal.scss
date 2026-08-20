@@ -475,7 +475,10 @@ $code-color: $ink !default;
   // thing sitting in the second column.
   .split-content.golden-columns { grid-template-columns: 1.618fr 1fr; }
   .split-content > p { display: flex; align-items: center; justify-content: center; }
-  .split-content img { max-width: 100%; max-height: 540px; object-fit: contain; }
+  // 480px is what actually fits between the title rule and the footer band:
+  // 720 slide - 48 top padding - the h2 block - 92 bottom padding. A taller
+  // cap lets a portrait figure run off the bottom of the slide.
+  .split-content img { max-width: 100%; max-height: 480px; object-fit: contain; }
   // Slides with an echoed code cell and a computed figure (use with
   // auto-stretch: false). Code keeps its natural height; the figure is
   // centered and fills 90% of the leftover height, clearing the footer band
