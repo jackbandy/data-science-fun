@@ -218,11 +218,13 @@ UIC has an [[official missed class time policy]{.underline}](https://uicflames.c
 
 
 
-## [Privacy Note on Recording in Class]{.underline}
+## [Privacy Note (Recording in Class)]{.underline}
 
 As of right now I do not plan to record class sessions this semester. If this changes, I will ask for your permission to record, and it will most likely be only audio.
 
 Similarly, please do not record any video or audio from class without permission.
+
+Please do not wear glasses or other devices that record audio and/or video. If you need to make an arrangement to use a wearable computer of some kind, please come see me.
 
 ## [Classroom Conduct and in-class Technology]{.underline}
 
@@ -236,7 +238,7 @@ In Summer 2026, I looked at peer-reviewed scientific evidence on the subject. As
 
 Interestingly, while some students can multitask and still comprehend material *during* class time, those students experience significantly reduced long-term retention ([Glass & Kang, 2019](https://doi.org/10.1080/01443410.2018.1489046)).
 
-For these reasons and others, **by default, all class periods will be free from cell phones, laptops, and tablets**. In some cases, we will use devices for activities, usually at the end of class.
+For these reasons and others, **by default, all class periods will be free from cell phones, laptops, tablets, and wearable computers (i.e. "smart glasses")**. In some cases, we will use devices for activities, usually at the end of class.
 
 The no-phone, no-laptop policy is intended for your own benefit as well as the benefit of your classmates, as using a phone/laptop often has a chain reaction of distracting other students.
 
