@@ -688,8 +688,9 @@ Credit line.
 ```
 
 ::: {.aside-note}
-Use `.figure-sm` or `.figure-lg` alongside `.figure` when one image needs to run
-shorter or taller than the 520px default — not a bespoke `max-height`.
+Use `.figure-sm` alongside `.figure` when one image needs to run shorter than
+this layout's 430px cap — not a bespoke `max-height`. `.figure-lg` is for
+figures that own a whole slide; it does not raise the cap here.
 :::
 
 ::: {.aside-note}

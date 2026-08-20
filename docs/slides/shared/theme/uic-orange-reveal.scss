@@ -35,6 +35,9 @@ $dense-smaller-size: 0.65em;
 $figure-height: 520px;
 $figure-height-sm: 360px;
 $figure-height-lg: 620px;
+// The cap for a figure in the .figure-aside layout, where it shares the slide
+// with a text column and its own credit line rather than owning the height.
+$figure-height-aside: 430px;
 $figure-border: 1px solid rgba(0, 0, 0, 0.12);
 $figure-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 $orange: #f9461c;
@@ -369,8 +372,28 @@ $code-color: $ink !default;
     }
   }
 
-  .dense { font-size: $dense-size; line-height: 1.45; }
-  .dense-smaller { font-size: $dense-smaller-size; line-height: 1.35; }
+  // The nested `ul, ol` rules matter: `ul, ol { line-height: 1.75 }` above
+  // sets the leading directly on the list, and a direct rule beats an
+  // inherited one no matter the specificity. Without these, .dense and
+  // .dense-smaller only ever changed the font size on a list, and the tighter
+  // leading they promise was silently dropped.
+  .dense {
+    font-size: $dense-size;
+    line-height: 1.45;
+    ul, ol { line-height: inherit; }
+  }
+  .dense-smaller {
+    font-size: $dense-smaller-size;
+    line-height: 1.35;
+    ul, ol { line-height: inherit; }
+  }
+
+  // Quarto injects `.reveal .slide ul li { margin-top: .4em; margin-bottom: .2em }`
+  // inline into every deck. That is (0,2,2), so a bare `.dense li` never wins.
+  // Matching its `.slide` puts these at (0,3,1), which does — without it the
+  // item gaps stay at full size and the dense classes only shrink the type.
+  .slide .dense li { margin-top: 0.15em; margin-bottom: 0; }
+  .slide .dense-smaller li { margin-top: 0.05em; margin-bottom: 0; }
 
   // ---------------------------------------------------------------------
   // Inline emphasis. Two colors with fixed meanings, so a highlight means the
@@ -654,10 +677,25 @@ $code-color: $ink !default;
   // source line. Widths live here so no slide has to restate them and the
   // text/figure boundary lands in the same place deck to deck.
   .slides section.figure-aside {
+    // .figure-lg is sized for a slide that is mostly figure (620px). Here the
+    // figure shares the slide with a heading, a text column, the credit line
+    // underneath it, and the footer band, so that height overflows and clips
+    // the bottom of the image. Cap it to what this layout actually leaves.
+    img.figure { max-height: 430px; }
+
     .columns { display: flex; align-items: flex-start; gap: 4%; }
     .column { flex: 0 0 auto; }
     .column:first-child { width: 50%; }
     .column:last-child { width: 46%; }
+
+    // The figure sits under the title rule and above the footer band, with its
+    // credit line below it: 720px slide - 48px top padding - the h2 block -
+    // 92px bottom padding - the caption leaves about 430px. .figure-lg's 620px
+    // cap is a full-slide height and never fit here, so any portrait figure in
+    // this layout ran off the bottom (both Elephantidae cladogram slides in
+    // Week 1). Landscape figures are bound by the column width and are
+    // untouched. Doubled selector so it outranks img.figure-lg.
+    img.figure, img.figure.figure-lg { max-height: $figure-height-aside; }
 
     // The near-even split above assumes the figure carries as much of the
     // argument as the prose. When it only illustrates a point the text is
