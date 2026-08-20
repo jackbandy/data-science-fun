@@ -544,6 +544,172 @@ rows[0][1]
 
 ---
 
+# Tuples and Sets {.smaller}
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Tuple** — like a list, but you cannot change it after you create it
+- **Use a tuple for a fixed record** — a (name, score) pair, a coordinate
+- **Set** — unordered, no duplicates, very fast membership test
+:::
+
+::: {.column width="58%"}
+```python
+# tuple like a list, but cannot be changed
+student = ('Ana', 88)
+student[0]
+name, score = student
+student[1] = 91
+
+# set
+scores = {88, 92, 79, 92}
+len(scores)
+
+# turning a list into a set to see distinct values
+grades = [88, 92, 79, 92, 65]
+set(grades)
+```
+:::
+
+::::
+
+::: {.notes}
+- Immutable is the whole tuple story: `student[1] = 91` raises a TypeError, and that is the feature
+- Reach for a tuple when the record's shape is fixed and nobody should edit it — a (name, score) pair, a lat/lon pair
+- `name, score = student` is unpacking; it shows up constantly in loops
+- The set literal drops the duplicate 92, so `len(scores)` is 3, not 4
+- The payoff is the last block: `set(grades)` is how you find out what values actually appear in a column — the first thing you do with any unfamiliar categorical column
+- Two trip-ups: a set has no order, so you cannot index one; and `{}` makes an empty *dict*, not an empty set — that is `set()`
+:::
+
+---
+
+# Dictionaries {.smaller}
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Key to value** — the key is a label you choose, not a position
+- **Keys are unique** — assigning to a key that exists replaces the value
+- **.get() is the safe one** — gives back None instead of an error when the key is missing
+- **This is the shape of data** — one dictionary = one record = one row
+:::
+
+::: {.column width="58%"}
+```python
+# values stored under labels, not positions
+student = {'name': 'Ana', 'grade': 88, 'major': 'CS'}
+student['grade']
+student['email']
+student.get('email')
+
+# all the labels, all the values
+student.keys()
+student.values()
+
+# replace an existing key, or add a new one
+student['grade'] = 91
+student['year'] = 'junior'
+```
+:::
+
+::::
+
+::: {.notes}
+- The most important container in the course — spend real time here
+- Brackets vs `.get()` matters on Day 2: an absent API field raises a KeyError and stops everything, `.get()` returns None and keeps going
+- `student['email']` is there to be run and to fail
+- Land the last bullet: a CSV row arrives as exactly this object, and so does every record from the Chicago Data Portal
+- If the room is comfortable, put a list of dictionaries on the board — that is a whole table before it becomes a dataframe
+:::
+
+---
+
+# Strings {.smaller}
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Strings are sequences** — index and slice them exactly like lists
+- **Immutable** — methods hand back a new string; the original never changes
+- **.strip() and .split()** — the two you reach for with messy data
+- **f-strings** — put values inside text without gluing pieces together
+:::
+
+::: {.column width="58%"}
+```python
+# strings are sequences, like lists
+name = 'Midway'
+name[0]
+len(name)
+'way' in name
+
+# methods return a new string
+name.upper()
+'  Midway  '.strip()
+'W,A,U'.split(',')
+
+# f-strings build text out of values
+rides = 7423
+f'{name}: {rides} entries'
+```
+:::
+
+::::
+
+::: {.notes}
+- Immutability surprises people: `name.upper()` does not change `name`, so the result must be assigned or it is lost
+- `strip()` removes stray whitespace — endemic in exported data, and it breaks joins silently: `'Midway '` and `'Midway'` never match
+- `split()` turns one field into several — how you pull apart a combined column
+- f-strings: anything inside the braces is evaluated
+- Station names, dates, and category codes all arrive as strings, so cleaning text is most of early data wrangling
+:::
+
+---
+
+# Loops {.smaller}
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- **for walks a sequence** — one item at a time, in order
+- **Indentation is the body** — Python has no braces; the spacing is the syntax
+- **enumerate()** — when you need the position as well as the value
+- **.items()** — to loop over a dictionary's keys and values together
+:::
+
+::: {.column width="58%"}
+```python
+grades = [88, 92, 79, 92, 65]
+
+# do the same thing to every item
+total = 0
+for g in grades:
+    total = total + g
+
+# position and value together
+for i, g in enumerate(grades):
+    print(i, g)
+
+# keys and values of a dictionary
+scores = {'Ana': 88, 'Ben': 92}
+for name, score in scores.items():
+    print(name, score)
+```
+:::
+
+::::
+
+::: {.notes}
+- Indentation deserves ten seconds: an IndentationError is the first error most students hit, and the fix is mechanical
+- Name the accumulator pattern — start at zero, add inside the loop — they need it for the by-hand grouping example later
+- `enumerate` and `.items()` are the two variants that come up constantly in real code
+- Say out loud: this is the last time we write a loop over data by choice
+:::
+
+---
+
 # Dataframes and Polars {.section-header}
 
 ---
