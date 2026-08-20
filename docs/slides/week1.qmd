@@ -833,7 +833,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ::::: {.columns}
 
-:::: {.column}
+:::: {.column .dense}
 ::: {.incremental}
 - What determines the stability of atoms?
 - What is the molecular structure of caffeine?
@@ -860,7 +860,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ::::: {.columns}
 
-:::: {.column}
+:::: {.column .dense}
 ::: {.incremental}
 - Which cold brew recipe do guests rate highest?
 - Which version of the headline gets more clicks?
@@ -885,7 +885,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ::::: {.columns}
 
-:::: {.column}
+:::: {.column .dense}
 ::: {.incremental}
 - Do noise machines help people sleep? Why or why not?
 - How does the running plan influence people's performance?
@@ -911,6 +911,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 
 ## More Example Questions
 
+:::: {.dense}
 ::: {.incremental}
 - Do guests like the new cold brew recipe?
 - Is the running plan helping people run faster?
@@ -922,6 +923,7 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 - Data scientists can *explain* answers in detail.
 - (See mini-book, [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html)).
 :::
+::::
 
 ---
 
@@ -1255,6 +1257,7 @@ Different types of screens have different pixel / sub pixel shapes. Source: Pete
 
 ## Your Quiz on Wednesday
 
+:::: {.dense}
 ::: {.incremental}
 - A "systems check" for PrairieLearn
 - **Ten questions**
@@ -1264,6 +1267,7 @@ Different types of screens have different pixel / sub pixel shapes. Source: Pete
 - Mostly true/false, one "select all that apply," one fill-in-the-blank, one short answer
 - **Everything on it was covered today.**
 :::
+::::
 
 
 ---
@@ -1301,9 +1305,9 @@ You should be able to say...
 
 ## Homework 1 {.split}
 
-::: {.split-content .narrow-aside}
+::: {.split-content .narrow-aside .fill-height}
 
-::: {}
+::: {.dense}
 - **Ten questions**, only homework that will be due on a Wednesday
 - A "systems check" to make sure you're in PrairieLearn
 - Basic probability review (chain rule / product rule)
@@ -1399,9 +1403,9 @@ Examples from Booth et al., *The Craft of Research* (2024).
 
 ## Basic Types of Questions {.split}
 
-::: {.split-content .narrow-aside}
+::: {.split-content .narrow-aside .fill-height}
 
-::: {}
+::: {.dense}
 
 ::: {.caption}
 Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
@@ -1449,6 +1453,7 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 
 ## Contrast Classes
 
+:::: {.dense}
 ::: {.incremental}
 - Explanatory questions often presuppose a set of alternatives
 	- "compared to **what**?"
@@ -1459,6 +1464,7 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - Each "contrast class" implies a different comparison group, study design, and dataset
 - TODO: an example question from the class w/ contrast classes
 :::
+::::
 
 ---
 
@@ -1555,6 +1561,7 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 
 ## Invasive Questions
 
+:::: {.dense}
 ::: {.incremental}
 - All questions ask for information
 - But information sensitivity can exceeds the context
@@ -1564,6 +1571,7 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - Ask for the **least sensitive** data that can address the question
 - More on this when we get to obtaining data
 :::
+::::
 
 ---
 

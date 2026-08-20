@@ -497,6 +497,35 @@ $code-color: $ink !default;
   // The two columns themselves in the golden ratio (φ : 1), rather than the
   // thing sitting in the second column.
   .split-content.golden-columns { grid-template-columns: 1.618fr 1fr; }
+  // A split whose text column is a whole list rather than a few lines. .split
+  // centers .split-content in the leftover row and .split-content centers each
+  // column in itself, which turns a tall list into a block floating in the
+  // middle of the column with its last items past the bottom edge. This claims
+  // the full height under the title rule and starts the text at the top, so the
+  // list uses the left side instead of sitting in the middle of it. The item
+  // gaps open up to spread it through that height -- (0,3,2) so they outrank
+  // `.slide .dense li` at (0,3,1). The companion figure stays centered.
+  .split-content.fill-height {
+    align-self: stretch;
+    align-items: stretch;
+    > :first-child {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      > ul, > ol {
+        flex: 1;
+        margin: 0;
+        // The list itself distributes its items through the height it was just
+        // given, so the spacing follows the content instead of a gap tuned to
+        // one slide's bullet count.
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      li { margin: 0; }
+    }
+    img { align-self: center; }
+  }
   .split-content > p { display: flex; align-items: center; justify-content: center; }
   // 480px is what actually fits between the title rule and the footer band:
   // 720 slide - 48 top padding - the h2 block - 92 bottom padding. A taller
@@ -696,6 +725,15 @@ $code-color: $ink !default;
     // Week 1). Landscape figures are bound by the column width and are
     // untouched. Doubled selector so it outranks img.figure-lg.
     img.figure, img.figure.figure-lg { max-height: $figure-height-aside; }
+
+    // .figure-sm has to be re-stated here for the same cascade reason: the
+    // rule above is (0,2,1) and `img.figure-sm` is only (0,1,1), so a figure
+    // asking to run short was silently pushed back up to the 430px aside cap.
+    // On a .figure-aside slide that also carries an .eyebrow above the columns
+    // (Schedule Overview in Week 1), 430px starts low enough that the bottom
+    // of a portrait figure lands in the footer band. Tripled selector so this
+    // outranks both the aside cap and img.figure-lg.
+    img.figure.figure-sm { max-height: $figure-height-sm; }
 
     // The near-even split above assumes the figure carries as much of the
     // argument as the prose. When it only illustrates a point the text is
