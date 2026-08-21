@@ -3,18 +3,21 @@
 
 Thirteen datasets, one animation: the cloud of points morphs from a dinosaur to
 a star to a circle to a set of stripes, while the summary statistics printed
-under it -- mean of x, mean of y, both standard deviations, and Pearson's r --
-never move, because to two decimal places they are the same in every one of the
-thirteen datasets. That is the argument for plotting your data, made in a single
-frame-by-frame image.
+above it -- mean of x, mean of y, both standard deviations, and Pearson's r --
+are recomputed live on every frame. They drift a little mid-morph, when the
+points are in transit and belong to no dataset at all, and then settle back to
+the same five numbers each time a shape arrives, because to two decimal places
+they are the same in every one of the thirteen datasets. That is the argument
+for plotting your data, made in a single frame-by-frame image.
 
 Data and construction: Justin Matejka and George Fitzmaurice, "Same Stats,
 Different Graphs: Generating Datasets with Varied Appearance and Identical
 Statistics through Simulated Annealing," CHI 2017.
 
 Design notes (see docs/assets/STYLE.md):
-  - points are orange, because they are the only thing on the canvas that
-    changes; the statistics readout is steel, because it is the constant.
+  - points are orange, because they are the shape of the argument; the
+    statistics readout is steel, because it is the thing that keeps returning
+    to the same value.
   - the axes box takes the data's own aspect ratio, so the dinosaur is never
     stretched; the canvas is sized around it.
   - the morph interpolates each point along a straight line to its counterpart
@@ -88,9 +91,12 @@ ORDER = (
     "away",
 )
 
-HOLD_FRAMES = 7  # frames a shape sits still, long enough to read it
-MORPH_FRAMES = 9  # frames spent travelling to the next shape
-FRAME_MS = 60
+# Slow the animation down by spending more frames, not by holding each frame
+# longer: at 60 ms a frame the motion still reads as motion, where a longer
+# delay turns the same path into a series of jumps.
+HOLD_FRAMES = 12  # frames a shape sits still, long enough to read it
+MORPH_FRAMES = 15  # frames spent travelling to the next shape
+FRAME_MS = 60  # GIF delays are stored in hundredths of a second, so keep this a multiple of 10
 
 LABELS = {
     "dino": "dino",
@@ -142,12 +148,18 @@ def load_shapes() -> dict[str, np.ndarray]:
 
 
 def stats_line(pts: np.ndarray) -> str:
+    """The five summary statistics, in fields wide enough that the line holds still.
+
+    The numbers are recomputed every frame, so each field is padded to a fixed
+    width -- room for a minus sign and two integer digits -- and the readout
+    stays put instead of shuffling sideways as digits come and go.
+    """
     x, y = pts[:, 0], pts[:, 1]
     r = np.corrcoef(x, y)[0, 1]
     return (
-        f"mean(x) = {x.mean():.2f}     mean(y) = {y.mean():.2f}     "
-        f"sd(x) = {x.std(ddof=1):.2f}     sd(y) = {y.std(ddof=1):.2f}     "
-        f"r = {r:.2f}"
+        f"mean(x) = {x.mean():>6.2f}     mean(y) = {y.mean():>6.2f}     "
+        f"sd(x) = {x.std(ddof=1):>6.2f}     sd(y) = {y.std(ddof=1):>6.2f}     "
+        f"r = {r:>5.2f}"
     )
 
 
@@ -250,9 +262,9 @@ def main() -> None:
 
     scatter = ax.scatter([], [], s=42, color=ORANGE, alpha=0.85, linewidths=0, zorder=3)
 
-    # The whole point of the figure: this line is pinned outside the axes and
-    # never changes while the cloud underneath it does.
-    fig.text(
+    # The whole point of the figure: this line is recomputed from whatever the
+    # cloud currently is, and keeps landing on the same five numbers.
+    stats_label = fig.text(
         0.5,
         0.955,
         stats_line(shapes["dino"]),
@@ -300,6 +312,7 @@ def main() -> None:
         for pts, label in frames:
             scatter.set_offsets(pts)
             name_label.set_text(label)
+            stats_label.set_text(stats_line(pts))
             writer.grab_frame(facecolor=PAPER)
 
     plt.close(fig)

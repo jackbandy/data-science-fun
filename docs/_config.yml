@@ -30,15 +30,20 @@ defaults:
   - scope:
       path: ""
     values:
-      image: /assets/orange-line/orange-line-fractal-og.gif
+      image: /assets/branding/datasaurus-og.gif
 social:
-  image: /assets/orange-line/orange-line-fractal-og.gif
-  image_fallback: /assets/orange-line/orange-line-fractal-og-poster.png
+  image: /assets/branding/datasaurus-og.gif
+  image_fallback: /assets/branding/datasaurus-og.png
+  # A golden rectangle rather than the 1200x630 most cards assume: the Datasaurus shapes
+  # are taller than they are wide and must not be squashed, so the frame follows them.
+  # Scrapers that letterbox show the whole thing; ones that crop to 1.91:1 take a band out
+  # of the middle, which is still the cloud.
   image_width: 1200
-  image_height: 630
+  image_height: 742
   image_alt: >-
-    The Chicago Orange Line map, pulling back to reveal it was inside one of its own
-    stops, over and over.
+    A cloud of orange dots rearranging itself between the Chicago Orange Line route, a
+    dinosaur, a star, a circle and a grid of dots -- five datasets with the same summary
+    statistics and nothing else in common.
 
 # Jekyll renders any file with YAML front matter, whatever its extension. The
 # Quarto sources below all have it, so without these entries Jekyll would render

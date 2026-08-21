@@ -12,11 +12,11 @@ here with different values would leave scrapers picking between two answers.
 
 Two images are declared, in order:
   1. the animated GIF, for readers that show motion (Slack, Discord, Telegram)
-  2. a 20KB PNG still of the same first frame, for everything with a size ceiling --
-     WhatsApp in particular drops thumbnails over a few hundred KB, and a 3.9MB GIF is
-     far past that.
+  2. an 18KB PNG still of the same first frame, for everything with a size ceiling --
+     WhatsApp in particular drops thumbnails over a few hundred KB.
 Most scrapers take the first og:image and ignore the rest; ones that skip what they cannot
-render fall to the PNG. Either way the picture is the same map.
+render fall to the PNG. Either way the picture is the same one: the Orange Line drawn in
+points, which is the frame the GIF opens on.
 
 Per-page overrides: `image:` (site-root-relative) and `image_alt:` in front matter, plus
 `image_width`/`image_height` if the override is not 1200x630.
