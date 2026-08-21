@@ -368,23 +368,19 @@ See the [[UIC Academic Calendar]{.underline}](https://catalog.uic.edu/ucat/acade
 
 UIC is committed to full inclusion and participation of people with disabilities in all aspects of university life. If you face or anticipate disability-related barriers while at UIC, you should connect with the Disability Resource Center (DRC) at drc.uic.edu, drc@uic.edu, or at (312) 413-2183 to create a plan for reasonable accommodations. In order to receive accommodations, you will need to disclose the disability to the DRC, complete an interactive registration process with the DRC, and provide me with a Letter of Accommodation (LOA). Letters of Accommodations can be presented at any point of the semester and, unless otherwise noted, do not expire once obtained. Upon receipt of an LOA, I will gladly work with you and the DRC to implement approved accommodations.
 
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
-
 ## [Religious Accommodations]{.underline}
 
 I will make every effort to avoid scheduling exams or requiring student projects be submitted on [[religious holidays]{.underline}](https://oae.uic.edu/religious-calendar/). If you wish to observe your religious holidays, please notify me by the tenth day of the semester of the date when you will be absent unless the religious holiday is observed on or before the tenth day of the semester. In such cases, please notify me or a TA as soon as possible to let me know when you will be absent.
 
 I will make every reasonable effort to honor your request and not penalize you for missing the class. If an examination or project is due during your absence, you will be given an exam or assignment equivalent to the one completed by those students in attendance. Students may appeal through [[campus grievance procedures]{.underline}](https://oae.uic.edu/religious/) for religious accommodations.
 
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
+*Much of the remaining syllabus was copied or lightly modified from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
 # VI. Classroom Environment
 
 ## [Inclusive Community]{.underline}
 
 At UIC we expect all members of this class to contribute to a respectful, welcoming, and inclusive environment for every other member of our class. If there are aspects of the instruction or design of this course that result in barriers to your inclusion, engagement, accurate assessment or achievement, please notify me as soon as possible.
-
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
 ## [Preferred Names and Pronouns]{.underline}
 
@@ -393,8 +389,6 @@ If your name or pronouns do not match the class roster, please let the class kno
 ## [Community Agreement]{.underline}
 
 TK
-
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
 # VII. Feedback & Support
 
@@ -433,10 +427,10 @@ Importantly, if you are in immediate distress, please know the UIC Counseling Ce
 
 **Title IX / Campus Advocacy Network:** For confidential victim services and advocacy, contact [[UIC's Campus Advocacy Network]{.underline}](https://can.uic.edu/) at 312-413-8206. To make a report to UIC's Title IX office, email [[TitleIX@uic.edu]{.underline}](mailto:TitleIX@uic.edu) or call (312) 996-8670.
 
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
-
 # VIII. Disclaimer
 
 This syllabus is intended to give guidance on what may be covered during the semester and will be followed as closely as possible. However, the instructor reserves the right to modify, supplement, and make changes as course needs arise. Significant changes will be communicated in advance as in-class announcements and in writing via Canvas Announcements and email.
 
-*Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
+---
+
+*Parts of this syllabus were copied or lightly modified from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
