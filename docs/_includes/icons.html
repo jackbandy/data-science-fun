@@ -8,9 +8,19 @@ the rest fall back to favicon.ico (16/32/48/64/128px, each rendered from the vec
 The icon is the track path alone -- station markers read as grit at this size.
 theme-color tints the browser chrome CTA orange to match; a page whose own ground is a
 different color passes `theme_color="#..."` rather than emitting a second tag.
+
+iOS ignores the manifest's short_name, so a Home Screen save is labelled from <title> --
+"Schedule — Introduction to Data Science", truncated to about a dozen characters. apple-mobile-web-app-title
+names it instead; keep it in step with short_name in site.webmanifest.
+
+color-scheme tells the browser this design is light-only, which keeps Chrome's
+force-dark from inverting it into something that is not the design, and makes
+scrollbars and form controls match the page.
 {%- endcomment -%}
 <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="32x32">
 <link rel="icon" href="{{ '/assets/orange-line/loop-icon.svg' | relative_url }}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{ '/assets/orange-line/apple-touch-icon.png' | relative_url }}">
 <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
 <meta name="theme-color" content="{{ include.theme_color | default: '#f9461c' }}">
+<meta name="apple-mobile-web-app-title" content="CS 418">
+<meta name="color-scheme" content="light">
