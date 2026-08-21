@@ -29,10 +29,13 @@ Prose-only fixes usually need none of this — GitHub's web editor is fine.
 Preview the site:
 
 ```bash
+python3 exercises/build-exercises-data.py  # writes files jekyll needs
 cd docs
 bundle install          # first time only
 bundle exec jekyll serve # http://localhost:4000
 ```
+
+
 
 Build the slides:
 

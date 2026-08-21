@@ -26,10 +26,13 @@ This repo holds the raw files (mostly markdown files) that are assembled and pub
 To preview the site locally:
 
 ```bash
+python3 exercises/build-exercises-data.py  # required: see note below
 cd docs
 bundle install          # first time only
 bundle exec jekyll serve
 ```
+
+Run the exercises script first on a fresh clone. It writes `docs/_data/exercises.yml`, `docs/_includes/exercises-about.html` and `docs/exercises/`, all generated from `exercises/*/exercise.md` and all gitignored, and Jekyll aborts with `Liquid error: Cannot sort a null object` if they are absent.
 
 Quarto output (slides, mini-book) is served as-is, so use `quarto preview` for local previews.
 
