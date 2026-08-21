@@ -4,7 +4,8 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{fontspec}
 \usepackage{microtype}
-\usepackage{xcolor}
+% [table] brings in colortbl's \rowcolors, used for the banded schedule table.
+\usepackage[table]{xcolor}
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{calc}
@@ -14,6 +15,11 @@
 \usepackage{setspace}
 \usepackage[normalem]{ulem}
 \usepackage{graphicx}
+% Every image keeps its aspect ratio. Pandoc emits `height=\textheight` alongside
+% any width it is given; older pandocs (the CI runner's, notably) do not add
+% `keepaspectratio` to that, which stretched the signal drawings to the full text
+% height. Setting it as a graphicx default fixes it for whatever pandoc emits.
+\setkeys{Gin}{keepaspectratio}
 % Figures stay where they are written (a syllabus reads top to bottom, so a
 % float that drifts to the next page lands away from the text that introduces
 % it), and captions carry no "Figure N:" label.
@@ -80,7 +86,9 @@
   \begin{minipage}[t]{\dimexpr\textwidth-\signalwidth-1.2em\relax}\vspace{0pt}}
 \newcommand{\signalaspectend}{\end{minipage}\par\medskip}
 
-% Tables
+% Tables. The schedule table alternates white and a very light gray, switched
+% on around that table alone by schedule.lua.
+\definecolor{schedulerow}{RGB}{245,245,245}
 \setlength{\LTpre}{0pt}
 \setlength{\LTpost}{0pt}
 \renewcommand{\arraystretch}{1.02}

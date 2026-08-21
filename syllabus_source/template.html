@@ -59,6 +59,11 @@ nav: syllabus
     .underline { text-decoration: underline; }
     table th:nth-child(2),
     table td:nth-child(2) { min-width: 6.6em; }
+    /* Banded rows for the course schedule table (tagged by schedule.lua): the
+       rows are tall and the eye has to track across five columns, so every
+       other one carries a very light gray. The PDF does the same in
+       template.tex. */
+    .schedule-table tbody tr:nth-child(even) { background: #f5f5f5; }
 
     header { text-align: center; }
     header .course-title { font-size: 21pt; font-weight: 700; margin: 0 0 0.5em 0; }

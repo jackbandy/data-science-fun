@@ -93,6 +93,19 @@ function CodeBlock(el)
         colspecs[i] = { pandoc.AlignLeft, width }
       end
       blocks[1].colspecs = colspecs
+      -- Banded rows. HTML gets the class and styles it in template.html; LaTeX
+      -- has no selectors, so the table is wrapped in a group that turns on
+      -- \rowcolors (see the schedulerow color in template.tex). The group keeps
+      -- the banding off every other table in the document.
+      blocks[1].attr = pandoc.Attr("", { "schedule-table" })
+      if FORMAT:match("latex") then
+        local wrapped = pandoc.List({
+          pandoc.RawBlock("latex", "\\begingroup\\rowcolors{2}{white}{schedulerow}"),
+        })
+        wrapped:extend(blocks)
+        wrapped:insert(pandoc.RawBlock("latex", "\\endgroup"))
+        return wrapped
+      end
       return blocks
     end
   end
