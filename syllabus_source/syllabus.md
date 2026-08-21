@@ -120,7 +120,9 @@ For Fall 2026, supporting texts and materials will be open-source and freely ava
 
 Slides and other reference materials are publicly available online under a Creative Commons license.
 
-Please protect the integrity of other course materials and content: as a general rule of thumb, please do not upload course materials onto third-party websites or share private content with anyone who is not enrolled in our course. If you have any questions about this, please ask.
+Please protect the integrity of other course materials and content: as a general rule of thumb, please do not upload course materials you did not create onto third-party websites, and do not share private content with anyone who is not enrolled in our course. This includes worksheets, rubrics, and any readings posted behind the Canvas login. If you have any questions about this, please ask.
+
+The work you create for this course belongs to you. I may ask you to submit some exercises publicly through the course website, and I may ask to reuse your work as an example for future classes. You can always say "no" and choose to submit your work privately (i.e. only through Canvas).
 
 
 **Content Notices**
@@ -169,10 +171,10 @@ Details TK
 
 Final grades use the following scale: A = 90–100%, B = 80–89%, C = 70–79%, D = 60–69%, and F = 59% or below.
 
-In other words, you can expect the following correspondence between your percentage grade in the course and your final letter grade, and the "equivalent" description from the registrar.
+In other words, you can expect the following correspondence between your percentage grade in the course and your final letter grade, and the "equivalent" description from the [[registrar's grading system]{.underline}](https://registrar.uic.edu/student_records/grading_system.html).
 
 | **F** | **D** | **C** | **B** | **A** |
-|:--|:--|:--|:--|:--|
+|:-------------|:-------------|:-------------|:-------------|:-------------|
 | 59% or below | 60–69% | 70–79% | 80–89% | 90–100% |
 | Failure | Poor but passing | Average | Good | Excellent |
 
@@ -194,7 +196,7 @@ Due dates will be visible in PrairieLearn (Homework Questions) or Canvas (Coding
 
 Anything submitted more than one week after the original due date will only receive 50% credit.
 
-If you anticipate any difficulty meeting a due date, contact the instructor as soon as possible.
+If you anticipate any difficulty meeting a due date, contact the instructor as soon as possible. I am often able to adjust due dates, especially if multiple people want/need an extension.
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
@@ -270,16 +272,22 @@ A related (and somewhat separate) question is whether writing notes by hand is b
 - Morehead, Dunlosky, & Rawson (2019). How much mightier is the pen than the keyboard for note-taking? A replication and extension of Mueller and Oppenheimer (2014). *Educational Psychology Review*. [doi.org/10.1007/s10648-019-09468-2](https://doi.org/10.1007/s10648-019-09468-2)
     - A replication that did not fully reproduce the benefits of handwriting: "concluding which method is superior for improving the functions of note-taking seems premature."
 
-This is one reason I am open to you taking notes on a device :-)
+This is one reason I am open to you taking notes on a tablet-like device, if you really want to :-)
 
 
-## [Academic Integrity]{.underline}
+## [Academic Integrity and Assurance of Learning]{.underline}
 
 UIC is an academic community committed to providing an environment in which research, learning, and scholarship can flourish and in which all endeavors are guided by academic and professional integrity. In this community, all members including faculty, administrators, staff, and students alike share the responsibility to uphold the highest standards of academic honesty and quality of academic work so that such a collegial and productive environment exists.
 
 As a student and member of the UIC community, you are expected to adhere to the [[Community Standards]{.underline}](https://dos.uic.edu/community-standards/) of integrity, accountability, and respect in all of your academic endeavors. When [[accusations of academic dishonesty occur]{.underline}](https://dos.uic.edu/community-standards/academic-integrity/), the Office of the Dean of Students investigates and adjudicates suspected violations of this student code. Unacceptable behavior includes cheating, unauthorized collaboration, fabrication or falsification, plagiarism, multiple submissions without instructor permission, using unauthorized study aids, coercion regarding grading or evaluation of coursework, and facilitating academic misconduct. Please review the [[UIC Student Disciplinary Policy]{.underline}](https://dos.uic.edu/wp-content/uploads/sites/262/2024/11/Student-Disciplinary-Policy-2024-1.pdf) for additional information about the process by which instances of academic misconduct are handled towards the goal of developing responsible student behavior.
 
 By submitting your assignments for grading you acknowledge these terms, you declare that your work is solely your own, and you promise that, unless authorized by the instructor or proctor, you have not communicated with anyone in any way during an exam or other online assessment.
+
+In line with UIC's mission to provide "an environment in which research, learning, and scholarship can flourish and in which all endeavors are guided by academic and professional integrity," **the work you turn in for this class must be your own work**.
+
+This is to ensure that **you** develop skills and knowledge from this course that will be valuable to you in your future courses, your career, and other areas of your life. In other words, the point is to **assure that you are learning** so that UIC fulfills its educational mission.
+
+Academic integrity also includes respecting the copyright of course materials — see "Respect for Copyright" above.
 
 This does not mean you need to complete all work in a bunker. You are encouraged to discuss your ideas with friends and classmates, and to explore related work. An important part of scholarship is standing on the shoulders of giants (and acknowledging whose shoulders we stand upon) — in other words, **cite your sources**.
 
@@ -293,17 +301,53 @@ This does not mean you need to complete all work in a bunker. You are encouraged
 
 While this class will eventually invite you to experiment with some LLM-based coding tools, we will be working up to that point. The class moves through three phases, named after CTA rail signals:
 
-- **Double red** ("stop and stay") — no AI/LLM use at all. Some concepts should be fully learned and absorbed before you reach for a tool. The first few weeks of the semester are double red, with the goal of developing a foundational understanding and discernment.
-- **Red/yellow** ("proceed with caution on main route, prepared to stop at next signal") — a specific, carefully-scoped set of tasks where AI/LLM use is allowed, but not required, for parts of an exercise. See how the tool fails, decide if and when you find it useful, and pay close attention.
-- **Double yellow** ("proceed with caution at restricted speed") — you choose where AI/LLM tools fit into your own workflow. Every use is still at reduced speed and full attention, and you should be prepared to justify it.
+### Double red — "stop and stay"
 
-Each exercise will indicate which of these three phases applies. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
+::: {.signal-aspect}
+![Two red lamps stacked vertically. CTA rulebook: "Stop and stay."](../assets/signals/signal-01-stop-stay.svg)\
+
+::: {.signal-aspect-body}
+**No AI/LLM use at all.** Some concepts should be fully learned and absorbed before you reach for a tool. The first few weeks of the semester are double red, with the goal of developing a foundational understanding and discernment.
+:::
+:::
+
+### Yellow over red — "proceed with caution, prepared to stop"
+
+::: {.signal-aspect}
+![A yellow lamp above a red lamp. CTA rulebook: "Proceed with caution on main route, prepared to stop at next signal."](../assets/signals/signal-02-caution-main.svg)\
+
+::: {.signal-aspect-body}
+**Limited, optional, specific use; use cautiously, with citation.** A specific, carefully-scoped set of tasks where AI/LLM use is allowed, but not required, for parts of an exercise. See how the tool fails, decide if and when you find it useful, and pay close attention.
+:::
+:::
+
+### Double yellow — "proceed with caution at restricted speed"
+
+::: {.signal-aspect}
+![Two yellow lamps stacked vertically. CTA rulebook: "Proceed with caution at restricted speed."](../assets/signals/signal-09-caution-restricted.svg)\
+
+::: {.signal-aspect-body}
+**You choose how to use it; use cautiously, with citation.** You choose where AI/LLM tools fit into your own workflow. Every use is still at reduced speed and full attention, and you should be prepared to justify it.
+:::
+:::
+
+Just for fun, here is [[the full set of eleven signals]{.underline}](https://dodatascience.fun/assets/signals/signals-only.pdf) from the 1973 CTA rulebook:
+
+![The eleven interlocking home signal aspects from the 1973 CTA rulebook.](../assets/signals/signals-only.png){width=100%}
+
+Each exercise will indicate which of these three phases applies. Note that use of AI/LLMs is never required. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
+
+**Citing your use of AI/LLMs.** Whenever the signal is yellow-over-red or double yellow, if you do use an AI/LLM-based tool, include a citation, and be specific:
+
+> I used [tool and version] to [what you asked it to do]. My prompt was: [prompt, or a summary if it was long]. Here is what I did with the output: [what you kept, changed, or threw away].
+
+This policy is my current best judgment as of August 2026, and it will keep evolving, maybe even during this semester. I am genuinely curious about evidence-based arguments for various different policies - if you see them, bring them to class so we can discuss!
 
 More details on the three phases, including the signal diagrams they are named after, are in the [course FAQ](https://dodatascience.fun/faq.html). See also the [CATE Teaching Guide on Creating AI Policies for Teaching and Learning](https://teaching.uic.edu/cate-teaching-guides/digital-learning/creating-ai-policies-for-teaching-and-learning/).
 
 ## [FERPA]{.underline}
 
-Federal law (FERPA) prohibits me from disclosing or discussing your grades over e-mail. Please come see me during drop-in hours or make an appointment if you want to talk about your work. I will work with TAs to try to keep grades updated in Canvas, so you can see how you are performing in class.
+Federal law (the [[Family Educational Rights and Privacy Act]{.underline}](https://registrar.uic.edu/ferpa/)) prohibits me from disclosing or discussing your grades over e-mail. Please come see me during drop-in hours or make an appointment if you want to talk about your work. I will work with TAs to try to keep grades updated in Canvas, so you can see how you are performing in class.
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
@@ -328,9 +372,9 @@ UIC is committed to full inclusion and participation of people with disabilities
 
 ## [Religious Accommodations]{.underline}
 
-I will make every effort to avoid scheduling exams or requiring student projects be submitted on religious holidays. If you wish to observe your religious holidays, please notify me by the tenth day of the semester of the date when you will be absent unless the religious holiday is observed on or before the tenth day of the semester. In such cases, please notify me or a TA as soon as possible to let me know when you will be absent.
+I will make every effort to avoid scheduling exams or requiring student projects be submitted on [[religious holidays]{.underline}](https://oae.uic.edu/religious-calendar/). If you wish to observe your religious holidays, please notify me by the tenth day of the semester of the date when you will be absent unless the religious holiday is observed on or before the tenth day of the semester. In such cases, please notify me or a TA as soon as possible to let me know when you will be absent.
 
-I will make every reasonable effort to honor your request and not penalize you for missing the class. If an examination or project is due during your absence, you will be given an exam or assignment equivalent to the one completed by those students in attendance. Students may appeal through campus grievance procedures for religious accommodations.
+I will make every reasonable effort to honor your request and not penalize you for missing the class. If an examination or project is due during your absence, you will be given an exam or assignment equivalent to the one completed by those students in attendance. Students may appeal through [[campus grievance procedures]{.underline}](https://oae.uic.edu/religious/) for religious accommodations.
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
@@ -373,7 +417,7 @@ As a student at UIC, you may experience challenges related to academics, finance
 - [[Student Guide for Information Technology]{.underline}](https://uofi.app.box.com/s/0nyho51r24yo0pivafibb1nvqogjm401) — a comprehensive resource for UIC students describing the most commonly used IT services and tools supporting your success
 - [[Navigating Health Resources at UIC]{.underline}](https://publichealthinitiatives.uic.edu/health-hub/navigating-health-resources/) — explore the many resources on campus to support students' health and wellbeing and learn about how you can access them
 
-Importantly, if you are in immediate distress, please know the UIC Counseling Center has crisis intervention services available 24 hours a day, 7 days a week. You can walk into the Counseling Center during business hours to request to talk to a crisis counselor, or you can call the Counseling Center main line at (312) 996-3490. If you are calling outside of business hours, select "2" during the automated greeting to be connected to a crisis counselor. You can find additional mental health resources and services on the [[Counseling Center website]{.underline}](https://counseling.uic.edu/) and in the [[Student's Guide to Accessing Behavioral Health Services at UIC]{.underline}](https://uofi.box.com/s/yh2aqt9sdhbkhx4xk6pkaat2ztm9nkvb). For immediate crisis support outside of UIC, call or text "9-8-8" any time, 24 hours a day, 7 days a week.
+Importantly, if you are in immediate distress, please know the UIC Counseling Center has crisis intervention services available 24 hours a day, 7 days a week. You can walk into the Counseling Center during business hours to request to talk to a crisis counselor, or you can call the Counseling Center main line at (312) 996-3490. If you are calling outside of business hours, select "2" during the automated greeting to be connected to a crisis counselor. You can find additional mental health resources and services on the [[Counseling Center website]{.underline}](https://counseling.uic.edu/) and in the [[Student's Guide to Accessing Behavioral Health Services at UIC]{.underline}](https://uofi.box.com/s/yh2aqt9sdhbkhx4xk6pkaat2ztm9nkvb). For immediate crisis support outside of UIC, call or text "9-8-8" any time, 24 hours a day, 7 days a week. Dialing 988 will connect you to a trained crisis professional, and the [[988 website]{.underline}](https://988lifeline.org/) has an online chat feature too.
 
 **The Writing Center** offers friendly and supportive tutors who can help you with reading and writing in any of your courses, not just English. For more information and to schedule an appointment, visit the [[Writing Center website]{.underline}](https://writingcenter.uic.edu/).
 

@@ -42,18 +42,20 @@ pandoc "$INPUT" \
   --from markdown+smart \
   --lua-filter "$SOURCE_DIR/schedule.lua" \
   --lua-filter "$SOURCE_DIR/underline.lua" \
+  --lua-filter "$SOURCE_DIR/signal.lua" \
   --template "$SOURCE_DIR/template.tex" \
   --pdf-engine=xelatex \
   --metadata created="$CREATED" \
   --metadata logo_pdf="$LOGO_PDF" \
   --metadata main_font="$MAIN_FONT" \
-  --resource-path "$SOURCE_DIR" \
+  --resource-path "$SOURCE_DIR:$OUTPUT_DIR" \
   -o "$OUTPUT_DIR/syllabus.pdf"
 
 pandoc "$INPUT" \
   --from markdown+smart \
   --lua-filter "$SOURCE_DIR/schedule.lua" \
   --lua-filter "$SOURCE_DIR/underline.lua" \
+  --lua-filter "$SOURCE_DIR/signal.lua" \
   --template "$SOURCE_DIR/template.html" \
   --standalone \
   --metadata created="$CREATED" \

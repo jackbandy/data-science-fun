@@ -78,6 +78,22 @@ nav: syllabus
     .syllabus-meta a { color: inherit; }
     .draft-note { margin: 0 0 1rem 0; text-align: center; font-size: 0.75rem; color: #999; }
 
+    img { max-width: 100%; height: auto; }
+    /* Signal aspects: the drawing sits beside the rule it stands for, so the
+       aspect reads first, then what it tells you to do. The hairline border
+       stands in for the signal's backing plate, which makes the lamps legible. */
+    .signal-aspect { display: flex; align-items: flex-start; gap: 1.25rem; margin: 1rem 0 1.5rem; }
+    .signal-aspect > p:first-child { flex: 0 0 130px; margin: 0; }
+    /* The escaped space that keeps pandoc from making this a figure leaves a <br>. */
+    .signal-aspect > p:first-child br { display: none; }
+    .signal-aspect img { display: block; width: 100%; height: auto; border: 1px solid #565a5c; border-radius: 2px; }
+    .signal-aspect-body > :first-child { margin-top: 0; }
+    .signal-aspect-body > :last-child { margin-bottom: 0; }
+    @media (max-width: 700px) {
+      .signal-aspect { gap: 1rem; }
+      .signal-aspect > p:first-child { flex-basis: 90px; }
+    }
+
     @media print {
       .site-masthead, .orange-line { display: none; }
       .syllabus-doc { margin: 0 auto; padding: 0; }
