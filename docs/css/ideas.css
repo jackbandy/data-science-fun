@@ -1,0 +1,136 @@
+/* NOTICE: This file was created by an LLM coding system (Claude, August 2026). */
+/* Styles for /ideas/.
+ *
+ * The page has exactly one action, so it gets exactly one filled element: the
+ * Shuffle button, in CTA Orange (#f9461c) — the same hue as the masthead rules
+ * and the site's identity. The card itself is quiet: a hairline gray rectangle
+ * with sharp corners, which frames the drawn idea without competing with the
+ * masthead's orange rules for attention.
+ *
+ * The deck is a stack: every card occupies the same grid cell so the page does
+ * not jump between draws of different lengths.
+ */
+
+:root {
+  --ideas-accent: #f9461c;
+  --ideas-rule: #d8d8d8;
+  --ideas-muted: #6b6b6b;
+}
+
+.ideas-lede {
+  color: var(--ideas-muted);
+  max-width: 46em;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+/* ── The card stack ────────────────────────────────────────────────────── */
+
+.ideas-deck {
+  display: grid;
+  margin-bottom: 28px;
+}
+
+/* All cards share one cell; the hidden ones simply do not paint. Without this
+   the stack would be as tall as the sum of every card. */
+.idea-card {
+  grid-area: 1 / 1;
+  border: 1px solid var(--ideas-rule);
+  border-radius: 0;             /* sharp corners: a card, not a chip */
+  padding: 28px 32px 26px;
+}
+
+.idea-card[hidden] {
+  display: none;
+}
+
+.idea-title {
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.idea-description {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.idea-source a {
+  color: var(--ideas-accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(249, 70, 28, 0.35);
+}
+
+.idea-source a:hover,
+.idea-source a:focus-visible {
+  border-bottom-color: var(--ideas-accent);
+}
+
+/* ── Controls ──────────────────────────────────────────────────────────── */
+
+.ideas-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.ideas-shuffle {
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #fff;
+  background: var(--ideas-accent);
+  border: none;
+  border-radius: 4px;
+  padding: 12px 28px;
+  cursor: pointer;
+}
+
+/* The die rides on the label's baseline; a hair larger than the text so it
+   reads as an icon rather than a stray character. */
+.ideas-die {
+  font-size: 1.15em;
+  line-height: 1;
+}
+
+.ideas-shuffle:hover {
+  background: #dd3a13;
+}
+
+.ideas-shuffle:focus-visible {
+  outline: 3px solid #222;
+  outline-offset: 2px;
+}
+
+.ideas-progress {
+  font-size: 0.9rem;
+  color: var(--ideas-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ideas-note {
+  font-size: 0.9rem;
+  color: var(--ideas-muted);
+  line-height: 1.5;
+}
+
+.ideas-note a {
+  color: inherit;
+}
+
+/* A short cross-fade marks that the card changed; anyone who has asked their OS
+   for less motion just gets the swap. */
+@media (prefers-reduced-motion: no-preference) {
+  .idea-card {
+    animation: idea-in 220ms ease-out;
+  }
+  @keyframes idea-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+}

@@ -1,0 +1,48 @@
+---
+layout: default
+title: Idea Shuffle
+description: One study at a time, drawn at random.
+extra_css:
+  - /css/ideas.css
+---
+<!-- NOTICE: This file was modified by an LLM coding system (Claude, August 2026). -->
+{%- comment -%}
+  Every idea is rendered here at build time from _data/ideas.json and hidden with
+  the `hidden` attribute; js/ideas.js reveals one at a time. Rendering them all
+  server-side means the page works with scripting off (the first card shows) and
+  the shuffle never waits on a fetch.
+{%- endcomment -%}
+
+<h1>Idea Shuffle</h1>
+
+<p class="ideas-lede">
+  {{ site.data.ideas.ideas | size }} studies, shown one at a
+  time, drawn at random. May be helpful for a project topic, a discussion prompt, or a side quest.
+</p>
+
+<div class="ideas-deck" id="ideas-deck">
+{% for idea in site.data.ideas.ideas %}
+  <article class="idea-card" data-index="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+    <h2 class="idea-title">{{ idea.title }}</h2>
+    <p class="idea-description">{{ idea.description }}</p>
+    <p class="idea-source">
+      <a href="{{ idea.source }}" target="_blank" rel="noopener">{{ idea.source_label | default: idea.source }}</a>
+    </p>
+  </article>
+{% endfor %}
+</div>
+
+<div class="ideas-controls">
+  <button id="ideas-shuffle" type="button" class="ideas-shuffle">
+    <span class="ideas-die" aria-hidden="true">🎲</span> Another Idea
+  </button>
+  <p class="ideas-progress" id="ideas-progress" aria-live="polite"></p>
+</div>
+
+<p class="ideas-note">
+  The deck lives in
+  <a href="https://github.com/jackbandy/data-science-fun/blob/main/docs/_data/ideas.json"><code>docs/_data/ideas.json</code></a>
+  (edits there show up here - contributions welcome)
+</p>
+
+<script src="{{ '/js/ideas.js' | relative_url }}" defer></script>

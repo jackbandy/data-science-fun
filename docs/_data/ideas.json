@@ -1,0 +1,238 @@
+{
+  "ideas": [
+    {
+      "title": "Same Stats, Different Graphs",
+      "description": "Matejka and Fitzmaurice built the Datasaurus Dozen: twelve wildly different scatterplots that share the same mean, standard deviation, and correlation to two decimal places.",
+      "source": "https://www.autodesk.com/research/publications/same-stats-different-graphs",
+      "source_label": "Matejka & Fitzmaurice, CHI 2017"
+    },
+    {
+      "title": "Anscombe's Quartet",
+      "description": "A 1973 note thatshowed four datasets with the same means, variances, regression line, and R-squared, and four completely different stories once visualized.",
+      "source": "https://doi.org/10.1080/00031305.1973.10478966",
+      "source_label": "Anscombe, The American Statistician, 1973"
+    },
+    {
+      "title": "Gender Shades",
+      "description": "Buolamwini and Gebru audited three commercial gender-classification APIs and found error rates up to 34.7% for darker-skinned women versus 0.8% for lighter-skinned men (aggregated accuracy metrics had hid the discrepancies).",
+      "source": "https://proceedings.mlr.press/v81/buolamwini18a.html",
+      "source_label": "Buolamwini & Gebru, FAccT / PMLR 81, 2018"
+    },
+    {
+      "title": "A Biased Health Care Algorithm",
+      "description": "Obermeyer et al. showed that an algorithm used on millions of patients ''falsely concludes that Black patients are healthier than equally sick White patients'' (largely because it was based on predicting health costs).",
+      "source": "https://doi.org/10.1126/science.aax2342",
+      "source_label": "Obermeyer et al., Science, 2019"
+    },
+    {
+      "title": "Many Analysts, One Dataset",
+      "description": "Silberzahn et al. gave 29 teams one dataset and one question — are soccer referees more likely to give red cards to dark-skinned players? Effect sizes ranged from 0.89 to 2.93; 20 teams found a significant effect and 9 did not.",
+      "source": "https://doi.org/10.1177/2515245917747646",
+      "source_label": "Silberzahn et al., AMPPS, 2018"
+    },
+    {
+      "title": "The Parable of Google Flu",
+      "description": "At its worst, Google Flu Trends overestimated doctor-visit rates by more than double",
+      "source": "https://doi.org/10.1126/science.1248506",
+      "source_label": "Lazer, Kennedy, King & Vespignani, Science, 2014"
+    },
+    {
+      "title": "Sex Bias in Graduate Admissions",
+      "description": "A canonical example of Simpson's paradox: Berkeley's 1973 admissions looked biased against women in aggregate, but the aggregate was driven by which departments women applied to.",
+      "source": "https://doi.org/10.1126/science.187.4175.398",
+      "source_label": "Bickel, Hammel & O'Connell, Science, 1975"
+    },
+    {
+      "title": "Inherent Trade-Offs in Fair Risk Scores",
+      "description": "Three common fairness conditions are mathematically incompatible.",
+      "source": "https://arxiv.org/abs/1609.05807",
+      "source_label": "Kleinberg, Mullainathan & Raghavan, ITCS 2017 (arXiv 2016)"
+    },
+    {
+      "title": "Machine Bias (COMPAS)",
+      "description": "ProPublica's investigation of the COMPAS risk score, and the parallel discussion around equal false-positive rates versus equal predictive value as validation tests.",
+      "source": "https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing",
+      "source_label": "Angwin, Larson, Mattu & Kirchner, ProPublica, 2016"
+    },
+    {
+      "title": "Reproducibility in Psychology",
+      "description": "270 authors replicated 100 psychology studies. 97% of the originals reported significant results; 36% of the replications did, and mean effect sizes fell by about half.",
+      "source": "https://doi.org/10.1126/science.aac4716",
+      "source_label": "Open Science Collaboration, Science, 2015"
+    },
+    {
+      "title": "Datasheets for Datasets",
+      "description": "Gebru et al. propose a standard documentation record for datasets, based on datasheets for electronic components.",
+      "source": "https://doi.org/10.1145/3458723",
+      "source_label": "Gebru et al., CACM, 2021"
+    },
+    {
+      "title": "Model Cards for Model Reporting",
+      "description": "Mitchell et al. propose short accompanying documents that report model performance, along with intended use and out-of-scope use.",
+      "source": "https://doi.org/10.1145/3287560.3287596",
+      "source_label": "Mitchell et al., FAccT 2019"
+    },
+    {
+      "title": "The MusicLab Experiment",
+      "description": "A classic. Salganik, Dodds, and Watts ran 14,341 participants through parallel artificial music markets. Songs in worlds that showed download counts became both more unequal and less predictable — the same song was a hit in one world and a flop in another.",
+      "source": "https://doi.org/10.1126/science.1121066",
+      "source_label": "Salganik, Dodds & Watts, Science, 2006"
+    },
+    {
+      "title": "The Vocabulary Problem",
+      "description": "In this study, Furnas and colleagues analyzed spontaneous word choice for objects in five different contexts. They found the probability that two people would favor the same term for an object was less than 20%.",
+      "source": "https://doi.org/10.1145/32206.32212",
+      "source_label": "Furnas, Landauer, Gomez & Dumais, CACM, 1987"
+    },
+    {
+      "title": "Algorithmic Amplification of Politics on Twitter",
+      "description": "A rare 'counterfactual' audit, done from inside the company, in which millions of Twitter users were given reverse-chronological timelines instead of  algorithmically-ranked feeds.",
+      "source": "https://doi.org/10.1073/pnas.2025334119",
+      "source_label": "Huszár et al., PNAS, 2021"
+    },
+    {
+      "title": "Exposure to Diverse News on Facebook",
+      "description": "Bakshy, Messing, and Adamic analyzed the 'filter bubble' into three stages for 10.1 million Facebook users: who your friends are, what the ranking algorithm shows you, and what you click.",
+      "source": "https://doi.org/10.1126/science.aaa1160",
+      "source_label": "Bakshy, Messing & Adamic, Science, 2015"
+    },
+    {
+      "title": "Collaboration and Creativity: The Small World Problem",
+      "description": "Uzzi and Spiro reconstructed the network of everyone who wrote, directed, choreographed, or produced a Broadway musical from 1945 to 1989. The relationship to artistic / financial success was an inverted U: with too little connection, good ideas never travel, but with too much, everyone converges.",
+      "source": "https://doi.org/10.1086/432782",
+      "source_label": "Uzzi & Spiro, American Journal of Sociology, 2005"
+    },
+    {
+      "title": "The Spread of True and False News Online",
+      "description": "Vosoughi, Roy, and Aral tracked about 126,000 verified true and false stories as they moved through 3 million people on Twitter. False stories reached more people, spread faster, and went deeper into the network(s).",
+      "source": "https://doi.org/10.1126/science.aap9559",
+      "source_label": "Vosoughi, Roy & Aral, Science, 2018"
+    },
+    {
+      "title": "Can Cascades Be Predicted?",
+      "description": "Given a cascade/domino/viral effect that has already reached size k, can you predict if it will reach 2k?",
+      "source": "https://doi.org/10.1145/2566486.2567997",
+      "source_label": "Cheng, Adamic, Dow, Kleinberg & Leskovec, WWW 2014"
+    },
+    {
+      "title": "Systematic Inequality in Faculty Hiring",
+      "description": "Clauset, Arbesman, and Larremore mapped 16,000 faculty placements as a directed network and recovered a steep prestige hierarchy: a quarter of institutions produce roughly 71–86% of all tenure-track faculty.",
+      "source": "https://doi.org/10.1126/sciadv.1400005",
+      "source_label": "Clauset, Arbesman & Larremore, Science Advances, 2015"
+    },
+    {
+      "title": "Asking About Social Circles",
+      "description": "Galesic et al. improved election forecasts by asking respondents not only how they intended to vote, but also how the people around them would vote. The social-circle question was more effective than the own-intention question in US and French samples.",
+      "source": "https://doi.org/10.1038/s41562-018-0302-y",
+      "source_label": "Galesic, Bruine de Bruin, Dumas, Kapteyn, Darling & Meijer, Nature Human Behaviour, 2018"
+    },
+    {
+      "title": "Quantifying Reputation and Success in Art",
+      "description": "TK",
+      "source": "https://doi.org/10.1126/science.aau7224",
+      "source_label": "Fraiberger, Sinatra, Resch, Riedl & Barabási, Science, 2018"
+    },
+    {
+      "title": "Scale-Free Networks Are Rare",
+      "description": "TK",
+      "source": "https://doi.org/10.1038/s41467-019-08746-5",
+      "source_label": "Broido & Clauset, Nature Communications, 2019"
+    },
+    {
+      "title": "Do Women Suffer from Network Closure?",
+      "description": "TK",
+      "source": "https://doi.org/10.1177/0003122414568788",
+      "source_label": "Lutter, American Sociological Review, 2015"
+    },
+    {
+      "title": "The Structural Virality of Online Diffusion",
+      "description": "TK",
+      "source": "https://doi.org/10.1287/mnsc.2015.2158",
+      "source_label": "Goel, Anderson, Hofman & Watts, Management Science, 2016"
+    },
+    {
+      "title": "Lost in Propagation? Unfolding News Cycles from the Source",
+      "description": "TK",
+      "source": "https://doi.org/10.1609/icwsm.v10i1.14712",
+      "source_label": "Tan, Friggeri & Adamic, ICWSM 2016"
+    },
+    {
+      "title": "Message Distortion in Information Cascades",
+      "description": "TK",
+      "source": "https://doi.org/10.1145/3308558.3313531",
+      "source_label": "Horta Ribeiro, Gligorić & West, WWW 2019"
+    },
+    {
+      "title": "Partisan Differences in the Consumption of Science",
+      "description": "TK",
+      "source": "https://doi.org/10.1038/s41562-017-0079",
+      "source_label": "Shi, Shi, Dokshin, Evans & Macy, Nature Human Behaviour, 2017"
+    },
+    {
+      "title": "The Social Silos of Journalism?",
+      "description": "TK",
+      "source": "https://doi.org/10.1177/1461444818807133",
+      "source_label": "Wihbey, Joseph & Lazer, New Media & Society, 2019"
+    },
+    {
+      "title": "Collaborative Learning in Networks",
+      "description": "TK",
+      "source": "https://doi.org/10.1073/pnas.1110069108",
+      "source_label": "Mason & Watts, PNAS, 2011"
+    },
+    {
+      "title": "Network Dynamics of Social Influence in the Wisdom of Crowds",
+      "description": "TK",
+      "source": "https://doi.org/10.1073/pnas.1615978114",
+      "source_label": "Becker, Brackbill & Centola, PNAS, 2017"
+    },
+    {
+      "title": "Cross-Cultural Video Consumption on YouTube",
+      "description": "TK",
+      "source": "https://doi.org/10.1371/journal.pone.0177865",
+      "source_label": "Park, Park, Baek & Macy, PLOS ONE, 2017"
+    },
+    {
+      "title": "Tipping Points in Social Convention",
+      "description": "TK",
+      "source": "https://doi.org/10.1126/science.aas8827",
+      "source_label": "Centola, Becker, Brackbill & Baronchelli, Science, 2018"
+    },
+    {
+      "title": "The Spontaneous Emergence of Conventions",
+      "description": "TK",
+      "source": "https://doi.org/10.1073/pnas.1418838112",
+      "source_label": "Centola & Baronchelli, PNAS, 2015"
+    },
+    {
+      "title": "Game Changer: The Topology of Creativity",
+      "description": "TK",
+      "source": "https://doi.org/10.1086/681213",
+      "source_label": "de Vaan, Vedres & Stark, American Journal of Sociology, 2015"
+    },
+    {
+      "title": "Structure and Inference in Annotated Networks",
+      "description": "TK",
+      "source": "https://doi.org/10.1038/ncomms11863",
+      "source_label": "Newman & Clauset, Nature Communications, 2016"
+    },
+    {
+      "title": "Gender Composition and Women's Leadership Success",
+      "description": "TK",
+      "source": "https://doi.org/10.1073/pnas.1721438116",
+      "source_label": "Yang, Chawla & Uzzi, PNAS, 2019"
+    },
+    {
+      "title": "Opinion Cascades and the Unpredictability of Polarization",
+      "description": "TK",
+      "source": "https://doi.org/10.1126/sciadv.aax0754",
+      "source_label": "Macy, Deri, Ruch & Tong, Science Advances, 2019"
+    },
+    {
+      "title": "Everyone's an Influencer: Quantifying Influence on Twitter",
+      "description": "TK",
+      "source": "https://doi.org/10.1145/1935826.1935845",
+      "source_label": "Bakshy, Hofman, Mason & Watts, WSDM 2011"
+    }
+  ]
+}
