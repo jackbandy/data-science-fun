@@ -1,0 +1,293 @@
+/* NOTICE: This file was created by an LLM coding system (Claude, August 2026). */
+/* Styles for /obscure-films/.
+ *
+ * One accent — CTA Orange Line #f9461c — the same color as the masthead rules
+ * and the site's identity. Every bar is the same hue because this is a single
+ * series: the bar *height* (log total votes) encodes magnitude and the gate
+ * *selection* encodes emphasis (in-range bars read full strength, out-of-range
+ * bars fade). See js/obscure-films.js for the reasoning.
+ */
+
+:root {
+  --obscure-accent: #f9461c;
+  --obscure-accent-wash: #fdece7;
+  --obscure-rule: #d8d8d8;
+  --obscure-muted: #6b6b6b;
+  --obscure-ink: #222;
+}
+
+/* ── Chart ─────────────────────────────────────────────────────────────── */
+
+.obscure-plot {
+  position: relative;
+  margin: 8px 0 20px;
+  min-height: 240px;            /* hold layout while the data loads */
+}
+
+.obscure-plot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  touch-action: none;           /* gate dragging owns the gestures on the chart */
+}
+
+.obscure-loading {
+  color: var(--obscure-muted);
+  font-style: italic;
+  padding: 40px 0;
+}
+
+.obscure-error {
+  color: #c60c30;
+  padding: 40px 0;
+}
+
+/* Recessive axes and labels — the marks carry the signal, not the chrome. */
+.obscure-axis line,
+.obscure-axis path {
+  stroke: var(--obscure-rule);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.obscure-axis text {
+  fill: var(--obscure-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.obscure-axis.obscure-tick {
+  stroke: var(--obscure-muted);
+}
+/* Minor 1% step ticks are shorter and fainter than the labeled decade ticks. */
+.obscure-axis.obscure-tick-minor {
+  stroke: var(--obscure-rule);
+}
+
+.obscure-caption {
+  fill: var(--obscure-muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* The bars. In-range: solid accent. Out-of-range: the same hue faded, so the
+   selected span reads as the figure and the rest recedes as ground. */
+.obscure-bar {
+  fill: var(--obscure-accent);
+  transition: fill-opacity 120ms linear;
+}
+.obscure-bar-in  { fill-opacity: 1; }
+.obscure-bar-out { fill-opacity: 0.14; }
+
+.obscure-span-wash {
+  fill: var(--obscure-accent-wash);
+}
+
+/* Full-column transparent hit targets for the tooltips. */
+.obscure-hit {
+  fill: transparent;
+  cursor: default;
+}
+
+/* ── Gates ─────────────────────────────────────────────────────────────── */
+
+.obscure-gate {
+  cursor: grab;
+  outline: none;
+}
+.obscure-gate:active {
+  cursor: grabbing;
+}
+.obscure-gate:focus-visible .obscure-gate-tab {
+  stroke: var(--obscure-ink);
+  stroke-width: 2;
+}
+
+/* Wide transparent strip so the gate is easy to grab, not just the 2px line. */
+.obscure-gate-hit {
+  fill: transparent;
+}
+
+.obscure-gate-line {
+  stroke: var(--obscure-accent);
+  stroke-width: 2.5;
+}
+
+.obscure-gate-tab {
+  fill: var(--obscure-accent);
+}
+
+.obscure-gate-label {
+  fill: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Tooltip (HTML, positioned over the chart by script) ───────────────── */
+
+.obscure-tooltip {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 90ms linear;
+  transform: translate(-50%, -100%);
+  background: var(--obscure-ink);
+  color: #fff;
+  border-radius: 3px;
+  padding: 6px 9px;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+.obscure-tooltip[data-visible="true"] {
+  opacity: 1;
+}
+
+/* ── Controls ──────────────────────────────────────────────────────────── */
+
+.obscure-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 24px 0 8px;
+}
+
+.obscure-range-readout {
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+.obscure-range-readout span {
+  font-weight: 700;
+  color: var(--obscure-accent);
+}
+
+#obscure-sample {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 4px;
+  background: var(--obscure-accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 120ms linear;
+}
+#obscure-sample:hover:not(:disabled) {
+  background: #c83214;
+}
+#obscure-sample:disabled {
+  background: #d8d8d8;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+/* ── Gallery ──────────────────────────────────────────────────────────── */
+
+.obscure-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+.obscure-card {
+  border: 1px solid var(--obscure-rule);
+  border-radius: 0;
+  padding: 14px 16px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.obscure-card h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.obscure-card-meta {
+  font-size: 0.82rem;
+  color: var(--obscure-muted);
+  margin: 0;
+}
+
+.obscure-card-stats {
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--obscure-ink);
+  margin: 0;
+}
+
+.obscure-card-stats-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 2px 0 4px;
+}
+
+/* The percentile this film sits at — accented so it reads as the headline fact. */
+.obscure-card-pct {
+  color: var(--obscure-accent);
+  font-weight: 700;
+}
+
+.obscure-card-link {
+  margin-top: 4px;
+  align-self: flex-start;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--obscure-accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--obscure-accent);
+}
+.obscure-card-link:hover {
+  color: #c83214;
+  border-bottom-color: #c83214;
+}
+
+/* ── Footnote ──────────────────────────────────────────────────────────── */
+
+.obscure-note {
+  color: var(--obscure-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-top: 24px;
+}
+.obscure-note a {
+  color: var(--obscure-accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--obscure-accent);
+}
+.obscure-note a:hover {
+  color: #c83214;
+  border-bottom-color: #c83214;
+}
+.obscure-note code {
+  background: #f3f3f3;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 0.82em;
+}
+
+@media (max-width: 540px) {
+  .obscure-gallery {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .obscure-card {
+    padding: 10px 12px;
+  }
+}

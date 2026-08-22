@@ -66,6 +66,9 @@ exclude:
   # layout-less public page and list it in sitemap.xml.
   - assets/*.md
   - assets/**/*.md
+  # Obscure Films source notes (the published page is index.html; the README
+  # stays source-only, same reason as the assets notes above).
+  - obscure-films/*.md
   # Local Jekyll tooling, never part of the site
   - Gemfile
   - Gemfile.lock

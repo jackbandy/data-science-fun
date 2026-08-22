@@ -1,0 +1,43 @@
+---
+layout: default
+title: Obscure Films
+description: A percentile view of IMDb films by vote count — drag the gates to pick a popularity range, then sample eight films from it.
+extra_css:
+  - /css/obscure-films.css
+---
+<!-- NOTICE: This file was created by an LLM coding system (Claude, August 2026). -->
+
+<h1>Obscure Films</h1>
+
+<p>
+  Every film IMDb users have rated, sorted by how many votes it has (most popular on the left, most obscure on the right). The
+  most-voted 0.1% and the least-voted 0.1% are set aside. Each bar is the total number of votes cast for the
+  films in that 1% band. Drag the two gates to choose a range, then sample eight films from it.
+</p>
+
+<div id="obscure-chart" class="obscure-plot obscure-loading"
+     data-src="{{ '/obscure-films/data/obscure-films.json' | relative_url }}"
+     role="img" aria-label="Bar chart of total IMDb votes by popularity percentile">
+  Loading film data…
+</div>
+
+<div class="obscure-controls">
+  <p class="obscure-range-readout">
+    Range <span id="obscure-range-label">0.1% – 99.9%</span> ·
+    <span id="obscure-count">—</span> films in range
+  </p>
+  <button id="obscure-sample" type="button" disabled>Sample films</button>
+</div>
+
+<div id="obscure-gallery" class="obscure-gallery" aria-live="polite"></div>
+
+<p class="obscure-note">
+  Data is IMDb's public <code>title.ratings</code> snapshot
+  (<span id="obscure-generated">—</span>) —
+  <span id="obscure-total">—</span> rated films. The pool the page samples from is a stratified ~50-film
+  draw per 1% band, rebuilt by
+  <a href="https://github.com/jackbandy/data-science-fun/blob/main/datasets/movies-from-imdb/build_obscure.py">a
+  script</a>. IMDb data is for personal, non-commercial use.
+</p>
+
+<script src="{{ '/js/obscure-films.js' | relative_url }}" defer></script>
