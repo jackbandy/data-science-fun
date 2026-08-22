@@ -195,6 +195,115 @@ $$P(A \mid B) = \frac{n(A \cap B)}{n(B)} = \frac{28}{49} = \frac{4}{7}$$
 
 ---
 
+# Bayes Basics {.smaller}
+
+::: {.caption}
+Lifetime risks from Villeneuve & Mao (1994); attribution figure from the [CDC](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
+:::
+
+**Example:** Consider two events about a randomly chosen adult. **A** = the adult develops lung cancer &nbsp;&nbsp; **B** = the adult smokes cigarettes
+
+:::: {.columns}
+
+::: {.column width="48%"}
+::: {.fragment}
+$$P(A \mid B)$$
+:::
+
+::: {.fragment}
+"Among adults who smoke cigarettes, how many develop lung cancer?"
+:::
+
+::: {.fragment}
+Between 1 in 9 and 1 in 6 current smokers, (116–172 per 1,000, depending on the cohort).
+:::
+
+::: {.fragment}
+Most smokers never develop lung cancer.
+:::
+:::
+
+::: {.column width="52%"}
+
+::: {.fragment}
+$$P(B \mid A)$$
+:::
+
+::: {.fragment}
+Among people with lung cancer, how many smoked?
+:::
+
+::: {.fragment}
+**About 8 in 10** ("cigarette smoking is linked to about 80% of lung cancer deaths")
+:::
+
+::: {.fragment}
+Most cases of lung cancer trace back to smoking.
+:::
+:::
+
+::::
+
+::: {.fragment}
+<div style="border-radius:8px; padding:8px 16px; text-align:center; margin-top:0.3em;">
+<span class="eyebrow" style="color:#fff;">TAKEAWAY</span> &nbsp;&nbsp; <span style="font-weight:bold; font-size:1.1em;">P(A | B) &ne; P(B | A)</span>
+</div>
+:::
+
+
+
+---
+
+# Example: A Test That Is 99% Accurate {.image-frame-slide}
+
+<img src="../assets/bayes-diagnostic/01-bayes-diagnostic.svg" alt="A grid of 1,000 small gray dots, one per person, captioned '1,000 people'">
+
+::: {.caption}
+Diagnostic-test walkthrough adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
+:::
+
+---
+
+# One Person in a Thousand Is Sick {.image-frame-slide}
+
+<img src="../assets/bayes-diagnostic/02-bayes-diagnostic.svg" alt="The same grid of 1,000 dots with exactly one dot colored red, captioned '0.1% carry the disease (1 person)'">
+
+::: {.caption}
+Diagnostic-test walkthrough adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
+:::
+
+---
+
+# Test Everyone {.image-frame-slide}
+
+<img src="../assets/bayes-diagnostic/03-bayes-diagnostic.svg" alt="The grid with the one red dot plus ten dots darkened, captioned 'a test with 99% accuracy returns 11 positives'">
+
+::: {.caption}
+1% of the 999 healthy people test positive anyway — about 10 false positives, alongside the 1 true positive.
+:::
+
+---
+
+# Who Are the 11? {.image-frame-slide}
+
+<img src="../assets/bayes-diagnostic/04-bayes-diagnostic.svg" alt="The 11 positive dots labeled individually: one red dot marked 'true +' and ten dark dots each marked 'false +'. Caption: 11 people test positive, only 1 has the disease">
+
+::: {.caption}
+Diagnostic-test walkthrough adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
+:::
+
+---
+
+# You Tested Positive. Now What? {.image-frame-slide}
+
+<img src="../assets/bayes-diagnostic/05-bayes-diagnostic.svg" alt="Just the 11 positives, one red and ten dark, captioned 'testing positive: only a 1-in-11 (~9%) chance'">
+
+::: {.caption}
+$P(\text{positive} \mid \text{sick}) = 99\%$, but $P(\text{sick} \mid \text{positive}) \approx 9\%$. The rest of this section is how to get from one to the other.
+:::
+
+---
+
 # Bayes' Theorem
 
 Conditional probabilities can be reversed using Bayes' theorem, which provides a systematic method for expressing one conditional probability in terms of another.
@@ -202,6 +311,81 @@ Conditional probabilities can be reversed using Bayes' theorem, which provides a
 $$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
 
 $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
+
+---
+
+# Bayes' Theorem: An Example {.smaller}
+
+**Example:** What are the odds that Charli will have lung cancer, given that Charli smokes cigarettes?
+
+:::: {.columns}
+
+::: {.column width="48%"}
+
+::: {.fragment}
+**A** = Charli has lung cancer \n **B** = Charli smokes a pack every day
+:::
+
+::: {.fragment}
+$$P(B \mid A) = 0.90$$
+Suppose 90% of people with lung cancer smoked
+:::
+
+::: {.fragment}
+$$P(A) = 0.04$$
+Suppose 4% of adults develop lung cancer
+:::
+
+::: {.fragment}
+$$P(B) = 0.24$$
+Suppose 24% of adults smoke cigarettes
+:::
+
+::: {.fragment}
+*We want* $P(A \mid B)$ *— cancer given smoking.*
+:::
+:::
+
+::: {.column width="52%"}
+[SOLUTION]{.eyebrow}
+
+::: {.fragment}
+$$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
+:::
+
+::: {.fragment}
+$$P(A \mid B) = \frac{(0.90)(0.04)}{0.24}$$
+:::
+
+::: {.fragment}
+$$P(A \mid B) = \frac{0.036}{0.24} = 0.15$$
+:::
+
+::: {.fragment}
+<div style="border-radius:8px; padding:8px 16px; text-align:center; margin-top:0.3em;">
+<span class="eyebrow" style="color:#fff;">ANSWER</span> &nbsp;&nbsp; <span style="font-weight:bold; font-size:1.1em;">P(A | B) = 15%</span>
+</div>
+:::
+
+::: {.fragment}
+P(B) was given in this case, but it can also be expanded:
+$$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
+:::
+:::
+
+::::
+
+
+
+---
+
+# Bayes' Law
+
+::: {style="display:flex; align-items:center; justify-content:center; min-height:60vh;"}
+::: {style="font-size:2em;"}
+$$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
+:::
+:::
 
 ---
 
@@ -787,3 +971,6 @@ Jack Bandy
 7. Richard McElreath, *[Statistical Rethinking: A Bayesian Course with Examples in R and Stan](https://xcelab.net/rm/statistical-rethinking/)*, 2nd ed., Chapman and Hall/CRC, 2020.
 8. Coin toss photo by ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).
 9. Bradley Efron, ["Why Isn't Everyone a Bayesian?"](https://doi.org/10.1080/00031305.1986.10475342), *The American Statistician* 40(1), 1986, pp. 1–5.
+10. The diagnostic-test walkthrough (1,000 people, a 99% accurate test, 11 positives) is adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
+11. Paul J. Villeneuve and Yang Mao, ["Lifetime probability of developing lung cancer, by smoking status, Canada"](https://pubmed.ncbi.nlm.nih.gov/7895211/), *Canadian Journal of Public Health* 85(6), 1994, pp. 385–388.
+12. CDC, ["Risk Factors for Lung Cancer"](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
