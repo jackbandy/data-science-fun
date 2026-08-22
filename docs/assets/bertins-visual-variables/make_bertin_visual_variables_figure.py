@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import base64
 import colorsys
+from math import cos, pi, sin
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -179,69 +180,121 @@ def draw_size(x, y, w, h) -> list[str]:
     return out
 
 
+# The eight silhouettes in the "Shape" row are the shapes from ../abstraction:
+# the five in 0-shapes.svg (star, square, teardrop, broccoli, lightning), then
+# three more read off 2-wiki-fandom-abstract.jpeg -- the green isosceles
+# mountain, the blue dome, and the navy hook. Drawn in ink only: the row is
+# about outline, so borrowing their colours would smuggle in a second variable.
+# Each builder centres on (cx, cy) and stands 2 * r tall, so height is held
+# constant and only the outline varies.
+
+
+def _shape_star(cx, cy, r) -> str:
+    """Eight-spike starburst -- the yellow star."""
+    inner = r * 0.29
+    verts = []
+    for index in range(16):
+        radius = r if index % 2 == 0 else inner
+        angle = -pi / 2 + index * pi / 8
+        verts.append((cx + radius * cos(angle), cy + radius * sin(angle)))
+    return polygon(verts)
+
+
+def _shape_square(cx, cy, r) -> str:
+    """The red square."""
+    side = r * 1.6
+    return rect(cx - side / 2, cy - side / 2, side, side, rx=3)
+
+
+def _shape_teardrop(cx, cy, r) -> str:
+    """Round on top, drawn to a point at the bottom."""
+    radius = r * 0.755
+    base = cy + r
+    top = base - radius * 1.65  # centre of the round top
+    return (
+        f'  <path d="M {cx:.1f},{base:.1f} '
+        f'C {cx - radius * 0.72:.1f},{top + radius * 0.85:.1f} '
+        f'{cx - radius:.1f},{top + radius * 0.45:.1f} {cx - radius:.1f},{top:.1f} '
+        f'A {radius:.1f},{radius:.1f} 0 1 1 {cx + radius:.1f},{top:.1f} '
+        f'C {cx + radius:.1f},{top + radius * 0.45:.1f} '
+        f'{cx + radius * 0.72:.1f},{top + radius * 0.85:.1f} {cx:.1f},{base:.1f} Z" '
+        f'fill="{INK}"/>'
+    )
+
+
+def _shape_broccoli(cx, cy, r) -> str:
+    """Three circular bulges over a short stem."""
+    radius = r * 0.53
+    base = cy + r
+    stem_len = radius * 1.15
+    head_cy = base - stem_len - radius
+    parts = [
+        f'  <circle cx="{cx + dx * radius:.1f}" cy="{head_cy + dy * radius:.1f}" '
+        f'r="{radius:.1f}" fill="{INK}"/>'
+        for dx, dy in ((-0.95, 0.0), (0.0, -0.62), (0.95, 0.0))
+    ]
+    parts.append(
+        rect(cx - radius / 2, head_cy, radius, stem_len + radius, rx=2)
+    )
+    return "\n".join(parts)
+
+
+def _shape_lightning(cx, cy, r) -> str:
+    """Zigzag bolt with a wide shoulder and a tapered tail."""
+    height, width = 2 * r, r * 1.306
+    verts = [
+        (0.10, -0.50), (-0.45, 0.02), (-0.05, 0.02),
+        (-0.30, 0.50), (0.45, -0.10), (0.02, -0.10), (0.42, -0.50),
+    ]
+    return polygon([(cx + fx * width, cy + fy * height) for fx, fy in verts])
+
+
+def _shape_triangle(cx, cy, r) -> str:
+    """The green isosceles mountain."""
+    return polygon([(cx, cy - r), (cx + r * 0.82, cy + r), (cx - r * 0.82, cy + r)])
+
+
+def _shape_dome(cx, cy, r) -> str:
+    """The blue blob: a flat base under a full round top."""
+    half = r * 0.95
+    base = cy + r
+    return (
+        f'  <path d="M {cx - half:.1f},{base:.1f} H {cx + half:.1f} '
+        f'A {half:.1f},{2 * r:.1f} 0 0 0 {cx - half:.1f},{base:.1f} Z" '
+        f'fill="{INK}"/>'
+    )
+
+
+def _shape_hook(cx, cy, r) -> str:
+    """The navy crook -- the one open, stroked outline in the set."""
+    return (
+        f'  <path d="M {cx - r * 0.5:.1f},{cy + r:.1f} V {cy:.1f} '
+        f'C {cx - r * 0.5:.1f},{cy - r * 1.25:.1f} '
+        f'{cx + r * 0.55:.1f},{cy - r * 1.25:.1f} {cx + r * 0.55:.1f},{cy:.1f} '
+        f'V {cy + r * 0.35:.1f}" fill="none" stroke="{INK}" '
+        f'stroke-width="{r * 0.42:.1f}" stroke-linecap="round"/>'
+    )
+
+
+SHAPES = [
+    _shape_star,
+    _shape_square,
+    _shape_teardrop,
+    _shape_broccoli,
+    _shape_lightning,
+    _shape_triangle,
+    _shape_dome,
+    _shape_hook,
+]
+
+
 def draw_shape(x, y, w, h) -> list[str]:
-    """Eight silhouettes at a constant area, so only outline varies."""
+    """Eight silhouettes at a constant height, so only outline varies."""
     size = 34
     cy = y + h / 2
-    out = []
-    for index, left in enumerate(spread(x, w, 8, size)):
-        cx = left + size / 2
-        r = size / 2
-        if index == 0:  # cross
-            arm = r * 0.42
-            out.append(
-                polygon(
-                    [
-                        (cx - arm, cy - r), (cx + arm, cy - r), (cx + arm, cy - arm),
-                        (cx + r, cy - arm), (cx + r, cy + arm), (cx + arm, cy + arm),
-                        (cx + arm, cy + r), (cx - arm, cy + r), (cx - arm, cy + arm),
-                        (cx - r, cy + arm), (cx - r, cy - arm), (cx - arm, cy - arm),
-                    ]
-                )
-            )
-        elif index == 1:  # octagon
-            out.append(polygon(_regular(cx, cy, r, 8, 22.5)))
-        elif index == 2:  # triangle
-            out.append(polygon([(cx, cy - r), (cx + r, cy + r * 0.8), (cx - r, cy + r * 0.8)]))
-        elif index == 3:  # parallelogram
-            out.append(
-                polygon(
-                    [
-                        (cx - r * 0.4, cy - r * 0.7), (cx + r, cy - r * 0.7),
-                        (cx + r * 0.4, cy + r * 0.7), (cx - r, cy + r * 0.7),
-                    ]
-                )
-            )
-        elif index == 4:  # ellipse
-            out.append(
-                f'  <ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{r * 0.78:.1f}" '
-                f'ry="{r:.1f}" fill="{INK}"/>'
-            )
-        elif index == 5:  # hexagon
-            out.append(polygon(_regular(cx, cy, r, 6, 0)))
-        elif index == 6:  # pentagon
-            out.append(polygon(_regular(cx, cy, r, 5, 0)))
-        else:  # trapezoid
-            out.append(
-                polygon(
-                    [
-                        (cx - r, cy - r * 0.75), (cx + r, cy - r * 0.75),
-                        (cx + r * 0.45, cy + r * 0.75), (cx - r * 0.45, cy + r * 0.75),
-                    ]
-                )
-            )
-    return out
-
-
-def _regular(cx, cy, r, sides, rotation_degrees) -> list[tuple[float, float]]:
-    from math import cos, radians, sin
-
     return [
-        (
-            cx + r * sin(radians(rotation_degrees) + 2 * 3.141592653589793 * i / sides),
-            cy - r * cos(radians(rotation_degrees) + 2 * 3.141592653589793 * i / sides),
-        )
-        for i in range(sides)
+        builder(left + size / 2, cy, size / 2)
+        for builder, left in zip(SHAPES, spread(x, w, len(SHAPES), size))
     ]
 
 

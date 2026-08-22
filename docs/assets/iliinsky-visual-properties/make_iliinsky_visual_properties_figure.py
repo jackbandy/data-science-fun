@@ -18,6 +18,9 @@ Departures from the reference raster (visualpropertiestable2.gif):
     blue, and everything else stays neutral, per ../STYLE.md
   - the "weight, boldness" example uses actual type weights, which is what the
     row is about, rather than reusing the line-weight example
+  - the "shape, icon" example uses the star, square and teardrop from
+    ../abstraction/0-shapes.svg, so the shape row and the abstraction figures
+    speak the same vocabulary
 
 Source: Noah Iliinsky, complexdiagrams.com/properties (2012-06), reproduced in
 https://datavizblog.com/2017/06/13/revisiting-tableau-desktop-fundamentals/
@@ -27,7 +30,7 @@ from __future__ import annotations
 
 import base64
 import colorsys
-from math import cos, radians, sin
+from math import cos, pi, radians, sin
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -241,22 +244,35 @@ def example_colour(x, y, w, h) -> list[str]:
 
 
 def example_shape(x, y, w, h) -> list[str]:
-    side = 18
+    """Star, square, teardrop -- the first three shapes from ../abstraction's
+    0-shapes.svg, drawn as flat silhouettes so only the outline varies."""
+    r = 9.5
     cy = y + h / 2
-    lefts = thirds(x, w, side)
-    r = side / 2
-    triangle_points = " ".join(
-        f"{px:.1f},{py:.1f}"
-        for px, py in (
-            (lefts[2], cy - r),
-            (lefts[2] + side, cy),
-            (lefts[2], cy + r),
-        )
-    )
+    lefts = thirds(x, w, 2 * r)
+
+    star = []
+    for index in range(16):
+        radius = r if index % 2 == 0 else r * 0.29
+        angle = -pi / 2 + index * pi / 8
+        star.append((lefts[0] + r + radius * cos(angle), cy + radius * sin(angle)))
+    star_points = " ".join(f"{px:.1f},{py:.1f}" for px, py in star)
+
+    side = r * 1.6
+    cx = lefts[2] + r
+    drop_r = r * 0.755
+    base = cy + r
+    top = base - drop_r * 1.65  # centre of the teardrop's round top
+
     return [
-        circle(lefts[0] + r, cy, r),
-        rect(lefts[1], cy - r, side, side),
-        f'  <polygon points="{triangle_points}" fill="{ACCENT}"/>',
+        f'  <polygon points="{star_points}" fill="{ACCENT}"/>',
+        rect(lefts[1] + r - side / 2, cy - side / 2, side, side, rx=2),
+        f'  <path d="M {cx:.1f},{base:.1f} '
+        f'C {cx - drop_r * 0.72:.1f},{top + drop_r * 0.85:.1f} '
+        f'{cx - drop_r:.1f},{top + drop_r * 0.45:.1f} {cx - drop_r:.1f},{top:.1f} '
+        f'A {drop_r:.1f},{drop_r:.1f} 0 1 1 {cx + drop_r:.1f},{top:.1f} '
+        f'C {cx + drop_r:.1f},{top + drop_r * 0.45:.1f} '
+        f'{cx + drop_r * 0.72:.1f},{top + drop_r * 0.85:.1f} {cx:.1f},{base:.1f} Z" '
+        f'fill="{ACCENT}"/>',
     ]
 
 
