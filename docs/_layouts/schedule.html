@@ -19,6 +19,23 @@ layout: default
 
   Note: this file was largely written by an LLM (Claude Code).
 {%- endcomment -%}
+{%- comment -%}
+  Optional alert above the title, matching the sign on the About page. Set
+  `alert` (the headline on the sign) and `alert_detail` (the blurb under it)
+  in the page's front matter; leave them out and nothing renders.
+{%- endcomment -%}
+{%- if page.alert %}
+<div class="sign">
+  <div class="sign-top">
+    <div class="sign-icon">!</div>
+    <span class="sign-attention">Attention</span>
+  </div>
+  <div class="sign-bottom">
+    <p class="sign-closed">{{ page.alert }}</p>
+  </div>
+</div>
+{% if page.alert_detail %}<p class="sign-detail">{{ page.alert_detail }}</p>{% endif %}
+{%- endif %}
 <h1 class="schedule-title">{{ page.title }}</h1>
 {% if page.subtitle %}<p class="schedule-subtitle">{{ page.subtitle }}</p>{% endif %}
 <div class="schedule-body">
@@ -73,9 +90,9 @@ layout: default
     {%- assign deckpath = "/slides/week" | append: week.name | append: ".html" -%}
     {%- assign deck = site.static_files | where: "path", deckpath | first -%}
     {%- if deck -%}
-    <p class="week-slides">Slides:
-      <a href="{{ site.baseurl }}/slides/week{{ week.name }}.html">Deck {{ week.name }}</a>
-      (<a href="{{ site.baseurl }}/slides/week{{ week.name }}.pdf">PDF</a>)</p>
+    <p class="week-slides">
+      <a href="{{ site.baseurl }}/slides/week{{ week.name }}.html">Week {{ week.name }} Slides</a>
+      (or as a <a href="{{ site.baseurl }}/slides/week{{ week.name }}.pdf">PDF</a>)</p>
     {%- endif -%}
 
     <ul>

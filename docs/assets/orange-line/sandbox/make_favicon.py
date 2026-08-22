@@ -31,6 +31,10 @@ DOCS = HERE.parents[2]
 # The Loop, in map units. The track rectangle spans x 345..607, y 183..492; a 30-unit
 # stroke and the r=22 transfer markers push the ink out to roughly 323..629 / 161..514.
 LOOP_BOX = (323, 161, 306, 353)  # x, y, w, h
+# The Orange Line leaves the Loop heading south at x=607 before it bends southwest.
+# Growing the frame downward (rather than padding evenly) spends the extra ~10% of the
+# crop entirely on that tail, which is the bit that reads as "Orange Line" and not "loop".
+TAIL_EXTRA = 37
 ICO_SIZES = (16, 32, 48, 64, 128)
 PWA_SIZES = (192, 512)
 
@@ -45,6 +49,7 @@ def loop_svg(pad: float = 10.0) -> str:
     body = re.search(r"<svg\b[^>]*>(.*)</svg>", text, re.DOTALL).group(1)
     body = re.sub(r'<g id="Stops">.*?</g>\s*(?=<|$)', "", body, flags=re.DOTALL)
     x, y, w, h = LOOP_BOX
+    h += TAIL_EXTRA                     # room below the Loop for the southbound stub
     side = max(w, h) + 2 * pad          # square viewBox so the icon never distorts
     x -= (side - w) / 2
     y -= (side - h) / 2
