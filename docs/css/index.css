@@ -39,8 +39,11 @@ body {
 /* Yellow Line (Skokie Swift): #F9E300 */
 /* The masthead rule (.orange-line) and nav live in css/masthead.css. */
 
+/* Same width as the masthead's column in css/masthead.css, so the body's left
+   edge lines up with the title and menu above it rather than sitting 50px
+   inside them. */
 .container {
-  max-width: 700px;
+  max-width: 800px;
   margin: 48px auto;
   padding: 0 24px;
 }
