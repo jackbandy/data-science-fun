@@ -243,6 +243,7 @@ https://cs.uic.edu/undergraduate/data-science-major/
 
 https://www.techtimes.com/articles/322586/20260801/chatgpt-research-habit-cost-hank-green-accuracy-his-brand-was-built.htm
 
+https://correlatesofwar.org
 
 ## Misc. TODO
 

@@ -45,7 +45,7 @@ Jack Bandy
 
 ---
 
-## Meet Your Elbow Partner(s)! {.split}
+## Meet Your Elbow Neighbor(s)! {.split}
 
 ::: {.split-content .golden-columns}
 
@@ -145,8 +145,6 @@ Open a pull request on the course repo to fix a typo, a broken link, a confusing
 
 ::: {.columns .compare-columns}
 ::: {.column}
-[THE EXPERIMENT]{.eyebrow}
-
 ::: {.incremental}
 ::: {.dense}
 - Random roll call!
@@ -159,8 +157,6 @@ Open a pull request on the course repo to fix a typo, a broken link, a confusing
 :::
 
 ::: {.column}
-[WHY TRY IT]{.eyebrow}
-
 ::: {.incremental}
 ::: {.dense}
 - helps me collect attendance data
@@ -326,13 +322,13 @@ You choose where it fits. Still reduced speed, full attention. Be ready to justi
 - **Week 7** — hypothesis testing; estimation & sampling
 - **Weeks 8–9** — regression; classification; trees; SVMs
 - **Week 10** — clustering; PCA; model evaluation
-- **Week 11** — recommendation systems; A/B testing
-- **Week 12** — network analysis; graphs
+- **Week 11** — recommendation systems; A/B testing, RCTs
+- **Week 12** — network analysis;
 - **Weeks 14–15** — presentations
 :::
 
 ::: {.aside-note}
-Schedule is on the course [home](https://dodatascience.fun/#schedule).
+Full schedule is on the course [home](https://dodatascience.fun/#schedule).
 :::
 ::::
 
@@ -370,6 +366,23 @@ Weights are in the [syllabus](../syllabus/).
 
 ::: {.caption}
 One grace day, then 10 points a day down to 50%. Nothing drops below 50%, and nothing is accepted after day 30 — see the [syllabus](../syllabus/).
+:::
+
+---
+
+## Discuss with your elbow neighbor(s) {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+1. What are you expecting from this class?
+2. What do you want to learn? Anything sound particularly exciting?
+3. What skills do you hope to develop and/or strengthen?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
 :::
 
 ---
@@ -435,17 +448,6 @@ One grace day, then 10 points a day down to 50%. Nothing drops below 50%, and no
 
 ---
 
-## Do the Tools Matter?
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK**
-:::
-:::
-
-<!-- TODO: Polars vs. pandas, Python vs. R, notebook vs. script; etc. -->
 
 
 
@@ -643,11 +645,12 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 [TODO]{.eyebrow .todo}
 
 ::: {.dense}
-- **TK**
+- I did not finish a visual for this, so...
+- You tell me how you think of a terabyte
 :::
 :::
 
-<!-- TODO: add 1 TB visual before the 400M TB/day slide -->
+<!-- TODO: 1 TB visual -->
 
 ---
 
@@ -781,12 +784,19 @@ From Simon Goorney, Jonas Bley, Stefan Heusler, and Jacob Sherson, ["A Framework
 
 ---
 
-## Your Turn: Other Work Cycles {.prompt-slide}
+## Yet Another Data Science Cycle {.image-frame-slide}
 
+<img src="../assets/lifecycle/timbers-et-al-chapter_overview.png" alt="A data science cycle drawn as labeled boxes joined by arrows: ask a question, collect data, read in data, clean and wrangle, visualize, model, interpret, and then either communicate results or loop back to ask a new question.">
 
-::: {.prompt-question}
-Other work cycles have you seen or used in work/life?
+::: {.caption}
+From Tiffany Timbers, Trevor Campbell, and Melissa Lee, [*Data Science: A First Introduction*](https://datasciencebook.ca/).
 :::
+
+---
+
+## Questions about the lifecycle? {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle-v0.svg" alt="The data science lifecycle: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
 
 
 # Pasteur's Quadrant {.section-header}
@@ -967,6 +977,13 @@ Donald E. Stokes, *Pasteur's Quadrant: Basic Science and Technological Innovatio
 What other questions are you curious about that you think could be answered/addressed with data?
 :::
 
+---
+
+## The Lifecycle: Ask a Question {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle-v1.svg" alt="The data science lifecycle with the 'ask a question' stage highlighted; obtain data, understand the data, understand the world, and reports, decisions, solutions are shown unhighlighted.">
+
+---
 
 # The DIKW Pyramid {.section-header}
 
@@ -1495,7 +1512,7 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - "How do reptiles (vs. mammals and birds) reproduce?"
 	- every member is true
 - Each "contrast class" implies a different comparison group, study design, and dataset
-- TODO: an example question from the class w/ contrast classes
+- TODO: an example question w/ contrast classes
 :::
 ::::
 
@@ -1673,13 +1690,13 @@ Michael Shermer
 
 ---
 
-## Your Turn: Analyze Your Questions {.split}
+## Your Turn: Discuss Your Questions {.split}
 
 ::: {.split-content .golden-columns}
 
 ::: {}
 
-Discuss with your elbow partner(s):
+Discuss with your elbow neighbor(s):
 
 1. What type is it? (whether, which, why, indirect)
 2. What does it presuppose?
