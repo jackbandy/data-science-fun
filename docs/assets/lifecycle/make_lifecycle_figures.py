@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import base64
-import shutil
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -180,9 +179,6 @@ def make_svg(highlight_index: int | None) -> str:
 
 
 def main() -> None:
-    font_destination = OUT_DIR / FONT_FILE
-    if FONT_SOURCE != font_destination:
-        shutil.copy2(FONT_SOURCE, font_destination)
     for version in range(6):
         highlight_index = None if version == 0 else version - 1
         path = OUT_DIR / f"ds-lifecycle-v{version}.svg"

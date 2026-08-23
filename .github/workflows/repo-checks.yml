@@ -81,15 +81,26 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # There are 5 known sets of duplicates left in docs/ (a shared font file,
-      # a license badge, and a few reused SVGs). Rather than fail on those,
-      # this only fails if the number goes UP. Lower the number as you clean
-      # them up -- that locks in the progress.
+      # Two known sets of duplicates are left in docs/, both deliberate:
+      #   - lifecycle-steps/ds-lifecycle-step5.svg and lifecycle/
+      #     ds-lifecycle-v5.svg, the same final frame emitted by two generators
+      #     that share their geometry.
+      #   - ethics-in-data-science/assets/cc-by-nc-sa.svg, the license badge in
+      #     the ethics book's page footer. It has its own copy because the
+      #     footer is raw HTML in _quarto.yml, which Quarto does not scan for
+      #     resources the way it scans the chapter bodies.
+      # Rather than fail on those, this only fails if the number goes UP. Lower
+      # the number as you clean them up -- that locks in the progress.
       - name: Check for new duplicate files
         env:
-          BASELINE: 5
+          BASELINE: 2
         run: |
-          git ls-files -z 'docs/*' | xargs -0 md5sum | sort > all.txt
+          # Mode 120000 is a symlink. docs/ethics-in-data-science/assets/shared
+          # points at docs/assets/, and md5sum would follow it into a directory
+          # and error out, so list blobs only.
+          git ls-files -s 'docs/*' \
+            | awk '$1 != "120000" { sub(/^[^\t]*\t/, ""); print }' \
+            | tr '\n' '\0' | xargs -0 md5sum | sort > all.txt
           awk '{print $1}' all.txt | uniq -d > dups.txt
           count=$(wc -l < dups.txt | tr -d ' ')
 

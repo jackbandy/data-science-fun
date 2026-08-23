@@ -6,5 +6,5 @@
   Science and Technological Innovation* (Brookings Institution Press, 1997),
   ISBN 978-0-8157-8177-6. Overview:
   <https://en.wikipedia.org/wiki/Pasteur%27s_quadrant>
-- `LibreFranklin.woff2` — Libre Franklin, SIL Open Font License 1.1; copied from
-  `../fonts/libre-franklin/` (see the `OFL.txt` there).
+- The lettering is Libre Franklin, SIL Open Font License 1.1, embedded from
+  `../fonts/libre-franklin/LibreFranklin.woff2` (see the `OFL.txt` there).

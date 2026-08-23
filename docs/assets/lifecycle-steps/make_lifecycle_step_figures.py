@@ -14,7 +14,6 @@ but the labels are withheld until a node is highlighted:
 
 from __future__ import annotations
 
-import shutil
 import sys
 from pathlib import Path
 
@@ -35,9 +34,6 @@ def draw_node_progressive(node_id: str, label: str, highlighted: bool) -> str:
 
 
 def main() -> None:
-    font_destination = OUT_DIR / base.FONT_FILE
-    shutil.copy2(base.FONT_SOURCE, font_destination)
-
     base.draw_node = draw_node_progressive
     try:
         for step in range(len(base.NODES) + 1):

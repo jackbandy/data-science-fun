@@ -21,7 +21,6 @@ https://en.wikipedia.org/wiki/Pasteur%27s_quadrant
 from __future__ import annotations
 
 import base64
-import shutil
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -200,9 +199,6 @@ def make_svg(step: int, highlight: bool = True) -> str:
 
 
 def main() -> None:
-    font_destination = OUT_DIR / FONT_FILE
-    if FONT_SOURCE.resolve() != font_destination.resolve():
-        shutil.copy2(FONT_SOURCE, font_destination)
     for step in range(len(STEPS) + 1):
         path = OUT_DIR / f"pasteurs-quadrant-step{step}.svg"
         path.write_text(make_svg(step), encoding="utf-8")
