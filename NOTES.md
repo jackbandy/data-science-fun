@@ -247,7 +247,7 @@ https://correlatesofwar.org
 
 ## Misc. TODO
 
-
+* "extras" page with a list of all the extra stuff
 * Check overflow on slide templates (i.e. spilling into footer).
 * Test slides at 16:10 (the classroom projector is 16:10) - check decks at that aspect ratio (letterboxing, footer position, slides that fill the full height).
 * clean up ipynb headers
