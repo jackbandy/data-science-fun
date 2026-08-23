@@ -1,15 +1,55 @@
 {%- comment -%}
-Site footer: the two meta links, GitHub source and About. The compact nav menu
-repeats them at its bottom (see .site-nav-meta in css/masthead.css), since the
-menu covers the page there and the footer is a long scroll away.
+Site footer: the two meta links, GitHub source and About, with the milkweed
+flower centered between them — milkweed is the monarch's host plant, so it
+links out to the monarch habitat page. The compact nav menu repeats the two
+links at its bottom (see .site-nav-meta in css/masthead.css), since the menu
+covers the page there and the footer is a long scroll away.
+
+The flower's hover spin is driven by the Web Animations API rather than CSS
+`animation-play-state`, which does not reliably resume from the paused angle.
 {%- endcomment -%}
 <footer>
   <a href="https://github.com/jackbandy/data-science-fun">
     {% include icon-github.html %}
     GitHub Source
   </a>
+  <a class="footer-flower"
+     href="https://heritagegarden.uic.edu/monarch-butterfly-habitat/"
+     title="Butterfly Milkweed">
+    <img src="{{ '/assets/branding/flower-48.png' | relative_url }}"
+         alt="Butterfly milkweed flower" width="24" height="24"
+         loading="lazy" decoding="async">
+  </a>
   <a href="/about.html">
     {% include icon-info.html %}
     About
   </a>
 </footer>
+
+<!--
+  Pausing and resuming a CSS animation via `animation-play-state` jumps to an
+  angle derived from wall-clock time in some engines, so hovering in and out
+  makes the flower snap around. A WAAPI animation object pauses and plays at
+  exactly the angle it stopped on.
+
+  Note: this file was largely written by an LLM (Claude Code).
+-->
+<script>
+(function () {
+  var link = document.querySelector('.footer-flower');
+  if (!link || !link.animate) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var flower = link.querySelector('img');
+  var spin = flower.animate(
+    [{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }],
+    { duration: 8000, iterations: Infinity, easing: 'linear' }
+  );
+  spin.pause();
+
+  link.addEventListener('mouseenter', function () { spin.play(); });
+  link.addEventListener('mouseleave', function () { spin.pause(); });
+  link.addEventListener('focus', function () { spin.play(); });
+  link.addEventListener('blur', function () { spin.pause(); });
+})();
+</script>

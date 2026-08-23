@@ -188,6 +188,17 @@ footer svg {
   flex-shrink: 0;
 }
 
+/* The milkweed flower sits between the two meta links, so it lands in the
+   middle of the centered footer row. Milkweed is the monarch's host plant —
+   it links out to the monarch habitat page. The slow hover spin itself is
+   driven from _includes/footer.html, so that hovering in and out pauses and
+   resumes it at the angle it stopped on. */
+.footer-flower img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
 h1 a {
   color: inherit;
   text-decoration: none;

@@ -109,6 +109,74 @@ CS 418 · Week 5 · 🟠 Clark/Lake 🟠
 import matplotlib.pyplot as plt
 
 
+# Marker paths traced from ../assets/abstraction/0-shapes.svg, so the abstract
+# shape demo and the "Shape Anecdote" slide speak the same visual vocabulary.
+from matplotlib.path import Path as MplPath
+
+def _poly(points):
+    """A closed subpath through `points` (SVG user units, y growing downward)."""
+    pts = list(points) + [points[0]]
+    codes = [MplPath.MOVETO] + [MplPath.LINETO] * (len(points) - 1) + [MplPath.CLOSEPOLY]
+    return pts, codes
+
+def _circle(cx, cy, r, n=64):
+    a = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    return _poly(list(zip(cx + r * np.cos(a), cy + r * np.sin(a))))
+
+def _rect(x, y, w, h):
+    return _poly([(x, y), (x + w, y), (x + w, y + h), (x, y + h)])
+
+def _join(*parts):
+    verts, codes = [], []
+    for v, c in parts:
+        verts += list(v)
+        codes += list(c)
+    return verts, codes
+
+def _marker(part):
+    """Normalize an SVG-space subpath set into a unit-height scatter marker.
+
+    Flipping y and dividing by the bounding-box height means every shape is
+    drawn at the same height for a given `s`, so only the form varies.
+    """
+    verts, codes = part
+    v = np.asarray(verts, dtype=float)
+    v[:, 1] *= -1
+    v /= v[:, 1].max() - v[:, 1].min()
+    v -= [(v[:, 0].max() + v[:, 0].min()) / 2, (v[:, 1].max() + v[:, 1].min()) / 2]
+    return MplPath(v, codes)
+
+def _teardrop(cx=809.0, cy=488.4, r=104.0, tip=660.0, n=48):
+    """Point at the bottom, round over the top -- the upside-down tear.
+
+    Traced curve-for-curve from the SVG: the flanks are cubics that leave the
+    tip and meet the semicircle tangentially, so there is no corner where the
+    straight sides would otherwise hit the dome.
+    """
+    a = np.linspace(np.pi, 2 * np.pi, n)  # over the top in SVG's y-down space
+    arc = list(zip(cx + r * np.cos(a), cy + r * np.sin(a)))
+    verts = ([(cx, tip), (734.12, 576.80), (cx - r, 535.20), (cx - r, cy)]
+             + arc[1:]
+             + [(cx + r, 535.20), (883.88, 576.80), (cx, tip), (cx, tip)])
+    codes = ([MplPath.MOVETO] + [MplPath.CURVE4] * 3
+             + [MplPath.LINETO] * (len(arc) - 1)
+             + [MplPath.CURVE4] * 3 + [MplPath.CLOSEPOLY])
+    return verts, codes
+
+STAR = _marker(_poly([
+    (219.00, 387.00), (234.15, 486.93), (315.52, 426.98), (255.57, 508.35),
+    (355.50, 523.50), (255.57, 538.65), (315.52, 620.02), (234.15, 560.07),
+    (219.00, 660.00), (203.85, 560.07), (122.48, 620.02), (182.43, 538.65),
+    (82.50, 523.50), (182.43, 508.35), (122.48, 426.98), (203.85, 486.93)]))
+SQUARE = _marker(_rect(419.75, 471.50, 188.50, 188.50))
+TEARDROP = _marker(_teardrop())
+BROCCOLI = _marker(_join(
+    _circle(1027.43, 486.71, 80.60), _circle(1104.00, 436.74, 80.60),
+    _circle(1180.57, 486.71, 80.60), _rect(1063.70, 486.71, 80.60, 173.29)))
+BOLT = _marker(_poly([
+    (1419.80, 341.50), (1305.40, 507.12), (1388.60, 507.12), (1336.60, 660.00),
+    (1492.60, 468.90), (1403.16, 468.90), (1486.36, 341.50)]))
+
 def mark_axes(ax, xlim=(0, 10), ylim=(0, 6)):
     """A blank frame for the abstract mark demos."""
     ax.set(xlim=xlim, ylim=ylim, xticks=[], yticks=[])
@@ -312,10 +380,10 @@ mark_axes(ax)
 #| echo: false
 #| fig-width: 5.2
 #| fig-height: 4.0
-#| fig-alt: "Five orange marks in a row at the same size: a circle, a square, a triangle, a diamond and a cross"
+#| fig-alt: "Five orange marks in a row at the same height: a star, a square, an upside-down teardrop, a broccoli floret and a lightning bolt"
 fig, ax = plt.subplots()
-for x, m in zip([1.4, 3.2, 5.0, 6.8, 8.6], ["o", "s", "^", "D", "X"]):
-    ax.scatter([x], [3], marker=m, s=560, color=ORANGE, zorder=3)
+for x, m in zip([1.4, 3.2, 5.0, 6.8, 8.6], [STAR, SQUARE, TEARDROP, BROCCOLI, BOLT]):
+    ax.scatter([x], [3], marker=m, s=1600, color=ORANGE, zorder=3)
 mark_axes(ax)
 ```
 :::

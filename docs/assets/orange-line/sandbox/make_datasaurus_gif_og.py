@@ -9,6 +9,14 @@ that at card size each one is on screen long enough to register. The lasso is in
 between the other four rather than taking a turn of its own: lasso, dino, lasso, star, and
 so on, so the route is the shape the card keeps coming back to.
 
+The star
+--------
+Not the Datasaurus Dozen's five-pointed star: the six-pointed star off the Chicago flag,
+traced from Chicago-star.png. Its geometry is measured, not guessed -- outer points at
+90 deg + 60k, inner vertices at 0.367 of the outer radius -- and the outline is walked at
+even arc length. See `chicago_star_points` for how it is made to carry the dozen's
+statistics without being distorted out of shape.
+
 The lasso
 ---------
 The fifth shape is the Orange Line itself: points sampled at even arc length along the
@@ -24,6 +32,7 @@ Usage
 -----
     python make_datasaurus_gif_og.py
     python make_datasaurus_gif_og.py --width 1200 --duration 1.1 --poster
+    python make_datasaurus_gif_og.py --dataset   # also dump the point cloud as a CSV
 """
 
 from __future__ import annotations
@@ -53,9 +62,17 @@ from make_chevron_gif_og import build_route, parse_path, read_svg  # noqa: E402
 ORANGE = "#F9461C"
 PAPER = "#FFFFFF"
 
-# Four shapes borrowed from the dozen, plus the route.
+# Three shapes borrowed from the dozen, plus the Chicago star and the route.
+FROM_CSV = ("dino", "circle", "dots")
 BORROWED = ("dino", "star", "circle", "dots")
 SHAPES = BORROWED + ("lasso",)
+
+# Measured off Chicago-star.png: six points, one straight up, and inner vertices 30 deg
+# between them at 0.367 of the outer radius. (The flag's own proportion; traced from the
+# PNG rather than eyeballed, so the outline is the star and not a generic hexagram.)
+STAR_POINTS = 6
+STAR_INNER = 0.367
+STAR_PHASE = 90.0  # degrees; a point at the top, as the flag has it
 
 # The lasso is the refrain: every borrowed shape passes back through the Orange Line on its
 # way to the next one, so the route is what the eye keeps returning to and the other four
@@ -100,10 +117,71 @@ def route_points(n: int, moments: tuple[float, float, float, float]) -> np.ndarr
     return out
 
 
+def _star_outline(samples: int = 20000) -> np.ndarray:
+    """The Chicago star's outline, walked at even arc length."""
+    step = np.pi / STAR_POINTS  # outer and inner vertices alternate every 30 deg
+    k = np.arange(2 * STAR_POINTS)
+    angle = np.radians(STAR_PHASE) + k * step
+    radius = np.where(k % 2 == 0, 1.0, STAR_INNER)
+    corners = np.column_stack([radius * np.cos(angle), radius * np.sin(angle)])
+    corners = np.vstack([corners, corners[:1]])  # close the polygon
+
+    edge = np.linalg.norm(np.diff(corners, axis=0), axis=1)
+    walked = np.concatenate([[0.0], np.cumsum(edge)])
+    s = np.linspace(0.0, walked[-1], samples, endpoint=False)
+    i = np.clip(np.searchsorted(walked, s, "right") - 1, 0, len(edge) - 1)
+    t = ((s - walked[i]) / edge[i])[:, None]
+    return corners[i] * (1 - t) + corners[i + 1] * t
+
+
+def chicago_star_points(n: int, moments: tuple[float, float, float, float]) -> np.ndarray:
+    """`n` points on the Chicago star's outline, matched to the dozen's moments.
+
+    The lasso can be z-scored per axis because a stretched Orange Line is still the Orange
+    Line -- that stretch is the joke. A stretched Chicago star is just a wrong star, so the
+    statistics are matched a different way: the outline keeps its true proportions and the
+    *spacing* of the points along it does the work. Anything with six-fold symmetry sampled
+    evenly has sd(x) = sd(y), and the dozen wants sd(y) about 1.6x sd(x), so points are
+    drawn from a density that leans on |y| -- crowded up the two vertical points, thinner
+    across the four that reach sideways -- until the ratio lands. One uniform scale then
+    fixes the size and the means fix the position, so mean(x), mean(y), sd(x) and sd(y) all
+    come out on the nose with the shape untouched. r is 0 by symmetry, and left alone.
+    """
+    outline = _star_outline()
+    tallness = np.abs(outline[:, 1]) / np.abs(outline[:, 1]).max()
+
+    def spaced(lean: float) -> np.ndarray:
+        weight = np.exp(lean * tallness ** 4)
+        walked = np.cumsum(weight)
+        walked = np.concatenate([[0.0], walked]) / walked[-1]
+        q = (np.arange(n) + 0.5) / n
+        return outline[np.clip(np.searchsorted(walked, q) - 1, 0, len(outline) - 1)]
+
+    mean_x, mean_y, sd_x, sd_y = moments
+    want = sd_y / sd_x
+
+    def gap(lean: float) -> float:
+        p = spaced(lean)
+        return p[:, 1].std(ddof=1) / p[:, 0].std(ddof=1) - want
+
+    # gap() climbs monotonically from -(want - 1) at lean = 0; bisect rather than pull in
+    # scipy for one root.
+    lo, hi = 0.0, 1.0
+    while gap(hi) < 0:
+        hi *= 2
+    for _ in range(80):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if gap(mid) < 0 else (lo, mid)
+    pts = spaced((lo + hi) / 2)
+
+    pts = pts * (sd_x / pts[:, 0].std(ddof=1))  # one scale, both axes: no distortion
+    return pts + np.array([mean_x - pts[:, 0].mean(), mean_y - pts[:, 1].mean()])
+
+
 def load_shapes() -> dict[str, np.ndarray]:
     df = pl.read_csv(DATA_PATH)
     shapes: dict[str, np.ndarray] = {}
-    for name in BORROWED:
+    for name in FROM_CSV:
         sub = df.filter(pl.col("dataset") == name)
         shapes[name] = _angle_sorted(
             np.column_stack([sub["x"].to_numpy(), sub["y"].to_numpy()])
@@ -113,8 +191,22 @@ def load_shapes() -> dict[str, np.ndarray]:
         dino[:, 0].mean(), dino[:, 1].mean(),
         dino[:, 0].std(ddof=1), dino[:, 1].std(ddof=1),
     )
+    shapes["star"] = _angle_sorted(chicago_star_points(len(dino), moments))
     shapes["lasso"] = _angle_sorted(route_points(len(dino), moments))
     return shapes
+
+
+def write_dataset(path: Path, shapes: dict[str, np.ndarray]) -> None:
+    """The dozen with `star` replaced by the Chicago star, plus the lasso, as a CSV."""
+    df = pl.read_csv(DATA_PATH).filter(pl.col("dataset") != "star")
+    extra = pl.concat(
+        [
+            pl.DataFrame({"dataset": [name] * len(pts), "x": pts[:, 0], "y": pts[:, 1]})
+            for name, pts in (("star", shapes["star"]), ("lasso", shapes["lasso"]))
+        ]
+    ).with_columns(pl.col("x", "y").round(4))
+    pl.concat([df, extra]).write_csv(path)
+    print(f"wrote {path}")
 
 
 def smoothstep(t: float) -> float:
@@ -141,12 +233,27 @@ def main() -> None:
     ap.add_argument("--morph", type=float, default=0.5, help="seconds spent travelling to the next shape")
     ap.add_argument("--fps", type=float, default=25.0)
     ap.add_argument("--size", type=float, default=55.0, help="point area in pt^2")
+    ap.add_argument(
+        "--alpha",
+        type=float,
+        default=0.8,
+        help="point opacity; below ~0.8 stacked points start to show as darker overlaps",
+    )
     ap.add_argument("--poster", action="store_true", help="also write a PNG of frame 0")
+    ap.add_argument(
+        "--dataset",
+        type=Path,
+        nargs="?",
+        const=HERE / "datasaurus-chicago-star.csv",
+        help="also write the point cloud out as a CSV (default: sandbox/datasaurus-chicago-star.csv)",
+    )
     args = ap.parse_args()
 
     width = args.width
     height = round(width / ((1 + 5 ** 0.5) / 2))
     shapes = load_shapes()
+    if args.dataset:
+        write_dataset(args.dataset, shapes)
 
     fig, ax = plt.subplots(figsize=(width / args.dpi, height / args.dpi), dpi=args.dpi)
     fig.patch.set_facecolor(PAPER)
@@ -164,7 +271,11 @@ def main() -> None:
     ax.set_xlim(mid_x - span_x / 2, mid_x + span_x / 2)
     ax.set_ylim(*ylim)
 
-    scatter = ax.scatter([], [], s=args.size, color=ORANGE, alpha=0.9, linewidths=0)
+    # Slightly transparent, so where the outline crowds -- the star's two vertical points,
+    # the Loop's corners -- the pile-up reads as a deeper orange instead of one flat blob.
+    scatter = ax.scatter(
+        [], [], s=args.size, color=ORANGE, alpha=args.alpha, linewidths=0
+    )
 
     hold_frames = max(1, round(args.hold * args.fps))
     morph_frames = max(1, round(args.morph * args.fps))
