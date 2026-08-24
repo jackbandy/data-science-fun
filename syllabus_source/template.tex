@@ -27,7 +27,6 @@
 \floatplacement{figure}{H}
 \usepackage[labelformat=empty]{caption}
 \usepackage{fancyhdr}
-\usepackage{eso-pic}
 \usepackage[explicit]{titlesec}
 \usepackage{tikz}
 
@@ -121,21 +120,7 @@
 
 \begin{document}
 
-\AddToShipoutPictureBG{%
-  \AtPageCenter{%
-    \makebox(0,0){%
-      \rotatebox{45}{%
-        \textcolor{black!10}{%
-          \bfseries\fontsize{54}{54}\selectfont WORK IN PROGRESS%
-        }%
-      }%
-    }%
-  }%
-}
-
 \begin{center}
-  {\footnotesize\color{headergray}\textbf{WORK IN PROGRESS} --- draft syllabus subject to revision}\par
-  \vspace{0.75em}
   {\Large\bfseries\sffamily $course-title$}\par
   \vspace{0.5em}
   \textbf{$college$}, $credit-hours$\par

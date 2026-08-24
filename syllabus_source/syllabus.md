@@ -11,19 +11,19 @@ credit-hours: "3 undergraduate hours, 4 graduate hours"
 
 Email address: jxb@uic.edu
 
-Drop-In Office Hours (in-person or virtual): TK
+Drop-In Office Hours (in-person or virtual): Tuesdays and Thursdays, see scheduling link in Canvas
 
 Drop-In Hours location: CDRLC 3454
 
 **[Teaching Assistants]{.underline}**
 
-Email address: TK
+**[Maksym Turkot (Maks)]{.underline}**
 
-Section designation(s): TK
+Email address: mturk5@uic.edu
 
-Drop-In Office Hours (in-person or virtual): TK
+Drop-In Office Hours (in-person or virtual): TBA
 
-Drop-In Hours location: TK
+Drop-In Hours location: TBA
 
 **Course Site:** [dodatascience.fun](https://dodatascience.fun/)
 
@@ -35,9 +35,9 @@ For technical questions about Canvas, email the Learning Technology Solutions te
 
 Students are responsible for all messages sent to UIC email and Canvas accounts. I generally aim to respond to emails within 24 hours during weekdays. I generally do not check my email on Saturday and Sunday.
 
-**PrairieLearn:** TK
+**PrairieLearn:** [us.prairielearn.com/pl/course_instance/216433](https://us.prairielearn.com/pl/course_instance/216433) — homework questions, quizzes, and the final exam.
 
-**Canvas:** TK
+**Canvas:** [canvas.uic.edu](https://canvas.uic.edu) — grades, coding exercises, and project scaffolding. Please log in regularly to monitor your grades and to learn about any developments related to the course.
 
 
 **[Course Modality and Schedule]{.underline}**
@@ -112,9 +112,19 @@ If we are successful, by the end of the semester, you will have proficiency in t
 
 For Fall 2026, supporting texts and materials will be open-source and freely available. 
 
-**Required Technology:** TK
+**Required Technology:** You will need access to a computer capable of running Jupyter notebook and Python, as well as PrairieLearn and Canvas.
 
-**Recommended (Optional) Texts or Other Materials:** TK
+All required software is free. If that ever seems to not be the case, please let me know as soon as possible.
+
+Also, access to a suitable computer or internet connection presents a challenge for any reason, please tell me as soon as possible — this is a solvable problem and you will not be the first person to ask.
+
+**Core Texts:** There is no required textbook to purchase. The course draws on three freely available open-access texts:
+
+- [*Learning Data Science*](https://learningds.org/intro.html) by Sam Lau, Joey Gonzalez, and Deb Nolan
+- [*Data Science: A First Introduction with Python*](https://python.datasciencebook.ca/) by Tiffany Timbers, Trevor Campbell, Melissa Lee, Joel Ostblom, and Lindsey Heagy
+- [*The Art of Data Science*](https://bookdown.org/rdpeng/artofdatascience/) by Roger D. Peng and Elizabeth Matsui
+
+Readings from these texts will be listed alongside the weekly schedule. If obtaining any course material presents a challenge for any reason, please tell me as soon as possible.
 
 **Respect for Copyright**
 
@@ -138,40 +148,34 @@ Furthermore, some readings and other materials may expose you to ideas, subjects
 
 ## [Grading Policy and Point Breakdown]{.underline}
 
-Details TK
-
 **Assessments**
+
+In order to provide a final letter grade at the end of the class, I will use the following combination of graded exercises:
 
 | **Category** | **Weight** |
 |:--|--:|
-| *TK* | *TK%* |
-| *TK* | *TK%* |
-| *TK* | *TK%* |
-| *TK* | *TK%* |
+| **In-Class Worksheets** | **20%** |
+| **In-Class Quizzes** | **20%** |
+| **Group Project** | **20%** |
+| &nbsp;&nbsp;&nbsp;*Question memo* | |
+| &nbsp;&nbsp;&nbsp;*Data acquisition* | |
+| &nbsp;&nbsp;&nbsp;*EDA checkpoint* | |
+| &nbsp;&nbsp;&nbsp;*Data documentation* | |
+| &nbsp;&nbsp;&nbsp;*Rhetorical analysis* | |
+| &nbsp;&nbsp;&nbsp;*Public repository* | |
+| &nbsp;&nbsp;&nbsp;*Written report* | |
+| &nbsp;&nbsp;&nbsp;*Presentation* | |
+| &nbsp;&nbsp;&nbsp;*Peer assessment* | |
+| **PrairieLearn Homeworks** | **15%** |
+| **Coding Exercises** | **15%** |
+| **Final Exam** | **9%** |
+| **Collective Attendance** | **1%** |
 
-
-* Worksheets
-* Homeworks
-* Quizzes
-* Coding exercises
-* Attendance
-* Group project
-	- question memo
-	- data acquisition
-	- EDA checkpoint
-	- data documentation
-	- rhetorical analysis
-	- public repository
-	- written report
-	- presentation
-	- peer assessment
-
+Further details and rubrics for each exercise will be published on Canvas.
 
 **Grading Scale**
 
-Final grades use the following scale: A = 90–100%, B = 80–89%, C = 70–79%, D = 60–69%, and F = 59% or below.
-
-In other words, you can expect the following correspondence between your percentage grade in the course and your final letter grade, and the "equivalent" description from the [[registrar's grading system]{.underline}](https://registrar.uic.edu/student_records/grading_system.html).
+You can expect the following correspondence between your percentage grade in the course and your final letter grade, and the "equivalent" description from the [[registrar's grading system]{.underline}](https://registrar.uic.edu/student_records/grading_system.html).
 
 | **F** | **D** | **C** | **B** | **A** |
 |:-------------|:-------------|:-------------|:-------------|:-------------|
@@ -180,19 +184,32 @@ In other words, you can expect the following correspondence between your percent
 
 **Student Accountability for Coursework**
 
-TK
+Instructions for every graded exercise will be posted before the work is due, usually at least one week ahead. Some exercises are still being developed, so please let me know as soon as possible if you notice any issues.
+
+Unless an exercise says otherwise:
+
+- **In-class worksheets** are completed in class, and submitted in canvas via picture.
+- **In-class quizzes** are taken during class on your laptop.
+- **PrairieLearn homeworks** are submitted in PrairieLearn by the posted due date. There are unlimited retakes.
+- **Coding exercises** and **group project milestones** are submitted in Canvas by the posted due date.
+
+Due dates for everything submitted online are visible in PrairieLearn and Canvas, and I plan to highlight them in class. See "Policy for Missed or Late Work" below for what happens when something is submitted late.
 
 **Midterm Grades**
 
-TK
+Grades in Canvas are kept current throughout the semester, so you can check where you stand at any point.
+
+Around the midpoint of the semester I will also do a check-in: if your grade suggests you are at risk of not passing, I will email you directly so we have time to intervene. You are always welcome to come to drop-in hours to ask about your grade.
 
 **Final Exams**
 
-TK *(final exam format and scheduling; see registrar's [schedule of final exams and exam policies](https://registrar.uic.edu/current_students/calendars/final_exam_schedule.html))*
+The final exam will be administered in PrairieLearn and is worth 9% of your grade. Most of the final exam questions will be "variants" of the same questions you will have already seen in homework and quizzes throughout the semester. This means that steady work on the homework and quizzes is excellent preparation for the final.
+
+Scheduling follows the registrar's [schedule of final exams and exam policies](https://registrar.uic.edu/current_students/calendars/final_exam_schedule.html).
 
 ## [Policy for Missed or Late Work]{.underline}
 
-Due dates will be visible in PrairieLearn (Homework Questions) or Canvas (Coding Exercises, Project Scaffolding), and highlighted in class. There is an automatic "sliding scale" that will deduct points based on how late you submitted the work, down to 50%.
+Due dates will be visible in PrairieLearn (Homework Questions) or Canvas (Coding Exercises, Project Scaffolding), and highlighted in class. There is an automatic "sliding scale" that will deduct points based on how late you submitted the work, subtracting 10% a day, down to 50%.
 
 Anything submitted more than one week after the original due date will only receive 50% credit.
 
@@ -207,7 +224,11 @@ The activities we do during class are essential to your learning in this course,
 
 I recognize that illness, personal emergencies, university obligations, religious observances, and other circumstances may sometimes cause you to be late to class or prevent your attendance entirely.
 
-Details TK
+**An audacious experiment.** Attendance is worth 1% of your grade, and it is a collective 1%. Each class meeting, after the agenda slide, I will draw ten names at random using live random numbers from [random.org](https://www.random.org/). Everyone in the class receives the same attendance grade out of ten for that day, based on how many of the ten drawn students are present.
+
+There are two motivations for this experiment. First, it gives me real attendance data without spending class time on a roll call of the whole roster. It also puts some pressure on me to make sure class is worth attending. I will be able to see if we regularly have very low attendance, which is a signal to me that I should probably change something about our class meetings.
+
+This is an experiment and is only 1% of your grade. I will be curious to hear your thoughts and ideas throughout the semester.
 
 
 **Attendance-related accommodations**
@@ -388,7 +409,7 @@ If your name or pronouns do not match the class roster, please let the class kno
 
 ## [Community Agreement]{.underline}
 
-TK
+This will be discussed and developed collectively in class.
 
 # VII. Feedback & Support
 

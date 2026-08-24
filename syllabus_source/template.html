@@ -32,21 +32,6 @@ nav: syllabus
       max-width: 8.5in;
       padding: 0 24px;
     }
-    body::before {
-      content: "WORK IN PROGRESS";
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-28deg);
-      font-size: 4.5rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: rgba(0, 0, 0, 0.08);
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 0;
-    }
-    body > * { position: relative; z-index: 1; }
 
     h1, h2 { font-family: "Theinhardt", Arial, sans-serif; }
     h1 {
@@ -88,7 +73,6 @@ nav: syllabus
       white-space: nowrap;
     }
     .syllabus-meta a { color: inherit; }
-    .draft-note { margin: 0 0 1rem 0; text-align: center; font-size: 0.75rem; color: #999; }
 
     img { max-width: 100%; height: auto; }
     /* Signal aspects: the drawing sits beside the rule it stands for, so the
@@ -126,8 +110,6 @@ nav: syllabus
     This version created $created$ &nbsp;&nbsp; <a href="https://dodatascience.fun/syllabus/syllabus.pdf">Click here for PDF version</a>
   </div>
 </div>
-
-<p class="draft-note"><strong>WORK IN PROGRESS</strong> - draft syllabus subject to revision</p>
 
 <header>
   <p class="course-title">$course-title$</p>
