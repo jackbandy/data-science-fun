@@ -1510,7 +1510,8 @@ Jack Bandy and Elda Shatro
     - Meet your TA
     - Logistical Questions
     - More about Questions
-    - Quiz
+    - Quiz time (on your laptops)
+        - Make sure I start by 4:25
 :::
 
 ![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 1 stop"}
@@ -1518,12 +1519,88 @@ Jack Bandy and Elda Shatro
 :::
 
 
-## Random Draw: 12 of 62 {.iframe-slide}
+## Random Roll Call {.iframe-slide}
 
-<iframe src="https://www.random.org/integers/?num=12&min=1&max=62&col=2&base=10&format=html&rnd=new" title="RANDOM.ORG draw of 12 integers between 1 and 62" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+<div class="random-draw" data-num="12" data-min="1" data-max="62">
+<div class="random-draw-frame">
+<div class="random-draw-numbers" role="status" aria-live="polite" data-placeholder="Press “Draw” for 12 random numbers between 1 and 62."></div>
+</div>
+<p class="random-draw-controls"><button type="button" class="random-draw-button">Draw</button> <span class="random-draw-status"></span></p>
+</div>
+
+<style>
+.random-draw { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.random-draw-frame { flex: 1; min-height: 0; display: flex; justify-content: center; }
+.random-draw-numbers { height: 100%; aspect-ratio: 1.618 / 1; max-width: 100%; border: 1px solid #999; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); place-items: center; }
+.random-draw-numbers .random-draw-number { font-size: 3rem; font-weight: 700; line-height: 1; }
+.random-draw-numbers .random-draw-placeholder { grid-column: 1 / -1; grid-row: 1 / -1; text-align: center; font-size: 1.4rem; color: #555; padding: 0 1.5em; }
+.random-draw-controls { flex: none; margin: 12px 0 0; }
+.random-draw-button { font: inherit; font-size: 1.1rem; font-weight: 600; padding: 0.3em 1.2em; border: none; border-radius: 3px; background: #f9461c; color: #fff; cursor: pointer; }
+.random-draw-button:hover:not(:disabled) { background: #e03c14; }
+.random-draw-button:disabled { opacity: 0.6; cursor: default; }
+.random-draw-status { font-size: 1rem; color: #555; margin-left: 0.75em; }
+</style>
+
+<script>
+(() => {
+  const API = "https://www.random.org/integers/";
+  function setup(root) {
+    if (root.dataset.wired) return;
+    root.dataset.wired = "1";
+    const out = root.querySelector(".random-draw-numbers");
+    const button = root.querySelector(".random-draw-button");
+    const status = root.querySelector(".random-draw-status");
+    const num = root.dataset.num, min = root.dataset.min, max = root.dataset.max;
+    const url = API + "?num=" + num + "&min=" + min + "&max=" + max + "&col=1&base=10&format=plain&rnd=new";
+    function placeholder(text) {
+      out.innerHTML = "";
+      const p = document.createElement("div");
+      p.className = "random-draw-placeholder";
+      p.textContent = text;
+      out.appendChild(p);
+    }
+    function render(numbers) {
+      out.innerHTML = "";
+      numbers.forEach(function (n) {
+        const cell = document.createElement("div");
+        cell.className = "random-draw-number";
+        cell.textContent = n;
+        out.appendChild(cell);
+      });
+    }
+    function draw() {
+      button.disabled = true;
+      status.textContent = "drawing from random.org…";
+      fetch(url, { cache: "no-store" })
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+        .then(function (text) {
+          const numbers = text.trim().split(/\s+/).filter(Boolean);
+          if (!numbers.length) throw new Error("empty response");
+          render(numbers);
+          status.textContent = "true random numbers from random.org";
+        })
+        .catch(function (err) {
+          placeholder("Could not reach random.org (" + err.message + "). Open the draw in a new tab instead.");
+          status.textContent = "";
+        })
+        .then(function () { button.disabled = false; });
+    }
+    button.addEventListener("click", draw);
+    placeholder(out.dataset.placeholder);
+  }
+  function init() {
+    document.querySelectorAll(".random-draw").forEach(setup);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
 
 ::: {.iframe-caption}
-Generated live at <https://www.random.org/integers/>
+Numbers drawn live from <a href="https://www.random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new">random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new</a>
 :::
 
 
@@ -1649,8 +1726,28 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - Otherwise it asks for a value (a "which" question)
 - "How far is it to Cleveland?" (a distance)
 - "How does screen time influence mental health?" (an explanation)
-- TODO: add Cross's seven "ways" (by what road, in what manner, by what method, ...)
 :::
+
+---
+
+
+## Cross's Seven "Ways"
+
+::: {.caption}
+Charles B. Cross, ["Explanation and the Theory of Questions"](https://doi.org/10.1007/BF00385722), *Erkenntnis* 34(2), 1991, pp. 248–249.
+:::
+
+:::: {.dense}
+::: {.incremental}
+- **By what road** — the route taken ("How did you get here?")
+- **In what manner** — the style of the doing ("How did you behave at the party?")
+- **By what argument** — the reasoning offered ("How will you justify this?")
+- **By what method** — the established procedure ("How do you perform an appendectomy?")
+- **By what means** — the resource or instrument used ("How did you get that money?")
+- **In what respect** — the dimension of comparison ("How do these differ?")
+- **By what process** — the mechanism unfolding over time ("How do DNA molecules replicate?")
+:::
+::::
 
 ---
 
@@ -1789,12 +1886,18 @@ Carl Sagan
 - The asker already knows the answer they want
 - "What's the sample size for that?"
 - sometimes a matter of how it's said
-- save these for political debates
+- Usually best saved for politicians / laywers
 :::
 
 :::
 
+::: {.captioned-figure}
 ![](../assets/lattice/question2.png){.figure alt="A student in a lecture hall raising her hand, with classmates seated in the rows around her"}
+
+::: {.caption}
+"If Thanos was so worried about overpopulation, why didn't he use the magic glove to make more food?"
+:::
+:::
 
 :::
 

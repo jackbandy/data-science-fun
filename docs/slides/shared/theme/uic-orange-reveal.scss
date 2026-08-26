@@ -527,6 +527,16 @@ $code-color: $ink !default;
     img { align-self: center; }
   }
   .split-content > p { display: flex; align-items: center; justify-content: center; }
+  // A figure in a split column that carries its own caption. Both must sit in
+  // one grid child, or the caption becomes a third grid item and wraps under
+  // the text column instead of staying with the image.
+  .split-content > .captioned-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    > p { margin: 0; }
+  }
   // 480px is what actually fits between the title rule and the footer band:
   // 720 slide - 48 top padding - the h2 block - 92 bottom padding. A taller
   // cap lets a portrait figure run off the bottom of the slide.
