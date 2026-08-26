@@ -1396,7 +1396,11 @@ Jack Bandy and Elda Shatro
 ::: {}
 - Week 1: Harold Washington Library
 - Day 2
-    - Asking Questions
+    - Random Roll Call
+    - Meet your TA
+    - Logistical Questions
+    - More about Questions
+    - Quiz
 :::
 
 ![](../assets/orange-line-map-stops/stop01-harold-washington-library.svg){.figure alt="Orange Line map with the Harold Washington Library stop marked, the Week 1 stop"}
@@ -1404,20 +1408,27 @@ Jack Bandy and Elda Shatro
 :::
 
 
-# Asking Questions {.section-header}
+## Random Draw: 12 of 62 {.iframe-slide}
 
+<iframe src="https://www.random.org/integers/?num=12&min=1&max=62&col=2&base=10&format=html&rnd=new" title="RANDOM.ORG draw of 12 integers between 1 and 62" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
-## Carl Sagan {.quote-slide}
-
-> There are naïve questions, tedious questions, ill-phrased questions, questions put after inadequate self-criticism. But every question is a cry to understand the world.
-
-::: {.attribution}
-Carl Sagan
+::: {.iframe-caption}
+Generated live at <https://www.random.org/integers/>
 :::
 
-::: {.quote-source}
-*The Demon-Haunted World: Science as a Candle in the Dark* (1995).
-:::
+
+# Meet your TA! {.section-header}
+
+
+# Logistical Questions? {.section-header}
+
+
+# More about Questions {.section-header}
+
+
+## Questions in the Data Science Lifecycle {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle-v1.svg" alt="The data science lifecycle with the 'ask a question' stage highlighted; obtain data, understand the data, understand the world, and reports, decisions, solutions are shown unhighlighted.">
 
 ---
 
@@ -1444,11 +1455,33 @@ Examples from Booth et al., *The Craft of Research* (2024).
 - "Are there ultimate particles?"
 - "Was Abraham Lincoln's right thumb longer than his nose?"
 - Both are concrete and answerable!
+- Today we will develop vocabulary to describe the differences
 :::
 
 
 
 ---
+
+## Warm-up Activity {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+- Gather with your elbow neighbor(s)
+- You must speak to each other only in questions
+- Topic can be anything
+    - If you're stuck, start with something you enjoyed eating/drinking recently
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+
+# Basic Types of Questions {.section-header}
 
 
 ## Basic Types of Questions {.split}
@@ -1490,31 +1523,21 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 
 ---
 
-## Presuppositions
 
-::: {.incremental}
-- A **presupposition** is a background claim that must be true for the question to have a meaningful answer
-- "Who was the Roman emperor in 2020?"
-- Presupposes an active Roman Empire
-- Name your presuppositions!
+# Common Pitfalls in Questions {.section-header}
+
+
+## Carl Sagan {.quote-slide}
+
+> There are naïve questions, tedious questions, ill-phrased questions, questions put after inadequate self-criticism. But every question is a cry to understand the world.
+
+::: {.attribution}
+Carl Sagan
 :::
 
----
-
-## Contrast Classes
-
-:::: {.dense}
-::: {.incremental}
-- Explanatory questions often presuppose a set of alternatives
-	- "compared to **what**?"
-- "How do DNA molecules (vs. benzene and hexane) replicate?"
-	- only one is true
-- "How do reptiles (vs. mammals and birds) reproduce?"
-	- every member is true
-- Each "contrast class" implies a different comparison group, study design, and dataset
-- TODO: an example question w/ contrast classes
+::: {.quote-source}
+*The Demon-Haunted World: Science as a Candle in the Dark* (1995).
 :::
-::::
 
 ---
 
@@ -1549,7 +1572,7 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - Can also reveal assumptions "experts" have stopped considering
 - e.g. "Was Michael Jordan good at basketball?"
 - e.g. "Which NBA players are the best scorers?"
-	- points per game vs. efficiency, possession context
+	- points per game vs. efficiency, possession context, etc.
 :::
 
 
@@ -1563,7 +1586,6 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - Measurable details are not always meaningful
 - "How many times did each council member say the word 'budget'?"
     - (e.g. but ignoring how they actually voted)
-- Compare: the triangle/pixel zoom from Day 1
 :::
 
 ---
@@ -1574,7 +1596,7 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 ::: {.incremental}
 - Terms, scope, or possible answers are unclear
 - "Are students doing better this year?"
-	- which students, compared with when, by what measure?
+	- which students, compared with when, by what metric?
 - "Is our museum's collection diverse?"
 	- diverse in who/what/when, counted how?
 - "Is news coverage biased?"
@@ -1589,7 +1611,7 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 - Implies a preferred answer
 - "How much did the tutoring program raise test scores?"
 - "Everything tasting good over here?"
-- Other examples?
+- Other examples of leading questions?
 :::
 
 ---
@@ -1614,12 +1636,12 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 :::: {.dense}
 ::: {.incremental}
 - All questions ask for information
-- But information sensitivity can exceeds the context
+- But information sensitivity can exceed the context
     - "Contextual integrity"
-- E.g. Asking weight at a job interview vs. at the DMV
-- Can become coercive when answers gate grades, jobs, housing, healthcare
+- E.g. Asking your weight at a job interview vs. at the DMV
+- Can become coercive, e.g. if answers required for grades, jobs, housing, healthcare
 - Ask for the **least sensitive** data that can address the question
-- More on this when we get to obtaining data
+    - More on this when we get to obtaining data, privacy
 :::
 ::::
 
@@ -1633,9 +1655,10 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 
 ::: {.incremental}
 - Asked to call someone out, not to learn/explore
-- The asker already has the answer they want
+- The asker already knows the answer they want
 - "What's the sample size for that?"
-- sometimes a matter of tone (*how* it's said)
+- sometimes a matter of how it's said
+- save these for political debates
 :::
 
 :::
@@ -1643,6 +1666,37 @@ Taxonomy from the *Stanford Encyclopedia of Philosophy* entry on questions.
 ![](../assets/lattice/question2.png){.figure alt="A student in a lecture hall raising her hand, with classmates seated in the rows around her"}
 
 :::
+
+---
+
+
+# Temporality and More {.section-header}
+
+
+## Presuppositions
+
+::: {.incremental}
+- A **presupposition** is a background claim that must be true for the question to have a meaningful answer
+- "Who was the Roman emperor in 2020?"
+- Presupposes an active Roman Empire
+- Try to name your presuppositions!
+:::
+
+---
+
+## Contrast Classes
+
+:::: {.dense}
+::: {.incremental}
+- Explanatory questions often presuppose a set of alternatives
+	- "compared to **what**?"
+- "How do DNA molecules (vs. benzene and hexane) replicate?"
+	- only one replicates -> no contrast class
+- "How do reptiles (vs. mammals and birds) reproduce?"
+	- every member reproduces -> contrast classes!
+- A different "contrast class" can imply a different study design
+:::
+::::
 
 ---
 
@@ -1673,7 +1727,7 @@ Michael Shermer
 
 ---
 
-## Your Turn: What Questions do you wonder about? {.split}
+## On your own: What Questions do you wonder about? {.split}
 
 ::: {.split-content .golden-columns}
 
@@ -1682,6 +1736,7 @@ Michael Shermer
 - Write down as many questions as come to mind
 - Anything you are curious about
 - Ideally, questions that could be addressed with data
+- I know you are doing this multiple times - it's intentional
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -1698,9 +1753,8 @@ Michael Shermer
 
 Discuss with your elbow neighbor(s):
 
-1. What type is it? (whether, which, why, indirect)
-2. What does it presuppose?
-3. Which pitfall is it closest to? (naïve, tedious, ill-phrased, leading, settled/speculative/dead-end, invasive, "gotcha")
+1. What type is it? (whether, which, why, indirect, etc.)
+2. What does it presuppose, if anything?
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -1709,10 +1763,19 @@ Discuss with your elbow neighbor(s):
 
 ---
 
+
+# Upload today's worksheet in Canvas! {.section-header}
+
+
+# Quiz {.section-header}
+
+
 ## Quiz Time!
 
 - PrairieLearn
 - Week1 Quiz
+- It should give you your score instantly
+- You can leave when finished!
 
 
 # Sources {.sources}
