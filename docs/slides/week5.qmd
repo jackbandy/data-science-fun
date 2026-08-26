@@ -163,11 +163,12 @@ def _teardrop(cx=809.0, cy=488.4, r=104.0, tip=660.0, n=48):
              + [MplPath.CURVE4] * 3 + [MplPath.CLOSEPOLY])
     return verts, codes
 
+# The Chicago flag's star: six points, one straight up, inner vertices at 0.367 of the
+# outer radius -- the flag's own proportion, measured off Chicago-star.png.
 STAR = _marker(_poly([
-    (219.00, 387.00), (234.15, 486.93), (315.52, 426.98), (255.57, 508.35),
-    (355.50, 523.50), (255.57, 538.65), (315.52, 620.02), (234.15, 560.07),
-    (219.00, 660.00), (203.85, 560.07), (122.48, 620.02), (182.43, 538.65),
-    (82.50, 523.50), (182.43, 508.35), (122.48, 426.98), (203.85, 486.93)]))
+    (219.00, 387.00), (244.05, 480.12), (337.21, 455.25), (269.10, 523.50),
+    (337.21, 591.75), (244.05, 566.88), (219.00, 660.00), (193.95, 566.88),
+    (100.79, 591.75), (168.90, 523.50), (100.79, 455.25), (193.95, 480.12)]))
 SQUARE = _marker(_rect(419.75, 471.50, 188.50, 188.50))
 TEARDROP = _marker(_teardrop())
 BROCCOLI = _marker(_join(
@@ -380,7 +381,7 @@ mark_axes(ax)
 #| echo: false
 #| fig-width: 5.2
 #| fig-height: 4.0
-#| fig-alt: "Five orange marks in a row at the same height: a star, a square, an upside-down teardrop, a broccoli floret and a lightning bolt"
+#| fig-alt: "Five orange marks in a row at the same height: a six-pointed Chicago-flag star, a square, an upside-down teardrop, a broccoli floret and a lightning bolt"
 fig, ax = plt.subplots()
 for x, m in zip([1.4, 3.2, 5.0, 6.8, 8.6], [STAR, SQUARE, TEARDROP, BROCCOLI, BOLT]):
     ax.scatter([x], [3], marker=m, s=1600, color=ORANGE, zorder=3)

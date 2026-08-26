@@ -686,6 +686,84 @@ Source: [Exploding Topics](https://explodingtopics.com/blog/data-generated-per-d
 
 ---
 
+## A Terabyte in Phones {.figure-aside .golden}
+
+::::: {.columns}
+
+:::: {.column}
+::: {.incremental}
+::: {.dense}
+- Fill up a 256 GB phone with photos — **4 full phones ≈ 1 TB**
+- Every UIC student with a full phone: (**35,869** as of Fall 2025) ≈ **9,000 TB**
+- Every Cook County resident with a full phone: (**5.2 million**) ≈ **1.3 million TB**
+- Everyone in the US (**340 million**) ≈ **85 million TB**
+    - Still less than the estimated 400 million terabytes created every day!
+:::
+:::
+::::
+
+:::: {.column}
+<img class="figure" src="../assets/terabyte-scale/iphone-17-pro-max-cosmic-orange.jpg" alt="The back of a Cosmic Orange iPhone 17 Pro Max on a display stand at an Apple product launch, its three camera lenses in the raised bar across the top">
+
+::: {.caption}
+Ahmad Ali Karim, [*Cosmic Orange iPhone 17 Pro Max*](https://commons.wikimedia.org/wiki/File:Cosmic_Orange_iPhone_17_Pro_Max.jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/). Populations: [Census Bureau 2024 estimates](https://www.census.gov/programs-surveys/popest.html); enrollment: [UIC Today](https://today.uic.edu/uic-enrollment-hits-all-time-best-mark/).
+:::
+::::
+
+:::::
+
+
+---
+
+## A Terabyte in Streaming {.figure-aside .golden}
+
+::::: {.columns}
+
+:::: {.column}
+::: {.incremental}
+::: {.dense}
+- **~30 hours of 4K video ≈ 1 TB**
+- Stream 4K nonstop for **a week** ≈ **5.6 TB**
+- Stream nonstop for **a month** ≈ **24 TB**
+- Stream nonstop for **a year** ≈ **292 TB**
+    - apparently the world creates that much 0.06 seconds
+    - according to the 400 million terabytes per day estimate
+- All **35,869** UIC students streaming 4K nonstop for a year ≈ **10.5 million TB**
+    - Again less than the estimated 400 million terabytes created every day
+:::
+:::
+::::
+
+:::: {.column}
+<img class="figure" src="../assets/terabyte-scale/oppenheimer-format-guide.jpg" alt="The 'Oppenheimer' format guide: a two-column chart comparing film formats (IMAX 70mm, 70mm, 35mm) against digital ones (IMAX with laser, IMAX Xenon, DCP), each with its aspect ratio and resolution — IMAX 70mm is listed at a digital equivalent of about 18K pixels, DCP at 4096 x 1716">
+
+::: {.caption}
+*Oppenheimer* format guide, Universal Pictures / IMAX, via Rasmus Larsen, [FlatpanelsHD](https://www.flatpanelshd.com/news.php?subaction=showfull&id=1685963488) (2023); fair use. Capacities: [Kingston](https://www.kingston.com/en/memory-cards/storage-chart).
+:::
+::::
+
+:::::
+
+::: {.notes}
+- IMAX 70mm - roughly an 18K digital equivalent
+
+:::
+
+---
+
+## Footnote about terabyte in streaming {.image-frame-slide}
+
+<img src="../assets/terabyte-scale/terabyte-video-hours-linear.svg" alt="The same interval chart on a linear axis, which crushes the top of the range: 8K's 7-to-28-hour pill is a sliver and 4K's 26-to-63 barely wider, while 480p's 556-to-889 runs a third of the width of the plot. Rows heaviest first: 8K, 7 to 28 hours; 4K UHD, 26 to 63; 1440p, 74 to 139; 1080p, 148 to 278; 720p, 234 to 444; 480p, 556 to 889." class="r-stretch figure-plain">
+
+---
+
+## Footnote about terabyte in streaming {.image-frame-slide}
+
+<img src="../assets/terabyte-scale/terabyte-video-hours-log.svg" alt="Interval chart, on a log axis, of how many hours of video fit in one terabyte at six resolutions, heaviest first. Each resolution is a range rather than a single number, spanning YouTube's recommended bitrates from SDR at standard frame rate to HDR at high frame rate: 8K, 7 to 28 hours; 4K UHD, 26 to 63; 1440p, 74 to 139; 1080p, 148 to 278; 720p, 234 to 444; 480p, 556 to 889." class="r-stretch figure-plain">
+
+
+---
+
 ## What is Data Science? (A Hub of Fields) {.image-frame-slide}
 
 <img src="../assets/week1-intro-data-science/role-of-data-science.svg" alt="Hub-and-spoke diagram: data science at the center linked to healthcare, transportation, climate science, public safety, and scientific research" class="r-stretch figure-plain">
@@ -1452,8 +1530,29 @@ Generated live at <https://www.random.org/integers/>
 # Meet your TA! {.section-header}
 
 
+
 # Logistical Questions? {.section-header}
 
+
+## Homework 2 {.split}
+
+::: {.split-content .narrow-aside .fill-height}
+
+::: {.dense}
+- Due Monday (sorry for the quick turnaround)
+- More probability review (rule of subtraction)
+- A few more challenging questions
+- Variants of the same questions will be on the week3 quiz
+- Unlimited retakes!
+- Collaboration is encouraged!
+- Paper / whiteboard work is encouraged!
+:::
+
+![](../assets/prairielearn/PL-logo-white-on-blue.svg){.figure .figure-sm alt="The PrairieLearn logo, a white line drawing of a purple coneflower on a dark blue panel"}
+
+:::
+
+---
 
 # More about Questions {.section-header}
 
@@ -1837,3 +1936,7 @@ Discuss with your elbow neighbor(s):
 23. UIC elevated walkway photo courtesy University of Illinois Chicago, via Hillary Bird, ["Walk through UIC's architectural history"](https://today.uic.edu/walk-through-uics-architectural-history/), *UIC Today*, June 9, 2025; the article prints no photographer credit, but the filename points to architectural photographer Orlando Cabanban.
 24. The "Asking Questions" section follows [Chapter 2: Ethics in Asking Questions](../ethics-in-data-science/book/02-ethics-in-asking-questions.html), which draws on the *[Stanford Encyclopedia of Philosophy](https://plato.stanford.edu/entries/questions/)* entry on questions, Charles B. Cross, ["Explanation and the Theory of Questions"](https://doi.org/10.1007/BF00385722), *Erkenntnis* 34(2), 1991, pp. 237–260, and Wayne C. Booth et al., *The Craft of Research*, 5th ed., University of Chicago Press, 2024.
 25. Note-taking evidence on "The Benefits of Paper": Fergus I. M. Craik and Robert S. Lockhart, ["Levels of Processing: A Framework for Memory Research"](https://doi.org/10.1016/S0022-5371(72)80001-X), *Journal of Verbal Learning and Verbal Behavior* 11(6), 1972, pp. 671–684; Pam A. Mueller and Daniel M. Oppenheimer, ["The Pen Is Mightier Than the Keyboard"](https://doi.org/10.1177/0956797614524581), *Psychological Science* 25(6), 2014, pp. 1159–1168; and Kayla Morehead, John Dunlosky, and Katherine A. Rawson, ["How Much Mightier Is the Pen than the Keyboard for Note-Taking? A Replication and Extension of Mueller and Oppenheimer (2014)"](https://doi.org/10.1007/s10648-019-09468-2), *Educational Psychology Review* 31(3), 2019, pp. 753–780.
+26. iPhone 17 Pro Max photo by Ahmad Ali Karim, [*Cosmic Orange iPhone 17 Pro Max*](https://commons.wikimedia.org/wiki/File:Cosmic_Orange_iPhone_17_Pro_Max.jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
+27. Population figures for the terabyte analogies are Census Bureau [Population Estimates Program](https://www.census.gov/programs-surveys/popest.html) vintage 2024 (Cook County 5,182,617; United States 340,110,988); the UIC figure is the Fall 2025 record enrollment of 35,869 reported by [*UIC Today*](https://today.uic.edu/uic-enrollment-hits-all-time-best-mark/).
+28. The "~30 hours of 4K per terabyte" figure is from Kingston Technology, ["Flash Memory Storage Chart"](https://www.kingston.com/en/memory-cards/storage-chart) (2019), cross-checked against [Clip Sweeper](https://clipsweeper.com/blog/how-long-record-1tb-ssd). The interval chart uses bitrates from YouTube Help, ["Recommended upload encoding settings"](https://support.google.com/youtube/answer/1722171), with hours derived exactly (1 TB = 8 × 10^12 bits, so hours = 2,222 ÷ Mbps); the streaming comparison in the speaker notes is [Netflix's published data usage](https://help.netflix.com/en/node/87). See [assets/terabyte-scale/SOURCES.md](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/terabyte-scale/SOURCES.md) for why the chart does not use Kingston's bitrate labels.
+29. *Oppenheimer* format guide by Universal Pictures and IMAX, via Rasmus Larsen, ["Only 30 theaters will screen 'Oppenheimer' as intended by Christopher Nolan"](https://www.flatpanelshd.com/news.php?subaction=showfull&id=1685963488), *FlatpanelsHD*, June 5, 2023; used under fair use for educational commentary.
