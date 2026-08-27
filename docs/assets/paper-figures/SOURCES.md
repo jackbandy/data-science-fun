@@ -70,3 +70,18 @@ the PNAS version of record is CC BY-NC-ND.
    three ways — error bars, a violin plot, and selected frames of a Hypothetical
    Outcome Plot (HOP), which animates draws from the distribution instead of
    summarizing it.
+
+## Strömberg, Lei & Wu, "The Generative AI Learning Penalty: Evidence from Chinese Secondary Education"
+
+- David Strömberg (Stockholm University), Victor Lei (University of Hong Kong),
+  Yanhui Wu (University of Hong Kong)
+- Working paper, June 2026 — https://dx.doi.org/10.2139/ssrn.6868618
+
+### Files
+
+All 24 figures were extracted as **vector SVG** by rendering the relevant PDF
+page with `pdftocairo -svg` and then rewriting the SVG `viewBox` to crop to the
+figure region. The PDF's figures are TikZ/pgfplots output (vector); `pdfimages`
+only recovers a single embedded raster, so the SVG route is the only way to keep
+them sharp at slide resolution. Previews were rendered with `rsvg-convert`.
+
