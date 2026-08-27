@@ -138,7 +138,7 @@ The collider: independent causes $X$ and $Y$ (e.g., heat and fuel, or two bucket
 The descendant: $D$ (e.g., how well the meat cooked) is a side effect of $Z$ (the flame), which in this case is itself a collider between $X$ and $Y$ (the gas level and the igniter). Because $D$ carries part of $Z$'s information, conditioning on $D$ partially conditions on $Z$, and so leaks in a partial version of the collider bias from @fig-confound-collider.
 :::
 
-The unmeasured-cause problem connects directly to the discussion of proxies above: a descendant *is* a proxy, and reasoning about proxies means reasoning about what the proxy inherits from the thing it stands in for. For further discussion of these questions, see [@sep-causation-regularity]. Also, the [Week 6 slides about causal graphs](../slides/week6.qmd) work through elemental confounds — fork, pipe, collider, and descendant — in more depth.
+The unmeasured-cause problem connects directly to the discussion of proxies above: a descendant *is* a proxy, and reasoning about proxies means reasoning about what the proxy inherits from the thing it stands in for. For further discussion of these questions, see [@sep-causation-regularity]. Also, the [Week 6 slides about causal graphs](/slides/week6.html) work through elemental confounds — fork, pipe, collider, and descendant — in more depth.
 
 ### Uncertainty
 TK
