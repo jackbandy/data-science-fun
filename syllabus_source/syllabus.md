@@ -211,11 +211,13 @@ Scheduling follows the registrar's [schedule of final exams and exam policies](h
 
 ## [Policy for Missed or Late Work]{.underline}
 
-Due dates will be visible in PrairieLearn (Homework Questions) or Canvas (Coding Exercises, Project Scaffolding), and highlighted in class. There is an automatic "sliding scale" that will deduct points based on how late you submitted the work, subtracting 10% a day, down to 50%.
+Due dates will be visible in PrairieLearn (Homework Questions) or Canvas (Coding Exercises, Project Scaffolding), and highlighted in class. Work submitted up to one day late still earns effectively full credit (99%). After that, an automatic "sliding scale" deducts 10% for each additional day late, down to a floor of 50% credit.
 
-Anything submitted more than one week after the original due date will only receive 50% credit.
+Anything submitted more than one week after the original due date will only receive 50% credit, and nothing will be accepted after the last day of class.
 
 If you anticipate any difficulty meeting a due date, contact the instructor as soon as possible. I am often able to adjust due dates, especially if multiple people want/need an extension.
+
+![Credit for late homeworks: full credit through the one-day grace period, then a 10%-a-day sliding scale down to a 50% floor by one week late, held flat through the last day of class.](../assets/grading-visuals/late-penalty-curve.svg)
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
