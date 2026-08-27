@@ -39,7 +39,8 @@ DPI = 100
 
 FULL_CREDIT = 1.00
 FLOOR = 0.50
-GRACE_DAYS = 1  # one day late is free: still full credit
+GRACE_DAYS = 1  # one day late is free: still (almost) full credit
+GRACE_CREDIT = 0.99  # the grace day is nominally a point off, so it reads as distinct from the due date
 RATE_PER_DAY = 0.10  # the sliding scale, once the grace day is used up
 # Where the scale bottoms out: 100% - 10 a day takes five penalized days to
 # reach 50%, so day 6. Everything later is the same 50%, out to the 30-day cap.
@@ -75,7 +76,8 @@ def credit(days_late: np.ndarray) -> np.ndarray:
     and it is also what holds the grace day flat at 100%.
     """
     slid = FULL_CREDIT - RATE_PER_DAY * (days_late - GRACE_DAYS)
-    return np.clip(slid, FLOOR, FULL_CREDIT)
+    result = np.clip(slid, FLOOR, FULL_CREDIT)
+    return np.where(np.asarray(days_late) == GRACE_DAYS, GRACE_CREDIT, result)
 
 
 def build_figure():
@@ -102,6 +104,11 @@ def build_figure():
         color=INK, linewidth=2.5, marker="o", markersize=6,
         zorder=3, clip_on=False,
     )
+    # The grace day gets its own orange dot, drawn over the line's black one.
+    ax.plot(
+        [GRACE_DAYS], [GRACE_CREDIT],
+        color=ORANGE, marker="o", markersize=6, zorder=4, clip_on=False,
+    )
 
     # Days 13-29: same 50%, drawn as a dotted bridge so the compressed stretch
     # does not read as real, evenly-spaced days.
@@ -117,7 +124,7 @@ def build_figure():
         color=QUIET, linewidth=1.2, linestyle=(0, (2, 3)), zorder=2,
     )
     ax.annotate(
-        f"Day {LAST_DAY}:\nlast day to submit",
+        "LDOC:\nlast day to submit",
         xy=(X_END, FLOOR),
         xytext=(0, 14),
         textcoords="offset points",
@@ -127,26 +134,26 @@ def build_figure():
     ax.annotate(
         "Due date: 100%",
         xy=(0, FULL_CREDIT),
-        xytext=(12, 6),
+        xytext=(-4, 6),
         textcoords="offset points",
-        ha="left", va="bottom", fontsize=14, color=INK,
+        ha="left", va="bottom", fontsize=14, color=INK, fontweight="bold",
     )
     ax.annotate(
-        "Grace day:\nstill 100%",
-        xy=(GRACE_DAYS, FULL_CREDIT),
-        xytext=(-38, -12),
+        "Grace day:\nstill 99%",
+        xy=(GRACE_DAYS, GRACE_CREDIT),
+        xytext=(-16, -12),
         textcoords="offset points",
         ha="center", va="top", fontsize=13, color=ORANGE, linespacing=1.3,
     )
     ax.annotate(
-        "Sliding scale/ladder:\n10% a day",
+        "Sliding scale (ladder):\n-10% a day",
         xy=(3, credit(np.array([3]))[0]),
-        xytext=(-14, -30),
+        xytext=(4, -30),
         textcoords="offset points",
         ha="right", va="top", fontsize=13, color=STEEL, linespacing=1.3,
     )
     ax.annotate(
-        "(50% credit, up to 30 days late)",
+        "(50% credit)",
         xy=(FLOOR_DAY + 0.25, FLOOR),
         xytext=(0, 26),
         textcoords="offset points",
@@ -157,7 +164,7 @@ def build_figure():
     ax.set_xticklabels(
         ["due\ndate"]
         + [str(d) for d in days[1:]]
-        + ["…", str(LAST_DAY)],
+        + ["…", "LDOC"],
         fontsize=12,
         color=STEEL,
     )
