@@ -420,8 +420,11 @@ jobs:
       # JS string fragments ("#", ref.getAttribute('data-footnote-href')) get
       # misparsed as links and fail
       # the <a href> links are still checked.
+      # Advisory on both main and PRs: 
+      #  a broken link anywhere can fail the run for an unrelated PR
+      # The errors still show up but they don't block a merge.
       - name: Check internal links
-        continue-on-error: ${{ github.event_name != 'pull_request' }}
+        continue-on-error: true
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
