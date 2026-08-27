@@ -24,6 +24,7 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
   - Raw data not included; download from the [Princeton Research Data Commons](https://datacommons.princeton.edu/discovery/catalog/doi-10-34770-y56c-ym90)
 - [national-parks-info](national-parks-info/) — The 63 U.S. national parks
 - [resume-audit-bertrand-mullainathan](resume-audit-bertrand-mullainathan/) — Replication data for Bertrand & Mullainathan, *AER* 2004 field experiment on racial discrimination in hiring
+- [us-presidential-elections](us-presidential-elections/) — Popular vote totals and shares for every U.S. presidential candidate, 1824–2024, from the Berkeley Data 100 course notes
 - [world-inequality-database](world-inequality-database/) — Pre-tax national income share time series for 9 countries, from the World Inequality Database
 
 ### Guidelines
