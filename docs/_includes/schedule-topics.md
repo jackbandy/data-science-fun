@@ -32,6 +32,7 @@
 * *The Art of Data Science*, [Chapter 3: Stating and Refining the Question](https://bookdown.org/rdpeng/artofdatascience/chapter-question.html)
 * *Ethics in Data Science* (course mini-book), [Chapter 2: Ethics in Asking Questions](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
 * Leek & Peng (2015), ["What is the question?"](https://www.science.org/doi/abs/10.1126/science.aaa6146), *Science* 347(6228), 1314-1315
+* Cross & Roelofsen (2014), ["Questions"](https://plato.stanford.edu/entries/questions/), *Stanford Encyclopedia of Philosophy*
 
 ## Week 2, Day 1 (2026-08-31)
 
