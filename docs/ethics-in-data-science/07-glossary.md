@@ -8,8 +8,12 @@
 
 TK: terms used throughout the book, with definitions and pointers to relevant chapter(s).
 
+Alternative hypothesis ($H_a$)
+: The hypothesis that contradicts the null hypothesis.
+
 [Aristotle's four causes]{#four-causes}
 : TK — four different ways that one thing can explain another thing: the *material cause*, *formal cause*, *efficient cause*, and *final cause* [Source: @sep-aristotle-causality]
+
 
 Campbell's Law
 : The notion that social indicator metrics often become corrupt and unreliable when used for high-stakes decision-making. Examples include standardized test scores (Campbell's example), mortality scorecards for surgeons [@dranove_report_cards_2003], and sales quotas tied to compensation [@cfpb_wells_fargo_consent_order_2016]. See @sec-campbells-law. [Source: @campbell1979assessing]
@@ -22,6 +26,9 @@ Common causes
 
 Common knowledge
 : Shared awareness about what other people know. That is, not just knowing a proposition/fact, but also having awareness that others know that proposition/fact too (as well as others knowing that *you* know that proposition/fact). Often conflated with mutual knowledge. [Source: @sep-common-knowledge]
+
+Conditional probability
+: The probability of an event $A$ given that another event $B$ has already happened: $P(A \mid B) = \frac{P(A \cap B)}{P(B)}$.
 
 Consent
 : Permission that is freely given, reversible, informed, enthusiastic, and specific. [Source: @lee_building_consentful_2017]
@@ -43,6 +50,9 @@ Data visceralization
 
 Datum
 : A single data point, such as a number or symbol.
+
+Descriptive statistics
+: Statistics that summarize real data (e.g. through measures of center, spread, and position)
 
 Directionality
 : Relevant when determining which of two correlated things is the cause and which is the effect, e.g. train's speed and its speedometer needle. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
@@ -66,14 +76,24 @@ The highest human good, the [telos](#telos) which Aristotle argues is the aim of
 More than pleasure or satisfaction or a specific state of feeling.
 "human good turns out to be activity of soul in accordance with virtue" [@aristotle_nicomachean_ethics, *Nicomachean Ethics* I.7, 1097b–1098a]. 
 
+Event
+: TK (A subset of a sample space?)
+
+Experiment
+: A procedure or process with more than one possible outcome.
+
 Final cause
 : TK — a thing's purpose or end, what it is good for. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
+
 
 Formal cause
 : TK — a thing's real-world essence. E.g. for a bronze statue, the actual shape of the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
 
 Goodhart's Law
 : The notion that a measure can stop being a helpful measure when it becomes a target. E.g. see @sec-college-rankings: acceptance rates, student-teacher ratios, and reported SAT scores can all be moved directly once they are ranked on (but may or may not improve the actual school quality). See @sec-goodharts-law. [Source: @goodhart1984problems]
+
+Inferential statistics
+: Statistics that use a sample to conclude something about the population it was drawn from, e.g. through hypothesis testing and confidence intervals. [Source: [Week 2 Slides](../../slides/week2.html)]
 
 Information
 : TK
@@ -90,8 +110,21 @@ Multiple necessary conditions
 Mutual knowledge
 : A proposition is mutual knowledge among people when each person knows that proposition. Often conflated with common knowledge. [Source: @sep-common-knowledge]
 
+Null hypothesis ($H_0$)
+: The hypothesis assumed true unless the evidence says otherwise. [Source: [Week 2 Slides](../../slides/week2.html)]
+
+Outcome
+: A single possible result of an experiment.
+
+
 Overdetermination
 : Describes situations in which two sufficient causes may occur at once, e.g. two people each empty a full bucket of water onto a campfire.
+
+Percentile
+: One of 100 equal divisions of a dataset; i.e. $n$% of the data is at or below the $n$th percentile.
+
+Population
+: The entire group that a statistical sample is drawn from and used to make inferences about.
 
 Presupposition
 : A background claim that must be true in order for a question to have a meaningful answer. [Source: @sep-questions]
@@ -102,14 +135,34 @@ Provenance
 Proxy
 : TK [@barocas_selbst_big_data_disparate_impact_2016]
 
+Quartile
+: One of four equal divisions of a dataset — $Q_1$ (25th percentile), $Q_2$ (50th, the median), and $Q_3$ (75th percentile). [Source: [Week 2 Slides](../../slides/week2.html)]
+
+
+Sample
+: The actual data at hand, as opposed to the population it is drawn from.
+
+Sample space
+: The set of all possible outcomes of an experiment. (TODO - add garden of forking data explanation)
+
 Sensitive information
 : TK [@nissenbaum_privacy_contextual_integrity_2004]
+
+Significance level ($\alpha$)
+: The threshold, typically 0.05, below which a p-value is considered statistically significant.
 
 Situated knowledge
 : TK [@dignazio_klein_data_feminism_2020]
 
 Spurious regularities
 : Used to describe when things consistently occur together without one causing the other, e.g. rooster crows every morning before sunrise. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+
+
+Statistically significant
+: Describes a result whose p-value falls below the significance level. [Source: [Week 2 Slides](../../slides/week2.html)]
+
+Statistics
+: Learning from data under uncertainty. (TODO- cross-reference)
 
 Tech Debt
 : TK
@@ -125,6 +178,7 @@ Wisdom
 
 Worldview
 : TK [@taves_worldview_studies_2019; @sep-statistics]
+
 
 ## Defining Data Science {#sec-defining-data-science}
 
