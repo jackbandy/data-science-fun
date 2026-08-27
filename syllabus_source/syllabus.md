@@ -42,11 +42,13 @@ Students are responsible for all messages sent to UIC email and Canvas accounts.
 
 **[Course Modality and Schedule]{.underline}**
 
-Meeting time:
+Meeting time: 
+
 * Monday and Wednesday
 * 03:30 PM - 04:45 PM
 
 Location: 
+
 * Lecture Center Building C
 * Room C001
 
@@ -54,7 +56,7 @@ CRN: 44033
 
 Schedule Type: Lecture
 
-Instructional Method: Meet on campus
+Instructional Method: Meet on campus (in-person)
 
 
 # II. Course Information
