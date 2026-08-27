@@ -21,9 +21,9 @@ Drop-In Hours location: CDRLC 3454
 
 Email address: mturk5@uic.edu
 
-Drop-In Office Hours (in-person or virtual): TBA
+Drop-In Office Hours (in-person or virtual): Tuesdays and Wednesdays, 12:30 PM - 01:30 PM
 
-Drop-In Hours location: TBA
+Drop-In Hours location: CDRLC 2404 (The 404)
 
 **Course Site:** [dodatascience.fun](https://dodatascience.fun/)
 
