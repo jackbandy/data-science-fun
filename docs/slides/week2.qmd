@@ -19,6 +19,45 @@ format:
           background: transparent;
           padding: 0;
         }
+
+        /* Column widths come from the pipe-table separator row, which pandoc
+           turns into a <colgroup>. Those percentages are only honoured under a
+           fixed layout -- otherwise the long exception names widen column one. */
+        .reveal .narrow-first-col table { table-layout: fixed; width: 100%; }
+
+        /* Wide-format demo: the table is meant to run off the right edge of
+           the slide once enough day columns have been added, so nothing here
+           may wrap or shrink it back into view. */
+        /* Left-aligned, not reveal's centered default: new days have to append
+           to the right edge, otherwise the table grows outward both ways. */
+        .reveal .wide-demo table {
+          border-collapse: collapse; white-space: nowrap;
+          margin-left: 0; margin-right: auto; width: auto;
+        }
+        .reveal .wide-demo th, .reveal .wide-demo td {
+          padding: 0.25em 0.7em;
+          border-bottom: 1px solid #d8d8d8;
+          text-align: right;
+        }
+        .reveal .wide-demo th:first-child, .reveal .wide-demo td:first-child {
+          text-align: left;
+          font-weight: 600;
+        }
+        .reveal .wide-demo thead th { color: #c83214; border-bottom: 2px solid #f9461c; }
+        /* Reveal only fades fragments in; a hidden one still holds its column
+           open, so the table would start at full width with blank gaps. Taking
+           it out of the layout instead is what makes the table visibly grow. */
+        .reveal .wide-demo .fragment:not(.visible) { display: none; }
+        .reveal .wide-demo td, .reveal .wide-demo th { min-width: 112px; }
+        .reveal .wide-demo td:first-child, .reveal .wide-demo th:first-child { min-width: 160px; }
+
+        /* Long format: fixed three columns, so it never leaves the frame. */
+        .reveal .long-demo table { border-collapse: collapse; }
+        .reveal .long-demo th, .reveal .long-demo td {
+          padding: 0.22em 1.4em 0.22em 0; text-align: left;
+        }
+        .reveal .long-demo thead th { color: #c83214; border-bottom: 2px solid #f9461c; }
+        .reveal .long-demo td { border-bottom: 1px solid #d8d8d8; }
         </style>
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 2</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week2.html">dodatascience.fun/slides/week2</a></span>'
 ---
@@ -210,42 +249,7 @@ ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(36
 
 ---
 
-## Descriptive Stats: Measures of Center
-::: {.columns .compare-columns}
-
-::: {.column width="50%"}
-[THE THREE MIDDLES]{.eyebrow}
-
-**Mean** — the sum divided by the number of values
-
-$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} a_i$$
-
-**Median** — the middle value of the sorted data, or the mean of the two middle values when $n$ is even
-
-**Mode** — the most frequent value. A dataset with two modes is **bimodal**
-:::
-
-::: {.column width="50%"}
-[WORKED THROUGH]{.eyebrow}
-
-| Ages | 24 | 35 | 32 | 21 | 28 |
-|:--|--:|--:|--:|--:|--:|
-
-$$\bar{x} = \frac{24+35+32+21+28}{5} = 28$$
-
-Grades: 78, 90, 90, 80, 78, 95, 76, 84
-
-Sorted: 76, 78, 78, 80, 84, 90, 90, 95
-
-$$\text{median} = \frac{80+84}{2} = 82
-\qquad \text{mode} = 78, 90$$
-:::
-
-:::
-
----
-
-## Why it's Mean to Use the Mean {.smaller}
+## Why it can be Mean to Use the Mean {.smaller}
 Which measure better summarizes these salaries?
 
 ::: {.columns}
@@ -479,7 +483,7 @@ ax.spines[["top", "right", "left"]].set_visible(False)
 
 ## Lots of Descriptive Stats at Once {.smaller}
 
-`describe()` gives: count, nulls, mean, standard deviation, and the five-number summary — on every column of a dataframe.
+
 
 ::: {.columns}
 
@@ -497,6 +501,7 @@ grades.describe()
 :::
 
 ::: {.column width="52%"}
+- `describe()` gives: count, nulls, mean, standard deviation, and the five-number summary — on every column of a dataframe.
 - Works on any dataframe, or just one column
 - Good first thing to run on data you have never seen
 - `null_count` is often useful for cleaning/wrangling
@@ -552,17 +557,13 @@ grades.select(
 ---
 
 ## Why Python for This Course {.plain-code}
-You already know Python from previous classes. Reasons it is useful for data science:
+Reasons Python is useful for data science:
 
-- **Readable** — sort of close to plain English, very forgiving
-- **Libraries** — e.g. `polars` for dataframes, `matplotlib` for figures, `requests` for pulling data off the web
+- **Readable** — closer to plain English than other languages, very forgiving
+- **Libraries** — e.g. `polars` for dataframes, `requests` for pulling data
 - **Visualization** — charts and maps without leaving the notebook
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
 
-- **TK**
-:::
 
 
 ---
@@ -663,8 +664,12 @@ e.g. color, product type, operating system
 
 Quantitative, ordinal, or nominal?
 
-1. The price of a product
-2. TODO add more examples
+1. The name of a flower
+2. The height of a tree
+3. The color of a book cover
+4. The serial number of a phone
+5. The numeric labels for OpenAI models (e.g. )
+5. TODO add more examples
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -685,7 +690,7 @@ Quantitative, ordinal, or nominal?
 | ZIP code | nominal | number | `pl.String` — **not** an integer |
 
 - A ZIP code is *stored* as a number, but it is not a quantity
-    - Nothing stops you from taking the mean of a column of ZIP codes — it just means nothing
+    - Nothing stops you from taking the mean of a column of ZIP codes, but the mean just means very little (same for serial numbers)
 - `pl.Categorical`: "repeated labels, store them once"
 - `pl.Enum`: "these labels, in this order"
 - TODO more examples for categorical/enum
@@ -729,13 +734,13 @@ grades               # [88, 92, 85, 92, 65, 100]
 
 ---
 
-## Where Are Lists Mostly Used? {.smaller}
+## Listing common features of lists {.smaller}
 :::: {.columns}
 
 ::: {.column width="42%"}
-- **Handling collections of data** — any group of values you work with together: station names, grades, scores
-- **Managing request and response payloads** — a web API answers with a JSON array, which arrives as a list of dictionaries
-- **Processing database results** — a query hands back one row per result, in order, ready to loop over
+- **Handling collections of data**, i.e. any group of values that go together: station names, grades, scores
+- **Catching request and response payloads**, e.g. a web API answers with a JSON array, which arrives as a list of dictionaries
+- **Processing database results**, queries often hand back a list, one row per result, in order, ready to loop over
 :::
 
 ::: {.column width="58%"}
@@ -764,9 +769,9 @@ rows[0][1]
 :::: {.columns}
 
 ::: {.column width="42%"}
-- **Tuple** — like a list, but you cannot change it after you create it
-- **Use a tuple for a fixed record** — a (name, score) pair, a coordinate
-- **Set** — unordered, no duplicates, very fast membership test
+- **Tuple**: like a list, but cannot change (fancy word: _)
+- **Use a tuple for a fixed record**, e.g. a (name, score) pair, a coordinate
+- **Set**: unordered, no duplicates, fast membership test (`in`)
 :::
 
 ::: {.column width="58%"}
@@ -804,8 +809,8 @@ set(grades)
 :::: {.columns}
 
 ::: {.column width="42%"}
-- **Key to value** — the key is a label
-- **Keys are unique** — assigning to a key that exists replaces the value
+- **Key to value**: the key is a label
+- **Keys are unique**: assigning to a key that exists replaces the value
 - **.get() is the safest way to access values** — gives back None (instead of an error) when the key is missing
 - **This is the shape of data** — one dictionary = one record = one row
 :::
@@ -815,14 +820,16 @@ set(grades)
 # values stored under labels, not positions
 student = {'name': 'Ana', 'grade': 88, 'major': 'CS'}
 student['grade']
+# this will fail/crash
 student['email']
+# safer option
 student.get('email')
 
 # all the labels, all the values
 student.keys()
 student.values()
 
-# replace an existing key, or add a new one
+# replace an existing key or add a new one
 student['grade'] = 91
 student['year'] = 'junior'
 ```
@@ -900,37 +907,124 @@ for name, score in scores.items():
 
 ::::
 
+---
+
+## Types of Errors and Exceptions {.smaller}
+::: {.caption}
+Quotes and examples from the [Python Tutorial, "Errors and Exceptions"](https://docs.python.org/3/tutorial/errors.html).
+:::
+
+::: {.columns .compare-columns}
+
+::: {.column}
+[SYNTAX ERRORS]{.eyebrow}
+
+Caught by the **parser**, before a single line runs. The code is not valid Python, so nothing executes.
+
+```python
+while True print('Hello world')
+#          ^^^^^ SyntaxError: invalid syntax
+```
+
+The arrows point at where the error was *detected*, which is not always where it needs to be **fixed** — here the missing `:` is one token earlier.
+:::
+
+::: {.column}
+[EXCEPTIONS]{.eyebrow}
+
+The code is valid, but something goes wrong **while it runs**. Execution stops and Python prints a *traceback*.
+
+```python
+10 * (1/0)
+# ZeroDivisionError: division by zero
+```
+
+Exceptions "are not unconditionally fatal" — you can catch and handle them.
+:::
+
+:::
+
 
 
 ---
 
-## Comprehensions
+## Exceptions You Might See {.smaller .plain-code .narrow-first-col}
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-- **TK**
+::: {.caption}
+Definitions paraphrased from the [Python documentation, "Built-in Exceptions"](https://docs.python.org/3/library/exceptions.html).
 :::
 
----
+| Exception | Raised when… | A way to trigger it |
+|:--------------------|:-----------------------------------------|:------------------------------------|
+| `NameError` | a local or global name is not found | `print(grade)` before assigning `grade` |
+| `TypeError` | an operation is applied to an object of **inappropriate type** | `"88" + 12` |
+| `ValueError` | an argument has the **right type but an inappropriate value** | `int("eighty-eight")` |
+| `IndexError` | a sequence subscript is **out of range** | `grades[99]` on a 5-item list |
+| `KeyError` | a dictionary key is **not found** | `student['email']` |
+| `AttributeError` | an attribute reference or assignment fails | `student.grade` on a dict |
+| `ZeroDivisionError` | the second argument of a division is zero | `sum(grades) / len(grades)` on an empty list |
+| `FileNotFoundError` | a file or directory is requested but **doesn't exist** | `pl.read_csv("typo.csv")` |
 
-## Types of Errors and Exceptions
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-- **TK**
-:::
 
 # Dataframes and Polars {.section-header}
 
 
-## Dataframes and Polars
+## From Dictionaries to a DataFrame {.smaller}
+Think of one dictionary as one record or one row in a spreadsheet:
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+```{python}
+#| echo: true
+import polars as pl
 
-- **TK**
+roster = [
+    {"name": "Ana",  "grade": 88, "major": "CS"},
+    {"name": "Ben",  "grade": 92, "major": "Stats"},
+    {"name": "Cruz", "grade": 79, "major": "CS"},
+]
+
+pl.DataFrame(roster)
+```
+
+Polars reads the keys as **column names** and each dictionary as a **row**.
+
+---
+
+## The Same Table, Column by Column {.smaller}
+A dataframe is a collection of columns, so you can also hand Polars **one list per column**. Same table, built the other way around.
+
+```{python}
+#| echo: false
+students = pl.DataFrame({
+    "name": ["Ana", "Ben", "Cruz"],
+    "grade": [88, 92, 79],
+    "major": ["CS", "Stats", "CS"],
+})
+students
+```
+
+::: {.columns}
+
+::: {.column width="50%"}
+```{python}
+#| echo: true
+students["grade"].mean()
+```
+:::
+
+::: {.column width="50%"}
+```{python}
+#| echo: true
+students.filter(pl.col("major") == "CS")
+```
+:::
+
+:::
+
+::: {.notes}
+- The list-of-dicts version is the shape data arrives in from a web API; the dict-of-lists version is the shape you type by hand
+- Point out the dtype row under the header: `str`, `i64`, `str` — Polars inferred them, and it will hold you to them
+- `students["grade"]` is a Series; `.mean()` on it gives one number, not a table
 :::
 
 ---
@@ -946,7 +1040,7 @@ Data scientists tend to prefer **rectangular** data for analysis.
     - Tables in Excel
     - Relations in a database
     - Matrices (`numpy.ndarray`)
-    - A list of dictionaries — one dict per row
+    - A list of dictionaries — one per row
 - Next: the **dataframe**
 :::
 
@@ -989,9 +1083,10 @@ Pandas also has the **Index** (row labels that can be non-numeric, named, or eve
 
 ## Why Polars {.plain-code}
 - Selecting, filtering, and computing all go through *expressions* — `pl.col("...")` — instead of different bracket behaviors
-- **Fast.** Written in Rust, runs on all cores, can work on data larger than memory 😎
-- **Strict about types.** A column has one data type, and Polars tells you when an operation does not make sense
-- **Pandas is still everywhere.** The concepts transfer pretty directly
+- **Fast.** Backend written in Rust, runs on all cores, can work on data larger than memory 😎 (e.g. with "LazyFrames")
+- **Strict about types.** A column has one data type; Polars tells you when an operation does not make sense
+    - Pandas often turns things into generic 'objects'
+- **Don't sleeep on Pandas.** Polars/Pandas concepts line up pretty directly, but Pandas is still everywhere.
 
 ::: {.caption}
 Docs: <https://docs.pola.rs/>
@@ -999,15 +1094,33 @@ Docs: <https://docs.pola.rs/>
 
 ---
 
-## Example Data: U.S. Presidential Elections {.smaller}
-One row per candidate per election, keep 1980 onward and drop candidates under 1% of the popular vote.
+## Let's read our first dataset 🤩 {.plain-code}
 
 ```{python}
 #| echo: true
 import polars as pl
 
+ELECTIONS = ("https://raw.githubusercontent.com/jackbandy/data-science-fun"
+             "/main/datasets/us-presidential-elections/elections.csv")
+
+elections = pl.read_csv(ELECTIONS)
+elections.head(3)
+```
+
+::: {.notes}
+- That is the whole thing: import the library, hand `read_csv` a path or a URL, get a DataFrame back
+- A URL works exactly like a filename here, so this runs the same on your laptop, in Colab, or on a lab machine
+:::
+
+---
+
+## Filtering the Dataset {.smaller}
+Keep 1980 onward; drop candidates under 1% of the popular vote.
+
+```{python}
+#| echo: true
 elections = (
-    pl.read_csv("../../datasets/us-presidential-elections/elections.csv")
+    pl.read_csv(ELECTIONS)
     .filter((pl.col("Year") >= 1980) & (pl.col("%") > 1))
     .select("Candidate", "Party", pl.col("%").round(1), "Year", "Result")
 )
@@ -1030,7 +1143,7 @@ elections["Candidate"].head(6)
 
 ---
 
-## Selecting Several Columns
+## Selecting Multiple Columns
 `select` takes any number of columns and always gives back a **DataFrame**.
 
 ```{python}
@@ -1040,8 +1153,7 @@ elections.select("Candidate", "Party").sample(6, seed=418)
 
 ---
 
-## Expressions {.smaller .plain-code}
-`pl.col("Party")` does not compute anything. It is a **description** of a computation that Polars applies to a column.
+## Expressions Demo {.plain-code}
 
 ```{python}
 #| echo: true
@@ -1055,7 +1167,6 @@ elections.select(
 ---
 
 ## Selecting Rows by Position
-A numeric slice gives back rows, and the stop is excluded — the same rule as a Python list.
 
 ```{python}
 #| echo: true
@@ -1065,7 +1176,7 @@ elections[0:3]
 ---
 
 ## Rows and Columns by Position
-Polars has no `.loc` and no `.iloc` 🥲 A two-part slice indexes rows then columns, by position.
+Polars has no `.loc` and no `.iloc` 🥲
 
 ```{python}
 #| echo: true
@@ -1095,7 +1206,7 @@ elections.filter(pl.col("Result") == "win", pl.col("%") < 50)
 ---
 
 ## Handy Properties
-Three things worth knowing about a dataframe before you touch it.
+Common to check these before working with a dataframe
 
 ```{python}
 #| echo: true
@@ -1115,7 +1226,7 @@ elections.schema
 ---
 
 ## Sorting
-`sort` returns a **new** dataframe; the original is untouched.
+Beware: `sort` returns a **new** dataframe!
 
 ```{python}
 #| echo: true
@@ -1149,9 +1260,7 @@ Split the rows into groups, then compute something for each group.
 #| echo: true
 (elections
  .group_by("Party")
- .agg(pl.len().alias("candidates"),
-      pl.col("%").mean().round(1).alias("mean_pct"))
- .sort("candidates", "Party", descending=[True, False]))
+ .agg(pl.len().alias("candidates")))
 ```
 
 ---
@@ -1232,6 +1341,376 @@ third_party_best = (elections
 ::: {.caption}
 Full mapping: [Polars user guide, "Coming from pandas"](https://docs.pola.rs/user-guide/migration/pandas/).
 :::
+
+---
+
+## Pandas to Polars: The Cheatsheet Frame {.plain-code .smaller}
+::: {.caption}
+Tables on the next several slides follow Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal (2024).
+:::
+
+Every table that follows refers to this small frame, so the columns stay recognizable from slide to slide.
+
+```{python}
+#| echo: true
+import polars.selectors as cs
+
+df = pl.DataFrame({
+    "grp": [1, 2, 1, 2, 1, 2],
+    "x": list(range(6, 0, -1)),
+    "y": list(range(4, 10)),
+    "z": [3, 4, 5, 6, 7, None],
+    "ref": list("abcdef"),
+})
+df
+```
+
+---
+
+## Pandas to Polars: Accessing Data Using `[]` {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Get column as Series | `df["grp"]` | `df["grp"]` |
+| Cell indexing by location | `df.iloc[1, 1]` | `df[1, 1]` |
+| Row slicing by location | `df.iloc[1:3]` | `df[1:3]` |
+| Column slicing by location | `df.iloc[:, 1:]` | `df[:, 1:]` |
+| Row indexing by label | `df.loc["c"]` | *no index* — `df.filter(pl.col("ref") == "c")` |
+| Column indexing by label | `df.loc[:, "x"]` | `df[:, "x"]` or `df.select("x")` |
+| Column indexing by labels | `df.loc[:, ["x", "z"]]` | `df[:, ["x", "z"]]` or `df.select("x", "z")` |
+| Column slicing by label | `df.loc[:, "x":"z"]` | `df[:, "x":"z"]` |
+| Mixed indexing | `df.loc["c"].iloc[1]` | `df.filter(pl.col("ref") == "c")[0, 1]` |
+
+`[]` is for quick, interactive pokes at the data. Everything you want to *keep* should go through `select` / `filter` instead.
+
+---
+
+## Pandas to Polars: Selecting and Transforming {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Select a subset of columns | `df[["x", "y"]]` | `df.select("x", "y")` |
+| Select and transform columns | `df[["x", "y"]].astype(float)` | `df.select(pl.col("x", "y").cast(pl.Float64))` |
+| Add a column from a constant | `df["w"] = 1` | `df.with_columns(w=pl.lit(1))` |
+| Add a column from a list | `df["w"] = list(range(1, 7))` | `df.with_columns(pl.Series("w", range(1, 7)))` |
+| Add a column from other columns | `df["w"] = df["x"] + df["y"]` | `df.with_columns(w=pl.col("x") + pl.col("y"))` |
+| Change dtype of a column | `df.assign(x=lambda d: d["x"].astype(float))` | `df.with_columns(pl.col("x").cast(pl.Float64))` |
+| Rename a column | `df.rename(columns={"x": "x2"})` | `df.rename({"x": "x2"})` |
+| Drop columns | `df.drop(columns=["x", "y"])` | `df.drop("x", "y")` |
+| Sorting | `df.sort_values("x")` | `df.sort("x")` |
+| Copying | `df.copy()` | `df.clone()` |
+
+Note that `with_columns` **returns a new frame** — `df.with_columns(...)` alone changes nothing. Assign it: `df = df.with_columns(w=pl.lit(1))`.
+
+---
+
+## Pandas to Polars: Choosing Columns by Type or Pattern {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+`pl.col` takes names; `polars.selectors` (imported as `cs`) takes *rules*.
+
+| Select | Polars |
+|:--|:--|
+| All columns | `df.select(pl.all())` |
+| All integer columns | `df.select(cs.integer())` |
+| …except `x` | `df.select(cs.integer() - cs.by_name("x"))` |
+| By regex | <code>df.select(cs.matches(&quot;x&#124;y&quot;))</code> |
+| By name pattern | `df.select(cs.starts_with("r"))` |
+| Everything numeric, rounded | `df.select(cs.numeric().round(1))` |
+
+A selector is still an expression, so you can keep chaining: `cs.numeric().mean()` averages every numeric column at once.
+
+---
+
+## Pandas to Polars: Filtering Rows {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Filter rows | `df.loc[df.ref == "c"]` | `df.filter(pl.col("ref") == "c")` |
+| …by keyword | `df.query("ref == 'c'")` | `df.filter(ref="c")` [^kw] |
+| Filter rows (text operator) | `df.loc[df.ref.eq("c")]` | `df.filter(pl.col("ref").eq("c"))` |
+| Multiple filters (AND) | `df.loc[(df.ref == "c") & (df.x > 1)]` | `df.filter((pl.col("ref") == "c") & (pl.col("x") > 1))` |
+| …without the brackets | | `df.filter(pl.col("ref") == "c", pl.col("x") > 1)` [^comma] |
+| Multiple filters (OR) | <code>df.loc[(df.ref == &quot;c&quot;) &#124; (df.x > 1)]</code> | <code>df.filter((pl.col(&quot;ref&quot;) == &quot;c&quot;) &#124; (pl.col(&quot;x&quot;) > 1))</code> |
+| Is-in condition | `df.loc[df.ref.isin(["a", "b"])]` | `df.filter(pl.col("ref").is_in(["a", "b"]))` |
+| Is-between condition | `df.loc[df.x.between(2, 4)]` | `df.filter(pl.col("x").is_between(2, 4))` |
+
+[^kw]: The keyword form (`ref="c"`) only works for equality.
+[^comma]: Comma-separated conditions are ANDed together — no brackets, no `&`.
+
+---
+
+## Pandas to Polars: Duplicates and Missing Values {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Keep unique rows | `df.drop_duplicates()` | `df.unique()` |
+| …based on a subset of columns | `df.drop_duplicates(subset=["ref"])` | `df.unique(subset=["ref"])` |
+| Drop rows with missing values | `df.dropna()` | `df.drop_nulls()` |
+| …in one column | `df.dropna(subset=["z"])` | `df.drop_nulls(subset=["z"])` |
+| Fill missing values | `df.fillna(0)` | `df.fill_null(0)` |
+| Count missing values | `df.isna().sum()` | `df.null_count()` |
+
+::: {.aside-note}
+Two gotchas with `unique()`: the output row order is **not** guaranteed to match the input, and when rows are duplicated the one it keeps is `"any"` by default, not the first. Pass `maintain_order=True` and `keep="first"` to get the pandas behavior.
+:::
+
+---
+
+## Pandas to Polars: Grouping and Aggregation {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Aggregate by group | `df.groupby("grp")["x"].mean()` | `df.group_by("grp").agg(pl.col("x").mean())` |
+| Aggregate several columns | `df.agg({"x": "max", "y": "min"})` | `df.select(pl.col("x").max(), pl.col("y").min())` |
+| Mean of some columns | `df[["x", "y"]].mean()` | `df.select("x", "y").mean()` |
+| Mean of columns by pattern | `df.filter(regex="^x").mean()` | `df.select(cs.starts_with("x").mean())` |
+| Rename after aggregating | `df.groupby("grp")["x"].mean().rename("x_mean")` | `df.group_by("grp").agg(pl.col("x").mean().name.suffix("_mean"))` |
+| Add the group value as a column | `df.assign(x_mean=df.groupby("grp")["x"].transform("mean"))` | `df.with_columns(pl.col("x").mean().over("grp").name.suffix("_mean"))` |
+
+The last row is the one to remember: `.over("grp")` is Polars' answer to `transform` — aggregate **within** each group but keep every original row.
+
+---
+
+## Wide vs. Long: CTA Ridership {.smaller}
+The CTA publishes daily entries for every 'L' station. There are two ways to lay that out.
+
+```{python}
+#| echo: false
+CTA = "../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"
+
+cta = (
+    pl.scan_csv(CTA)
+    .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
+                  pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
+    .filter(pl.col("stationname").is_in(["UIC-Halsted", "Clark/Lake", "Roosevelt"]))
+    .filter(pl.col("date").is_between(pl.date(2024, 3, 4), pl.date(2024, 3, 6)))
+    .select("stationname", "date", "rides")
+    .sort("stationname", "date")
+    .collect()
+)
+```
+
+::: {.columns}
+
+::: {.column width="52%"}
+[WIDE — ONE COLUMN PER DAY]{.eyebrow}
+
+```{python}
+#| echo: false
+cta.pivot(index="stationname", on="date", values="rides")
+```
+
+One row per station. Reading across a row gives you that station's history.
+:::
+
+::: {.column width="46%"}
+[LONG — ONE ROW PER OBSERVATION]{.eyebrow}
+
+```{python}
+#| echo: false
+cta.head(5)
+```
+
+One row per station **per day**. Every row is one measurement.
+:::
+
+:::
+
+::: {.caption}
+[CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f), City of Chicago Data Portal. Three stations, three days in March 2024.
+:::
+
+---
+
+## How "Wide-format" Dataframes Grow {.wide-demo}
+Five Orange Line stops. One row per stop, **one column per day**.
+
+```{python}
+#| echo: false
+#| output: asis
+import datetime as dt
+
+CTA = "../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"
+STOPS = {"Midway Airport": "Midway", "Pulaski-Orange": "Pulaski", "Kedzie-Midway": "Kedzie",
+         "Western-Orange": "Western", "35th/Archer": "35th/Archer"}
+DAYS = [dt.date(2025, 8, 17) + dt.timedelta(days=i) for i in range(10)]
+
+daily = (
+    pl.scan_csv(CTA)
+    .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
+                  pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
+    .filter(pl.col("stationname").is_in(list(STOPS)))
+    .filter(pl.col("date").is_between(DAYS[0], DAYS[-1]))
+    .select("stationname", "date", "rides")
+    .sort("stationname", "date")
+    .collect()
+)
+rides = {(r["stationname"], r["date"]): r["rides"] for r in daily.iter_rows(named=True)}
+
+def frag(i):
+    """Day 0 is on the slide from the start; every later day is its own fragment."""
+    return f' class="fragment" data-fragment-index="{i}"' if i else ""
+
+head = "<th>stop</th>" + "".join(f"<th{frag(i)}>{d:%b %-d}</th>" for i, d in enumerate(DAYS))
+rows = "".join(
+    f"<tr><td>{short}</td>"
+    + "".join(f"<td{frag(i)}>{rides[(full, d)]:,}</td>" for i, d in enumerate(DAYS))
+    + "</tr>"
+    for full, short in STOPS.items()
+)
+print(f"<table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>")
+```
+
+::: {.fragment data-fragment-index="9"}
+The CTA has published records for every day since 2001 , which would be **9,000+ columns** and counting...
+:::
+
+::: {.caption}
+[CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f), City of Chicago Data Portal.
+:::
+
+---
+
+## Alternative: Long-Format Dataframes {.long-demo}
+Every cell becomes **one row** with the stop, the day, and the number. The first five rows are Aug 17 (the wide table's first column).
+
+::: {.columns}
+
+::: {.column width="52%"}
+```{python}
+#| echo: false
+#| output: asis
+# Date first, so the visible rows are all five stops on Aug 17 -- the same
+# five numbers as the first column of the wide table on the previous slide.
+by_day = daily.sort("date", "stationname")
+
+head = "<tr><th>stop</th><th>date</th><th>riders</th></tr>"
+body = "".join(
+    f"<tr><td>{STOPS[r['stationname']]}</td><td>{r['date']}</td><td>{r['rides']:,}</td></tr>"
+    for r in by_day.head(6).iter_rows(named=True)
+)
+body += "<tr><td>⋮</td><td>⋮</td><td>⋮</td></tr>"
+print(f"<table><thead>{head}</thead><tbody>{body}</tbody></table>")
+print(f"<p class='caption'>{by_day.height} rows — 5 stops × {len(DAYS)} days.</p>")
+```
+:::
+
+::: {.column width="46%"}
+- **Three columns.** Tomorrow's data is 5 more *rows*, not a new column
+- `date` is a **value** you can filter, sort, and group on 😌
+- 25 years of this is still three columns, just "taller"
+- This is the shape Polars expects
+:::
+
+:::
+
+::: {.notes}
+- Walk one cell across: Midway on Aug 17 was one cell in the wide table, and is one row here
+- Ask what happens tomorrow in each layout — that is the whole argument
+- Tall is cheap; wide is expensive. Rows are data, columns are schema
+:::
+
+---
+
+## Why Long-Format Data? {.smaller}
+
+::: {.columns .compare-columns}
+
+::: {.column}
+WIDE DATAFRAMES:
+- **The schema might change.**
+- **Tough to filter on a date**
+- `pl.col("2024-03-04")` names one day; there is no way to say "every day in March"
+- Plotting libraries usually want one column to map to an axis
+:::
+
+::: {.column}
+LONG DATAFRAMES:
+- **Fixed schema.** New data point is a new row
+- `date` is a real column, so filtering, grouping, and sorting all work normally
+- `group_by("stationname")` and `.over("date")` do what you expect
+- One row = one observation = the shape assumed by Polars terminology
+:::
+
+:::
+
+Generally you will want to reshape into long as soon as possible.
+
+---
+
+## Reshaping Between the Two {.smaller}
+`pivot` goes long → wide. `unpivot` goes back.
+
+```{python}
+#| echo: true
+wide = cta.pivot(index="stationname", on="date", values="rides")
+wide
+```
+
+```{python}
+#| echo: true
+wide.unpivot(index="stationname", variable_name="date", value_name="rides").head(4)
+```
+
+::: {.notes}
+- The round trip is the point: no information is lost either way, only the layout changes
+- Note the date came back as a *string*, not a date — column names are always text, so a pivot loses the dtype
+- This is the same pair of verbs as the cheatsheet slide that follows
+:::
+
+---
+
+## Pandas to Polars: Pivoting and Unpivoting {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+Pivoting goes from long to wide. Going back the other way is called *unpivoting* — pandas calls it melting.
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Pivot (long → wide) | `df.pivot(index="grp", columns="x", values="y")` | `df.pivot(index="grp", on="x", values="y")` |
+| Unpivot (wide → long) | `wide.melt(id_vars="grp", value_name="y")` | `wide.unpivot(index="grp", value_name="y")` |
+
+Polars intentionally broke away from  pandas terminology: `melt` became `unpivot`, both use the same `on` / `index` arguments.
+
+
+---
+
+## TODO
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+``` markdown
+Move cheat sheet to appendix, bring stats up front, make sections more organized... lots more improvements...
+```
+:::
+
+
+---
+
+
+
+
 
 # Week 2, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
 
@@ -1744,6 +2223,41 @@ $$P(\text{two heads}) = E[p^{2}] = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485
 :::
 
 
+# Appendix: Descriptive Statistics {.section-header}
+
+## Descriptive Stats: Measures of Center
+::: {.columns .compare-columns}
+
+::: {.column width="50%"}
+[THE THREE MIDDLES]{.eyebrow}
+
+**Mean** — the sum divided by the number of values
+
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} a_i$$
+
+**Median** — the middle value of the sorted data, or the mean of the two middle values when $n$ is even
+
+**Mode** — the most frequent value. A dataset with two modes is **bimodal**
+:::
+
+::: {.column width="50%"}
+[WORKED THROUGH]{.eyebrow}
+
+| Ages | 24 | 35 | 32 | 21 | 28 |
+|:--|--:|--:|--:|--:|--:|
+
+$$\bar{x} = \frac{24+35+32+21+28}{5} = 28$$
+
+Grades: 78, 90, 90, 80, 78, 95, 76, 84
+
+Sorted: 76, 78, 78, 80, 84, 90, 90, 95
+
+$$\text{median} = \frac{80+84}{2} = 82
+\qquad \text{mode} = 78, 90$$
+:::
+
+:::
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week2.qmd>.
@@ -1765,3 +2279,6 @@ $$P(\text{two heads}) = E[p^{2}] = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485
 17. The diagnostic-test walkthrough (1,000 people, a 99% accurate test, 11 positives) is adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
 18. Paul J. Villeneuve and Yang Mao, ["Lifetime probability of developing lung cancer, by smoking status, Canada"](https://pubmed.ncbi.nlm.nih.gov/7895211/), *Canadian Journal of Public Health* 85(6), 1994, pp. 385–388.
 19. CDC, ["Risk Factors for Lung Cancer"](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
+20. The pandas-to-Polars comparison tables are adapted from Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal (2024), updated for Polars 1.x and pandas 3.x.
+21. The errors-and-exceptions slides follow the [Python Tutorial, "Errors and Exceptions"](https://docs.python.org/3/tutorial/errors.html); the exception descriptions are paraphrased from the [Python documentation, "Built-in Exceptions"](https://docs.python.org/3/library/exceptions.html).
+22. Wide-vs-long examples use [CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) from the City of Chicago Data Portal, mirrored in this repo at [`datasets/cta-ridership`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/cta-ridership).
