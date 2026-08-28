@@ -2,7 +2,10 @@
 
 Thanks for contributing! This repo holds materials for a section of CS 418 (Intro to Data Science) at UIC — slides, worksheets, the syllabus, and the "ethics in data science" mini-book.
 
-If you're fixing a typo, correcting a fact, repairing a broken link, or improving an explanation, a quick pull request should work fine.
+A quick pull request should work fine for things like:
+* fixing a typo
+* rephrasing a bulletpoint
+* preparing a broken link
 
 If you want to make a larger change (e.g. a new section of slides, a new chapter in the mini-book), consider opening a GitHub issue first.
 
