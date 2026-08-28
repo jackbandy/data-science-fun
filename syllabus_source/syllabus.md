@@ -435,6 +435,7 @@ As a student at UIC, you may experience challenges related to academics, finance
 - [[Current Student Resources]{.underline}](https://today.uic.edu/resources/current-student-resources) — a one-stop shop for links to resources in the following categories: General, Academic, Student Support, Student Life, Technology, Health and Safety, and Getting Around Campus
 - UIC [[Tutoring Resources]{.underline}](https://tutoring.uic.edu/)
 - UIC College of Engineering Tutoring Program
+- Engineering Learning Center - SELE2250
 - The [[UIC Library]{.underline}](https://library.uic.edu/) provides access to resources, study rooms, and research support both online via chat and in person; see also the subject-specific [[Research Guides]{.underline}](https://researchguides.uic.edu/)
 - Programs and initiatives supporting the UIC undergraduate experience and academic programs through the [[Student Success Initiative]{.underline}](https://studentsuccess.uic.edu/programs-and-supports/)
 - If you are experiencing personal hardships and need resources and assistance, please reach out to the [[Student Assistance]{.underline}](https://dos.uic.edu/student-assistance/) division, supported by UIC's Office of the Dean of Students.
