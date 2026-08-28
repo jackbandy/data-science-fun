@@ -42,6 +42,7 @@
 
 ### Sources
 
+* *Calling Bullshit*, [4.2: Means and Medians](https://www.youtube.com/watch?v=mc-6-v2c4WM) (video, 15 min)
 * [Polars user guide](https://docs.pola.rs)
 * *Learning Data Science*, [Chapter 6: Working with Dataframes Using pandas](https://learningds.org/ch/06/pandas_intro.html)
 * *Data Science: A First Introduction*, [Chapter 1: Python and Pandas](https://python.datasciencebook.ca/intro.html)
@@ -55,6 +56,7 @@
 * *Learning Data Science*, [Chapter 2: Questions and Data Scope](https://learningds.org/ch/02/data_scope_intro.html)
 * *Data Science: A First Introduction*, [Chapter 2: Reading in Data Locally and from the Web](https://python.datasciencebook.ca/reading.html)
 * *Ethics in Data Science* (course mini-book), [Chapter 3: Ethics in Obtaining Data](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* *Calling Bullshit*, [5.3: Big Data Hubris](https://www.youtube.com/watch?v=X0XqnAqvyIk) (video, 6 min)
 
 ## Week 3, Day 1 (2026-09-07)
 
@@ -112,6 +114,7 @@
 * *Fundamentals of Data Visualization*, [Chapter 5: Directory of Visualizations](https://clauswilke.com/dataviz/directory-of-visualizations.html)
 * *Fundamentals of Data Visualization*, [Chapter 16: Visualizing Uncertainty](https://clauswilke.com/dataviz/visualizing-uncertainty.html)
 * *Computational and Inferential Thinking*, [Chapter 7: Visualization](https://inferentialthinking.com/chapters/07/visualization)
+* *Calling Bullshit*, [6.5: Glass Slippers](https://www.youtube.com/watch?v=59teS0SUHtI) (video, 9 min)
 
 ## Week 6, Day 1 (2026-09-28)
 
@@ -123,7 +126,9 @@
 * *The Art of Data Science*, [Chapter 10: Communication](https://bookdown.org/rdpeng/artofdatascience/chapter-communication.html)
 * *Fundamentals of Data Visualization*, [Chapter 17: The Principle of Proportional Ink](https://clauswilke.com/dataviz/proportional-ink.html)
 * *Calling Bullshit*, [Misleading Axes on Graphs](https://www.callingbullshit.org/tools/tools_misleading_axes.html)
+	* [6.2: Misleading Axes](https://www.youtube.com/watch?v=9pNWVMxaFuM) (video, 8 min)
 * *Calling Bullshit*, [The Principle of Proportional Ink](https://www.callingbullshit.org/tools/tools_proportional_ink.html)
+	* [6.6: The Principle of Proportional Ink](https://www.youtube.com/watch?v=oNhusd3xFC4) (video, 12 min)
 
 ## Week 6, Day 2 (2026-09-30)
 
@@ -146,6 +151,7 @@
 * *Data Science: A First Introduction*, [Chapter 10: Statistical Inference](https://python.datasciencebook.ca/inference.html)
 * *Learning Data Science*, [Chapter 17: Theory for Inference and Prediction](https://learningds.org/ch/17/inf_pred_gen_intro.html)
 * *Computational and Inferential Thinking*, [Chapter 11: Testing Hypotheses](https://inferentialthinking.com/chapters/11/testing-hypotheses)
+* *Calling Bullshit*, [4.3: P Values and the Prosecutor's Fallacy](https://www.youtube.com/watch?v=eesUdFlYMh8) (video, 12 min)
 
 ## Week 7, Day 2 (2026-10-07)
 
@@ -245,6 +251,7 @@
 * *Learning Data Science*, [Chapter 3: Simulation and Data Design](https://learningds.org/ch/03/theory_intro.html) (continued)
 * *Computational and Inferential Thinking*, [Chapter 2: Causality and Experiments](https://inferentialthinking.com/chapters/02/causality-and-experiments)
 * *Computational and Inferential Thinking*, [Chapter 12: Comparing Two Samples](https://inferentialthinking.com/chapters/12/comparing-two-samples)
+* *Calling Bullshit*, [3.5: Common Causes](https://www.youtube.com/watch?v=5iVN13tbVNc) (video, 10 min)
 
 ## Week 12, Day 1 (2026-11-09)
 

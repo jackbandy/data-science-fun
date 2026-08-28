@@ -1,0 +1,184 @@
+<script>
+// Shrink any slide whose body spills behind the footer band until it fits.
+//
+// The alternative is tagging decks by hand with .smaller / .dense / a bespoke
+// width, which has to be re-guessed every time a slide's content changes and
+// says nothing about whether the result actually clears the footer. This
+// measures the rendered slide instead and scales the body down by only as much
+// as that slide needs, so a deck stays at the theme's sizes wherever it already
+// fits.
+//
+// CSS `zoom` (not `transform: scale`) does the shrinking: zoom affects layout,
+// so the children below a shrunk block reflow up into the space it gave back,
+// and percentage widths inside the subtree still resolve against the full slide
+// width. A transform would leave the freed space behind as a gap.
+//
+// The heading is left at full size. A title that shrinks with its slide makes
+// the deck's typography look accidental, and the body is where the height
+// actually goes.
+(() => {
+  const GAP = 12;          // breathing room above the footer, in px
+  const MIN_ZOOM = 0.5;    // floor: below this, the slide needs editing, not scaling
+  const PASSES = 5;        // binary-search rounds after the first guess
+  const SLACK = 0.995;     // aim just inside the floor so rounding cannot overshoot
+
+  // Slide types that already own their vertical layout: the theme gives these
+  // `display: flex; height: 100%` and a bottom padding that reserves the footer,
+  // so their content is sized by the flex box rather than by how tall it happens
+  // to be. Scaling them would fight that. `.sources` is likewise skipped --
+  // sources-fit-after-body.html fits those reference lists on its own.
+  function managed(slide) {
+    if (slide.classList.contains("sources")) return true;
+    const display = window.getComputedStyle(slide).display;
+    return display === "flex" || display === "grid" || display === "none";
+  }
+
+  function headingLike(el) {
+    return /^H[1-6]$/.test(el.tagName);
+  }
+
+  // Everything under the title: what this slide is allowed to shrink.
+  function bodyOf(slide) {
+    const kids = Array.from(slide.children).filter((el) => !headingLike(el));
+    return kids.filter((el) => {
+      const cs = window.getComputedStyle(el);
+      return cs.display !== "none" && cs.position !== "absolute" && cs.position !== "fixed";
+    });
+  }
+
+  function footerHeight() {
+    const footer = document.querySelector(".reveal .footer");
+    const height = footer ? footer.getBoundingClientRect().height : 0;
+    // A hidden footer (data-footer="false") reports zero height.
+    return height > 0 ? height : 0;
+  }
+
+  // The lowest the body may reach. On screen the footer is fixed to the
+  // viewport, so its top is the floor. In print view the slides are stacked down
+  // a long scrolling document and the footer repeats per page, so the floor is
+  // the bottom of this slide's own page.
+  function floorPx(slide) {
+    const page = slide.closest(".pdf-page");
+    if (page) return page.getBoundingClientRect().bottom - footerHeight() - GAP;
+
+    const footer = document.querySelector(".reveal .footer");
+    if (footer) {
+      const rect = footer.getBoundingClientRect();
+      if (rect.height > 0) return rect.top - GAP;
+    }
+    return window.innerHeight - GAP;
+  }
+
+  function extent(body) {
+    let top = Infinity;
+    let bottom = -Infinity;
+    body.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) return;
+      top = Math.min(top, rect.top);
+      bottom = Math.max(bottom, rect.bottom);
+    });
+    return { top: top, bottom: bottom };
+  }
+
+  function apply(body, zoom) {
+    body.forEach((el) => { el.style.zoom = zoom === 1 ? "" : zoom.toFixed(4); });
+  }
+
+  function fit(slide) {
+    if (managed(slide)) return;
+    const body = bodyOf(slide);
+    if (!body.length) return;
+
+    apply(body, 1);
+    const limit = floorPx(slide);
+    const box = extent(body);
+    if (!isFinite(box.bottom) || box.bottom <= limit) return;
+
+    const fits = (zoom) => {
+      apply(body, zoom);
+      return extent(body).bottom <= limit;
+    };
+
+    // The height ratio is only a first guess: shrinking rewraps text, so a
+    // slide at zoom k is usually shorter than k times its full-size height and
+    // this lands lower than it needs to.
+    const available = limit - box.top;
+    const needed = box.bottom - box.top;
+    if (available <= 0 || needed <= 0) return;
+    let lo = Math.max(MIN_ZOOM, (available / needed) * SLACK);
+    if (!fits(lo)) return;  // already at the floor; the slide needs editing
+
+    // Walk the guess back up to the largest zoom that still clears the footer,
+    // so a slide is never shrunk further than its own content requires.
+    let hi = 1;
+    for (let pass = 0; pass < PASSES; pass++) {
+      const mid = (lo + hi) / 2;
+      if (fits(mid)) lo = mid; else hi = mid;
+    }
+    apply(body, lo);
+  }
+
+  function fitCurrent() {
+    const slide = window.Reveal && Reveal.getCurrentSlide();
+    if (slide) fit(slide);
+  }
+
+  function fitAll() {
+    document.querySelectorAll(".reveal .slides section.slide").forEach(fit);
+  }
+
+  // Reveal builds the .pdf-page boxes after it reports ready, and those boxes
+  // are what a print fit measures against. Fitting before they are sized reads
+  // an unbounded page, finds no overflow, and leaves every slide alone -- so
+  // wait for a page height that holds still for two frames.
+  function whenPrintLayoutSettles(done) {
+    let last = -1;
+    let stable = 0;
+    let frames = 0;
+    (function poll() {
+      const page = document.querySelector(".pdf-page");
+      const height = page ? Math.round(page.getBoundingClientRect().height) : 0;
+      stable = height > 0 && height === last ? stable + 1 : 0;
+      last = height;
+      if (stable >= 2 || ++frames > 240) { done(); return; }
+      window.requestAnimationFrame(poll);
+    })();
+  }
+
+  // Reveal stamps `reveal-print` on <html> during its print setup, which happens
+  // after it reports ready -- so a boot-time class check reads false and the
+  // whole deck gets fitted as if it were on screen. The query string is set from
+  // the start, so ask that first.
+  function printing() {
+    return /(^|[?&])print-pdf($|[=&])/.test(window.location.search)
+      || document.documentElement.classList.contains("reveal-print");
+  }
+
+  // In print view every slide is laid out at once; on screen only the current
+  // slide has a measurable box, so refit on each visit.
+  function refit() {
+    if (printing()) fitAll(); else fitCurrent();
+  }
+
+  function boot() {
+    if (!window.Reveal || !Reveal.isReady()) { window.setTimeout(boot, 50); return; }
+    if (printing()) whenPrintLayoutSettles(refit); else refit();
+    Reveal.on("slidechanged", fitCurrent);
+    Reveal.on("resize", refit);
+    window.addEventListener("resize", refit);
+    // Fonts and images settle after the first layout and both change heights.
+    // Reveal often reports ready after `load` has already fired, so check
+    // rather than only listening -- a fit is idempotent, so extra runs are free.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
+    if (document.readyState === "complete") refit();
+    window.addEventListener("load", refit);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>

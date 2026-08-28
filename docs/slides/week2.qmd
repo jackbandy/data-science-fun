@@ -1,7 +1,14 @@
 ---
 title: "Week 2 (CS 418 @ UIC)"
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
 format:
   revealjs:
+    fig-format: svg
+    fig-width: 5
+    fig-height: 3.09  # golden ratio rectangle
+    auto-stretch: false  # figures sized by the figure-slide classes instead
     include-in-header:
       text: |
         <style>
@@ -12,36 +19,83 @@ format:
           background: transparent;
           padding: 0;
         }
+
+        /* Column widths come from the pipe-table separator row, which pandoc
+           turns into a <colgroup>. Those percentages are only honoured under a
+           fixed layout -- otherwise the long exception names widen column one. */
+        .reveal .narrow-first-col table { table-layout: fixed; width: 100%; }
+
+        /* Wide-format demo: the table is meant to run off the right edge of
+           the slide once enough day columns have been added, so nothing here
+           may wrap or shrink it back into view. */
+        /* Left-aligned, not reveal's centered default: new days have to append
+           to the right edge, otherwise the table grows outward both ways. */
+        .reveal .wide-demo table {
+          border-collapse: collapse; white-space: nowrap;
+          margin-left: 0; margin-right: auto; width: auto;
+        }
+        .reveal .wide-demo th, .reveal .wide-demo td {
+          padding: 0.25em 0.7em;
+          border-bottom: 1px solid #d8d8d8;
+          text-align: right;
+        }
+        .reveal .wide-demo th:first-child, .reveal .wide-demo td:first-child {
+          text-align: left;
+          font-weight: 600;
+        }
+        .reveal .wide-demo thead th { color: #c83214; border-bottom: 2px solid #f9461c; }
+        /* Reveal only fades fragments in; a hidden one still holds its column
+           open, so the table would start at full width with blank gaps. Taking
+           it out of the layout instead is what makes the table visibly grow. */
+        .reveal .wide-demo .fragment:not(.visible) { display: none; }
+        .reveal .wide-demo td, .reveal .wide-demo th { min-width: 112px; }
+        .reveal .wide-demo td:first-child, .reveal .wide-demo th:first-child { min-width: 160px; }
+
+        /* Long format: fixed three columns, so it never leaves the frame. */
+        .reveal .long-demo table { border-collapse: collapse; }
+        .reveal .long-demo th, .reveal .long-demo td {
+          padding: 0.22em 1.4em 0.22em 0; text-align: left;
+        }
+        .reveal .long-demo thead th { color: #c83214; border-bottom: 2px solid #f9461c; }
+        .reveal .long-demo td { border-bottom: 1px solid #d8d8d8; }
         </style>
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 2</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week2.html">dodatascience.fun/slides/week2</a></span>'
 ---
 
-# Week 2 Slide Deck {.course-title}
+```{python}
+#| echo: false
+# Shared setup for the figure cells in this deck.
+import numpy as np
+import polars as pl
+from plotnine import *
 
-## Statistics Review; Python, Dataframes, Polars; Obtaining Data
+ORANGE = "#f9461c"
+DARK = "#c83214"
+INK = "#1a1a1a"
 
-Jack Bandy
-2026
+def note(x, y, text, ha="left", color=INK, size=13):
+    """A text annotation in the deck's type and colors."""
+    return annotate("text", x=x, y=y, label=text, ha=ha, size=size, color=color)
+```
 
----
+
 
 # Week 2, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
 
+<h2>Statistics Review; Python and Polars</h2>
+
 CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
 
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
-
----
-
-# Map {.split}
-
+## Map {.split}
 ::: {.split-content .narrow-aside}
 
 ::: {}
 - Week 2: LaSalle/Van Buren
 - Day 1
+    - Random Roll Call
     - Statistics Review
     - Python Foundations
     - Dataframes and Polars
@@ -53,24 +107,1670 @@ CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
 
 ---
 
+## Random Roll Call {.iframe-slide}
+<div class="random-draw" data-num="12" data-min="1" data-max="62">
+<div class="random-draw-frame">
+<div class="random-draw-numbers" role="status" aria-live="polite" data-placeholder="Press “Draw” for 12 random numbers between 1 and 62."></div>
+</div>
+<p class="random-draw-controls"><button type="button" class="random-draw-button">Draw</button> <label class="random-draw-sort"><input type="checkbox" class="random-draw-sort-input"> Sort</label> <span class="random-draw-status"></span></p>
+</div>
+
+<style>
+.random-draw { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.random-draw-frame { flex: 1; min-height: 0; display: flex; justify-content: center; }
+.random-draw-numbers { height: 100%; aspect-ratio: 1.618 / 1; max-width: 100%; border: 1px solid #999; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(2, 1fr); place-items: center; }
+.random-draw-numbers .random-draw-number { font-size: 3rem; font-weight: 700; line-height: 1; }
+.random-draw-numbers .random-draw-placeholder { grid-column: 1 / -1; grid-row: 1 / -1; text-align: center; font-size: 1.4rem; color: #555; padding: 0 1.5em; }
+.random-draw-controls { flex: none; margin: 12px 0 0; }
+.random-draw-button { font: inherit; font-size: 1.1rem; font-weight: 600; padding: 0.3em 1.2em; border: none; border-radius: 3px; background: #f9461c; color: #fff; cursor: pointer; }
+.random-draw-button:hover:not(:disabled) { background: #e03c14; }
+.random-draw-button:disabled { opacity: 0.6; cursor: default; }
+.random-draw-sort { font-size: 1rem; color: #555; margin-left: 0.75em; cursor: pointer; }
+.random-draw-status { font-size: 1rem; color: #555; margin-left: 0.75em; }
+</style>
+
+<script>
+(() => {
+  const API = "https://www.random.org/integers/";
+  function setup(root) {
+    if (root.dataset.wired) return;
+    root.dataset.wired = "1";
+    const out = root.querySelector(".random-draw-numbers");
+    const button = root.querySelector(".random-draw-button");
+    const status = root.querySelector(".random-draw-status");
+    const sortBox = root.querySelector(".random-draw-sort-input");
+    const num = root.dataset.num, min = root.dataset.min, max = root.dataset.max;
+    const url = API + "?num=" + num + "&min=" + min + "&max=" + max + "&col=1&base=10&format=plain&rnd=new";
+    let drawn = null;
+    function placeholder(text) {
+      out.innerHTML = "";
+      const p = document.createElement("div");
+      p.className = "random-draw-placeholder";
+      p.textContent = text;
+      out.appendChild(p);
+    }
+    function render() {
+      if (!drawn) return;
+      const numbers = sortBox.checked ? drawn.slice().sort(function (a, b) { return a - b; }) : drawn;
+      out.innerHTML = "";
+      numbers.forEach(function (n) {
+        const cell = document.createElement("div");
+        cell.className = "random-draw-number";
+        cell.textContent = n;
+        out.appendChild(cell);
+      });
+    }
+    function draw() {
+      button.disabled = true;
+      status.textContent = "drawing from random.org…";
+      fetch(url, { cache: "no-store" })
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+        .then(function (text) {
+          const numbers = text.trim().split(/\s+/).filter(Boolean).map(Number);
+          if (!numbers.length) throw new Error("empty response");
+          drawn = numbers;
+          render();
+          status.textContent = "true random numbers from random.org";
+        })
+        .catch(function (err) {
+          drawn = null;
+          placeholder("Could not reach random.org (" + err.message + "). Open the draw in a new tab instead.");
+          status.textContent = "";
+        })
+        .then(function () { button.disabled = false; });
+    }
+    button.addEventListener("click", draw);
+    sortBox.addEventListener("change", render);
+    placeholder(out.dataset.placeholder);
+  }
+  function init() {
+    document.querySelectorAll(".random-draw").forEach(setup);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+::: {.iframe-caption}
+Numbers drawn live from <a href="https://www.random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new">random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new</a>
+:::
+
 
 # Statistics Review {.section-header}
 
 
+## Statistics in Data Science {.figure-aside}
+::: {.columns}
 
-# Statistics in Data Science
+::: {.column}
+- **Statistics**: learning from data under uncertainty.
+- "How can these raw numbers be used as evidence?"
+- "What does this sample say about the whole population?"
+:::
 
-::: {.incremental}
-- Statistics: the science of learning from data under uncertainty.
-- It turns raw numbers into evidence we can actually trust.
-- It tells us what a sample says about the whole population.
-- It underpins every stage of the data science lifecycle.
+::: {.column}
+<img class="figure" src="../assets/slides-misc/coin-toss.jpg" alt="A coin in mid-air above a thumb that has just flipped it">
+
+::: {.caption}
+ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).
+:::
+:::
+
 :::
 
 ---
 
-# Probability {.smaller}
+## Kinds of Statistics
 
+::: {.columns .compare-columns}
+
+::: {.column}
+[DESCRIPTIVE]{.eyebrow}
+
+- Summarizes the **sample** (the actual data we have)
+- Measures of **center**: mean, median, mode
+- Measures of **spread**: range, standard deviation, variance
+- Measures of **position**: quartiles, percentiles
+:::
+
+::: {.column}
+[INFERENTIAL]{.eyebrow}
+
+- Uses the sample to conclude something about the **population**
+- Hypothesis testing, confidence intervals
+- A **parameter** is a numerical characteristic of a population
+- Week 2 is a review; we return to inference in Week 8
+:::
+
+:::
+
+---
+
+## Why it can be Mean to Use the Mean {.smaller}
+Which measure better summarizes these salaries?
+
+::: {.columns}
+
+::: {.column width="20%"}
+| Salaries |
+|--:|
+| 75,000 |
+| 70,000 |
+| 72,000 |
+| 65,000 |
+| **675,000** |
+| 75,000 |
+| 68,000 |
+| 74,000 |
+:::
+
+::: {.column width="80%"}
+::: {.incremental}
+- Mean = **\$146,750**
+- Median = **\$73,000**
+- [675,000 is an **outlier**]{.key} — a value much higher or much lower than the rest of the data
+- The mean is **not robust** to outliers
+- The median is the better one-number summary here
+- Often the case for social media data, where a few accounts dwarf the rest
+
+:::
+:::
+
+:::
+
+---
+
+## Sneak Peek: Where Is the Middle? {.figure-slide}
+```{python}
+#| echo: false
+# Copied from the Week 4 deck: builds up the arithmetic vs. geometric mean number line.
+A, B = 10, 10_000
+AM = (A + B) / 2            # 5005
+GM = (A * B) ** 0.5         # ~316.23
+TEAL = "#1f8a9b"            # the deck's secondary accent
+
+def number_line(positions, labels, marks, title, xmax):
+    """A bare horizontal axis with tick labels and annotated marks.
+
+    `marks` is a list of (position, label, color, level) drawn as a dot with a
+    caption on a stem above it; `level` 0 or 1 picks the stem height so that
+    labels for values close together don't collide. Every stage draws the same
+    axis and the same limits, so the .r-stack fragments swap without the
+    layout shifting.
+    """
+    pad = 0.14 * xmax           # room for labels that overhang the ends
+    axis = pl.DataFrame({"x": [0.0], "y": [0.0]})
+    p = (ggplot(axis, aes("x", "y"))
+         + annotate("segment", x=0, xend=xmax, y=0, yend=0, color=INK, size=1)
+         + theme_void()
+         + theme(figure_size=(10, 3.4)))
+    for pos, lab in zip(positions, labels):
+        p = (p
+             + annotate("segment", x=pos, xend=pos, y=-0.08, yend=0.08, color=INK)
+             + note(pos, -0.3, lab, ha="center", size=12))
+    for pos, lab, col, level in marks:
+        top = 0.5 + 0.6 * level
+        p = (p
+             + annotate("point", x=pos, y=0, color=col, size=5)
+             + annotate("segment", x=pos, xend=pos, y=0.14, yend=top, color=col)
+             + note(pos, top + 0.12, lab, ha="center", color=col, size=13))
+    return (p
+            + note(xmax / 2, 2.0, title, ha="center", size=15)
+            + scale_x_continuous(limits=(-pad, xmax + pad))
+            + scale_y_continuous(limits=(-0.55, 2.2)))
+
+lin_ticks = [0, 2500, 5000, 7500, 10000]
+lin_labels = ["0", "2,500", "5,000", "7,500", "10,000"]
+lin_data = [(A, "10", ORANGE, 0), (B, "10,000", ORANGE, 0)]
+
+log_ticks = [1, 2, 3, 4]
+log_labels = ["10", "100", "1,000", "10,000"]
+log_data = [(1, "10", ORANGE, 0), (4, "10,000", ORANGE, 0)]
+```
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-alt: "A linear number line from 0 to 10,000 with two orange points, one at 10 near the far left and one at 10,000 at the right end"
+number_line(lin_ticks, lin_labels, lin_data, "Two values on a linear scale", 10000)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-alt: "The same linear number line with the arithmetic mean of 5,005 marked at the halfway point, far from both data values"
+number_line(lin_ticks, lin_labels,
+            lin_data + [(AM, "arithmetic mean\n5,005", DARK, 0)],
+            "Arithmetic mean (the middle of the linear scale)", 10000)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-alt: "The same linear number line with the geometric mean of about 316 marked close to the left end, and the arithmetic mean still at 5,005"
+number_line(lin_ticks, lin_labels,
+            lin_data + [(AM, "arithmetic mean\n5,005", DARK, 0),
+                        (GM, "geometric mean\n≈ 316", TEAL, 1)],
+            "Geometric mean (much closer to both values)", 10000)
+```
+:::
+
+::: {.fragment fragment-index=3}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-alt: "The same two values redrawn on a logarithmic number line with ticks at 10, 100, 1,000 and 10,000; the geometric mean of about 316 now sits exactly halfway between the points, while the arithmetic mean of 5,005 sits far to the right"
+number_line(log_ticks, log_labels,
+            log_data + [(np.log10(AM), "arithmetic mean\n5,005", DARK, 1),
+                        (np.log10(GM), "geometric mean\n≈ 316", TEAL, 0)],
+            "Same values on a log₁₀ scale, the geometric mean is the middle",
+            4.6)
+```
+:::
+
+::::
+
+
+---
+
+
+## Descriptive Stats: Measures of Spread
+::: {.columns .compare-columns}
+
+::: {.column}
+[HOW SPREAD OUT?]{.eyebrow}
+
+- **Range** = maximum − minimum
+- **Standard deviation** — typical distance between a value and the mean
+- **Variance** = $s^2$
+
+$$s = \sqrt{\frac{\sum_{i=1}^{n}(a_i - \bar{x})^2}{n-1}}$$
+:::
+
+::: {.column}
+[WORKED THROUGH]{.eyebrow}
+
+| Ages | 24 | 35 | 32 | 21 | 28 |
+|:--|--:|--:|--:|--:|--:|
+
+Mean = 28
+
+$$\frac{(-4)^2 + 7^2 + 4^2 + (-7)^2 + 0^2}{4} = 32.5$$
+
+Variance = **32.5** &nbsp;&nbsp; Std. dev. = **5.7**
+:::
+
+:::
+
+---
+
+## Descriptive Stats: Percentiles and Quartiles {.smaller}
+
+- **Percentiles** divide the data into 100 equal parts: $n$% of the data is at or below the $n$th percentile
+- **Quartiles** divide it into quarters — $Q_1$ (25th), $Q_2$ (50th, the median), $Q_3$ (75th)
+- The minimum, $Q_1$, median, $Q_3$, and maximum are the **five-number summary**
+
+::: {.columns}
+
+::: {.column width="48%"}
+Grades, sorted: 76, 78, 78, 80, 84, 90, 90, 95
+
+| | Value |
+|:--|--:|
+| Minimum | 76 |
+| $Q_1$ | 78 |
+| Median | 82 |
+| $Q_3$ | 90 |
+| Maximum | 95 |
+:::
+
+::: {.column width="48%"}
+```{python}
+#| echo: false
+#| fig-alt: "Horizontal box plot of eight grades, with the box spanning the first quartile at 78 to the third quartile at 90, a median line at 82, and whiskers reaching 76 and 95"
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(4.6, 2.0))
+ax.boxplot([78, 90, 90, 80, 78, 95, 76, 84], vert=False, widths=0.45,
+           boxprops=dict(color="#f9461c"), medianprops=dict(color="#001E62"),
+           whiskerprops=dict(color="#565a5c"), capprops=dict(color="#565a5c"))
+ax.set(xlabel="grade", yticks=[])
+ax.spines[["top", "right", "left"]].set_visible(False)
+```
+
+:::
+
+:::
+
+---
+
+## Probability Terminology
+
+- An **experiment** is a procedure with more than one possible outcome
+    - the **sample space** $S$ is the set of all outcomes
+    - an **event** $E$ is a subset of $S$
+- **Conditional probability** — the probability of $A$ given that $B$ already happened: $P(A \mid B) = \frac{P(A \cap B)}{P(B)}$
+- **Bayes' theorem** — flip the condition around: $P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$
+
+---
+
+## Hypothesis Testing Terminology
+
+- The **null hypothesis** $H_0$ is assumed true unless the evidence says otherwise; the **alternative** $H_a$ contradicts it
+- A **$p$-value** is the probability of seeing evidence at least this extreme, if $H_0$ were true
+- If $p$ is below the **significance level** $\alpha$ (typically 0.05), the result is said to be **statistically significant**
+
+| | $H_0$ is true | $H_0$ is false |
+|:--|:--|:--|
+| **Reject $H_0$** | Type I error (prob. $\alpha$) | Correct decision |
+| **Fail to reject $H_0$** | Correct decision | Type II error (prob. $\beta$) |
+
+
+---
+
+## Lots of Descriptive Stats at Once {.smaller}
+
+
+
+::: {.columns}
+
+::: {.column width="46%"}
+```{python}
+#| echo: true
+import polars as pl
+
+grades = pl.DataFrame(
+    {"grade": [78, 90, 90, 80, 78, 95, 76, 84]}
+)
+
+grades.describe()
+```
+:::
+
+::: {.column width="52%"}
+- `describe()` gives: count, nulls, mean, standard deviation, and the five-number summary — on every column of a dataframe.
+- Works on any dataframe, or just one column
+- Good first thing to run on data you have never seen
+- `null_count` is often useful for cleaning/wrangling
+:::
+
+:::
+
+---
+
+## Why describe() Exists
+
+This is not super fun:
+
+::: {.columns}
+
+::: {.column width="52%"}
+```{python}
+#| echo: true
+grades.select(
+    pl.col("grade").mean().alias("mean"),
+    pl.col("grade").median().alias("median"),
+    pl.col("grade").std().round(2).alias("std"),
+)
+```
+:::
+
+::: {.column width="46%"}
+```{python}
+#| echo: true
+grades.select(
+    pl.col("grade").min().alias("min"),
+    pl.col("grade").quantile(0.25).alias("Q1"),
+    pl.col("grade").quantile(0.75).alias("Q3"),
+    pl.col("grade").max().alias("max"),
+)
+```
+:::
+
+:::
+
+
+# Python Foundations {.section-header}
+
+
+## Python Foundations
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+- **TK**
+:::
+
+---
+
+## Why Python for This Course {.plain-code}
+Reasons Python is useful for data science:
+
+- **Readable** — closer to plain English than other languages, very forgiving
+- **Libraries** — e.g. `polars` for dataframes, `requests` for pulling data
+- **Visualization** — charts and maps without leaving the notebook
+
+
+
+
+---
+
+## Review: Types in Python {.plain-code}
+Every value in Python has a type
+
+:::: {.columns}
+
+::: {.column width="48%"}
+| Type | Example |
+|:--|:--|
+| `int` | `5231` |
+| `float` | `7423.5` |
+| `complex` | `3 + 4j` |
+| `str` | `'Midway'` |
+| `list` | `[1, 2, 3]` |
+| `tuple` | `(41.78, -87.73)` |
+| `range` | `range(0, 10)` |
+:::
+
+::: {.column width="48%"}
+| Type | Example |
+|:--|:--|
+| `dict` | `{'rides': 5231}` |
+| `set` | `{'W', 'A', 'U'}` |
+| `frozenset` | `frozenset({1, 2})` |
+| `bool` | `True` |
+:::
+
+::::
+
+::: {.notes}
+- `tuple` is an immutable list
+:::
+
+---
+
+## Kinds of Data
+For understanding the *meaning* of values. (Python types: how a value is *stored*.)
+
+<svg viewBox="0 0 1000 215" width="100%" style="max-height:180px; display:block; margin:0.2em auto 0;" role="img" aria-label="A tree diagram: Data splits into Quantitative Data and Categorical Data; Categorical Data splits again into Ordinal and Nominal">
+  <g fill="none" stroke="#f9461c" stroke-width="1.5">
+    <path d="M470 44 L270 88"/>
+    <path d="M530 44 L640 78"/>
+    <path d="M655 122 L625 164"/>
+    <path d="M725 122 L800 164"/>
+  </g>
+  <g font-family="inherit" text-anchor="middle" fill="#ffffff">
+    <rect x="440" y="6" width="120" height="38" rx="8" fill="#c83214"/>
+    <text x="500" y="31" font-size="20" font-weight="700">Data</text>
+    <rect x="70" y="88" width="200" height="38" rx="8" fill="#f9461c"/>
+    <text x="170" y="112" font-size="16" font-weight="600">Quantitative Data</text>
+    <rect x="595" y="78" width="190" height="38" rx="8" fill="#f9461c"/>
+    <text x="690" y="102" font-size="16" font-weight="600">Categorical Data</text>
+    <rect x="555" y="164" width="140" height="36" rx="8" fill="#f9461c"/>
+    <text x="625" y="187" font-size="16" font-weight="600">Ordinal</text>
+    <rect x="730" y="164" width="140" height="36" rx="8" fill="#f9461c"/>
+    <text x="800" y="187" font-size="16" font-weight="600">Nominal</text>
+  </g>
+</svg>
+
+::: {.columns .compare-columns}
+
+::: {.column}
+[QUANTITATIVE]{.eyebrow}
+
+Numbers with meaningful ratios or intervals.
+
+Price, quantity, temperature, date
+:::
+
+::: {.column}
+[ORDINAL]{.eyebrow}
+
+Categories with an order, but no consistent meaning "in between"
+
+e.g. ranked preferences, level of education
+:::
+
+::: {.column}
+[NOMINAL]{.eyebrow}
+
+Categories with no ordering.
+
+e.g. color, product type, operating system
+:::
+
+:::::
+
+---
+
+# "Just Do the Math" {.smaller}
+
+::: {.incremental}
+- **Frequentist**: probability = long-run frequency; judge procedures by error rates
+- **Bayesian**: probability = degree of belief, updated as evidence arrives
+- Efron (1986) asked "Why Isn't Everyone a Bayesian?" — an active contest at the time
+- McElreath (2020): the debate has largely been **subsumed by causal inference**
+- Even so: you still have to choose prior belief(s)
+- One of many examples in data science where there is not always a single correct option
+:::
+
+
+---
+
+## On your own: Which Kind of Datum Is It? {.split}
+::: {.split-content .golden-columns}
+
+::: {}
+
+Quantitative, ordinal, or nominal?
+
+1. The name of a flower
+2. The height of a tree
+3. The color of a book cover
+4. The serial number of a phone
+5. The numeric labels for OpenAI models (e.g. )
+5. TODO add more examples
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+
+---
+
+## Storage Type vs. Kind of Data {.smaller .plain-code}
+| Column | Kind of data | Stored as | Polars dtype |
+|:--|:--|:--|:--|
+| `%` (share of the vote) | quantitative | number | `pl.Float64` |
+| `Year` | quantitative | number | `pl.Int64` |
+| `Party` | nominal | text | `pl.String` / `pl.Categorical` |
+| `Result` (`win` / `loss`) | nominal | text | `pl.String` |
+| star rating, 1–5 | ordinal | number | `pl.Enum` (keeps the order) |
+| ZIP code | nominal | number | `pl.String` — **not** an integer |
+
+- A ZIP code is *stored* as a number, but it is not a quantity
+    - Nothing stops you from taking the mean of a column of ZIP codes, but the mean just means very little (same for serial numbers)
+- `pl.Categorical`: "repeated labels, store them once"
+- `pl.Enum`: "these labels, in this order"
+- TODO more examples for categorical/enum
+
+---
+
+## Lists {.smaller .plain-code}
+A list holds several values in one variable, in order.
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Ordered, mutable (changeable), and indexable** — position is stable, and you can change items in place
+- **Allow duplicate items** — unlike a set, a repeated value is kept
+- **Support slicing** — `[start:stop]` takes a range, and the stop is excluded
+- **Negative indexing** — `-1` is the last item, counting back from the end
+:::
+
+::: {.column width="58%"}
+```python
+grades = [88, 92, 79, 92, 65]
+
+# index from zero
+grades[0]            # 88
+# negative indexing counts from the end
+grades[-1]           # 65
+# slicing - the stop is excluded
+grades[1:3]          # [92, 79]
+len(grades)          # 5
+
+# mutable - both of these change the list itself
+grades.append(100)
+grades[2] = 85
+grades               # [88, 92, 85, 92, 65, 100]
+```
+:::
+
+::::
+
+
+
+---
+
+## Listing common features of lists {.smaller}
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Handling collections of data**, i.e. any group of values that go together: station names, grades, scores
+- **Catching request and response payloads**, e.g. a web API answers with a JSON array, which arrives as a list of dictionaries
+- **Processing database results**, queries often hand back a list, one row per result, in order, ready to loop over
+:::
+
+::: {.column width="58%"}
+```python
+# 1. a collection you build yourself
+grades = [88, 92, 79]
+grades.append(95)
+sum(grades) / len(grades)
+
+# 2. a web API response
+data = requests.get(url).json()
+data[0]['stationname']
+
+# 3. a database query result
+rows = cur.fetchall()
+rows[0][1]
+```
+:::
+
+::::
+
+
+---
+
+## Tuples and Sets
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Tuple**: like a list, but cannot change (fancy word: _)
+- **Use a tuple for a fixed record**, e.g. a (name, score) pair, a coordinate
+- **Set**: unordered, no duplicates, fast membership test (`in`)
+:::
+
+::: {.column width="58%"}
+```python
+# tuple like a list, but cannot be changed
+student = ('Ana', 88)
+student[0]
+name, score = student
+student[1] = 91
+
+# set
+scores = {88, 92, 79, 92}
+len(scores)
+
+# turning a list into a set to see distinct values
+grades = [88, 92, 79, 92, 65]
+set(grades)
+```
+:::
+
+::::
+
+::: {.notes}
+- Immutable is the whole tuple story: `student[1] = 91` raises a TypeError, and that is the feature
+- Reach for a tuple when the record's shape is fixed and nobody should edit it — a (name, score) pair, a lat/lon pair
+- `name, score = student` is unpacking; it shows up constantly in loops
+- The set literal drops the duplicate 92, so `len(scores)` is 3, not 4
+- The payoff is the last block: `set(grades)` is how you find out what values actually appear in a column — the first thing you do with any unfamiliar categorical column
+- Two trip-ups: a set has no order, so you cannot index one; and `{}` makes an empty *dict*, not an empty set — that is `set()`
+:::
+
+---
+
+## Dictionaries {.smaller}
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Key to value**: the key is a label
+- **Keys are unique**: assigning to a key that exists replaces the value
+- **.get() is the safest way to access values** — gives back None (instead of an error) when the key is missing
+- **This is the shape of data** — one dictionary = one record = one row
+:::
+
+::: {.column width="58%"}
+```python
+# values stored under labels, not positions
+student = {'name': 'Ana', 'grade': 88, 'major': 'CS'}
+student['grade']
+# this will fail/crash
+student['email']
+# safer option
+student.get('email')
+
+# all the labels, all the values
+student.keys()
+student.values()
+
+# replace an existing key or add a new one
+student['grade'] = 91
+student['year'] = 'junior'
+```
+:::
+
+::::
+
+
+
+---
+
+## Strings
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Strings are sequences** — index and slice them exactly like lists
+- **Immutable** — methods hand back a new string
+- **.strip() and .split()** — for messy data
+- **f-strings** — put values inside text
+:::
+
+::: {.column width="58%"}
+```python
+# strings are sequences, like lists
+name = 'Midway'
+name[0]
+len(name)
+'way' in name
+
+# methods return a new string
+name.upper()
+'  Midway  '.strip()
+'W,A,U'.split(',')
+
+# f-strings build text out of values
+rides = 7423
+f'{name}: {rides} entries'
+```
+:::
+
+::::
+
+
+---
+
+## Loops
+:::: {.columns}
+
+::: {.column width="42%"}
+- **for** - go one item at a time, in order
+- **Indentation is the body**
+- **enumerate()** — when you need the position and the value
+- **.items()** — loop over a dictionary's keys and values
+:::
+
+::: {.column width="58%"}
+```python
+grades = [88, 92, 79, 92, 65]
+
+# do the same thing to every item
+total = 0
+for g in grades:
+    total = total + g
+
+# position and value together
+for i, g in enumerate(grades):
+    print(i, g)
+
+# keys and values of a dictionary
+scores = {'Ana': 88, 'Ben': 92}
+for name, score in scores.items():
+    print(name, score)
+```
+:::
+
+::::
+
+---
+
+## Types of Errors and Exceptions {.smaller}
+::: {.caption}
+Quotes and examples from the [Python Tutorial, "Errors and Exceptions"](https://docs.python.org/3/tutorial/errors.html).
+:::
+
+::: {.columns .compare-columns}
+
+::: {.column}
+[SYNTAX ERRORS]{.eyebrow}
+
+Caught by the **parser**, before a single line runs. The code is not valid Python, so nothing executes.
+
+```python
+while True print('Hello world')
+#          ^^^^^ SyntaxError: invalid syntax
+```
+
+The arrows point at where the error was *detected*, which is not always where it needs to be **fixed** — here the missing `:` is one token earlier.
+:::
+
+::: {.column}
+[EXCEPTIONS]{.eyebrow}
+
+The code is valid, but something goes wrong **while it runs**. Execution stops and Python prints a *traceback*.
+
+```python
+10 * (1/0)
+# ZeroDivisionError: division by zero
+```
+
+Exceptions "are not unconditionally fatal" — you can catch and handle them.
+:::
+
+:::
+
+
+
+---
+
+## Exceptions You Might See {.smaller .plain-code .narrow-first-col}
+
+::: {.caption}
+Definitions paraphrased from the [Python documentation, "Built-in Exceptions"](https://docs.python.org/3/library/exceptions.html).
+:::
+
+| Exception | Raised when… | A way to trigger it |
+|:--------------------|:-----------------------------------------|:------------------------------------|
+| `NameError` | a local or global name is not found | `print(grade)` before assigning `grade` |
+| `TypeError` | an operation is applied to an object of **inappropriate type** | `"88" + 12` |
+| `ValueError` | an argument has the **right type but an inappropriate value** | `int("eighty-eight")` |
+| `IndexError` | a sequence subscript is **out of range** | `grades[99]` on a 5-item list |
+| `KeyError` | a dictionary key is **not found** | `student['email']` |
+| `AttributeError` | an attribute reference or assignment fails | `student.grade` on a dict |
+| `ZeroDivisionError` | the second argument of a division is zero | `sum(grades) / len(grades)` on an empty list |
+| `FileNotFoundError` | a file or directory is requested but **doesn't exist** | `pl.read_csv("typo.csv")` |
+
+
+
+# Dataframes and Polars {.section-header}
+
+
+## From Dictionaries to a DataFrame {.smaller}
+Think of one dictionary as one record or one row in a spreadsheet:
+
+```{python}
+#| echo: true
+import polars as pl
+
+roster = [
+    {"name": "Ana",  "grade": 88, "major": "CS"},
+    {"name": "Ben",  "grade": 92, "major": "Stats"},
+    {"name": "Cruz", "grade": 79, "major": "CS"},
+]
+
+pl.DataFrame(roster)
+```
+
+Polars reads the keys as **column names** and each dictionary as a **row**.
+
+---
+
+## The Same Table, Column by Column {.smaller}
+A dataframe is a collection of columns, so you can also hand Polars **one list per column**. Same table, built the other way around.
+
+```{python}
+#| echo: false
+students = pl.DataFrame({
+    "name": ["Ana", "Ben", "Cruz"],
+    "grade": [88, 92, 79],
+    "major": ["CS", "Stats", "CS"],
+})
+students
+```
+
+::: {.columns}
+
+::: {.column width="50%"}
+```{python}
+#| echo: true
+students["grade"].mean()
+```
+:::
+
+::: {.column width="50%"}
+```{python}
+#| echo: true
+students.filter(pl.col("major") == "CS")
+```
+:::
+
+:::
+
+::: {.notes}
+- The list-of-dicts version is the shape data arrives in from a web API; the dict-of-lists version is the shape you type by hand
+- Point out the dtype row under the header: `str`, `i64`, `str` — Polars inferred them, and it will hold you to them
+- `students["grade"]` is a Series; `.mean()` on it gives one number, not a table
+:::
+
+---
+
+## Rectangular Data {.smaller}
+Data scientists tend to prefer **rectangular** data for analysis.
+
+::: {.columns}
+
+::: {.column width="56%"}
+- A big part of wrangling / cleaning is transforming data to be **more rectangular**
+- Rectangular representations:
+    - Tables in Excel
+    - Relations in a database
+    - Matrices (`numpy.ndarray`)
+    - A list of dictionaries — one per row
+- Next: the **dataframe**
+:::
+
+::: {.column width="40%"}
+| | Candidate | Party | % |
+|--:|:--|:--|--:|
+| **0** | Reagan | Republican | 50.9 |
+| **1** | Carter | Democratic | 41.1 |
+| **2** | Anderson | Independent | 6.6 |
+
+Columns are **fields / attributes / features**.
+
+Rows are **records / observations**.
+:::
+
+:::
+
+---
+
+## Polars Data Structures {.plain-code}
+::: {.columns .compare-columns}
+
+::: {.column}
+[DATAFRAME]{.eyebrow}
+
+Two-dimensional tabular data. A collection of Series that all have the same length.
+:::
+
+::: {.column}
+[SERIES]{.eyebrow}
+
+One-dimensional data — a single column, with a name and one data type.
+:::
+
+:::
+
+Pandas also has the **Index** (row labels that can be non-numeric, named, or even non-unique). In Polars a row is identified by its position and nothing else.
+
+---
+
+## Why Polars {.plain-code}
+- Selecting, filtering, and computing all go through *expressions* — `pl.col("...")` — instead of different bracket behaviors
+- **Fast.** Backend written in Rust, runs on all cores, can work on data larger than memory 😎 (e.g. with "LazyFrames")
+- **Strict about types.** A column has one data type; Polars tells you when an operation does not make sense
+    - Pandas often turns things into generic 'objects'
+- **Don't sleeep on Pandas.** Polars/Pandas concepts line up pretty directly, but Pandas is still everywhere.
+
+::: {.caption}
+Docs: <https://docs.pola.rs/>
+:::
+
+---
+
+## Let's read our first dataset 🤩 {.plain-code}
+
+```{python}
+#| echo: true
+import polars as pl
+
+ELECTIONS = ("https://raw.githubusercontent.com/jackbandy/data-science-fun"
+             "/main/datasets/us-presidential-elections/elections.csv")
+
+elections = pl.read_csv(ELECTIONS)
+elections.head(3)
+```
+
+::: {.notes}
+- That is the whole thing: import the library, hand `read_csv` a path or a URL, get a DataFrame back
+- A URL works exactly like a filename here, so this runs the same on your laptop, in Colab, or on a lab machine
+:::
+
+---
+
+## Filtering the Dataset {.smaller}
+Keep 1980 onward; drop candidates under 1% of the popular vote.
+
+```{python}
+#| echo: true
+elections = (
+    pl.read_csv(ELECTIONS)
+    .filter((pl.col("Year") >= 1980) & (pl.col("%") > 1))
+    .select("Candidate", "Party", pl.col("%").round(1), "Year", "Result")
+)
+elections.sample(6, seed=418)
+```
+
+::: {.caption}
+Data from the [Berkeley Data 100 course notes](https://github.com/DS-100/course-notes/blob/main/content/pandas_1/data/elections.csv), compiled from Wikipedia's popular-vote tables. `Result` is the result of the *election*, not of the popular vote.
+:::
+
+---
+
+## Selecting One Column
+Passing a column name to `[]` gives back a **Series**.
+
+```{python}
+#| echo: true
+elections["Candidate"].head(6)
+```
+
+---
+
+## Selecting Multiple Columns
+`select` takes any number of columns and always gives back a **DataFrame**.
+
+```{python}
+#| echo: true
+elections.select("Candidate", "Party").sample(6, seed=418)
+```
+
+---
+
+## Expressions Demo {.plain-code}
+
+```{python}
+#| echo: true
+elections.select(
+    pl.col("Candidate"),
+    pl.col("%").round(0).alias("rounded"),
+    (pl.col("%") > 50).alias("majority"),
+).head(5)
+```
+
+---
+
+## Selecting Rows by Position
+
+```{python}
+#| echo: true
+elections[0:3]
+```
+
+---
+
+## Rows and Columns by Position
+Polars has no `.loc` and no `.iloc` 🥲
+
+```{python}
+#| echo: true
+elections[0:3, 0:2]
+```
+
+---
+
+## Filtering Rows
+`filter` keeps the rows where an expression is `True`.
+
+```{python}
+#| echo: true
+elections.filter(pl.col("Party") == "Independent")
+```
+
+---
+
+## Filtering on Several Conditions
+Which candidates won the election with less than half the popular vote?
+
+```{python}
+#| echo: true
+elections.filter(pl.col("Result") == "win", pl.col("%") < 50)
+```
+
+---
+
+## Handy Properties
+Common to check these before working with a dataframe
+
+```{python}
+#| echo: true
+elections.shape
+```
+
+```{python}
+#| echo: true
+elections.columns
+```
+
+```{python}
+#| echo: true
+elections.schema
+```
+
+---
+
+## Sorting
+Beware: `sort` returns a **new** dataframe!
+
+```{python}
+#| echo: true
+elections.sort("%", descending=True).head(5)
+```
+
+---
+
+## Counting Values
+`value_counts` on a Series counts every distinct value.
+
+```{python}
+#| echo: true
+elections["Party"].value_counts(sort=True)
+```
+
+---
+
+## Unique Values
+```{python}
+#| echo: true
+elections["Party"].unique(maintain_order=True).to_list()
+```
+
+---
+
+## Grouping and Aggregating {.smaller}
+Split the rows into groups, then compute something for each group.
+
+```{python}
+#| echo: true
+(elections
+ .group_by("Party")
+ .agg(pl.len().alias("candidates")))
+```
+
+---
+
+## A Question: The Closest Elections?
+Which elections had the smallest gap between the top two finishers?
+
+```{python}
+#| echo: true
+top_two = (elections
+           .sort(["Year", "%"], descending=[False, True])
+           .group_by("Year", maintain_order=True)
+           .head(2))
+
+margins = (top_two
+           .group_by("Year")
+           .agg(margin=pl.col("%").diff().last().abs().round(1)))
+
+margins.sort("margin").head(5)
+```
+
+---
+
+## A Question: The Most Lopsided Elections
+And which elections had the biggest gaps?
+
+```{python}
+#| echo: true
+margins.sort("margin", descending=True).head(5)
+```
+
+---
+
+## A Question: Could a Third Party Have Won? {.smaller}
+Three steps, building on the `top_two` and `margins` computed above:
+
+1. **Get the top two finishers** from each election — already done, that's `top_two`
+2. **Check the margin of victory** — already done, that's `margins`
+3. **Check the most popular third-party candidate's vote %** — did any of them outpoll that margin?
+
+```{python}
+#| echo: true
+third_party_best = (elections
+                     .filter(~pl.col("Party").is_in(["Democratic", "Republican"]))
+                     .sort("%", descending=True)
+                     .group_by("Year", maintain_order=True)
+                     .head(1)
+                     .rename({"%": "third_party_pct", "Candidate": "third_party_candidate"}))
+
+(third_party_best
+ .join(margins, on="Year")
+ .filter(pl.col("third_party_pct") > pl.col("margin"))
+ .select("Year", "third_party_candidate", "Party", "third_party_pct", "margin"))
+```
+
+---
+
+## Pandas to Polars: Getting Rows and Columns {.plain-code}
+| Task | pandas | Polars |
+|:--|:--|:--|
+| one column | `df["Party"]` | `df["Party"]` |
+| several columns | `df[["Party", "Year"]]` | `df.select("Party", "Year")` |
+| first rows | `df.head(3)` / `df[0:3]` | `df.head(3)` / `df[0:3]` |
+| by label | `df.loc[0:3, "Party"]` | *no index — use `filter`* |
+| by position | `df.iloc[0:3, 0:3]` | `df[0:3, 0:3]` |
+| filter rows | `df[df["%"] > 50]` | `df.filter(pl.col("%") > 50)` |
+
+---
+
+## Pandas to Polars: Changing the Data {.plain-code}
+| Task | pandas | Polars |
+|:--|:--|:--|
+| new column | `df["x"] = ...` | `df.with_columns(x=...)` |
+| sort | `df.sort_values("%")` | `df.sort("%")` |
+| counts | `df["Party"].value_counts()` | `df["Party"].value_counts()` |
+| group | `df.groupby("Party").mean()` | `df.group_by("Party").agg(...)` |
+
+::: {.caption}
+Full mapping: [Polars user guide, "Coming from pandas"](https://docs.pola.rs/user-guide/migration/pandas/).
+:::
+
+---
+
+## Pandas to Polars: The Cheatsheet Frame {.plain-code .smaller}
+::: {.caption}
+Tables on the next several slides follow Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal (2024).
+:::
+
+Every table that follows refers to this small frame, so the columns stay recognizable from slide to slide.
+
+```{python}
+#| echo: true
+import polars.selectors as cs
+
+df = pl.DataFrame({
+    "grp": [1, 2, 1, 2, 1, 2],
+    "x": list(range(6, 0, -1)),
+    "y": list(range(4, 10)),
+    "z": [3, 4, 5, 6, 7, None],
+    "ref": list("abcdef"),
+})
+df
+```
+
+---
+
+## Pandas to Polars: Accessing Data Using `[]` {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Get column as Series | `df["grp"]` | `df["grp"]` |
+| Cell indexing by location | `df.iloc[1, 1]` | `df[1, 1]` |
+| Row slicing by location | `df.iloc[1:3]` | `df[1:3]` |
+| Column slicing by location | `df.iloc[:, 1:]` | `df[:, 1:]` |
+| Row indexing by label | `df.loc["c"]` | *no index* — `df.filter(pl.col("ref") == "c")` |
+| Column indexing by label | `df.loc[:, "x"]` | `df[:, "x"]` or `df.select("x")` |
+| Column indexing by labels | `df.loc[:, ["x", "z"]]` | `df[:, ["x", "z"]]` or `df.select("x", "z")` |
+| Column slicing by label | `df.loc[:, "x":"z"]` | `df[:, "x":"z"]` |
+| Mixed indexing | `df.loc["c"].iloc[1]` | `df.filter(pl.col("ref") == "c")[0, 1]` |
+
+`[]` is for quick, interactive pokes at the data. Everything you want to *keep* should go through `select` / `filter` instead.
+
+---
+
+## Pandas to Polars: Selecting and Transforming {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Select a subset of columns | `df[["x", "y"]]` | `df.select("x", "y")` |
+| Select and transform columns | `df[["x", "y"]].astype(float)` | `df.select(pl.col("x", "y").cast(pl.Float64))` |
+| Add a column from a constant | `df["w"] = 1` | `df.with_columns(w=pl.lit(1))` |
+| Add a column from a list | `df["w"] = list(range(1, 7))` | `df.with_columns(pl.Series("w", range(1, 7)))` |
+| Add a column from other columns | `df["w"] = df["x"] + df["y"]` | `df.with_columns(w=pl.col("x") + pl.col("y"))` |
+| Change dtype of a column | `df.assign(x=lambda d: d["x"].astype(float))` | `df.with_columns(pl.col("x").cast(pl.Float64))` |
+| Rename a column | `df.rename(columns={"x": "x2"})` | `df.rename({"x": "x2"})` |
+| Drop columns | `df.drop(columns=["x", "y"])` | `df.drop("x", "y")` |
+| Sorting | `df.sort_values("x")` | `df.sort("x")` |
+| Copying | `df.copy()` | `df.clone()` |
+
+Note that `with_columns` **returns a new frame** — `df.with_columns(...)` alone changes nothing. Assign it: `df = df.with_columns(w=pl.lit(1))`.
+
+---
+
+## Pandas to Polars: Choosing Columns by Type or Pattern {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+`pl.col` takes names; `polars.selectors` (imported as `cs`) takes *rules*.
+
+| Select | Polars |
+|:--|:--|
+| All columns | `df.select(pl.all())` |
+| All integer columns | `df.select(cs.integer())` |
+| …except `x` | `df.select(cs.integer() - cs.by_name("x"))` |
+| By regex | <code>df.select(cs.matches(&quot;x&#124;y&quot;))</code> |
+| By name pattern | `df.select(cs.starts_with("r"))` |
+| Everything numeric, rounded | `df.select(cs.numeric().round(1))` |
+
+A selector is still an expression, so you can keep chaining: `cs.numeric().mean()` averages every numeric column at once.
+
+---
+
+## Pandas to Polars: Filtering Rows {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Filter rows | `df.loc[df.ref == "c"]` | `df.filter(pl.col("ref") == "c")` |
+| …by keyword | `df.query("ref == 'c'")` | `df.filter(ref="c")` [^kw] |
+| Filter rows (text operator) | `df.loc[df.ref.eq("c")]` | `df.filter(pl.col("ref").eq("c"))` |
+| Multiple filters (AND) | `df.loc[(df.ref == "c") & (df.x > 1)]` | `df.filter((pl.col("ref") == "c") & (pl.col("x") > 1))` |
+| …without the brackets | | `df.filter(pl.col("ref") == "c", pl.col("x") > 1)` [^comma] |
+| Multiple filters (OR) | <code>df.loc[(df.ref == &quot;c&quot;) &#124; (df.x > 1)]</code> | <code>df.filter((pl.col(&quot;ref&quot;) == &quot;c&quot;) &#124; (pl.col(&quot;x&quot;) > 1))</code> |
+| Is-in condition | `df.loc[df.ref.isin(["a", "b"])]` | `df.filter(pl.col("ref").is_in(["a", "b"]))` |
+| Is-between condition | `df.loc[df.x.between(2, 4)]` | `df.filter(pl.col("x").is_between(2, 4))` |
+
+[^kw]: The keyword form (`ref="c"`) only works for equality.
+[^comma]: Comma-separated conditions are ANDed together — no brackets, no `&`.
+
+---
+
+## Pandas to Polars: Duplicates and Missing Values {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Keep unique rows | `df.drop_duplicates()` | `df.unique()` |
+| …based on a subset of columns | `df.drop_duplicates(subset=["ref"])` | `df.unique(subset=["ref"])` |
+| Drop rows with missing values | `df.dropna()` | `df.drop_nulls()` |
+| …in one column | `df.dropna(subset=["z"])` | `df.drop_nulls(subset=["z"])` |
+| Fill missing values | `df.fillna(0)` | `df.fill_null(0)` |
+| Count missing values | `df.isna().sum()` | `df.null_count()` |
+
+::: {.aside-note}
+Two gotchas with `unique()`: the output row order is **not** guaranteed to match the input, and when rows are duplicated the one it keeps is `"any"` by default, not the first. Pass `maintain_order=True` and `keep="first"` to get the pandas behavior.
+:::
+
+---
+
+## Pandas to Polars: Grouping and Aggregation {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Aggregate by group | `df.groupby("grp")["x"].mean()` | `df.group_by("grp").agg(pl.col("x").mean())` |
+| Aggregate several columns | `df.agg({"x": "max", "y": "min"})` | `df.select(pl.col("x").max(), pl.col("y").min())` |
+| Mean of some columns | `df[["x", "y"]].mean()` | `df.select("x", "y").mean()` |
+| Mean of columns by pattern | `df.filter(regex="^x").mean()` | `df.select(cs.starts_with("x").mean())` |
+| Rename after aggregating | `df.groupby("grp")["x"].mean().rename("x_mean")` | `df.group_by("grp").agg(pl.col("x").mean().name.suffix("_mean"))` |
+| Add the group value as a column | `df.assign(x_mean=df.groupby("grp")["x"].transform("mean"))` | `df.with_columns(pl.col("x").mean().over("grp").name.suffix("_mean"))` |
+
+The last row is the one to remember: `.over("grp")` is Polars' answer to `transform` — aggregate **within** each group but keep every original row.
+
+---
+
+## Wide vs. Long: CTA Ridership {.smaller}
+The CTA publishes daily entries for every 'L' station. There are two ways to lay that out.
+
+```{python}
+#| echo: false
+CTA = "../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"
+
+cta = (
+    pl.scan_csv(CTA)
+    .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
+                  pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
+    .filter(pl.col("stationname").is_in(["UIC-Halsted", "Clark/Lake", "Roosevelt"]))
+    .filter(pl.col("date").is_between(pl.date(2024, 3, 4), pl.date(2024, 3, 6)))
+    .select("stationname", "date", "rides")
+    .sort("stationname", "date")
+    .collect()
+)
+```
+
+::: {.columns}
+
+::: {.column width="52%"}
+[WIDE — ONE COLUMN PER DAY]{.eyebrow}
+
+```{python}
+#| echo: false
+cta.pivot(index="stationname", on="date", values="rides")
+```
+
+One row per station. Reading across a row gives you that station's history.
+:::
+
+::: {.column width="46%"}
+[LONG — ONE ROW PER OBSERVATION]{.eyebrow}
+
+```{python}
+#| echo: false
+cta.head(5)
+```
+
+One row per station **per day**. Every row is one measurement.
+:::
+
+:::
+
+::: {.caption}
+[CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f), City of Chicago Data Portal. Three stations, three days in March 2024.
+:::
+
+---
+
+## How "Wide-format" Dataframes Grow {.wide-demo}
+Five Orange Line stops. One row per stop, **one column per day**.
+
+```{python}
+#| echo: false
+#| output: asis
+import datetime as dt
+
+CTA = "../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"
+STOPS = {"Midway Airport": "Midway", "Pulaski-Orange": "Pulaski", "Kedzie-Midway": "Kedzie",
+         "Western-Orange": "Western", "35th/Archer": "35th/Archer"}
+DAYS = [dt.date(2025, 8, 17) + dt.timedelta(days=i) for i in range(10)]
+
+daily = (
+    pl.scan_csv(CTA)
+    .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
+                  pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
+    .filter(pl.col("stationname").is_in(list(STOPS)))
+    .filter(pl.col("date").is_between(DAYS[0], DAYS[-1]))
+    .select("stationname", "date", "rides")
+    .sort("stationname", "date")
+    .collect()
+)
+rides = {(r["stationname"], r["date"]): r["rides"] for r in daily.iter_rows(named=True)}
+
+def frag(i):
+    """Day 0 is on the slide from the start; every later day is its own fragment."""
+    return f' class="fragment" data-fragment-index="{i}"' if i else ""
+
+head = "<th>stop</th>" + "".join(f"<th{frag(i)}>{d:%b %-d}</th>" for i, d in enumerate(DAYS))
+rows = "".join(
+    f"<tr><td>{short}</td>"
+    + "".join(f"<td{frag(i)}>{rides[(full, d)]:,}</td>" for i, d in enumerate(DAYS))
+    + "</tr>"
+    for full, short in STOPS.items()
+)
+print(f"<table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>")
+```
+
+::: {.fragment data-fragment-index="9"}
+The CTA has published records for every day since 2001 , which would be **9,000+ columns** and counting...
+:::
+
+::: {.caption}
+[CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f), City of Chicago Data Portal.
+:::
+
+---
+
+## Alternative: Long-Format Dataframes {.long-demo}
+Every cell becomes **one row** with the stop, the day, and the number. The first five rows are Aug 17 (the wide table's first column).
+
+::: {.columns}
+
+::: {.column width="52%"}
+```{python}
+#| echo: false
+#| output: asis
+# Date first, so the visible rows are all five stops on Aug 17 -- the same
+# five numbers as the first column of the wide table on the previous slide.
+by_day = daily.sort("date", "stationname")
+
+head = "<tr><th>stop</th><th>date</th><th>riders</th></tr>"
+body = "".join(
+    f"<tr><td>{STOPS[r['stationname']]}</td><td>{r['date']}</td><td>{r['rides']:,}</td></tr>"
+    for r in by_day.head(6).iter_rows(named=True)
+)
+body += "<tr><td>⋮</td><td>⋮</td><td>⋮</td></tr>"
+print(f"<table><thead>{head}</thead><tbody>{body}</tbody></table>")
+print(f"<p class='caption'>{by_day.height} rows — 5 stops × {len(DAYS)} days.</p>")
+```
+:::
+
+::: {.column width="46%"}
+- **Three columns.** Tomorrow's data is 5 more *rows*, not a new column
+- `date` is a **value** you can filter, sort, and group on 😌
+- 25 years of this is still three columns, just "taller"
+- This is the shape Polars expects
+:::
+
+:::
+
+::: {.notes}
+- Walk one cell across: Midway on Aug 17 was one cell in the wide table, and is one row here
+- Ask what happens tomorrow in each layout — that is the whole argument
+- Tall is cheap; wide is expensive. Rows are data, columns are schema
+:::
+
+---
+
+## Why Long-Format Data? {.smaller}
+
+::: {.columns .compare-columns}
+
+::: {.column}
+WIDE DATAFRAMES:
+- **The schema might change.**
+- **Tough to filter on a date**
+- `pl.col("2024-03-04")` names one day; there is no way to say "every day in March"
+- Plotting libraries usually want one column to map to an axis
+:::
+
+::: {.column}
+LONG DATAFRAMES:
+- **Fixed schema.** New data point is a new row
+- `date` is a real column, so filtering, grouping, and sorting all work normally
+- `group_by("stationname")` and `.over("date")` do what you expect
+- One row = one observation = the shape assumed by Polars terminology
+:::
+
+:::
+
+Generally you will want to reshape into long as soon as possible.
+
+---
+
+## Reshaping Between the Two {.smaller}
+`pivot` goes long → wide. `unpivot` goes back.
+
+```{python}
+#| echo: true
+wide = cta.pivot(index="stationname", on="date", values="rides")
+wide
+```
+
+```{python}
+#| echo: true
+wide.unpivot(index="stationname", variable_name="date", value_name="rides").head(4)
+```
+
+::: {.notes}
+- The round trip is the point: no information is lost either way, only the layout changes
+- Note the date came back as a *string*, not a date — column names are always text, so a pivot loses the dtype
+- This is the same pair of verbs as the cheatsheet slide that follows
+:::
+
+---
+
+## Pandas to Polars: Pivoting and Unpivoting {.plain-code .smaller}
+::: {.caption}
+Source: Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal.
+:::
+
+Pivoting goes from long to wide. Going back the other way is called *unpivoting* — pandas calls it melting.
+
+| Operation | pandas | Polars |
+|:--|:--|:--|
+| Pivot (long → wide) | `df.pivot(index="grp", columns="x", values="y")` | `df.pivot(index="grp", on="x", values="y")` |
+| Unpivot (wide → long) | `wide.melt(id_vars="grp", value_name="y")` | `wide.unpivot(index="grp", value_name="y")` |
+
+Polars intentionally broke away from  pandas terminology: `melt` became `unpivot`, both use the same `on` / `index` arguments.
+
+
+---
+
+## TODO
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+``` markdown
+Move cheat sheet to appendix, bring stats up front, make sections more organized... lots more improvements...
+```
+:::
+
+
+---
+
+
+
+
+
+# Week 2, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
+
+<h2>Obtaining Data</h2>
+
+CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
+
+---
+
+## Map {.split}
+::: {.split-content .narrow-aside}
+
+::: {}
+- Week 2: LaSalle/Van Buren
+- Day 2
+    - Obtaining Data
+:::
+
+![](../assets/orange-line-map-stops/stop02-lasalle-van-buren.svg){.figure alt="Orange Line map with the LaSalle/Van Buren stop marked, the Week 2 stop"}
+
+:::
+
+
+# Obtaining Data {.section-header}
+
+
+## Obtaining Data
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+- **TK**
+:::
+
+
+# Appendix: Probability in Depth {.section-header}
+
+## What's in the Appendix
+The Statistics Review earlier in this deck compresses probability into a single slide. These slides are the long version, kept here so the worked examples stay available:
+
+- Conditional probability, worked through a two-card draw
+- Bayes' theorem, and the 99%-accurate medical test that trips everyone up
+- A coin bet where a frequentist and a Bayesian give different answers
+
+---
+
+## Probability
 - **Probability** is a measure of the **likelihood** of an event occurring.
 - Probability is the language we use to quantify uncertainty in what the data tells us.
 
@@ -104,20 +1804,17 @@ What is the probability of drawing a blue or red marble on the first draw?
 
 ---
 
-# Key Terminology
+## Key Terminology
 
-::: {.dense}
 - **Experiment** — a process or action with an uncertain result
 - **Outcome** — a single possible result of an experiment
 - **Event** — a set of one or more outcomes we care about
 - **Sample space** — the set of all possible outcomes
 - **Complementary events** — two events where one occurs if and only if the other does not
 	- E.g. coin flip
-:::
 ---
 
-# Conditional Probability {.smaller}
-
+## Conditional Probability
 - **Conditional probability** is the probability of an event **given that another event has already happened**.
 - **P(A | B)** — "the probability of A given B."
 
@@ -141,8 +1838,7 @@ $$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
 
 ---
 
-# Conditional Probability: An Example {.smaller}
-
+## Conditional Probability: An Example
 **Example:** A deck contains 15 distinct cards labeled 1 through 15. Two cards are drawn at random without replacement.
 
 :::: {.columns}
@@ -195,12 +1891,7 @@ $$P(A \mid B) = \frac{n(A \cap B)}{n(B)} = \frac{28}{49} = \frac{4}{7}$$
 
 ---
 
-# Bayes Basics {.smaller}
-
-::: {.caption}
-Lifetime risks from Villeneuve & Mao (1994); attribution figure from the [CDC](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
-:::
-
+## Bayes Basics
 **Example:** Consider two events about a randomly chosen adult. **A** = the adult develops lung cancer &nbsp;&nbsp; **B** = the adult smokes cigarettes
 
 :::: {.columns}
@@ -215,7 +1906,7 @@ $$P(A \mid B)$$
 :::
 
 ::: {.fragment}
-Between 1 in 9 and 1 in 6 current smokers, (116–172 per 1,000, depending on the cohort).
+Between 1 in 9 and 1 in 6 current smokers (116–172 per 1,000, depending on the cohort).
 :::
 
 ::: {.fragment}
@@ -250,12 +1941,14 @@ Most cases of lung cancer trace back to smoking.
 </div>
 :::
 
+::: {.caption}
+Lifetime risks from Villeneuve & Mao (1994); attribution figure from the [CDC](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
+:::
 
 
 ---
 
-# Example: A Test That Is 99% Accurate {.image-frame-slide}
-
+## Example: A Test That Is 99% Accurate {.image-frame-slide}
 <img src="../assets/bayes-diagnostic/01-bayes-diagnostic.svg" alt="A grid of 1,000 small gray dots, one per person, captioned '1,000 people'">
 
 ::: {.caption}
@@ -264,8 +1957,7 @@ Diagnostic-test walkthrough adapted from Veritasium, ["The Bayesian Trap"](https
 
 ---
 
-# One Person in a Thousand Is Sick {.image-frame-slide}
-
+## One Person in a Thousand Is Sick {.image-frame-slide}
 <img src="../assets/bayes-diagnostic/02-bayes-diagnostic.svg" alt="The same grid of 1,000 dots with exactly one dot colored red, captioned '0.1% carry the disease (1 person)'">
 
 ::: {.caption}
@@ -274,18 +1966,20 @@ Diagnostic-test walkthrough adapted from Veritasium, ["The Bayesian Trap"](https
 
 ---
 
-# Test Everyone {.image-frame-slide}
-
+## Test Everyone {.image-frame-slide}
 <img src="../assets/bayes-diagnostic/03-bayes-diagnostic.svg" alt="The grid with the one red dot plus ten dots darkened, captioned 'a test with 99% accuracy returns 11 positives'">
 
 ::: {.caption}
+Diagnostic-test walkthrough adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
+:::
+
+::: {.notes}
 1% of the 999 healthy people test positive anyway — about 10 false positives, alongside the 1 true positive.
 :::
 
 ---
 
-# Who Are the 11? {.image-frame-slide}
-
+## Who Are the 11? {.image-frame-slide}
 <img src="../assets/bayes-diagnostic/04-bayes-diagnostic.svg" alt="The 11 positive dots labeled individually: one red dot marked 'true +' and ten dark dots each marked 'false +'. Caption: 11 people test positive, only 1 has the disease">
 
 ::: {.caption}
@@ -294,17 +1988,16 @@ Diagnostic-test walkthrough adapted from Veritasium, ["The Bayesian Trap"](https
 
 ---
 
-# You Tested Positive. Now What? {.image-frame-slide}
-
+## You Tested Positive. Now What? {.image-frame-slide}
 <img src="../assets/bayes-diagnostic/05-bayes-diagnostic.svg" alt="Just the 11 positives, one red and ten dark, captioned 'testing positive: only a 1-in-11 (~9%) chance'">
 
-::: {.caption}
+::: {.notes}
 $P(\text{positive} \mid \text{sick}) = 99\%$, but $P(\text{sick} \mid \text{positive}) \approx 9\%$. The rest of this section is how to get from one to the other.
 :::
 
 ---
 
-# Bayes' Theorem
+## Bayes' Theorem
 
 Conditional probabilities can be reversed using Bayes' theorem, which provides a systematic method for expressing one conditional probability in terms of another.
 
@@ -314,8 +2007,7 @@ $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 
 ---
 
-# Bayes' Theorem: An Example {.smaller}
-
+## Bayes' Theorem: An Example {.smaller}
 **Example:** What are the odds that Charli will have lung cancer, given that Charli smokes cigarettes?
 
 :::: {.columns}
@@ -323,7 +2015,7 @@ $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 ::: {.column width="48%"}
 
 ::: {.fragment}
-**A** = Charli has lung cancer \n **B** = Charli smokes a pack every day
+**A** = Charli has lung cancer &nbsp;&nbsp; **B** = Charli smokes a pack every day
 :::
 
 ::: {.fragment}
@@ -376,12 +2068,11 @@ $$P(B) = P(B \mid A)\,P(A) + P(B \mid A')\,P(A')$$
 ::::
 
 
-
 ---
 
-# Bayes' Law
+## Bayes' Law
 
-::: {style="display:flex; align-items:center; justify-content:center; min-height:60vh;"}
+::: {style="display:flex; align-items:center; justify-content:center; min-height:440px;"}
 ::: {style="font-size:2em;"}
 $$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
 :::
@@ -389,8 +2080,7 @@ $$P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$$
 
 ---
 
-# A Coin, 14 Flips, and a Bet {.image-frame-slide}
-
+## A Coin, 14 Flips, and a Bet {.image-frame-slide}
 <img src="../assets/coin-flip-worldviews/coin-flip-worldviews-blank.svg" alt="An empty chart. The y-axis is the estimated chance of heads from 0 to 100 percent; the x-axis has 16 slots for flips, each an empty circle with a question mark, and the last two sit in a shaded band labeled 'the bet'">
 
 ::: {.caption}
@@ -399,8 +2089,7 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 
 ---
 
-# Before Any Flips {.image-frame-slide}
-
+## Before Any Flips {.image-frame-slide}
 <img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip0.svg" alt="The same chart with a single Bayesian point at 50 percent above the tick labeled 'prior'. The Bayesian line is labeled with its formula, (h + 1) / (n + 2). No frequentist estimate exists yet">
 
 ::: {.caption}
@@ -409,8 +2098,7 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 
 ---
 
-# One Flip: Heads {.image-frame-slide}
-
+## One Flip: Heads {.image-frame-slide}
 <img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip1.svg" alt="After one heads, the frequentist estimate appears at 100 percent while the Bayesian estimate has moved only from 50 to 67 percent">
 
 ::: {.caption}
@@ -419,8 +2107,7 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 
 ---
 
-# Two Flips: Heads, Heads {.image-frame-slide}
-
+## Two Flips: Heads, Heads {.image-frame-slide}
 <img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip2.svg" alt="After two heads the frequentist estimate is still 100 percent; the Bayesian estimate has moved to 75 percent">
 
 ::: {.caption}
@@ -429,8 +2116,7 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 
 ---
 
-# Three Flips: The First Tails {.image-frame-slide}
-
+## Three Flips: The First Tails {.image-frame-slide}
 <img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip3.svg" alt="After a tails on the third flip the frequentist estimate drops sharply from 100 to 67 percent, while the Bayesian estimate eases down from 75 to 60 percent">
 
 ::: {.caption}
@@ -439,8 +2125,7 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 
 ---
 
-# All 14 Flips: 10 Heads, 4 Tails {.image-frame-slide}
-
+## All 14 Flips: 10 Heads, 4 Tails {.image-frame-slide}
 <img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip14.svg" alt="Both estimates across all 14 flips. The frequentist line lurches early and ends at 71.4 percent; the Bayesian line moves more gradually and ends at 68.8 percent. The two flips being bet on remain empty">
 
 ::: {.caption}
@@ -449,11 +2134,7 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 
 ---
 
-# Coin Flip Odds
-
-::: {.caption}
-Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
-:::
+## Coin Flip Odds
 
 ::::: {.columns}
 
@@ -477,10 +2158,13 @@ ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(36
 
 :::::
 
+::: {.caption}
+Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
+:::
+
 ---
 
-# How Frequentists Get to 51% {.smaller}
-
+## How Frequentists Get to 51%
 ::::: {.columns}
 
 :::: {.column width="56%"}
@@ -509,8 +2193,7 @@ $$P(\text{two heads}) = \hat{p}^{\,2} = \left(\frac{10}{14}\right)^{2} \approx 0
 
 ---
 
-# How Bayesians Get to 48.5% {.smaller}
-
+## How Bayesians Get to 48.5% {.smaller}
 ::::: {.columns}
 
 :::: {.column width="56%"}
@@ -541,7 +2224,7 @@ $$P(\text{two heads}) = E[p^{2}] = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485
 
 ---
 
-# "Just Do the Math" {.smaller}
+## "Just Do the Math"
 
 ::: {.incremental}
 - **Frequentist**: probability = long-run frequency; judge procedures by error rates
@@ -553,412 +2236,40 @@ $$P(\text{two heads}) = E[p^{2}] = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485
 :::
 
 
-# Python Foundations {.section-header}
+# Appendix: Descriptive Statistics {.section-header}
 
----
+## Descriptive Stats: Measures of Center
+::: {.columns .compare-columns}
 
-# Python Foundations
+::: {.column width="50%"}
+[THE THREE MIDDLES]{.eyebrow}
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+**Mean** — the sum divided by the number of values
 
-::: {.dense}
-- **TK**
-:::
-:::
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} a_i$$
 
----
+**Median** — the middle value of the sorted data, or the mean of the two middle values when $n$ is even
 
-# Why Python for this Course {.smaller .plain-code}
-
-You already know Python from previous classes. Reasons it is useful for data science:
-
-::: {.dense}
-- **Easy to learn** — readable, close to plain English, and forgiving
-- **Libraries** — `polars` for dataframes, `matplotlib` for figures, `requests` for pulling data off the web
-- **Excellent data visualization tools** — a quick exploratory plot or a publication-ready figure, without leaving the notebook
-|
-|
-|
-**TO DO**
+**Mode** — the most frequent value. A dataset with two modes is **bimodal**
 :::
 
-::: {.notes}
-- None of the three reasons is speed
-- "Easy to learn" matters most here: CS 1 and CS 2, but not fluent
-- Name the libraries now so they are familiar later: polars today, requests on Day 2, matplotlib in Week 5
-- Seeing the data early is what makes exploratory analysis possible at all
-- R and Julia are reasonable alternatives; Python wins on ecosystem breadth
+::: {.column width="50%"}
+[WORKED THROUGH]{.eyebrow}
+
+| Ages | 24 | 35 | 32 | 21 | 28 |
+|:--|--:|--:|--:|--:|--:|
+
+$$\bar{x} = \frac{24+35+32+21+28}{5} = 28$$
+
+Grades: 78, 90, 90, 80, 78, 95, 76, 84
+
+Sorted: 76, 78, 78, 80, 84, 90, 90, 95
+
+$$\text{median} = \frac{80+84}{2} = 82
+\qquad \text{mode} = 78, 90$$
 :::
 
----
-
-# Types in Python {.smaller .plain-code}
-
-Every value in Python has a type, and the type decides what you can do with it.
-
-:::: {.columns}
-
-::: {.column width="48%"}
-::: {.dense-smaller}
-| Type | Example |
-|:--|:--|
-| `int` | `5231` |
-| `float` | `7423.5` |
-| `complex` | `3 + 4j` |
-| `str` | `'Midway'` |
-| `list` | `[1, 2, 3]` |
-| `tuple` | `(41.78, -87.73)` |
-| `range` | `range(0, 10)` |
 :::
-:::
-
-::: {.column width="48%"}
-::: {.dense-smaller}
-| Type | Example |
-|:--|:--|
-| `dict` | `{'rides': 5231}` |
-| `set` | `{'W', 'A', 'U'}` |
-| `frozenset` | `frozenset({1, 2})` |
-| `bool` | `True` |
-| `bytes` | `b'CTA'` |
-| `bytearray` | `bytearray(4)` |
-| `memoryview` | `memoryview(b'CTA')` |
-:::
-:::
-
-::::
-
-::: {.notes}
-- Move quickly; this is the landscape, not a quiz
-- In practice this course lives in int, float, str, bool, list, dict
-- `tuple` is an immutable list — how coordinate pairs are usually written
-- `set` discards duplicates — useful for asking what distinct values a column has
-- `bytes` / `memoryview` show up when reading files in binary mode
-- Say plainly they are not expected to memorize it, so nothing looks unfamiliar later
-:::
-
----
-
-# Lists {.smaller .plain-code}
-
-A list holds several values in one variable, in order.
-
-:::: {.columns}
-
-::: {.column width="42%"}
-- **Ordered, mutable (changeable), and indexable** — position is stable, and you can change items in place
-- **Allow duplicate items** — unlike a set, a repeated value is kept
-- **Support slicing** — `[start:stop]` takes a range, and the stop is excluded
-- **Negative indexing** — `-1` is the last item, counting back from the end
-:::
-
-::: {.column width="58%"}
-```python
-grades = [88, 92, 79, 92, 65]
-
-# index from zero
-grades[0]            # 88
-# negative indexing counts from the end
-grades[-1]           # 65
-# slicing - the stop is excluded
-grades[1:3]          # [92, 79]
-len(grades)          # 5
-
-# mutable - both of these change the list itself
-grades.append(100)
-grades[2] = 85
-grades               # [88, 92, 85, 92, 65, 100]
-```
-:::
-
-::::
-
-::: {.notes}
-- Walk the example line by line rather than reading the bullets
-- Ordered: position is meaningful and stable — the 88 stays first until you move it
-- Indexable: `grades[0]` counts from zero, so the fifth score is index 4
-- Negative: `grades[-1]` is the last score, safer than `grades[len(grades)-1]`
-- Slicing: `grades[1:3]` returns two scores, not three — the most common off-by-one in the course
-- Duplicates: 92 appears twice and the list keeps both, unlike a set — exactly what you want for scores
-- Mutable: `append` adds a sixth score, `grades[2] = 85` regrades one in place
-- Nothing new is created, which matters when two names refer to the same list
-- A list of dicts is the shape almost every web API returns — why we spend time here
-:::
-
----
-
-# Where are lists mostly used? {.smaller}
-
-:::: {.columns}
-
-::: {.column width="42%"}
-- **Handling collections of data** — any group of values that you work together such as stations grades, names, scores
-- **Managing request and response payloads** — a web API answers with a JSON array, which arrives as a list of dictionaries
-- **Processing database results** — a query hands back one row per result, in order, ready to loop over
-:::
-
-::: {.column width="58%"}
-```python
-# 1. a collection you build yourself
-grades = [88, 92, 79]
-grades.append(95)
-sum(grades) / len(grades)
-
-# 2. a web API response
-data = requests.get(url).json()
-data[0]['stationname']
-
-# 3. a database query result
-rows = cur.fetchall()
-rows[0][1]
-```
-:::
-
-::::
-
-::: {.notes}
-- A list is what several values look like while they are in transit
-- Case 1: data you built yourself
-- Case 2: a JSON array becomes a Python list, each element a dict — the list-of-dicts shape from the dictionaries slide, and literally what happens on Day 2 with the Chicago Data Portal API
-- Case 3: `fetchall()` gives one tuple per row — a list of tuples, not dicts
-- Examples 2 and 3 are fragments (assume `requests` imported, cursor exists) — do not run as written
-- Say it out loud: in all three the list is only the container, and all three are one step from a dataframe — `read_csv`, `pl.DataFrame(data)`, `pl.DataFrame(rows)`
-:::
-
----
-
-# Tuples and Sets {.smaller}
-
-:::: {.columns}
-
-::: {.column width="42%"}
-- **Tuple** — like a list, but you cannot change it after you create it
-- **Use a tuple for a fixed record** — a (name, score) pair, a coordinate
-- **Set** — unordered, no duplicates, very fast membership test
-:::
-
-::: {.column width="58%"}
-```python
-# tuple like a list, but cannot be changed
-student = ('Ana', 88)
-student[0]
-name, score = student
-student[1] = 91
-
-# set
-scores = {88, 92, 79, 92}
-len(scores)
-
-# turning a list into a set to see distinct values
-grades = [88, 92, 79, 92, 65]
-set(grades)
-```
-:::
-
-::::
-
-::: {.notes}
-- Immutable is the whole tuple story: `student[1] = 91` raises a TypeError, and that is the feature
-- Reach for a tuple when the record's shape is fixed and nobody should edit it — a (name, score) pair, a lat/lon pair
-- `name, score = student` is unpacking; it shows up constantly in loops
-- The set literal drops the duplicate 92, so `len(scores)` is 3, not 4
-- The payoff is the last block: `set(grades)` is how you find out what values actually appear in a column — the first thing you do with any unfamiliar categorical column
-- Two trip-ups: a set has no order, so you cannot index one; and `{}` makes an empty *dict*, not an empty set — that is `set()`
-:::
-
----
-
-# Dictionaries {.smaller}
-
-:::: {.columns}
-
-::: {.column width="42%"}
-- **Key to value** — the key is a label you choose, not a position
-- **Keys are unique** — assigning to a key that exists replaces the value
-- **.get() is the safe one** — gives back None instead of an error when the key is missing
-- **This is the shape of data** — one dictionary = one record = one row
-:::
-
-::: {.column width="58%"}
-```python
-# values stored under labels, not positions
-student = {'name': 'Ana', 'grade': 88, 'major': 'CS'}
-student['grade']
-student['email']
-student.get('email')
-
-# all the labels, all the values
-student.keys()
-student.values()
-
-# replace an existing key, or add a new one
-student['grade'] = 91
-student['year'] = 'junior'
-```
-:::
-
-::::
-
-::: {.notes}
-- The most important container in the course — spend real time here
-- Brackets vs `.get()` matters on Day 2: an absent API field raises a KeyError and stops everything, `.get()` returns None and keeps going
-- `student['email']` is there to be run and to fail
-- Land the last bullet: a CSV row arrives as exactly this object, and so does every record from the Chicago Data Portal
-- If the room is comfortable, put a list of dictionaries on the board — that is a whole table before it becomes a dataframe
-:::
-
----
-
-# Strings {.smaller}
-
-:::: {.columns}
-
-::: {.column width="42%"}
-- **Strings are sequences** — index and slice them exactly like lists
-- **Immutable** — methods hand back a new string; the original never changes
-- **.strip() and .split()** — the two you reach for with messy data
-- **f-strings** — put values inside text without gluing pieces together
-:::
-
-::: {.column width="58%"}
-```python
-# strings are sequences, like lists
-name = 'Midway'
-name[0]
-len(name)
-'way' in name
-
-# methods return a new string
-name.upper()
-'  Midway  '.strip()
-'W,A,U'.split(',')
-
-# f-strings build text out of values
-rides = 7423
-f'{name}: {rides} entries'
-```
-:::
-
-::::
-
-::: {.notes}
-- Immutability surprises people: `name.upper()` does not change `name`, so the result must be assigned or it is lost
-- `strip()` removes stray whitespace — endemic in exported data, and it breaks joins silently: `'Midway '` and `'Midway'` never match
-- `split()` turns one field into several — how you pull apart a combined column
-- f-strings: anything inside the braces is evaluated
-- Station names, dates, and category codes all arrive as strings, so cleaning text is most of early data wrangling
-:::
-
----
-
-# Loops {.smaller}
-
-:::: {.columns}
-
-::: {.column width="42%"}
-- **for walks a sequence** — one item at a time, in order
-- **Indentation is the body** — Python has no braces; the spacing is the syntax
-- **enumerate()** — when you need the position as well as the value
-- **.items()** — to loop over a dictionary's keys and values together
-:::
-
-::: {.column width="58%"}
-```python
-grades = [88, 92, 79, 92, 65]
-
-# do the same thing to every item
-total = 0
-for g in grades:
-    total = total + g
-
-# position and value together
-for i, g in enumerate(grades):
-    print(i, g)
-
-# keys and values of a dictionary
-scores = {'Ana': 88, 'Ben': 92}
-for name, score in scores.items():
-    print(name, score)
-```
-:::
-
-::::
-
-::: {.notes}
-- Indentation deserves ten seconds: an IndentationError is the first error most students hit, and the fix is mechanical
-- Name the accumulator pattern — start at zero, add inside the loop — they need it for the by-hand grouping example later
-- `enumerate` and `.items()` are the two variants that come up constantly in real code
-- Say out loud: this is the last time we write a loop over data by choice
-:::
-
----
-
-# Comprehensions {.smaller}
-
----
-
-# Types of errors and exceptions {.smaller}
-
----
-
-# Dataframes and Polars {.section-header}
-
----
-
-# Dataframes and Polars
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK**
-:::
-:::
-
----
-
-# Week 2, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
-
-<h2>Obtaining Data</h2>
-
-Jack Bandy
-2026
-
----
-
-# Map {.split}
-
-::: {.split-content .narrow-aside}
-
-::: {}
-- Week 2: LaSalle/Van Buren
-- Day 2
-    - Obtaining Data
-:::
-
-![](../assets/orange-line-map-stops/stop02-lasalle-van-buren.svg){.figure alt="Orange Line map with the LaSalle/Van Buren stop marked, the Week 2 stop"}
-
-:::
-
----
-
-
-# Obtaining Data {.section-header}
-
----
-
-# Obtaining Data
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK**
-:::
-:::
-
----
 
 # Sources {.sources}
 
@@ -967,10 +2278,20 @@ Jack Bandy
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
 5. [Elda Shatro](https://github.com/eldashatro4) contributed to the Statistics Review slides.
-6. The frequentist/Bayesian coin bet draws on [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html); the coin-bet example is from [Panos Ipeirotis (2008)](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html).
-7. Richard McElreath, *[Statistical Rethinking: A Bayesian Course with Examples in R and Stan](https://xcelab.net/rm/statistical-rethinking/)*, 2nd ed., Chapman and Hall/CRC, 2020.
-8. Coin toss photo by ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).
-9. Bradley Efron, ["Why Isn't Everyone a Bayesian?"](https://doi.org/10.1080/00031305.1986.10475342), *The American Statistician* 40(1), 1986, pp. 1–5.
-10. The diagnostic-test walkthrough (1,000 people, a 99% accurate test, 11 positives) is adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
-11. Paul J. Villeneuve and Yang Mao, ["Lifetime probability of developing lung cancer, by smoking status, Canada"](https://pubmed.ncbi.nlm.nih.gov/7895211/), *Canadian Journal of Public Health* 85(6), 1994, pp. 385–388.
-12. CDC, ["Risk Factors for Lung Cancer"](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
+6. The Statistics Review follows Gonzalo Bello's CS 418 lectures 02–04, "Preliminaries: Probability & Statistics (I)–(III)," which in turn cite Diez, Barr & Çetinkaya-Rundel, *OpenIntro Statistics* (2015); Grus, *Data Science from Scratch* (2015); and OpenStax, *Introductory Statistics* (2016).
+7. The Polars section recreates Elena Zheleva's CS 418 pandas lecture (January 20, 2026), itself built on Berkeley DS 100 materials, with Polars in place of pandas.
+8. Elections data from the [Berkeley Data 100 course notes](https://github.com/DS-100/course-notes/blob/main/content/pandas_1/data/elections.csv), mirrored in this repo at [`datasets/us-presidential-elections`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/us-presidential-elections).
+9. Polars user guide and API reference: <https://docs.pola.rs/>.
+10. The "Kinds of Data" taxonomy (quantitative / categorical → ordinal, nominal) follows Elena Zheleva's CS 418 data-wrangling lecture (January 22, 2026).
+11. The log-scale sneak peek is copied from the [Week 4 deck](week4.html), where the geometric mean is developed in full.
+12. Course core texts, all freely available: Sam Lau, Joey Gonzalez & Deb Nolan, *[Learning Data Science](https://learningds.org/)*; Tiffany Timbers, Trevor Campbell, Melissa Lee, Joel Ostblom & Lindsey Heagy, *[Data Science: A First Introduction with Python](https://python.datasciencebook.ca/)*; Roger D. Peng & Elizabeth Matsui, *[The Art of Data Science](https://bookdown.org/rdpeng/artofdatascience/)*.
+13. The frequentist/Bayesian coin bet draws on [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html); the coin-bet example is from [Panos Ipeirotis (2008)](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html).
+14. Richard McElreath, *[Statistical Rethinking: A Bayesian Course with Examples in R and Stan](https://xcelab.net/rm/statistical-rethinking/)*, 2nd ed., Chapman and Hall/CRC, 2020.
+15. Coin toss photo by ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).
+16. Bradley Efron, ["Why Isn't Everyone a Bayesian?"](https://doi.org/10.1080/00031305.1986.10475342), *The American Statistician* 40(1), 1986, pp. 1–5.
+17. The diagnostic-test walkthrough (1,000 people, a 99% accurate test, 11 positives) is adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
+18. Paul J. Villeneuve and Yang Mao, ["Lifetime probability of developing lung cancer, by smoking status, Canada"](https://pubmed.ncbi.nlm.nih.gov/7895211/), *Canadian Journal of Public Health* 85(6), 1994, pp. 385–388.
+19. CDC, ["Risk Factors for Lung Cancer"](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
+20. The pandas-to-Polars comparison tables are adapted from Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal (2024), updated for Polars 1.x and pandas 3.x.
+21. The errors-and-exceptions slides follow the [Python Tutorial, "Errors and Exceptions"](https://docs.python.org/3/tutorial/errors.html); the exception descriptions are paraphrased from the [Python documentation, "Built-in Exceptions"](https://docs.python.org/3/library/exceptions.html).
+22. Wide-vs-long examples use [CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) from the City of Chicago Data Portal, mirrored in this repo at [`datasets/cta-ridership`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/cta-ridership).
