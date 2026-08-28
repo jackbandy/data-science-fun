@@ -157,7 +157,9 @@ In order to provide a final letter grade at the end of the class, I will use the
 | **Category** | **Weight** |
 |:--|--:|
 | **In-Class Worksheets** | **20%** |
+| &nbsp;&nbsp;&nbsp;*One per class* | |
 | **In-Class Quizzes** | **20%** |
+| &nbsp;&nbsp;&nbsp;*Every other week, seven total* | |
 | **Group Project** | **20%** |
 | &nbsp;&nbsp;&nbsp;*Question memo* | |
 | &nbsp;&nbsp;&nbsp;*Data acquisition* | |
@@ -169,6 +171,7 @@ In order to provide a final letter grade at the end of the class, I will use the
 | &nbsp;&nbsp;&nbsp;*Presentation* | |
 | &nbsp;&nbsp;&nbsp;*Peer assessment* | |
 | **PrairieLearn Homeworks** | **15%** |
+| &nbsp;&nbsp;&nbsp;*One per week, unlimited retakes* | |
 | **Coding Exercises** | **15%** |
 | **Final Exam** | **9%** |
 | **Collective Attendance** | **1%** |

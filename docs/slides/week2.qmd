@@ -652,6 +652,19 @@ Categories with no ordering.
 e.g. color, product type, operating system
 :::
 
+:::::
+
+---
+
+# "Just Do the Math" {.smaller}
+
+::: {.incremental}
+- **Frequentist**: probability = long-run frequency; judge procedures by error rates
+- **Bayesian**: probability = degree of belief, updated as evidence arrives
+- Efron (1986) asked "Why Isn't Everyone a Bayesian?" — an active contest at the time
+- McElreath (2020): the debate has largely been **subsumed by causal inference**
+- Even so: you still have to choose prior belief(s)
+- One of many examples in data science where there is not always a single correct option
 :::
 
 
