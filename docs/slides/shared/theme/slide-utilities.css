@@ -1,0 +1,80 @@
+/* Reusable slide-layout utilities: opt-in classes for code-as-prose text,
+   roomy column stacks, and the table demos used to show data shapes.
+   Moved here from the week2 deck header so any deck can use them. */
+
+/* On .plain-code slides the library and type names read as prose, so
+   drop the inline-code background from the theme. Fenced blocks are
+   untouched -- :not(pre) > code only matches inline code. */
+.reveal .plain-code :not(pre) > code {
+  background: transparent;
+  padding: 0;
+}
+
+/* Column widths come from the pipe-table separator row, which pandoc
+   turns into a <colgroup>. Those percentages are only honoured under a
+   fixed layout -- otherwise the long exception names widen column one. */
+.reveal .narrow-first-col table { table-layout: fixed; width: 100%; }
+
+/* Wide-format demo: the table is meant to run off the right edge of
+   the slide once enough day columns have been added, so nothing here
+   may wrap or shrink it back into view. */
+/* Left-aligned, not reveal's centered default: new days have to append
+   to the right edge, otherwise the table grows outward both ways. */
+.reveal .wide-demo table {
+  border-collapse: collapse; white-space: nowrap;
+  margin-left: 0; margin-right: auto; width: auto;
+}
+.reveal .wide-demo th, .reveal .wide-demo td {
+  padding: 0.25em 0.7em;
+  border-bottom: 1px solid #d8d8d8;
+  text-align: right;
+}
+.reveal .wide-demo th:first-child, .reveal .wide-demo td:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+.reveal .wide-demo thead th { color: #c83214; border-bottom: 2px solid #f9461c; }
+/* Reveal only fades fragments in; a hidden one still holds its column
+   open, so the table would start at full width with blank gaps. Taking
+   it out of the layout instead is what makes the table visibly grow. */
+.reveal .wide-demo .fragment:not(.visible) { display: none; }
+.reveal .wide-demo td, .reveal .wide-demo th { min-width: 112px; }
+.reveal .wide-demo td:first-child, .reveal .wide-demo th:first-child { min-width: 160px; }
+
+/* The worked-through column on the spread slide stacks five short
+   blocks (label, table, a line of prose, a display equation, a result).
+   At default margins they crowd together, so open the column up. */
+.reveal .roomy > * { margin-top: 1.35em; margin-bottom: 1.35em; }
+.reveal .roomy > :first-child { margin-top: 0; }
+.reveal .roomy .eyebrow { display: inline-block; margin-bottom: 0.9em; }
+
+/* Counts table on the forking-garden slide: columns arrive as fragments.
+   Same growing-table idea as .wide-demo, but the display:none is scoped to
+   table cells only -- the slide also stacks three SVGs as fragments, and a
+   blanket rule would hide the .fade-out one before it ever showed. */
+.reveal .grow-table table {
+  border-collapse: collapse; white-space: nowrap;
+  margin: 0.4em auto 0; width: auto;
+}
+.reveal .grow-table th, .reveal .grow-table td {
+  padding: 0.2em 0.7em; border-bottom: 1px solid #d8d8d8;
+  text-align: right; min-width: 78px;
+}
+.reveal .grow-table th:first-child, .reveal .grow-table td:first-child {
+  text-align: left; font-weight: 600; min-width: 0;
+}
+.reveal .grow-table thead th { color: #c83214; border-bottom: 2px solid #f9461c; }
+.reveal .grow-table th.fragment:not(.visible),
+.reveal .grow-table td.fragment:not(.visible) { display: none; }
+/* Reveal's .r-stack children are centred grid items that shrink to
+   content, so an SVG sized at width:100% has nothing to resolve against
+   and collapses to its 300px intrinsic width. Stretch them instead. */
+.reveal .grow-table .r-stack > * { width: 100%; justify-self: stretch; }
+
+/* Long format: fixed three columns, so it never leaves the frame. */
+.reveal .long-demo table { border-collapse: collapse; }
+.reveal .long-demo th, .reveal .long-demo td {
+  padding: 0.22em 1.4em 0.22em 0; text-align: left;
+}
+.reveal .long-demo thead th { color: #c83214; border-bottom: 2px solid #f9461c; }
+.reveal .long-demo td { border-bottom: 1px solid #d8d8d8; }

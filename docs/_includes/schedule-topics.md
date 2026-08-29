@@ -42,10 +42,12 @@
 
 ### Sources
 
+* *Learning Data Science*, [Chapter 4: Modeling with Summary Statistics](https://learningds.org/ch/04/modeling_intro.html)
 * *Calling Bullshit*, [4.2: Means and Medians](https://www.youtube.com/watch?v=mc-6-v2c4WM) (video, 15 min)
-* [Polars user guide](https://docs.pola.rs)
+* *Learning Data Science*, [Section 10.1: Feature Types](https://learningds.org/ch/10/eda_feature_types.html)
 * *Learning Data Science*, [Chapter 6: Working with Dataframes Using pandas](https://learningds.org/ch/06/pandas_intro.html)
 * *Data Science: A First Introduction*, [Chapter 1: Python and Pandas](https://python.datasciencebook.ca/intro.html)
+* [Polars user guide](https://docs.pola.rs)
 
 ## Week 2, Day 2 (2026-09-02)
 
@@ -54,9 +56,10 @@
 ### Sources
 
 * *Learning Data Science*, [Chapter 2: Questions and Data Scope](https://learningds.org/ch/02/data_scope_intro.html)
-* *Data Science: A First Introduction*, [Chapter 2: Reading in Data Locally and from the Web](https://python.datasciencebook.ca/reading.html)
-* *Ethics in Data Science* (course mini-book), [Chapter 3: Ethics in Obtaining Data](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
 * *Calling Bullshit*, [5.3: Big Data Hubris](https://www.youtube.com/watch?v=X0XqnAqvyIk) (video, 6 min)
+* *The Art of Data Science*, [Section 2.4: Collecting Information](https://bookdown.org/rdpeng/artofdatascience/collecting-information.html)
+* *Data Science: A First Introduction*, [Chapter 2: Reading in data locally and from the web](https://python.datasciencebook.ca/reading.html)
+* *Ethics in Data Science* (course mini-book), [Chapter 3: Ethics in Obtaining Data](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
 
 ## Week 3, Day 1 (2026-09-07)
 

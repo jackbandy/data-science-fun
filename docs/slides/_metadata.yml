@@ -1,6 +1,8 @@
 format:
   revealjs:
-    css: shared/theme/responsive-footer.css
+    css:
+      - shared/theme/responsive-footer.css
+      - shared/theme/slide-utilities.css
     include-in-header:
       - shared/includes/head-icons.html
     include-after-body:
