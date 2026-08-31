@@ -3,10 +3,13 @@
 """Post-process a Quarto reveal.js slide deck.
 
 For .ipynb notebooks:
-  1. Remove YAML frontmatter from the first markdown cell.
-  2. Add <!-- slide N --> comment before each level-1 heading.
+  1. Replace the YAML frontmatter cell with a plain title heading.
+  2. Split markdown cells so one notebook cell holds one slide.
   3. Insert a compilation timestamp into the Sources slide.
-  4. Clear code-cell outputs, so the committed notebooks stay small.
+  4. Strip the Quarto-only markup students have no use for: fenced divs,
+     heading/span attributes, <style> and <script> blocks, #| cell options.
+  5. Add a <!-- slide N --> comment before each slide heading.
+  6. Clear code-cell outputs, so the committed notebooks stay small.
 
 For .qmd / .md files:
   3. Insert a compilation timestamp into the Sources slide.
@@ -24,9 +27,30 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 NOTE_PREFIX = "Last modified and compiled "
-FRONTMATTER_RE = re.compile(r'\A---\n.*?\n---\n', re.DOTALL)
+# The closing --- can be the very end of the cell, with no trailing newline —
+# which is what Quarto emits when the frontmatter is the whole first cell.
+FRONTMATTER_RE = re.compile(r'\A---\n.*?\n---[ \t]*(?:\n|\Z)', re.DOTALL)
 SLIDE_SEP_RE = re.compile(r'(?m)^---[ \t]*$')
 HEADING_RE = re.compile(r'(?m)^# .+')
+# The decks set slide-level: 2, so a slide starts at a level-1 heading (a
+# section divider) or a level-2 heading.
+SLIDE_HEADING_RE = re.compile(r'^#{1,2} +\S')
+# A ``` or ~~~ fence inside a markdown cell holds a code sample: the # lines in
+# it are Python comments, not headings, and must not be read as slide starts.
+CODE_FENCE_RE = re.compile(r'^ {0,3}(```+|~~~+)')
+# Pandoc fenced div: ::: {.columns}, :::: {.r-stack}, or a bare :::
+DIV_FENCE_RE = re.compile(r'^:{3,}[ \t]*(?:\{[^{}]*\}|[A-Za-z][\w-]*)?[ \t]*$')
+# Trailing attributes on a heading: ## Rectangular Data {.smaller}
+HEADING_ATTR_RE = re.compile(r'[ \t]*\{[^{}]*\}[ \t]*$')
+# Bracketed span: [WORKED THROUGH]{.eyebrow} -> WORKED THROUGH
+SPAN_ATTR_RE = re.compile(r'\[([^\[\]]*)\]\{[^{}]*\}')
+# Attributes hung off a link or image: ![](fig.svg){.figure alt="..."}
+LINK_ATTR_RE = re.compile(r'(!?\[[^\[\]]*\]\([^()]*\))\{[^{}]*\}')
+# Quarto cell options: #| echo: false
+CELL_OPTION_RE = re.compile(r'(?m)^#\|[^\n]*\n?')
+# Slide widgets (the roll-call draw, mostly): a page's worth of CSS and JS that
+# does nothing in a notebook.
+RAW_BLOCK_RE = re.compile(r'(?is)<(style|script)\b[^>]*>.*?</\1>[ \t]*\n?')
 
 
 # ── shared helpers ───────────────────────────────────────────────────────────
@@ -126,74 +150,99 @@ def _set_src(cell, text):
     cell['source'] = result
 
 
+def _code_fence_mask(lines):
+    """True for every line inside (or delimiting) a ``` / ~~~ code fence."""
+    mask = [False] * len(lines)
+    fence = None
+    for i, line in enumerate(lines):
+        m = CODE_FENCE_RE.match(line)
+        if fence is None:
+            if m:
+                fence = m.group(1)[0] * 3
+                mask[i] = True
+            continue
+        mask[i] = True
+        if m and line.strip().startswith(fence):
+            fence = None
+    return mask
+
+
+def _split_slides(src):
+    """Split one markdown cell into one chunk per slide.
+
+    Slides break at a standalone --- (dropped: the cell boundary replaces it)
+    and at every level-1/level-2 heading. A leading chunk with no heading is
+    the tail of the slide that the previous cell started.
+    """
+    lines = src.split('\n')
+    mask = _code_fence_mask(lines)
+    chunks, current = [], []
+
+    for i, line in enumerate(lines):
+        if not mask[i]:
+            if SLIDE_SEP_RE.match(line):
+                chunks.append(current)
+                current = []
+                continue
+            if SLIDE_HEADING_RE.match(line) and any(l.strip() for l in current):
+                chunks.append(current)
+                current = []
+        current.append(line)
+
+    chunks.append(current)
+    return ['\n'.join(c).strip('\n') for c in chunks]
+
+
+def _clean_markdown(src):
+    """Drop the Quarto/reveal.js markup that means nothing in a notebook."""
+    src = RAW_BLOCK_RE.sub('', src)
+    lines = src.split('\n')
+    mask = _code_fence_mask(lines)
+    out = []
+
+    for i, line in enumerate(lines):
+        if mask[i]:
+            out.append(line)
+            continue
+        if DIV_FENCE_RE.match(line):
+            continue
+        if line.startswith('#'):
+            line = HEADING_ATTR_RE.sub('', line)
+        line = LINK_ATTR_RE.sub(r'\1', line)
+        line = SPAN_ATTR_RE.sub(r'\1', line)
+        out.append(line)
+
+    return re.sub(r'\n{3,}', '\n\n', '\n'.join(out)).strip('\n')
+
+
 def process_ipynb(path):
     nb = json.loads(open(path, encoding='utf-8').read())
     cells = nb['cells']
 
-    # 1. Replace YAML frontmatter in the first markdown cell with only the
-    #    title: and jupyter: lines, then skip to the first # heading.
+    # Running twice would split the split cells again and number them a second
+    # time; the build always starts from a fresh .quarto_ipynb, so bail out.
+    if any('<!-- slide ' in _src(c) for c in cells):
+        print(f'[postprocess] {path}: already processed, skipping', file=sys.stderr)
+        return
+
+    # 1. Drop the YAML frontmatter cell, keeping the title for a heading cell
+    #    added at the end (added last so it does not shift the slide numbers).
+    title = None
     for cell in cells:
         if cell['cell_type'] == 'markdown':
             src = _src(cell)
             m = FRONTMATTER_RE.match(src)
             if m:
-                fm = m.group(0)
-                kept = [
-                    ln for ln in fm.splitlines()
-                    if ln.startswith('title:') or ln.startswith('jupyter:')
-                ]
+                for ln in m.group(0).splitlines():
+                    if ln.startswith('title:'):
+                        title = ln.split(':', 1)[1].strip().strip('"\'')
                 after_fm = src[m.end():]
                 h1 = HEADING_RE.search(after_fm)
-                rest = after_fm[h1.start():] if h1 else after_fm.lstrip('\n')
-                _set_src(cell, '\n'.join(kept) + '\n\n' + rest)
+                _set_src(cell, after_fm[h1.start():] if h1 else after_fm.lstrip('\n'))
             break
 
-    # 2. Walk cells to identify slide numbers.
-    slide_num = 0
-    slide_meta = []  # {num, cell_idx}
-
-    for i, cell in enumerate(cells):
-        if cell['cell_type'] == 'markdown':
-            for _ in HEADING_RE.finditer(_src(cell)):
-                slide_num += 1
-                slide_meta.append({'num': slide_num, 'cell_idx': i})
-
-    # 3. Annotate markdown cells: number headings.
-    from collections import defaultdict
-    by_cell = defaultdict(list)
-    for s in slide_meta:
-        by_cell[s['cell_idx']].append(s)
-
-    for i, cell in enumerate(cells):
-        if cell['cell_type'] != 'markdown' or i not in by_cell:
-            continue
-
-        src = _src(cell)
-        cell_slides = by_cell[i]
-        slide_ptr = 0
-
-        # Split on standalone --- lines; rejoin with the separator after editing.
-        parts = SLIDE_SEP_RE.split(src)
-        new_parts = []
-
-        for part in parts:
-            hm = HEADING_RE.search(part)
-            if hm:
-                sl = cell_slides[slide_ptr]
-                slide_ptr += 1
-
-                # Prepend slide-number comment before the heading.
-                part = (
-                    part[:hm.start()]
-                    + f'<!-- slide {sl["num"]} -->\n'
-                    + part[hm.start():]
-                )
-
-            new_parts.append(part)
-
-        _set_src(cell, '---'.join(new_parts))
-
-    # 4. Stamp timestamp in the Sources slide (idempotent).
+    # 2. Stamp the Sources slide before cleaning, while the {.sources} class
+    #    that identifies it is still on the heading. Idempotent.
     note = _now_stamp()
     for cell in cells:
         if cell['cell_type'] != 'markdown':
@@ -207,7 +256,59 @@ def process_ipynb(path):
             _set_src(cell, '\n'.join(lines))
             break
 
-    # 4. Strip execution outputs. These notebooks are committed (see the
+    # 3. One cell per slide, cleaned; chunks left empty by the cleaning (a
+    #    stray ::: closing a div that opened on the previous slide) are dropped.
+    split_cells = []
+    for cell in cells:
+        if cell['cell_type'] != 'markdown':
+            split_cells.append(cell)
+            continue
+        for n, piece in enumerate(_split_slides(_src(cell))):
+            piece = _clean_markdown(piece)
+            # Nothing left but whitespace, or a heading whose text was entirely
+            # attributes (## {.photo-only ...}, a full-bleed photo slide).
+            if not piece.strip() or re.fullmatch(r'#{1,6}[ \t]*', piece.strip()):
+                continue
+            part = dict(cell)
+            if 'id' in part and n:
+                part['id'] = f'{part["id"]}-{n}'[:64]
+            _set_src(part, piece)
+            split_cells.append(part)
+    cells = nb['cells'] = split_cells
+
+    # 4. Number the slides.
+    slide_num = 0
+    for cell in cells:
+        if cell['cell_type'] != 'markdown':
+            continue
+        lines = _src(cell).split('\n')
+        mask = _code_fence_mask(lines)
+        out = []
+        for i, line in enumerate(lines):
+            if not mask[i] and SLIDE_HEADING_RE.match(line):
+                slide_num += 1
+                out.append(f'<!-- slide {slide_num} -->')
+            out.append(line)
+        _set_src(cell, '\n'.join(out))
+
+    # 5. Drop Quarto cell options (#| echo: false and friends) from code cells.
+    for cell in cells:
+        if cell['cell_type'] == 'code':
+            _set_src(cell, CELL_OPTION_RE.sub('', _src(cell)).strip('\n'))
+
+    if title:
+        cells.insert(0, {
+            'cell_type': 'markdown',
+            'id': 'deck-title',
+            'metadata': {},
+            'source': [f'# {title}'],
+        })
+
+    # The kernel Quarto records points at this machine's .venv; students get a
+    # notebook that runs against whatever kernel they open it with.
+    nb.get('metadata', {}).get('kernelspec', {}).pop('path', None)
+
+    # 6. Strip execution outputs. These notebooks are committed (see the
     #    !docs/slides/*.ipynb negation in .gitignore) so students can download
     #    them, and the decks render figures as SVG -- which Jupyter embeds as
     #    inline markup, pushing a single notebook past 20 MB and writing a fresh

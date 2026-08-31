@@ -1,7 +1,6 @@
 ---
 # NOTICE: The slide order in this deck was rearranged with an LLM-based coding
-# tool, which also drafted the garden-of-forking-data and statistical-opportunist
-# slides. Maintained, reviewed, and vetted by humans.
+# tool. It is maintained, reviewed, and vetted by humans.
 title: "Week 2 (CS 418 @ UIC)"
 # Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
 # that group the `##` slides beneath them into the navigation menu (press M).
@@ -52,6 +51,7 @@ Day 1
 - Statistical Worldviews
 - Types and Kinds of Data
 - Peak at Dataframes and Polars
+- Wide and Long Data
 :::
 
 ![](../assets/orange-line-map-stops/stop02-lasalle-van-buren.svg){.figure alt="Orange Line map with the LaSalle/Van Buren stop marked, the Week 2 stop"}
@@ -150,6 +150,12 @@ Day 1
 ::: {.iframe-caption}
 Numbers drawn live from <a href="https://www.random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new">random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new</a>
 :::
+
+---
+
+## The Data Science Lifecycle {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle-v0.svg" alt="The data science lifecycle: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
 
 # A Coin Flip {.section-header}
 
@@ -355,7 +361,7 @@ Check in with your elbow neighbor(s):
 
 ---
 
-# Two Worldviews, One Coin {.section-header}
+# Two (World)views of the Same Coin {.section-header}
 
 ## Before Any Flips {.image-frame-slide}
 <img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip0.svg" alt="The same chart with a single Bayesian point at 50 percent above the tick labeled 'prior'. The Bayesian line is labeled with its formula, (h + 1) / (n + 2). No frequentist estimate exists yet">
@@ -410,7 +416,7 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 ::: {.caption}
 Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
 :::
-::: {.incremental}
+:::
 - **14 flips, 10 heads.**
 - Will the next two both be heads?
 - [FREQUENTIST]{style="color:#001E62; font-weight:bold; letter-spacing:2px;"} — **51%**
@@ -500,7 +506,7 @@ $$P(\text{two heads}) = \frac{11}{16}\cdot\frac{12}{17} \approx 0.485$$
 
 ---
 
-## Same Data, Two Answers {.image-frame-slide}
+## Statistical Worldviews {.image-frame-slide}
 <img src="../assets/coin-flip-worldviews/coin-flip-worldviews-flip14.svg" alt="Both estimates across all 14 flips. The frequentist line lurches early and ends at 71.4 percent; the Bayesian line moves more gradually and ends at 68.8 percent. The two flips being bet on remain empty">
 
 ::: {.caption}
@@ -545,6 +551,7 @@ ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(36
 :::
 
 ---
+
 
 ## Kinds of Statistics
 
@@ -591,7 +598,7 @@ How would you summarize these salaries?
 :::
 
 ::: {.column width="80%"}
-::: {.incremental}
+:::
 - Mean = **\$146,750**
 - Median = **\$73,000**
 - [675,000 is an **outlier**]{.key} (a value much higher or much lower than the rest of the data)
@@ -708,35 +715,7 @@ number_line(log_ticks, log_labels,
 ::::
 
 
----
 
-## Descriptive Stats: Measures of Spread
-::: {.columns .compare-columns}
-
-::: {.column}
-[HOW SPREAD OUT?]{.eyebrow}
-
-- **Range** = maximum − minimum
-- **Standard deviation** — typical distance between a value and the mean
-- **Variance** = $s^2$
-
-$$s = \sqrt{\frac{\sum_{i=1}^{n}(a_i - \bar{x})^2}{n-1}}$$
-:::
-
-::: {.column .roomy}
-[WORKED THROUGH]{.eyebrow}
-
-| Ages: | 24 | 35 | 32 | 21 | 28 |
-|:--|--:|--:|--:|--:|--:|
-
-Mean = 28
-
-$$\frac{(-4)^2 + 7^2 + 4^2 + (-7)^2 + 0^2}{4} = 32.5$$
-
-Variance = **32.5** &nbsp;&nbsp; Std. dev. = **5.7**
-:::
-
-:::
 
 ---
 
@@ -779,29 +758,57 @@ ax.spines[["top", "right", "left"]].set_visible(False)
 
 ---
 
-## Probability Terminology
+## Descriptive Stats: Measures of Spread
+::: {.columns .compare-columns}
 
-- An **experiment** is a procedure with more than one possible outcome
-    - the **sample space** $S$ is the set of all outcomes
-    - an **event** $E$ is a subset of $S$
-- **Conditional probability** — the probability of $A$ given that $B$ already happened: $P(A \mid B) = \frac{P(A \cap B)}{P(B)}$
-- **Bayes' theorem** — flip the condition around: $P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$
+::: {.column}
+- Will revisit these throughout the course
+- **Range** = maximum − minimum
+- **Standard deviation** — typical distance between a value and the mean
+- **Variance** = $s^2$
+
+$$s = \sqrt{\frac{\sum_{i=1}^{n}(a_i - \bar{x})^2}{n-1}}$$
+:::
+
+::: {.column .roomy}
+[WORKED THROUGH]{.eyebrow}
+
+| Ages: | 24 | 35 | 32 | 21 | 28 |
+|:--|--:|--:|--:|--:|--:|
+
+Mean = 28
+
+$$\frac{(-4)^2 + 7^2 + 4^2 + (-7)^2 + 0^2}{4} = 32.5$$
+
+Variance = **32.5** &nbsp;&nbsp; Std. dev. = **5.7**
+:::
+
+:::
 
 ---
 
-## The Terminology, Applied to the Coin {.smaller}
+## Probability Terminology
+
+- An **experiment**: a procedure with more than one possible outcome
+    - the **sample space** $S$: the set of all outcomes
+    - an **event** $E$: a subset of $S$
+- **Conditional probability**: probability of $A$ given that $B$ already happened: $P(A \mid B) = \frac{P(A \cap B)}{P(B)}$
+- **Bayes' theorem** — (will get to this later): $P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$
+
+---
+
+## Terminology Applied to the Coin {.smaller}
 
 ::::: {.columns}
 
 :::: {.column width="64%"}
 ::: {.incremental}
-- **Experiment** — flip this coin 14 times
-- **Outcome** — one sequence: `HHTHHTHHHTHHTH`
-- **Sample space** $S$ — all $2^{14} = 16{,}384$ possible sequences
-- **Event** $E$ — e.g. heads on the first flip
-- A bigger **event** — "10 of the 14 were heads": 1,001 paths
-- **Conditional probability** — $P(\text{heads next} \mid \text{10 heads in 14})$
-- **Bayes' theorem** — flips it: $P(\text{biased} \mid \text{the 14 flips})$
+- **Experiment**: flip this coin 14 times
+- **Outcome**: one sequence: `HHTHHTHHHTHHTH`
+- **Sample space** $S$: all $2^{14} = 16{,}384$ possible sequences
+- **Event** $E$: e.g. heads on the first flip
+- Another **event**: "10 of the 14 were heads" (1,001 paths)
+- **Conditional probability**: $P(\text{heads next} \mid \text{10 heads in 14})$
 :::
 ::::
 
@@ -823,6 +830,7 @@ ax.spines[["top", "right", "left"]].set_visible(False)
 - The **null hypothesis** $H_0$ is assumed true unless the evidence says otherwise; the **alternative** $H_a$ contradicts it
 - A **$p$-value** is the probability of seeing evidence at least this extreme, if $H_0$ were true
 - If $p$ is below the **significance level** $\alpha$ (typically 0.05), the result is said to be **statistically significant**
+- Mnemonics?
 
 | | $H_0$ is true | $H_0$ is false |
 |:--|:--|:--|
@@ -841,11 +849,11 @@ ax.spines[["top", "right", "left"]].set_visible(False)
 - **Null hypothesis** $H_0$: the coin is fair, $p = 0.5$
 - **Alternative** $H_a$: the coin is not fair, $p \neq 0.5$
 - **Evidence**: 10 heads in 14 flips
-- **$p$-value** — how often a *fair* coin is this lopsided: $2 \times \frac{1{,}471}{16{,}384} \approx 0.18$
+- **$p$-value**: how often a fair coin would give these outcomes, $2 \times \frac{1{,}471}{16{,}384} \approx 0.18$
 - $0.18 > \alpha = 0.05$, so we [**fail to reject** $H_0$]{.key}
 - "14 flips is not enough to tell"
-- **Type I error** — calling a fair coin biased (false positive, rate $\alpha$)
-- **Type II error** — missing a coin that is biased (false negative)
+- **Type I error**: calling a fair coin biased (false positive, rate $\alpha$)
+- **Type II error**: missing a coin that is biased (false negative)
 :::
 ::::
 
@@ -876,13 +884,13 @@ Richard McElreath, *[Statistical Rethinking](https://xcelab.net/rm/statistical-r
 
 ## Data Scientists as Statistical Opportunists
 
-::: {.incremental}
+:::
 - A flowchart answers *"which test am I allowed to run?"*
     - McElreath calls pre-made tests **golems**: no wisdom about the question actually asked
 - Better: *"what would the world have to look like for my claim to be wrong?"*
 - Data scientists often get to be statistical **opportunists**: choose a tool that meaningfully fits the question and the data, and be prepared to justify it
 - Frequentist test(s), Bayesian test(s), simulation(s), a plot, etc.
-- Be able to say **why** you picked what you picked!
+- Just be ready to say **why** you picked what you picked!
 :::
 
 ---
@@ -900,7 +908,7 @@ Richard McElreath, *[Statistical Rethinking](https://xcelab.net/rm/statistical-r
 | Two dice, first is even | $P(E \mid F)$ | conditional probability |
 :::
 
-::: {.incremental}
+:::
 - These are essentially counting problems
 - Draw or imagine the forking garden and the paths that match
 - Coin is fair, the dice are fair, the mugs are equally likely 🤠
@@ -1038,7 +1046,7 @@ Quantitative, ordinal, or nominal?
 
 1. The name of a flower
 2. The height of a tree
-3. The color of a book cover
+3. The ZIP code of a house
 4. The serial number of a phone
 5. A Yelp/Google star rating
 6. Models: GPT-2, GPT-3, GPT-4, GPT-5
@@ -1079,10 +1087,19 @@ Reasons Python is useful for data science:
 - Your thoughts?
 - **Readability** — closer to plain English than other languages
 - **Libraries** — e.g. `polars` for dataframes, `requests` for pulling data
-- **Visualization** — charts and maps without leaving the notebook
+- **Visualization** — charts and maps without leaving the notebook, although R does this too ¯\(ツ)/¯
 :::
 
 
+
+---
+
+## Polar(s) Bear {.image-frame-slide}
+<img src="../assets/polar-bear-blizzard/polar-bear-in-a-blizzard-donohue.jpg" alt="A polar bear walking head down across flat snow in a heavy snowstorm">
+
+::: {.caption}
+Carl Donohue, ["Polar Bear in a Blizzard"](https://www.skolaiimages.com/photo/polar-bear-in-a-blizzard-photo/), Arctic National Wildlife Refuge, Alaska. © Carl Donohue / Skolai Images; shown here for classroom discussion.
+:::
 
 ---
 
@@ -1469,7 +1486,198 @@ Careful with the conclusion: outpolling the margin only means the third party wa
 
 
 
+# Wide and Long Data {.section-header}
+
+## Wide vs. Long: CTA Ridership {.smaller}
+The CTA publishes daily entries for every 'L' station. There are two ways to lay that out.
+
+```{python}
+#| echo: false
+CTA = "../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"
+
+cta = (
+    pl.scan_csv(CTA)
+    .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
+                  pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
+    .filter(pl.col("stationname").is_in(["UIC-Halsted", "Clark/Lake", "Roosevelt"]))
+    .filter(pl.col("date").is_between(pl.date(2024, 3, 4), pl.date(2024, 3, 6)))
+    .select("stationname", "date", "rides")
+    .sort("stationname", "date")
+    .collect()
+)
+```
+
+::: {.columns}
+
+::: {.column width="52%"}
+[WIDE — ONE COLUMN PER DAY]{.eyebrow}
+
+```{python}
+#| echo: false
+cta.pivot(index="stationname", on="date", values="rides")
+```
+
+One row per station. Reading across a row gives you that station's history.
+:::
+
+::: {.column width="46%"}
+[LONG — ONE ROW PER OBSERVATION]{.eyebrow}
+
+```{python}
+#| echo: false
+cta.head(5)
+```
+
+One row per station **per day**. Every row is one measurement.
+:::
+
+:::
+
+::: {.caption}
+[CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f), City of Chicago Data Portal. Three stations, three days in March 2024.
+:::
+
 ---
+
+## How "Wide-format" Dataframes Grow {.wide-demo}
+Five Orange Line stops. One row per stop, **one column per day**.
+
+```{python}
+#| echo: false
+#| output: asis
+import datetime as dt
+
+CTA = "../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"
+STOPS = {"Midway Airport": "Midway", "Pulaski-Orange": "Pulaski", "Kedzie-Midway": "Kedzie",
+         "Western-Orange": "Western", "35th/Archer": "35th/Archer"}
+DAYS = [dt.date(2025, 8, 17) + dt.timedelta(days=i) for i in range(10)]
+
+daily = (
+    pl.scan_csv(CTA)
+    .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
+                  pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
+    .filter(pl.col("stationname").is_in(list(STOPS)))
+    .filter(pl.col("date").is_between(DAYS[0], DAYS[-1]))
+    .select("stationname", "date", "rides")
+    .sort("stationname", "date")
+    .collect()
+)
+rides = {(r["stationname"], r["date"]): r["rides"] for r in daily.iter_rows(named=True)}
+
+def frag(i):
+    """Day 0 is on the slide from the start; every later day is its own fragment."""
+    return f' class="fragment" data-fragment-index="{i}"' if i else ""
+
+head = "<th>stop</th>" + "".join(f"<th{frag(i)}>{d:%b %-d}</th>" for i, d in enumerate(DAYS))
+rows = "".join(
+    f"<tr><td>{short}</td>"
+    + "".join(f"<td{frag(i)}>{rides[(full, d)]:,}</td>" for i, d in enumerate(DAYS))
+    + "</tr>"
+    for full, short in STOPS.items()
+)
+print(f"<table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>")
+```
+
+::: {.fragment data-fragment-index="9"}
+The CTA has published records for every day since 2001, which would be **9,000+ columns** and counting...
+:::
+
+::: {.caption}
+[CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f), City of Chicago Data Portal.
+:::
+
+---
+
+## Alternative: Long-Format Dataframes {.long-demo}
+Every cell becomes **one row** with the stop, the day, and the number. The first five rows are Aug 17 (the wide table's first column).
+
+::: {.columns}
+
+::: {.column width="52%"}
+```{python}
+#| echo: false
+#| output: asis
+# Date first, so the visible rows are all five stops on Aug 17 -- the same
+# five numbers as the first column of the wide table on the previous slide.
+by_day = daily.sort("date", "stationname")
+
+head = "<tr><th>stop</th><th>date</th><th>riders</th></tr>"
+body = "".join(
+    f"<tr><td>{STOPS[r['stationname']]}</td><td>{r['date']}</td><td>{r['rides']:,}</td></tr>"
+    for r in by_day.head(6).iter_rows(named=True)
+)
+body += "<tr><td>⋮</td><td>⋮</td><td>⋮</td></tr>"
+print(f"<table><thead>{head}</thead><tbody>{body}</tbody></table>")
+print(f"<p class='caption'>{by_day.height} rows — 5 stops × {len(DAYS)} days.</p>")
+```
+:::
+
+::: {.column width="46%"}
+- **Three columns.** Tomorrow's data is 5 more *rows*, not a new column
+- `date` is a **value** you can filter, sort, and group on 😌
+- 25 years of this is still three columns, just "taller"
+- This is the shape Polars expects
+:::
+
+:::
+
+
+---
+
+## Why Long-Format Data? {.smaller}
+
+::: {.columns .compare-columns}
+
+::: {.column}
+WIDE DATAFRAMES:
+- **The schema might change.**
+- **Tough to filter on a date**
+- `pl.col("2024-03-04")` names one day; there is no way to say "every day in March"
+- Plotting libraries usually want one column to map to an axis
+:::
+
+::: {.column}
+LONG DATAFRAMES:
+- **Fixed schema.** New data point is a new row
+- `date` is a real column, so filtering, grouping, and sorting all work normally
+- `group_by("stationname")` and `.over("date")` do what you expect
+- One row = one observation = the shape assumed by Polars terminology
+:::
+
+:::
+
+Generally you will want to reshape into long as soon as possible.
+
+---
+
+## Reshaping Between the Two {.smaller}
+`pivot` goes long → wide. `unpivot` goes back.
+
+```{python}
+#| echo: true
+wide = cta.pivot(index="stationname", on="date", values="rides")
+wide
+```
+
+```{python}
+#| echo: true
+wide.unpivot(index="stationname", variable_name="date", value_name="rides").head(4)
+```
+
+---
+
+## Preview: Coding Exercise 0 {.iframe-slide}
+
+<iframe src="https://dodatascience.fun/exercises/00-systems-check/" title="Exercise Zero — Systems Check" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+::: {.iframe-caption}
+Full write-up: <https://dodatascience.fun/exercises/00-systems-check/>
+:::
+
+# A Note About Code from These Slides {.section-header}
+
+# Any Questions? {.section-header}
+
 
 # Week 2, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
 
@@ -1861,185 +2069,6 @@ Definitions paraphrased from the [Python documentation, "Built-in Exceptions"](h
 | `AttributeError` | an attribute reference or assignment fails | `student.grade` on a dict |
 | `ZeroDivisionError` | the second argument of a division is zero | `sum(grades) / len(grades)` on an empty list |
 | `FileNotFoundError` | a file or directory is requested but **doesn't exist** | `pl.read_csv("typo.csv")` |
-
-# Appendix: Wide and Long Data {.section-header}
-
-## Wide vs. Long: CTA Ridership {.smaller}
-The CTA publishes daily entries for every 'L' station. There are two ways to lay that out.
-
-```{python}
-#| echo: false
-CTA = "../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"
-
-cta = (
-    pl.scan_csv(CTA)
-    .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
-                  pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
-    .filter(pl.col("stationname").is_in(["UIC-Halsted", "Clark/Lake", "Roosevelt"]))
-    .filter(pl.col("date").is_between(pl.date(2024, 3, 4), pl.date(2024, 3, 6)))
-    .select("stationname", "date", "rides")
-    .sort("stationname", "date")
-    .collect()
-)
-```
-
-::: {.columns}
-
-::: {.column width="52%"}
-[WIDE — ONE COLUMN PER DAY]{.eyebrow}
-
-```{python}
-#| echo: false
-cta.pivot(index="stationname", on="date", values="rides")
-```
-
-One row per station. Reading across a row gives you that station's history.
-:::
-
-::: {.column width="46%"}
-[LONG — ONE ROW PER OBSERVATION]{.eyebrow}
-
-```{python}
-#| echo: false
-cta.head(5)
-```
-
-One row per station **per day**. Every row is one measurement.
-:::
-
-:::
-
-::: {.caption}
-[CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f), City of Chicago Data Portal. Three stations, three days in March 2024.
-:::
-
----
-
-## How "Wide-format" Dataframes Grow {.wide-demo}
-Five Orange Line stops. One row per stop, **one column per day**.
-
-```{python}
-#| echo: false
-#| output: asis
-import datetime as dt
-
-CTA = "../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv"
-STOPS = {"Midway Airport": "Midway", "Pulaski-Orange": "Pulaski", "Kedzie-Midway": "Kedzie",
-         "Western-Orange": "Western", "35th/Archer": "35th/Archer"}
-DAYS = [dt.date(2025, 8, 17) + dt.timedelta(days=i) for i in range(10)]
-
-daily = (
-    pl.scan_csv(CTA)
-    .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
-                  pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
-    .filter(pl.col("stationname").is_in(list(STOPS)))
-    .filter(pl.col("date").is_between(DAYS[0], DAYS[-1]))
-    .select("stationname", "date", "rides")
-    .sort("stationname", "date")
-    .collect()
-)
-rides = {(r["stationname"], r["date"]): r["rides"] for r in daily.iter_rows(named=True)}
-
-def frag(i):
-    """Day 0 is on the slide from the start; every later day is its own fragment."""
-    return f' class="fragment" data-fragment-index="{i}"' if i else ""
-
-head = "<th>stop</th>" + "".join(f"<th{frag(i)}>{d:%b %-d}</th>" for i, d in enumerate(DAYS))
-rows = "".join(
-    f"<tr><td>{short}</td>"
-    + "".join(f"<td{frag(i)}>{rides[(full, d)]:,}</td>" for i, d in enumerate(DAYS))
-    + "</tr>"
-    for full, short in STOPS.items()
-)
-print(f"<table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>")
-```
-
-::: {.fragment data-fragment-index="9"}
-The CTA has published records for every day since 2001, which would be **9,000+ columns** and counting...
-:::
-
-::: {.caption}
-[CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f), City of Chicago Data Portal.
-:::
-
----
-
-## Alternative: Long-Format Dataframes {.long-demo}
-Every cell becomes **one row** with the stop, the day, and the number. The first five rows are Aug 17 (the wide table's first column).
-
-::: {.columns}
-
-::: {.column width="52%"}
-```{python}
-#| echo: false
-#| output: asis
-# Date first, so the visible rows are all five stops on Aug 17 -- the same
-# five numbers as the first column of the wide table on the previous slide.
-by_day = daily.sort("date", "stationname")
-
-head = "<tr><th>stop</th><th>date</th><th>riders</th></tr>"
-body = "".join(
-    f"<tr><td>{STOPS[r['stationname']]}</td><td>{r['date']}</td><td>{r['rides']:,}</td></tr>"
-    for r in by_day.head(6).iter_rows(named=True)
-)
-body += "<tr><td>⋮</td><td>⋮</td><td>⋮</td></tr>"
-print(f"<table><thead>{head}</thead><tbody>{body}</tbody></table>")
-print(f"<p class='caption'>{by_day.height} rows — 5 stops × {len(DAYS)} days.</p>")
-```
-:::
-
-::: {.column width="46%"}
-- **Three columns.** Tomorrow's data is 5 more *rows*, not a new column
-- `date` is a **value** you can filter, sort, and group on 😌
-- 25 years of this is still three columns, just "taller"
-- This is the shape Polars expects
-:::
-
-:::
-
-
----
-
-## Why Long-Format Data? {.smaller}
-
-::: {.columns .compare-columns}
-
-::: {.column}
-WIDE DATAFRAMES:
-- **The schema might change.**
-- **Tough to filter on a date**
-- `pl.col("2024-03-04")` names one day; there is no way to say "every day in March"
-- Plotting libraries usually want one column to map to an axis
-:::
-
-::: {.column}
-LONG DATAFRAMES:
-- **Fixed schema.** New data point is a new row
-- `date` is a real column, so filtering, grouping, and sorting all work normally
-- `group_by("stationname")` and `.over("date")` do what you expect
-- One row = one observation = the shape assumed by Polars terminology
-:::
-
-:::
-
-Generally you will want to reshape into long as soon as possible.
-
----
-
-## Reshaping Between the Two {.smaller}
-`pivot` goes long → wide. `unpivot` goes back.
-
-```{python}
-#| echo: true
-wide = cta.pivot(index="stationname", on="date", values="rides")
-wide
-```
-
-```{python}
-#| echo: true
-wide.unpivot(index="stationname", variable_name="date", value_name="rides").head(4)
-```
-
 
 ---
 
@@ -2611,4 +2640,5 @@ $$\text{median} = \frac{80+84}{2} = 82
 20. The pandas-to-Polars comparison tables are adapted from Liam Brannigan, ["Cheatsheet for Pandas to Polars"](https://www.rhosignal.com/posts/polars-pandas-cheatsheet/), Rho Signal (2024), updated for Polars 1.x and pandas 3.x.
 21. The errors-and-exceptions slides follow the [Python Tutorial, "Errors and Exceptions"](https://docs.python.org/3/tutorial/errors.html); the exception descriptions are paraphrased from the [Python documentation, "Built-in Exceptions"](https://docs.python.org/3/library/exceptions.html).
 22. Wide-vs-long examples use [CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) from the City of Chicago Data Portal, mirrored in this repo at [`datasets/cta-ridership`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/cta-ridership).
-23. "Questions You've Done So Far" indexes the probability questions from Homeworks 1 and 2, which live in the course's PrairieLearn repository (`pl-uic-cs418`).
+23. Polar bear photo by Carl Donohue, ["Polar Bear in a Blizzard"](https://www.skolaiimages.com/photo/polar-bear-in-a-blizzard-photo/), Arctic National Wildlife Refuge, Alaska. © Carl Donohue / Skolai Images, all rights reserved; reproduced here for classroom discussion. Details in [`docs/assets/polar-bear-blizzard/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/polar-bear-blizzard/SOURCES.md).
+24. "Questions You've Done So Far" indexes the probability questions from Homeworks 1 and 2, which live in the course's PrairieLearn repository (`pl-uic-cs418`).
