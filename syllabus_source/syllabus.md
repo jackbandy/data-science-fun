@@ -3,6 +3,7 @@ title: "CS 418 Syllabus"
 course-title: "Introduction to Data Science (CS 418)"
 college: "UIC College of Engineering"
 credit-hours: "3 undergraduate hours, 4 graduate hours"
+term: "Fall 2026"
 ---
 
 # I. Instructor & Course Details
@@ -11,7 +12,7 @@ credit-hours: "3 undergraduate hours, 4 graduate hours"
 
 Email address: jxb@uic.edu
 
-Drop-In Office Hours (in-person or virtual): Tuesdays and Thursdays, see scheduling link in Canvas
+Drop-In Office Hours (in-person or virtual): Tuesdays 1:30 - 2:30 PM, other times via scheduling link in Canvas
 
 Drop-In Hours location: CDRLC 3454
 
@@ -21,7 +22,7 @@ Drop-In Hours location: CDRLC 3454
 
 Email address: mturk5@uic.edu
 
-Drop-In Office Hours (in-person or virtual): Tuesdays and Wednesdays, 12:30 PM - 01:30 PM
+Drop-In Office Hours (in-person or virtual): Tuesdays and Wednesdays, 12:30 - 1:30 PM
 
 Drop-In Hours location: CDRLC 2404 (The 404)
 
@@ -42,12 +43,12 @@ Students are responsible for all messages sent to UIC email and Canvas accounts.
 
 **[Course Modality and Schedule]{.underline}**
 
-Meeting time: 
+Meeting time:
 
 * Monday and Wednesday
-* 03:30 PM - 04:45 PM
+* 3:30 - 4:45 PM
 
-Location: 
+Location:
 
 * Lecture Center Building C
 * Room C001
@@ -112,13 +113,13 @@ If we are successful, by the end of the semester, you will have proficiency in t
 
 ## [Course Texts and Materials]{.underline}
 
-For Fall 2026, supporting texts and materials will be open-source and freely available. 
+For Fall 2026, supporting texts and materials will be open-source and freely available.
 
 **Required Technology:** You will need access to a computer capable of running Jupyter notebook and Python, as well as PrairieLearn and Canvas.
 
 All required software is free. If that ever seems to not be the case, please let me know as soon as possible.
 
-Also, access to a suitable computer or internet connection presents a challenge for any reason, please tell me as soon as possible — this is a solvable problem and you will not be the first person to ask.
+Also, if access to a suitable computer or internet connection presents a challenge for any reason, please tell me as soon as possible — this is a solvable problem and you will not be the first person to ask.
 
 **Core Texts:** There is no required textbook to purchase. The course draws on three freely available open-access texts:
 
@@ -163,7 +164,7 @@ In order to provide a final letter grade at the end of the class, I will use the
 | **Group Project** | **20%** |
 | &nbsp;&nbsp;&nbsp;*Question memo* | |
 | &nbsp;&nbsp;&nbsp;*Data acquisition* | |
-| &nbsp;&nbsp;&nbsp;*EDA checkpoint* | |
+| &nbsp;&nbsp;&nbsp;*EDA* | |
 | &nbsp;&nbsp;&nbsp;*Data documentation* | |
 | &nbsp;&nbsp;&nbsp;*Rhetorical analysis* | |
 | &nbsp;&nbsp;&nbsp;*Public repository* | |
@@ -258,7 +259,7 @@ Please do not wear glasses or other devices that record audio and/or video. If y
 
 ## [Classroom Conduct and in-class Technology]{.underline}
 
-**TLDR:** no phones, no laptops in class - take notes on paper! :-D 
+**TLDR:** no phones, no laptops in class - take notes on paper! :-D
 
 This class meets twice a week for one hour and fifteen minutes, totaling 2.5 hours per week. The purpose of our meeting time is to learn, and the following policies are written with that purpose in mind. Outside of our meeting times, of course, you are free to use your devices however you choose.
 
