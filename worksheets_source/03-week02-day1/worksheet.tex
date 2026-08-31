@@ -5,8 +5,9 @@
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -44,40 +45,109 @@
   \end{mdframed}\vspace{0.3em}
 }
 
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
+% Usage: \blankspace{6cm} — blank area for hand-written work, no rules
+\newcommand{\blankspace}[1]{%
   \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
   \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
+  \end{minipage}
   \vspace{0.3em}
+}
+
+% Usage: \guidedopen{title}{guided content}{guided workspace height}{open-ended workspace height}
+% Left: a titled, structured prompt with its own blank workspace. Right: a
+% fully blank workspace for open-ended exploration of the same topic (no
+% prompt text), sized so the two columns land at roughly the same total
+% height. Neither workspace is ruled.
+\newcommand{\guidedopen}[4]{%
+  \noindent\textbf{#1}\\[0.18em]
+  \noindent
+  \begin{minipage}[t]{0.485\textwidth}
+    #2
+    \blankspace{#3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.485\textwidth}
+    \blankspace{#4}
+  \end{minipage}
+  \\[0.4em]
 }
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
 \noindent
 \begin{minipage}[t]{0.55\textwidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,3}} \\[0.3em]
-  {\large \textit{Week 2, Day 1: Statistics review; Python foundations; dataframes and Polars}}
+  {\LARGE \textbf{Worksheet \#\,3}} \\[0.18em]
+  {\large \textit{Week 2, Day 1: Statistics review / worldviews; Python foundations; dataframes and Polars; maybe more}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
+\vspace{0.5em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.5em}
+
+\noindent
+\begin{minipage}[t]{0.485\textwidth}
+  \centering\small\textbf{GUIDED}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering\small\textbf{OPEN-ENDED}
+\end{minipage}
+
 \vspace{0.2em}
+
+% ── 1. Garden of forking data ───────────────────────────────────────────────
+\guidedopen{1. The Garden of Forking Data}{
+Draw the garden of forking data for flipping a coin three times.
+}{5.2cm}{6.3cm}
+
+% ── 2. Descriptive stats: box plot ──────────────────────────────────────────
+\guidedopen{2. Descriptive Stats}{
+Draw a box plot and label each with the five-number summary value it corresponds to.
+}{5.2cm}{6.5cm}
+
+\newpage
+
+% ── 3. Python data types ────────────────────────────────────────────────────
+\guidedopen{3. Types in Python}{
+Write the type name next to each example.
+
+\small
+\begin{tabular}{@{}p{2.3cm}p{3.4cm}@{}}
+\textbf{Type} & \textbf{Example} \\[0.35em]
+\underline{\hspace{2.1cm}} & \texttt{5231} \\[0.18em]
+\underline{\hspace{2.1cm}} & \texttt{7423.5} \\[0.18em]
+\underline{\hspace{2.1cm}} & \texttt{3 + 4j} \\[0.18em]
+\underline{\hspace{2.1cm}} & \texttt{'Midway'} \\[0.18em]
+\underline{\hspace{2.1cm}} & \texttt{[1, 2, 3]} \\[0.18em]
+\underline{\hspace{2.1cm}} & \texttt{(41.78, -87.73)} \\[0.18em]
+\underline{\hspace{2.1cm}} & \texttt{\{'rides': 5231\}} \\[0.18em]
+\underline{\hspace{2.1cm}} & \texttt{\{'W', 'A', 'U'\}} \\[0.18em]
+\underline{\hspace{2.1cm}} & \texttt{True} \\
+\end{tabular}
+}{3.0cm}{4.5cm}
+
+% ── 4. Descriptive vs inferential ───────────────────────────────────────────
+\guidedopen{4. Descriptive vs.\ Inferential Statistics}{
+Write one example of a descriptive statistic and one example of an inferential statistic.
+}{3.8cm}{5.5cm}
+
+% ── 5. The data tree ─────────────────────────────────────────────────────────
+\guidedopen{5. The Data Tree}{
+Draw the ``data tree'' used to visualize different kinds of data.
+}{3.8cm}{5.1cm}
+
+\vfill
 
 \end{document}
