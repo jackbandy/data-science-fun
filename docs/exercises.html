@@ -31,7 +31,7 @@ extra_css:
 <ol class="exercise-list">
 {% for e in exercises %}
   {%- assign signal = signals[e.ai_policy] -%}
-  <li class="exercise-item">
+  <li class="exercise-item" value="{{ e.number }}">
     <a class="exercise-item-title" href="/exercises/{{ e.slug }}/">{{ e.title }}</a>
     <p class="exercise-item-summary">{{ e.summary }}</p>
     <p class="exercise-item-meta">{{ e.topic }}</p>
