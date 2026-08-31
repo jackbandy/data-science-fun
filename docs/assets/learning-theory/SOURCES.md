@@ -39,9 +39,12 @@ All images are from [Wikimedia Commons](https://commons.wikimedia.org) and are f
   labels accumulate one at a time: v0 blank, v1 adds the innermost (unaided),
   v2 adds the outermost (cannot do), v3 adds the middle (the zone) and so
   carries all three, v4 rings the zone in white.
-- **Two outputs:** the `.svg` files stand alone with fonts embedded;
+- **Three outputs:** the `.svg` files stand alone with fonts embedded;
   `zpd-loop-stack.md` is a Quarto include holding the same five frames as inline
-  SVG for the "Zone of Proximal Development" slide in `../../slides/week1.qmd`.
+  SVG for the "Zone of Proximal Development" slide in `../../slides/week1.qmd`;
+  `zpd-loop-final.md` is the same inline SVG for v4 alone, with no fragment
+  wrapper and sized to the theme's small-figure cap, for the "Are We in the
+  Zone?" slide in `../../slides/week2.qmd`.
   Reveal scales `.slides` with a CSS transform and an `<img>` is rasterised at
   its layout size beforehand, so an `<img>` figure goes soft; inline SVG stays
   vector. The inline copies carry no `@font-face` and inherit the deck's

@@ -153,6 +153,22 @@ Numbers drawn live from <a href="https://www.random.org/integers/?num=12&min=1&m
 
 ---
 
+## Are We in the Zone?
+
+::: {.columns .compare-columns}
+
+::: {.column}
+<img class="figure figure-sm" src="../assets/prairielearn/PL-logo-white-on-blue.svg" alt="The PrairieLearn logo, a white line drawing of a purple coneflower on a dark blue panel">
+:::
+
+::: {.column}
+{{< include ../assets/learning-theory/zpd-loop-final.md >}}
+:::
+
+:::
+
+---
+
 ## The Data Science Lifecycle {.image-frame-slide}
 
 <img src="../assets/lifecycle/ds-lifecycle-v0.svg" alt="The data science lifecycle: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
@@ -206,7 +222,7 @@ Check in with your elbow neighbor(s):
 ::: {.dense-smaller}
 - Richard McElreath, *[Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/)*, 2nd ed. (2020), ch. 2, "Small Worlds and Large Worlds"
 - Lecture: ["The Garden of Forking Data"](https://www.youtube.com/watch?v=R1vcdhPBlXA)
-- The name is borrowed from Jorge Luis Borges, *El jardín de senderos que se bifurcan* (1941)
+- The name is borrowed from Jorge Luis Borges, *[El jardín de senderos que se bifurcan](https://en.wikipedia.org/wiki/The_Garden_of_Forking_Paths)* (1941)
 :::
 :::
 
@@ -409,19 +425,17 @@ This example is based on the scenario from Panos Ipeirotis, ["Are You a Bayesian
 ---
 
 ## Coin Flip Odds
-
 ::::: {.columns}
 
 :::: {.column width="56%"}
-::: {.caption}
-Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
-:::
-:::
 - **14 flips, 10 heads.**
 - Will the next two both be heads?
 - [FREQUENTIST]{style="color:#001E62; font-weight:bold; letter-spacing:2px;"} — **51%**
 - [BAYESIAN]{style="color:#f9461c; font-weight:bold; letter-spacing:2px;"} — **48.5%**
 - **Same data, opposite sides?!**
+
+::: {.caption}
+Example from Panos Ipeirotis, ["Are You a Bayesian or a Frequentist?"](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html) (2008).
 :::
 ::::
 
@@ -434,7 +448,6 @@ ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(36
 ::::
 
 :::::
-
 
 
 ---
@@ -582,9 +595,9 @@ ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(36
 ## Why it can be Mean to Use the Mean {.smaller}
 How would you summarize these salaries?
 
-::: {.columns}
+::::: {.columns}
 
-::: {.column width="20%"}
+:::: {.column width="20%"}
 | Salaries |
 |--:|
 | 75,000 |
@@ -595,21 +608,18 @@ How would you summarize these salaries?
 | 75,000 |
 | 68,000 |
 | 74,000 |
-:::
+::::
 
-::: {.column width="80%"}
-:::
+:::: {.column width="76%"}
 - Mean = **\$146,750**
 - Median = **\$73,000**
 - [675,000 is an **outlier**]{.key} (a value much higher or much lower than the rest of the data)
 - The mean is **not robust** to outliers
 - The median is the better one-number summary here
 - Often the case for social media data
+::::
 
-:::
-:::
-
-:::
+:::::
 
 ---
 
@@ -884,14 +894,12 @@ Richard McElreath, *[Statistical Rethinking](https://xcelab.net/rm/statistical-r
 
 ## Data Scientists as Statistical Opportunists
 
-:::
 - A flowchart answers *"which test am I allowed to run?"*
     - McElreath calls pre-made tests **golems**: no wisdom about the question actually asked
 - Better: *"what would the world have to look like for my claim to be wrong?"*
 - Data scientists often get to be statistical **opportunists**: choose a tool that meaningfully fits the question and the data, and be prepared to justify it
 - Frequentist test(s), Bayesian test(s), simulation(s), a plot, etc.
 - Just be ready to say **why** you picked what you picked!
-:::
 
 ---
 
@@ -908,12 +916,10 @@ Richard McElreath, *[Statistical Rethinking](https://xcelab.net/rm/statistical-r
 | Two dice, first is even | $P(E \mid F)$ | conditional probability |
 :::
 
-:::
 - These are essentially counting problems
 - Draw or imagine the forking garden and the paths that match
 - Coin is fair, the dice are fair, the mugs are equally likely 🤠
 - Real data almost never hands you "fair" models like this 😔
-:::
 
 ---
 
@@ -2631,7 +2637,7 @@ $$\text{median} = \frac{80+84}{2} = 82
 11. The log-scale sneak peek is copied from the [Week 4 deck](week4.html), where the geometric mean is developed in full.
 12. Course core texts, all freely available: Sam Lau, Joey Gonzalez & Deb Nolan, *[Learning Data Science](https://learningds.org/)*; Tiffany Timbers, Trevor Campbell, Melissa Lee, Joel Ostblom & Lindsey Heagy, *[Data Science: A First Introduction with Python](https://python.datasciencebook.ca/)*; Roger D. Peng & Elizabeth Matsui, *[The Art of Data Science](https://bookdown.org/rdpeng/artofdatascience/)*.
 13. The frequentist/Bayesian coin bet draws on [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html); the coin-bet example is from [Panos Ipeirotis (2008)](https://www.behind-the-enemy-lines.com/2008/01/are-you-bayesian-or-frequentist-or.html).
-14. Richard McElreath, *[Statistical Rethinking: A Bayesian Course with Examples in R and Stan](https://xcelab.net/rm/statistical-rethinking/)*, 2nd ed., Chapman and Hall/CRC, 2020. The flowchart of statistical tests is fig. 1.1, from ch. 1, "The Golem of Prague," where it is drawn as the approach the book argues against; the garden of forking data is ch. 2, "Small Worlds and Large Worlds," and its [lecture video](https://www.youtube.com/watch?v=R1vcdhPBlXA). The phrase is borrowed from Jorge Luis Borges, *El jardín de senderos que se bifurcan* (1941).
+14. Richard McElreath, *[Statistical Rethinking: A Bayesian Course with Examples in R and Stan](https://xcelab.net/rm/statistical-rethinking/)*, 2nd ed., Chapman and Hall/CRC, 2020. The flowchart of statistical tests is fig. 1.1, from ch. 1, "The Golem of Prague," where it is drawn as the approach the book argues against; the garden of forking data is ch. 2, "Small Worlds and Large Worlds," and its [lecture video](https://www.youtube.com/watch?v=R1vcdhPBlXA). The phrase is borrowed from Jorge Luis Borges, *[El jardín de senderos que se bifurcan](https://en.wikipedia.org/wiki/The_Garden_of_Forking_Paths)* (1941).
 15. Coin toss photo by ICMA Photos, [*Coin Toss*](https://commons.wikimedia.org/wiki/File:Coin_Toss_(3635981474).jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The Harvey Dent / Two-Face stills are from *The Dark Knight* (dir. Christopher Nolan, Warner Bros., 2008), used here for classroom illustration; provenance and crops are recorded in [`docs/assets/coin-flip-worldviews/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/coin-flip-worldviews/SOURCES.md).
 16. Bradley Efron, ["Why Isn't Everyone a Bayesian?"](https://doi.org/10.1080/00031305.1986.10475342), *The American Statistician* 40(1), 1986, pp. 1–5.
 17. The diagnostic-test walkthrough (1,000 people, a 99% accurate test, 11 positives) is adapted from Veritasium, ["The Bayesian Trap"](https://www.youtube.com/watch?v=R13BD8qKeTg) (2017).
