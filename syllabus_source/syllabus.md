@@ -18,6 +18,7 @@ Drop-In Hours location: CDRLC 3454
 
 **[Teaching Assistants]{.underline}**
 
+::: {.indented}
 **[Maksym Turkot (Maks)]{.underline}**
 
 Email address: mturk5@uic.edu
@@ -25,6 +26,7 @@ Email address: mturk5@uic.edu
 Drop-In Office Hours (in-person or virtual): Tuesdays and Wednesdays, 12:30 - 1:30 PM
 
 Drop-In Hours location: CDRLC 2404 (The 404)
+:::
 
 **Course Site:** [dodatascience.fun](https://dodatascience.fun/)
 
@@ -215,13 +217,13 @@ Scheduling follows the registrar's [schedule of final exams and exam policies](h
 
 ## [Policy for Missed or Late Work]{.underline}
 
-Due dates will be visible in PrairieLearn (Homework Questions) or Canvas (Coding Exercises, Project Scaffolding), and highlighted in class. Work submitted up to one day late still earns effectively full credit (99%). After that, an automatic "sliding scale" deducts 10% for each additional day late, down to a floor of 50% credit.
+Due dates will be visible in PrairieLearn (Homework Questions) and/or Canvas (Coding Exercises, Project Scaffolding), and highlighted in class. Work submitted up to one day late still earns effectively full credit (99%). After that, an automatic "sliding scale" deducts 10% for each additional day late, down to a floor of 50% credit.
 
 Anything submitted more than one week after the original due date will only receive 50% credit, and nothing will be accepted after the last day of class.
 
 If you anticipate any difficulty meeting a due date, contact the instructor as soon as possible. I am often able to adjust due dates, especially if multiple people want/need an extension.
 
-![Credit for late homeworks: full credit through the one-day grace period, then a 10%-a-day sliding scale down to a 50% floor by one week late, held flat through the last day of class.](../assets/grading-visuals/late-penalty-curve.svg)
+![Credit for late homeworks: 99% on the one-day grace period, then a 10%-a-day sliding scale down to a 50% floor, until the last day of class.](../assets/grading-visuals/late-penalty-curve.svg){width=100%}
 
 *Adapted from the [UIC CATE syllabus template](https://teaching.uic.edu/cate-teaching-guides/syllabus-course-design/syllabus/).*
 
@@ -232,7 +234,7 @@ The activities we do during class are essential to your learning in this course,
 
 I recognize that illness, personal emergencies, university obligations, religious observances, and other circumstances may sometimes cause you to be late to class or prevent your attendance entirely.
 
-**An audacious experiment.** Attendance is worth 1% of your grade, and it is a collective 1%. Each class meeting, after the agenda slide, I will draw ten names at random using live random numbers from [random.org](https://www.random.org/). Everyone in the class receives the same attendance grade out of ten for that day, based on how many of the ten drawn students are present.
+**An audacious experiment.** Attendance is worth 1% of your grade, and it is a collective 1%. Each class meeting, after the agenda slide, I will draw twelve names at random using live random numbers from [random.org](https://www.random.org/). Everyone in the class receives the same attendance grade out of ten for that day, based on how many of the drawn students are present.
 
 There are two motivations for this experiment. First, it gives me real attendance data without spending class time on a roll call of the whole roster. It also puts some pressure on me to make sure class is worth attending. I will be able to see if we regularly have very low attendance, which is a signal to me that I should probably change something about our class meetings.
 
@@ -362,9 +364,9 @@ While this class will eventually invite you to experiment with some LLM-based co
 
 Just for fun, here is [[the full set of eleven signals]{.underline}](https://dodatascience.fun/assets/signals/signals-only.pdf) from the 1973 CTA rulebook:
 
-![The eleven interlocking home signal aspects from the 1973 CTA rulebook.](../assets/signals/signals-only.png){width=100%}
+![Eleven signals from the 1973 CTA rulebook.](../assets/signals/signals-only.png){width=100%}
 
-Each exercise will indicate which of these three phases applies. Note that use of AI/LLMs is never required. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
+Each exercise will indicate which of these three applies. Note that use of AI/LLMs is never required. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
 
 **Citing your use of AI/LLMs.** Whenever the signal is yellow-over-red or double yellow, if you do use an AI/LLM-based tool, include a citation, and be specific:
 

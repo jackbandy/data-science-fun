@@ -1,6 +1,6 @@
 -- NOTICE: This file modified by an LLM coding system on 2026-05-26.
 
--- Pandoc Lua filter: turns spans with class "underline" into \underline for
+-- Pandoc Lua filter: turns spans with class "underline" into \uline for
 -- LaTeX/PDF output, and preserves the class for HTML so CSS can style it.
 
 local function has_underline_class(el)
@@ -21,7 +21,7 @@ function Span(el)
   end
 
   if FORMAT:match("latex") then
-    return pandoc.RawInline("latex", "\\underline{" .. pandoc.utils.stringify(el.content) .. "}")
+    return pandoc.RawInline("latex", "\\uline{" .. pandoc.utils.stringify(el.content) .. "}")
   end
 
   -- For HTML (and other formats), keep as-is (class will come through).
@@ -30,7 +30,7 @@ end
 
 function Underline(el)
   if FORMAT:match("latex") then
-    return pandoc.RawInline("latex", "\\underline{" .. pandoc.utils.stringify(el.content) .. "}")
+    return pandoc.RawInline("latex", "\\uline{" .. pandoc.utils.stringify(el.content) .. "}")
   end
 
   if FORMAT:match("html") then

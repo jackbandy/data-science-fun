@@ -85,6 +85,30 @@
   \begin{minipage}[t]{\dimexpr\textwidth-\signalwidth-1.2em\relax}\vspace{0pt}}
 \newcommand{\signalaspectend}{\end{minipage}\par\medskip}
 
+% A block set slightly in from the left margin, for details that belong to the
+% label above them (the TA's contact details under "Teaching Assistants").
+% Pandoc's LaTeX writer drops generic divs, so indent.lua applies this; the
+% HTML build gets the same indent from the .indented rule in template.html.
+\newlength{\blockindent}
+\setlength{\blockindent}{1.5em}
+\newenvironment{indentblock}{%
+  \begin{list}{}{%
+    \setlength{\leftmargin}{\blockindent}%
+    \setlength{\rightmargin}{0pt}%
+    \setlength{\labelwidth}{0pt}%
+    \setlength{\labelsep}{0pt}%
+    \setlength{\itemindent}{0pt}%
+    \setlength{\listparindent}{0pt}%
+    \setlength{\topsep}{0pt}%
+    \setlength{\partopsep}{0pt}%
+    \setlength{\parsep}{\parskip}%
+    \setlength{\itemsep}{0pt}%
+  }%
+  \item\relax
+}{%
+  \end{list}%
+}
+
 % Tables. The schedule table alternates white and a very light gray, switched
 % on around that table alone by schedule.lua.
 \definecolor{schedulerow}{RGB}{245,245,245}

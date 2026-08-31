@@ -43,6 +43,7 @@ pandoc "$INPUT" \
   --lua-filter "$SOURCE_DIR/schedule.lua" \
   --lua-filter "$SOURCE_DIR/underline.lua" \
   --lua-filter "$SOURCE_DIR/signal.lua" \
+  --lua-filter "$SOURCE_DIR/indent.lua" \
   --template "$SOURCE_DIR/template.tex" \
   --pdf-engine=xelatex \
   --metadata created="$CREATED" \
@@ -56,6 +57,7 @@ pandoc "$INPUT" \
   --lua-filter "$SOURCE_DIR/schedule.lua" \
   --lua-filter "$SOURCE_DIR/underline.lua" \
   --lua-filter "$SOURCE_DIR/signal.lua" \
+  --lua-filter "$SOURCE_DIR/indent.lua" \
   --template "$SOURCE_DIR/template.html" \
   --standalone \
   --metadata created="$CREATED" \
