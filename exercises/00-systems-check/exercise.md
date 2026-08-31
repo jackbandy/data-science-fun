@@ -55,19 +55,19 @@ Use anything in the [datasets folder of the course repository](https://github.co
 
 ## Starter code
 
-`starter.ipynb` has one section per graded item, each with a `TODO`:
+`starter.ipynb` has one section per graded item, each with a `TODO`. Here is some code you can use for these items:
 
 ```python
 import polars as pl
 
-df = pl.read_csv("datasets/national-parks-info/us-national-parks.csv")
+df = pl.read_csv("https://raw.githubusercontent.com/jackbandy/data-science-fun/refs/heads/main/datasets/national-parks-info/us-national-parks.csv")
 
 df.select("latitude", "longitude").describe()
 
 df.filter(pl.col("state") == "UT")
 ```
 
-If you use the starter's file path, run the notebook from inside a clone of the course repository so the relative path resolves; otherwise point `read_csv` at wherever your own file actually is.
+Be sure to point `read_csv` to a complete URL or a complete file path to a csv.
 
 ## What to submit
 
