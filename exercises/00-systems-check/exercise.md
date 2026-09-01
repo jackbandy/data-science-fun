@@ -52,9 +52,11 @@ Line by line:
 
 ## Tool Overview
 
-**Jupyter** is the notebook interface. Install and launch instructions are at [jupyter.org/install](https://jupyter.org/install); the full documentation lives at [docs.jupyter.org](https://docs.jupyter.org/en/latest/), and [JupyterLab's own installation page](https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html) covers the lab interface specifically. The one habit worth building now: a notebook that only works because you ran the cells out of order is broken. Before you submit anything, **Kernel → Restart Kernel and Run All Cells**.
+**Jupyter** is the notebook interface. Install and launch instructions are at [jupyter.org/install](https://jupyter.org/install); the full documentation lives at [docs.jupyter.org](https://docs.jupyter.org/en/latest/), and [JupyterLab's own installation page](https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html) covers the lab interface specifically.
 
-**Polars** is the dataframe library we will use throughout the semester (in place of pandas). It is [pola.rs](https://pola.rs/); the [installation page](https://docs.pola.rs/user-guide/installation/) and the [getting started guide](https://docs.pola.rs/user-guide/getting-started/) are the places to begin, and the [Python API reference](https://docs.pola.rs/api/python/stable/reference/index.html) is what you will actually keep open while working. The three calls this exercise needs: [read_csv](https://docs.pola.rs/api/python/stable/reference/api/polars.read_csv.html), [DataFrame.describe](https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.describe.html), and [DataFrame.filter](https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.filter.html).
+	* One habit worth building now is to run **Kernel → Restart Kernel and Run All Cells** to make sure your notebook works before you submit anything. In some cases, your notebook may only "work" because you ran the cells in a specific order, which can make it difficult to grade.
+
+**Polars** is the dataframe library we will use throughout the semester (in place of pandas). It is [pola.rs](https://pola.rs/); the [installation page](https://docs.pola.rs/user-guide/installation/) and the [getting started guide](https://docs.pola.rs/user-guide/getting-started/) are the places to begin, and the [Python API reference](https://docs.pola.rs/api/python/stable/reference/index.html) is what you might want to keep open while working. This exercise only uses three calls: [read_csv](https://docs.pola.rs/api/python/stable/reference/api/polars.read_csv.html), [DataFrame.describe](https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.describe.html), and [DataFrame.filter](https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.filter.html).
 
 ## Getting a dataset
 
@@ -62,7 +64,9 @@ Use anything in the [datasets folder of the course repository](https://github.co
 
 ## Starter code
 
-[`starter.ipynb`](/exercises/00-systems-check/starter/starter.ipynb) ([view on GitHub](https://github.com/jackbandy/data-science-fun/blob/main/exercises/00-systems-check/starter/starter.ipynb)) has one section per graded item, each with a `TODO`. Here is some code you can use for these items:
+[`starter.ipynb`](/exercises/00-systems-check/starter/starter.ipynb) ([view on GitHub](https://github.com/jackbandy/data-science-fun/blob/main/exercises/00-systems-check/starter/starter.ipynb)) has one section per graded item, each with a `TODO`.
+
+Here is some code you can use for these items:
 
 ```python
 import polars as pl
@@ -91,8 +95,8 @@ Six points available. You will get them if:
 5. You included a text cell that says `nine pizzas`.
 6. A free point because it's your first coding exercise.
 
-That is the whole rubric for this "systems check," warm-up exercise.
+That is the whole rubric for this "systems check," warm-up exercise. I expect you to get 6 out of 6!
 
 ## AI/LLM policy
 
-**Double red — stop and stay.** No AI/LLM use on this exercise. It will be helpful for you to be comfortable setting up a Jupyter notebook "from scratch" for future data science projects, and all the code you need is here in this project description.
+**Double red — stop and stay.** No AI/LLM use on this exercise. It will be helpful for you to be comfortable setting up a Jupyter notebook "from scratch" for future data science projects. Also, all the code you need is here in this project description.
