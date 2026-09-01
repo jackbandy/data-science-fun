@@ -1,6 +1,6 @@
 ---
 layout: schedule
-title: Full Schedule
+title: Intro to Data Science (CS 418)
 nav: schedule
 description: Day-by-day schedule for Introduction to Data Science (CS 418), Fall 2026 with slides, worksheets, and source materials.
 subtitle: Each week links to its slides; each meeting day links to its in-class worksheet and source materials.
@@ -17,7 +17,7 @@ extra_css:
      typed below this comment appears above the week links on the published
      page. -->
 
-**Schedule is a draft / work-in-progress.**
+**Schedule is a work-in-progress.**
 
 ## Schedule Overview
 

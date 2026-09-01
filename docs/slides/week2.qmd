@@ -1410,87 +1410,282 @@ Split the rows into groups, then compute something for each group.
 
 ---
 
-## A Question: The Closest Elections?
-Which election years had the smallest gap between the top two finishers?
+## Preview: Coding Exercise 0 {.iframe-slide}
 
-```{python}
-#| echo: true
-top_two = (elections
-           .sort(["Year", "%"], descending=[False, True])
-           .group_by("Year", maintain_order=True)
-           .head(2))
+<iframe src="https://dodatascience.fun/exercises/00-systems-check/" title="Exercise Zero — Systems Check" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
-margins = (top_two
-           .group_by("Year")
-           .agg(margin=pl.col("%").diff().last().abs().round(1)))
+::: {.iframe-caption}
+Full write-up: <https://dodatascience.fun/exercises/00-systems-check/>
+:::
 
-margins.sort("margin").head(5)
-```
+# A Note About Code from These Slides {.section-header}
 
----
+# Any Questions? {.section-header}
 
-## A Question: The Most Lopsided Elections
-And which election years had the biggest gaps?
 
-```{python}
-#| echo: true
-margins.sort("margin", descending=True).head(5)
-```
+# Week 2, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
+
+<h2>Obtaining Data</h2>
+
+CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
 
 ---
 
-## Third Party Analysis
-Three steps, building on the `top_two` and `margins` computed above:
+## Map for Week 2 (LaSalle/Van Buren) {.split}
+::: {.split-content .narrow-aside}
 
-1. **Look at top two finishers** from each election ( `top_two` )
-2. **Check the margin of victory** ( `margins` )
-3. **Check the most popular third-party candidate's vote %**
+::: {}
+Day 2
 
----
+- Random Roll Call
+- Questions from Wednesday
+- Files, APIs, and Scraping
+- Project Checkpoint
+- Obtaining Data Example
+- Wide and Long Data
+:::
 
+![](../assets/orange-line-map-stops/stop02-lasalle-van-buren.svg){.figure alt="Orange Line map with the LaSalle/Van Buren stop marked, the Week 2 stop"}
 
-## Third Party Analysis, Continued
-
-```{python}
-#| echo: true
-# Step 3a: for each year, find the best-polling candidate who is not a
-# Democrat or a Republican. `~` negates the is_in check.
-third_party_best = (
-    elections
-    .filter(~pl.col("Party").is_in(["Democratic", "Republican"]))
-    .sort("%", descending=True)              # best showing first...
-    .group_by("Year", maintain_order=True)   # ...then one group per election
-    .head(1)                                 # keep that year's best only
-    # rename now, so the columns stay readable after the join on the next slide
-    .rename({"%": "third_party_pct", "Candidate": "third_party_candidate"})
-)
-
-third_party_best.head(4)
-```
+:::
 
 ---
 
-## Could a Third Party Have Swung It? {.smaller}
-Now put each year's best third-party showing next to that year's margin of victory.
+## Random Roll Call {.iframe-slide}
+<!-- The Day 1 roll-call slide carries the style and script; its init() wires
+     every .random-draw on the page, so this slide only needs the markup. -->
+<div class="random-draw" data-num="12" data-min="1" data-max="62">
+<div class="random-draw-frame">
+<div class="random-draw-numbers" role="status" aria-live="polite" data-placeholder="Press “Draw” for 12 random numbers between 1 and 62."></div>
+</div>
+<p class="random-draw-controls"><button type="button" class="random-draw-button">Draw</button> <label class="random-draw-sort"><input type="checkbox" class="random-draw-sort-input"> Sort</label> <span class="random-draw-status"></span></p>
+</div>
 
-```{python}
-#| echo: true
-# Step 3b: `join` lines the two frames up on Year, so each row holds both
-# numbers. Then keep only the years where the third party outpolled the gap
-# between the top two finishers.
-(third_party_best
- .join(margins, on="Year")
- .filter(pl.col("third_party_pct") > pl.col("margin"))
- .select("Year", "third_party_candidate", "Party", "third_party_pct", "margin"))
-```
+::: {.iframe-caption}
+Numbers drawn live from <a href="https://www.random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new">random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new</a>
+:::
+
+---
+
+## The Data Science Lifecycle: Obtain Data {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle-v2.svg" alt="The data science lifecycle with the 'obtain data' step highlighted: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
+
+---
+
+## Type I and Type II Errors (Part II) {.figure-aside}
+::: {.columns}
+
+::: {.column}
+- **Type I error** — a [false positive]{.key}
+    - There is no wolf
+    - Reject $H_0$ when $H_0$ is true
+- **Type II error** — a [false negative]{.key}
+    - The wolf is real
+    - Fail to reject $H_0$ when $H_0$ is false
+:::
+
+::: {.column}
+<img class="figure" src="../assets/slides-misc/boy-who-cried-wolf-milo-winter-1919.jpg" alt="A colour illustration of Aesop's fable: a shepherd boy raises his staff as a wolf attacks one of his sheep, with the rest of the flock and a distant village behind him">
 
 ::: {.caption}
-Careful with the conclusion: outpolling the margin only means the third party was *large enough to matter*. It does not mean those voters would all have turned out, or all have gone to the runner-up.
+Milo Winter, "The Shepherd Boy and the Wolf," *[The Æsop for Children](https://www.gutenberg.org/ebooks/19994)*. Public domain, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Boy_Who_Cried_Wolf_-_Project_Gutenberg_etext_19994.jpg).
+:::
+:::
+
+:::
+
+---
+
+## Questions from Wednesday
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK** —  Polars / statistics questions
+:::
+:::
+
+## Cathy O'Neil {.quote-slide}
+
+> Models are opinions embedded in mathematics.
+
+::: {.attribution}
+Cathy O'Neil
+:::
+
+::: {.quote-source}
+*[Weapons of Math Destruction:](https://www.penguinrandomhouse.com/books/241363/weapons-of-math-destruction-by-cathy-oneil/)*, ch. 1. See also Cathy's TED talk: ["The Era of Blind Faith in Big Data Must End"](https://www.ted.com/talks/cathy_o_neil_the_era_of_blind_faith_in_big_data_must_end) (TED2017).
+:::
+
+---
+
+
+# Obtaining Data {.section-header}
+
+
+## Where Data Come From (Key Terms) {.smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+- **Target population** — who or what you actually want to describe
+- **Access frame** — who or what your method can even reach
+- **Sample** — who or what you end up measuring
+- Every gap between those three is a place for bias to enter, and no amount of data closes one
+
+:::
+
+::: {.column width="46%"}
+
+- **Designed** data are collected for your question — surveys, sensors, experiments, instruments you control
+- **Found** data — logs, scrapes, administrative records, etc. from someone else
+- Found data are cheap, but may be answering a different question
+:::
+
 :::
 
 
+---
+
+## Files, APIs, and Scraping {.plain-code .smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+[LOOK HOW EASY THIS IS 😭😅]{.eyebrow}
+
+```python
+pl.read_csv("elections.csv")
+pl.read_excel("ridership.xlsx")
+pl.read_json("payload.json")
+pl.read_ndjson("events.jsonl")
+pl.read_parquet("trips.parquet")
+pl.read_database(query, connection)
+```
+
+- `pl.scan_csv` reads *lazily* — Polars plans the whole query before touching the rows, which is how the CTA file gets read here
+:::
+
+::: {.column width="46%"}
+[DATA OWNED BY OTHERS]{.eyebrow}
+
+- Ideally, access via an **API** documented fields, a rate limit, a key (usually)
+- **Scraping** - pull values out of an HTML
+    - Anecdote: crawling vs. scraping
+- Scrape when there is no API
+:::
+
+:::
+
+---
+
+## Provenance and Permission {.figure-aside}
+::: {.columns}
+
+::: {.column}
+- "Is it **legal**? Is it against the **terms of service**? Is it **in the public interest**?"
+    - These are different questions
+- Try to preserve provenance: **datasheets for datasets**; stewardship principles **FAIR** and **CARE**
+:::
+
+::: {.column}
+<img class="figure" src="../assets/slides-misc/sandvig-v-barr-opinion-p1.png" alt="The first page of the memorandum opinion in Sandvig v. Barr: a US District Court caption block followed by an opening paragraph about academic researchers who planned to violate website terms of service in order to audit hiring sites for discrimination">
+
+::: {.caption}
+[*Sandvig v. Barr*, No. 16-1368 (D.D.C. Mar. 27, 2020)](https://www.aclu.org/sites/default/files/field_document/sandvig_opinion.pdf) — researchers auditing hiring sites for discrimination. The court held the CFAA does not criminalize mere terms-of-service violations. Opinion hosted by the ACLU.
+:::
+:::
+
+:::
 
 
+---
+
+## Project Checkpoint: Data Acquisition
+
+- **Due today:** the *question memo*
+- We will assemble **project groups** next class (Wed, Sept 9)
+- **Data acquisition** will be the next checkpoint, due **Wed, Sept 23** (Week 5)
+- Show that you can actually *get* the data you need to address your question
+    - Where the data are, and how you obtained them
+    - Target population, access frame, sample
+    - License and terms
+    - What is missing
+    - etc.
+- You are welcome ot start looking now
+
+# Obtaining Data Example {.section-header}
+
+## How Does Winning a FIFA Title Affect Birth Rates? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+**How does winning a FIFA title affect the birth rate of the winning country?**
+
+Discuss with your elbow neighbor(s):
+
+1. What kind of data would you need?
+2. Where would you look?
+3. What would one row look like?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## Obtaining FIFA Data {.figure-aside .smaller}
+::: {.columns}
+
+::: {.column}
+- **What you need:** who won, and when (the date of each final)
+- **Wikipedia** publishes it as an HTML table: no API, easy to download/parse/scrape
+- **FIFA.com** has tournament archives, but no open API to query
+- **Kaggle** and **GitHub** may also have ready-made CSVs (found data)
+- One row is a tournament winner
+- Limitations of the question?
+:::
+
+::: {.column}
+<img class="figure" src="../assets/fifa-birth-rate/fifa-world-cup-2010-spain-with-cup.jpg" alt="The Spain national team on the pitch holding the FIFA World Cup trophy aloft after winning the 2010 final against the Netherlands">
+
+::: {.caption}
+Anthony Stanley, [*Spain with the cup, 2010 FIFA World Cup Final*](https://commons.wikimedia.org/wiki/File:FIFA_World_Cup_2010_Spain_with_cup.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/).
+:::
+:::
+
+:::
+
+---
+
+## Obtaining Birth Rate Data {.figure-aside .smaller}
+::: {.columns}
+
+::: {.column}
+- **What you need:** births in the winning country around each final
+    - hour? day? week? month? year?
+- **World Bank** (`SP.DYN.CBRT.IN`) and the **UN** publish crude birth rate per 1,000 — free, documented, and annual
+- A nine-month effect - what granularity would we need?
+- Monthly counts via **national statistics offices**: different sites, formats, and language per country
+- **Eurostat** `demo_fmonth` aggregates monthly live births, but only for Europe
+- Limitations?
+:::
+
+::: {.column}
+<img class="figure" src="../assets/fifa-birth-rate/countries-by-birth-rate-2017.svg" alt="A world choropleth map shading each country by its crude birth rate in 2017, births per 1,000 inhabitants, with the highest rates across central Africa">
+
+::: {.caption}
+Ali Zifan and Skimel, [*Countries by Birth Rate in 2017*](https://commons.wikimedia.org/wiki/File:Countries_by_Birth_Rate_in_2017.svg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), from CIA *World Factbook* figures.
+:::
+:::
+
+:::
 
 # Wide and Long Data {.section-header}
 
@@ -1670,140 +1865,95 @@ wide
 wide.unpivot(index="stationname", variable_name="date", value_name="rides").head(4)
 ```
 
+# Questions for the Election Data {.section-header}
+
+## A Question: The Closest Elections?
+Which election years had the smallest gap between the top two finishers?
+
+```{python}
+#| echo: true
+top_two = (elections
+           .sort(["Year", "%"], descending=[False, True])
+           .group_by("Year", maintain_order=True)
+           .head(2))
+
+margins = (top_two
+           .group_by("Year")
+           .agg(margin=pl.col("%").diff().last().abs().round(1)))
+
+margins.sort("margin").head(5)
+```
+
 ---
 
-## Preview: Coding Exercise 0 {.iframe-slide}
+## A Question: The Most Lopsided Elections
+And which election years had the biggest gaps?
 
-<iframe src="https://dodatascience.fun/exercises/00-systems-check/" title="Exercise Zero — Systems Check" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+```{python}
+#| echo: true
+margins.sort("margin", descending=True).head(5)
+```
+
+---
+
+## Third Party Analysis
+Three steps, building on the `top_two` and `margins` computed above:
+
+1. **Look at top two finishers** from each election ( `top_two` )
+2. **Check the margin of victory** ( `margins` )
+3. **Check the most popular third-party candidate's vote %**
+
+---
+
+
+## Third Party Analysis, Continued
+
+```{python}
+#| echo: true
+# Step 3a: for each year, find the best-polling candidate who is not a
+# Democrat or a Republican. `~` negates the is_in check.
+third_party_best = (
+    elections
+    .filter(~pl.col("Party").is_in(["Democratic", "Republican"]))
+    .sort("%", descending=True)              # best showing first...
+    .group_by("Year", maintain_order=True)   # ...then one group per election
+    .head(1)                                 # keep that year's best only
+    # rename now, so the columns stay readable after the join on the next slide
+    .rename({"%": "third_party_pct", "Candidate": "third_party_candidate"})
+)
+
+third_party_best.head(4)
+```
+
+---
+
+## Could a Third Party Have Swung It? {.smaller}
+Now put each year's best third-party showing next to that year's margin of victory.
+
+```{python}
+#| echo: true
+# Step 3b: `join` lines the two frames up on Year, so each row holds both
+# numbers. Then keep only the years where the third party outpolled the gap
+# between the top two finishers.
+(third_party_best
+ .join(margins, on="Year")
+ .filter(pl.col("third_party_pct") > pl.col("margin"))
+ .select("Year", "third_party_candidate", "Party", "third_party_pct", "margin"))
+```
+
+::: {.caption}
+Careful with the conclusion: outpolling the margin only means the third party was *large enough to matter*. It does not mean those voters would all have turned out, or all have gone to the runner-up.
+:::
+
+# Any Questions? {.iframe-slide}
+
+<iframe src="https://dodatascience.fun/" title="CS 418 course home page" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
 ::: {.iframe-caption}
-Full write-up: <https://dodatascience.fun/exercises/00-systems-check/>
+Course home page: <https://dodatascience.fun>
 :::
 
-# A Note About Code from These Slides {.section-header}
-
-# Any Questions? {.section-header}
-
-
-# Week 2, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop02-lasalle-van-buren-a.jpg" background-size="cover"}
-
-<h2>Obtaining Data</h2>
-
-CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
-
----
-
-## Map for Week 2 (LaSalle/Van Buren) {.split}
-::: {.split-content .narrow-aside}
-
-::: {}
-Day 2
-
-- Random Roll Call
-- Questions from Wednesday
-- Where Data Comes From
-- Found vs. Designed Data
-- Files, APIs, and Scraping
-- Provenance and Permission
-- Project Checkpoint
-:::
-
-![](../assets/orange-line-map-stops/stop02-lasalle-van-buren.svg){.figure alt="Orange Line map with the LaSalle/Van Buren stop marked, the Week 2 stop"}
-
-:::
-
----
-
-## Random Roll Call {.iframe-slide}
-<!-- The Day 1 roll-call slide carries the style and script; its init() wires
-     every .random-draw on the page, so this slide only needs the markup. -->
-<div class="random-draw" data-num="12" data-min="1" data-max="62">
-<div class="random-draw-frame">
-<div class="random-draw-numbers" role="status" aria-live="polite" data-placeholder="Press “Draw” for 12 random numbers between 1 and 62."></div>
-</div>
-<p class="random-draw-controls"><button type="button" class="random-draw-button">Draw</button> <label class="random-draw-sort"><input type="checkbox" class="random-draw-sort-input"> Sort</label> <span class="random-draw-status"></span></p>
-</div>
-
-::: {.iframe-caption}
-Numbers drawn live from <a href="https://www.random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new">random.org/integers/?num=12&min=1&max=62&col=1&base=10&format=plain&rnd=new</a>
-:::
-
----
-
-## Questions from Wednesday
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** —  Polars / statistics questions
-:::
-:::
-
-# Obtaining Data {.section-header}
-
-## Where Data Come From
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** — the sources behind a dataset: instruments, records, surveys, logs, scrapes
-- *Learning Data Science*, ch. 2, target population → access frame → sample
-:::
-:::
-
----
-
-## Found and Designed Data
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** — data collected *for* your question vs. data you found somewhere
-- "big data hubris"
-:::
-:::
-
----
-
-## Files, APIs, and Scraping
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** — `pl.read_csv` and related methods (excel, json, etc.)
-- **TK** — requests to a web API or similar
-- **TK** — scraping and why
-:::
-:::
-
----
-
-## Provenance and Permission
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** — licenses, terms of use, `robots.txt`, rate limits, etc.
-- **TK** — why record where a dataset came from
-:::
-:::
-
----
-
-## Project Checkpoint: Data Acquisition
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** — explanation
-:::
-:::
+# That's All for Today, See You Next Week! {.section-header .no-index}
 
 # Appendix: Python Foundations {.section-header}
 
@@ -2648,3 +2798,8 @@ $$\text{median} = \frac{80+84}{2} = 82
 22. Wide-vs-long examples use [CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) from the City of Chicago Data Portal, mirrored in this repo at [`datasets/cta-ridership`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/cta-ridership).
 23. Polar bear photo by Carl Donohue, ["Polar Bear in a Blizzard"](https://www.skolaiimages.com/photo/polar-bear-in-a-blizzard-photo/), Arctic National Wildlife Refuge, Alaska. © Carl Donohue / Skolai Images, all rights reserved; reproduced here for classroom discussion. Details in [`docs/assets/polar-bear-blizzard/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/polar-bear-blizzard/SOURCES.md).
 24. "Questions You've Done So Far" indexes the probability questions from Homeworks 1 and 2, which live in the course's PrairieLearn repository (`pl-uic-cs418`).
+25. The Obtaining Data section follows Sam Lau, Joey Gonzalez & Deb Nolan, *Learning Data Science*, [Chapter 2: Questions and Data Scope](https://learningds.org/ch/02/data_scope_intro.html) (target population, access frame, sample), and [Chapter 3: Ethics in Obtaining Data](../ethics-in-data-science/book/03-ethics-in-obtaining-data.html) of this course's *Ethics in Data Science* mini-book (consent, scraping, licensing, provenance).
+26. "Big data hubris" and the Google Flu Trends example are from David Lazer, Ryan Kennedy, Gary King & Alessandro Vespignani, ["The Parable of Google Flu: Traps in Big Data Analysis"](https://doi.org/10.1126/science.1248506), *Science* 343(6176), 2014, pp. 1203–1205; see also Carl Bergstrom & Jevin West, *Calling Bullshit*, [5.3: Big Data Hubris](https://www.youtube.com/watch?v=X0XqnAqvyIk).
+27. The reading-data slide follows Timbers, Campbell, Lee, Ostblom & Heagy, *Data Science: A First Introduction*, [Chapter 2: Reading in Data Locally and from the Web](https://python.datasciencebook.ca/reading.html), with Polars readers in place of pandas.
+28. Cathy O'Neil, *[Weapons of Math Destruction](https://www.penguinrandomhouse.com/books/241363/weapons-of-math-destruction-by-cathy-oneil/)*, Broadway Books, 2017, ch. 1; the "opinions embedded in code" phrasing of the same point is from her TED2017 talk, ["The Era of Blind Faith in Big Data Must End"](https://www.ted.com/talks/cathy_o_neil_the_era_of_blind_faith_in_big_data_must_end).
+29. The Type I / Type II errors illustration is Milo Winter's plate for "The Shepherd Boy and the Wolf" in *[The Æsop for Children](https://www.gutenberg.org/ebooks/19994)* (Rand McNally, 1919), public domain via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Boy_Who_Cried_Wolf_-_Project_Gutenberg_etext_19994.jpg); provenance recorded in [`docs/assets/slides-misc/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/slides-misc/SOURCES.md).
