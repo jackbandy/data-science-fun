@@ -100,9 +100,29 @@
   border-radius: 2px;
 }
 
+/* Floated rather than inline so the aspect's label and meaning wrap alongside
+   the drawing instead of pushing a tall line box open. */
+/* The aspect is named in words first; the drawing sits under that line rather
+   than beside it, so the reading order is label -> meaning -> picture. */
 .exercise-meta .signal-badge {
-  height: 2.4em;
-  vertical-align: -0.9em;
+  display: block;
+  height: 9.2em;
+  margin: 8px 0 2px;
+}
+
+/* The same drawing again beside the exercise's own policy paragraph, larger,
+   since here it is the illustration rather than a badge on a metadata row. */
+.signal-badge-policy {
+  float: left;
+  height: 6.5em;
+  margin: 0.25em 1em 0.5em 0;
+}
+
+/* Contain the floated policy badge -- it is the last thing on the page. */
+.exercise-body::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .visually-hidden {
@@ -152,16 +172,23 @@
   margin-bottom: 20px;
 }
 
+/* One fact per row: with three of them (and a signal drawing tall enough to
+   read) a single flex line would either wrap unpredictably or squeeze the
+   policy text into a column. */
 .exercise-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 32px;
   padding: 14px 18px;
   border-top: 4px solid #f9461c;
   background: #fafafa;
-  margin-bottom: 16px;
+  margin-bottom: 28px;
   font-size: 0.92rem;
 }
+
+.exercise-meta > div { margin-bottom: 14px; }
+.exercise-meta > div:last-child { margin-bottom: 0; }
+
+.exercise-meta dd a { color: #f9461c; font-weight: 700; }
+
+.starter-alt { font-weight: 400; color: #777; }
 
 .exercise-meta dt {
   font-size: 0.75rem;
@@ -173,13 +200,6 @@
 }
 
 .exercise-meta dd { font-weight: 600; }
-
-.exercise-starter {
-  font-size: 0.95rem;
-  margin-bottom: 28px;
-}
-
-.exercise-starter a { color: #f9461c; font-weight: 700; }
 
 .exercise-body {
   font-size: 1rem;
@@ -250,6 +270,7 @@
    reference. */
 
 .notebook-preview {
+  clear: both; /* never let the floated policy badge above crowd the preview */
   margin: 40px 0 8px;
 }
 
@@ -275,6 +296,58 @@
   font-size: 0.9em;
 }
 
+/* Reading the preview is the common case; actually opening the file is the
+   next thing you want, so the link sits at the top of the panel rather than
+   sending you back up to the header strip. */
+.nb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.nb-open {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: #f9461c;
+  text-decoration: none;
+  padding: 8px 14px;
+  border: 2px solid #f9461c;
+  border-radius: 4px;
+}
+
+/* Viewing the file on GitHub is the secondary path -- downloading it is what
+   the exercise actually asks for. */
+.nb-open-secondary {
+  color: #555;
+  border-color: #ccc;
+}
+
+.nb-open-secondary:hover,
+.nb-open-secondary:focus-visible {
+  background: #555;
+  border-color: #555;
+}
+
+.nb-open:hover,
+.nb-open:focus-visible {
+  background: #f9461c;
+  color: #fff;
+}
+
+.nb-open code {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.95em;
+}
+
+.exercise-body .nb-open code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
 .nb {
   border: 2px solid #e2e2e2;
   border-top: none;
@@ -296,44 +369,70 @@
   line-height: 1.65;
 }
 
+.exercise-body .nb-markdown code,
+.exercise-body .nb-markdown pre {
+  font-family: "Courier New", Courier, monospace;
+  background: #ececec;
+  border: 1px solid #d4d4d4;
+  border-radius: 0;
+}
+
+.exercise-body .nb-markdown code { padding: 0.1em 0.3em; font-size: 0.9em; }
+
+.exercise-body .nb-markdown pre {
+  color: #1f1f1f;
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+
+.exercise-body .nb-markdown pre code { background: none; border: none; padding: 0; }
+
 .nb-markdown h1 { font-size: 1.3rem; margin-bottom: 8px; }
 .nb-markdown h2 { font-size: 1.1rem; margin-bottom: 6px; }
 .nb-markdown p  { margin-bottom: 10px; }
 .nb-markdown p:last-child { margin-bottom: 0; }
 
-.nb-source,
-.nb-stream,
-.nb-result,
-.nb-error {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+/* Courier with square corners: the preview should read as a notebook cell at a
+   glance. Scoped under .exercise-body so these win over the dark `.exercise-body
+   pre` above -- the preview sits inside that wrapper. */
+.exercise-body .nb-source,
+.exercise-body .nb-stream,
+.exercise-body .nb-result,
+.exercise-body .nb-error {
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.85rem;
   line-height: 1.55;
   overflow-x: auto;
   padding: 12px 14px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
-.nb-source {
-  background: #f6f6f6;
+.exercise-body .nb-source {
+  background: #ececec;
+  border: 1px solid #d4d4d4;
   border-left: 4px solid #ccc;
   color: #1f1f1f;
 }
 
-.nb-source code {
+.exercise-body .nb-source code {
   background: none;
+  border: none;
   padding: 0;
   font-size: inherit;
+  color: inherit;
+  font-family: inherit;
 }
 
 /* Outputs sit under their input, indented past the rule the way Jupyter does. */
-.nb-stream,
-.nb-result {
+.exercise-body .nb-stream,
+.exercise-body .nb-result {
   background: #fff;
   border-left: 4px solid #f9461c;
   margin-top: 4px;
 }
 
-.nb-error {
+.exercise-body .nb-error {
   background: #fff4f4;
   border-left: 4px solid #C60C30;
   margin-top: 4px;

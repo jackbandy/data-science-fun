@@ -5,6 +5,9 @@ plugins:
   - jekyll-sitemap
 
 url: "https://dodatascience.fun"
+# Source repo. Used by the exercise pages to link each starter file back to the
+# copy under exercises/ that the build reads (docs/exercises/ is generated).
+repo: "https://github.com/jackbandy/data-science-fun"
 include:
   - .well-known
 title: Introduction to Data Science

@@ -6,11 +6,13 @@ layout: default
 
   The page itself is generated — edit exercises/<slug>/exercise.md and rerun
   exercises/build-exercises-data.py. This file only frames what that build
-  produces: the header strip, the starter-code links, and the AI signal.
+  produces: the header strip (due date, starter code, AI signal) and the
+  signal drawing beside the closing policy section.
 
   Note: this file was largely written by an LLM (Claude Code).
 {%- endcomment -%}
 {%- assign signals = site.data.ai_signals -%}
+{%- assign signal = signals[page.ai_policy] -%}
 <p class="exercise-breadcrumb"><a href="/exercises.html">&larr; All exercises</a></p>
 
 <article class="exercise">
@@ -20,19 +22,32 @@ layout: default
 
   <dl class="exercise-meta">
     <div><dt>Due</dt><dd>{{ page.due }}</dd></div>
+{% if page.starter %}
+    <div><dt>Starter code</dt>
+      <dd>{% for file in page.starter %}<a href="{{ page.url }}starter/{{ file }}" download><code>{{ file }}</code></a>
+        <span class="starter-alt">(<a href="{{ site.repo }}/blob/main/exercises/{{ page.slug }}/starter/{{ file }}">view on GitHub</a>)</span>{% unless forloop.last %}<br>{% endunless %}{% endfor %}</dd></div>
+{% endif %}
     <div><dt>AI/LLM use</dt>
-      <dd>{% assign signal = signals[page.ai_policy] %}
-        {% if signal.image %}<img class="signal-badge" src="{{ signal.image }}" alt="">{% endif %}
-        <a href="{{ signal.faq }}">{{ signal.label }}</a> &mdash; {{ signal.meaning }}</dd></div>
+      <dd>
+        <a href="{{ signal.faq }}">{{ signal.label }}</a> &mdash; {{ signal.meaning }}
+        {% if signal.image %}<img class="signal-badge" src="{{ signal.image }}" alt="">{% endif %}</dd></div>
   </dl>
 
-{% if page.starter %}
-  <p class="exercise-starter">Starter code:
-    {% for file in page.starter %}<a href="{{ page.url }}starter/{{ file }}"><code>{{ file }}</code></a>{% unless forloop.last %}, {% endunless %}{% endfor %}
-  </p>
-{% endif %}
+{%- comment -%}
+  The closing "AI/LLM policy" section is prose in each exercise.md, but the
+  drawing that goes with it is data (_data/ai_signals.yml). Rather than have
+  every author paste the right SVG path into their markdown, the heading the
+  build emits is used as an anchor and the badge injected after it, so the
+  aspect shown there can never drift from the one in the header strip.
+{%- endcomment -%}
+{%- capture policy_heading -%}<h2>AI/LLM policy</h2>{%- endcapture -%}
+{%- if signal.image -%}
+  {%- capture policy_block -%}{{ policy_heading }}<img class="signal-badge signal-badge-policy" src="{{ signal.image }}" alt="">{%- endcapture -%}
+{%- else -%}
+  {%- assign policy_block = policy_heading -%}
+{%- endif -%}
 
   <div class="exercise-body">
-    {{ content }}
+    {{ content | replace: policy_heading, policy_block }}
   </div>
 </article>
