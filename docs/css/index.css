@@ -344,12 +344,9 @@ h1 a:hover {
 }
 
 .schedule-table-wrap {
-  max-width: 600px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .schedule-table {
@@ -459,6 +456,18 @@ h1 a:hover {
 .schedule-table th:nth-child(3),
 .schedule-table td:nth-child(3) {
   width: 22%;
+}
+
+/* The worksheets table has only three columns (Week, Class Day, Worksheet).
+   Let Week and Class Day hug their content and give the rest to the
+   Worksheet column, instead of the fixed widths the homepage table uses. */
+.worksheets-table-wrap .schedule-table td:first-of-type {
+  width: auto;
+}
+
+.worksheets-table-wrap .schedule-table th:nth-child(3),
+.worksheets-table-wrap .schedule-table td:nth-child(3) {
+  width: auto;
 }
 
 @media (max-width: 640px) {
