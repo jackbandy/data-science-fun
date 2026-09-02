@@ -1,0 +1,66 @@
+---
+layout: default
+title: Worksheets
+nav: worksheets
+description: In-class worksheets for Introduction to Data Science (CS 418), Fall 2026, one per meeting day.
+show_last_updated: true
+---
+{%- comment -%}
+  Index of the in-class worksheets, served at /worksheets/.
+
+  Like the homepage table, the spine comes from _data/schedule.csv — the weeks
+  and their meeting days — so this page can never disagree with the schedule.
+  The PDFs themselves are committed under docs/worksheets/ by
+  worksheets_source/build.sh and named NN-weekWW-dayD.pdf; a day is linked only
+  once its file exists, which is the same rule _layouts/schedule.html uses.
+
+  Note: this file was largely written by an LLM (Claude Code).
+{%- endcomment -%}
+<h1>Worksheets</h1>
+
+<div class="schedule-table-wrap">
+{%- assign weeks = site.data.schedule | group_by: "Week" %}
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th scope="col">Week</th>
+      <th scope="col">Class Day</th>
+      <th scope="col">Worksheet</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%- for week in weeks -%}
+    {%- assign station = site.data.stations[week.name] -%}
+    {%- if station -%}
+      {%- assign dot = "Week " | append: week.name | append: ", " | append: station -%}
+    {%- else -%}
+      {%- assign dot = "Week " | append: week.name -%}
+    {%- endif -%}
+    {%- comment -%} Worksheet files are named ...-weekWW-dayD.pdf, week zero-padded. {%- endcomment -%}
+    {%- assign padded = week.name -%}
+    {%- if week.name.size == 1 -%}{%- assign padded = "0" | append: week.name -%}{%- endif -%}
+    {%- for row in week.items %}
+    <tr>
+      {%- if forloop.first %}
+      <th scope="row" rowspan="{{ week.items | size }}"><span class="schedule-week-dot" data-label="{{ dot | escape }}" aria-label="{{ dot | escape }}" tabindex="0">{{ week.name | escape }}</span></th>
+      {%- endif %}
+      <td>{{ row["Class Day"] | escape }}<span class="schedule-day-date">({{ row["Date"] | date: "%b %-d" | replace: "Sep ", "Sept " }})</span></td>
+      {%- assign suffix = "-week" | append: padded | append: "-day" | append: forloop.index | append: ".pdf" -%}
+      {%- assign sheet = site.static_files | where_exp: "f", "f.path contains suffix" | first -%}
+      {%- if sheet -%}
+        {%- comment -%} The leading NN of the filename is the worksheet's number. {%- endcomment -%}
+        {%- assign number = sheet.path | split: "/" | last | split: "-" | first -%}
+      <td><a href="{{ site.baseurl }}{{ sheet.path }}">Worksheet {{ number }}</a> (Week {{ week.name }}, Day {{ forloop.index }})</td>
+      {%- elsif row["Notes"] != "" -%}
+      <td>{{ row["Notes"] | escape }}</td>
+      {%- else -%}
+      <td>—</td>
+      {%- endif %}
+    </tr>
+    {%- endfor -%}
+  {%- endfor %}
+  </tbody>
+</table>
+</div>
+<div id="schedule-tooltip" aria-hidden="true"></div>
+<script src="{{ '/js/schedule-tooltip.js' | relative_url }}"></script>
