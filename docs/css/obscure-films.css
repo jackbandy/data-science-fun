@@ -150,6 +150,100 @@
   opacity: 1;
 }
 
+/* ── Actor filter ──────────────────────────────────────────────────────── */
+
+.obscure-actor-filter {
+  margin: 16px 0 0;
+}
+
+.obscure-actor-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+.obscure-actor-toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--obscure-accent);
+  cursor: pointer;
+}
+
+/* Anchors the results list, which overlays the controls below it. */
+.obscure-actor-search {
+  position: relative;
+  max-width: 380px;
+  margin-top: 10px;
+}
+
+#obscure-actor-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 9px 12px;
+  border: 1px solid var(--obscure-rule);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--obscure-ink);
+}
+#obscure-actor-input:focus {
+  outline: none;
+  border-color: var(--obscure-accent);
+  box-shadow: 0 0 0 2px var(--obscure-accent-wash);
+}
+
+ul.obscure-actor-results {
+  position: absolute;
+  z-index: 3;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--obscure-rule);
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+ul.obscure-actor-results li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+ul.obscure-actor-results li.is-active,
+ul.obscure-actor-results li:hover {
+  background: var(--obscure-accent-wash);
+}
+
+.obscure-actor-count {
+  flex: none;
+  font-size: 0.8rem;
+  color: var(--obscure-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+p.obscure-actor-status {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--obscure-muted);
+  min-height: 1.2em;
+}
+
 /* ── Controls ──────────────────────────────────────────────────────────── */
 
 .obscure-controls {
@@ -193,6 +287,15 @@
 }
 
 /* ── Gallery ──────────────────────────────────────────────────────────── */
+
+/* The one-sentence reading of what the cards below are — written when a sample
+   is drawn, in standard percentile terms ("more votes than X% of movies"). */
+p.obscure-gallery-caption {
+  margin: 12px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--obscure-ink);
+}
 
 .obscure-gallery {
   display: grid;

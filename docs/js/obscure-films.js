@@ -15,6 +15,17 @@
  * 1–99), and double-clicking a gate lets you type an exact value. Each pool film
  * carries its own percentile `p`, so any span — not just whole bands — filters
  * correctly.
+ *
+ * "Filter by actor" swaps the sampling universe: picking an actor samples from
+ * *every* rated feature they are credited on rather than from the stratified
+ * pool, because the pool holds ~50 films per band and would almost never
+ * contain a given actor. That needs its own dataset — data/actors.json, built by
+ * datasets/movies-from-imdb/build_actors.py — which is fetched lazily, on the
+ * first click of the checkbox, and never otherwise.
+ *
+ * Its film rows are packed (int id, shared genre table, rating times ten) and
+ * unpacked here into the same {id,t,y,g,r,v,p} shape POOL uses, so the gallery
+ * and the range filter cannot tell the two universes apart.
  */
 (function () {
   "use strict";
@@ -45,6 +56,15 @@
   var BARS;         // 10 {low,high,totalVotes,count}
   var POOL;         // ~5000 {id,t,y,g,r,v,p}
   var X_MIN, X_MAX; // first/last tick — the visible percentile range
+
+  // Actor filter. ACTORS is null until the checkbox is first checked; each entry
+  // is {name, key, films}, films being that actor's full credit list in the same
+  // {id,t,y,g,r,v,p} shape as POOL. `actor` is the current selection, or null
+  // when the filter is off or nothing has been picked yet.
+  var ACTORS = null;
+  var actorsLoading = null;
+  var actor = null;
+  var MAX_RESULTS = 8;
 
   // Gate positions, in percentile units. Valid spans: 0.1 < left < right < 99.9.
   var leftPct = 1, rightPct = 99;
@@ -83,6 +103,16 @@
     v = Math.round(v * 10) / 10;
     return (v % 1 === 0 ? String(v) : v.toFixed(1)) + "%";
   }
+
+  // Fold case and strip diacritics so "timothee chalamet" finds "Timothée Chalamet".
+  function norm(str) {
+    return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  // The gates read in popularity-percentile space (0 = most-voted), but prose
+  // reads in the standard direction: a film at percentile p has more votes than
+  // (100 - p)% of films.
+  function moreThan(p) { return 100 - p; }
 
   function buildChart(svg) {
     // Y gridlines + labels, one per decade across the fitted domain.
@@ -131,13 +161,15 @@
         x1: x, x2: x, y1: IB, y2: IB + (major ? 5 : 3)
       }));
       if (major) {
-        svg.appendChild(el("text", { class: "obscure-axis obscure-xlabel", x: x, y: IB + 20, "text-anchor": "middle" }, fmtPct(tv)));
+        // Labelled in the standard direction: the left edge is the films that
+        // out-poll almost everything, so it reads 99.9%, not 0.1%.
+        svg.appendChild(el("text", { class: "obscure-axis obscure-xlabel", x: x, y: IB + 20, "text-anchor": "middle" }, fmtPct(moreThan(tv))));
       }
     }
 
     // Axis captions.
     svg.appendChild(el("text", { class: "obscure-caption", x: (IL + IR) / 2, y: H - 8, "text-anchor": "middle" },
-      "Popularity percentile  (popular → obscure)"));
+      "More IMDb votes than this % of other films  (popular → obscure)"));
     // Y caption sits on its own line above the plot — rotated titles force a head-tilt.
     svg.appendChild(el("text", { class: "obscure-caption", x: IL, y: 20 }, "Total votes (log)"));
 
@@ -173,21 +205,43 @@
     gate.line.setAttribute("x2", x);
     gate.tab.setAttribute("x", x - 32);
     gate.label.setAttribute("x", x);
-    gate.label.textContent = fmtPct(pct);
-    gate.g.setAttribute("aria-valuenow", pct);
-    gate.g.setAttribute("aria-label", (gate.side === "left" ? "Left" : "Right") + " boundary, " + fmtPct(pct));
+    // Gates read in the same direction as the axis they sit on.
+    gate.label.textContent = fmtPct(moreThan(pct));
+    gate.g.setAttribute("aria-valuenow", moreThan(pct));
+    gate.g.setAttribute("aria-label", (gate.side === "left" ? "Left" : "Right") +
+      " boundary, more votes than " + fmtPct(moreThan(pct)) + " of films");
   }
 
   // A display bar is lit when its bucket intersects the selected span.
   function barIn(b) { return b.low < rightPct && b.high > leftPct; }
 
-  function eligibleCount() {
+  // The universe the sampler draws from: an actor's full credit list when one is
+  // selected, otherwise the stratified pool.
+  function universe() { return actor ? actor.films : POOL; }
+
+  // How many films are actually in the selected span. With an actor picked that
+  // is their credit list, which is exhaustive. Without one it is *every* rated
+  // film in the span — not the ~5,000-film sampling pool, which is a stratified
+  // subsample and would understate the population by two orders of magnitude.
+  // Taken from the band counts, prorating the two bands the gates cut through.
+  function rangeCount() {
+    if (actor) return eligibleFilms().length;
     var n = 0;
-    for (var i = 0; i < POOL.length; i++) {
-      var p = POOL[i].p;
-      if (p >= leftPct && p < rightPct) n++;
+    for (var i = 0; i < BARS.length; i++) {
+      var b = BARS[i];
+      var overlap = Math.min(b.high, rightPct) - Math.max(b.low, leftPct);
+      if (overlap > 0) n += b.count * (overlap / (b.high - b.low));
     }
-    return n;
+    return Math.round(n);
+  }
+
+  function eligibleFilms() {
+    var u = universe(), out = [];
+    for (var i = 0; i < u.length; i++) {
+      var p = u[i].p;
+      if (p >= leftPct && p < rightPct) out.push(u[i]);
+    }
+    return out;
   }
 
   function updateView() {
@@ -198,10 +252,11 @@
     for (var i = 0; i < state.barEls.length; i++) {
       state.barEls[i].setAttribute("class", barIn(BARS[i]) ? "obscure-bar obscure-bar-in" : "obscure-bar obscure-bar-out");
     }
-    rangeLabel.textContent = fmtPct(leftPct) + " – " + fmtPct(rightPct);
-    var n = eligibleCount();
-    countEl.textContent = fmt(n);
-    sampleBtn.disabled = n === 0;
+    rangeLabel.textContent = fmtPct(moreThan(rightPct)) + " – " + fmtPct(moreThan(leftPct));
+    countEl.textContent = fmt(rangeCount());
+    // Enablement tracks what can actually be drawn, which is the pool, not the
+    // population the readout reports.
+    sampleBtn.disabled = eligibleFilms().length === 0;
   }
 
   function nudge(side, dir) {
@@ -237,23 +292,21 @@
     g.addEventListener("dblclick", function () { typeValue(side); });
   }
 
-  // Double-click → type an exact boundary. Left must be in (0.1, right); right in
-  // (left, 99.9). Re-prompts on anything that is not a number in that range.
+  // Double-click → type an exact boundary, in the same "more votes than X%"
+  // terms the gate displays. The left gate holds the larger of the two values,
+  // so its floor is whatever the right gate reads. Re-prompts on bad input.
   function typeValue(side) {
     while (true) {
-      var msg, lo, hi;
-      if (side === "left") {
-        lo = 0.1; hi = rightPct;
-        msg = "Left boundary (%ile). Must be greater than 0.1 and less than " + fmtPct(rightPct) + ":";
-      } else {
-        lo = leftPct; hi = 99.9;
-        msg = "Right boundary (%ile). Must be greater than " + fmtPct(leftPct) + " and less than 99.9:";
-      }
-      var input = window.prompt(msg, String(side === "left" ? leftPct : rightPct));
+      var lo, hi;
+      if (side === "left") { lo = moreThan(rightPct); hi = 99.9; }
+      else { lo = 0.1; hi = moreThan(leftPct); }
+      var msg = (side === "left" ? "Left" : "Right") + " boundary: more IMDb votes than what % of " +
+        "other films? Must be greater than " + fmtPct(lo) + " and less than " + fmtPct(hi) + ":";
+      var input = window.prompt(msg, String(moreThan(side === "left" ? leftPct : rightPct)));
       if (input === null) return;
       var v = parseFloat(input);
       if (isFinite(v) && v > lo && v < hi) {
-        v = Math.round(v * 10) / 10;
+        v = moreThan(Math.round(v * 10) / 10);
         if (side === "left") leftPct = v; else rightPct = v;
         updateView();
         return;
@@ -274,7 +327,7 @@
     state.svg.querySelectorAll(".obscure-hit").forEach(function (h) {
       h.addEventListener("mouseenter", function () {
         var b = BARS[+h.getAttribute("data-i")];
-        tt.innerHTML = "<b>" + fmtPct(b.low) + " – " + fmtPct(b.high) + "</b><br>" +
+        tt.innerHTML = "<b>more votes than " + fmtPct(moreThan(b.high)) + " – " + fmtPct(moreThan(b.low)) + "</b><br>" +
           fmt(b.count) + " films · " + fmt(b.totalVotes) + " votes";
         tt.setAttribute("data-visible", "true");
       });
@@ -288,12 +341,8 @@
   }
 
   // --- sampling + gallery ---------------------------------------------------
-  function sampleEight() {
-    var elig = [];
-    for (var i = 0; i < POOL.length; i++) {
-      var p = POOL[i].p;
-      if (p >= leftPct && p < rightPct) elig.push(POOL[i]);
-    }
+  function sampleFilms() {
+    var elig = eligibleFilms();
     if (elig.length === 0) return;
     // Partial Fisher–Yates: up to 8 distinct draws.
     var k = Math.min(8, elig.length);
@@ -301,7 +350,24 @@
       var r = j + Math.floor(Math.random() * (elig.length - j));
       var tmp = elig[j]; elig[j] = elig[r]; elig[r] = tmp;
     }
+    setCaption();
     renderGallery(elig.slice(0, k));
+  }
+
+  // Describes the cards below it, in standard percentile terms. Written when a
+  // sample is drawn, so it always matches the gallery rather than the gates.
+  function setCaption() {
+    var span = fmtPct(moreThan(rightPct)) + " – " + fmtPct(moreThan(leftPct));
+    caption.textContent = actor
+      ? "Movies with " + actor.name + " that have received more IMDb votes than " + span + " of other movies."
+      : "Movies that have received more IMDb votes than " + span + " of other movies.";
+    caption.hidden = false;
+  }
+
+  function clearGallery() {
+    gallery.innerHTML = "";
+    caption.hidden = true;
+    caption.textContent = "";
   }
 
   function renderGallery(films) {
@@ -335,9 +401,7 @@
 
       var pct = document.createElement("p");
       pct.className = "obscure-card-stats obscure-card-pct";
-      // p is the film's rank from the most-voted end, so that fraction of films
-      // have more votes — i.e. this film has fewer votes than p% of films.
-      pct.textContent = "Fewer votes than " + fmtPct(m.p) + " of films in IMDb";
+      pct.textContent = "More votes than " + fmtPct(moreThan(m.p)) + " of films on IMDb";
 
       stats.appendChild(rating);
       stats.appendChild(votes);
@@ -358,8 +422,171 @@
     });
   }
 
+  // --- actor filter ---------------------------------------------------------
+  // Two panels: a checkbox that reveals the search box, and a combobox over the
+  // actor list. Results are the first MAX_RESULTS name matches; because
+  // actors.json is ordered by total votes, that puts the recognizable Chris
+  // Evans ahead of the obscure one without any extra ranking.
+  var actorCheck, actorSearch, actorInput, actorResults, actorStatus;
+  var results = [], activeResult = -1;
+
+  // ~2.8 MB over the wire, so it waits until the user actually opts into the
+  // filter. Once loaded it serves every search and every pick with no further
+  // requests.
+  function loadActors() {
+    if (ACTORS) return Promise.resolve();
+    if (actorsLoading) return actorsLoading;
+    actorStatus.textContent = "Loading actors…";
+    actorsLoading = fetch(state.host.getAttribute("data-actors-src")).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (data) {
+      var films = data.films.map(function (f) {
+        var id = String(f[0]);
+        while (id.length < 7) id = "0" + id;
+        return {
+          id: "tt" + id,
+          t: f[1],
+          y: f[2] ? String(f[2]) : "\\N",
+          g: data.genres[f[3]],
+          r: f[4] ? (f[4] / 10).toFixed(1) : "\\N",
+          v: f[5],
+          p: f[6]
+        };
+      });
+      ACTORS = data.actors.map(function (a) {
+        return {
+          name: a[0],
+          key: norm(a[0]),
+          films: a[1].map(function (i) { return films[i]; })
+        };
+      });
+      actorsLoading = null;
+      actorStatus.textContent = fmt(ACTORS.length) + " actors loaded — start typing a name.";
+    }).catch(function (err) {
+      actorsLoading = null;
+      actorStatus.textContent = "Could not load the actor list: " + err.message;
+      throw err;
+    });
+    return actorsLoading;
+  }
+
+  function renderResults() {
+    actorResults.innerHTML = "";
+    results.forEach(function (a, i) {
+      var li = document.createElement("li");
+      li.className = "obscure-actor-result" + (i === activeResult ? " is-active" : "");
+      li.id = "obscure-actor-result-" + i;
+      li.setAttribute("role", "option");
+      li.setAttribute("aria-selected", i === activeResult ? "true" : "false");
+      li.textContent = a.name;
+
+      var count = document.createElement("span");
+      count.className = "obscure-actor-count";
+      count.textContent = fmt(a.films.length) + " film" + (a.films.length === 1 ? "" : "s");
+      li.appendChild(count);
+
+      // mousedown, not click: the input's blur handler closes the list first.
+      li.addEventListener("mousedown", function (e) { e.preventDefault(); pickActor(a); });
+      actorResults.appendChild(li);
+    });
+    var open = results.length > 0;
+    actorResults.hidden = !open;
+    actorInput.setAttribute("aria-expanded", open ? "true" : "false");
+    if (open && activeResult >= 0) {
+      actorInput.setAttribute("aria-activedescendant", "obscure-actor-result-" + activeResult);
+    } else {
+      actorInput.removeAttribute("aria-activedescendant");
+    }
+  }
+
+  function closeResults() {
+    results = [];
+    activeResult = -1;
+    renderResults();
+  }
+
+  function search(q) {
+    q = norm(q.trim());
+    if (!ACTORS || q.length < 2) { closeResults(); return; }
+    // Rank order means the first MAX_RESULTS hits are the most-voted ones, so
+    // the loop can stop early rather than scanning all ~296,000 names.
+    results = [];
+    for (var i = 0; i < ACTORS.length && results.length < MAX_RESULTS; i++) {
+      if (ACTORS[i].key.indexOf(q) !== -1) results.push(ACTORS[i]);
+    }
+    activeResult = results.length ? 0 : -1;
+    renderResults();
+    actorStatus.textContent = results.length ? "" : "No actor in the list matches “" + q + "”.";
+  }
+
+  function pickActor(a) {
+    actor = a;
+    actorInput.value = a.name;
+    closeResults();
+    updateView();
+    // Sampling straight away makes the pick feel like it did something. Famous
+    // actors cluster at the popular end, so an obscure span can legitimately
+    // hold none of their films — say so rather than leaving a stale gallery.
+    if (eligibleFilms().length) {
+      actorStatus.textContent = fmt(a.films.length) + " rated features credited to " + a.name + ".";
+      sampleFilms();
+    } else {
+      actorStatus.textContent = "None of " + a.name + "'s " + fmt(a.films.length) +
+        " rated features fall in the selected range — widen the gates.";
+      clearGallery();
+    }
+  }
+
+  function setActorMode(on) {
+    actorSearch.hidden = !on;
+    if (on) {
+      actorInput.focus();
+      loadActors().catch(function () { /* the status line already says what failed */ });
+    } else {
+      actor = null;
+      actorInput.value = "";
+      actorStatus.textContent = "";
+      closeResults();
+      clearGallery();
+      updateView();
+    }
+  }
+
+  function attachActorFilter() {
+    actorCheck = document.getElementById("obscure-actor-check");
+    actorSearch = document.getElementById("obscure-actor-search");
+    actorInput = document.getElementById("obscure-actor-input");
+    actorResults = document.getElementById("obscure-actor-results");
+    actorStatus = document.getElementById("obscure-actor-status");
+
+    actorCheck.addEventListener("change", function () { setActorMode(actorCheck.checked); });
+
+    actorInput.addEventListener("input", function () {
+      // Typing over a chosen name drops the selection until a new pick lands.
+      if (actor && actorInput.value !== actor.name) { actor = null; updateView(); }
+      search(actorInput.value);
+    });
+    actorInput.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        if (!results.length) return;
+        activeResult = (activeResult + (e.key === "ArrowDown" ? 1 : results.length - 1)) % results.length;
+        renderResults();
+        e.preventDefault();
+      } else if (e.key === "Enter") {
+        if (activeResult >= 0) { pickActor(results[activeResult]); e.preventDefault(); }
+      } else if (e.key === "Escape") {
+        closeResults();
+      }
+    });
+    actorInput.addEventListener("blur", closeResults);
+
+    // The checkbox survives a reload in some browsers; honor whatever it says.
+    if (actorCheck.checked) setActorMode(true);
+  }
+
   // --- init -----------------------------------------------------------------
-  var state, rangeLabel, countEl, sampleBtn, gallery;
+  var state, rangeLabel, countEl, sampleBtn, gallery, caption;
 
   function init(host) {
     state = { host: host };
@@ -392,6 +619,7 @@
       countEl = document.getElementById("obscure-count");
       sampleBtn = document.getElementById("obscure-sample");
       gallery = document.getElementById("obscure-gallery");
+      caption = document.getElementById("obscure-gallery-caption");
 
       host.classList.remove("obscure-loading");
       host.textContent = "";
@@ -414,7 +642,8 @@
       attachDrag(built.rightGate, "right");
       attachTooltip();
 
-      sampleBtn.addEventListener("click", sampleEight);
+      sampleBtn.addEventListener("click", sampleFilms);
+      attachActorFilter();
       updateView();
     }).catch(function (err) {
       host.classList.remove("obscure-loading");
