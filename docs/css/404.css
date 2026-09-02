@@ -1,0 +1,25 @@
+/*
+   Note: this file was written by an LLM (Claude Code). Reviewed before publishing.
+   Styles for 404.html. */
+
+/* The animation spells out the 404 in dots, so the heading stays a plain label and
+   sits close to the text that introduces it. */
+.container h1 {
+  margin-bottom: 16px;
+}
+
+.notfound-lead {
+  max-width: 60ch;
+  margin-bottom: 32px;
+}
+
+.notfound-datasaurus {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 32px;
+}
+
+.notfound-back {
+  max-width: 60ch;
+}
