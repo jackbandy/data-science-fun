@@ -1438,7 +1438,7 @@ CS 418 · Week 2 · 🟠 LaSalle/Van Buren 🟠
 Day 2
 
 - Random Roll Call
-- Questions from Wednesday
+- Questions / Loose Ends from Monday
 - Files, APIs, and Scraping
 - Project Checkpoint
 - Obtaining Data Example
@@ -1474,15 +1474,18 @@ Numbers drawn live from <a href="https://www.random.org/integers/?num=12&min=1&m
 ---
 
 ## Type I and Type II Errors (Part II) {.figure-aside}
+
+::: {.caption}
+Mnemonic based on [this video](https://youtu.be/DWcKCZ9vIzI?si=qNNE38GD-a-p2We0) by Deevy Bishop.
+:::
+
 ::: {.columns}
 
 ::: {.column}
 - **Type I error** — a [false positive]{.key}
     - There is no wolf
-    - Reject $H_0$ when $H_0$ is true
 - **Type II error** — a [false negative]{.key}
     - The wolf is real
-    - Fail to reject $H_0$ when $H_0$ is false
 :::
 
 ::: {.column}
@@ -1497,15 +1500,11 @@ Milo Winter, "The Shepherd Boy and the Wolf," *[The Æsop for Children](https://
 
 ---
 
-## Questions from Wednesday
+## Other Looming Questions?
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK** —  Polars / statistics questions
 :::
 :::
+
 
 ## Cathy O'Neil {.quote-slide}
 
@@ -1531,10 +1530,10 @@ Cathy O'Neil
 
 ::: {.column width="50%"}
 
-- **Target population** — who or what you actually want to describe
-- **Access frame** — who or what your method can even reach
-- **Sample** — who or what you end up measuring
-- Every gap between those three is a place for bias to enter, and no amount of data closes one
+- **Target population** — who or what you truly want to describe, in whole
+- **Access frame** — who or what your method can actually reach
+- **Sample** — who or what you end up measuring (the actual data)
+- Mind the gap(s) between them
 
 :::
 
@@ -1567,12 +1566,13 @@ pl.read_database(query, connection)
 ```
 
 - `pl.scan_csv` reads *lazily* — Polars plans the whole query before touching the rows, which is how the CTA file gets read here
+- we will soon look at these different formats in detail
 :::
 
 ::: {.column width="46%"}
 [DATA OWNED BY OTHERS]{.eyebrow}
 
-- Ideally, access via an **API** documented fields, a rate limit, a key (usually)
+- Ideally, access via an **API** (documented fields, rate limits, keys, etc.)
 - **Scraping** - pull values out of an HTML
     - Anecdote: crawling vs. scraping
 - Scrape when there is no API
@@ -1586,9 +1586,10 @@ pl.read_database(query, connection)
 ::: {.columns}
 
 ::: {.column}
-- "Is it **legal**? Is it against the **terms of service**? Is it **in the public interest**?"
-    - These are different questions
-- Try to preserve provenance: **datasheets for datasets**; stewardship principles **FAIR** and **CARE**
+- "Is it **legal**?"
+- "Is it against the **terms of service**?"
+- "Is it **in the public interest**?"
+- These are different questions
 :::
 
 ::: {.column}
@@ -1614,12 +1615,12 @@ pl.read_database(query, connection)
     - Target population, access frame, sample
     - License and terms
     - What is missing
-    - etc.
-- You are welcome ot start looking now
+    - Start a "[datasheet](https://arxiv.org/abs/1803.09010)" or "dataset nutrition label"
+- You are welcome to start looking now
 
 # Obtaining Data Example {.section-header}
 
-## How Does Winning a FIFA Title Affect Birth Rates? {.split}
+## An Example Research Question {.split}
 
 ::: {.split-content .golden-columns}
 
@@ -1644,9 +1645,9 @@ Discuss with your elbow neighbor(s):
 ::: {.columns}
 
 ::: {.column}
-- **What you need:** who won, and when (the date of each final)
+- **What you need, at minimum:** who won, and when (the date of each final)
 - **Wikipedia** publishes it as an HTML table: no API, easy to download/parse/scrape
-- **FIFA.com** has tournament archives, but no open API to query
+- **FIFA.com** has tournament archives (but no open API)
 - **Kaggle** and **GitHub** may also have ready-made CSVs (found data)
 - One row is a tournament winner
 - Limitations of the question?
@@ -1671,7 +1672,7 @@ Anthony Stanley, [*Spain with the cup, 2010 FIFA World Cup Final*](https://commo
 - **What you need:** births in the winning country around each final
     - hour? day? week? month? year?
 - **World Bank** (`SP.DYN.CBRT.IN`) and the **UN** publish crude birth rate per 1,000 — free, documented, and annual
-- A nine-month effect - what granularity would we need?
+- A nine-month effect - what granularity?
 - Monthly counts via **national statistics offices**: different sites, formats, and language per country
 - **Eurostat** `demo_fmonth` aggregates monthly live births, but only for Europe
 - Limitations?
@@ -1825,20 +1826,22 @@ print(f"<p class='caption'>{by_day.height} rows — 5 stops × {len(DAYS)} days.
 
 ---
 
-## Why Long-Format Data? {.smaller}
+## Principles of Long-Format Data {.smaller}
 
 ::: {.columns .compare-columns}
 
 ::: {.column}
 WIDE DATAFRAMES:
+
 - **The schema might change.**
 - **Tough to filter on a date**
 - `pl.col("2024-03-04")` names one day; there is no way to say "every day in March"
-- Plotting libraries usually want one column to map to an axis
+- Plotting libraries usually want one column to map to one axis
 :::
 
 ::: {.column}
 LONG DATAFRAMES:
+
 - **Fixed schema.** New data point is a new row
 - `date` is a real column, so filtering, grouping, and sorting all work normally
 - `group_by("stationname")` and `.over("date")` do what you expect
@@ -1865,7 +1868,21 @@ wide
 wide.unpivot(index="stationname", variable_name="date", value_name="rides").head(4)
 ```
 
-# Questions for the Election Data {.section-header}
+# Demo Code: Questions for the Election Data {.section-header}
+
+## A Question: The Closest Elections?
+Which election years had the smallest gap between the top two finishers?
+
+```{python}
+#| echo: false
+top_two = (elections
+           .sort(["Year", "%"], descending=[False, True])
+           .group_by("Year", maintain_order=True)
+           .head(2))
+
+```
+
+---
 
 ## A Question: The Closest Elections?
 Which election years had the smallest gap between the top two finishers?
@@ -1897,7 +1914,7 @@ margins.sort("margin", descending=True).head(5)
 ---
 
 ## Third Party Analysis
-Three steps, building on the `top_two` and `margins` computed above:
+Three steps (building on `top_two` and `margins` from each election):
 
 1. **Look at top two finishers** from each election ( `top_two` )
 2. **Check the margin of victory** ( `margins` )
@@ -1910,15 +1927,15 @@ Three steps, building on the `top_two` and `margins` computed above:
 
 ```{python}
 #| echo: true
-# Step 3a: for each year, find the best-polling candidate who is not a
+# Step 3a: for each year, find the best-polling candidate whose party is not
 # Democrat or a Republican. `~` negates the is_in check.
 third_party_best = (
     elections
     .filter(~pl.col("Party").is_in(["Democratic", "Republican"]))
     .sort("%", descending=True)              # best showing first...
     .group_by("Year", maintain_order=True)   # ...then one group per election
-    .head(1)                                 # keep that year's best only
-    # rename now, so the columns stay readable after the join on the next slide
+    .head(1)                                 # keep that year's best
+    # rename for clarity
     .rename({"%": "third_party_pct", "Candidate": "third_party_candidate"})
 )
 
@@ -1927,8 +1944,8 @@ third_party_best.head(4)
 
 ---
 
-## Could a Third Party Have Swung It? {.smaller}
-Now put each year's best third-party showing next to that year's margin of victory.
+## What is this asking? {.smaller}
+Now put the third-party pct next to that year's margin of victory.
 
 ```{python}
 #| echo: true
@@ -1941,9 +1958,7 @@ Now put each year's best third-party showing next to that year's margin of victo
  .select("Year", "third_party_candidate", "Party", "third_party_pct", "margin"))
 ```
 
-::: {.caption}
-Careful with the conclusion: outpolling the margin only means the third party was *large enough to matter*. It does not mean those voters would all have turned out, or all have gone to the runner-up.
-:::
+
 
 # Any Questions? {.iframe-slide}
 
