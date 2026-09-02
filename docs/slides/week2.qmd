@@ -1526,16 +1526,39 @@ Cathy O'Neil
 
 ::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="54%"}
 
 - **Target population** — who or what you truly want to describe, in whole
 - **Access frame** — who or what your method can actually reach
 - **Sample** — who or what you end up measuring (the actual data)
 - Mind the gap(s) between them
 
+<svg viewBox="0 0 640 250" width="100%" height="auto" style="display:block; margin:0.2em auto 0;" role="img" aria-label="Three nested ellipses: the target population contains the access frame, which contains the sample. The ring between the target population and the access frame is the coverage gap, who cannot be reached; the ring between the access frame and the sample is the sampling gap, who could be reached but was not measured.">
+  <ellipse cx="210" cy="122" rx="200" ry="115" fill="#f4f4f4" stroke="#9a9a9a" stroke-width="1.6"/>
+  <ellipse cx="210" cy="142" rx="136" ry="86" fill="#fde3da" stroke="#f9461c" stroke-width="1.6"/>
+  <ellipse cx="210" cy="160" rx="72" ry="50" fill="#f9461c" stroke="#c83214" stroke-width="1.6"/>
+  <g font-family="inherit" text-anchor="middle" font-weight="600" font-size="19">
+    <text x="210" y="40" fill="#1a1a1a">Target population</text>
+    <text x="210" y="92" fill="#c83214">Access frame</text>
+    <text x="210" y="166" fill="#ffffff" font-weight="700">Sample</text>
+  </g>
+  <g stroke="#565a5c" stroke-width="1.4" fill="none">
+    <path d="M324 87 V103 M404 87 V103 M324 95 H404"/>
+    <path d="M404 95 L436 78"/>
+    <path d="M282 152 V168 M343 152 V168 M282 160 H343"/>
+    <path d="M343 160 L436 194"/>
+  </g>
+  <g font-family="inherit" font-size="15">
+    <text x="444" y="72" font-weight="700" fill="#c83214">coverage gap</text>
+    <text x="444" y="90" fill="#565a5c">can't be reached</text>
+    <text x="444" y="188" font-weight="700" fill="#c83214">sampling gap</text>
+    <text x="444" y="206" fill="#565a5c">reachable, not measured</text>
+  </g>
+</svg>
+
 :::
 
-::: {.column width="46%"}
+::: {.column width="42%"}
 
 - **Designed** data are collected for your question — surveys, sensors, experiments, instruments you control
 - **Found** data — logs, scrapes, administrative records, etc. from someone else
@@ -1587,7 +1610,10 @@ pl.read_database(query, connection)
 - "Is it **legal**?"
 - "Is it against the **terms of service**?"
 - "Is it **in the public interest**?"
-- These are different questions
+- Scraping is not a crime 😇
+- [Sandvig v. Barr](https://www.acludc.org/cases/sandvig-v-barr-first-amendment-challenge-federal-computer-fraud-and-abuse-act/) (terms-of-service violations don't break CFAA)
+- Supreme court has also looked at CFAA
+    - [Van Buren v. United States](https://en.wikipedia.org/wiki/Van_Buren_v._United_States) (2021 decision)
 :::
 
 ::: {.column}
@@ -1608,13 +1634,12 @@ pl.read_database(query, connection)
 - **Due today:** the *question memo*
 - We will assemble **project groups** next class (Wed, Sept 9)
 - **Data acquisition** will be the next checkpoint, due **Wed, Sept 23** (Week 5)
-- Show that you can actually *get* the data you need to address your question
+- Try to get some initial data needed to address your question(s)
     - Where the data are, and how you obtained them
     - Target population, access frame, sample
-    - License and terms
-    - What is missing
+    - License and terms, what is missing, etc.
     - Start a "[datasheet](https://arxiv.org/abs/1803.09010)" or "dataset nutrition label"
-- You are welcome to start looking now
+- You are welcome to start exploring!
 
 # Obtaining Data Example {.section-header}
 
@@ -1631,6 +1656,7 @@ Discuss with your elbow neighbor(s):
 1. What kind of data would you need?
 2. Where would you look?
 3. What would one row look like?
+4. How would you visualize this?
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -1816,7 +1842,7 @@ print(f"<p class='caption'>{by_day.height} rows — 5 stops × {len(DAYS)} days.
 - **Three columns.** Tomorrow's data is 5 more *rows*, not a new column
 - `date` is a **value** you can filter, sort, and group on 😌
 - 25 years of this is still three columns, just "taller"
-- This is the shape Polars expects
+- This is the shape Polars expects (other libraries too)
 :::
 
 :::
@@ -1848,7 +1874,6 @@ LONG DATAFRAMES:
 
 :::
 
-Generally you will want to reshape into long as soon as possible.
 
 ---
 
@@ -1872,7 +1897,7 @@ wide.unpivot(index="stationname", variable_name="date", value_name="rides").head
 Which election years had the smallest gap between the top two finishers?
 
 ```{python}
-#| echo: false
+#| echo: true
 top_two = (elections
            .sort(["Year", "%"], descending=[False, True])
            .group_by("Year", maintain_order=True)
@@ -1942,7 +1967,7 @@ third_party_best.head(4)
 
 ---
 
-## What is this asking? {.smaller}
+## What is this query asking? {.smaller}
 Now put the third-party pct next to that year's margin of victory.
 
 ```{python}
@@ -1956,6 +1981,7 @@ Now put the third-party pct next to that year's margin of victory.
  .select("Year", "third_party_candidate", "Party", "third_party_pct", "margin"))
 ```
 
+# Upload your worksheet in canvas {.section-header .no-index}
 
 
 # Any Questions? {.iframe-slide}
@@ -1965,6 +1991,9 @@ Now put the third-party pct next to that year's margin of victory.
 ::: {.iframe-caption}
 Course home page: <https://dodatascience.fun>
 :::
+
+
+
 
 # That's All for Today, See You Next Week! {.section-header .no-index}
 
