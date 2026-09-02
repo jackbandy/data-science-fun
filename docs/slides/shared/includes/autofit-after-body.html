@@ -19,8 +19,7 @@
 (() => {
   const GAP = 12;          // breathing room above the footer, in px
   const MIN_ZOOM = 0.5;    // floor: below this, the slide needs editing, not scaling
-  const PASSES = 5;        // binary-search rounds after the first guess
-  const SLACK = 0.995;     // aim just inside the floor so rounding cannot overshoot
+  const PASSES = 8;        // bisection rounds over [MIN_ZOOM, 1] -- resolution 0.002
 
   // Slide types that already own their vertical layout: the theme gives these
   // `display: flex; height: 100%` and a bottom padding that reserves the footer,
@@ -37,13 +36,43 @@
     return /^H[1-6]$/.test(el.tagName);
   }
 
-  // Everything under the title: what this slide is allowed to shrink.
+  function laidOut(el) {
+    const cs = window.getComputedStyle(el);
+    return cs.display !== "none" && cs.position !== "absolute" && cs.position !== "fixed";
+  }
+
+  // Everything under the title: what this slide is allowed to shrink. Zoom is
+  // set on these and nothing deeper, so one factor applies to the whole body.
   function bodyOf(slide) {
-    const kids = Array.from(slide.children).filter((el) => !headingLike(el));
-    return kids.filter((el) => {
-      const cs = window.getComputedStyle(el);
-      return cs.display !== "none" && cs.position !== "absolute" && cs.position !== "fixed";
+    return Array.from(slide.children).filter((el) => !headingLike(el) && laidOut(el));
+  }
+
+  // What to measure the body's height by. It is not enough to take the boxes of
+  // the elements zoom is applied to: pandoc renders a `::: {.columns}` block as
+  // a plain `<div>` holding `inline-block` columns, and with no rule making that
+  // wrapper a block it computes to `display: inline`. Its own box is then a bare
+  // two-line inline box while the columns inside it run hundreds of pixels
+  // further down, so the wrapper reports no overflow on exactly the slides most
+  // likely to have some -- every two-column slide in the deck.
+  //
+  // So walk the rendered subtree and measure that. The walk stops at anything
+  // that clips or scrolls its own content (an inline SVG with a viewBox, say):
+  // that element's box is the honest bottom, and its children may sit far
+  // outside it in user units that have nothing to do with page pixels.
+  //
+  // Collected once per fit, at zoom 1, and re-measured on each pass: zooming
+  // moves these boxes but never changes which elements exist.
+  function measurable(roots) {
+    const nodes = [];
+    roots.forEach((root) => {
+      (function walk(el) {
+        nodes.push(el);
+        const cs = window.getComputedStyle(el);
+        if (cs.overflowX !== "visible" || cs.overflowY !== "visible") return;
+        Array.from(el.children).forEach((child) => { if (laidOut(child)) walk(child); });
+      })(root);
     });
+    return nodes;
   }
 
   function footerHeight() {
@@ -69,16 +98,16 @@
     return window.innerHeight - GAP;
   }
 
-  function extent(body) {
-    let top = Infinity;
+  // How far down the slide the body actually reaches. -Infinity when nothing on
+  // it has a box, which reads as "fits" everywhere this is compared to a floor.
+  function lowestPx(nodes) {
     let bottom = -Infinity;
-    body.forEach((el) => {
+    nodes.forEach((el) => {
       const rect = el.getBoundingClientRect();
       if (rect.width === 0 && rect.height === 0) return;
-      top = Math.min(top, rect.top);
       bottom = Math.max(bottom, rect.bottom);
     });
-    return { top: top, bottom: bottom };
+    return bottom;
   }
 
   function apply(body, zoom) {
@@ -92,25 +121,22 @@
 
     apply(body, 1);
     const limit = floorPx(slide);
-    const box = extent(body);
-    if (!isFinite(box.bottom) || box.bottom <= limit) return;
+    const nodes = measurable(body);
+    if (lowestPx(nodes) <= limit) return;
 
     const fits = (zoom) => {
       apply(body, zoom);
-      return extent(body).bottom <= limit;
+      return lowestPx(nodes) <= limit;
     };
 
-    // The height ratio is only a first guess: shrinking rewraps text, so a
-    // slide at zoom k is usually shorter than k times its full-size height and
-    // this lands lower than it needs to.
-    const available = limit - box.top;
-    const needed = box.bottom - box.top;
-    if (available <= 0 || needed <= 0) return;
-    let lo = Math.max(MIN_ZOOM, (available / needed) * SLACK);
-    if (!fits(lo)) return;  // already at the floor; the slide needs editing
+    // Bisect for the largest zoom that still clears the footer, so a slide is
+    // never shrunk further than its own content requires. Straight bisection
+    // rather than a height-ratio first guess: shrinking rewraps text, so a
+    // slide at zoom k is not k times its full-size height in either direction,
+    // and a guess that overshoots leaves the slide overflowing anyway.
+    if (!fits(MIN_ZOOM)) return;  // at the floor and still spilling: needs editing
 
-    // Walk the guess back up to the largest zoom that still clears the footer,
-    // so a slide is never shrunk further than its own content requires.
+    let lo = MIN_ZOOM;
     let hi = 1;
     for (let pass = 0; pass < PASSES; pass++) {
       const mid = (lo + hi) / 2;
@@ -161,6 +187,23 @@
     if (printing()) fitAll(); else fitCurrent();
   }
 
+  // MathJax typesets after Reveal reports ready and after `load`, and typeset
+  // math is taller than the raw TeX it replaces -- so a slide fitted before
+  // then was measured against the wrong height and lands back in the footer
+  // once the math appears. Refit when the typesetting queue drains. Decks
+  // without math never load MathJax, so only wait when the page has some.
+  function refitAfterMath() {
+    if (!document.querySelector(".math")) return;
+    let tries = 0;
+    (function look() {
+      const mj = window.MathJax;
+      if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(refit, refit); return; }
+      if (mj && mj.Hub && typeof mj.Hub.Queue === "function") { mj.Hub.Queue(refit); return; }
+      if (++tries > 200) return;   // 10s: MathJax is not coming
+      window.setTimeout(look, 50);
+    })();
+  }
+
   function boot() {
     if (!window.Reveal || !Reveal.isReady()) { window.setTimeout(boot, 50); return; }
     if (printing()) whenPrintLayoutSettles(refit); else refit();
@@ -173,6 +216,7 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
     if (document.readyState === "complete") refit();
     window.addEventListener("load", refit);
+    refitAfterMath();
   }
 
   if (document.readyState === "loading") {
