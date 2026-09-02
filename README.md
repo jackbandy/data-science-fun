@@ -137,7 +137,7 @@ data-science-fun/
 │   ├── syllabus/                # Generated syllabus output (gitignored, built in CI)
 │   ├── worksheets/              # Generated worksheet PDFs
 │   ├── ethics-in-data-science/  # Quarto mini-book
-│   ├── timer/, spectogram/      # Small in-class web tools
+│   ├── timer/, spectrogram/      # Small in-class web tools
 │   ├── security.md, robots.txt  # Privacy/security page and crawler rules
 │   └── CNAME                    # domain config
 ├── datasets/                    # Datasets used in class materials

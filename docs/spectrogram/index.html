@@ -1,0 +1,106 @@
+---
+---
+<!DOCTYPE html>
+<!-- NOTICE: This file was substantially generated/modified by an LLM.
+     Live microphone spectrogram, styled after the Merlin Bird ID Sound ID view. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A live black-and-white spectrogram of your microphone, drawn in the browser. Time scrolls under a moving cursor, frequency runs up the side, darkness is loudness.">
+  <title>Live Spectrogram — Introduction to Data Science</title>
+  <link rel="canonical" href="https://dodatascience.fun/spectrogram/">
+  <meta property="og:title" content="Live Spectrogram — Introduction to Data Science">
+  <meta property="og:description" content="A live black-and-white spectrogram of your microphone, drawn in the browser. Nothing is recorded or uploaded.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dodatascience.fun/spectrogram/">
+  {% include social-meta.html primary=true %}
+  {% include icons.html theme_color='#ffffff' %}
+  <link rel="stylesheet" href="spectrogram.css">
+  <script>
+    // Same trick as the class timer: inside an iframe (the course slides) the
+    // attribution footer is noise and the viewer has no way out of the frame,
+    // so swap it for a link to the real page. Set in <head> so the footer never
+    // flashes before it is hidden.
+    if (window.self !== window.top) {
+      document.documentElement.classList.add('embedded');
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('openStandalone').href = window.location.href;
+      });
+    }
+  </script>
+</head>
+<body>
+
+<div class="interior-content-wrapper">
+
+  <div class="pageHeading">
+    <h1 class="title">
+      <!-- Three stacked bars, tall-short-tall: the sound-wave mark, drawn from
+           the same ink as the spectrogram itself. -->
+      <svg class="title-icon" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="2"  y="7"  width="3" height="10" rx="1.5"/>
+        <rect x="7"  y="3"  width="3" height="18" rx="1.5"/>
+        <rect x="12" y="9"  width="3" height="6"  rx="1.5"/>
+        <rect x="17" y="5"  width="3" height="14" rx="1.5"/>
+      </svg>
+      <b>live</b> spectrogram demo
+    </h1>
+    <a class="open-standalone" id="openStandalone" href="https://dodatascience.fun/spectrogram/"
+       target="_blank" rel="noopener">Open in new tab</a>
+  </div>
+
+  <div class="controls">
+    <button id="micBtn">▶️ Start (turn on microphone)</button>
+
+    <label for="rangeSelect">Range:</label>
+    <select id="rangeSelect">
+      <option value="4000">0–4 kHz (speech)</option>
+      <option value="10000" selected>0–10 kHz (birds)</option>
+      <option value="16000">0–16 kHz (full)</option>
+    </select>
+
+    <button id="clearBtn" class="secondary">Clear</button>
+  </div>
+
+  <div class="scope" id="scope">
+    <canvas id="axis" class="axis" aria-hidden="true"></canvas>
+    <div class="plot" id="plot">
+      <canvas id="spectrogram" role="img"
+              aria-label="Live spectrogram of microphone input: time runs left to right, frequency bottom to top, darker means louder."></canvas>
+      <div class="gridlines" id="gridlines" aria-hidden="true"></div>
+      <div class="cursor" id="cursor" aria-hidden="true"></div>
+      <div class="idle-message" id="idleMessage">
+        <p><b>Nothing is recorded.</b> The audio is analyzed frame by frame and never leaves your device.</p>
+        <p class="hint">Turn on the microphone, then whistle, or hum, or speak to see the spectrogram in action.</p>
+      </div>
+    </div>
+    <div class="time-axis" aria-hidden="true">
+      <span class="now-label" id="nowLabel">now</span>
+      <span class="time-axis-caption">time &rarr; (tick every second)</span>
+    </div>
+  </div>
+
+  <p class="caption">
+    Each vertical stripe is one slice of sound, about <span id="hopMs">16</span> ms wide:
+    a <a href="https://en.wikipedia.org/wiki/Short-time_Fourier_transform">short-time Fourier transform</a>
+    splits that slice into frequencies, and each frequency is inked in proportion to
+    how loud it is. Whistles come out as thin lines, vowels as stacked
+    <a href="https://en.wikipedia.org/wiki/Formant">formants</a>, and a hand clap as
+    one dark column spanning every frequency at once.
+  </p>
+
+</div>
+
+<div class="footnotes">
+  <a href="https://jackbandy.com/text/llm-code-philosophy.html">Made with help from LLMs</a>
+  <a href="https://merlin.allaboutbirds.org/sound-id/">Inspired by Merlin Bird ID Sound ID</a>
+  <a href="https://dodatascience.fun/">CS 418 Course Home</a>
+</div>
+
+<script src="spectrogram.js"></script>
+
+</body>
+</html>
