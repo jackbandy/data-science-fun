@@ -1,5 +1,8 @@
 ---
 title: "Week 3 (CS 418 @ UIC)"
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
 format:
   revealjs:
     include-in-header:
@@ -96,56 +99,65 @@ format:
           font-style: italic;
           color: #666;
         }
+        /* Content-slide titles a notch below the theme's 3.5rem: several titles
+           in this deck are full phrases, and at 3.5rem the longest ones run to
+           the edge of the line. Section dividers, the cover, and the sources
+           list set their own sizes and are untouched. */
+        .reveal .slides section.level2 > h2 {
+          font-size: 2.9rem;
+          margin-bottom: 20px;
+        }
         </style>
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 3</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week3.html">dodatascience.fun/slides/week3</a></span>'
 ---
 
 # Week 3 Slide Deck {.course-title}
 
-## Wrangling, Filtering; Formats
+<h2>Wrangling, Aggregation; Formats</h2>
 
 Jack Bandy
 2026
 
----
 
-# Week 3, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
+# Week 3, Day 2 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
+
+<h2>Wrangling, Aggregation; Formats</h2>
 
 CS 418 · Week 3 · 🟠 Quincy 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
 
 ---
 
-# Map {.split}
+## Map {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
 - Week 3: Quincy
-- Day 1
+- Day 2 (Monday was Labor Day)
     - Data Wrangling
-    - Data Filtering
+    - Granularity & Aggregation
+    - Data Formats (time permitting)
 :::
 
 ![](../assets/orange-line-map-stops/stop03-quincy.svg){.figure alt="Orange Line map with the Quincy stop marked, the Week 3 stop"}
 
 :::
 
----
 
 
 # Data Wrangling {.section-header}
 
 ---
 
-# What is Data Wrangling? {.smaller}
+## What is Data Wrangling? {.smaller}
 
-::: {.incremental}
+::: 
 
-- Data wrangling is the process of transforming raw, unstructured data into clean, consistent, and useful data that supports its intended application.
+- "the process of transforming raw, unstructured data into consistent and useful data that supports intended applications."
 
 - How can we perform data wrangling?
   1. Discover and address quality issues
@@ -157,7 +169,7 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
 
 ---
 
-# Discover and address quality issues {.smaller}
+## Discover and address quality issues {.smaller}
 
 Find issues in the raw data before they bias your results.
 
@@ -209,11 +221,11 @@ Find issues in the raw data before they bias your results.
 
 ::::
 
-Pandas: `df.info()`, `df.isna().sum()`, `df.duplicated().sum()`, and `df.describe()`.
+Polars: `df.glimpse()`, `df.null_count()`, `df.is_duplicated().sum()`, and `df.describe()`.
 
 ---
 
-# Reshape data into the structure your analysis needs {.smaller}
+## Reshape data into the structure your analysis needs {.smaller}
 
 Rearrange rows and columns until the table matches what your analysis needs.
 
@@ -222,10 +234,10 @@ Rearrange rows and columns until the table matches what your analysis needs.
 ::: {.column width="55%"}
 
 - **Tidy data** — one row per observation, one column per variable
-- **Wide → long** — collapse many columns into key/value pairs with df.melt()
+- **Wide → long** — collapse many columns into key/value pairs with df.unpivot()
 - **Long → wide** — spread one column back out into many with df.pivot()
-- **Combine tables** — stack rows with pd.concat(), match on keys with pd.merge()
-- **Rename and reindex** — clean column names, set an index, sort the rows
+- **Combine tables** — stack rows with pl.concat(), match on keys with df.join()
+- **Rename and reorder** — clean up column names with df.rename(), put the rows in order with df.sort()
 :::
 
 ::: {.column width="45%"}
@@ -283,11 +295,11 @@ Rearrange rows and columns until the table matches what your analysis needs.
 
 ::::
 
-Pandas: `df.melt()`, `df.pivot()`, `pd.concat()`, and `pd.merge()`.
+Polars: `df.unpivot()`, `df.pivot()`, `pl.concat()`, and `df.join()`.
 
 ---
 
-# Add new information to existing datasets {.smaller}
+## Add new information to existing datasets {.smaller}
 
 We can add information to a dataset through **data augmentation**.
 
@@ -295,11 +307,11 @@ We can add information to a dataset through **data augmentation**.
 
 ::: {.column width="55%"}
 
-- **Derived columns** — compute from what you already have, e.g. speed from miles and hours (df.assign())
-- **Binning** — classify numeric data into categories based on the ranges you specify (pd.cut())
-- **External joins** — attach weather, census, or geographic data on a shared key (pd.merge())
-- **Group features** — add a group's summary statistic onto each of its rows (df.groupby().transform())
-- **Encoding** — convert text variables into numerical columns of 0s and 1s, model-ready (pd.get_dummies())
+- **Derived columns** — compute from what you already have, e.g. speed from miles and hours (df.with_columns())
+- **Binning** — classify numeric data into categories based on the ranges you specify (pl.col().cut())
+- **External joins** — attach weather, census, or geographic data on a shared key (df.join())
+- **Group features** — add a group's summary statistic onto each of its rows (pl.col().mean().over())
+- **Encoding** — convert text variables into numerical columns of 0s and 1s, model-ready (df.to_dummies())
 :::
 
 ::: {.column width="45%"}
@@ -369,16 +381,16 @@ We can add information to a dataset through **data augmentation**.
 
 ---
 
-# Example of application
+## Example of application
 
 <table style="border-collapse:collapse; margin:0.6em auto 0; font-size:0.42em;">
 <tr>
 <td colspan="4"></td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">df.assign()</td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">pd.cut()</td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">pd.merge()</td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">.transform()</td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">get_dummies()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">with_columns()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">.cut()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">.join()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">.over()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">to_dummies()</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">trip</td>
@@ -450,7 +462,7 @@ We can add information to a dataset through **data augmentation**.
 
 Why do we need to perform *data augmentation* in a dataset?
 
-::: {.incremental}
+::: 
 - Improve machine learning models
 - Reduce overfitting
 - Correct imbalanced datasets
@@ -458,97 +470,425 @@ Why do we need to perform *data augmentation* in a dataset?
 
 ---
 
-# Verify accuracy and consistency in the dataset {.smaller}
+## Verify accuracy and consistency in the dataset {.smaller}
 
 Useful techniques to verify accuracy and consistency:
 
-::: {.incremental}
+:::
 - Range and format checks
 - Consistency checks
 - Cross-field logic
 - Statistical analysis
 :::
 
+
+# Granularity & Aggregation {.section-header}
+
 ---
 
-# Data Filtering {.section-header}
+## What Does One Row Represent? {.image-frame-slide}
+
+<img src="../assets/wrangling/granularity-v0.svg" class="figure" alt="Three tables of the same CTA ridership at three granularities: one row per tap-in, one row per station-day, and one row per line-month, laid out along an arrow running from fine grained to coarse grained.">
+
+::: {.caption}
+Station-day and line-month counts computed from the [CTA 'L' station entries](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) dataset, August 2025. The tap-in rows are illustrative — the CTA does not publish individual entries.
+:::
 
 ---
 
-# Data Filtering {.smaller}
+## Questions to Ask About Granularity {.smaller}
 
-Data filtering is part of the data wrangling process, but it answers a different question: is this data relevant to my analysis?
+**Granularity** is how fine or coarse each datum is — what one row actually counts.
 
 :::: {.columns}
 
-::: {.column width="42%"}
-- **Keep rows that satisfy a condition** — a comparison returns True/False for every row
-- **Select only the columns you need** — based on the question you're asking
-- **Combine multiple conditions** — join comparisons with AND or OR
-- **Smaller data, clearer analysis**
+::: {.column width="50%"}
+- **What does each record represent?** One tap-in, one station-day, one line-month
+- **Do all records sit at the same level?** Summary rows like to hide among detail rows
+- **If the data is coarse, how was it aggregated?** Summed, averaged, sampled — each answers a different question
 :::
 
-::: {.column width="58%"}
-```python
-# rows that satisfy a condition
-df[df["miles"] > 15]
+::: {.column width="50%"}
+- **What aggregations are possible?** Station → line, day → month, person → demographic group
+- **Hierarchies** — city/county/state, second/minute/hour/day
+- **Two files have to agree** on granularity before you can merge them
+:::
 
-# multiple conditions — parenthesize each one
-df[(df["miles"] > 15) & (df["hours"] < 1)]
+::::
 
-# only the columns you need
-df[["trip", "driver", "miles"]]
+Coarsening can reveal a pattern that individual rows bury — and it can hide one just as easily.
 
-# .loc[] takes rows and columns together
-df.loc[df["miles"] > 15, ["trip", "miles"]]
+---
 
-# .query() reads like the sentence you meant
-df.query("miles > 15 and hours < 1")
-```
+## Manipulating Granularity: Group By {.image-frame-slide}
+
+**Split** the rows into groups, **apply** a function to each group, **combine** the answers into one table.
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/wrangling/groupby-v0.svg" class="figure figure-plain" style="max-height:470px" alt="Nine records of rides keyed by CTA route — Orange, Red, and Purple — in the order they arrive.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/wrangling/groupby-v1.svg" class="figure figure-plain" style="max-height:470px" alt="The same nine records split into three groups, one per route.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+<img src="../assets/wrangling/groupby-v2.svg" class="figure figure-plain" style="max-height:470px" alt="An aggregate function reduces each group to a single total: Orange 6, Red 12, Purple 18.">
+:::
+
+::: {.fragment fragment-index=3}
+<img src="../assets/wrangling/groupby-v3.svg" class="figure figure-plain" style="max-height:470px" alt="The three group totals merged back into one table with one row per route: Orange 6, Red 12, Purple 18.">
 :::
 
 ::::
 
 ---
 
-# Week 3, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop03-quincy-c.jpg" background-size="cover"}
+## Group By in Code {.smaller}
 
-<h2>Data Formats</h2>
+:::: {.columns}
 
-Jack Bandy
-2026
+::: {.column width="60%"}
+```python
+import polars as pl
+
+rides = pl.DataFrame({
+    "line":  ["Orange", "Red", "Purple",
+              "Orange", "Red", "Purple",
+              "Orange", "Red", "Purple"],
+    "rides": [3, 1, 4, 1, 5, 9, 2, 6, 5],
+})
+
+# split, apply, and combine, all in one line
+rides.group_by("line").agg(pl.col("rides").sum())
+```
+
+`group_by` hands each group to `agg`, and the expression inside says what to compute.
+:::
+
+::: {.column width="40%"}
+
+<p style="margin:0 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">One row per group</p>
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.6em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 20px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 20px; text-align:center;">rides</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 20px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 20px; text-align:center;">6</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 20px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:6px 20px; text-align:center;">12</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 20px; text-align:center;">Purple</td>
+<td style="border:2px solid #f9461c; padding:6px 20px; text-align:center;">18</td>
+</tr>
+</table>
+
+<p class="code-caption">Swap the function, keep the shape: `sum`, `mean`, `median`, `min`, `max`, `len`, `n_unique`…</p>
+:::
+
+::::
 
 ---
 
-# Map {.split}
+## Predict the Output {.smaller}
 
-::: {.split-content .narrow-aside}
+Five station-days from the CTA file. What comes back?
 
-::: {}
-- Week 3: Quincy
-- Day 2
-    - Data Formats
+:::: {.columns}
+
+::: {.column width="44%"}
+
+<table style="border-collapse:collapse; margin:0 auto 0.6em; font-size:0.52em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">station_id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">rides</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">4867</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">4825</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">5536</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40190</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">5543</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40190</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">5726</td>
+</tr>
+</table>
+
+```python
+entries.group_by("line").sum()
+```
 :::
 
-![](../assets/orange-line-map-stops/stop03-quincy.svg){.figure alt="Orange Line map with the Quincy stop marked, the Week 3 stop"}
+::: {.column width="56%"}
 
+::: {.fragment}
+
+<table style="border-collapse:collapse; margin:0 auto 0.5em; font-size:0.52em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">station_id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">rides</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:5px 12px; text-align:center;">122790</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">15228</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:5px 12px; text-align:center;">80380</td>
+<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">11269</td>
+</tr>
+</table>
+
+`sum()` sums *every* column it can, and `station_id` is a label that only looks like a number. Midway's id added to itself three times is 122,790 — a value that means nothing at all.
+
+Name the column you meant: `entries.group_by("line").agg(pl.col("rides").sum())`
+
+:::
+
+:::
+
+::::
+
+---
+
+## Group By on the Whole Dataset {.smaller}
+
+Every 'L' station entry in August 2025, grouped by the routes that serve the station.
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```python
+august = (
+    entries
+    .join(stops, left_on="station_id", right_on="MAP_ID")
+    .unpivot(index=["stationname", "date", "daytype", "rides"],
+             on=["O", "RED", "P"],       # one flag column per route
+             variable_name="line", value_name="serves")
+    .filter("serves")                    # one row per station-day-route
+)
+
+august.group_by("line").agg(pl.col("rides").sum())
+```
+:::
+
+::: {.column width="40%"}
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.58em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">rides</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">3,703,028</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Purple</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">1,918,209</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">1,141,856</td>
+</tr>
+</table>
+
+<p class="code-caption">A transfer station is served by more than one route, so its entries count once for each — a granularity decision baked into the answer.</p>
+:::
+
+::::
+
+---
+
+## Manipulating Granularity: Pivot {.image-frame-slide}
+
+The same three steps — but the group key is now **two** columns, route *and* day type.
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/wrangling/pivot-v0.svg" class="figure figure-plain" style="max-height:470px" alt="Nine records keyed by two columns, CTA route and day type.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/wrangling/pivot-v1.svg" class="figure figure-plain" style="max-height:470px" alt="The nine records split into five groups, one for each route and day type pair that appears in the data.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/wrangling/pivot-v2.svg" class="figure figure-plain" style="max-height:470px" alt="Each of the five groups reduced to a single total, still keyed by route and day type.">
+:::
+
+::::
+
+---
+
+## Pivot: One Cell per Combination {.smaller}
+
+<img src="../assets/wrangling/pivot-v3.svg" class="figure figure-plain" style="max-height:430px" alt="The five aggregated groups reshaped into a grid with one row per CTA route and one column per day type. The Purple Line Saturday cell is empty and marked NaN.">
+
+One key goes on the rows, the other on the columns. A combination with no records leaves a hole — is `NaN` a zero, or a value nobody wrote down? Decide before you compute with it.
+
+---
+
+## Pivot in Code {.smaller}
+
+Average daily entries by route and day type, August 2025 (`W` weekday, `A` Saturday, `U` Sunday/holiday).
+
+:::: {.columns}
+
+::: {.column width="55%"}
+```python
+daily = august.group_by("line", "daytype", "date").agg(
+    pl.col("rides").sum())
+
+(daily.group_by("line", "daytype")
+      .agg(pl.col("rides").mean().round(0))
+      .pivot(index="line", on="daytype", values="rides"))
+```
+
+`pivot` reshapes what is already one row per group. Aggregate first, then pivot — otherwise Polars has to guess what to do with the duplicates.
+:::
+
+::: {.column width="45%"}
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.55em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">W</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">A</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">U</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">122,289</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; font-weight:bold; padding:6px 12px; text-align:center;">124,475</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">102,517</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Purple</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">67,878</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">55,407</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">43,147</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">41,945</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">28,488</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">23,714</td>
+</tr>
+</table>
+
+<p class="code-caption">One route averages more entries on a Saturday than on a weekday. Why that one?</p>
+:::
+
+::::
+
+---
+
+## Is the Data in Scope? {.smaller}
+
+Check that the rows available are the rows your question is about.
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/wrangling/scope-v0.svg" class="figure figure-plain" style="max-height:400px" alt="Under the question &quot;How busy was the Orange Line in 2025?&quot;, a rectangle holding every 'L' entry from 2001 to 2026, with a smaller ellipse of 2025 Orange Line entries entirely inside it.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/wrangling/scope-v1.svg" class="figure figure-plain" style="max-height:400px" alt="Two panels. Under &quot;How busy was the Orange Line in 2025?&quot;, a rectangle of all 'L' entries fully contains the ellipse of 2025 Orange Line entries. Under &quot;How do people get to Midway?&quot;, a rectangle of Orange Line entries overlaps an ellipse of everyone traveling to Midway only partly, leaving most of those travelers outside the data.">
+:::
+
+::::
+
+---
+
+## Filtering Changes a Sample {.smaller}
+
+:::
+- **Too expansive?** Filter. *"I want grades for CS 418, but the file has every CS class."*
+- **Not expansive enough?** No filter will fix it. *"I want 311 requests in Illinois, but the file is Chicago only."*
+- Filtering a sample shrinks the sample. Afterward: are there still enough rows, and do they still represent what you're studying?
+- A filter is a modeling decision, so write down which rows are dropped and why.
 :::
 
 ---
+
+## Data Filtering {.smaller}
+
+Data filtering is part of the data wrangling process: "is this data relevant to my analysis?"
+
+:::: {.columns}
+
+::: {.column width="42%"}
+- **Keep rows that satisfy a condition** — a comparison returns True/False for every row
+- **Select only the columns you need** — based on the question
+- **Combine multiple conditions** — join comparisons with AND or OR
+:::
+
+::: {.column width="58%"}
+```python
+# rows that satisfy a condition
+df.filter(pl.col("miles") > 15)
+
+# multiple conditions — one filter per condition
+df.filter(pl.col("miles") > 15, pl.col("hours") < 1)
+
+# or combine them yourself, parenthesizing each one
+df.filter((pl.col("miles") > 15) | (pl.col("hours") < 1))
+
+# only the columns you need
+df.select("trip", "driver", "miles")
+
+# rows and columns together, in the order you read them
+df.filter(pl.col("miles") > 15).select("trip", "miles")
+```
+:::
+
+::::
 
 
 # Data Formats {.section-header}
 
+*time permitting*
+
 ---
 
-# How Do We Store This Data? {.business-card-slide}
+## How Do We Store This Data? {.business-card-slide}
 
 ![](../assets/slides-misc/tyler-durden-business-card.png)
 
 ---
 
 
-# Spreadsheet??
+## Spreadsheet??
 
 :::: {.columns}
 
@@ -573,7 +913,7 @@ Jack Bandy
 
 ---
 
-# Why Not Spreadsheets?
+## Why Not Spreadsheets?
 
 :::: {.columns}
 
@@ -599,7 +939,7 @@ Jack Bandy
 
 ---
 
-# CSV
+## CSV
 
 :::: {.columns}
 
@@ -622,7 +962,7 @@ Tyler Durden,Paper Street Soap Co.,All Natural Handmade,537 Paper Street,Bradfor
 
 ---
 
-# TSV
+## TSV
 
 :::: {.columns}
 
@@ -643,7 +983,7 @@ Tyler Durden	Paper Street Soap Co.	All Natural Handmade	537 Paper Street	Bradfor
 
 ---
 
-# JSON
+## JSON
 
 :::: {.columns}
 
@@ -674,7 +1014,7 @@ Tyler Durden	Paper Street Soap Co.	All Natural Handmade	537 Paper Street	Bradfor
 
 ---
 
-# XML
+## XML
 
 :::: {.columns}
 
@@ -708,7 +1048,7 @@ Tyler Durden	Paper Street Soap Co.	All Natural Handmade	537 Paper Street	Bradfor
 
 
 
-# YAML
+## YAML
 
 :::: {.columns}
 
@@ -737,7 +1077,7 @@ phone: (288) 555-0153
 ---
 
 
-# Parquet
+## Parquet
 
 :::: {.columns}
 
@@ -771,7 +1111,7 @@ Tyler Durden | Paper Street Soap Co. | All Natural Handmade |
 ---
 
 
-# What About More Complex Data? {.image-frame-slide}
+## What About More Complex Data? {.image-frame-slide}
 
 ::: {.content-visible when-format="html"}
 ![](../assets/three-dimensional-array/three-dimensional-array.svg)
@@ -784,7 +1124,7 @@ Tyler Durden | Paper Street Soap Co. | All Natural Handmade |
 ---
 
 
-# NetCDF
+## NetCDF
 
 :::: {.columns}
 
@@ -820,7 +1160,7 @@ variables:
 
 ---
 
-# Format Summary {.format-summary}
+## Format Summary {.format-summary}
 
 | Format | Best fit | Short example |
 |---|---|---|
@@ -833,7 +1173,6 @@ variables:
 | Parquet | Typed, compressed analytics data | `name: STRING`<br>`city: STRING` |
 | Spreadsheet | Small, early-stage data; prototypes; manual entry | *(Excel, Google Sheets, Numbers)* |
 
----
 
 # Sources {.sources}
 
@@ -848,3 +1187,5 @@ variables:
 9. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 10. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 11. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+12. Ridership numbers computed from [CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) and [CTA System Information — List of 'L' Stops](https://data.cityofchicago.org/Transportation/CTA-System-Information-List-of-L-Stops/8pix-ypme), City of Chicago Data Portal, for August 2025.
+13. Granularity, group by, pivot, and scope figures drawn for this deck by `docs/assets/wrangling/make_wrangling_figures.py`, following the split-apply-combine and pivot diagrams in the CS 418 wrangling materials (see 9). Route colors follow the [CTA Trademark Guidelines for Developers](https://www.transitchicago.com/developers/branding/); the figures use Orange, Red, and Purple, which stay distinguishable under common color vision deficiencies and are all dark enough for white lettering.
