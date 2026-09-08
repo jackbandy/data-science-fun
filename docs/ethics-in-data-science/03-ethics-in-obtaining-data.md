@@ -16,11 +16,14 @@ Obtaining data, in the context of the data science lifecycle.
 
 -- Geoffrey Bowker and Susan Leigh Star in *Sorting Things Out* [@bowker_star_sorting_things_out_1999]
 
-🔴 *Chapter Status: in development. Some sections drafted, mostly incomplete.*
+🔴 *Chapter Status: in early development. Some sections drafted, mostly incomplete.*
 
 <!-- TODO: write the **Overview:** box to match Chapters 1 and 2. -->
 
 The process of obtaining data is perhaps the aspect of data science with the most concrete and direct ethical implications.
+
+TK: zip code / birthday example
+
 
 ## Where do data come from?
 
@@ -73,14 +76,15 @@ Are data "given" or "taken?" [@barrowman_data_never_raw_2018]
 ### Scraping
 
 * three separate questions, often conflated: is it *legal*, does it violate *terms of service*, is it *in the public interest*
+* scraping is not a crime
 * U.S. law has narrowed the Computer Fraud and Abuse Act: authorization means access limits, not use limits [@van_buren_v_us_2021; @hiq_v_linkedin_2022]
 * social platforms - scraping terms are inconsistent across platforms [@fiesler_no_robots_2020]
-* questions survive legality: expectations of the people in the data, aggregation harms, re-identification, burden on the host, etc.
+* concrete questions to consider: expectations of the people in the data, aggregation harms, re-identification, burden on the host, etc.
 * practical minimums: rate limits, robots.txt, no circumvention of authentication, no redistribution of raw personal data
 
 ### Licensing and provenance
 
-* a dataset's license governs *reuse*, and is often incompatible with the license of the work you are building
+* a dataset license governs *reuse*
 * try not to break provenance chains
 * documentation artifacts that carry provenance forward: datasheets for datasets [@gebru_datasheets_2021]
 * stewardship principles: FAIR (findable, accessible, interoperable, reusable) [@wilkinson_fair_2016]
@@ -90,11 +94,12 @@ Are data "given" or "taken?" [@barrowman_data_never_raw_2018]
 ### Synthetic data
 
 * pitched as a privacy fix — no real people, therefore no disclosure risk
-* still can have biases and gaps from generator's training data
+* still can have biases and gaps
 * privacy protection is not automatic: generative models can memorize and leak; formal guarantees require explicit mechanisms [@bellovin_privacy_synthetic_datasets_2019]
-* useful for testing pipelines and sharing schemas
+* useful for testing pipelines, sharing schemas, prototyping, etc.
 * less useful as evidence about the world
 * disclosure obligation: synthetic provenance must travel with the data so it is not treated as measurement
+
 
 ## Sensitive information
 
@@ -129,7 +134,7 @@ Are data "given" or "taken?" [@barrowman_data_never_raw_2018]
 
 ## Maintaining Data
 
-Although not formally captured in the data science lifecycle figure(s), data scientists are often responsible for maintaining the data they obtain and analyze.
+Although not formally captured in the data science lifecycle figure(s), data scientists are often responsible for maintaining the data they obtain and analyze. Stewardship could be considered a background process that underlies the full lifecycle.
 
 * "data stewardship" — someone is accountable for a dataset over its whole life, not just at collection
 * documentation as maintenance: schema, collection protocol, known defects, version history [@gebru_datasheets_2021]
@@ -141,7 +146,7 @@ Although not formally captured in the data science lifecycle figure(s), data sci
 
 ## Example: How the Census Obtains Data
 
-The U.S. census offers a helpful example of ethical decision-making in the data science lifecycle. It has been explored in *Data Feminism* [@dignazio_klein_data_feminism_2020], in Kenneth Prewitt's *What Is Your Race?* [@prewitt_what_is_your_race_2013], in G. Cristina Mora's *Making Hispanics* [@mora_making_hispanics_2014], and in Bowker and Star's *Sorting Things Out* [@bowker_star_sorting_things_out_1999]. It is included here in brief as a canonical example of subjectivity in the process of obtaining data.
+The U.S. census offers a helpful example of ethical decision-making in the data science lifecycle. It has been explored in *Data Feminism* [@dignazio_klein_data_feminism_2020], in Kenneth Prewitt's *What Is Your Race?* [@prewitt_what_is_your_race_2013], in G. Cristina Mora's *Making Hispanics* [@mora_making_hispanics_2014], and in Bowker and Star's *Sorting Things Out* [@bowker_star_sorting_things_out_1999]. It is included here in brief as a canonical example of the ways in which subjectivity, opinions, and worldviews manifest in the process of obtaining data.
 
 ### Census form in 1790
 
@@ -159,7 +164,7 @@ Massachusetts printed schedule used in the 1790 census. Source: Census Bureau qu
 
 [Free Inhabitants schedule](../../assets/census/1850-free-inhabitants-schedule.png).
 
-Categories: name, age, sex, color, occupation, value of real estate, birthplace, married within the year, school attendance, literacy, deafness, dumbness, blindness, insanity, idiocy, pauper status, and conviction.
+Categories in 1850: name, age, sex, color, occupation, value of real estate, birthplace, married within the year, school attendance, literacy, deafness, dumbness, blindness, insanity, idiocy, pauper status, and conviction.
 
 ::: {#fig-census-1850}
 <img src="../../assets/census/1850-free-inhabitants-schedule.png" alt="1850 Free Inhabitants schedule." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -171,7 +176,7 @@ The 1850 Free Inhabitants schedule. Source: Census Bureau questionnaire page [@c
 
 [Population questionnaire](../../assets/census/1940-population-questionnaire.pdf).
 
-Categories: name, relationship, personal description, residence, birthplace, citizenship, education, employment, occupation, income, veteran status, Social Security, and selected supplemental questions for sample respondents.
+Categories in 1940: name, relationship, personal description, residence, birthplace, citizenship, education, employment, occupation, income, veteran status, Social Security, and selected supplemental questions for sample respondents.
 
 ::: {#fig-census-1940}
 <img src="../../assets/census/1940-population-questionnaire.png" alt="1940 population questionnaire." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -183,7 +188,7 @@ The 1940 population questionnaire. Source: Census Bureau questionnaire page [@ce
 
 [Informational bilingual questionnaire](../../assets/census/2020-informational-questionnaire.pdf).
 
-Categories: household count, ownership or tenure, phone number, name, sex, age and date of birth, Hispanic/Latino/Spanish origin, race, relationship, and whether the person usually lives or stays elsewhere.
+Categories in 2020: household count, ownership or tenure, phone number, name, sex, age and date of birth, Hispanic/Latino/Spanish origin, race, relationship, and whether the person usually lives or stays elsewhere.
 
 ::: {#fig-census-2020}
 <img src="../../assets/census/2020-informational-questionnaire.png" alt="2020 informational bilingual questionnaire." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color); padding: 10px;" />
@@ -214,33 +219,32 @@ Federal statistical categories are set by the Office of Management and Budget, n
 
 ## Example: Facebook Profile
 
-Similar dynamics can be observed in the Facebook signup process: the process of "obtaining data" involved numerous subjective decisions. Until 2014, the signup process for Facebook offered three options in the gender field: male, female, or no answer. On February 13, 2014, Facebook substantially expanded its gender fields, with 58 different options, custom fields, and additional pronoun settings.
+Similar dynamics can be observed in the Facebook signup process: here too, the process of "obtaining data" has involved numerous subjective decisions. Until 2014, the signup process for Facebook offered three options in the gender field: male, female, or no answer. On February 13, 2014, Facebook expanded its gender fields, with 58 different options, custom fields, and additional pronoun settings.
 
 Sources: ABC News [@abcn_news_facebook_gender_2014] and CNN [@kelly_facebook_gender_2014].
 
 Parallels to the census example:
 
-* both are *category design* problems: the form determines what can be said / what can be counted [@bowker_star_sorting_things_out_1999]
-* both changed their categories in response to political pressure, not new measurement technology
-* both create the same comparability break — pre-2014 and post-2014 gender data are not the same variable
-* residual category problem: "no answer" and "Some other race" are where the scheme's failures accumulate
+* both are *category design* examples, i.e. the form determines what can be said / what can be counted [@bowker_star_sorting_things_out_1999]
+* changes categories in response to social/political pressure, not new measurement technology
+* comparability break — pre-2014 and post-2014 gender data are not the same variable
+* residual category problem: "no answer" and "Some other race"
 
 Differences:
 
-* the census publishes its category rationale in the Federal Register; the platform does not
-* despite 58 front-end options, Facebook reportedly continued to resolve users into a binary for advertising purposes
+* the census publishes its category rationale in the Federal Register; Facebook does not
+* despite 58 front-end options, Facebook reportedly continued to classify users into a binary for advertising purposes
 	* i.e. the *stored* category vs the *displayed* category [@bivens_gender_binary_facebook_2017]
-* a field offered as self-expression
+* field offered as self-expression
 	* became used for targeting
-	* a contextual-integrity violation with no breach / scraping 
+	* contextual-integrity violation with no breach / scraping?
 
 ## Conclusion
 
-
-* data are obtained, not found
-* every dataset has fingerprints of its collection
-* data collection may be where it is cheapest to fix
-	* but also easiest to skip
+* data are always generated, even when "found" or "obtained"
+* every dataset has fingerprints/artifacts of its collection
+* data collection may be where it is cheapest to "fix" datasets
+	* but also easy to skip
 * the next chapter (Ch. 4) asks what these obtained data can and cannot be understood to mean
 
 ::: {.content-visible when-format="html"}
