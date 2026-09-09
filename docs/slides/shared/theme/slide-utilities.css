@@ -78,3 +78,13 @@
 }
 .reveal .long-demo thead th { color: #c83214; border-bottom: 2px solid #f9461c; }
 .reveal .long-demo td { border-bottom: 1px solid #d8d8d8; }
+
+/* Caption under a code block or figure inside a column. Moved here from the
+   week3 deck header -- week8 already marks up captions with this class. */
+.reveal .code-caption {
+  margin: 0.35em 0 0;
+  text-align: center;
+  font-size: 0.68em;
+  font-style: italic;
+  color: #666;
+}

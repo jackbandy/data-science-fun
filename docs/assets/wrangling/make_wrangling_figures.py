@@ -491,7 +491,8 @@ def scope_panel(panel, data_fill=ORANGE):
         )
         parts.append(text(x + 20, 326, panel["data_label"], 19, 700, PAPER, anchor="start"))
         parts.append(text(x + 450, 114, panel["pop_label"], 17, 700, INK, anchor="end"))
-    parts.append(text(x + 225, 386, panel["note"], 16, 400, MUTED, style="italic"))
+    note_lines = panel["note"] if isinstance(panel["note"], list) else [panel["note"]]
+    parts.extend(text(x + 225, 386 + i * 20, line, 16, 400, MUTED, style="italic") for i, line in enumerate(note_lines))
     return "".join(parts)
 
 
@@ -526,7 +527,7 @@ SC_FIFA_PANELS = [
         "diagnosis": "The data covers only part of the question",
         "data_label": "Eurostat births (EU)",
         "pop_label": "Every World Cup winner",
-        "note": "10 of the 23 titles went to Brazil, Argentina, or Uruguay",
+        "note": ["Eurostat births do not include World Cup winning", "countries like Brazil, Argentina, Uruguay"],
         "overlap": True,
     },
 ]
@@ -538,8 +539,127 @@ def make_scope_fifa():
                'Two black and white panels. Under "Did Spain\'s birth rate move after the 2010 final?", a rectangle '
                "of all Eurostat monthly births from 1960 to 2025 fully contains an ellipse of Spanish births in 2010 "
                'and 2011. Under "Does winning a World Cup raise the birth rate?", a rectangle of Eurostat births for '
-               "EU countries overlaps an ellipse of every World Cup winner only partly, leaving the South American "
-               "winners outside the data.")
+               "EU countries overlaps an ellipse of every World Cup winner only partly, because Eurostat births do "
+               "not include World Cup winning countries like Brazil, Argentina, and Uruguay.")
+
+
+# ------------------------------------------------------------------- box plot
+
+# Daily entry totals for August 2025, five-number summary per route and day
+# type. Computed from the two CTA files named in the week 3 sources: stops
+# deduplicated on MAP_ID, a station counted toward every route it serves, then
+# summed to one total per route per day. The medians here and the means in the
+# pivot table on the same slide come from the same nine groups.
+BOX_STATS = {
+    ("Red", "W"): (103273, 112917, 118841, 127796, 156874),
+    ("Red", "A"): (103331, 112277, 128505, 131348, 146915),
+    ("Red", "U"): (83871, 91131, 103935, 115008, 118641),
+    ("Purple", "W"): (58329, 63212, 70700, 72561, 75669),
+    ("Purple", "A"): (49937, 51070, 55625, 56839, 63563),
+    ("Purple", "U"): (36730, 38126, 44831, 47595, 48453),
+    ("Orange", "W"): (36208, 39318, 43026, 43906, 47804),
+    ("Orange", "A"): (24081, 26428, 27549, 31151, 33230),
+    ("Orange", "U"): (20053, 20591, 23150, 27204, 27574),
+}
+
+# The group means, i.e. the nine numbers in the pivot table on the same slide.
+# Drawn as a dashed rule behind each box so the mean and the median (the white
+# line inside the box) can be read against each other.
+BOX_MEANS = {
+    ("Red", "W"): 122289,
+    ("Red", "A"): 124475,
+    ("Red", "U"): 102517,
+    ("Purple", "W"): 67878,
+    ("Purple", "A"): 55407,
+    ("Purple", "U"): 43147,
+    ("Orange", "W"): 41945,
+    ("Orange", "A"): 28488,
+    ("Orange", "U"): 23714,
+}
+
+BOX_DAYTYPES = [("W", "Weekday"), ("A", "Saturday"), ("U", "Sunday/holiday")]
+BOX_ROUTES = ["Red", "Purple", "Orange"]
+
+# Horizontal boxes: total daily entries runs along the x axis, day type down
+# the y axis, so the three long day-type labels sit on one line each.
+BOX_WIDTH, BOX_HEIGHT = 980, 430
+BOX_LEFT, BOX_RIGHT = 172, 950
+BOX_TOP, BOX_BOTTOM = 26, 336
+BOX_MAX = 160000
+BOX_H = 26
+BOX_GAP = 8
+
+
+def box_x(value):
+    return BOX_LEFT + (value / BOX_MAX) * (BOX_RIGHT - BOX_LEFT)
+
+
+def one_box(cy, stats, mean, color):
+    """One box and whisker: min, 25%, 50%, 75%, max, drawn in the route color.
+    The white rule inside the box is the median; the dashed black rule standing
+    behind it is the mean."""
+    lo, q1, med, q3, hi = (box_x(v) for v in stats)
+    mx = box_x(mean)
+    half = BOX_H / 2
+    cap = BOX_H * 0.32
+    tall = BOX_H * 0.85
+    return (
+        f'<line x1="{mx:.1f}" y1="{cy - tall:.1f}" x2="{mx:.1f}" y2="{cy + tall:.1f}" stroke="{INK}" '
+        f'stroke-width="2" stroke-dasharray="5 4"/>'
+        f'<line x1="{lo:.1f}" y1="{cy:.1f}" x2="{q1:.1f}" y2="{cy:.1f}" stroke="{color}" stroke-width="{STROKE_WIDTH}"/>'
+        f'<line x1="{hi:.1f}" y1="{cy:.1f}" x2="{q3:.1f}" y2="{cy:.1f}" stroke="{color}" stroke-width="{STROKE_WIDTH}"/>'
+        f'<line x1="{lo:.1f}" y1="{cy - cap:.1f}" x2="{lo:.1f}" y2="{cy + cap:.1f}" stroke="{color}" stroke-width="{STROKE_WIDTH}"/>'
+        f'<line x1="{hi:.1f}" y1="{cy - cap:.1f}" x2="{hi:.1f}" y2="{cy + cap:.1f}" stroke="{color}" stroke-width="{STROKE_WIDTH}"/>'
+        f'<rect x="{q1:.1f}" y="{cy - half:.1f}" width="{q3 - q1:.1f}" height="{BOX_H}" rx="3" fill="{color}" '
+        f'stroke="{color}" stroke-width="{STROKE_WIDTH}"/>'
+        f'<line x1="{med:.1f}" y1="{cy - half:.1f}" x2="{med:.1f}" y2="{cy + half:.1f}" stroke="{PAPER}" stroke-width="3"/>'
+    )
+
+
+def make_boxplot():
+    span = (BOX_BOTTOM - BOX_TOP) / len(BOX_DAYTYPES)
+    parts = []
+    for tick in range(0, BOX_MAX + 1, 40000):
+        x = box_x(tick)
+        parts.append(
+            f'<line x1="{x:.1f}" y1="{BOX_TOP}" x2="{x:.1f}" y2="{BOX_BOTTOM}" stroke="{NEUTRAL}" stroke-width="1"/>'
+        )
+        parts.append(text(x, BOX_BOTTOM + 22, f"{tick // 1000:,}k" if tick else "0", 14, 400, MUTED))
+    parts.append(
+        f'<line x1="{BOX_LEFT}" y1="{BOX_TOP}" x2="{BOX_LEFT}" y2="{BOX_BOTTOM}" stroke="{INK}" stroke-width="{STROKE_WIDTH}"/>'
+    )
+    parts.append(
+        f'<line x1="{BOX_LEFT}" y1="{BOX_BOTTOM}" x2="{BOX_RIGHT}" y2="{BOX_BOTTOM}" stroke="{INK}" stroke-width="{STROKE_WIDTH}"/>'
+    )
+    parts.append(text((BOX_LEFT + BOX_RIGHT) / 2, BOX_BOTTOM + 48,
+                      "Total daily entries, all stops on the line", 15, 700, INK))
+
+    for i, (code, label) in enumerate(BOX_DAYTYPES):
+        center = BOX_TOP + span * (i + 0.5)
+        offsets = [(j - 1) * (BOX_H + BOX_GAP) for j in range(len(BOX_ROUTES))]
+        for route, dy in zip(BOX_ROUTES, offsets):
+            parts.append(one_box(center + dy, BOX_STATS[(route, code)], BOX_MEANS[(route, code)], ROUTES[route]))
+        parts.append(text(BOX_LEFT - 14, center + 6, f"{label} ({code})", 17, 700, INK, anchor="end"))
+
+    legend_y = BOX_HEIGHT - 18
+    legend_x = (BOX_LEFT + BOX_RIGHT) / 2 - 340
+    for route in BOX_ROUTES:
+        parts.append(f'<rect x="{legend_x:.1f}" y="{legend_y - 12:.1f}" width="16" height="16" rx="3" fill="{ROUTES[route]}"/>')
+        parts.append(text(legend_x + 24, legend_y + 1, f"{route} Line", 15, 400, INK, anchor="start"))
+        legend_x += 172
+    parts.append(
+        f'<line x1="{legend_x + 6:.1f}" y1="{legend_y - 13:.1f}" x2="{legend_x + 6:.1f}" y2="{legend_y + 5:.1f}" '
+        f'stroke="{INK}" stroke-width="2" stroke-dasharray="5 4"/>'
+    )
+    parts.append(text(legend_x + 18, legend_y + 1, "mean (white rule = median)", 15, 400, INK, anchor="start"))
+
+    return svg(BOX_WIDTH, BOX_HEIGHT, "".join(parts),
+               "Nine horizontal box plots of total daily CTA entries, summed across all stops on a line, for "
+               "August 2025. Total daily entries runs along the x axis and day type down the y axis: weekday, "
+               "Saturday, then Sunday or holiday, each holding one box per route. The Red Line sits furthest "
+               "right in all three groups, near 120,000 entries a day, and is the only route whose Saturday box "
+               "reaches as far right as its weekday box; Purple and Orange both shift left from weekdays to "
+               "Saturdays to Sundays and holidays. Inside each box a white rule marks the median, and a dashed black rule standing behind the box marks the mean.")
 
 
 # ------------------------------------------------------------------------- main
@@ -557,6 +677,7 @@ def main() -> None:
     for stage in range(len(SC_PANELS)):
         written.append((f"scope-v{stage}.svg", make_scope(stage)))
     written.append(("scope-fifa.svg", make_scope_fifa()))
+    written.append(("pivot-boxplot.svg", make_boxplot()))
 
     for name, markup in written:
         path = OUT_DIR / name

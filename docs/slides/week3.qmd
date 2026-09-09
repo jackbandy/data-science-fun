@@ -92,13 +92,6 @@ format:
           font-size: 0.88em;
           line-height: 1.2;
         }
-        .reveal .code-caption {
-          margin: 0.35em 0 0;
-          text-align: center;
-          font-size: 0.68em;
-          font-style: italic;
-          color: #666;
-        }
         /* Content-slide titles a notch below the theme's 3.5rem: several titles
            in this deck are full phrases, and at 3.5rem the longest ones run to
            the edge of the line. Section dividers, the cover, and the sources
@@ -141,6 +134,7 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
     - Data Wrangling
     - Granularity & Aggregation
     - Data Formats (time permitting)
+    - Week 3 Quiz
 :::
 
 ![](../assets/orange-line-map-stops/stop03-quincy.svg){.figure alt="Orange Line map with the Quincy stop marked, the Week 3 stop"}
@@ -153,41 +147,73 @@ CS 418 · Week 3 · 🟠 Quincy 🟠
 
 ---
 
-## What is Data Wrangling? {.smaller}
+## What to Check when Wrangling a New Dataset {.smaller}
 
-::: 
+::: {.caption}
+Based on Data 100 course notes, [Data Cleaning and EDA](https://ds100.org/course-notes-su23/eda/eda.html)
+:::
 
-- "the process of transforming raw, unstructured data into consistent and useful data that supports intended applications."
+- **Structure**: how the data is encoded and laid out
+- **Granularity**
+- **Scope**
+- **Temporality**: the period the data covers, and/or what its timestamps mean
+- **Faithfulness**: does the data accurately capture the "real world?"
+- (We'll look at all of these today)
 
-- How can we perform data wrangling?
-  1. Discover and address quality issues
-  2. Reshape data into the structure your analysis needs
-  3. Add new information to existing datasets (data augmentation)
-  4. Verify accuracy and consistency in the dataset
+---
 
+## What is Data Wrangling? {.figure-aside .golden .smaller}
+
+::: {.columns}
+::: {.column}
+
+*"the process of transforming raw, messy, unstructured data into coherent, structured data that can support intended applications and/or analyses"*
+
+**How to wrangle?**
+
+1. Discover and address quality issues
+2. Reshape data into the structure your analysis needs
+3. Add information to datasets (data augmentation)
+4. Verify accuracy and consistency in the dataset
+
+:::
+::: {.column}
+
+<img class="figure" src="../assets/wrangling/spiderman-data-credits.svg" alt="Poster-style credits list for Spider-Man: Brand New Day, showing seven crew members whose job titles contain the word data, including Lead Data Wrangler and VFX Data Wrangler">
+
+::: {.caption}
+Crew on *Spider-Man: Brand New Day*, filtered to roles containing "data" ([full crew on IMDb](https://www.imdb.com/title/tt22084616/fullcredits/)).
+:::
+
+:::
 :::
 
 ---
 
-## Discover and address quality issues {.smaller}
+## Types of quality issues {.smaller}
 
-Find issues in the raw data before they bias your results.
+
+::: {.caption}
+Details in *Learning Data Science*, [§9.2 Quality Checks](https://learningds.org/ch/09/wrangling_checks.html) and [§9.3 Missing Values](https://learningds.org/ch/09/wrangling_missing.html)
+:::
+
+Common issues to discover and address:
 
 :::: {.columns}
 
 ::: {.column width="55%"}
 
-- **Missing values** — nulls, `NaN`, or disguised blanks like `"N/A"`, `-999`
-- **Duplicates** — the same row or entity recorded more than once
-- **Inconsistent formatting** — `"IL"` vs `"Illinois"`, `mm/dd/yyyy` vs `yyyy/dd/mm`
-- **Wrong data types** — numbers or dates stored as strings
-- **Structure issues** — mixed units, e.g. miles vs km
-- **Invalid values** — impossible entries such as age = 350
+- **Missing values**: nulls, `NaN`, or disguised blanks like `"N/A"`, `-999`
+- **Duplicates**: the same row or entity recorded more than once
+- **Inconsistent formatting**: `"IL"` vs `"Illinois"`, `mm/dd/yyyy` vs `yyyy/dd/mm`
+- **Wrong data types**: numbers or dates stored as strings
+- **Structure issues**: mixed units, e.g. miles vs km
+- **Invalid values**: impossible entries such as age = 350
 :::
 
 ::: {.column width="45%"}
 
-<p class="code-caption" style="margin-bottom:0.4em;">Raw data often looks like this:</p>
+<p class="code-caption" style="margin-bottom:0.4em;">Raw data might look like this:</p>
 
 <table style="border-collapse:collapse; margin:0.2em auto 0; font-size:0.62em;">
 <tr>
@@ -221,30 +247,32 @@ Find issues in the raw data before they bias your results.
 
 ::::
 
-Polars: `df.glimpse()`, `df.null_count()`, `df.is_duplicated().sum()`, and `df.describe()`.
+
+
 
 ---
 
-## Reshape data into the structure your analysis needs {.smaller}
+## Vocabulary for reshaping data {.smaller}
 
-Rearrange rows and columns until the table matches what your analysis needs.
+Rearrange rows and columns for analysis needs.
 
 :::: {.columns}
 
 ::: {.column width="55%"}
 
-- **Tidy data** — one row per observation, one column per variable
-- **Wide → long** — collapse many columns into key/value pairs with df.unpivot()
-- **Long → wide** — spread one column back out into many with df.pivot()
-- **Combine tables** — stack rows with pl.concat(), match on keys with df.join()
-- **Rename and reorder** — clean up column names with df.rename(), put the rows in order with df.sort()
+- **"Tidy" data** — one row per observation, one column per variable
+- **Wide → long** — collapse many columns into key/value pairs with `df.unpivot()`
+- **Long → wide** — spread one column back out into many with `df.pivot()`
+- **Combine tables** — stack rows/dataframes with `pl.concat()`
+    - merge/match rows on keys with `df.join()`
+- **Rename and reorder** — clean up column names with `df.rename()`, put the rows in order with `df.sort()`
 :::
 
 ::: {.column width="45%"}
 
 <p style="margin:0 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">Wide format</p>
 
-<table style="border-collapse:collapse; margin:0 auto; font-size:0.55em;">
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.62em;">
 <tr>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">id</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">2023</td>
@@ -264,7 +292,7 @@ Rearrange rows and columns until the table matches what your analysis needs.
 
 <p style="margin:0.9em 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">Long format</p>
 
-<table style="border-collapse:collapse; margin:0 auto; font-size:0.55em;">
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.62em;">
 <tr>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">id</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 18px; text-align:center;">year</td>
@@ -299,66 +327,66 @@ Polars: `df.unpivot()`, `df.pivot()`, `pl.concat()`, and `df.join()`.
 
 ---
 
-## Add new information to existing datasets {.smaller}
+## Adding information (?) to existing datasets {.smaller}
 
-We can add information to a dataset through **data augmentation**.
+We can "add information" to a dataset through **data augmentation**.
 
 :::: {.columns}
 
 ::: {.column width="55%"}
 
-- **Derived columns** — compute from what you already have, e.g. speed from miles and hours (df.with_columns())
-- **Binning** — classify numeric data into categories based on the ranges you specify (pl.col().cut())
-- **External joins** — attach weather, census, or geographic data on a shared key (df.join())
-- **Group features** — add a group's summary statistic onto each of its rows (pl.col().mean().over())
-- **Encoding** — convert text variables into numerical columns of 0s and 1s, model-ready (df.to_dummies())
+- **Derived columns**: compute from what you already have, e.g. speed from miles and hours (`df.with_columns()`)
+- **Binning**: classify numeric data into categories based on the ranges you specify (`pl.col().cut()`)
+- **External joins**: attach weather, census, or geographic data on a shared key (`df.join()`)
+- **Group features**: include a group's summary statistic onto each of its rows (`pl.col().mean().over()`)
+- **Encoding**: convert text variables into numerical columns of 0s and 1s for modeling (`df.to_dummies()`)
 :::
 
 ::: {.column width="45%"}
 
 <p style="margin:0 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">Raw dataset</p>
 
-<table style="border-collapse:collapse; margin:0 auto; font-size:0.5em;">
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.6em;">
 <tr>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">trip</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">driver</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">city</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">miles</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">hours</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">trip</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">driver</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">city</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">miles</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">hours</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">1</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Kevin</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Chicago</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">12</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">0.5</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Kevin</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Chicago</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">12</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0.5</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">2</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Kevin</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Naperville</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">30</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">0.6</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">2</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Kevin</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Naperville</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">30</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0.6</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">3</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Yuseph</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Chicago</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">8</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">0.4</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">3</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Yuseph</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Chicago</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">8</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0.4</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">4</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Yuseph</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Naperville</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">45</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">0.9</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">4</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Yuseph</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Naperville</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">45</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0.9</td>
 </tr>
 </table>
 
 <p style="margin:1.1em 0 0.3em; text-align:center; font-size:0.62em; font-weight:700; color:#333;">Population<span style="font-weight:400; font-family:monospace; font-size:0.9em; color:#666;"></span></p>
 
-<table style="border-collapse:collapse; margin:0 auto; font-size:0.5em;">
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.6em;">
 <tr>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 14px; text-align:center;">city</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 14px; text-align:center;">population</td>
@@ -381,114 +409,280 @@ We can add information to a dataset through **data augmentation**.
 
 ---
 
-## Example of application
+## Example
 
-<table style="border-collapse:collapse; margin:0.6em auto 0; font-size:0.42em;">
+<table style="border-collapse:collapse; margin:0.6em auto 0; font-size:0.5em;">
 <tr>
 <td colspan="4"></td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">with_columns()</td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">.cut()</td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">.join()</td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">.over()</td>
-<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;">to_dummies()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;" class="fragment" data-fragment-index="1">with_columns()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;" class="fragment" data-fragment-index="2">.cut()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;" class="fragment" data-fragment-index="3">.join()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;" class="fragment" data-fragment-index="4">.over()</td>
+<td style="padding:2px 6px; text-align:center; font-family:monospace; font-size:0.9em; color:#7a7a7a;" class="fragment" data-fragment-index="5">to_dummies()</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">trip</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">driver</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">miles</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">hours</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">mph</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">distance</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">population</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">driver_avg</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;">Naperville</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="1">mph</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="2">distance</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="3">population</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="4">driver_avg</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="5">Naperville</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">1</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Kevin</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">12</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.5</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">24.0</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">short</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">2.70</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">16.3</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="1">24.0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="2">short</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="3">2.70</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="4">16.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="5">0</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">2</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Kevin</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">31</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.7</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">44.3</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">long</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0.15</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">16.3</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="1">44.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="2">long</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="3">0.15</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="4">16.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="5">1</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">3</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Yuseph</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">8</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.4</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">20.0</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">short</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">2.70</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">26.5</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="1">20.0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="2">short</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="3">2.70</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="4">26.5</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="5">0</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">4</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Yuseph</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">45</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.9</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">50.0</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">long</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0.15</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">26.5</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">1</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="1">50.0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="2">long</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="3">0.15</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="4">26.5</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="5">1</td>
 </tr>
 <tr>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">5</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">Kevin</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">6</td>
 <td style="border:2px solid #f9461c; padding:4px 9px; text-align:center;">0.3</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">20.0</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">short</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">2.70</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">16.3</td>
-<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;">0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="1">20.0</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="2">short</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="3">2.70</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="4">16.3</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; padding:4px 9px; text-align:center;" class="fragment" data-fragment-index="5">0</td>
 </tr>
 </table>
 
-Why do we need to perform *data augmentation* in a dataset?
+When and why *data augmentation*?
 
-::: 
+- Create more intuitive variables
 - Improve machine learning models
 - Reduce overfitting
-- Correct imbalanced datasets
-:::
+- Adjust for imbalanced datasets
 
 ---
 
-## Verify accuracy and consistency in the dataset {.smaller}
+## Vocabulary for accuracy and consistency in the dataset {.smaller}
 
-Useful techniques to verify accuracy and consistency:
+::: {.caption}
+Based on *Learning Data Science*, [§9.2 Quality Checks](https://learningds.org/ch/09/wrangling_checks.html)
+:::
+
+Common checks:
+
+- **Range and format checks**: is this value even possible, and did it parse as the type you expected?
+- **Consistency checks**: does the same thing always get stored the same way?
+- **Cross-field logic**: do columns that must agree with each other actually agree?
+- **Statistical analysis**: do the summary numbers look like the world you expect?
+
+Example on next slide...
+
+---
+
+## Verify: Statistical Analysis {.smaller}
+
+Reminder: `describe()` puts nine summary numbers next to every column at once.
+
+```python
+entries.select("station_id", "rides").describe()
+```
+
+<table style="border-collapse:collapse; margin:0.5em auto 0; font-size:0.55em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">statistic</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">station_id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">rides</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">count</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1,315,823</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1,315,823</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">null_count</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">mean</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40769.49</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">2928.65</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">std</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">450.96</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">3017.80</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">min</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40010</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">25%</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40370</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">912</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">50%</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40760</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1,904</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">75%</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">41160</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">3,849</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">max</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">41710</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">36,323</td>
+</tr>
+</table>
+
+<p class="code-caption">1.3 million rows of CTA station entries (January 2001 through March 2026). Anything look off?</p>
+
+---
+
+## Verify: Three Things Worth a Second Look {.smaller}
+
+:::: {.columns}
+
+::: {.column width="45%"}
+<table style="border-collapse:collapse; margin:0.5em auto 0; font-size:0.55em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">statistic</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">station_id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">rides</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">count</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1,315,823</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1,315,823</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">null_count</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">0</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">mean</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 14px; text-align:center;">40769.49</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">2928.65</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">std</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">450.96</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">3017.80</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">min</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40010</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 14px; text-align:center;">0</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">25%</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40370</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">912</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">50%</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40760</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1,904</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">75%</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">41160</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">3,849</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">max</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">41710</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 14px; text-align:center;">36,323</td>
+</tr>
+</table>
+:::
+
+::: {.column width="55%"}
+
+- **The mean station id is 40,769.** 🤔
+- **`rides` has at least one 0.** 🤨
+- **The median is 1,904; the max is 36,323** 😾
+
+::: {.fragment}
+```python
+entries.sort("rides", descending=True).head(1)
+# Belmont-North Main, Sunday 2015-06-28, 36,323
+```
+
+<p class="code-caption">What happened at Belmont that Sunday?</p>
+:::
 
 :::
-- Range and format checks
-- Consistency checks
-- Cross-field logic
-- Statistical analysis
-:::
+
+::::
 
 
 # Granularity & Aggregation {.section-header}
 
 ---
 
-## What Does One Row Represent? {.image-frame-slide}
+## Granularity: What Does One Row Represent? {.image-frame-slide}
 
-<img src="../assets/wrangling/granularity-v0.svg" class="figure" alt="Three tables of the same CTA ridership at three granularities: one row per tap-in, one row per station-day, and one row per line-month, laid out along an arrow running from fine grained to coarse grained.">
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/wrangling/granularity-v0.svg" class="figure figure-plain" style="max-height:430px" alt="An empty axis running from fine grained on the left to coarse grained on the right, with no tables on it yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/wrangling/granularity-v1.svg" class="figure figure-plain" style="max-height:430px" alt="One table at the fine-grained end of the axis, where one row is one tap-in: a rider, a station, and a time.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+<img src="../assets/wrangling/granularity-v2.svg" class="figure figure-plain" style="max-height:430px" alt="A second table added further along the axis, where one row is one station-day: a station, a date, and a count of entries.">
+:::
+
+::: {.fragment fragment-index=3}
+<img src="../assets/wrangling/granularity-v3.svg" class="figure figure-plain" style="max-height:430px" alt="A third table at the coarse-grained end, where one row is one line-month: a route, a month, and a count of entries.">
+:::
+
+::::
 
 ::: {.caption}
 Station-day and line-month counts computed from the [CTA 'L' station entries](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) dataset, August 2025. The tap-in rows are illustrative — the CTA does not publish individual entries.
@@ -496,33 +690,26 @@ Station-day and line-month counts computed from the [CTA 'L' station entries](ht
 
 ---
 
-## Questions to Ask About Granularity {.smaller}
+## Vocab for Granularity {.smaller}
 
-**Granularity** is how fine or coarse each datum is — what one row actually counts.
-
-:::: {.columns}
-
-::: {.column width="50%"}
-- **What does each record represent?** One tap-in, one station-day, one line-month
-- **Do all records sit at the same level?** Summary rows like to hide among detail rows
-- **If the data is coarse, how was it aggregated?** Summed, averaged, sampled — each answers a different question
+::: {.caption}
+Based on Data 100 course notes, [Data Cleaning and EDA](https://ds100.org/course-notes-su23/eda/eda.html)
 :::
 
-::: {.column width="50%"}
+**Granularity** is how fine or coarse each datum is.
+
+- **What does each record represent?** e.g. one tap-in, one station-day, one line-month
+- **Do all records sit at the same level?** Summary rows are sometimes mixed in among detail rows
 - **What aggregations are possible?** Station → line, day → month, person → demographic group
-- **Hierarchies** — city/county/state, second/minute/hour/day
-- **Two files have to agree** on granularity before you can merge them
-:::
+- **Which hierarchies apply?** City/county/state, second/minute/hour/day
+- **Do two files agree?** They have to sit at the same granularity before you can merge them
 
-::::
-
-Coarsening can reveal a pattern that individual rows bury — and it can hide one just as easily.
 
 ---
 
-## Manipulating Granularity: Group By {.image-frame-slide}
+## Group By, Visualized (Manipulating Granularity) {.image-frame-slide}
 
-**Split** the rows into groups, **apply** a function to each group, **combine** the answers into one table.
+**Split** the rows into groups, **apply** an aggregate function to each group, **combine** (merge) results into one table.
 
 :::: {.r-stack}
 
@@ -565,7 +752,7 @@ rides = pl.DataFrame({
 rides.group_by("line").agg(pl.col("rides").sum())
 ```
 
-`group_by` hands each group to `agg`, and the expression inside says what to compute.
+`group_by` hands each group to `agg`
 :::
 
 ::: {.column width="40%"}
@@ -591,51 +778,106 @@ rides.group_by("line").agg(pl.col("rides").sum())
 </tr>
 </table>
 
-<p class="code-caption">Swap the function, keep the shape: `sum`, `mean`, `median`, `min`, `max`, `len`, `n_unique`…</p>
 :::
 
 ::::
 
 ---
 
-## Predict the Output {.smaller}
+## Predict the Output {.split .smaller}
 
-Five station-days from the CTA file. What comes back?
+::: {.split-content .golden-columns}
+
+::: {}
+
+Consider the following station-day records (`entries`) and the line of code below. Discuss with your elbow neighbor(s):
+
+<table style="border-collapse:collapse; margin:0 auto 0.6em; font-size:0.62em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">station_id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">rides</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">3</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">2</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40190</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">5</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40190</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">6</td>
+</tr>
+</table>
+
+```python
+entries.group_by("line").sum()
+```
+
+1. How many rows come back?
+2. Which columns come back?
+3. Other thoughts / questions?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## Predict the Output: What Comes Back {.smaller}
 
 :::: {.columns}
 
-::: {.column width="44%"}
+::: {.column width="42%"}
 
-<table style="border-collapse:collapse; margin:0 auto 0.6em; font-size:0.52em;">
+<p class="code-caption" style="margin-bottom:0.4em;">In</p>
+
+<table style="border-collapse:collapse; margin:0 auto 0.6em; font-size:0.62em;">
 <tr>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">station_id</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">line</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">rides</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">station_id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">rides</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40930</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Orange</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">4867</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">3</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40930</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Orange</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">4825</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">1</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40930</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Orange</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">5536</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40930</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">2</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40190</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Red</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">5543</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40190</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">5</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">40190</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Red</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">5726</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">40190</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">6</td>
 </tr>
 </table>
 
@@ -644,92 +886,56 @@ entries.group_by("line").sum()
 ```
 :::
 
-::: {.column width="56%"}
+::: {.column width="58%"}
 
-::: {.fragment}
+<p class="code-caption" style="margin-bottom:0.4em;">Out</p>
 
-<table style="border-collapse:collapse; margin:0 auto 0.5em; font-size:0.52em;">
+<table style="border-collapse:collapse; margin:0 auto 0.5em; font-size:0.62em;">
 <tr>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">line</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">station_id</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:5px 12px; text-align:center;">rides</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">station_id</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">rides</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Orange</td>
-<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:5px 12px; text-align:center;">122790</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">15228</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 14px; text-align:center;">122790</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">6</td>
 </tr>
 <tr>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">Red</td>
-<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:5px 12px; text-align:center;">80380</td>
-<td style="border:2px solid #f9461c; padding:5px 12px; text-align:center;">11269</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; background:#fbe0d8; color:#c0392b; font-weight:bold; font-family:monospace; padding:6px 14px; text-align:center;">80380</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">11</td>
 </tr>
 </table>
 
-`sum()` sums *every* column it can, and `station_id` is a label that only looks like a number. Midway's id added to itself three times is 122,790 — a value that means nothing at all.
 
-Name the column you meant: `entries.group_by("line").agg(pl.col("rides").sum())`
+Fix is to name the intended column:
 
-:::
-
-:::
-
-::::
-
----
-
-## Group By on the Whole Dataset {.smaller}
-
-Every 'L' station entry in August 2025, grouped by the routes that serve the station.
-
-:::: {.columns}
-
-::: {.column width="60%"}
 ```python
-august = (
-    entries
-    .join(stops, left_on="station_id", right_on="MAP_ID")
-    .unpivot(index=["stationname", "date", "daytype", "rides"],
-             on=["O", "RED", "P"],       # one flag column per route
-             variable_name="line", value_name="serves")
-    .filter("serves")                    # one row per station-day-route
-)
-
-august.group_by("line").agg(pl.col("rides").sum())
+entries.group_by("line").agg(pl.col("rides").sum())
 ```
 :::
 
-::: {.column width="40%"}
-
-<table style="border-collapse:collapse; margin:0 auto; font-size:0.58em;">
-<tr>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">line</td>
-<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 16px; text-align:center;">rides</td>
-</tr>
-<tr>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Red</td>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">3,703,028</td>
-</tr>
-<tr>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Purple</td>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">1,918,209</td>
-</tr>
-<tr>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">Orange</td>
-<td style="border:2px solid #f9461c; padding:6px 16px; text-align:center;">1,141,856</td>
-</tr>
-</table>
-
-<p class="code-caption">A transfer station is served by more than one route, so its entries count once for each — a granularity decision baked into the answer.</p>
-:::
-
 ::::
+
 
 ---
 
-## Manipulating Granularity: Pivot {.image-frame-slide}
+## Pivot: One Cell per Combination {.smaller}
 
-The same three steps — but the group key is now **two** columns, route *and* day type.
+<img src="../assets/wrangling/pivot-v3.svg" class="figure figure-plain" style="max-height:430px" alt="The five aggregated groups reshaped into a grid with one row per CTA route and one column per day type. The Purple Line Saturday cell is empty and marked NaN.">
+
+One key goes on the rows, the other on the columns.
+
+```python
+df.pivot(index="line", on="daytype", values="rides")
+```
+
+---
+
+## Pivot as Manipulating Granularity {.image-frame-slide}
+
+Same three steps with **two** columns for the group key (route, day type)
 
 :::: {.r-stack}
 
@@ -749,13 +955,7 @@ The same three steps — but the group key is now **two** columns, route *and* d
 
 ---
 
-## Pivot: One Cell per Combination {.smaller}
 
-<img src="../assets/wrangling/pivot-v3.svg" class="figure figure-plain" style="max-height:430px" alt="The five aggregated groups reshaped into a grid with one row per CTA route and one column per day type. The Purple Line Saturday cell is empty and marked NaN.">
-
-One key goes on the rows, the other on the columns. A combination with no records leaves a hole — is `NaN` a zero, or a value nobody wrote down? Decide before you compute with it.
-
----
 
 ## Pivot in Code {.smaller}
 
@@ -773,12 +973,12 @@ daily = august.group_by("line", "daytype", "date").agg(
       .pivot(index="line", on="daytype", values="rides"))
 ```
 
-`pivot` reshapes what is already one row per group. Aggregate first, then pivot — otherwise Polars has to guess what to do with the duplicates.
+Aggregate first, then pivot.
 :::
 
 ::: {.column width="45%"}
 
-<table style="border-collapse:collapse; margin:0 auto; font-size:0.55em;">
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.62em;">
 <tr>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">line</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">W</td>
@@ -805,12 +1005,335 @@ daily = august.group_by("line", "daytype", "date").agg(
 </tr>
 </table>
 
-<p class="code-caption">One route averages more entries on a Saturday than on a weekday. Why that one?</p>
+:::
+
+::::
+
+::: {.fragment}
+<img src="../assets/wrangling/pivot-boxplot.svg" class="figure figure-plain" style="max-height:265px; margin-top:0.2em" alt="Nine horizontal box plots of total daily CTA entries, summed across all stops on a line, for August 2025. Total daily entries runs along the x axis and day type down the y axis: weekday, Saturday, then Sunday or holiday, each holding one box per route. The Red Line sits furthest right in all three groups, near 120,000 entries a day, and is the only route whose Saturday box reaches as far right as its weekday box; Purple and Orange both shift left from weekdays to Saturdays to Sundays and holidays. Inside each box a white rule marks the median, and a dashed black rule standing behind the box marks the mean.">
+
+<p class="code-caption">A simple visual for the same data.</p>
+:::
+
+---
+
+## Manipulating Datasets via Join {.smaller}
+::: {.caption}
+Births and population from Eurostat [`demo_fmonth`](https://ec.europa.eu/eurostat/databrowser/view/demo_fmonth/) and [`demo_pjan`](https://ec.europa.eu/eurostat/databrowser/view/demo_pjan/); `per_1000` annualizes the month against the January 1 population. Final dates from Wikipedia.
+:::
+Back to Week 2: **does winning a World Cup raise the winning country's birth rate nine months later?**
+
+At minimum we would need two tables:
+
+:::: {.columns}
+
+::: {.column width="46%"}
+
+<p style="margin:0 0 0.3em; text-align:center; font-size:0.7em; font-weight:700; color:#333;">World Cup finals, 2006-2018 (Wikipedia)</p>
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.6em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">country</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">year</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">final_date</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Italy</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2006</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2006-07-09</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Spain</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2010</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2010-07-11</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Germany</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2014</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2014-07-13</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">France</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2018</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2018-07-15</td>
+</tr>
+</table>
+
+<p class="code-caption">One row = one tournament.</p>
+:::
+
+::: {.column width="54%"}
+
+<p style="margin:0 0 0.3em; text-align:center; font-size:0.7em; font-weight:700; color:#333;">Monthly live births (Eurostat)</p>
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.6em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">geo</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">month</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">births</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">per_1000</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">ES</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-03</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">39,900</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">10.07</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">ES</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-04</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">37,396</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">9.75</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">DE</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2015-04</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">56,664</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">8.49</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">IT</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-04</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">39,395</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">8.00</td>
+</tr>
+</table>
+
+<p class="code-caption">One row = one country-month.</p>
+:::
+
+::::
+
+
+
+**Which field do we merge on?**
+
+---
+
+## Making the Keys Match {.smaller}
+
+Simple "Crosswalk table" demo
+
+:::: {.columns}
+
+::: {.column width="58%"}
+```python
+codes = pl.DataFrame({                    # a crosswalk table!
+    "country": ["Italy", "Spain", "Germany", "France"],
+    "geo":     ["IT",    "ES",    "DE",      "FR"],
+})
+
+wins = (
+    finals
+    .join(codes, on="country")
+    # date augmentation demo column
+    .with_columns(
+        pl.col("final_date").dt.offset_by("9mo")
+                            .dt.strftime("%Y-%m").alias("month")
+    )
+)
+
+births = births.join(codes, on="geo")     # ES -> Spain, for reading
+```
+:::
+
+::: {.column width="42%"}
+
+<p style="margin:0 0 0.3em; text-align:center; font-size:0.7em; font-weight:700; color:#333;">wins</p>
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.6em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">country</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">geo</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">month</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Italy</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">IT</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">2007-04</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Spain</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">ES</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">2011-04</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Germany</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">DE</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">2015-04</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">France</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">FR</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">2019-04</td>
+</tr>
+</table>
+
+<p class="code-caption">`geo` and `month` are now the key</p>
+:::
+
+::::
+
+`join(codes, on="country")` matches on a column both tables already name the same way.
+
+When column names differ: `finals.join(codes, left_on="winner", right_on="country")`.
+
+---
+
+## Join in Code {.smaller}
+
+With the keys from the crosswalk, the join is straightforward:
+
+:::: {.columns}
+
+::: {.column width="46%"}
+```python
+merged = births.join(
+    wins.select("geo", "month", "year"),
+    on=["geo", "month"],
+    how="left",
+)
+```
+
+`how="left"` keeps every row of `births` and leaves `year` null wherever nothing matched (no championship)
+
+(`how="inner"` would keep only the winning months)
+:::
+
+::: {.column width="54%"}
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.58em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">country</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">month</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">per_1000</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">year</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Spain</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-03</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">10.07</td>
+<td style="border:2px solid #f9461c; color:#999; font-family:monospace; padding:6px 12px; text-align:center;">null</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Spain</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-04</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">9.75</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">2010</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Spain</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-05</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">9.92</td>
+<td style="border:2px solid #f9461c; color:#999; font-family:monospace; padding:6px 12px; text-align:center;">null</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Germany</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2015-03</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">8.48</td>
+<td style="border:2px solid #f9461c; color:#999; font-family:monospace; padding:6px 12px; text-align:center;">null</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Germany</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2015-04</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">8.49</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">2014</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Germany</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2015-05</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">8.84</td>
+<td style="border:2px solid #f9461c; color:#999; font-family:monospace; padding:6px 12px; text-align:center;">null</td>
+</tr>
+</table>
+
+<p class="code-caption">Two rows matched, others came back with a null.</p>
 :::
 
 ::::
 
 ---
+
+## Another Column {.smaller}
+
+Create a yes/no variable to align with the question:
+
+:::: {.columns}
+
+::: {.column width="46%"}
+```python
+merged = merged.with_columns(
+    pl.col("year").is_not_null()
+      .alias("won_world_cup_9mo_ago")
+)
+```
+
+Note this is for demonstration purposes; it is not a thorough, meaningful answer to the research question.
+
+(It does make the question seem slightly more answerable!)
+:::
+
+::: {.column width="54%"}
+
+<table style="border-collapse:collapse; margin:0 auto; font-size:0.58em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">country</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">month</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">per_1000</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 12px; text-align:center;">won_world_cup_9mo_ago</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Spain</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-03</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">10.07</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">false</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Spain</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-04</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">9.75</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">true</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Spain</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2011-05</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">9.92</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">false</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Germany</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2015-03</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">8.48</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">false</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Germany</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2015-04</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">8.49</td>
+<td style="border:2px solid #f9461c; background:#fdf2ee; font-weight:bold; padding:6px 12px; text-align:center;">true</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">Germany</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">2015-05</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">8.84</td>
+<td style="border:2px solid #f9461c; padding:6px 12px; text-align:center;">false</td>
+</tr>
+</table>
+:::
+
+::::
+
+---
+
+
+## Scope in the World Cups / Birth Rates example {.smaller}
+
+
+<img src="../assets/wrangling/scope-fifa.svg" class="figure figure-plain" style="max-height:390px" alt="Two black and white panels. Under &quot;Did Spain's birth rate move after the 2010 final?&quot;, a rectangle of all Eurostat monthly births from 1960 to 2025 fully contains an ellipse of Spanish births in 2010 and 2011. Under &quot;Does winning a World Cup raise the birth rate?&quot;, a rectangle of Eurostat births for EU countries overlaps an ellipse of every World Cup winner only partly, because Eurostat births do not include World Cup winning countries like Brazil, Argentina, and Uruguay.">
+
+
+---
+
 
 ## Is the Data in Scope? {.smaller}
 
@@ -830,14 +1353,17 @@ Check that the rows available are the rows your question is about.
 
 ---
 
+
+
 ## Filtering Changes a Sample {.smaller}
 
-:::
-- **Too expansive?** Filter. *"I want grades for CS 418, but the file has every CS class."*
-- **Not expansive enough?** No filter will fix it. *"I want 311 requests in Illinois, but the file is Chicago only."*
-- Filtering a sample shrinks the sample. Afterward: are there still enough rows, and do they still represent what you're studying?
+- **Too expansive?** Filter.
+    - e.g. *"I want grades for CS 418, but the file has every CS class."*
+- **Not expansive enough?** No filter will fix it, try to find more data (or...?)
+    - e.g. *"I want 311 requests in Illinois, but the file is Chicago only."*
+- Filtering a sample shrinks the sample.
+    - Afterward: are there still enough rows, and do they still represent what you're studying?
 - A filter is a modeling decision, so write down which rows are dropped and why.
-:::
 
 ---
 
@@ -850,18 +1376,21 @@ Data filtering is part of the data wrangling process: "is this data relevant to 
 ::: {.column width="42%"}
 - **Keep rows that satisfy a condition** — a comparison returns True/False for every row
 - **Select only the columns you need** — based on the question
-- **Combine multiple conditions** — join comparisons with AND or OR
+- **Combine multiple conditions** — `&` is AND (every condition must hold), `|` is OR (either one will do)
 :::
 
 ::: {.column width="58%"}
 ```python
-# rows that satisfy a condition
+# one condition: keep the rows where it is True
 df.filter(pl.col("miles") > 15)
 
-# multiple conditions — one filter per condition
+# AND: commas mean every condition must hold
 df.filter(pl.col("miles") > 15, pl.col("hours") < 1)
 
-# or combine them yourself, parenthesizing each one
+# AND: the same thing written with &, parenthesizing each condition
+df.filter((pl.col("miles") > 15) & (pl.col("hours") < 1))
+
+# OR: | keeps a row if either condition holds
 df.filter((pl.col("miles") > 15) | (pl.col("hours") < 1))
 
 # only the columns you need
@@ -893,11 +1422,10 @@ df.filter(pl.col("miles") > 15).select("trip", "miles")
 :::: {.columns}
 
 ::: {.column width="42%"}
-- You've probably seen lots of spreadsheets
 - Grid with cells, rows, columns (and sheets/tabs)
 - Excel, Google Sheets, Numbers, LibreOffice Calc, etc.
 - Convenient for manual entry, review, sharing
-- But data scientists don't keep data in spreadsheets...
+- But data scientists often don't keep data in spreadsheets...
 :::
 
 ::: {.column width="58%"}
@@ -921,8 +1449,8 @@ df.filter(pl.col("miles") > 15).select("trip", "miles")
 ::: {.incremental}
 - Formulas and transformations are hidden inside cells
 - Data types, missing values can be ambiguous
-- Auto-formatting can corrupt values (e.g., gene name "SEPT2" becomes a date)<sup>[6]</sup>
-- Errors can go undetected for years without automated testing <sup>[7,8]</sup>
+- Auto-formatting can corrupt values (e.g., [gene name "SEPT2" becomes a date](https://link.springer.com/article/10.1186/s13059-016-1044-7))
+- Errors can go undetected for years without automated testing ([spreadsheet horror stories](https://eusprig.org/research-info/horror-stories/), [the Reinhart-Rogoff error](https://theconversation.com/the-reinhart-rogoff-error-or-how-not-to-excel-at-economics-13646))
 :::
 :::
 
@@ -945,10 +1473,10 @@ df.filter(pl.col("miles") > 15).select("trip", "miles")
 
 ::: {.column width="42%"}
 - Comma-separated values
-- Plain-text table: one row per record, one delimiter between fields
+- Plain-text table: one row per record, one delimiter between fields (can be non-comma)
 - Often used for spreadsheets, exports, and simple datasets
 - Easy to inspect
-- Types and hierarchy are usually implicit
+- Types and hierarchy are usually implicit until ingested/wrangled
 :::
 
 ::: {.column width="58%"}
@@ -992,6 +1520,7 @@ Tyler Durden	Paper Street Soap Co.	All Natural Handmade	537 Paper Street	Bradfor
 - Text format for data interchange
 - Built from objects, arrays, strings, numbers, booleans, and null
 - Common for web APIs and configuration files
+- Allows for nesting (as opposed to flat)
 :::
 
 ::: {.column width="58%"}
@@ -1022,7 +1551,7 @@ Tyler Durden	Paper Street Soap Co.	All Natural Handmade	537 Paper Street	Bradfor
 - Extensible Markup Language
 - Nested tags represent elements and attributes
 - Verbose, but widely used by older document systems
-- E.g. Excel uses XML under the hood
+- E.g. Excel uses XML under the hood (same for Word)
 :::
 
 ::: {.column width="58%"}
@@ -1174,6 +1703,32 @@ variables:
 | Spreadsheet | Small, early-stage data; prototypes; manual entry | *(Excel, Google Sheets, Numbers)* |
 
 
+---
+
+## Conclusion
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### ❓Any Questions?
+:::
+
+::: {.column width="50%"}
+### 📸 Take a picture of your worksheet, upload it in Canvas
+:::
+
+::::
+
+---
+
+## Quiz Time!
+
+- PrairieLearn
+- Week 3 Quiz
+- It should give you your score instantly
+- You can leave when finished!
+
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week3.qmd>.
@@ -1184,8 +1739,10 @@ variables:
 6. Ziemann M., Eren Y., El-Osta A., "Gene name errors are widespread in the scientific literature," *Genome Biology* 17, 177 (2016): <https://link.springer.com/article/10.1186/s13059-016-1044-7>.
 7. European Spreadsheet Risks Interest Group (EuSpRIG), Horror Stories — a catalogue of real-world spreadsheet errors in business, government, and research: <https://eusprig.org/research-info/horror-stories/>.
 8. Inman, Phillip, "The Reinhart-Rogoff error — or how not to Excel at economics," *The Conversation*, 2013: <https://theconversation.com/the-reinhart-rogoff-error-or-how-not-to-excel-at-economics-13646>.
-9. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
-10. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-11. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
-12. Ridership numbers computed from [CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) and [CTA System Information — List of 'L' Stops](https://data.cityofchicago.org/Transportation/CTA-System-Information-List-of-L-Stops/8pix-ypme), City of Chicago Data Portal, for August 2025.
-13. Granularity, group by, pivot, and scope figures drawn for this deck by `docs/assets/wrangling/make_wrangling_figures.py`, following the split-apply-combine and pivot diagrams in the CS 418 wrangling materials (see 9). Route colors follow the [CTA Trademark Guidelines for Developers](https://www.transitchicago.com/developers/branding/); the figures use Orange, Red, and Purple, which stay distinguishable under common color vision deficiencies and are all dark enough for white lettering.
+9. Data quality vocabulary, and the structure / granularity / scope / temporality / faithfulness framework: Lau S., Gonzalez J., Nolan D., *Learning Data Science* (O'Reilly, 2023), [ch. 2, "Questions and Data Scope"](https://learningds.org/ch/02/data_scope_intro.html), [ch. 8, "Wrangling Files"](https://learningds.org/ch/08/files_intro.html), and [ch. 9, "Wrangling Dataframes"](https://learningds.org/ch/09/wrangling_intro.html); Berkeley Data 100 course notes, ["Data Cleaning and EDA"](https://ds100.org/course-notes-su23/eda/eda.html).
+10. World Cup and birth rate join example: monthly live births from Eurostat [`demo_fmonth`](https://ec.europa.eu/eurostat/databrowser/view/demo_fmonth/) and population from [`demo_pjan`](https://ec.europa.eu/eurostat/databrowser/view/demo_pjan/), retrieved September 2026; final dates from the Wikipedia articles on the [2006](https://en.wikipedia.org/wiki/2006_FIFA_World_Cup_final), [2010](https://en.wikipedia.org/wiki/2010_FIFA_World_Cup_final), [2014](https://en.wikipedia.org/wiki/2014_FIFA_World_Cup_final), and [2018](https://en.wikipedia.org/wiki/2018_FIFA_World_Cup_final) FIFA World Cup finals.
+11. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+12. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+13. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+14. Ridership numbers computed from [CTA Ridership — 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f) and [CTA System Information — List of 'L' Stops](https://data.cityofchicago.org/Transportation/CTA-System-Information-List-of-L-Stops/8pix-ypme), City of Chicago Data Portal. The group by and pivot figures use August 2025; the data quality checks use the full file, January 2001 through March 2026.
+15. Granularity, group by, pivot, and scope figures drawn for this deck by `docs/assets/wrangling/make_wrangling_figures.py`, based on the split-apply-combine and pivot diagrams in the CS 418 wrangling materials. Route colors follow the [CTA Trademark Guidelines for Developers](https://www.transitchicago.com/developers/branding/)
