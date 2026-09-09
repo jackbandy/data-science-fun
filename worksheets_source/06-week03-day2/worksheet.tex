@@ -1,0 +1,144 @@
+% CS 418: Intro to Data Science — Worksheet 6 (06-week03-day2)
+% Week 3, Wednesday 2026-09-09
+% Compile with: latexmk -pdf worksheet.tex
+
+\documentclass[11pt]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{mdframed}
+\usepackage{array}
+
+% ── Page style ────────────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{CS 418: Intro to Data Science}}
+\rhead{UIC, Fall 2026}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\setlength{\headheight}{12pt}
+\setlength{\headsep}{0.4cm}
+
+% ── Hyperlinks ────────────────────────────────────────────────────────────────
+\hypersetup{colorlinks=false, hidelinks}
+
+% ── Convenience environments ──────────────────────────────────────────────────
+\newenvironment{problem}[1]{%
+  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
+  \textbf{Problem #1.}
+}{%
+  \end{mdframed}\vspace{0.5em}
+}
+
+\newenvironment{hint}{%
+  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
+  \textit{Hint:}
+}{%
+  \end{mdframed}\vspace{0.3em}
+}
+
+% Usage: \blankspace{6cm} — blank area for hand-written work, no rules
+\newcommand{\blankspace}[1]{%
+  \vspace{0.3em}
+  \begin{minipage}[t][#1][t]{\linewidth}
+  \end{minipage}
+  \vspace{0.3em}
+}
+
+% Usage: \guidedopen{title}{guided content}{guided workspace height}{open-ended workspace height}
+% Left: a titled, structured prompt with its own blank workspace. Right: a
+% fully blank workspace for open-ended exploration of the same topic (no
+% prompt text), sized so the two columns land at roughly the same total
+% height. Neither workspace is ruled.
+\newcommand{\guidedopen}[4]{%
+  \noindent\textbf{#1}\\[0.18em]
+  \noindent
+  \begin{minipage}[t]{0.485\textwidth}
+    #2
+    \blankspace{#3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.485\textwidth}
+    \blankspace{#4}
+  \end{minipage}
+  \\[0.4em]
+}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+\RaggedRight
+
+% ── Title block: topic left, info box right ───────────────────────────────────
+\noindent
+\begin{minipage}[t]{0.55\textwidth}
+  \vspace{0pt}
+  {\LARGE \textbf{Worksheet \#\,6}} \\[0.18em]
+  {\large \textit{Week 3, Day 2: Wrangling, data formats}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+  \vspace{0pt}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
+\end{minipage}
+
+\vspace{0.6em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.1em}
+
+\noindent\underline{\textbf{Guided checkpoints (optional)}}
+\vspace{0.8em}
+
+% ── 1. Types of quality issues ──────────────────────────────────────────────
+\guidedopen{1. Types of Quality Issues}{
+List the  types of data quality issues
+}{3.2cm}{4.0cm}
+
+\vfill
+
+% ── 2. The granularity spectrum ─────────────────────────────────────────────
+\guidedopen{2. The Granularity Scale}{
+Draw the scale from fine-grained to coarse-grained data, with examples.
+}{4.0cm}{4.8cm}
+
+\vfill
+
+% ── 3. Group by, pictured ───────────────────────────────────────────────────
+\guidedopen{3. Group By, Visualized}{
+Sketch the three steps of ``group by.''
+}{4.3cm}{5.2cm}
+
+\newpage
+
+% ── 4. Pivot: one cell per combination ──────────────────────────────────────
+\guidedopen{4. Pivot: One Cell per Combination}{
+Sketch the pivoted grid (one cell comes up empty)
+}{4.0cm}{4.8cm}
+
+\vfill
+
+% ── 5. Is the data in scope? ────────────────────────────────────────────────
+\guidedopen{5. Is the Data in Scope?}{
+Draw the two scope visuals.
+}{4.0cm}{5.0cm}
+
+\vfill
+
+% ── 6. File formats ─────────────────────────────────────────────────────────
+\guidedopen{6. File Formats}{
+List the data formats discussed.
+}{3.2cm}{4.0cm}
+
+\vfill
+
+\end{document}
