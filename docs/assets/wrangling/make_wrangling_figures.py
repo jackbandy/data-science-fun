@@ -390,26 +390,40 @@ GR_CARDS = [
 ]
 
 
-def make_granularity():
-    parts = []
+GR_LABELS = [
+    "an empty axis from fine grained to coarse grained, with no tables on it yet",
+    "one table of CTA ridership at one row per tap-in, sitting at the fine-grained end of the axis",
+    "two tables of the same CTA ridership, one row per tap-in and one row per station-day, along the axis",
+    "three tables of the same CTA ridership at three granularities: one row per tap-in, one row per station-day, "
+    "one row per line-month, along an arrow from fine grained to coarse grained",
+]
+
+
+def granularity_card(card, x):
+    """One table, captioned, drawn at its place along the axis."""
+    parts = [text(x + GR_CARD_W / 2, 36, card["caption"], 17, 700, INK)]
     header_y, row_h, row_gap = 62, 34, 6
-    for card, x in zip(GR_CARDS, GR_CARD_XS):
-        parts.append(text(x + GR_CARD_W / 2, 36, card["caption"], 17, 700, INK))
+    cx = x
+    for width, label in zip(card["widths"], card["header"]):
+        parts.append(cell(cx, header_y, width, row_h, NEUTRAL, label, INK, size=14))
+        cx += width
+    for r, values in enumerate(card["rows"]):
+        y = header_y + row_h + row_gap + r * (row_h + row_gap)
         cx = x
-        for width, label in zip(card["widths"], card["header"]):
-            parts.append(cell(cx, header_y, width, row_h, NEUTRAL, label, INK, size=14))
+        for c, (width, value) in enumerate(zip(card["widths"], values)):
+            if c == 0 and value in ROUTES:
+                # Route names keep the 19px bold white lettering they carry
+                # in every other figure; white on Orange needs that size.
+                parts.append(cell(cx, y, width, row_h, ROUTES[value], value, PAPER, size=19))
+            else:
+                parts.append(cell(cx, y, width, row_h, PAPER, value, INK, size=14, weight=400))
             cx += width
-        for r, values in enumerate(card["rows"]):
-            y = header_y + row_h + row_gap + r * (row_h + row_gap)
-            cx = x
-            for c, (width, value) in enumerate(zip(card["widths"], values)):
-                if c == 0 and value in ROUTES:
-                    # Route names keep the 19px bold white lettering they carry
-                    # in every other figure; white on Orange needs that size.
-                    parts.append(cell(cx, y, width, row_h, ROUTES[value], value, PAPER, size=19))
-                else:
-                    parts.append(cell(cx, y, width, row_h, PAPER, value, INK, size=14, weight=400))
-                cx += width
+    return "".join(parts)
+
+
+def make_granularity(stage):
+    """`stage` tables, revealed left to right; the axis is on from the start."""
+    parts = [granularity_card(card, x) for card, x in zip(GR_CARDS[:stage], GR_CARD_XS[:stage])]
 
     bar_y = 344
     parts.append(
@@ -419,9 +433,7 @@ def make_granularity():
     parts.append(text(30, bar_y + 30, "fine grained", 19, 700, INK, anchor="start"))
     parts.append(text(1050, bar_y + 30, "coarse grained", 19, 700, INK, anchor="end"))
     parts.append(text(540, bar_y + 30, "fewer rows, each one summarizing more", 15, 400, MUTED, style="italic"))
-    return svg(GR_WIDTH, GR_HEIGHT, "".join(parts),
-               "Three tables of the same CTA ridership at three granularities: one row per tap-in, one row per "
-               "station-day, one row per line-month, along an arrow from fine grained to coarse grained.")
+    return svg(GR_WIDTH, GR_HEIGHT, "".join(parts), "Granularity: " + GR_LABELS[stage] + ".")
 
 
 # ------------------------------------------------------------------------ scope
@@ -449,7 +461,7 @@ SC_PANELS = [
 ]
 
 
-def scope_panel(panel):
+def scope_panel(panel, data_fill=ORANGE):
     x = panel["x"]
     # The question the panel is about comes first; the diagnosis under it names
     # what the picture shows, and the note at the bottom says what to do.
@@ -459,7 +471,7 @@ def scope_panel(panel):
     ]
     if not panel["overlap"]:
         parts.append(
-            f'<rect x="{x}" y="96" width="450" height="244" rx="14" fill="{ORANGE}" stroke="{INK}" '
+            f'<rect x="{x}" y="96" width="450" height="244" rx="14" fill="{data_fill}" stroke="{INK}" '
             f'stroke-width="{STROKE_WIDTH}"/>'
         )
         parts.append(text(x + 26, 330, panel["data_label"], 19, 700, PAPER, anchor="start"))
@@ -474,7 +486,7 @@ def scope_panel(panel):
             f'stroke-width="{STROKE_WIDTH}"/>'
         )
         parts.append(
-            f'<rect x="{x}" y="140" width="270" height="196" rx="14" fill="{ORANGE}" stroke="{INK}" '
+            f'<rect x="{x}" y="140" width="270" height="196" rx="14" fill="{data_fill}" stroke="{INK}" '
             f'stroke-width="{STROKE_WIDTH}" fill-opacity="0.92"/>'
         )
         parts.append(text(x + 20, 326, panel["data_label"], 19, 700, PAPER, anchor="start"))
@@ -496,12 +508,47 @@ def make_scope(stage):
     return svg(SC_WIDTH, SC_HEIGHT, body, label)
 
 
+# The World Cup scope example carries no CTA route, so it drops the route color
+# and draws the same two shapes in black and white.
+SC_FIFA_PANELS = [
+    {
+        "x": 40,
+        "question": '"Did Spain\'s birth rate move after the 2010 final?"',
+        "diagnosis": "The data is broader than the question",
+        "data_label": "Eurostat monthly births, 1960-2025",
+        "pop_label": "Spain, 2010-2011",
+        "note": "Filter down to the rows in scope",
+        "overlap": False,
+    },
+    {
+        "x": 560,
+        "question": '"Does winning a World Cup raise the birth rate?"',
+        "diagnosis": "The data covers only part of the question",
+        "data_label": "Eurostat births (EU)",
+        "pop_label": "Every World Cup winner",
+        "note": "10 of the 23 titles went to Brazil, Argentina, or Uruguay",
+        "overlap": True,
+    },
+]
+
+
+def make_scope_fifa():
+    body = "".join(scope_panel(p, data_fill=INK) for p in SC_FIFA_PANELS)
+    return svg(SC_WIDTH, SC_HEIGHT, body,
+               'Two black and white panels. Under "Did Spain\'s birth rate move after the 2010 final?", a rectangle '
+               "of all Eurostat monthly births from 1960 to 2025 fully contains an ellipse of Spanish births in 2010 "
+               'and 2011. Under "Does winning a World Cup raise the birth rate?", a rectangle of Eurostat births for '
+               "EU countries overlaps an ellipse of every World Cup winner only partly, leaving the South American "
+               "winners outside the data.")
+
+
 # ------------------------------------------------------------------------- main
 
 
 def main() -> None:
     written = []
-    written.append(("granularity-v0.svg", make_granularity()))
+    for stage in range(len(GR_CARDS) + 1):
+        written.append((f"granularity-v{stage}.svg", make_granularity(stage)))
     for stage in range(len(GROUPBY_STAGES)):
         written.append((f"groupby-v{stage}.svg", make_groupby(stage)))
     for stage in range(len(PIVOT_STAGES)):
@@ -509,6 +556,7 @@ def main() -> None:
     written.append(("pivot-v3.svg", make_pivot_result()))
     for stage in range(len(SC_PANELS)):
         written.append((f"scope-v{stage}.svg", make_scope(stage)))
+    written.append(("scope-fifa.svg", make_scope_fifa()))
 
     for name, markup in written:
         path = OUT_DIR / name
