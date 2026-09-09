@@ -881,16 +881,17 @@ entries.group_by("line").sum()
 </tr>
 </table>
 
-```python
-entries.group_by("line").sum()
-```
 :::
 
 ::: {.column width="58%"}
 
+```python
+entries.group_by("line").sum()
+```
+
 <p class="code-caption" style="margin-bottom:0.4em;">Out</p>
 
-<table style="border-collapse:collapse; margin:0 auto 0.5em; font-size:0.62em;">
+<table style="border-collapse:collapse; margin:0 auto 0.5em; font-size:0.58em;">
 <tr>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">line</td>
 <td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">station_id</td>
@@ -908,12 +909,28 @@ entries.group_by("line").sum()
 </tr>
 </table>
 
-
 Fix is to name the intended column:
 
 ```python
 entries.group_by("line").agg(pl.col("rides").sum())
 ```
+
+<p class="code-caption" style="margin-bottom:0.4em;">Out</p>
+
+<table style="border-collapse:collapse; margin:0 auto 0.5em; font-size:0.58em;">
+<tr>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">line</td>
+<td style="border:2px solid #f9461c; background:#f9461c; color:#fff; font-weight:bold; padding:6px 14px; text-align:center;">rides</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Orange</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">6</td>
+</tr>
+<tr>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">Red</td>
+<td style="border:2px solid #f9461c; padding:6px 14px; text-align:center;">11</td>
+</tr>
+</table>
 :::
 
 ::::

@@ -86,6 +86,9 @@ $presentation-heading-line-height: 1 !default;
 $presentation-heading-text-transform: none !default;
 $presentation-h1-font-size: $h1-size !default;
 $presentation-h2-font-size: $h2-size !default;
+// Code blocks. Quarto's default is 0.55em (~14pt against the 34px root); 0.62em
+// takes that to ~16pt so code reads from the back of the room.
+$code-block-font-size: 0.62em !default;
 $code-block-bg: $soft-gray !default;
 $code-block-border-color: $border !default;
 $code-bg: #ececea !default;
