@@ -177,6 +177,14 @@ print(df.shape)
 
 ---
 
+## What happens if you call `.describe()` on a column of strings?
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+:::
+
+---
+
 ## The EDA Checklist
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
