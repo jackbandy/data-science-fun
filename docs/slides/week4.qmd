@@ -175,6 +175,19 @@ print(df.shape)
 # (3, 2)
 ```
 
+---
+
+## The EDA Checklist
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*The Art of Data Science*, [Chapter 4: Exploratory Data Analysis](https://bookdown.org/rdpeng/artofdatascience/exploratory-data-analysis.html)
+:::
+:::
+
+
 # Week 4, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop04-washington-wells-b.jpg" background-size="cover"}
 
 <h2>Descriptive Statistics</h2>
@@ -601,6 +614,56 @@ box = pl.DataFrame({"x": np.zeros(len(vals)), "v": vals})
 ```
 
 ---
+
+## Summary Statistics as Minimizers
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Learning Data Science*, [Chapter 4: Modeling with Summary Statistics](https://learningds.org/ch/04/modeling_intro.html)
+:::
+:::
+
+
+---
+
+## Standard Units
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/why-the-mean-matters)
+:::
+:::
+
+
+---
+
+## Chebyshev's Bounds
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/why-the-mean-matters)
+:::
+:::
+
+
+---
+
+## The Normal Curve and 68-95-99.7
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/why-the-mean-matters)
+:::
+:::
+
 
 # Why Visualization? {.section-header}
 
