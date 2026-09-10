@@ -5,6 +5,7 @@ format:
       - shared/theme/slide-utilities.css
     include-in-header:
       - shared/includes/head-icons.html
+      - shared/includes/crawler-policy.html
     include-after-body:
       - shared/includes/slide-number-after-body.html
       - shared/includes/iframe-caption.html

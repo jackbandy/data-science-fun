@@ -59,6 +59,9 @@ exclude:
   # Quarto book sources (published HTML lives in `ethics-in-data-science/book/`)
   - ethics-in-data-science/*.md
   - ethics-in-data-science/_quarto.yml
+  # Quarto inlines this into each chapter's <head>; the fragment itself is not
+  # a page and was being served at /ethics-in-data-science/crawler-policy.html.
+  - ethics-in-data-science/crawler-policy.html
   - ethics-in-data-science/references.bib
   - ethics-in-data-science/.quarto
   - ethics-in-data-science/.venv
@@ -72,6 +75,18 @@ exclude:
   # Obscure Films source notes (the published page is index.html; the README
   # stays source-only, same reason as the assets notes above).
   - obscure-films/*.md
+  # Build-time only, and all of it was being served. The figure scripts under
+  # assets/ generate images ahead of a build, the slide helpers run in CI, and
+  # Quarto inlines shared/includes/*.html at render time -- nothing here is
+  # fetched by a rendered page. shared/theme/*.css is the exception and stays.
+  - "*.py"
+  - "*.sh"
+  - "*.bib"
+  - "*.scss"
+  - slides/shared/includes
+  - slides/shared/__pycache__
+  - slides/shared/requirements.txt
+  - slides/shared/0-old-outline.md
   # Local Jekyll tooling, never part of the site
   - Gemfile
   - Gemfile.lock

@@ -44,3 +44,5 @@ format:
     toc: true
     toc-depth: 2
     number-sections: true
+    include-in-header:
+      - crawler-policy.html

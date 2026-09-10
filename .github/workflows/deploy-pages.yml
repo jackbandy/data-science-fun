@@ -406,6 +406,20 @@ jobs:
           cp docs/slides/week*.qmd _site/slides/
           ls -1 _site/slides/week*.qmd
 
+      # Also after Jekyll, and for a less happy reason: docs/_config.yml lists
+      # `.well-known` under `include:`, but the file was still 404ing in
+      # production while the identical setup on doethics.fun (built by the
+      # stock Pages builder, not this workflow) served it fine. Rather than
+      # keep guessing which step eats a dotfile, copy it into place afterward.
+      # The step fails loudly if the source file is missing, so a rename can't
+      # silently take security.txt off the site again.
+      - name: Publish .well-known
+        run: |
+          test -f docs/.well-known/security.txt
+          mkdir -p _site/.well-known
+          cp -R docs/.well-known/. _site/.well-known/
+          ls -la _site/.well-known/
+
       # Looks for links that point to internal pages or files that don't exist.
       # --offline means it only checks local files
       # Outside links are handled weekly - link-check-external.yml.
