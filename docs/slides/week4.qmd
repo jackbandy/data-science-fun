@@ -226,12 +226,49 @@ Jack Bandy
 ::: {}
 - Week 4: Washington/Wells
 - Day 2
+    - Bayes/ Hw5
     - Descriptive Statistics
     - Data Visualization
     - Why Visualization?
 :::
 
 ![](../assets/orange-line-map-stops/stop04-washington-wells.svg){.figure alt="Orange Line map with the Washington/Wells stop marked, the Week 4 stop"}
+
+:::
+
+---
+
+
+# Bayes/Homework 5 {.section-header}
+
+## Homework 5 {.split}
+
+::: {.split-content .narrow-aside .fill-height}
+
+::: {.dense}
+- Part I: review of weeks 2–4 (Bayesian vs. frequentist, feature types, Bayes' Theorem)
+- Part II: defining exploratory analysis
+- Part III: a preview of next week — choosing a visualization
+:::
+
+![](../assets/prairielearn/PL-logo-white-on-blue.svg){.figure .figure-sm alt="The PrairieLearn logo, a white line drawing of a purple coneflower on a dark blue panel"}
+
+:::
+
+---
+
+
+## Bayes' Theorem {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em;"}
+[TODO]{.eyebrow .todo} walk the substitution: which number goes where
+:::
+:::
+
+![](../assets/bayes-diagnostic/bayes-theorem-visual-proof.svg){.figure alt="Pictorial proof of Bayes' theorem: a unit square split by the two events, showing that the joint probability can be read two ways"}
 
 :::
 
@@ -1100,5 +1137,6 @@ print(
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week4.qmd>.
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Tukey quotation: John W. Tukey, *The Collected Works of John W. Tukey, Volume IV: Philosophy and Principles of Data Analysis 1965–1986*, ed. Lyle V. Jones (Wadsworth & Brooks/Cole, 1986), p. 806. Quoted with its page citation in David R. Brillinger, ["Data Analysis, Exploratory," *Encyclopedia of Political Science* (SAGE, 2011), pp. 530–535](https://www.stat.berkeley.edu/~brill/Papers/EDASage.pdf).
-4. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-5. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+4. Bayes' Theorem diagram: Cmglee, [*Bayes theorem visual proof.svg*](https://commons.wikimedia.org/wiki/File:Bayes_theorem_visual_proof.svg), Wikimedia Commons. [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+5. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+6. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
