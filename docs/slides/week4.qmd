@@ -54,16 +54,18 @@ CS 418 · Week 4 · 🟠 Washington/Wells 🟠
 
 ---
 
-## Map {.split}
+## Day 1 Map {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
 - Week 4: Washington/Wells
 - Day 1
-    - Exploratory Analysis
+    - Group Topics Overview
+    - Group Project Intros
+    - The Ethos Exploratory Data Analysis
     - More Descriptive Statistics
-    - Group Project Time
+    - Bayes / Homework 5 (if time)
 :::
 
 ![](../assets/orange-line-map-stops/stop04-washington-wells.svg){.figure alt="Orange Line map with the Washington/Wells stop marked, the Week 4 stop"}
@@ -72,19 +74,436 @@ CS 418 · Week 4 · 🟠 Washington/Wells 🟠
 
 ---
 
+# Group Project Topics! {.section-header}
 
-# Exploratory Analysis {.section-header}
+<style>
+/* One topic card: an orange-ruled title over the questions students wrote for
+   it. Sized so two cards sit side by side on one slide without overflowing. */
+.reveal .group-card h3 { font-size: 1.05rem; line-height: 1.15; margin: 0.1em 0 0.45em; padding-top: 0.32em; border-top: 3px solid #f9461c; }
+.reveal .group-card ul { font-size: 0.6em; line-height: 1.32; padding-left: 1.1em; margin: 0; }
+.reveal .group-card li { margin: 0 0 0.55em; }
+/* A single group with a longer list: one full-width card, list in two columns. */
+.reveal .group-card-wide ul { columns: 2; column-gap: 56px; }
+.reveal .group-card-wide li { break-inside: avoid; }
+/* The overview slide: every topic name in two columns. 0.79em is the largest
+   size at which the 22 names (two columns, the longest name wrapping) still
+   clear the deck's autofit floor — footer top minus 12px, 656px at the 1280x720
+   design size — with the 0.3em gaps below; measured in a rendered deck. */
+.reveal .topic-list ul { columns: 2; column-gap: 56px; font-size: 0.79em; line-height: 1.3; padding-left: 1.1em; margin-bottom: 0; }
+/* The .slide in the middle of this selector is load-bearing: Quarto injects
+   .reveal .slide ul li { margin-top: .4em; margin-bottom: .2em } into every
+   deck at (0,2,2), which silently beat .reveal .topic-list li at (0,2,1) —
+   the margins below never applied. Matching .slide puts this at (0,3,1), the
+   same fix the theme uses for .dense. */
+.reveal .slide .topic-list li { break-inside: avoid; margin: 0 0 0.3em; }
+/* The group number each topic belongs to — the same 1-12 sequence the
+   tentative-group slides carry in their eyebrows. */
+.reveal .topic-list .gn { color: #f9461c; font-weight: 700; margin-right: 0.45em; font-variant-numeric: tabular-nums; }
+/* The twelve tentative-groups slides. The title names the groups on that
+   slide — twelve identical "Tentative Groups" headings are indistinguishable
+   in the slide menu (press M) — so the display-size title is scaled down to
+   fit both names on one line, and an eyebrow under it keeps the sequence
+   labelled and numbered. */
+.reveal .group-slide h2 { font-size: 2.1rem; line-height: 1.05; }
+.reveal .group-slide .eyebrow { margin: 0 0 0.35em; }
+</style>
+
+---
+
+## The Topics
+
+::: {.topic-list}
+- [2]{.gn} Trains and Public Transit
+- [3]{.gn} Chicago Housing Analytics
+- [4]{.gn} Chicago Traffic Analytics
+- [5]{.gn} Comparing Democracies
+- [6]{.gn} Economic Trajectories
+- [7]{.gn} Effect(s) of Surveillance Cameras on Public Safety
+- [8]{.gn} Effects of Commuting on Quality of Life
+- [9]{.gn} Exercise and Fitness Analytics (Personal)
+- [10]{.gn} External Impacts of Belief Systems
+- [11]{.gn} Grocery Stores as Public Health
+- [12]{.gn} Film Analytics
+- [13]{.gn} Socioeconomic Health Disparities
+- [14]{.gn} Learning With/Without AI
+- [15]{.gn} Music Analytics
+- [16]{.gn} News and Media Framing
+- [17]{.gn} Social Media and Society
+- [18]{.gn} Relationships and Mental Health
+- [19]{.gn} Sports and Performance Analytics (Professional)
+- [20]{.gn} "Not sure yet!"
+:::
+
+---
+
+## Chicago Housing Analytics {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 1 of 12
+:::
+
+::: {.group-card .group-card-wide}
+### Chicago Housing Analytics
+
+- Which factors best explain why housing prices increase faster in some Chicago neighborhoods than others?
+- Does living near a CTA station affect home sale prices in Cook County?
+- Does the price of homes in the Cook Country increase if there is an L-Stop nearby or it is similar?
+- Which neighborhood-level indicators best predict future increases in commercial rents, property values, and business activity?
+:::
+
+---
+
+## Chicago Traffic Analytics · Comparing Democracies {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 2 of 12
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.group-card}
+### Chicago Traffic Analytics
+
+- What are the leading causes of traffic accidents? Which locations in Chicago have the most traffic accidents?
+- What factors are associated with traffic accident severity in Chicago?
+- Which characteristics of Chicago intersections are associated with higher numbers of pedestrian or cyclist crashes?
+- How does traffic volume on I-290 in Chicago vary throughout the day, and what proportion of weekday traffic occurs during the 7–9 a.m. morning rush hour?
+:::
+:::
+
+::: {.column width="50%"}
+::: {.group-card}
+### Comparing Democracies
+
+- Do democratic countries with mandatory voting have a greater democratic health index than countries with no such measures?
+- Do democratic countries with mandatory voting measures exhibit higher levels of civic engagement compared to countries with no such measures?
+- Do more voters in democratic countries with mandatory voting measures (see above definition) report feeling more informed and knowledgeable about candidates on the ballot compared to voters in countries with no such measures?
+- Are people who grow up in eastern countries more generous than their western world counterparts?
+:::
+:::
+
+::::
+
+---
+
+## Economic Trajectories · Effect(s) of Surveillance Cameras on Public Safety {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 3 of 12
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.group-card}
+### Economic Trajectories
+
+- How do tariffs directly affect job hirings?
+- How have entry-level software job postings changed in terms of required skills and experience over the past several years?
+- To what degree does the median income of a child's neighborhood predict their median yearly income as an adult?
+- Is the economy showing symptoms of being in a AI debt bubble? Is this race towards AI and Data Centers economically viable?
+:::
+:::
+
+::: {.column width="50%"}
+::: {.group-card}
+### Effect(s) of Surveillance Cameras on Public Safety
+
+- Does surveillance camera in public areas reduce the crime rate in its region?
+- Do flock cameras actually reduce or solve crime? How are these locations chosen and are there demographics or sociopolitical patterns?
+- Do speed cameras actually stop crashes, or do they just make the crashes move to a different location?
+- Does being watched change behavior even when nothing is forbidden?
+:::
+:::
+
+::::
+
+---
+
+## Effects of Commuting on Quality of Life · Exercise and Fitness Analytics (Personal) {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 4 of 12
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.group-card}
+### Effects of Commuting on Quality of Life
+
+- Coming from a perspective as a student commuter, how does commuting affect college students attendance, academic performance, sleep, and/or stress levels?
+- How does commute time relate to class attendance and academic performance among college students?
+- How does the amount of time college students spend commuting affect how involved they are in activites or orgs on campus and their sense of connection to the university spirit?
+- Do work hours affect grades for students who commute?
+:::
+:::
+
+::: {.column width="50%"}
+::: {.group-card}
+### Exercise and Fitness Analytics (Personal)
+
+- does higher daily strain or training load (as measured by whoop/garmin) predict a measurable dip in recovery metrics (hrv, resting hr) in the following 24-48 hours, and does this relationship differ between trained athletes and casual users?
+- do rest days genuinely restore hrv and resting heart rate to baseline, or does recovery lag behind the number of rest days taken, and does this lag get worse with age or fitness level?
+- how does sleep quality (time in deep/rem stages, consistency of sleep/wake times) tracked by wearables like fitbit or whoop relate to next-day resting heart rate and hrv?
+- Does the time of day or day of the week a person typically works out predict their long-term gym attendance consistency?
+:::
+:::
+
+::::
+
+---
+
+## External Impacts of Belief Systems · Grocery Stores as Public Health {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 5 of 12
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.group-card}
+### External Impacts of Belief Systems
+
+- Does believing in afterlife change the way societies value human lives?
+- How much of human intelligence is shaped from the languages we think in?
+- Are people who grow up in eastern countries more generous than their western world counterparts?
+- Is reading fiction more helpful than reading non fiction for general life performance? (TBD measure again)
+:::
+:::
+
+::: {.column width="50%"}
+::: {.group-card}
+### Grocery Stores as Public Health
+
+- Does a grocery store closing actually change what people eat nearby?
+- Does living closer to dollar stores instead of grocery stores impact chronic health issues more than just the areas household income?
+- How does access to green space affect mental health and physical activity in urban communities?
+- How does nutrition and lifestyle affect the amount of young adults being diagnosed with colon cancer?
+:::
+:::
+
+::::
+
+---
+
+## Film Analytics {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 6 of 12
+:::
+
+::: {.group-card .group-card-wide}
+### Film Analytics
+
+- Can we predict whether a movie will be commercially successful before its release?
+- How do factors such as budget, ratings, etc influence a movies financial success?
+- Which features — cast, genre, runtime, release window — best predict how highly audiences rate a film, rather than how much money it makes?
+- Do actor and director collaboration networks predict which films get made, and which of them succeed?
+- Which recommendation strategy actually works better: "people who liked this also liked…", or matching on genre, cast, and crew?
+- How much do critic scores and audience scores agree, and which genres do they disagree about most?
+- Have the genres major studios release changed over the past few decades, and does that track what audiences rate highest?
+- Do sequels and franchise entries outperform original films once you account for budget?
+:::
+---
+
+## Learning With/Without AI {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 7 of 12
+:::
+
+::: {.group-card .group-card-wide}
+### Learning With/Without AI
+
+- How does the use of artificial intelligence tools, such as ChatGPT, affect college students' academic performance and study habits?
+- How has the use of AI in a classroom setting affected student performance?
+- Does the tolerance (as opposed to dismissal) of AI usage in classrooms improve the final exam scores?
+- How do longer study sessions compare to shorter ones when studying for exams?
+:::
+
+---
+
+## Music Analytics · News and Media Framing {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 8 of 12
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.group-card}
+### Music Analytics
+
+- What actually makes a song a summer hit and does the formula change?
+- What factors contribute to a song becoming a summer hit, and how have these factors changed over time?
+- Does music listening actually change with the seasons?
+- How does the popularity of a song, such as its download count, affect whether people choose to download and listen to it?
+:::
+:::
+
+::: {.column width="50%"}
+::: {.group-card}
+### News and Media Framing
+
+- How does the tone of international media coverage shape understanding of conflicts in Palestine?
+- Do a missing persons race, age, gender, and location affect how much news coverage they get and how fast their case is solved?
+- How does the sentiment and framing of media coverage about proposed public transit expansions relate to public support for those projects?
+- How fast do social media algorithms start recommending extreme political content to a brand new account?
+:::
+:::
+
+::::
+
+---
+
+## Relationships and Mental Health {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 9 of 12
+:::
+
+::: {.group-card .group-card-wide}
+### Relationships and Mental Health
+
+- How does having a strong relationship with parents influence one's self-esteem and ability to form positive relationships with peers and friends?
+- How do the people someone surrounds themselves with affect their academic motivation, career goals, and overall outlook on life?
+- People with which personality traits are more likely to suffer from mental health problems?
+- How do analog hobbies affect a person's mental health?
+:::
+
+---
+
+## Social Media and Society {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 10 of 12
+:::
+
+::: {.group-card .group-card-wide}
+### Social Media and Society
+
+- How does the presence and activity of bots on social media platforms affect user polarization?
+- Does social media actually diversify your perspective, or does it keep you in a bubble, giving you a false perception that youre being exposed to a wider range of perspectives and cultures?
+- How does social media use relate to anxiety among young adults, and does the type of social media use make a difference?
+- Does social media affect different generations mental health?
+:::
+
+---
+
+## Socioeconomic Health Disparities · Sports and Performance Analytics (Professional) {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 11 of 12
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.group-card}
+### Socioeconomic Health Disparities
+
+- Does Chicago's air pollution burden track income of people and does the answer depend on which particulate matter you look at?
+- How does maternal mortality within 1 year of giving birth differ by race in the United States?
+- How, if at all, does air quality correlate with rates of pulmonary and cardiovascular issues in Chicago neighborhoods?
+- Is there a correlation between neighborhood air pollution, poverty, and neighborhood demographics?
+:::
+:::
+
+::: {.column width="50%"}
+::: {.group-card}
+### Sports and Performance Analytics (Professional)
+
+- Do teams with higher player payrolls have better winning records than teams with lower payrolls?
+- Do EPL clubs display more long-term dominance than NFL teams?
+- How does a soccer team's possession percentage affect its chances of winning a match?
+- How significantly have major Formula 1 regulation changes disrupted the competitive order and how does the 2026 regulation change compare with previous eras?
+:::
+:::
+
+::::
+
+---
+
+## Trains and Public Transit {.group-slide}
+
+::: {.eyebrow}
+Tentative groups · 12 of 12
+:::
+
+::: {.group-card .group-card-wide}
+### Trains and Public Transit
+
+- Which BNSF trains/routes are often the most delayed/latest, and when does this happen most?
+- Does public transit reliability vary across Chicago neighborhoods, and what factors drive those differences?
+- Do different weather conditions increase public transit delays, such as CTA, Metra, etc. in major cities?
+- Can historical transit data be used to predict when and where bus bunching will occur?
+- What circumstances are most likely to result in unreported, missing ghost buses?
+:::
+---
+
+## Zones {.split}
+
+::: {.split-content .golden-columns .fill-height}
+
+::: {.dense}
+- Each tentative topic gets a **zone** of LCC C001 for today.
+- Find the zone for the topic you signed up for, and sit in it.
+- Not sure yet? Pick the zone whose questions you would actually want to answer — nothing is final until the group forms.
+- If a zone has nobody in it, that topic probably will not run this semester.
+:::
+
+![](../assets/art/LCC_C001_crop_zones.svg){.figure alt="Floor plan of UIC Lecture Center C001: a fan of curved rows of seats facing a lectern, inside a square room rotated 45 degrees"}
+
+:::
+
+---
+
+## Group Project Intros {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+
+Meet the people in your zone:
+
+* What is your name?
+* Why this topic?
+* Anything you want to know before committing to this topic?
+* Preferred communication?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+
+
+# The Ethos of Exploratory Data Analysis {.section-header}
+
+---
+
+## The Data Science Lifecycle {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle-v3.svg" alt="The data science lifecycle with the 'understand the data' stage highlighted: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
+
+::: {.caption}
+Exploratory data analysis — this week's focus — lives in the **understand the data** stage.
+:::
 
 ---
 
 ## What is Exploratory Data Analysis?
 
-::: {.incremental}
 - Exploratory Data Analysis (EDA): analyzing data simply to better understand it, discover patterns, identify potential issues, and determine the best approach for building predictive models.
 - The main tools of exploratory data analysis are:
-  - **Summary Statistics** (mean, median, spread, counts, etc.)
-  - **Descriptive Visualization** (histograms, box plots, scatter plots)
-:::
+  - **Summary Statistics** (spread, counts, central tendency, etc.)
+  - **Descriptive Visualization** (histograms, box plots, scatter plots, more to discuss next week)
 
 ---
 
@@ -117,7 +536,7 @@ John W. Tukey
 
 ## Steps
 
-The steps of exploratory data analysis are:
+Six conventional steps of exploratory data analysis:
 
 ::: {.incremental}
 1. Data Collection and Loading (setting up your environment)
@@ -165,15 +584,83 @@ print(df.shape)
 
 ---
 
-## What happens if you call `.describe()` on a column of strings?
+## What happens if you call `.describe()` on a column of strings? {.smaller}
 
-TODO
+:::: {.columns}
+
+::: {.column width="42%"}
+```python
+import polars as pl
+
+df = pl.DataFrame({
+    "name": ["Ana", "Ben", "Cleo", "Dee"],
+    "line": ["Orange", "Blue", "Orange", None],
+    "age":  [19, 21, 20, 22],
+})
+
+df.describe()
+```
+:::
+
+::: {.column width="58%"}
+```
+shape: (9, 4)
+┌────────────┬──────┬────────┬──────────┐
+│ statistic  ┆ name ┆ line   ┆ age      │
+│ ---        ┆ ---  ┆ ---    ┆ ---      │
+│ str        ┆ str  ┆ str    ┆ f64      │
+╞════════════╪══════╪════════╪══════════╡
+│ count      ┆ 4    ┆ 3      ┆ 4.0      │
+│ null_count ┆ 0    ┆ 1      ┆ 0.0      │
+│ mean       ┆ null ┆ null   ┆ 20.5     │
+│ std        ┆ null ┆ null   ┆ 1.290994 │
+│ min        ┆ Ana  ┆ Blue   ┆ 19.0     │
+│ 25%        ┆ null ┆ null   ┆ 20.0     │
+│ 50%        ┆ null ┆ null   ┆ 21.0     │
+│ 75%        ┆ null ┆ null   ┆ 21.0     │
+│ max        ┆ Dee  ┆ Orange ┆ 22.0     │
+└────────────┴──────┴────────┴──────────┘
+```
+:::
+
+::::
+
+::: {.aside-note}
+`count` and `null_count` work on any type, and `min`/`max` fall back to alphabetical order. Everything that needs arithmetic — `mean`, `std`, the quartiles — comes back `null`. Note also that `count` excludes nulls: `line` counts 3, not 4.
+:::
 
 ---
 
-## Basic steps to scraping a website
 
-TODO
+
+## Questions to Guide Exploration
+
+::: {.aside-note}
+*Learning Data Science*, [Section 10.5: Guidelines for Exploration](https://learningds.org/ch/10/eda_guidelines.html)
+:::
+::: {.incremental}
+- How are the values of **feature X** distributed?
+- How do **X** and **Y** relate to each other?
+- Is the distribution of **X** the same across subgroups defined by **Z**?
+- Are there unusual observations in **X**? In the pair **(X, Y)**? In **X** within a subgroup of **Z**?
+:::
+
+
+
+---
+
+## "What Next?" and "So What?"
+
+::: {.aside-note}
+*Learning Data Science*, [Section 10.5: Guidelines for Exploration](https://learningds.org/ch/10/eda_guidelines.html).
+:::
+
+- Use answers to point at the next question
+- Do you have reason to expect an observed difference?
+- What additional comparison could be helpful?
+- Check with a domain expert if possible!
+
+
 
 ---
 
@@ -192,9 +679,27 @@ TODO
 
 
 
+## EDA Is Open-Ended
+
+::: {.aside-note}
+*Learning Data Science*, [Chapter 10: Exploratory Data Analysis](https://learningds.org/ch/10/eda_intro.html)
+:::
+
+- EDA is not a fixed recipe.
+- The point is not to confirm a hypothesis at the start
+- Find useful questions about the data
+- Surface assumptions before modeling.
+
+
+
+---
+
 ## Any questions?
 
-TODO
+- PrairieLearn Homeworks?
+- Coding exercise 00?
+- Group Projects?
+- Other logistics?
 
 ---
 
@@ -202,42 +707,8 @@ TODO
 
 Upload a picutre of your worksheet in canvas
 
----
-
-## Group project time
-
-Details TODO
 
 ---
-
-# Week 4, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop04-washington-wells-b.jpg" background-size="cover"}
-
-<h2>Descriptive Statistics</h2>
-
-Jack Bandy
-2026
-
----
-
-## Map {.split}
-
-::: {.split-content .narrow-aside}
-
-::: {}
-- Week 4: Washington/Wells
-- Day 2
-    - Bayes/ Hw5
-    - Descriptive Statistics
-    - Data Visualization
-    - Why Visualization?
-:::
-
-![](../assets/orange-line-map-stops/stop04-washington-wells.svg){.figure alt="Orange Line map with the Washington/Wells stop marked, the Week 4 stop"}
-
-:::
-
----
-
 
 # Bayes/Homework 5 {.section-header}
 
@@ -273,6 +744,45 @@ Jack Bandy
 :::
 
 ---
+
+
+
+
+# Week 4, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop04-washington-wells-b.jpg" background-size="cover"}
+
+<h2>Descriptive Statistics &amp; Visualization</h2>
+
+Jack Bandy
+2026
+
+---
+
+## Day 2 Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+- Week 4: Washington/Wells
+- Day 2
+    - Whirlwind demo: how to scrape a website
+    - Descriptive Statistics
+    - Data Visualization
+    - Why Visualization?
+:::
+
+![](../assets/orange-line-map-stops/stop04-washington-wells.svg){.figure alt="Orange Line map with the Washington/Wells stop marked, the Week 4 stop"}
+
+:::
+
+---
+
+
+## Basic steps to scraping a website
+
+TODO
+
+---
+
 
 
 # Descriptive Statistics {.section-header}
@@ -816,18 +1326,6 @@ As the number of variables grows, a table of raw measurements becomes hard to re
 
 ---
 
-## EDA Is Open-Ended
-
-EDA is not a fixed recipe. You try a few summaries, make a few plots, and then follow the shape of the data. Some questions are answered by a single number; others require a scatter plot, a histogram, or a comparison across groups.
-
-The point is not to confirm a hypothesis at the start. It is to generate useful questions about the data and to surface assumptions before modeling.
-
-::: {.aside-note}
-*Learning Data Science*, [Chapter 10: Exploratory Data Analysis](https://learningds.org/ch/10/eda_intro.html)
-:::
-
----
-
 # Why Visualization? {.section-header}
 
 ---
@@ -1025,7 +1523,7 @@ Every $x$ is the same but one point that creates the slope.
 
 ---
 
-## The Full Quartet{.figure-slide}
+## The Full Quartet {.figure-slide}
 
 ```{python}
 #| echo: false
@@ -1067,7 +1565,7 @@ The dashed line on the next four slides is the same fitted line every time: $y =
 ---
 
 
-## The Datasaurus Dozen {.image-frame-slide auto-animate=true}
+## The Datasaurus Dozen: Same Statistics {.image-frame-slide auto-animate=true}
 
 ::: {.fragment}
 <img data-id="dozen" data-gif-src="../assets/datasaurus/datasaurus-dozen.gif" class="figure-plain" alt="Animation of thirteen datasets morphing into one another — a dinosaur, a star, horizontal stripes, a circle, an X, vertical stripes, a bullseye, slanted lines, dots, and more — while the summary statistics printed above the plot never change">
@@ -1092,7 +1590,7 @@ document.addEventListener("fragmenthidden", (e) => {
 
 ---
 
-## The Datasaurus Dozen {auto-animate=true}
+## The Datasaurus Dozen: Why Visualize? {auto-animate=true}
 
 :::: {.columns}
 ::: {.column width="52%"}
