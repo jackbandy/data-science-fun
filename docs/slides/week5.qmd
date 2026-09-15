@@ -77,7 +77,72 @@ CS 418 · Week 5 · 🟠 Clark/Lake 🟠
 
 ## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
 
+---
 
+## The Datasaurus Dozen: Same Statistics {.image-frame-slide auto-animate=true}
+
+::: {.fragment}
+<img data-id="dozen" data-gif-src="../assets/datasaurus/datasaurus-dozen.gif" class="figure-plain" alt="Animation of thirteen datasets morphing into one another — a dinosaur, a star, horizontal stripes, a circle, an X, vertical stripes, a bullseye, slanted lines, dots, and more — while the summary statistics printed above the plot never change">
+:::
+
+<script>
+// Hold the GIF until the fragment is clicked. A looping animation that loads
+// with the slide is already halfway through by the time anyone looks at it;
+// swapping the src on reveal means the dinosaur is always the first thing you
+// see. Clearing it again on the way back re-arms the slide.
+document.addEventListener("fragmentshown", (e) => {
+  e.fragment.querySelectorAll("img[data-gif-src]").forEach((img) => {
+    img.src = img.dataset.gifSrc;
+  });
+});
+document.addEventListener("fragmenthidden", (e) => {
+  e.fragment.querySelectorAll("img[data-gif-src]").forEach((img) => {
+    img.removeAttribute("src");
+  });
+});
+</script>
+
+---
+
+## The Datasaurus Dozen: Why Visualize? {auto-animate=true}
+
+:::: {.columns}
+::: {.column width="52%"}
+::: {.incremental style="font-size:0.72em;"}
+- Matejka & Fitzmaurice (CHI 2017) took Alberto Cairo's "Datasaurus" and generated **twelve more datasets** from it.
+- Each is nudged point by point toward a target shape, using only moves that leave the summary statistics alone.
+- All thirteen have the same mean, standard deviation, and correlation (to two decimals!)
+- Summary statistics are a "*lossy compression*"
+- Visualization helps
+:::
+:::
+::: {.column width="48%"}
+
+<img data-id="dozen" src="../assets/datasaurus/datasaurus-dozen-panel.svg" class="figure-plain" style="max-height:50vh; margin:0 auto;" alt="All thirteen Datasaurus Dozen datasets as small multiples: dino, star, h_lines, circle, x_shape, v_lines, bullseye, slant_up, dots, slant_down, high_lines, wide_lines, and away">
+
+```{python}
+#| echo: false
+#| output: asis
+dino = pl.read_csv("../../datasets/datasaurus-dozen/datasaurus-dozen.csv")
+agg = dino.group_by("dataset").agg(
+    pl.col("x").mean().alias("mx"), pl.col("y").mean().alias("my"),
+    pl.col("x").std().alias("sx"), pl.col("y").std().alias("sy"),
+    pl.corr("x", "y").alias("r"))
+# U+2212 minus, since a hyphen next to a digit reads as a dash on a slide.
+r_bar = f'{agg["r"].mean():.2f}'.replace("-", "−")
+print(
+    '<div style="text-align:center; font-size:0.55em; color:#565a5c; margin-top:0.3em;">'
+    f'across all {agg.height} datasets — '
+    f'mean(x) {agg["mx"].mean():.2f}, mean(y) {agg["my"].mean():.2f}, '
+    f'sd(x) {agg["sx"].mean():.2f}, sd(y) {agg["sy"].mean():.2f}, '
+    f'r {r_bar}</div>'
+)
+```
+
+:::
+::::
+
+---
 
 ## Map {.split}
 
