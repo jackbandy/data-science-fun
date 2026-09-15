@@ -94,8 +94,12 @@
 ### Sources
 
 * *Learning Data Science*, [Chapter 4: Modeling with Summary Statistics](https://learningds.org/ch/04/modeling_intro.html)
-* *The Art of Data Science*, [Chapter 5: Using Models to Explore Your Data](https://bookdown.org/rdpeng/artofdatascience/using-models-to-explore-your-data.html)
 * *Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/why-the-mean-matters)
+* *Computational and Inferential Thinking*, [Section 14.2: Variability](https://inferentialthinking.com/chapters/14/2/variability) (Chebychev's bounds)
+* *Think Stats* (3rd ed.), [Chapter 1: Exploratory Data Analysis](https://allendowney.github.io/ThinkStats/chap01.html)
+* *Think Stats* (3rd ed.), [Chapter 2: Distributions](https://allendowney.github.io/ThinkStats/chap02.html)
+* Matejka & Fitzmaurice (2017), ["Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing"](https://dl.acm.org/doi/10.1145/3025453.3025912), *Proc. CHI '17*, 1290-1294
+	* [Datasets](https://github.com/jmatejka/same-stats-different-graphs)
 
 ## Week 5, Day 1 (2026-09-21)
 
