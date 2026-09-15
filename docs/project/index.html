@@ -1,0 +1,65 @@
+---
+layout: default
+title: Group Project
+nav: project
+description: The group project checkpoints for Introduction to Data Science (CS 418), Fall 2026.
+show_last_updated: true
+extra_css:
+  - /css/exercises.css
+---
+{%- comment -%}
+  Index of the group-project checkpoints. Hand-written, and deliberately minimal:
+  the descriptions live in project/*.md at the repo root, and nothing generates
+  pages from them yet, so a checkpoint is listed here with a link only once its
+  page exists. Dates come from _data/schedule.csv -- keep the two in step.
+
+  Note: this file was largely written by an LLM (Claude Code).
+{%- endcomment -%}
+{%- assign signals = site.data.ai_signals -%}
+
+<h1 class="exercises-title">Group Project</h1>
+<p class="exercises-subtitle">The project runs the length of the semester, in checkpoints. Each one is a piece of the final report, due while there is still time to change course.</p>
+
+<ol class="exercise-list">
+  <li class="exercise-item">
+    <a class="exercise-item-title" href="/project/question-memo/">Question Memo</a>
+    <p class="exercise-item-summary">Share two or three research questions you would want to spend the semester on.</p>
+    <p class="exercise-item-meta">AI/LLM phase: {{ signals['red-yellow'].label }}</p>
+    <p class="exercise-item-meta">Due Wednesday, September 2</p>
+  </li>
+  <li class="exercise-item">
+    <span class="exercise-item-title">Groups Assembled</span>
+    <p class="exercise-item-summary">Done in class, around the shared interests that came out of the question memos.</p>
+    <p class="exercise-item-meta">Wednesday, September 9, in class</p>
+  </li>
+  <li class="exercise-item">
+    <a class="exercise-item-title" href="/project/data-acquisition/">Data Acquisition</a>
+    <p class="exercise-item-summary">Find, obtain, and describe datasets your group will work with.</p>
+    <p class="exercise-item-meta">AI/LLM phase: {{ signals['red-yellow'].label }}</p>
+    <p class="exercise-item-meta">Due Wednesday, September 23</p>
+  </li>
+  <li class="exercise-item">
+    <span class="exercise-item-title">Exploratory Analysis</span>
+    <p class="exercise-item-meta">Due Wednesday, October 7</p>
+  </li>
+  <li class="exercise-item">
+    <span class="exercise-item-title">Data Documentation</span>
+    <p class="exercise-item-meta">Due Wednesday, October 21</p>
+  </li>
+  <li class="exercise-item">
+    <span class="exercise-item-title">Narrative Analysis</span>
+    <p class="exercise-item-meta">Due Wednesday, November 4</p>
+  </li>
+  <li class="exercise-item">
+    <span class="exercise-item-title">Public-Facing Report</span>
+    <p class="exercise-item-meta">Due Wednesday, November 18</p>
+  </li>
+  <li class="exercise-item">
+    <span class="exercise-item-title">Presentation</span>
+    <p class="exercise-item-meta">In class, November 23 through December 2</p>
+  </li>
+  <li class="exercise-item">
+    <span class="exercise-item-title">Peer Assessment</span>
+    <p class="exercise-item-meta">Date TODO</p>
+  </li>
+</ol>
