@@ -370,6 +370,11 @@ jobs:
           key: english-frequencies-count_1w-v1
 
       - name: Rebuild meta-analytics data
+        # AI_USAGE_ENDPOINT is the counter Worker in ai_usage_endpoint/. Set it as a
+        # repository variable to turn the "AI tools" section on; unset, the build
+        # prints a note, skips ai-usage.json, and the section stays hidden.
+        env:
+          AI_USAGE_ENDPOINT: ${{ vars.AI_USAGE_ENDPOINT }}
         run: python3 meta_analytics_source/build_data.py
 
       # The coding exercises are generated from exercises/*/exercise.md into the

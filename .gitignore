@@ -87,3 +87,10 @@ meta_analytics_source/.cache/
 docs/_data/exercises.yml
 docs/_includes/exercises-about.html
 docs/exercises/
+
+# Wrangler's local state for the AI-usage counter: account id, deploy metadata,
+# and (after `wrangler dev`) a local copy of the KV data. Machine-specific, and
+# the account file carries an email address. The deployable source is just
+# worker.js + wrangler.toml.
+ai_usage_endpoint/.wrangler/
+ai_usage_endpoint/node_modules/

@@ -252,3 +252,22 @@
 .meta-error {
   color: #c60c30;
 }
+
+/* AI-tool counts: one horizontal bar per tool. */
+.meta-bar {
+  fill: var(--meta-accent);
+}
+
+.meta-bar-track {
+  fill: var(--meta-accent-wash);
+}
+
+.meta-bar-label {
+  font-size: 11px;
+  fill: #222;
+}
+
+.meta-bar-value {
+  font-size: 11px;
+  fill: var(--meta-muted);
+}

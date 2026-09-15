@@ -701,4 +701,88 @@
       });
     }
   );
+
+  // --- section 4: AI tools ------------------------------------------------
+
+  /* One horizontal bar per tool, longest first. A bar chart rather than a
+   * scatter because there are only ever a handful of tools and the comparison
+   * being made is "which one, how much" -- length against a shared baseline is
+   * the read people already know how to do.
+   */
+  function drawBars(spec) {
+    var container = spec.container;
+    container.textContent = "";
+    container.classList.remove("meta-loading");
+    container.classList.add("meta-plot");
+
+    var rows = spec.rows;
+    var m = { top: 16, right: 64, bottom: 16, left: 108 };
+    var innerW = PLOT_W - m.left - m.right;
+    var rowH = 26;
+    var height = m.top + rows.length * rowH + m.bottom;
+    var max = rows.reduce(function (acc, row) {
+      return Math.max(acc, row.value);
+    }, 0) || 1;
+
+    var svg = el("svg", {
+      viewBox: "0 0 " + PLOT_W + " " + height,
+      role: "img",
+      "aria-label": spec.ariaLabel
+    });
+
+    rows.forEach(function (row, i) {
+      var y = m.top + i * rowH;
+      var barH = 14;
+      var width = Math.max(1, Math.round((row.value / max) * innerW));
+
+      svg.appendChild(el("rect", { class: "meta-bar-track", x: m.left, y: y, width: innerW, height: barH, rx: 2 }));
+      svg.appendChild(el("rect", { class: "meta-bar", x: m.left, y: y, width: width, height: barH, rx: 2 }));
+      svg.appendChild(
+        el("text", { class: "meta-bar-label", x: m.left - 8, y: y + barH - 3, "text-anchor": "end" }, row.label)
+      );
+      svg.appendChild(
+        el("text", { class: "meta-bar-value", x: m.left + width + 8, y: y + barH - 3 }, row.note)
+      );
+    });
+
+    container.appendChild(svg);
+  }
+
+  function renderAiUsage(data) {
+    var tools = data.tools || [];
+    if (!tools.length) return false;
+
+    document.getElementById("ai-usage-sessions").textContent = num(data.total_sessions);
+    document.getElementById("ai-usage-installs").textContent = num(data.total_installs);
+    document.getElementById("ai-usage-tools").textContent = num(tools.length);
+
+    drawBars({
+      container: document.getElementById("ai-usage-plot"),
+      ariaLabel: "Agent sessions started in course assignment folders, by tool",
+      rows: tools.map(function (row) {
+        return {
+          label: row.tool,
+          value: row.sessions,
+          note: num(row.sessions) + " (" + plural(row.installs, "folder", "folders") + ")"
+        };
+      })
+    });
+    return true;
+  }
+
+  load(
+    "data/ai-usage.json",
+    function (data) {
+      // The section stays hidden until there is something real to show: the
+      // counter may not be deployed yet, and an empty chart says less than no
+      // chart at all.
+      if (renderAiUsage(data)) {
+        document.getElementById("ai-usage").hidden = false;
+        stamp("ai-usage-generated", data.generated);
+      }
+    },
+    function () {
+      // No endpoint configured, or no file yet. Leave the section hidden.
+    }
+  );
 })();

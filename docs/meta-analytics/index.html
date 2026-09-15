@@ -40,6 +40,30 @@ extra_css:
   </p>
 </section>
 
+<section class="meta-section" id="ai-usage" hidden>
+  <h2>AI tools opened in the assignments</h2>
+  <p>
+    Coding exercise folders have hook configs for the common coding
+    agents. When one of them starts a session in that folder it increments a counter
+    (the tool's name and nothing else).
+  </p>
+
+  <dl class="meta-figures">
+    <div><dt>Sessions</dt><dd id="ai-usage-sessions">—</dd></div>
+    <div><dt>Distinct folders</dt><dd id="ai-usage-installs">—</dd></div>
+    <div><dt>Tools seen</dt><dd id="ai-usage-tools">—</dd></div>
+  </dl>
+
+  <div id="ai-usage-plot" class="meta-loading">Loading AI-tool data…</div>
+
+  <p class="meta-note">
+    One session is one agent start, so one person opening a tool five times
+    counts five times; the folder count is maybe a closer stand-in for people. These
+    are rough signals. Last built
+    <span id="ai-usage-generated">—</span>.
+  </p>
+</section>
+
 <section class="meta-section" id="words">
   <h2>Word frequencies</h2>
   <p>
