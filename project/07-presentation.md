@@ -3,6 +3,7 @@ summary: TODO — one line describing this checkpoint.
 topic: TODO
 due: In class, November 23 through December 2
 ai_policy: tk
+draft: true
 ---
 
 # Checkpoint Seven: Presentation

@@ -3,6 +3,7 @@ summary: TODO — one line describing this checkpoint.
 topic: TODO
 due: Wednesday, October 7
 ai_policy: tk
+draft: true
 ---
 
 # Checkpoint Three: Exploratory Analysis

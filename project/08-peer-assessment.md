@@ -3,6 +3,7 @@ summary: TODO — one line describing this checkpoint.
 topic: TODO
 due: TODO
 ai_policy: tk
+draft: true
 ---
 
 # Checkpoint Eight: Peer Assessment

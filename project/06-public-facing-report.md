@@ -3,6 +3,7 @@ summary: TODO — one line describing this checkpoint.
 topic: TODO
 due: Wednesday, November 18
 ai_policy: tk
+draft: true
 ---
 
 # Checkpoint Six: Public-Facing Report

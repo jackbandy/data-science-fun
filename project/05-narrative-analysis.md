@@ -3,6 +3,7 @@ summary: TODO — one line describing this checkpoint.
 topic: TODO
 due: Wednesday, November 4
 ai_policy: tk
+draft: true
 ---
 
 # Checkpoint Five: Narrative Analysis

@@ -3,6 +3,7 @@ summary: TODO — one line describing this checkpoint.
 topic: TODO
 due: Wednesday, October 21
 ai_policy: tk
+draft: true
 ---
 
 # Checkpoint Four: Data Documentation

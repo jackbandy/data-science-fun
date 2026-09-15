@@ -1,0 +1,50 @@
+---
+layout: default
+---
+{%- comment -%}
+  Layout for a single group-project checkpoint page (/project/<slug>/).
+
+  The page itself is generated — edit project/<NN>-<slug>.md and rerun
+  project/build-project-data.py. This file only frames what that build
+  produces: the header strip (due date, AI signal) and the signal drawing
+  beside the closing policy section. It is deliberately the same furniture as
+  _layouts/exercise.html, minus the starter-code row, since the checkpoints and
+  the coding exercises are the same kind of page to a student.
+
+  Note: this file was largely written by an LLM (Claude Code).
+{%- endcomment -%}
+{%- assign signals = site.data.ai_signals -%}
+{%- assign signal = signals[page.ai_policy] -%}
+<p class="exercise-breadcrumb"><a href="/project/">&larr; All project checkpoints</a></p>
+
+<article class="exercise">
+  <p class="exercise-eyebrow">Group project{% if page.topic and page.topic != "TODO" %} &middot; {{ page.topic }}{% endif %}</p>
+  <h1 class="exercise-title">{{ page.title }}</h1>
+  <p class="exercise-summary">{{ page.summary }}</p>
+
+  <dl class="exercise-meta">
+    <div><dt>Due</dt><dd>{{ page.due }}</dd></div>
+    <div><dt>AI/LLM use</dt>
+      <dd>
+        <a href="{{ signal.faq }}">{{ signal.label }}</a> &mdash; {{ signal.meaning }}
+        {% if signal.image %}<img class="signal-badge" src="{{ signal.image }}" alt="">{% endif %}</dd></div>
+  </dl>
+
+{%- comment -%}
+  Same trick as the exercise layout: the closing "AI/LLM policy" section is prose
+  in each checkpoint's markdown, but the drawing that goes with it is data
+  (_data/ai_signals.yml), so the build emits the heading and the badge is
+  injected after it here. Kramdown auto-generates the heading id, hence matching
+  on the full opening tag rather than a bare <h2>.
+{%- endcomment -%}
+{%- capture policy_heading -%}<h2 id="aillm-policy">AI/LLM policy</h2>{%- endcapture -%}
+{%- if signal.image -%}
+  {%- capture policy_block -%}{{ policy_heading }}<img class="signal-badge signal-badge-policy" src="{{ signal.image }}" alt="">{%- endcapture -%}
+{%- else -%}
+  {%- assign policy_block = policy_heading -%}
+{%- endif -%}
+
+  <div class="exercise-body">
+    {{ content | replace: policy_heading, policy_block }}
+  </div>
+</article>

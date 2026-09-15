@@ -8,6 +8,7 @@ on:
       - "syllabus_source/**"
       - "meta_analytics_source/**"
       - "exercises/**"
+      - "project/**"
       - ".github/workflows/deploy-pages.yml"
   # build on pull requests, so mistakes show up before the site goes live
   pull_request:
@@ -17,6 +18,7 @@ on:
       - "syllabus_source/**"
       - "meta_analytics_source/**"
       - "exercises/**"
+      - "project/**"
       - ".github/workflows/deploy-pages.yml"
   # The meta-analytics counts are rebuilt during this build rather than
   # committed, and they drift as links and prose change. This refreshes them
@@ -386,6 +388,13 @@ jobs:
       # and docs/_includes/exercises-about.html, all of which are gitignored.
       - name: Build coding exercises
         run: python3 exercises/build-exercises-data.py
+
+      # Same arrangement for the group-project checkpoints, generated from
+      # project/*.md into docs/project/<slug>.md (gitignored). Checkpoints whose
+      # frontmatter says `draft: true` are skipped, so unfinished stubs are not
+      # published. docs/project/index.html is hand-written and committed.
+      - name: Build project checkpoints
+        run: python3 project/build-project-data.py
 
       # Strip dev/build cruft so we don't ship venvs and caches to GitHub Pages.
       # TODO: Verify the slide notebooks (docs/slides/week*.ipynb)

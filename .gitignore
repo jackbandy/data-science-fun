@@ -88,6 +88,12 @@ docs/_data/exercises.yml
 docs/_includes/exercises-about.html
 docs/exercises/
 
+# Group project: one page per checkpoint, generated from project/*.md by
+# project/build-project-data.py, which the Pages workflow runs on every build.
+# Same reasoning as the coding exercises above. Only the generated .md pages are
+# ignored -- docs/project/index.html is the hand-written index and IS committed.
+docs/project/*.md
+
 # Wrangler's local state for the AI-usage counter: account id, deploy metadata,
 # and (after `wrangler dev`) a local copy of the KV data. Machine-specific, and
 # the account file carries an email address. The deployable source is just
