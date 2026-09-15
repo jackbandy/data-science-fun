@@ -1098,6 +1098,13 @@ Positive, but weaker than the CTA example (0.88).
 - Create a **correlation matrix** showing all pairwise correlations.
 :::
 
+::: {}
+**Correlations can mislead**
+
+- Additional variables may reveal unexpected and contrasting results.
+- Always use your brain and think critically.
+:::
+
 # Bivariate Visualizations {.section-header}
 
 ---
@@ -2611,3 +2618,4 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 13. Color: Masataka Okabe and Kei Ito, ["Color Universal Design"](https://jfly.uni-koeln.de/color/) (2008); Françoise Viénot, Hans Brettel and John D. Mollon, "Digital video colourbars for testing dichromatic colour vision," *Color Research & Application* 24, no. 4 (1999): 243–252; Nathaniel Smith and Stéfan van der Walt, ["A Better Default Colormap for Matplotlib"](https://bids.github.io/colormap/) (SciPy 2015).
 14. Smoothing and the Cherry Blossom run analysis the Large-N section is modeled on: Deborah Nolan and Duncan Temple Lang, *Data Science in R: A Case Studies Approach to Computational Reasoning and Problem Solving* (CRC Press, 2015), ch. 2.
 15. Slide deck built with [Quarto](https://quarto.org/) revealjs. Title font is Big Shoulders; body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+16. Simpson's Paradox: https://www.linkedin.com/pulse/simpsons-paradox-one-chart-two-realities-gordon-goodwin-hhhte
