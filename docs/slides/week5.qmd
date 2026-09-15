@@ -998,6 +998,18 @@ Positive, but weaker than the CTA example (0.88).
 
 ---
 
+## Correlation Pitfalls: The Simpson's Paradox
+
+:::: {.split-content}
+
+<img src="../assets/viz-basics/simpsons-paradox-1.png" alt="Seems like salary drops with seniority...">
+
+<img class="fragment" src="../assets/viz-basics/simpsons-paradox-2.png" alt="...unless you control for departments!">
+
+::::
+
+---
+
 
 ## Concluding Notes
 ::: {}
