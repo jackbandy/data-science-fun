@@ -1,10 +1,18 @@
 jupyter
 nbformat
-# numba (pulled in via arviz, used by week6's pymc deck) removed support for
-# np.row_stack at NumPy 2.5. Unpinned, the resolver takes numpy 2.5 and is then
-# forced onto a numba prerelease that still calls it, breaking the slide render.
-# Capping here keeps numpy 2.4.x with stable numba. Lift once numba supports 2.5.
-numpy<2.5
+# numba (pulled in via arviz, used by week6's pymc deck) sets the real ceiling
+# here. It compiles against NumPy internals, so each numba release supports
+# NumPy only up to a known version. Left uncapped, the resolver would rather
+# drop numba -- taking pytensor down several major versions with it -- than
+# report the conflict, and the week6 deck renders degraded instead of failing
+# loudly. Mirroring numba's own ceiling keeps that resolution honest.
+#
+# numba 0.67 requires numpy<2.6, so that is the cap. Raise it in step with
+# numba's next release rather than ahead of one.
+#
+# For history: numba <=0.66 stopped at numpy<2.5 because it called
+# np.row_stack, which NumPy removed in 2.5. numba 0.67 fixed that.
+numpy<2.6
 polars
 seaborn
 plotnine
