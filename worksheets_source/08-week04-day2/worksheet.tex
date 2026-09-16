@@ -5,8 +5,9 @@
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -15,15 +16,6 @@
 \usepackage{fancyhdr}
 \usepackage{mdframed}
 \usepackage{array}
-
-% ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a stub. The watermark marks the PDF as unfinished so
-% nobody mistakes a placeholder for the real thing. Delete this block once the
-% worksheet has real content.
-\usepackage{draftwatermark}
-\SetWatermarkText{IN-PROGRESS}
-\SetWatermarkScale{2.2}
-\SetWatermarkLightness{0.85}
 
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -39,54 +31,152 @@
 \hypersetup{colorlinks=false, hidelinks}
 
 % ── Convenience environments ──────────────────────────────────────────────────
-\newenvironment{problem}[1]{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
-  \textbf{Problem #1.}
-}{%
-  \end{mdframed}\vspace{0.5em}
-}
-
-\newenvironment{hint}{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
-  \textit{Hint:}
-}{%
-  \end{mdframed}\vspace{0.3em}
-}
-
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
+% Usage: \blankspace{6cm} — blank area for hand-written work, no rules
+\newcommand{\blankspace}[1]{%
   \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
   \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
+  \end{minipage}
   \vspace{0.3em}
+}
+
+% Usage: \guidedopen{title}{guided content}{guided workspace height}{open-ended workspace height}
+% Left: a titled, structured prompt with its own blank workspace. Right: a
+% fully blank workspace for open-ended exploration of the same topic (no
+% prompt text), sized so the two columns land at roughly the same total
+% height. Neither workspace is ruled.
+\newcommand{\guidedopen}[4]{%
+  \noindent\textbf{#1}\\[0.18em]
+  \noindent
+  \begin{minipage}[t]{0.485\textwidth}
+    #2
+    \blankspace{#3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.485\textwidth}
+    \blankspace{#4}
+  \end{minipage}
+  \\[0.4em]
+}
+
+% Usage: \panelbox{width}{height}{caption} — a framed drawing panel with `caption`
+% centered beneath it. An empty caption leaves the panel bare, with nothing
+% below the frame at all.
+\newcommand{\panelbox}[3]{%
+  \begin{minipage}[t]{\dimexpr#1+2\fboxsep+2\fboxrule\relax}
+    \framebox[#1][c]{\rule{0pt}{#2}}%
+    \if\relax\detokenize{#3}\relax\else
+      \\[0.25em]{\centering\small #3\par}%
+    \fi
+  \end{minipage}%
 }
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
 \noindent
 \begin{minipage}[t]{0.55\textwidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,8}} \\[0.3em]
-  {\large \textit{Week 4, Day 2: Descriptive statistics}}
+  {\LARGE \textbf{Worksheet \#\,8}} \\[0.18em]
+  {\large \textit{Week 4, Day 2: Scraping guidance, Bayes' law, more descriptive statistics, why visualize}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
-\vspace{0.2em}
+\vspace{0.6em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.1em}
+
+\noindent\underline{\textbf{Guided checkpoints (optional)}}
+\vspace{0.8em}
+
+% ── 1. Six steps to scrape ───────────────────────────────────────────────────
+\guidedopen{1. Six Steps to Scrape a Website}{
+List the six typical steps of scraping a web page.
+}{5.0cm}{5.25cm}
+
+\vfill
+
+% ── 2. Anatomy of Bayes' theorem ─────────────────────────────────────────────
+\guidedopen{2. Bayes' Anatomy}{
+Write Bayes' law, define prior and posterior
+}{4.6cm}{5.3cm}
+
+\vfill
+
+% ── 3. The EDA toolkit ───────────────────────────────────────────────────────
+\guidedopen{3. Review: The EDA Toolkit}{
+Name the methods (and attribute) that offer an exploratory look at a dataframe.
+}{4.35cm}{5.55cm}
+
+\vfill
+
+\newpage
+
+% ── 4. The shape of a distribution ───────────────────────────────────────────
+\guidedopen{4. Common Shapes of Distributions}{
+Sketch a distribution in each panel, mark the mean and median, and label the panel.
+
+\vspace{0.5em}
+
+\noindent
+\panelbox{2.5cm}{2.5cm}{}\hfill
+\panelbox{2.5cm}{2.5cm}{}\hfill
+\panelbox{2.5cm}{2.5cm}{}
+}{0.2cm}{5.05cm}
+
+\vfill
+
+% ── 5. Chebyshev's bounds ────────────────────────────────────────────────────
+\guidedopen{5. Chebyshev's Bounds, Tabulated}{
+Fill in the bound for each $k$.
+
+\vspace{0.4em}
+
+{\small\renewcommand{\arraystretch}{1.75}%
+\noindent\begin{tabular}{@{}c >{\centering\arraybackslash}p{2.9cm} >{\centering\arraybackslash}p{2.9cm}@{}}
+\toprule
+$k$ & \textbf{Within $k$ SDs} & \textbf{Outside $k$ SDs} \\
+\midrule
+1 & & \\
+2 & & \\
+3 & & \\
+4 & & \\
+5 & & \\
+\bottomrule
+\end{tabular}}
+}{0.4cm}{6.27cm}
+
+\vfill
+
+% ── 6. Anscombe's quartet ────────────────────────────────────────────────────
+\guidedopen{6. Anscombe's Quartet}{
+Sketch each of the four datasets.
+
+\vspace{0.5em}
+
+\noindent
+\panelbox{4.0cm}{2.3cm}{I}\hfill
+\panelbox{4.0cm}{2.3cm}{II}
+
+\vspace{0.4em}
+
+\noindent
+\panelbox{4.0cm}{2.3cm}{III}\hfill
+\panelbox{4.0cm}{2.3cm}{IV}
+
+\vspace{1.2em}
+
+\noindent All four have...
+}{1.3cm}{9.2cm}
+
+\vfill
 
 \end{document}
