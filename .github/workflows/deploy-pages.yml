@@ -293,6 +293,26 @@ jobs:
           echo "Exporting PDFs for: $NEEDED"
           RENDER_SLIDES="$NEEDED" bash shared/build_all_quarto.sh
 
+      # The generated regions of docs/slides/index.html are rewritten here, not
+      # taken from the commit. build_all_quarto.sh already runs this script, but
+      # only when it runs at all — an exact slides-cache hit skips the render
+      # step above, and the cache key covers the deck sources without covering
+      # docs/_data/schedule.csv, which feeds the title parentheticals and the
+      # summary table's Topics column. So a schedule-only edit hits the cache
+      # and would otherwise deploy the stale index committed alongside it.
+      #
+      # Running it as its own step instead of widening the cache key keeps a
+      # schedule.csv edit from forcing a full re-render of every deck (and a
+      # re-export of every PDF) to refresh a file the script builds from the
+      # sources in well under a second. Nothing here needs the decks built:
+      # the anchors come from the deck sources, which is what lets the
+      # repo-checks.yml drift check run against a tree with no decks in it.
+      #
+      # This only fixes what gets deployed. The committed index.html can still
+      # drift, and repo-checks.yml is still the thing that says so.
+      - name: Sync the generated regions of the slide index
+        run: python3 docs/slides/shared/sync_slide_index.py docs/slides
+
       # The syllabus is built here rather than committed, so it must exist on
       # every run. Cache it on an exact key only: a hit skips both the ~1 GB
       # TeX Live install and the render, keeps the "This version created" stamp
