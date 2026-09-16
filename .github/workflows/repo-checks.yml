@@ -5,6 +5,10 @@ name: Repo checks
 #
 # None of these are required checks, so they show up as a red X but don't
 # block merging. See .github/workflows/deploy-pages.yml for the build.
+#
+# generated-files is the exception to "check": on a pull request it repairs the
+# drift it finds and pushes the result, so most of the time it never goes red
+# at all. The others only report.
 
 on:
   push:
@@ -17,18 +21,67 @@ permissions:
 
 jobs:
   # docs/slides/index.html has some lines that are written by a script, not by
-  # hand. This re-runs the script and fails if the result differs from what's
-  # committed -- which means someone edited those lines directly and the next
-  # deploy would silently overwrite their work.
+  # hand. On a pull request this re-runs the script and pushes the result back
+  # onto the branch, so a contributor who edits a deck without re-running the
+  # generator gets the sync done for them. Most edits here arrive through
+  # GitHub's web editor (CONTRIBUTING.md says prose fixes need no local setup),
+  # where a git hook cannot run, so CI is the only place that catch can happen.
+  #
+  # On a push to main there is no branch to fix up, so it stays a plain check:
+  # red means something reached main without passing through either this job or
+  # the .githooks/pre-commit hook.
   generated-files:
     runs-on: ubuntu-latest
+    # Only this job writes; lint and duplicate-assets stay read-only.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          # A pull_request build checks out a detached merge commit, which
+          # cannot be pushed back. Take the PR's own branch instead. The
+          # fallbacks are what a push to main already checks out.
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
 
       - name: Re-run the slide index generator
         run: python3 docs/slides/shared/sync_slide_index.py docs/slides
 
+      - name: Push the result back to the pull request
+        if: github.event_name == 'pull_request'
+        run: |
+          if git diff --quiet -- docs/slides/index.html; then
+            echo "index.html already matches the generator output."
+            exit 0
+          fi
+
+          echo "index.html was out of date. Regenerating it on this branch:"
+          git diff --stat -- docs/slides/index.html
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/slides/index.html
+          git commit -m "Sync docs/slides/index.html with sync_slide_index.py"
+
+          # Naming the refspec rather than relying on upstream tracking, which
+          # depends on how actions/checkout wired up the branch.
+          # A PR from a fork gets a read-only token, so this cannot push there.
+          # Fall back to the instructions rather than a bare git error.
+          if ! git push origin "HEAD:${{ github.event.pull_request.head.ref }}"; then
+            echo ""
+            echo "Could not push the fix -- expected for a pull request from a fork."
+            echo "Run this and commit the result:"
+            echo "  python3 docs/slides/shared/sync_slide_index.py docs/slides"
+            exit 1
+          fi
+
+          echo ""
+          echo "Pushed. Pull before you make further changes to this branch."
+
+      # A push made with GITHUB_TOKEN deliberately does not start another
+      # workflow run, so nothing re-runs this job in a loop above.
       - name: Check the result matches what's committed
+        if: github.event_name != 'pull_request'
         run: |
           if ! git diff --exit-code -- docs/slides/index.html; then
             echo ""

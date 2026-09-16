@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# NOTICE: This file was written by an LLM coding system.
+# Keeps docs/slides/index.html in step with the sources it is generated from.
+#
+# Enable it once per clone:
+#   git config core.hooksPath .githooks
+#
+# Parts of index.html -- the per-deck bullets and the slide-count table -- are
+# written by sync_slide_index.py from the week*.qmd decks and schedule.csv.
+# Editing a deck changes what the generator would produce, so forgetting to
+# re-run it leaves the committed file behind and turns the generated-files
+# check in repo-checks.yml red. Rather than block the commit, this regenerates
+# the file and stages it, which is the fix you would have applied by hand.
+#
+# Note this reads the working tree, not the index, so a partial commit (staged
+# hunks, or `git commit -- <path>`) regenerates from what is on disk. That is
+# the same thing `sync_slide_index.py` would do if you ran it yourself, and CI
+# re-checks the merged result either way.
+
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+INDEX="docs/slides/index.html"
+GENERATOR="docs/slides/shared/sync_slide_index.py"
+
+# Only the sources the generator actually reads are worth a re-run. Anything
+# else -- a worksheet, a dataset, the syllabus -- leaves index.html untouched.
+if ! git diff --cached --name-only --diff-filter=ACMR | grep -qE \
+  "^docs/(slides/(week[0-9]+\.(qmd|md)|index\.html|shared/sync_slide_index\.py)|_data/schedule\.csv)$"; then
+  exit 0
+fi
+
+# Contributors who only edit prose may not have python3 (see CONTRIBUTING.md).
+# Warn rather than block -- the CI check is still there as the backstop.
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "pre-commit: python3 not found, skipping the slide index sync." >&2
+  echo "pre-commit: CI will regenerate it on your pull request." >&2
+  exit 0
+fi
+
+cd "$REPO_ROOT"
+python3 "$GENERATOR" docs/slides
+
+if git diff --quiet -- "$INDEX"; then
+  exit 0
+fi
+
+git add -- "$INDEX"
+echo "pre-commit: regenerated $INDEX and added it to this commit:" >&2
+git diff --cached --stat -- "$INDEX" >&2

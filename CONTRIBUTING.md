@@ -15,6 +15,17 @@ If you want to make a larger change (e.g. a new section of slides, a new chapter
 
 [Fork the repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo), then clone your fork.
 
+If you are working from a clone, turn on the repo's git hooks once:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+That installs a pre-commit hook which re-runs the slide index generator
+whenever you commit a change to a deck, so `docs/slides/index.html` cannot
+fall out of step with it. Editing through GitHub's web editor instead? Nothing
+to do -- CI does the same sync on your pull request.
+
 Key resources as you edit:
 
 | Editing | You need |
@@ -53,7 +64,7 @@ Quarto output (slides, mini-book) is served as-is, so `quarto preview` works for
 A few important conventions:
 
 - **The `.qmd` is the slide source.** Don't edit `docs/slides/week*.html` (it is generated and gitignored)
-- **Parts of `docs/slides/index.html` are generated.** The per-deck bullets and the slide-count table are written by `docs/slides/shared/sync_slide_index.py`. To change a topic's wording, edit that deck's `{.section-header}` heading, and it will get propagated.
+- **Parts of `docs/slides/index.html` are generated.** The per-deck bullets and the slide-count table are written by `docs/slides/shared/sync_slide_index.py`. To change a topic's wording, edit that deck's `{.section-header}` heading, and it will get propagated. Don't hand-edit the generated lines -- the pre-commit hook and CI both overwrite them from the deck sources.
 - **The schedule lives in just one place:** `docs/_data/schedule.csv`. The homepage table, the syllabus, and `/schedule.html` all read from that csv. Add new columns at the end if needed (the first five are matched positionally by `schedule.lua`, and trailing ones (`Date`, `Notes`, `Unit`) are ignored by both tables)
 - **Day-by-day detail/source material goes in `docs/_includes/schedule-topics.md`,** not in the CSV: one `## Week N, Day M` section per class meeting, with the topics as bullets and any readings or links under a `### Sources` subheading.
 - **Images go in `docs/assets/<topic>/`,** ideally one folder per topic, so a figure can be referenced by several decks and site pages . Put a new figure in an existing topic folder when one fits, otherwise make a new one.
@@ -74,6 +85,12 @@ A few important conventions:
 - Link any issue your PR resolves so it closes on merge.
 
 The checks in `.github/workflows/repo-checks.yml` run on every PR: the slide index generator must match what's committed, Python and shell scripts must pass a lint for real errors, and no new duplicate files under `docs/`. These are currently non-blocking, but please look at the output.
+
+The slide index one repairs itself rather than just complaining: if your branch
+is out of step, CI regenerates `docs/slides/index.html` and pushes that commit
+to your branch, so **pull before you push again**. On a pull request from a
+fork the token is read-only and it can't do that, so there it fails with the
+command to run yourself.
 
 ## After your change is merged
 
