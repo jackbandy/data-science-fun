@@ -85,6 +85,7 @@
 
 * John Tukey, [We Need Both Exploratory and Confirmatory](https://www.jstor.org/stable/2682991)
 * *Learning Data Science*, [Chapter 10: Exploratory Data Analysis](https://learningds.org/ch/10/eda_intro.html)
+	* [Section 10.5: Guidelines for Exploration](https://learningds.org/ch/10/eda_guidelines.html)
 * *The Art of Data Science*, [Chapter 4: Exploratory Data Analysis](https://bookdown.org/rdpeng/artofdatascience/exploratory-data-analysis.html)
 
 ## Week 4, Day 2 (2026-09-16)
@@ -95,9 +96,17 @@
 
 * *Learning Data Science*, [Chapter 4: Modeling with Summary Statistics](https://learningds.org/ch/04/modeling_intro.html)
 * *Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/why-the-mean-matters)
-* *Computational and Inferential Thinking*, [Section 14.2: Variability](https://inferentialthinking.com/chapters/14/2/variability) (Chebychev's bounds)
+	* [Section 14.2: The Rough Size of Deviations from Average](https://inferentialthinking.com/chapters/14/2/variability/#the-rough-size-of-deviations-from-average) (standard deviation as typical distance)
+	* [Section 14.2: Standard Units](https://inferentialthinking.com/chapters/14/2/variability/#standard-units) (standardizing, z-scores)
+	* [Section 14.2: Chebychev's Bounds](https://inferentialthinking.com/chapters/14/2/variability/#chebychevs-bounds)
+	* [Section 14.3: How to Spot the SD on a Bell-Shaped Curve](https://inferentialthinking.com/chapters/14/3/sd-and-the-normal-curve/#how-to-spot-the-sd-on-a-bell-shaped-curve) (68-95-99.7)
+* *Computational and Inferential Thinking*, [Chapter 18: Updating Predictions](https://inferentialthinking.com/chapters/18/updating-predictions/) (prior, likelihood, evidence, posterior)
+* *Learning Data Science*, [Section 10.2: What to Look For in a Distribution](https://learningds.org/ch/10/eda_distributions.html#what-to-look-for-in-a-distribution)
 * *Think Stats* (3rd ed.), [Chapter 1: Exploratory Data Analysis](https://allendowney.github.io/ThinkStats/chap01.html)
+	* [Section 1.6: Summary Statistics](https://allendowney.github.io/ThinkStats/chap01.html#summary-statistics)
 * *Think Stats* (3rd ed.), [Chapter 2: Distributions](https://allendowney.github.io/ThinkStats/chap02.html)
+	* [Section 2.3: Outliers](https://allendowney.github.io/ThinkStats/chap02.html#outliers)
+* *Think Stats* (3rd ed.), [Section 4.4: Percentile-Based Statistics](https://allendowney.github.io/ThinkStats/chap04.html#percentile-based-statistics) (quartiles, box plots, robustness)
 * Matejka & Fitzmaurice (2017), ["Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing"](https://dl.acm.org/doi/10.1145/3025453.3025912), *Proc. CHI '17*, 1290-1294
 	* [Datasets](https://github.com/jmatejka/same-stats-different-graphs)
 
@@ -118,6 +127,10 @@
 ### Sources
 
 * *Learning Data Science*, [Chapter 11: Data Visualization](https://learningds.org/ch/11/viz_intro.html) (continued)
+	* [Section 11.1: Choosing Scale to Reveal Structure](https://learningds.org/ch/11/viz_scale.html)
+	* [Section 11.2: Smoothing and Aggregating Data](https://learningds.org/ch/11/viz_smoothing.html) (bin width, bandwidth, smoothing)
+	* [Section 11.3: Facilitating Meaningful Comparisons](https://learningds.org/ch/11/viz_comparisons.html)
+	* [Section 11.5: Adding Context](https://learningds.org/ch/11/viz_context.html)
 * *Fundamentals of Data Visualization*, [Chapter 5: Directory of Visualizations](https://clauswilke.com/dataviz/directory-of-visualizations.html)
 * *Fundamentals of Data Visualization*, [Chapter 16: Visualizing Uncertainty](https://clauswilke.com/dataviz/visualizing-uncertainty.html)
 * *Computational and Inferential Thinking*, [Chapter 7: Visualization](https://inferentialthinking.com/chapters/07/visualization)
