@@ -59,11 +59,23 @@ async function record(request, env) {
   // Distinct folders, so one student running twenty sessions counts once. The id is
   // random and generated in the student's folder; it identifies a copy of the
   // assignment, not a person, and nothing here can map it back to one.
+  //
+  // Two separate "seen" keys, because the two counters answer different questions.
+  // The headline `installs` is folder-wide: how many copies of the assignment ran
+  // any agent at all. `installs:tool:<tool>` is per tool: how many copies ran THIS
+  // tool. Sharing one folder-wide key between them let whichever tool happened to
+  // POST first claim the folder, and every other tool a student opened in the same
+  // folder scored zero — so per-tool adoption read far lower than it was.
   if (INSTALL.test(install)) {
-    const seen = `seen:${assignment}:${install}`;
-    if ((await env.COUNTS.get(seen)) === null) {
-      await env.COUNTS.put(seen, "1", { expirationTtl: INSTALL_TTL });
+    const seenAny = `seen:${assignment}:${install}`;
+    if ((await env.COUNTS.get(seenAny)) === null) {
+      await env.COUNTS.put(seenAny, "1", { expirationTtl: INSTALL_TTL });
       await bump(env.COUNTS, "installs");
+    }
+
+    const seenTool = `seen:${assignment}:${tool}:${install}`;
+    if ((await env.COUNTS.get(seenTool)) === null) {
+      await env.COUNTS.put(seenTool, "1", { expirationTtl: INSTALL_TTL });
       await bump(env.COUNTS, `installs:tool:${tool}`);
     }
   }

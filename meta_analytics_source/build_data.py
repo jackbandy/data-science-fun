@@ -49,6 +49,17 @@ SOURCE_DIR = Path(__file__).resolve().parent
 OUT_DIR = REPO / "docs" / "meta-analytics" / "data"
 STOPWORDS_FILE = SOURCE_DIR / "stopwords.txt"
 
+# Cloudflare (and plenty of other hosts) block the stdlib's default
+# "Python-urllib/3.x" User-Agent outright, which is how the ai-usage fetch
+# silently 403'd on the CI runner while curl from a laptop worked fine.
+USER_AGENT = "cs418-meta-analytics (+https://dodatascience.fun/meta-analytics/)"
+
+
+def _fetch(url: str, timeout: int):
+    return urllib.request.urlopen(
+        urllib.request.Request(url, headers={"User-Agent": USER_AGENT}), timeout=timeout
+    )
+
 # ---------------------------------------------------------------------------
 # Outbound links
 # ---------------------------------------------------------------------------
@@ -345,7 +356,7 @@ def load_english() -> tuple[dict[str, int], int]:
     if not ENGLISH_CACHE.exists():
         ENGLISH_CACHE.parent.mkdir(parents=True, exist_ok=True)
         print(f"downloading {ENGLISH_URL} ...", file=sys.stderr)
-        with urllib.request.urlopen(ENGLISH_URL, timeout=60) as response:
+        with _fetch(ENGLISH_URL, timeout=60) as response:
             ENGLISH_CACHE.write_bytes(response.read())
 
     freqs: dict[str, int] = {}
@@ -421,7 +432,7 @@ def build_ai_usage() -> dict | None:
 
     url = f"{AI_USAGE_ENDPOINT}/stats.json"
     try:
-        with urllib.request.urlopen(url, timeout=20) as response:
+        with _fetch(url, timeout=20) as response:
             payload = json.loads(response.read().decode("utf-8"))
     except Exception as exc:  # network, DNS, bad JSON — none worth failing a site build over
         print(f"could not read {url} ({exc}); skipping ai-usage.json", file=sys.stderr)
