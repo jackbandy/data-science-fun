@@ -1,0 +1,19 @@
+station,station_id,line,run,destination,direction,collected,shown,minutes,expected
+UIC-Halsted,40350,Blue,133,Forest Park,O'Hare,2026-09-15 20:35:51,Due,0,2026-09-15 20:35:51
+UIC-Halsted,40350,Blue,226,O'Hare,O'Hare,2026-09-15 20:35:51,3 min,3,2026-09-15 20:38:51
+UIC-Halsted,40350,Blue,144,O'Hare,O'Hare,2026-09-15 20:35:51,9 min,9,2026-09-15 20:44:51
+UIC-Halsted,40350,Blue,139,O'Hare,O'Hare,2026-09-15 20:35:51,16 min,16,2026-09-15 20:51:51
+UIC-Halsted,40350,Blue,217,Forest Park,Forest Park,2026-09-15 20:35:51,4 min,4,2026-09-15 20:39:51
+UIC-Halsted,40350,Blue,134,Forest Park,Forest Park,2026-09-15 20:35:51,13 min,13,2026-09-15 20:48:51
+UIC-Halsted,40350,Blue,234,Forest Park,Forest Park,2026-09-15 20:35:51,29 min,29,2026-09-15 21:04:51
+UIC-Halsted,40350,Blue,135,Forest Park,Forest Park,2026-09-15 20:35:51,37 min,37,2026-09-15 21:12:51
+UIC-Halsted,40350,Blue,219,Forest Park,Forest Park,2026-09-15 20:35:51,46 min,46,2026-09-15 21:21:51
+Washington/Wells,40730,Brown,436,Kimball,Outer Loop,2026-09-15 20:35:54,4 min,4,2026-09-15 20:39:54
+Washington/Wells,40730,Brown,422,Kimball,Outer Loop,2026-09-15 20:35:54,13 min,13,2026-09-15 20:48:54
+Washington/Wells,40730,Brown,433,Kimball,Outer Loop,2026-09-15 20:35:54,24 min,24,2026-09-15 20:59:54
+Washington/Wells,40730,Brown,427,Kimball,Outer Loop,2026-09-15 20:35:54,30 min,30,2026-09-15 21:05:54
+Washington/Wells,40730,Orange,721,Midway,Inner Loop,2026-09-15 20:35:54,6 min,6,2026-09-15 20:41:54
+Washington/Wells,40730,Pink,317,54th/Cermak,Inner Loop,2026-09-15 20:35:54,9 min,9,2026-09-15 20:44:54
+Washington/Wells,40730,Pink,314,54th/Cermak,Inner Loop,2026-09-15 20:35:54,11 min,11,2026-09-15 20:46:54
+Washington/Wells,40730,Pink,315,54th/Cermak,Inner Loop,2026-09-15 20:35:54,23 min,23,2026-09-15 20:58:54
+Washington/Wells,40730,Pink,319,54th/Cermak,Inner Loop,2026-09-15 20:35:54,36 min,36,2026-09-15 21:11:54
