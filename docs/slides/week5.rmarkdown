@@ -1,0 +1,2671 @@
+---
+title: "Week 5 (CS 418 @ UIC)"
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
+engine: knitr
+# Some code in this file was generated with LLM assistance.
+# Please contact jxb@uic.edu with any issues or concerns.
+format:
+  revealjs:
+    fig-width: 5
+    fig-height: 3.09
+    auto-stretch: false
+    footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 5</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week5.html">dodatascience.fun/slides/week5</a></span>'
+---
+
+```{r}
+#| include: false
+library(reticulate)
+# Prefer the local dev venv (built by build_all_quarto.sh); fall back to
+# whatever python3 is on PATH when it's absent (e.g. CI, which installs
+# dependencies system-wide via SKIP_VENV=true).
+venv_python <- here::here(".venv/bin/python")
+use_python(if (file.exists(venv_python)) venv_python else Sys.which("python3"), required = TRUE)
+```
+
+```{python}
+#| include: false
+import matplotlib
+matplotlib.use("Agg")
+```
+
+```{python}
+#| echo: false
+# Shared setup for every figure in this deck.
+import numpy as np
+import polars as pl
+from plotnine import *
+
+ORANGE = "#f9461c"
+DARK = "#c83214"
+INK = "#1a1a1a"
+
+def note(x, y, text, ha="left", color=INK, size=13):
+    """A text annotation in the deck's type and colors."""
+    return annotate("text", x=x, y=y, label=text, ha=ha, size=size, color=color)
+
+def upto(df, col, levels, k, on=0.8):
+    """Alpha column: `on` for the first k levels of `col`, 0 for the rest.
+
+    Used with scale_alpha_identity() to render a faceted figure several times
+    with the later panels blank. Every panel frame and axis is still computed
+    from the full data, so overlaying the versions in an .r-stack fills the
+    panels in one at a time without the layout shifting.
+    """
+    return df.with_columns(
+        pl.when(pl.col(col).cast(pl.Utf8).is_in(levels[:k]))
+          .then(on).otherwise(0.0).alias("a"))
+```
+
+# Week 5 Slide Deck {.course-title}
+
+<h2>Visualizations</h2>
+
+Jack Bandy
+2026
+
+# Week 5, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
+
+<h2>Visualization Basics</h2>
+
+CS 418 · Week 5 · 🟠 Clark/Lake 🟠
+
+---
+
+
+
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
+
+---
+
+## The Datasaurus Dozen: Same Statistics {.image-frame-slide auto-animate=true}
+
+::: {.fragment}
+<img data-id="dozen" data-gif-src="../assets/datasaurus/datasaurus-dozen.gif" class="figure-plain" alt="Animation of thirteen datasets morphing into one another — a dinosaur, a star, horizontal stripes, a circle, an X, vertical stripes, a bullseye, slanted lines, dots, and more — while the summary statistics printed above the plot never change">
+:::
+
+<script>
+// Hold the GIF until the fragment is clicked. A looping animation that loads
+// with the slide is already halfway through by the time anyone looks at it;
+// swapping the src on reveal means the dinosaur is always the first thing you
+// see. Clearing it again on the way back re-arms the slide.
+document.addEventListener("fragmentshown", (e) => {
+  e.fragment.querySelectorAll("img[data-gif-src]").forEach((img) => {
+    img.src = img.dataset.gifSrc;
+  });
+});
+document.addEventListener("fragmenthidden", (e) => {
+  e.fragment.querySelectorAll("img[data-gif-src]").forEach((img) => {
+    img.removeAttribute("src");
+  });
+});
+</script>
+
+---
+
+## The Datasaurus Dozen: Why Visualize? {auto-animate=true}
+
+:::: {.columns}
+::: {.column width="52%"}
+::: {.incremental style="font-size:0.72em;"}
+- Matejka & Fitzmaurice (CHI 2017) took Alberto Cairo's "Datasaurus" and generated **twelve more datasets** from it.
+- Each is nudged point by point toward a target shape, using only moves that leave the summary statistics alone.
+- All thirteen have the same mean, standard deviation, and correlation (to two decimals!)
+- Summary statistics are a "*lossy compression*"
+- Visualization helps
+:::
+:::
+::: {.column width="48%"}
+
+<img data-id="dozen" src="../assets/datasaurus/datasaurus-dozen-panel.svg" class="figure-plain" style="max-height:50vh; margin:0 auto;" alt="All thirteen Datasaurus Dozen datasets as small multiples: dino, star, h_lines, circle, x_shape, v_lines, bullseye, slant_up, dots, slant_down, high_lines, wide_lines, and away">
+
+```{python}
+#| echo: false
+#| output: asis
+dino = pl.read_csv("../../datasets/datasaurus-dozen/datasaurus-dozen.csv")
+agg = dino.group_by("dataset").agg(
+    pl.col("x").mean().alias("mx"), pl.col("y").mean().alias("my"),
+    pl.col("x").std().alias("sx"), pl.col("y").std().alias("sy"),
+    pl.corr("x", "y").alias("r"))
+# U+2212 minus, since a hyphen next to a digit reads as a dash on a slide.
+r_bar = f'{agg["r"].mean():.2f}'.replace("-", "−")
+print(
+    '<div style="text-align:center; font-size:0.55em; color:#565a5c; margin-top:0.3em;">'
+    f'across all {agg.height} datasets — '
+    f'mean(x) {agg["mx"].mean():.2f}, mean(y) {agg["my"].mean():.2f}, '
+    f'sd(x) {agg["sx"].mean():.2f}, sd(y) {agg["sy"].mean():.2f}, '
+    f'r {r_bar}</div>'
+)
+```
+
+:::
+::::
+
+---
+
+## Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+- Week 5: Clark/Lake
+- Day 1
+    - Elements of visualization
+    - Choosing a plot
+    - Relationships & correlation
+    - Bivariate visualizations
+    - Perception: color & length
+    - Pie & donut charts
+:::
+
+![](../assets/orange-line-map-stops/stop05-clark-lake.svg){.figure alt="Orange Line map with the Clark/Lake stop marked, the Week 5 stop"}
+
+:::
+
+# Elements of Visualization {.section-header}
+
+```{python}
+#| echo: false
+# Setup for the "elements of visualization" slides: one tiny helper for the
+# abstract mark demos. The three Chicago map figures (texture, color, value) are
+# built ahead of time by datasets/chicago-maps/make_bertin_figures.py and read in
+# as SVGs, so this deck no longer loads the geojson.
+import matplotlib.pyplot as plt
+
+
+# Marker paths traced from ../assets/abstraction/0-shapes.svg, so the abstract
+# shape demo and the "Shape Anecdote" slide speak the same visual vocabulary.
+from matplotlib.path import Path as MplPath
+
+def _poly(points):
+    """A closed subpath through `points` (SVG user units, y growing downward)."""
+    pts = list(points) + [points[0]]
+    codes = [MplPath.MOVETO] + [MplPath.LINETO] * (len(points) - 1) + [MplPath.CLOSEPOLY]
+    return pts, codes
+
+def _circle(cx, cy, r, n=64):
+    a = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    return _poly(list(zip(cx + r * np.cos(a), cy + r * np.sin(a))))
+
+def _rect(x, y, w, h):
+    return _poly([(x, y), (x + w, y), (x + w, y + h), (x, y + h)])
+
+def _join(*parts):
+    verts, codes = [], []
+    for v, c in parts:
+        verts += list(v)
+        codes += list(c)
+    return verts, codes
+
+def _marker(part):
+    """Normalize an SVG-space subpath set into a unit-height scatter marker.
+
+    Flipping y and dividing by the bounding-box height means every shape is
+    drawn at the same height for a given `s`, so only the form varies.
+    """
+    verts, codes = part
+    v = np.asarray(verts, dtype=float)
+    v[:, 1] *= -1
+    v /= v[:, 1].max() - v[:, 1].min()
+    v -= [(v[:, 0].max() + v[:, 0].min()) / 2, (v[:, 1].max() + v[:, 1].min()) / 2]
+    return MplPath(v, codes)
+
+def _teardrop(cx=809.0, cy=488.4, r=104.0, tip=660.0, n=48):
+    """Point at the bottom, round over the top -- the upside-down tear.
+
+    Traced curve-for-curve from the SVG: the flanks are cubics that leave the
+    tip and meet the semicircle tangentially, so there is no corner where the
+    straight sides would otherwise hit the dome.
+    """
+    a = np.linspace(np.pi, 2 * np.pi, n)  # over the top in SVG's y-down space
+    arc = list(zip(cx + r * np.cos(a), cy + r * np.sin(a)))
+    verts = ([(cx, tip), (734.12, 576.80), (cx - r, 535.20), (cx - r, cy)]
+             + arc[1:]
+             + [(cx + r, 535.20), (883.88, 576.80), (cx, tip), (cx, tip)])
+    codes = ([MplPath.MOVETO] + [MplPath.CURVE4] * 3
+             + [MplPath.LINETO] * (len(arc) - 1)
+             + [MplPath.CURVE4] * 3 + [MplPath.CLOSEPOLY])
+    return verts, codes
+
+# The Chicago flag's star: six points, one straight up, inner vertices at 0.367 of the
+# outer radius -- the flag's own proportion, measured off Chicago-star.png.
+STAR = _marker(_poly([
+    (219.00, 387.00), (244.05, 480.12), (337.21, 455.25), (269.10, 523.50),
+    (337.21, 591.75), (244.05, 566.88), (219.00, 660.00), (193.95, 566.88),
+    (100.79, 591.75), (168.90, 523.50), (100.79, 455.25), (193.95, 480.12)]))
+SQUARE = _marker(_rect(419.75, 471.50, 188.50, 188.50))
+TEARDROP = _marker(_teardrop())
+BROCCOLI = _marker(_join(
+    _circle(1027.43, 486.71, 80.60), _circle(1104.00, 436.74, 80.60),
+    _circle(1180.57, 486.71, 80.60), _rect(1063.70, 486.71, 80.60, 173.29)))
+BOLT = _marker(_poly([
+    (1419.80, 341.50), (1305.40, 507.12), (1388.60, 507.12), (1336.60, 660.00),
+    (1492.60, 468.90), (1403.16, 468.90), (1486.36, 341.50)]))
+
+def mark_axes(ax, xlim=(0, 10), ylim=(0, 6)):
+    """A blank frame for the abstract mark demos."""
+    ax.set(xlim=xlim, ylim=ylim, xticks=[], yticks=[])
+    ax.set_aspect("equal")
+    for s in ax.spines.values():
+        s.set(color="#c9ccce", linewidth=1)
+```
+
+## Position {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+- **Position**: the location of a mark within a plane.
+- According to Bertin, it is the **base** of the graphic (not a "retinal" variable)
+- Scatter plots, bars, maps: position-forward
+:::
+:::
+::: {.column width="54%"}
+```{python}
+#| echo: false
+#| fig-width: 5.2
+#| fig-height: 4.0
+#| fig-alt: "Three identical orange dots placed at different spots in an empty frame; nothing about the dots varies except where they are"
+fig, ax = plt.subplots()
+ax.scatter([1.6, 5.0, 8.4], [1.3, 4.4, 2.6], s=340, color=ORANGE, zorder=3)
+mark_axes(ax)
+```
+:::
+:::
+
+
+---
+
+## Size {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+- **Size**: how large or small a mark is (length, area, or volume).
+- *Ordered* and *quantitative*: bigger reliably reads as more.
+- Also dissociative (small marks are less prominent)
+- Can be difficult to compare similar values
+:::
+:::
+::: {.column width="54%"}
+```{python}
+#| echo: false
+#| fig-width: 5.2
+#| fig-height: 4.0
+#| fig-alt: "A small orange dot on the left and a much larger orange dot on the right, identical in every way except size"
+fig, ax = plt.subplots()
+ax.scatter([3.0, 7.0], [3.0, 3.0], s=[120, 2600], color=ORANGE, zorder=3)
+mark_axes(ax)
+```
+:::
+:::
+
+
+---
+
+## Texture (Grain) {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+- **Texture** (Bertin's **grain**): how coarse or fine a fill pattern is.
+- only the scale changes changes in this example
+- Land is coarse, water is fine
+- Categorical (not *quantitative*)
+:::
+:::
+::: {.column width="54%"}
+![](../assets/bertin-maps/bertin-texture.svg){.figure alt="Map of Chicago drawn only in black and white: the land is filled with a coarse dot pattern and Lake Michigan and the rivers with a much finer dot pattern"}
+:::
+:::
+
+
+---
+
+## Color (Hue) {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+::: {}
+- **Color** for Bertin means only **hue** (lightness is fixed)
+- Example: same map, same two areas, only hue is different.
+- **Not ordered.** (Blue is not "more" than tan)
+- So hue/color encodes identity/category (not magnitude)
+:::
+:::
+:::
+::: {.column width="54%"}
+![](../assets/bertin-maps/bertin-color.svg){.figure alt="The same map of Chicago, now with land filled in sand and Lake Michigan and the rivers filled in teal"}
+:::
+:::
+
+
+---
+
+## Value {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+- **Value**: lightness (independent of hue)
+- "Hue" is grey in this example, "value" is how dark
+- Chicago's 50 wards, shaded by median household income
+- *ordered*: darker reads as "more."
+- **dissociative** (like size), i.e. affects prominence / hierarchy
+- Two different greys can be visually "ranked" (but that's about it)
+:::
+:::
+::: {.column width="54%"}
+![](../assets/bertin-maps/bertin-value.svg){.figure alt="Choropleth map of Chicago's 50 wards shaded from pale grey to near-black by estimated median household income, with the darkest wards along the north lakefront"}
+:::
+:::
+
+
+
+---
+
+## Orientation {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+- **Orientation**: the angle a mark is tilted.
+- Identical bars; only the angle varies.
+- *Selective* and *associative*: easy to see, adds no "ink"
+- Not necessarily ordered, for points and lines : 30° is not "more" than 60°.
+- Can conflict with texture.
+:::
+:::
+::: {.column width="54%"}
+```{python}
+#| echo: false
+#| fig-width: 5.2
+#| fig-height: 4.0
+#| fig-alt: "Five identical orange bars in a row, each tilted to a different angle from horizontal through vertical"
+fig, ax = plt.subplots()
+for x, deg in zip([1.4, 3.2, 5.0, 6.8, 8.6], [0, 30, 60, 90, 135]):
+    t = np.deg2rad(deg)
+    dx, dy = 1.05 * np.cos(t), 1.05 * np.sin(t)
+    ax.plot([x - dx, x + dx], [3 - dy, 3 + dy], color=ORANGE, lw=7,
+            solid_capstyle="round")
+mark_axes(ax)
+```
+:::
+:::
+
+
+---
+
+## Shape {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+::: {}
+- **Shape**: the form of the mark, at constant size and "ink"
+- Weakest variable according to Bertin
+- The eye cannot easily collect "all the triangles"
+    - searches one at a time.
+- Not ordered, not quantitative, just labels categories.
+:::
+:::
+:::
+::: {.column width="54%"}
+```{python}
+#| echo: false
+#| fig-width: 5.2
+#| fig-height: 4.0
+#| fig-alt: "Five orange marks in a row at the same height: a six-pointed Chicago-flag star, a square, an upside-down teardrop, a broccoli floret and a lightning bolt"
+fig, ax = plt.subplots()
+for x, m in zip([1.4, 3.2, 5.0, 6.8, 8.6], [STAR, SQUARE, TEARDROP, BROCCOLI, BOLT]):
+    ax.scatter([x], [3], marker=m, s=1600, color=ORANGE, zorder=3)
+mark_axes(ax)
+```
+:::
+:::
+
+
+---
+
+## All Seven Variables{.image-frame-slide}
+
+<img src="../assets/bertins-visual-variables/bertins-visual-variables.svg" alt="Table of Bertin's seven visual variables. Each row pairs a name and definition with a demonstration: position shows one mark at four locations; size shows length, area and repetition; shape shows eight silhouettes; value shows a ten-step ramp from white to black; colour shows ten hues at one lightness; orientation shows one stripe pattern at four angles; texture shows the same pattern at four grains.">
+
+---
+
+
+
+## Munzner's Channels {.smaller}
+
+From Tamara Munzner's *Visualization Analysis & Design* (2014), which uses the term **channels** and splits them by what they can encode:
+
+::: {.columns}
+::: {.column width="50%"}
+::: {style="font-size:0.82em;"}
+**Magnitude channels** : ordered attributes, most to least effective:
+
+1. Position on a common scale
+2. Position on an unaligned scale
+3. Length (1D size)
+4. Tilt / angle
+5. Area (2D size)
+6. Depth (3D position)
+7. Color luminance / saturation
+8. Curvature
+9. Volume (3D size)
+:::
+:::
+::: {.column width="50%"}
+::: {style="font-size:0.82em;"}
+**Identity channels** : categorical attributes:
+
+1. Spatial region
+2. Color hue
+3. **Motion**
+4. Shape
+:::
+
+:::
+:::
+
+::: {.aside-note}
+The ranking is based on the Cleveland & McGill graphical-perception experiments.
+:::
+
+---
+
+## Which Encoding for Which Data? {.image-frame-slide}
+
+
+<img src="../assets/iliinsky-visual-properties/iliinsky-visual-properties.svg" alt="Table of fifteen visual encodings : position, text labels, length, size, angle, pattern density, weight, saturation, color, shape, pattern texture, enclosure, line pattern, line endings and line weight. For each, the table gives an example mark, whether it is ordered, how many useful values it carries, and dots marking which of quantitative, ordinal, categorical and relational data it suits.">
+
+::: {.caption}
+Based on Noah Iliinsky's table, complexdiagrams.com/properties (2012), CC BY-SA
+:::
+
+# Data Visualization {.section-header}
+
+---
+
+##  Kinds of Visualization
+
+::: {}
+- **Exploratory Data Visualization:** figuring out what is true. Mostly for you.
+- **Persuasive Data Visualization:** convincing other people something is true. Polished, for an audience.
+:::
+
+::: {style="margin-top:1em;"}
+We will start with exploratory/descriptive visualization, then move to persuasive visualization ("visualization rhetoric")
+:::
+
+---
+
+## Choosing a Plot: Quantitative Data
+
+**Plots:** histograms, box plots, rug plots, smoothed interpolations (KDE : kernel density estimators)
+
+::: {}
+- **Histogram** : relative frequency of values; there's a tradeoff in choosing bin sizes.
+- **Rug plot** : shows where the actual data points sit.
+- **KDE plot** : a smoothed density estimate; there's a tradeoff in the "bandwidth" parameter.
+:::
+
+::: {style="margin-top:0.8em;"}
+**Look for:** spread, shape, modes, gaps, outliers, unreasonable values.
+:::
+
+---
+
+## Some Made-Up Data
+
+```{python}
+#| echo: true
+rng = np.random.default_rng(418)
+d = np.concatenate([rng.normal(5, 3, 45), rng.normal(30, 6, 170),
+                    rng.normal(80, 3, 7)])
+dist = pl.DataFrame({"v": d})
+```
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+Three groups together: a small one near 5, a big one near 30, and seven near 80.
+:::
+
+---
+
+## Histogram {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Histogram of the made-up data with 32 bins, showing a small mode near 5, a large mode near 30, and a few isolated bars near 80"
+(ggplot(dist, aes("v"))
+ + geom_histogram(bins=32, fill=ORANGE, alpha=0.85,
+                  color="white", size=0.3)
+ + labs(x="Value", y="Count")
+ + theme_minimal(base_size=14))
+```
+
+::: {style="font-size:0.8em;"}
+Counts values falling in each bin. `bins` is the main knob to adjust.
+:::
+
+---
+
+## Too Few Bins {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Histogram of the same data with only 4 bins, collapsing the two groups into one tall bar and hiding the gap before the outliers"
+(ggplot(dist, aes("v"))
+ + geom_histogram(bins=4, fill=ORANGE, alpha=0.85,
+                  color="white", size=0.3)
+ + labs(x="Value", y="Count")
+ + theme_minimal(base_size=14))
+```
+
+::: {style="font-size:0.8em;"}
+**Oversmoothed.** The two groups merge into one bar, and the gap before the outliers disappears. The shape looks simpler than the data actually is.
+:::
+
+---
+
+## Too Many Bins {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Histogram of the same data with 300 bins, producing a spiky comb of mostly one- and two-count bars where the overall shape is hard to see"
+(ggplot(dist, aes("v"))
+ + geom_histogram(bins=300, fill=ORANGE, alpha=0.85,
+                  color="white", size=0.3)
+ + labs(x="Value", y="Count")
+ + theme_minimal(base_size=14))
+```
+
+::: {style="font-size:0.8em;"}
+**Undersmoothed.** Most bins hold one or two points, so the bars mostly report sampling noise. The modes are in there, but you have to squint past the comb to find them.
+:::
+
+---
+
+## Rug Plot {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Rug plot of the made-up data: a dense band of tick marks near 30, a sparser band near 5, an empty stretch, and a handful of ticks near 80"
+(ggplot(dist, aes("v", 0))
+ + geom_rug(sides="b", color=INK, alpha=0.4, length=0.5)
+ + labs(x="Value")
+ + theme_minimal(base_size=14)
+ + theme(panel_grid=element_blank(),
+         axis_title_y=element_blank(),
+         axis_text_y=element_blank()))
+```
+
+::: {style="font-size:0.8em;"}
+One tick per data point (no binning, no smoothing). Great for spotting gaps and outliers; less helpful once the ticks overlap into a solid block.
+:::
+
+---
+
+## KDE Plot {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Two kernel density curves over the same data: a smooth solid curve with two clear modes, and a wigglier dashed curve from a smaller bandwidth"
+(ggplot(dist, aes("v"))
+ + geom_density(size=1.2)                   # default bandwidth
+ + geom_density(alpha=0.6, size=1.0, linetype="dashed",
+                adjust=0.25)                              # 1/4 the bandwidth
+ + labs(x="Value", y="Density")
+ + theme_minimal(base_size=14))
+```
+
+::: {style="font-size:0.8em;"}
+A smoothed estimate of the density. **`adjust` scales the bandwidth:** the dashed curve is wigglier and chases noise, the solid one may smooth real structure away.
+:::
+
+---
+
+## All Three at Once {.figure-slide}
+
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| fig-alt: "A histogram of a bimodal distribution with a kernel density curve drawn over it and a rug of individual points along the bottom axis, annotated to point out the main mode, a second mode, a right skew, a gap, and a cluster of outliers"
+(ggplot(dist, aes("v"))
+ + geom_histogram(aes(y=after_stat("density")), bins=32,
+                  fill=ORANGE, alpha=0.35, color="white", size=0.3)
+ + geom_density(color=DARK, size=1.2)
+ + geom_rug(color=INK, alpha=0.4, length=0.04)
+ + note(44, 0.052, "Main mode")
+ + note(-6, 0.030, "Second mode")
+ + note(46, 0.014, "Skew right")
+ + note(56, 0.004, "Gap")
+ + note(70, 0.012, "Outliers", color=DARK)
+ + note(14, 0.040, "KDE", color=DARK)
+ + note(-6, 0.006, "Rug")
+ + labs(y="Density")
+ + theme_minimal(base_size=14)
+ + theme(axis_title_x=element_blank(), figure_size=(10, 4.2)))
+```
+
+---
+
+## Choosing a Plot: Categorical Data
+**Plots:** bar plots, sorted by frequency or by the ordinal dimension
+
+::: {}
+- **Look for:** skew, frequent and rare categories, invalid categories.
+- Consider grouping rare categories together and repeating the analysis.
+- For **ordinal** data (e.g. education level: < 12th, HS, Trade, Some College, College), keep the natural order : don't sort bars shortest to tallest.
+- **Dot plots** (Cleveland dot plots) make it easier to compare values than bars do.
+:::
+
+
+---
+
+## Bar Plot (for an Ordinal Variable) {.figure-slide}
+
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| fig-alt: "Bar chart of mothers' education level with five bars in their natural order from less than 12th grade through college; high school is the tallest bar and trade school the shortest"
+levels = ["< 12th", "HS", "Trade", "Some college", "College"]
+edu = pl.DataFrame({
+    "level": levels,
+    "count": [201, 449, 61, 297, 219],
+}).with_columns(pl.col("level").cast(pl.Enum(levels)))
+
+(ggplot(edu, aes("level", "count"))
+ + geom_col(fill=ORANGE, alpha=0.85, width=0.6)
+ + labs(x="Education level", y="Count")
+ + theme_minimal(base_size=15)
+ + theme(figure_size=(10, 4.2)))
+```
+
+::: {style="font-size:0.6em; margin-top:0.2em;"}
+The bars keep the natural order of the levels, not shortest-to-tallest.
+:::
+
+---
+
+## "Lollipop" Chart of the Same Data {.figure-slide}
+
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| fig-alt: "Lollipop chart of the same five education-level counts, with one dot per level at the end of an orange stem running out from the axis, which can make the values easier to compare than the bars"
+(ggplot(edu, aes("count", "level"))
+ + geom_segment(aes(x=0, xend="count", y="level", yend="level"),
+                color=ORANGE, size=1.5, alpha=0.85)
+ + geom_point(color=ORANGE, size=5)
+ + labs(x="Count", y="Education level")
+ + theme_minimal(base_size=15)
+ + theme(figure_size=(10, 4.2)))
+```
+
+::: {style="font-size:0.6em; margin-top:0.2em;"}
+Same numbers as the bars, far less ink. The stem carries the value; the dot marks where it ends.
+:::
+
+---
+
+## Line Graphs and Time Series
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Computational and Inferential Thinking*, [Chapter 7: Visualization](https://inferentialthinking.com/chapters/07/visualization)
+:::
+:::
+
+
+---
+
+## Reading a Histogram by Area
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Computational and Inferential Thinking*, [Chapter 7: Visualization](https://inferentialthinking.com/chapters/07/visualization)
+:::
+:::
+
+
+---
+
+## Describing the Shape of Data
+Many models assume features are **symmetric** and **unimodal**. Deviations can affect the validity of the model.
+
+::: {}
+- **Symmetric** : looks the same on the left and right sides.
+- **Skewed** : one tail is longer than the other (right-skewed, left-skewed).
+- **Unimodal** : a single mode (peak).
+- **Multimodal** : multiple modes (peaks).
+:::
+
+
+---
+
+## Three Shapes {.figure-slide}
+
+```{python}
+#| echo: false
+rng = np.random.default_rng(1848)
+shapes = ["Symmetric, unimodal", "Right-skewed", "Multimodal"]
+shape_df = pl.DataFrame({
+    "v": np.concatenate([
+        rng.normal(0, 1, 600),
+        rng.exponential(1, 600),
+        np.concatenate([rng.normal(-2, 0.6, 300), rng.normal(2, 0.6, 300)]),
+    ]),
+    "shape": np.repeat(shapes, 600),
+}).with_columns(pl.col("shape").cast(pl.Enum(shapes)))
+
+def shape_plot(k):
+    return (ggplot(upto(shape_df, "shape", shapes, k), aes("v"))
+     + geom_histogram(aes(alpha="a"), bins=28, fill=ORANGE,
+                      color="white", size=0.3)
+     + scale_alpha_identity()
+     + facet_wrap("shape", scales="free_x")
+     + labs(y="Count")
+     + theme_minimal(base_size=15)
+     + theme(axis_title_x=element_blank(),
+             strip_text=element_text(size=16, color=INK),
+             panel_spacing=0.06, figure_size=(10, 4)))
+```
+
+::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4
+#| fig-alt: "Three histogram panels side by side; only the first is filled in, showing a symmetric unimodal bell shape"
+shape_plot(1)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4
+#| fig-alt: "The same three panels with the first two filled in: a symmetric bell shape and a right-skewed distribution with a long tail to the right"
+shape_plot(2)
+```
+:::
+
+::: {.fragment fragment-index=2}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4
+#| fig-alt: "All three panels filled in: a symmetric unimodal bell shape, a right-skewed distribution with a long tail to the right, and a multimodal distribution with two separated peaks"
+shape_plot(3)
+```
+:::
+
+:::
+
+# Identifying Relationships {.section-header}
+
+---
+
+## Identifying Relationships
+::: {}
+- Features in a dataset are usually related to each other. **Linear** relationships are the simplest type.
+- **Correlation** describes the *strength* and *direction* of a linear relationship between two features.
+  - **Positive** correlation : one feature increases as the other increases.
+  - **Negative** correlation : one feature decreases as the other increases.
+- We explore relationships using **scatter plots**: positive correlation, negative correlation, or no linear correlation.
+:::
+
+---
+
+## Three Scatter Plots {.figure-slide}
+
+```{python}
+#| echo: false
+rng = np.random.default_rng(418)
+x = rng.uniform(0, 10, 90)
+kinds = ["Positive correlation", "Negative correlation", "No linear correlation"]
+corr_df = pl.DataFrame({
+    "x": np.tile(x, 3),
+    "y": np.concatenate([x + rng.normal(0, 1.5, 90),
+                         -x + rng.normal(0, 1.5, 90),
+                         rng.uniform(0, 10, 90)]),
+    "kind": np.repeat(kinds, 90),
+}).with_columns(pl.col("kind").cast(pl.Enum(kinds)))
+
+def corr_plot(k):
+    return (ggplot(upto(corr_df, "kind", kinds, k, on=0.75), aes("x", "y"))
+     + geom_point(aes(alpha="a"), color=ORANGE, size=2.5)
+     + scale_alpha_identity()
+     + facet_wrap("kind", scales="free_y")
+     + theme_minimal(base_size=15)
+     + theme(axis_title=element_blank(), axis_text=element_blank(),
+             strip_text=element_text(size=16, weight="bold", color=INK),
+             panel_spacing=0.06, figure_size=(10, 4)))
+```
+
+::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4
+#| fig-alt: "Three scatter plot panels side by side; only the first has points, trending upward for positive correlation"
+corr_plot(1)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4
+#| fig-alt: "The same three panels with the first two filled in: points trending upward, then points trending downward for negative correlation"
+corr_plot(2)
+```
+:::
+
+::: {.fragment fragment-index=2}
+```{python}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4
+#| fig-alt: "All three panels filled in: points trending upward (positive correlation), points trending downward (negative correlation), and points with no visible trend (no linear correlation)"
+corr_plot(3)
+```
+:::
+
+:::
+
+---
+
+## Correlation Coefficient
+
+The correlation coefficient measures the linear relationship between two features $X$ and $Y$. We'll look at **Pearson's correlation coefficient** first.
+
+::: {}
+- The value is always between **-1 and 1**.
+- The sign gives the direction; the closer to -1 or 1, the **stronger** the relationship.
+- A coefficient of **0** means there is no *linear* relationship : which is not the same as no relationship at all.
+:::
+
+---
+
+## Setup: Chicago 'L' ridership, 2019
+
+Are stations that are busy on weekdays also busy on Saturdays?
+
+```{python}
+#| echo: true
+cta = pl.read_csv("../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv",
+                  ignore_errors=True)
+cta = cta.with_columns(pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
+by_day = (cta.filter(pl.col("date").str.ends_with("2019"))
+             .group_by("stationname", "daytype")
+             .agg(pl.col("rides").median()))
+stations = by_day.pivot("daytype", index="stationname", values="rides")
+```
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+`daytype` is `W` for weekdays, `A` for Saturdays, `U` for Sundays and holidays.
+:::
+
+---
+
+## Weekday vs. Saturday {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Scatter plot of 144 Chicago 'L' stations, median weekday entries on the x-axis against median Saturday entries on the y-axis, showing a strong upward linear trend"
+(ggplot(stations, aes("W", "A"))
+ + geom_point(alpha=0.7)
+ + labs(x="Median weekday entries", y="Median Saturday entries")
+ + theme_minimal())
+```
+
+---
+
+## How strong is it?
+
+```{python}
+#| echo: true
+stations.select(pl.corr("W", "A")).item()
+```
+
+::: {style="font-size:0.85em; margin-top:0.8em;"}
+Strong and positive: busy stations are busy on both days. Not *perfect* : Loop stations serving commuters drop off far more on a Saturday than neighborhood stations do.
+:::
+
+---
+
+## Setup: Cook County home sales, 2025
+
+Do bigger houses sell for more money?
+
+```{python}
+#| echo: true
+sales = pl.read_csv("../../datasets/cook-county-home-sales-2025/cook-county-home-sales-2025.csv",
+                    ignore_errors=True)
+homes = sales.filter(
+    (pl.col("property_group") == "Single-Family")   # condos have no sqft
+    & (pl.col("is_multisale") == False)             # one price per home
+    & (pl.col("sale_price") > 10_000)               # drop nominal transfers
+    & pl.col("building_sqft").is_not_null()
+)
+homes.height
+```
+
+
+---
+
+## Square Footage vs. Price {.code-figure-slide .build-slide}
+
+::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+```{python}
+#| echo: true
+#| fig-alt: "Scatter plot of Cook County home sales, square footage against sale price, drawn with default styling so a few multi-million-dollar sales stretch the y-axis and flatten the rest of the cloud"
+(ggplot(homes, aes("building_sqft", "sale_price"))
+ + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True))
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{python}
+#| echo: true
+#| fig-alt: "The same scatter plot with the y-axis limited to two million dollars, which spreads the bulk of the sales out over the full height of the panel"
+(ggplot(homes, aes("building_sqft", "sale_price"))
+ + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True)
+ + scale_y_continuous(limits=(0, 2_000_000),
+                      labels=lambda v: [f"${x/1e6:g}M" for x in v]))
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+```{python}
+#| echo: true
+#| fig-alt: "The same scatter plot with both axes cropped, to two million dollars and six thousand square feet, bringing the cone shape of the main cloud into view"
+(ggplot(homes, aes("building_sqft", "sale_price"))
+ + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True)
+ + scale_y_continuous(limits=(0, 2_000_000),
+                      labels=lambda v: [f"${x/1e6:g}M" for x in v])
+ + scale_x_continuous(limits=(0, 6000)))
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=3}
+```{python}
+#| echo: true
+#| fig-alt: "The same cropped scatter plot, now with the axes labelled building square footage and sale price"
+(ggplot(homes, aes("building_sqft", "sale_price"))
+ + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True)
+ + scale_y_continuous(limits=(0, 2_000_000),
+                      labels=lambda v: [f"${x/1e6:g}M" for x in v])
+ + scale_x_continuous(limits=(0, 6000))
+ + labs(x="Building square footage", y="Sale price"))
+```
+:::
+
+::: {.fragment fragment-index=4}
+```{python}
+#| echo: true
+#| fig-alt: "Scatter plot of about 24,800 Cook County single-family home sales, building square footage on the x-axis against sale price on the y-axis, showing an upward trend that fans out widely at larger sizes"
+(ggplot(homes, aes("building_sqft", "sale_price"))
+ + geom_point(color="#f9461c", alpha=0.08, size=0.8, raster=True)
+ + scale_y_continuous(limits=(0, 2_000_000),
+                      labels=lambda v: [f"${x/1e6:g}M" for x in v])
+ + scale_x_continuous(limits=(0, 6000))
+ + labs(x="Building square footage", y="Sale price")
+ + theme_minimal())
+```
+:::
+
+:::
+
+---
+
+## How strong is it?
+
+```{python}
+#| echo: true
+homes.select(pl.corr("building_sqft", "sale_price")).item()
+```
+
+::: {style="font-size:0.85em; margin-top:0.8em;"}
+Positive, but weaker than the CTA example (0.88).
+:::
+
+---
+
+## The Cone Shape
+::: {}
+- The points **fan out** as houses get larger
+    - Small homes cluster in a price band, large homes all over
+- A single correlation coefficient reports one number for the whole cloud, and hides that the relationship is much tighter at one end than the other.
+- Always look at the scatter plot.
+- **The coefficient is only a summary.**
+:::
+
+
+---
+
+## Correlation Pitfalls: The Simpson's Paradox
+
+:::: {.split-content}
+
+<img src="../assets/viz-basics/simpsons-paradox-1.png" alt="Seems like salary drops with seniority...">
+
+<img class="fragment" src="../assets/viz-basics/simpsons-paradox-2.png" alt="...unless you control for departments!">
+
+::::
+
+---
+
+
+## Concluding Notes
+::: {}
+**One-dimensional data**
+
+- Summarize with summary statistics (mean, standard deviation, max, min, quartiles).
+- Visualize the distribution with histograms and box plots.
+:::
+
+::: {}
+**Two-dimensional data**
+
+- Visualize the relationship with scatter plots.
+- Measure the relationship by computing correlations.
+:::
+
+::: {}
+**High-dimensional data**
+
+- Create a **scatterplot matrix** showing all pairwise scatter plots.
+- Create a **correlation matrix** showing all pairwise correlations.
+:::
+
+::: {}
+**Correlations can mislead**
+
+- Additional variables may reveal unexpected and contrasting results. Always use your brain and think critically.
+:::
+
+# Bivariate Visualizations {.section-header}
+
+---
+
+## Visualizing Bivariate Relationships
+
+::: {}
+- A **scatter plot** uncovers the *form* of the relationship between two quantitative variables.
+- **Linear** relationships are the simplest to interpret : and there is a lot of clean statistical theory for them.
+- Models are approximations. Prefer the simpler one until the data forces you to a more complex one.
+:::
+
+::: {style="margin-top:0.8em;"}
+The question a scatter plot answers first is not "how strong?" but **"what shape?"**
+:::
+
+---
+
+## Common Forms a Scatter Plot Can Show {.image-frame-slide}
+
+<img src="../assets/viz-basics/scatter-forms.svg" alt="Four scatter plot panels. Simple linear: points rise in a straight band. Simple nonlinear: points curve upward. Unequal spread: points rise but fan out to the right. Complex nonlinear: points fall then rise in a U.">
+
+::: {.caption}
+Synthetic data.
+:::
+
+---
+
+## Two Categorical Variables {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+<img class="figure" src="../assets/viz-basics/two-categorical-counts.svg" alt="Grouped bar chart of 2025 Cook County home sales. Bedrooms 2, 3, 4 and 5-plus on the x-axis; within each, three bars count sales under 200 thousand dollars, 200 to 400 thousand, and over 400 thousand. The 3-bedroom group towers over the others.">
+:::
+::: {.column width="50%"}
+<img class="figure" src="../assets/viz-basics/two-categorical-normalized.svg" alt="The same grouped bars normalized within each bedroom count, so each group's three bars sum to 100 percent. The share of sales over 400 thousand dollars rises steadily from 2-bedroom to 5-plus-bedroom homes.">
+:::
+:::
+
+
+---
+
+## One Quantitative, One Categorical {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+<img class="figure" src="../assets/viz-basics/box-by-category.svg" alt="Side-by-side box plots of 2025 Cook County sale price by bedroom count. The median and the box both climb from 2-bedroom to 5-plus-bedroom homes, and the boxes get taller.">
+:::
+::: {.column width="50%"}
+<img class="figure" src="../assets/viz-basics/violin-by-category.svg" alt="Side-by-side violin plots of the same four groups. Each violin shows the full distribution's width; the 2- and 3-bedroom violins are narrow and bottom-heavy, the 5-plus violin is broad and nearly flat.">
+:::
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+(Note that a box plot cannot tell you a group is bimodal)
+:::
+
+---
+
+## Overlaying Distributions {.image-frame-slide}
+
+::: {.r-stack}
+<div class="fragment fade-out" data-fragment-index="1"><img src="../assets/viz-basics/overlaid-histogram.svg" alt="Two overlaid semi-transparent histograms of 2025 sale price, one for Chicago and one for suburban Cook County. The Chicago distribution peaks lower and is more right-skewed."></div>
+
+<div class="fragment" data-fragment-index="1"><img src="../assets/viz-basics/overlaid-density.svg" alt="The same two groups drawn as smooth filled density curves, which overlap more legibly than the bars did."></div>
+
+:::
+
+
+---
+
+## Univariate vs. Multivariate {.image-frame-slide}
+
+<img src="../assets/viz-basics/three-univariate.svg" alt="Three separate one-variable plots of the same table of home sales: a bar chart of bedroom counts, a bar chart of price tiers, and a histogram of sale price. None of the three shows how the variables relate.">
+
+::: {style="font-size:0.8em; margin-top:0.5em;"}
+Note that none of these shows a relationship.
+:::
+
+
+---
+
+## Geospatial Data
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Fundamentals of Data Visualization*, [Chapter 5: Directory of Visualizations](https://clauswilke.com/dataviz/directory-of-visualizations.html)
+:::
+:::
+
+
+---
+
+## Visualizing Uncertainty
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Fundamentals of Data Visualization*, [Chapter 16: Visualizing Uncertainty](https://clauswilke.com/dataviz/visualizing-uncertainty.html)
+:::
+:::
+
+
+# Perception: Color {.section-header}
+
+---
+
+## Color Blindness {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="38%"}
+::: {.dense}
+::: {}
+- Picking colors that work together is genuinely hard.
+- **7–10% of men** have red-green color vision deficiency (deuteranomaly is the common one).
+- Blue-yellow deficiency is far less common.
+- Red and green is the **default temptation** and the worst pair.
+:::
+:::
+:::
+::: {.column width="62%"}
+<img class="figure" src="../assets/viz-basics/color-red-green.svg" alt="Two line charts side by side. On the left, three series of median 2025 sale price by bedroom count drawn in red, green and brown. On the right, the same chart run through a deuteranope simulation, where the red and green lines have collapsed into nearly the same olive colour.">
+
+::: {.caption}
+Simulation uses Viénot, Brettel & Mollon (1999). It is a check, not a claim about what any particular person sees.
+:::
+:::
+:::
+
+---
+
+## Redundant Encoding {.image-frame-slide}
+
+<img src="../assets/viz-basics/color-redundant.svg" alt="The same three-series chart drawn in Okabe-Ito blue, vermillion and green with solid, dashed and dotted line styles, beside its deuteranope simulation. The three series remain distinguishable in both panels because the dash pattern carries the identity as well as the hue.">
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+In general, try to avoid letting hue be the only channel (add dash pattern, shape, or a direct label)
+:::
+
+---
+
+## Colorfulness {.image-frame-slide}
+
+<img src="../assets/viz-basics/color-saturation.svg" alt="The same chart twice: on the left in fully saturated pure red, green and blue, on the right in muted orange, steel grey and dusty blue. The muted version is markedly easier to look at.">
+
+
+---
+
+## Perceptually Uniform Colormaps {.image-frame-slide}
+
+::: {.caption}
+Design story: Nathaniel Smith and Stéfan van der Walt, "A Better Default Colormap for Matplotlib" (SciPy 2015), <https://bids.github.io/colormap>.
+:::
+
+<img src="../assets/viz-basics/colormap-luminance.svg" alt="Two colormap strips, jet and viridis, above a plot of their perceived lightness. Viridis climbs in a straight line from dark to light; jet zig-zags up and back down, with a bright band in the middle and dark at both ends.">
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+A colormap should have **uniform perceptual deltas**: equal steps in the data should look like equal steps. `jet` does not
+:::
+
+
+
+---
+
+## Data Type and Color {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="42%"}
+::: {.dense}
+::: {}
+- **Categorical** : pick a scheme that makes categories easy to *tell apart*. No order implied.
+- **Quantitative, low→high** : use a **sequential** scheme; light for low values.
+- **Quantitative, two meaningful ends** : use a **diverging** scheme; light in the middle.
+- Getting this wrong is a *type error*, not a taste question.
+:::
+:::
+:::
+::: {.column width="58%"}
+<img class="figure" src="../assets/viz-basics/color-schemes.svg" alt="Three rows of eight colour swatches: a categorical row of maximally distinct Okabe-Ito hues, a sequential row running from pale cream to dark brown, and a diverging row running dark blue through near-white to dark red.">
+
+::: {.caption}
+Categorical row is the Okabe & Ito palette, ["Color Universal Design"](https://jfly.uni-koeln.de/color/) (2008).
+:::
+:::
+:::
+
+# Perception: Length {.section-header}
+
+---
+
+## Length Beats Area {.image-frame-slide}
+
+<img src="../assets/viz-basics/area-vs-length.svg" alt="Left: eight circles, one per CTA 'L' line, sized so that circle area encodes median weekday entries; the Red Line circle is the largest and the Yellow Line circle is a dot. Right: the same eight values as a dot plot on a common scale, where the Red Line's 180 thousand entries is plainly about three times the Orange Line's 59 thousand.">
+
+::: {.caption}
+Median 2019 weekday entries, summed by line. Stations serving several lines count once per line.
+:::
+
+---
+
+## Stacking {.image-frame-slide}
+
+::: {.r-stack}
+<div class="fragment fade-out" data-fragment-index="1"><img src="../assets/viz-basics/stacked-area.svg" alt="Stacked area chart of CTA boardings from 1988 to 2025, with bus at the bottom, rail above it and paratransit on top. Only the bus band sits on a flat baseline."></div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="1"><img src="../assets/viz-basics/unstacked-lines.svg" alt="The same three modes as separate lines on a linear axis. Bus and rail are legible; paratransit is a flat line pinned against zero, annotated as such."></div>
+
+<div class="fragment" data-fragment-index="2"><img src="../assets/viz-basics/log-lines.svg" alt="The same three lines on a log y-axis, where paratransit is now readable near one to two million boardings and stops entirely in 2006, annotated as the transfer of paratransit service to Pace."></div>
+
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+"wobbling floor" problem
+:::
+
+---
+
+## Which plot? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+For each question, discuss with your elbow neighbors which plot(s) you could use:
+
+1. "What share of CTA trips are on rail?"
+2. "Did rail boardings recover after 2020?"
+3. "When did paratransit stop?"
+4. TODO add more
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+# Pie & Donut Charts {.section-header}
+
+
+## Pie Charts Intuition
+
+- A pie chart encodes **proportion** as **angle** (and area)
+- Works okay for simple comparisons, single data points
+- E.g. "roughly half" or "roughly a quarter"
+- Difficult to compare multiple slices
+
+---
+
+
+## Pie vs. Bar Example {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/piecharts-remix01.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/piecharts-remix01.svg)
+:::
+
+---
+
+## Pie vs. Bar Example {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/piecharts-remix02.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/piecharts-remix02.svg)
+:::
+
+---
+
+## Pie vs. Bar: Three Comparisons {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/Piecharts.svg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/Piecharts.svg)
+:::
+
+::: {.caption}
+Schutz, [*Piecharts.svg*](https://commons.wikimedia.org/wiki/File:Piecharts.svg), Wikimedia Commons, 2008. [CC BY 1.0](https://creativecommons.org/licenses/by/1.0/)
+:::
+
+---
+
+## The Principle of Proportional Ink
+
+::: {}
+- TK
+- TK
+:::
+
+---
+
+## Never Do a 3D Pie Chart
+
+::: {}
+- Never ever ever ever ever ever ever do a 3D pie chart
+- Why?
+    - Perspective distorts angle and area
+    - Slices in the front (near the viewer) look larger
+    - The tilt  changes how big a slice appears (independent of  data)
+    - A 3D pie adds a dimension that carries no information
+:::
+
+---
+
+## 3D Pie Chart in the Wild: Steve Jobs at Macworld 2008 {.image-frame-slide}
+
+![](../assets/pi-donut-demos/dsc_0143-golden.png){fig-alt="Steve Jobs' infamous U.S. SmartPhone Marketshare slide showing a 3D pie chart tilted toward the viewer. Apple's green slice sits at the front with a thick extruded edge. Source line reads Gartner for CQ3."}
+
+::: {.caption}
+Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24 to 10:10](https://www.youtube.com/watch?v=i9XU6wk_mWY&t=504s)
+:::
+
+---
+
+## 3D Pie Chart in the Wild: Steve Jobs at Macworld 2008 {.image-frame-slide}
+
+<iframe src="https://www.youtube-nocookie.com/embed/i9XU6wk_mWY?start=504&end=610&rel=0" title="Macworld San Francisco 2008 keynote : US smartphone market share segment (8:24–10:10)" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+::: {.caption}
+Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24 to 10:10](https://www.youtube.com/watch?v=i9XU6wk_mWY&t=504s)
+:::
+
+---
+
+## Why did Steve Jobs make a 3D pie chart? {.split}
+
+:::: {.split-content}
+
+<img src="../assets/pi-donut-demos/macworld-pie-3d.svg" alt="Pie chart of US smartphone market share drawn in 3D perspective and tilted toward the viewer. Apple's 19.5% green slice sits at the front and reads nearly as large as RIM's 39.0% blue slice at the back.">
+
+<img class="fragment" src="../assets/pi-donut-demos/macworld-pie-2d.svg" alt="The same US smartphone market share data as a flat 2D pie chart. RIM's 39.0% blue slice is plainly twice the size of Apple's 19.5% green slice.">
+
+::::
+
+---
+
+## The Donut Chart
+
+- A **donut chart** is a pie chart with the center cut out
+- Keeps the "this is all part of a whole" message
+- Slices are still difficult to compare
+
+---
+
+## Donut in the Wild: FIFA World Cup 2026 {.image-frame-slide}
+
+::: {.content-visible when-format="html"}
+![](../assets/pi-donut-demos/fifa-possession-example.jpeg)
+:::
+
+::: {.content-visible when-format="pdf"}
+![](../assets/pi-donut-demos/fifa-possession-example.jpeg)
+:::
+
+
+# Week 5, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
+
+<h2>Visualization, Continued</h2>
+
+Jack Bandy
+2026
+
+---
+
+## Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+- Week 5: Clark/Lake
+- Day 2
+    - Scale, conditioning, context
+    - Transformations
+    - Causality
+    - Large N and smoothing
+    - Dimensionality
+    - matplotlib & ggplot
+:::
+
+![](../assets/orange-line-map-stops/stop05-clark-lake.svg){.figure alt="Orange Line map with the Clark/Lake stop marked, the Week 5 stop"}
+
+:::
+
+# Visualization Considerations {.section-header}
+
+---
+
+## The Same Marks, Two Readings
+
+::: {.columns}
+::: {.column width="50%"}
+<img class="figure" src="../assets/ambiguous-figures/rubin-goblet-papanek.png" alt="A white goblet on a black square, whose outline is simultaneously two black faces in profile looking at each other." style="max-height:340px;">
+:::
+::: {.column width="50%" .fragment}
+<img class="figure" src="../assets/ambiguous-figures/hag-young-girl-papanek.png" alt="A pen drawing that reads either as a young woman turning away, her chin tucked into a fur collar, or as an old woman in profile with a large hooked nose and a downturned mouth." style="max-height:340px;">
+:::
+:::
+
+::: {style="font-size:0.78em; margin-top:0.5em;"}
+"people discover what they want to see more easily."
+:::
+
+::: {.caption}
+Rubin's vase (Edgar Rubin, 1915) and "My Wife and My Mother-in-Law" (W. E. Hill, *Puck*, 1915), as printed in Victor Papanek, *Design for the Real World* (Pantheon, 1972), p. 159.
+:::
+
+---
+
+## Shape Anecdote {.image-frame-slide}
+
+::: {style="position:relative; flex:0 0 auto; width:798px; height:432px; margin:0.2em auto 1.1em;"}
+
+<img class="photo-card" src="../assets/abstraction/0-shapes.svg" alt="Five plain flat shapes in a row on a cream field: a yellow eight-pointed star, a red rounded square, a blue heart, a green tree and a purple lightning bolt" style="position:absolute; top:0px; left:0px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/1-abstract-thought-inside-out_monster-verse.jpg" alt="Six pastel shapes drawn in a row on paper: a pink curved wedge, a yellow starburst, a blue blob, a purple squiggle, an orange rectangle and a green lollipop form" style="position:absolute; top:22.2px; left:57.6px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/2-wiki-fandom-abstract.jpeg" alt="The same vocabulary of shapes, now overlapping in one composition: an orange squiggle, a red square, a navy hook, a green triangle, a yellow starburst on a magenta circle, a blue blob and a purple curl" style="position:absolute; top:44.4px; left:115.2px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/3-abstract-thought-flat-shapes_animated-antic.jpeg" alt="Three flat shapes on white in the film: a yellow starburst, a pink curved wedge and a blue oval, with a hint of face parts inside the starburst" style="position:absolute; top:66.6px; left:172.8px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/4-abstract-thought-textured-collage_animated-antic.jpeg" alt="The same three forms as flat cut-paper collage figures, with eyes, mouths and limbs assembled from textured scraps, reading as three characters" style="position:absolute; top:88.8px; left:230.4px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/5-abstract-thought-blocky-shapes_animated-antic.jpeg" alt="The three characters as blocky, faceted three-dimensional figures, recognizable as Bing Bong, Joy and Sadness, with folded-paper objects tumbling around them" style="position:absolute; top:111px; left:288px; width:510px; height:315px;">
+
+:::
+
+::: {.caption}
+See [GitHub](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/abstraction) for sources.
+:::
+
+---
+
+## Seven Things to Watch
+
+::: {}
+1. **Scale** : what are the axes, and do they start where they should?
+2. **Conditioning** : what did you hold fixed to make the comparison?
+3. **Context** : units, reference values, labels, a caption.
+4. **Transformations** : logs and their friends.
+5. **Perception: color** : hue is a weak channel and not everyone sees it the same.
+6. **Perception: length** : length beats angle, area, and volume.
+7. **Causality** and **large N** : two ways a correct plot still misleads.
+:::
+
+
+
+---
+
+## Glass Slippers
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.aside-note}
+*Calling Bullshit*, [6.5: Glass Slippers](https://www.youtube.com/watch?v=59teS0SUHtI) (video, 9 min)
+:::
+:::
+
+
+# Scale {.section-header}
+
+---
+
+## 2015 Congressional Hearing: Planned Parenthood
+
+::: {}
+- Rep. Jason Chaffetz (R-UT), then chair of the House Oversight Committee, was questioning federal funding of Planned Parenthood.
+- He displayed a chart that had first appeared in a report by Americans United for Life.
+- The chart plots two services : cancer screenings and abortions : from 2006 to 2013.
+:::
+
+
+
+
+---
+
+## The Chart as Shown {.image-frame-slide}
+
+<img src="../assets/viz-basics/scale-two-axes.svg" alt="Two thick lines crossing. A pale line labelled Cancer screening falls from 2,007,371 in 2006 to 935,573 in 2013; an orange line labelled Abortion rises from 289,750 to 327,000. There is no y-axis and no gridline.">
+
+::: {.caption}
+Redrawn from the chart displayed at the House Oversight Committee hearing, 29 September 2015 (originally from an Americans United for Life report).
+:::
+
+---
+
+## What is suspicious about this plot? {.split .smaller}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+<img class="figure" src="../assets/viz-basics/scale-two-axes.svg" alt="Two thick lines crossing. A pale line labelled Cancer screening falls from 2,007,371 in 2006 to 935,573 in 2013; an orange line labelled Abortion rises from 289,750 to 327,000. There is no y-axis and no gridline." style="max-height:320px; margin-bottom:0.5em;">
+
+1. **How many data points** are actually in this plot?
+2. What is the **y-axis**?
+3. Why do the two lines cross?
+4. How would you fix it?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## The Same Four Numbers, One Scale {.image-frame-slide}
+
+<img src="../assets/viz-basics/scale-one-axis.svg" alt="The same two series on one shared y-axis running from zero to 2.2 million services. Cancer screening falls steeply from just over 2 million to under 1 million; the abortion line is nearly flat near 300,000 and the two never come close to crossing.">
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+Now the dominant fact is visible: cancer screenings **fell by half**, and abortions barely moved. Nothing crosses.
+:::
+
+---
+
+## Or Plot the Quantity in Dispute {.image-frame-slide}
+
+<img src="../assets/viz-basics/scale-percent.svg" alt="Bar chart with two bars. Abortions as a share of the two services rise from 13 percent in 2006 to 26 percent in 2013.">
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+The argument was about **mix**, not counts. As a share, abortions went from 13% to 26% : which the original chart never actually showed, even though it was trying to.
+:::
+
+# Conditioning {.section-header}
+
+---
+
+## Conditioning
+
+**Conditioning** means holding one variable fixed : or slicing by it : so that a comparison means something.
+
+::: {}
+- Split into groups and draw side-by-side bars, boxes, or panels.
+- Bin a continuous variable (ages in decades, homes by bedroom count) and compare within bins.
+- The Bertin/Munzner language for this is a **small multiple**: same encoding, repeated.
+:::
+
+::: {style="margin-top:0.6em;"}
+Every conditioning choice is a claim about what else was going on. Say it out loud.
+:::
+
+---
+
+## Grouped Bars {.image-frame-slide}
+
+<img src="../assets/viz-basics/conditioning-bars.svg" alt="Grouped bar chart of median 2025 sale price by bedroom count, with a Chicago bar and a suburban Cook County bar in each group. Both rise steeply from 2 to 5-plus bedrooms.">
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+Median sale price, conditioned on bedroom count and on Chicago vs. suburban Cook County.
+:::
+
+---
+
+## Which comparisons are easy here? {.split .smaller}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+<img class="figure" src="../assets/viz-basics/conditioning-bars.svg" alt="Grouped bar chart of median 2025 sale price by bedroom count, with a Chicago bar and a suburban Cook County bar in each group. Both rise steeply from 2 to 5-plus bedrooms." style="max-height:320px; margin-bottom:0.5em;">
+
+1. Which comparisons can you make **easily**?
+2. Which comparison is most **interesting** or important?
+3. Are those the same comparison?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## Same Numbers, Less Ink {.image-frame-slide}
+
+::: {.r-stack}
+<div class="fragment fade-out" data-fragment-index="1"><img src="../assets/viz-basics/conditioning-dots.svg" alt="Cleveland dot plot of the same medians: one row per bedroom count, with a Chicago dot and a suburban dot joined by a thin connector. The connectors get longer as bedrooms increase."></div>
+
+<div class="fragment" data-fragment-index="1"><img src="../assets/viz-basics/conditioning-lines.svg" alt="The same medians as two connected lines with the space between them lightly shaded, annotated with a 90 thousand dollar gap at 5-plus bedrooms."></div>
+
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+Dots put both values on a common scale. Lines make the **gap** itself the shape of the chart : which is the comparison we actually wanted.
+:::
+
+# Context {.section-header}
+
+---
+
+## What is missing? {.split .smaller}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+<img class="figure" src="../assets/viz-basics/context-bare.svg" alt="A single orange line rising gradually, then falling off a cliff near the right edge and partly recovering. The axes have bare numbers and no labels, titles, or units." style="max-height:300px; margin-bottom:0.5em;">
+
+Everything here is correct. Discuss with your elbow neighbors: what does this not tell you?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## The Same Line, With Context {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="40%"}
+::: {.dense}
+::: {}
+- Label the axes, and **include units**.
+- Add **reference lines** for values that matter.
+- Label the unusual or interesting **points**.
+- Write a **caption**: what the data is, how it is plotted, what to look at.
+:::
+:::
+:::
+::: {.column width="60%"}
+<img class="figure" src="../assets/viz-basics/context-annotated.svg" alt="The same CTA rail boardings line, now titled, with a y-axis labelled in millions, a dashed reference line at the 1999 level, a marked 2015 peak of 242 million rides, an annotation on the 2020 pandemic collapse, and a source line.">
+:::
+:::
+
+# Transformations {.section-header}
+
+---
+
+## Why Transform a Variable?
+
+::: {}
+- To **reveal the distribution of most of the observations** : otherwise the bulk of the data is squashed into a corner.
+- To **reveal anomalies** on the far side of a long tail.
+- To turn a **curved** relationship into a straight one you can reason about.
+:::
+
+::: {style="margin-top:0.8em;"}
+**Logarithmic transformations take care of most needs.**
+:::
+
+---
+
+## Skew, Before and After {.image-frame-slide}
+
+::: {.r-stack}
+<div class="fragment fade-out" data-fragment-index="1"><img src="../assets/viz-basics/skew-linear.svg" alt="Histogram of 2025 Cook County sale prices on a linear axis. Almost every sale is crushed into a single spike at the left, with a long thin tail stretching past 30 million dollars."></div>
+
+<div class="fragment" data-fragment-index="1"><img src="../assets/viz-basics/skew-log.svg" alt="The same sale prices on a log x-axis, which spreads them into a broad, nearly symmetric mound centred near 300 thousand dollars with a small bump of low-value transfers on the left."></div>
+
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+Same column, same 24,775 sales. The log axis is the only thing that changed.
+:::
+
+---
+
+## Basic Functional Relations {.image-frame-slide}
+
+<img src="../assets/viz-basics/functional-relations.svg" alt="Four small plots: y equals x is a straight line; y equals x squared and y equals x cubed curve away from the origin; y equals log x rises steeply then flattens; y equals e to the x is flat then explodes.">
+
+
+---
+
+## Log: the "Swiss Army Knife" {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+A log can turn non-linear relationships into linear ones:
+
+**1. Exponential**
+
+$y = a^{x} \;\Rightarrow\; \log(y) = x \log(a)$
+
+**2. Power law**
+
+$y = a x^{k} \;\Rightarrow\; \log(y) = \log(a) + k \log(x)$
+
+::: {style="font-size:0.85em; margin-top:0.6em;"}
+Exponential → log the **y**. Power law → log **both**.
+:::
+:::
+:::
+::: {.column width="54%"}
+<img class="figure" src="../assets/viz-basics/log-linearize.svg" alt="Two panels of the same exponential curve. On a linear y-axis it is a hockey stick; on a log y-axis it is a straight line.">
+:::
+:::
+
+---
+
+## Kepler's Third Law (1619) {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="42%"}
+::: {style="font-size:0.72em;"}
+| Planet | Distance (AU) | Period (days) |
+|---|---:|---:|
+| Mercury | 0.389 | 87.77 |
+| Venus | 0.724 | 224.70 |
+| Earth | 1.000 | 365.25 |
+| Mars | 1.524 | 686.95 |
+| Jupiter | 5.200 | 4332.62 |
+| Saturn | 9.510 | 10759.2 |
+:::
+:::
+::: {.column width="58%"}
+<img class="figure" src="../assets/viz-basics/kepler-linear.svg" alt="Scatter plot of orbital period in days against mean distance from the Sun in AU for six planets, on linear axes. The four inner planets pile up in the bottom-left corner with overlapping labels while Jupiter and Saturn sit far out to the right.">
+:::
+:::
+
+
+---
+
+## Log-Log: the Slope is the Exponent {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+<img class="figure" src="../assets/viz-basics/kepler-linear.svg" alt="Scatter plot of orbital period in days against mean distance from the Sun in AU for six planets, on linear axes. The four inner planets pile up in the bottom-left corner with overlapping labels while Jupiter and Saturn sit far out to the right.">
+:::
+::: {.column width="50%"}
+<img class="figure" src="../assets/viz-basics/kepler-loglog.svg" alt="The same six planets on log-log axes. The points fall almost exactly on a dashed straight line of slope 1.50, annotated as P squared proportional to a cubed.">
+:::
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+Same six planets. Log both axes and they fall on a line of slope $3/2$: the square of the orbital period is proportional to the cube of the semi-major axis.
+:::
+
+# Causality {.section-header}
+
+---
+
+## Can we conclude that one causes the other? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+<img class="figure" src="../assets/viz-basics/spurious-random-walks.svg" alt="Two series plotted against year on separate left and right y-axes, tracking each other closely, annotated r equals 0.99 and a note that both are random walks from a random number generator with nothing to do with each other." style="max-height:340px;">
+
+**A.** Yes &nbsp;&nbsp; **B.** No
+
+- What does $r = 0.99$ buy you here?
+- What would you need in order to say "causes"?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## Correlation ≠ Causation {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+::: {}
+- A correlation is consistent with $X \to Y$, with $Y \to X$, with a **common cause** $Z$, and with pure coincidence.
+- The **fork** is the classic one: $Z$ causes both, so $X$ and $Y$ move together without touching.
+- No amount of extra data points settles which it is. It is not a sample-size problem.
+:::
+:::
+:::
+::: {.column width="54%"}
+<img class="figure" src="../assets/confounds/fork.svg" alt="Causal diagram with three boxes. A dark box labelled Z sits above two neutral boxes labelled X and Y, with arrows running from Z down to X and from Z down to Y. There is no arrow between X and Y.">
+:::
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+We come back to this properly later in the course. For now, the visualization lesson is that **a chart cannot show you an arrow**.
+:::
+
+# Large N and Smoothing {.section-header}
+
+---
+
+## Nearly 25,000 Points {.image-frame-slide}
+
+<img src="../assets/viz-basics/overplot-solid.svg" alt="Scatter plot of about 24,000 Cook County home sales, building square footage against sale price, with every point drawn fully opaque. The lower left of the plot is a solid black mass with no internal structure.">
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+Every point is on the page, and the shape of the data is gone. **Overplotting** : the ink saturates and the plot stops being a distribution.
+:::
+
+---
+
+## What would be a better plot? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+Think about the **type** of data before you answer.
+
+**A.** Histogram / density plot
+
+**B.** Bar plot
+
+**C.** Violin plot
+
+**D.** Box plot
+
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## Two Fixes for Overplotting {.image-frame-slide}
+
+::: {.r-stack}
+<div class="fragment fade-out" data-fragment-index="1"><img src="../assets/viz-basics/overplot-alpha.svg" alt="The same 24,000 sales drawn at 6 percent opacity, so density shows as depth of colour: a bright dense core around 1,200 square feet and 300 thousand dollars fading outward."></div>
+
+<div class="fragment" data-fragment-index="1"><img src="../assets/viz-basics/overplot-hexbin.svg" alt="The same data as a hex-binned two-dimensional histogram with a logarithmic colour scale, showing the same dense core as dark cells and a long sparse fan to the upper right."></div>
+
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+**Alpha** lets overlap accumulate into shade. **Hex binning** is the honest version of the same idea: a two-dimensional histogram with a colorbar you can read.
+:::
+
+---
+
+## The Conditional Center {.image-frame-slide}
+
+<img src="../assets/viz-basics/overplot-smooth.svg" alt="The faint point cloud of home sales with a thick orange curve running through it, rising steeply from about 250 thousand dollars at 800 square feet to about 1.2 million at 5,000 square feet and flattening at the top.">
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+A smooth curve of **local averages**: for each $x$, the average $y$ in a neighborhood of $x$. That is the conditional center, and it is what your eye was trying to trace anyway.
+:::
+
+---
+
+## Histograms and Bin Width {.text-figure-slide}
+
+::: {.aside-note}
+*Learning Data Science*, [Section 11.2: Smoothing and Aggregating Data](https://learningds.org/ch/11/viz_smoothing.html)
+:::
+
+:::: {.columns}
+::: {.column width="38%"}
+::: {.incremental style="font-size:0.82em; padding-right:24px;"}
+- Same 400 heights, three bin counts.
+- Too few bins hides shape; too many shows noise.
+- Good to try more than one bin width
+- Bin width is a **smoothing choice**, like the bandwidth coming up next
+:::
+:::
+::: {.column width="62%"}
+```{python}
+#| echo: false
+#| fig-width: 5.3
+#| fig-height: 4.4
+#| fig-alt: "The same 400 heights drawn as three stacked histograms with 6, 20 and 60 bins; the 6-bin version is a coarse block, the 20-bin version shows a clean single peak, and the 60-bin version breaks into spiky counts"
+rng = np.random.default_rng(9)
+h = rng.normal(68, 3.2, 400)
+LEVELS = ["6 bins", "20 bins", "60 bins"]
+
+def counted(n, label):
+    """One np.histogram per bin count, so a single geom_col draws all three panels."""
+    cnt, edges = np.histogram(h, bins=n)
+    return pl.DataFrame({"mid": (edges[:-1] + edges[1:]) / 2,
+                         "count": cnt.astype(float),
+                         "w": np.repeat(edges[1] - edges[0], n),
+                         "bins": [label] * n})
+
+bars = pl.concat([counted(n, lab) for n, lab in zip([6, 20, 60], LEVELS)]
+                 ).with_columns(pl.col("bins").cast(pl.Enum(LEVELS)))
+
+(ggplot(bars, aes("mid", "count"))
+ + geom_col(aes(width="w"), fill=ORANGE, alpha=0.8, color="white", size=0.4)
+ + facet_wrap("bins", ncol=1, scales="free_y")
+ + labs(x="height (in)", y="count")
+ + theme_minimal(base_size=13)
+ + theme(strip_text=element_text(size=13, weight="bold", color=INK),
+         panel_grid_minor=element_blank(), figure_size=(5.3, 4.4)))
+```
+:::
+::::
+
+---
+
+## Smoothing Detour: Kernel Density {.image-frame-slide}
+
+::: {.r-stack}
+<div class="fragment fade-out" data-fragment-index="1"><img src="../assets/viz-basics/kde-1-points.svg" alt="An empty plot with three short tick marks on the x-axis at 2, 3 and 5."></div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="1"><img src="../assets/viz-basics/kde-2-one-kernel.svg" alt="The same three ticks with one grey bell curve centred on the point at 2, annotated that the area under each kernel is one third."></div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="2"><img src="../assets/viz-basics/kde-3-kernels.svg" alt="Three overlapping grey bell curves, one centred on each of the three ticks."></div>
+
+<div class="fragment" data-fragment-index="3"><img src="../assets/viz-basics/kde-4-sum.svg" alt="The three grey bell curves with a thick orange curve above them: their pointwise sum, with a tall peak between 2 and 3 and a second bump at 5."></div>
+
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+$\hat{f}(x) = \dfrac{1}{n}\sum_{i=1}^{n} K_h(x - x_i)$ : put a kernel on each observation, then add them up. **No bins, no bin edges.**
+:::
+
+---
+
+## Bandwidth {.image-frame-slide}
+
+<img src="../assets/viz-basics/kde-bandwidth.svg" alt="Three panels of the same three data points estimated with bandwidths 0.25, 0.75 and 2.0. The narrow bandwidth gives three separate spikes, the middle one gives a two-bump curve, the wide one gives a single broad mound.">
+
+::: {style="font-size:0.8em; margin-top:0.4em;"}
+$h$ decides how peaked or spread each kernel is.
+:::
+
+---
+
+## Smoothing a Scatter Plot {.image-frame-slide}
+
+::: {.r-stack}
+<div class="fragment fade-out" data-fragment-index="1"><img src="../assets/viz-basics/smooth-1-scatter.svg" alt="A scatter plot of about 46 grey points rising from lower left to upper right with noticeable scatter."></div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="1"><img src="../assets/viz-basics/smooth-2-window.svg" alt="The same scatter with a shaded vertical window between x equals 5 and 9; the points inside are orange and a black triangle marks their mean y-value."></div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="2"><img src="../assets/viz-basics/smooth-3-bin-means.svg" alt="The same scatter divided by dashed vertical lines into five bins, with a black triangle at the mean y-value of each bin."></div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="3"><img src="../assets/viz-basics/smooth-4-curve.svg" alt="The bin-mean triangles joined by straight black segments, sketching a rising curve across the point cloud."></div>
+
+<div class="fragment" data-fragment-index="4"><img src="../assets/viz-basics/smooth-5-kernel.svg" alt="The same scatter with a smooth orange curve instead of the jointed segments, produced by kernel weights rather than hard bins."></div>
+
+:::
+
+::: {style="font-size:0.78em; margin-top:0.3em;"}
+$g(x) = \sum_i \dfrac{K_h(x - x_i)\,y_i}{\sum_j K_h(x - x_j)}$ : a **weighted average of the $y_i$**, with weights from the kernel. The denominator is there so the weights sum to 1.
+:::
+
+---
+
+## Local Smoothing {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="42%"}
+::: {.dense}
+::: {}
+- A **moving window** over $x$; average (or fit) the $y$ values inside it.
+- Many ways to do it: **kernel** methods, cubic and thin-plate **splines**, **lowess**.
+- All of them have a bandwidth-shaped knob, and it is always the real decision.
+- Reveals the *shape* of the relationship between $y$ and $x$.
+:::
+:::
+:::
+::: {.column width="58%"}
+<img class="figure" src="../assets/viz-basics/smooth-6-bandwidth.svg" alt="One scatter plot with three kernel-smoothed curves: a wiggly grey curve at bandwidth 0.6, a moderate orange curve at 1.6, and a nearly straight black line at 6.0.">
+:::
+:::
+
+---
+
+## Smoothing Plus Conditioning {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="40%"}
+::: {.dense}
+::: {}
+- One smooth curve **per bedroom count**: we have controlled for bedrooms.
+- The curves separate, so square footage alone was never the whole story.
+- Careful: these are **not longitudinal** (no house was followed as it grew).
+- Conditioning removes one alternative explanation. It does not remove the rest.
+:::
+:::
+:::
+::: {.column width="60%"}
+<img class="figure" src="../assets/viz-basics/smoothing-conditioned.svg" alt="Four smoothed curves of local average sale price against building square footage, one for each of 2, 3, 4 and 5-plus bedrooms. The curves rise together but the 4 and 5-plus curves sit well above the 2 and 3 bedroom curves at the same square footage.">
+:::
+:::
+
+# Dimensionality {.section-header}
+
+---
+
+
+## One Variable, Linear {.image-frame-slide}
+
+A single feature, and the score moves with it at a constant rate.
+
+<img src="../assets/barocas-inscrutability/fig-04-linear-remix.svg" alt="Line chart with Length of Employment on the x-axis and Credit Score on the y-axis. A straight orange line rises steadily from the origin to the top right." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## One Variable, Nonlinear {.image-frame-slide}
+
+Still one feature, but the rate of change is not constant.
+
+<img src="../assets/barocas-inscrutability/fig-05-nonlinear-remix.svg" alt="Line chart with Length of Employment on the x-axis and Credit Score on the y-axis. An orange curve stays nearly flat at first, then bends sharply upward toward the right." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## One Variable, Non-Monotonic {.image-frame-slide}
+
+"More X" does not alwasy mean "more Y."
+
+<img src="../assets/barocas-inscrutability/fig-06-non-monotonic-remix.svg" alt="Line chart with Length of Employment on the x-axis and Credit Score on the y-axis. An orange bell-shaped curve rises to a peak near the left of center, then falls back toward the baseline." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## Two Variables, Linear {.image-frame-slide}
+
+The relationship becomes a surface (i.e. a tilted plane).
+
+<img src="../assets/barocas-inscrutability/fig-07-multidimensional-linear-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. A flat orange plane tilts upward with income and downward with debts." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## Two Variables, Nonlinear {.image-frame-slide}
+
+Curved surface: the effect of one feature depends on where you are.
+
+<img src="../assets/barocas-inscrutability/fig-08-multidimensional-nonlinear-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. An orange bowl-shaped surface dips in the middle and rises toward all four corners." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## Two Variables, Non-Monotonic {.image-frame-slide}
+
+Interaction: income's effect on score depends on the level of debt.
+
+<img src="../assets/barocas-inscrutability/fig-09-multidimensional-non-monotonic-a-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. An orange saddle-shaped surface rises toward one corner and falls away toward another." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## Two Variables, Many Turns {.image-frame-slide}
+
+Same two features, a more tangled surface, hard to summarize in words.
+
+<img src="../assets/barocas-inscrutability/fig-10-multidimensional-non-monotonic-b-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. An orange surface with several ridges and valleys rises and falls repeatedly across the square." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+---
+
+## What a Neural Network Learns {.image-frame-slide}
+
+The output of an actual four-layer network over the same two features.
+
+<img src="../assets/barocas-inscrutability/fig-11-four-layer-neural-network-remix.svg" alt="Three-dimensional plot with axes for Outstanding Debts, Income, and Credit Score. A craggy orange surface made of flat facets folds along sharp creases into irregular peaks and ridges." style="max-height: 420px; margin-top: 18px;">
+
+::: {.caption}
+Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
+:::
+
+# ggplot demo {.section-header}
+
+---
+
+## Recreating the FIFA Chart: Setup
+
+```{python}
+#| echo: true
+#| output: false
+import matplotlib.pyplot as plt
+
+sizes  = [63, 27, 10]
+labels = ['COL', 'COD', 'In Contest']
+colors = ['#f5c800', '#0057a8', '#00a896']
+
+fig, ax = plt.subplots(figsize=(4, 4))
+```
+
+---
+
+## Recreating the FIFA Chart: Draw {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-format: svg
+#| fig-alt: "Donut chart of FIFA World Cup 2026 Group K possession: Colombia 63% in yellow, DR Congo 27% in blue, In Contest 10% in teal"
+ax.pie(sizes, labels=labels, autopct='%1.0f%%',
+       colors=colors, startangle=90, counterclock=False,
+       wedgeprops=dict(width=0.5), pctdistance=0.75)
+ax.set_title('Possession', fontweight='bold')
+plt.tight_layout()
+```
+
+---
+
+## Recreating the FIFA Chart {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Donut chart of FIFA World Cup 2026 Group K possession: Colombia 63% in yellow, DR Congo 27% in blue, In Contest 10% in teal"
+#| fig-format: svg
+#| fig-width: 5
+#| fig-height: 5
+import matplotlib.pyplot as plt
+
+sizes  = [63, 27, 10]
+labels = ['COL', 'COD', 'In Contest']
+colors = ['#f5c800', '#0057a8', '#00a896']
+_, ax = plt.subplots()
+ax.pie(sizes, labels=labels, autopct='%1.0f%%', colors=colors,
+       startangle=90, counterclock=False,
+       wedgeprops=dict(width=0.5), pctdistance=0.75)
+ax.set_title('Possession', fontweight='bold');
+```
+
+---
+
+## Recreating the FIFA Chart: Polished
+
+```{python}
+#| echo: false
+#| fig-format: svg
+#| fig-alt: "Donut chart styled after the FIFA World Cup 2026 broadcast graphic: Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with legend on the right inside a semi-transparent dark rounded rectangle."
+#| out-width: 100%
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+from matplotlib.patches import FancyBboxPatch
+
+phi = (1 + 5**0.5) / 2  # golden ratio ≈ 1.618
+fig_h = 4.5
+fig_w = fig_h * phi
+
+fig = plt.figure(figsize=(fig_w, fig_h))
+fig.patch.set_alpha(0)
+
+bg = FancyBboxPatch(
+    (0.02, 0.03), 0.96, 0.94,
+    boxstyle="round,pad=0.03",
+    facecolor=(0, 0, 0, 0.72),
+    edgecolor="none",
+    transform=fig.transFigure,
+    zorder=0,
+)
+fig.add_artist(bg)
+
+gs = gridspec.GridSpec(
+    1, 2, width_ratios=[2, 3],
+    left=0.03, right=0.97, bottom=0.05, top=0.95, wspace=0,
+)
+ax_d = fig.add_subplot(gs[0])
+ax_l = fig.add_subplot(gs[1])
+for ax in (ax_d, ax_l):
+    ax.set_facecolor("none")
+
+sizes  = [63, 27, 10]
+labels = ["COL", "COD", "IN CONTEST"]
+colors = ["#fcd116", "#0057a8", "#00a896"]
+
+# startangle=-90 → Colombia starts at 6 o'clock, counterclock=False → runs clockwise to ~1 o'clock
+ax_d.pie(
+    sizes, colors=colors, startangle=-90, counterclock=False,
+    wedgeprops=dict(width=0.5, edgecolor="white", linewidth=2.5),
+)
+
+ax_l.axis("off")
+ax_l.set_xlim(0, 1)
+ax_l.set_ylim(0, 1)
+
+ax_l.text(0.08, 0.82, "POSSESSION", color="white", fontsize=19,
+          fontweight="bold", va="center")
+
+for i, (label, color, pct) in enumerate(zip(labels, colors, sizes)):
+    y = 0.60 - i * 0.20
+    # white ring behind colored fill
+    ax_l.plot(0.10, y, "o", color="white",  markersize=19, zorder=4)
+    ax_l.plot(0.10, y, "o", color=color,    markersize=14, zorder=5)
+    ax_l.text(0.22, y, label,      color="white", fontsize=16, va="center")
+    ax_l.text(0.72, y, f"{pct}%",  color="white", fontsize=16, va="center",
+              fontweight="bold");
+```
+
+---
+
+## What do you think of this code? {.smaller .scrollable}
+
+```{python}
+#| echo: true
+#| output-location: column
+#| fig-format: svg
+#| fig-alt: "Donut chart styled after the FIFA World Cup 2026 broadcast graphic: Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with legend on the right inside a semi-transparent dark rounded rectangle."
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+from matplotlib.patches import FancyBboxPatch
+
+phi = (1 + 5**0.5) / 2  # golden ratio ≈ 1.618
+fig_h = 4.5
+fig_w = fig_h * phi
+
+fig = plt.figure(figsize=(fig_w, fig_h))
+fig.patch.set_alpha(0)
+
+bg = FancyBboxPatch(
+    (0.02, 0.03), 0.96, 0.94,
+    boxstyle="round,pad=0.03",
+    facecolor=(0, 0, 0, 0.72),
+    edgecolor="none",
+    transform=fig.transFigure,
+    zorder=0,
+)
+fig.add_artist(bg)
+
+gs = gridspec.GridSpec(
+    1, 2, width_ratios=[2, 3],
+    left=0.03, right=0.97, bottom=0.05, top=0.95, wspace=0,
+)
+ax_d = fig.add_subplot(gs[0])
+ax_l = fig.add_subplot(gs[1])
+for ax in (ax_d, ax_l):
+    ax.set_facecolor("none")
+
+sizes  = [63, 27, 10]
+labels = ["COL", "COD", "IN CONTEST"]
+colors = ["#fcd116", "#0057a8", "#00a896"]
+
+# startangle=-90 → Colombia starts at 6 o'clock, counterclock=False → runs clockwise to ~1 o'clock
+ax_d.pie(
+    sizes, colors=colors, startangle=-90, counterclock=False,
+    wedgeprops=dict(width=0.5, edgecolor="white", linewidth=2.5),
+)
+
+ax_l.axis("off")
+ax_l.set_xlim(0, 1)
+ax_l.set_ylim(0, 1)
+
+ax_l.text(0.08, 0.82, "POSSESSION", color="white", fontsize=19,
+          fontweight="bold", va="center")
+
+for i, (label, color, pct) in enumerate(zip(labels, colors, sizes)):
+    y = 0.60 - i * 0.20
+    # white ring behind colored fill
+    ax_l.plot(0.10, y, "o", color="white",  markersize=19, zorder=4)
+    ax_l.plot(0.10, y, "o", color=color,    markersize=14, zorder=5)
+    ax_l.text(0.22, y, label,      color="white", fontsize=16, va="center")
+    ax_l.text(0.72, y, f"{pct}%",  color="white", fontsize=16, va="center",
+              fontweight="bold");
+```
+
+---
+
+## Recreating the FIFA Chart: R Setup
+
+```{r}
+#| echo: true
+library(ggplot2)
+
+sizes  <- c(63, 27, 10)
+labels <- c("COL", "COD", "In Contest")
+colors <- c("#fcd116", "#0057a8", "#00a896")
+
+df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = sizes,
+  color = colors
+)
+```
+
+---
+
+## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+
+```{r}
+#| echo: true
+#| dev: svglite
+#| fig-alt: "Basic donut chart using ggplot2 coord_polar with default colors: Colombia, DR Congo, In Contest"
+ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1)
+```
+
+---
+
+## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+
+```{r}
+#| echo: true
+#| dev: svglite
+#| code-line-numbers: "4-5"
+#| fig-alt: "Donut chart with FIFA colors applied and donut hole created via xlim"
+ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1) +
+  scale_fill_manual(values = setNames(df$color, df$label)) +
+  xlim(0.5, 2.5)
+```
+
+---
+
+## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+
+```{r}
+#| echo: true
+#| dev: svglite
+#| code-line-numbers: "6-8"
+#| fig-alt: "Completed ggplot2 donut chart: Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with Possession title and minimal theme"
+ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1) +
+  scale_fill_manual(values = setNames(df$color, df$label)) +
+  xlim(0.5, 2.5) +
+  labs(title = "Possession", fill = NULL) +
+  theme_void() +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+```
+
+---
+
+## Recreating the FIFA Chart: R Polished
+
+```{r}
+#| echo: false
+#| dev: svglite
+#| fig-alt: "Polished donut chart styled after FIFA broadcast graphic, made with ggplot2: dark background, Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with colored dot legend"
+library(ggplot2)
+library(ggtext)
+library(patchwork)
+
+sizes  <- c(63, 27, 10)
+labels <- c("COL", "COD", "IN CONTEST")
+colors <- c("#fcd116", "#0057a8", "#00a896")
+df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = sizes,
+  color = colors
+)
+
+donut <- ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1, color = "white", linewidth = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1) +
+  scale_fill_manual(values = setNames(df$color, df$label)) +
+  xlim(0.5, 2.5) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.background = element_rect(fill = NA, color = NA))
+
+legend_df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = paste0(sizes, "%"),
+  color = colors,
+  y     = c(0.65, 0.45, 0.25)
+)
+legend_panel <- ggplot(legend_df, aes(y = y)) +
+  annotate("text", x = 0.1, y = 0.85, label = "POSSESSION",
+           color = "white", size = 6, fontface = "bold", hjust = 0) +
+  geom_point(aes(x = 0.12, color = label), size = 7) +
+  geom_text(aes(x = 0.24, label = label), color = "white",
+            size = 5, hjust = 0) +
+  geom_text(aes(x = 0.95, label = pct), color = "white",
+            size = 5, hjust = 1, fontface = "bold") +
+  scale_color_manual(values = setNames(df$color, df$label)) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.background = element_rect(fill = NA, color = NA))
+
+donut + legend_panel +
+  plot_layout(widths = c(2, 3)) &
+  theme(plot.background = element_rect(fill = "#000000bb", color = NA))
+```
+
+---
+
+## What do you think of this code? {.smaller .scrollable}
+
+```{r}
+#| echo: true
+#| output-location: column
+#| dev: svglite
+#| fig-alt: "Polished donut chart styled after FIFA broadcast graphic, made with ggplot2: dark background, Colombia 63% yellow, DR Congo 27% blue, In Contest 10% teal, with colored dot legend"
+library(ggplot2)
+library(ggtext)
+library(patchwork)
+
+sizes  <- c(63, 27, 10)
+labels <- c("COL", "COD", "IN CONTEST")
+colors <- c("#fcd116", "#0057a8", "#00a896")
+df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = sizes,
+  color = colors
+)
+
+donut <- ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1, color = "white", linewidth = 1) +
+  coord_polar(theta = "y", start = pi, direction = -1) +
+  scale_fill_manual(values = setNames(df$color, df$label)) +
+  xlim(0.5, 2.5) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.background = element_rect(fill = NA, color = NA))
+
+legend_df <- data.frame(
+  label = factor(labels, levels = labels),
+  pct   = paste0(sizes, "%"),
+  color = colors,
+  y     = c(0.65, 0.45, 0.25)
+)
+legend_panel <- ggplot(legend_df, aes(y = y)) +
+  annotate("text", x = 0.1, y = 0.85, label = "POSSESSION",
+           color = "white", size = 6, fontface = "bold", hjust = 0) +
+  geom_point(aes(x = 0.12, color = label), size = 7) +
+  geom_text(aes(x = 0.24, label = label), color = "white",
+            size = 5, hjust = 0) +
+  geom_text(aes(x = 0.95, label = pct), color = "white",
+            size = 5, hjust = 1, fontface = "bold") +
+  scale_color_manual(values = setNames(df$color, df$label)) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.background = element_rect(fill = NA, color = NA))
+
+donut + legend_panel +
+  plot_layout(widths = c(2, 3)) &
+  theme(plot.background = element_rect(fill = "#000000bb", color = NA))
+```
+
+---
+
+## Comparing matplotlib and ggplot {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Python / matplotlib**
+
+```python
+import matplotlib.pyplot as plt
+
+sizes  = [63, 27, 10]
+labels = ['COL', 'COD', 'In Contest']
+colors = ['#fcd116', '#0057a8', '#00a896']
+
+# wedge order + label positions handled by pie()
+_, ax = plt.subplots()
+
+ax.pie(sizes, labels=labels, colors=colors,
+       autopct='%1.0f%%', pctdistance=0.75,
+       startangle=90, counterclock=False,
+       wedgeprops=dict(width=0.5))
+ax.set_title('Possession', fontweight='bold')
+```
+
+:::
+::: {.column width="50%"}
+
+**R / ggplot2**
+
+```r
+library(ggplot2)
+
+sizes  <- c(63, 27, 10)
+labels <- c("COL", "COD", "In Contest")
+colors <- c("#fcd116", "#0057a8", "#00a896")
+
+# wedge order + label positions computed by hand
+df <- data.frame(label = factor(labels, levels = labels),
+                 pct = sizes)
+df$pos <- cumsum(df$pct) - df$pct / 2
+
+ggplot(df, aes(x = 2, y = pct, fill = label)) +
+  geom_col(width = 1,
+           position = position_stack(reverse = TRUE)) +
+  geom_text(aes(x = 1.75, y = pos,
+                label = paste0(pct, "%"))) +
+  geom_text(aes(x = 2.75, y = pos, label = label)) +
+  coord_polar(theta = "y", start = 0, direction = 1) +
+  scale_fill_manual(values = setNames(colors, labels)) +
+  xlim(0.5, 3) +
+  labs(title = "Possession") +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold",
+                                  hjust = 0.5))
+```
+
+:::
+:::
+
+# Beyond the Basics {.section-header}
+
+---
+
+## Visualizations
+
+::: {}
+- Style rules/conventions are different from claims about **what the eye can decode**.
+- UIC has an entire course: **CS 424, Visualization and Visual Analytics**.
+- TODO
+:::
+
+
+---
+
+## Interactive Visualization
+
+::: {}
+- **D3** : JavaScript library; lots of flexibility
+- **Vega-Lite / Altair**, **Plotly**, **Bokeh** : declarative, and can embed in Jupyter notebooks.
+- Interaction adds a channel the printed page does not have: *detail on demand*.
+- It also adds a way to hide things.
+:::
+
+
+
+---
+
+## A Bit About Fonts
+
+::: {}
+- TK
+- TK
+:::
+
+# Sources {.sources}
+
+1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.qmd>.
+1. Last modified and compiled September 16, 11:05h Central (Chicago) time.
+2. Pie vs. bar comparison: Schutz, [*Piecharts.svg*](https://commons.wikimedia.org/wiki/File:Piecharts.svg), Wikimedia Commons, 2008. [CC BY 1.0](https://creativecommons.org/licenses/by/1.0/).
+3. Dimensionality figures redrawn from Solon Barocas, *Understanding Inscrutability*, presented at ["Algorithms and Explanations,"](https://www.law.nyu.edu/centers/ili/events/algorithms-and-explanations) Information Law Institute, NYU School of Law, 27–28 April 2017. Found by way of Meredith Broussard, *More Than a Glitch: Confronting Race, Gender, and Ability Bias in Tech* (MIT Press, 2023; ISBN 9780262047654, paperback 9780262548328), which cites Barocas and Chandler May on visualizing data relationships.
+4. 3D pie chart comparison: Cmglee, [*Misleading macworld 3d pie chart.svg*](https://commons.wikimedia.org/wiki/File:Misleading_macworld_3d_pie_chart.svg), Wikimedia Commons. [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0). Redrawn from the chart shown at Macworld 2008, via [Edward Tufte's notebook on pie charts](https://www.edwardtufte.com/notebook/pie-charts/).
+5. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+6. Macworld 2008 keynote clip: ["Macworld San Francisco 2008 Keynote Address (MacBook Air & iTunes Movie Rentals) by Steve Jobs"](https://www.youtube.com/watch?v=i9XU6wk_mWY), Apple Keynote Videos (YouTube); market share segment at 8:24–10:10.
+7. Visual variables: Jacques Bertin, *Sémiologie graphique: Les diagrammes, les réseaux, les cartes* (Gauthier-Villars, 1967); English translation *Semiology of Graphics: Diagrams, Networks, Maps*, trans. William J. Berg (University of Wisconsin Press, 1983; reissued by Esri Press, 2010).
+8. Channels and the effectiveness ranking: Tamara Munzner, *Visualization Analysis & Design* (CRC Press, 2014), ch. 5. Open companion site: <https://www.cs.ubc.ca/~tmm/vadbook/>.
+9. Chicago map layers: [chicago-maps](https://github.com/jackbandy/data-science-fun/tree/main/datasets/chicago-maps): city and ward boundaries and ward-level ACS income from the [Chicago Data Portal](https://data.cityofchicago.org/); water polygons from U.S. Census Bureau [TIGERweb](https://tigerweb.geo.census.gov/) areal hydrography.
+10. Shape anecdote: Pete Docter on designing characters from basic geometry, in [*Pete Docter | Geometry of Characters*](https://youtu.be/i2tkCBFlXyc?t=398) (Any-mation, 2016), from 6:38. Images in the build: [docs/assets/abstraction](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/abstraction) : see that folder's `SOURCES.md` for per-image credits.
+11. Figures in [docs/assets/viz-basics](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/viz-basics) are generated by `make_viz_basics_figures.py` from three in-repo datasets : [cook-county-home-sales-2025](https://github.com/jackbandy/data-science-fun/tree/main/datasets/cook-county-home-sales-2025) (Cook County Assessor's Office), [cta-ridership](https://github.com/jackbandy/data-science-fun/tree/main/datasets/cta-ridership) and [chicago-l-stations](https://github.com/jackbandy/data-science-fun/tree/main/datasets/chicago-l-stations) ([Chicago Data Portal](https://data.cityofchicago.org/)) : plus the sources below. See that folder's `SOURCES.md` for the per-figure mapping. CTA route colors follow the [CTA Trademark Guidelines for Developers](https://www.transitchicago.com/developers/branding/).
+12. Scale example: the chart Rep. Jason Chaffetz displayed at the House Committee on Oversight and Government Reform hearing, 29 September 2015, reproducing a figure from an [Americans United for Life](https://aul.org/) report. Service counts are Planned Parenthood's own published annual figures for 2006 and 2013.
+13. Color: Masataka Okabe and Kei Ito, ["Color Universal Design"](https://jfly.uni-koeln.de/color/) (2008); Françoise Viénot, Hans Brettel and John D. Mollon, "Digital video colourbars for testing dichromatic colour vision," *Color Research & Application* 24, no. 4 (1999): 243–252; Nathaniel Smith and Stéfan van der Walt, ["A Better Default Colormap for Matplotlib"](https://bids.github.io/colormap/) (SciPy 2015).
+14. Smoothing and the Cherry Blossom run analysis the Large-N section is modeled on: Deborah Nolan and Duncan Temple Lang, *Data Science in R: A Case Studies Approach to Computational Reasoning and Problem Solving* (CRC Press, 2015), ch. 2.
+15. Slide deck built with [Quarto](https://quarto.org/) revealjs. Title font is Big Shoulders; body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+16. Simpson's Paradox: https://www.linkedin.com/pulse/simpsons-paradox-one-chart-two-realities-gordon-goodwin-hhhte
+
