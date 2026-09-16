@@ -1756,6 +1756,52 @@ Everything here is correct. Discuss with your elbow neighbors: what does this no
 
 ---
 
+## Standardize or Normalize? {.text-figure-slide}
+
+::: {.aside-note}
+*Computational and Inferential Thinking*, [Section 14.2: Standard Units](https://inferentialthinking.com/chapters/14/2/variability/#standard-units)
+:::
+
+:::: {.columns}
+::: {.column width="38%"}
+::: {.incremental style="font-size:0.82em; padding-right:24px;"}
+- **Standardize** (z-score): $(x - \bar{x})/s$: center 0, spread 1.
+- **Normalize** (min–max): rescale onto $[0, 1]$.
+- What changes in the picture(s)?
+:::
+:::
+::: {.column width="62%"}
+```{python}
+#| echo: false
+#| fig-width: 5.3
+#| fig-height: 4.0
+#| fig-alt: "The same 90 salaries plotted three times as a row of dots: once on the raw dollar axis, once on a z-score axis running from about −2 to 3, and once on a min–max axis from 0 to 1; the arrangement of the dots is identical in all three, only the axis labels differ"
+rng = np.random.default_rng(17)
+raw = rng.normal(72_000, 14_000, 90)
+FORMS = ["raw salary ($)", "z-score (standardized)", "min–max (normalized)"]
+scaled = pl.DataFrame({
+    "form": np.repeat(FORMS, len(raw)),
+    "v": np.concatenate([raw,
+                         (raw - raw.mean()) / raw.std(ddof=1),
+                         (raw - raw.min()) / (raw.max() - raw.min())]),
+    "y": np.tile(np.zeros(len(raw)), 3)}
+).with_columns(pl.col("form").cast(pl.Enum(FORMS)))
+
+(ggplot(scaled, aes("v", "y"))
+ + geom_point(color=ORANGE, size=2.5, alpha=0.45)
+ + facet_wrap("form", ncol=1, scales="free_x")
+ + labs(x="", y="")
+ + theme_minimal(base_size=13)
+ + theme(strip_text=element_text(size=13, weight="bold", color=INK),
+         axis_text_y=element_blank(), panel_grid_major_y=element_blank(),
+         panel_grid_minor=element_blank(), figure_size=(5.3, 4.0)))
+```
+:::
+::::
+
+
+---
+
 ## Skew, Before and After {.image-frame-slide}
 
 ::: {.r-stack}
@@ -1958,15 +2004,15 @@ A smooth curve of **local averages**: for each $x$, the average $y$ in a neighbo
 :::
 
 :::: {.columns}
-::: {.column width="38%"}
-::: {.incremental style="font-size:0.82em; padding-right:24px;"}
+::: {.column width="42%"}
+::: {.incremental style="font-size:0.72em; padding-right:20px;"}
 - Same 400 heights, three bin counts.
 - Too few bins hides shape; too many shows noise.
-- Good to try more than one bin width
-- Bin width is a **smoothing choice**, like the bandwidth coming up next
+- Good to try more than one bin width.
+- A bin width is a **smoothing choice**, like the bandwidth coming up next.
 :::
 :::
-::: {.column width="62%"}
+::: {.column width="58%"}
 ```{python}
 #| echo: false
 #| fig-width: 5.3
@@ -2652,7 +2698,6 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.qmd>.
-1. Last modified and compiled September 16, 11:05h Central (Chicago) time.
 2. Pie vs. bar comparison: Schutz, [*Piecharts.svg*](https://commons.wikimedia.org/wiki/File:Piecharts.svg), Wikimedia Commons, 2008. [CC BY 1.0](https://creativecommons.org/licenses/by/1.0/).
 3. Dimensionality figures redrawn from Solon Barocas, *Understanding Inscrutability*, presented at ["Algorithms and Explanations,"](https://www.law.nyu.edu/centers/ili/events/algorithms-and-explanations) Information Law Institute, NYU School of Law, 27–28 April 2017. Found by way of Meredith Broussard, *More Than a Glitch: Confronting Race, Gender, and Ability Bias in Tech* (MIT Press, 2023; ISBN 9780262047654, paperback 9780262548328), which cites Barocas and Chandler May on visualizing data relationships.
 4. 3D pie chart comparison: Cmglee, [*Misleading macworld 3d pie chart.svg*](https://commons.wikimedia.org/wiki/File:Misleading_macworld_3d_pie_chart.svg), Wikimedia Commons. [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0). Redrawn from the chart shown at Macworld 2008, via [Edward Tufte's notebook on pie charts](https://www.edwardtufte.com/notebook/pie-charts/).
