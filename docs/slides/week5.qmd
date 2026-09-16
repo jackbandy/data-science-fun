@@ -1951,6 +1951,55 @@ A smooth curve of **local averages**: for each $x$, the average $y$ in a neighbo
 
 ---
 
+## Histograms and Bin Width {.text-figure-slide}
+
+::: {.aside-note}
+*Learning Data Science*, [Section 11.2: Smoothing and Aggregating Data](https://learningds.org/ch/11/viz_smoothing.html)
+:::
+
+:::: {.columns}
+::: {.column width="38%"}
+::: {.incremental style="font-size:0.82em; padding-right:24px;"}
+- Same 400 heights, three bin counts.
+- Too few bins hides shape; too many shows noise.
+- Good to try more than one bin width
+- Bin width is a **smoothing choice**, like the bandwidth coming up next
+:::
+:::
+::: {.column width="62%"}
+```{python}
+#| echo: false
+#| fig-width: 5.3
+#| fig-height: 4.4
+#| fig-alt: "The same 400 heights drawn as three stacked histograms with 6, 20 and 60 bins; the 6-bin version is a coarse block, the 20-bin version shows a clean single peak, and the 60-bin version breaks into spiky counts"
+rng = np.random.default_rng(9)
+h = rng.normal(68, 3.2, 400)
+LEVELS = ["6 bins", "20 bins", "60 bins"]
+
+def counted(n, label):
+    """One np.histogram per bin count, so a single geom_col draws all three panels."""
+    cnt, edges = np.histogram(h, bins=n)
+    return pl.DataFrame({"mid": (edges[:-1] + edges[1:]) / 2,
+                         "count": cnt.astype(float),
+                         "w": np.repeat(edges[1] - edges[0], n),
+                         "bins": [label] * n})
+
+bars = pl.concat([counted(n, lab) for n, lab in zip([6, 20, 60], LEVELS)]
+                 ).with_columns(pl.col("bins").cast(pl.Enum(LEVELS)))
+
+(ggplot(bars, aes("mid", "count"))
+ + geom_col(aes(width="w"), fill=ORANGE, alpha=0.8, color="white", size=0.4)
+ + facet_wrap("bins", ncol=1, scales="free_y")
+ + labs(x="height (in)", y="count")
+ + theme_minimal(base_size=13)
+ + theme(strip_text=element_text(size=13, weight="bold", color=INK),
+         panel_grid_minor=element_blank(), figure_size=(5.3, 4.4)))
+```
+:::
+::::
+
+---
+
 ## Smoothing Detour: Kernel Density {.image-frame-slide}
 
 ::: {.r-stack}
@@ -2603,6 +2652,7 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week5.qmd>.
+1. Last modified and compiled September 16, 11:05h Central (Chicago) time.
 2. Pie vs. bar comparison: Schutz, [*Piecharts.svg*](https://commons.wikimedia.org/wiki/File:Piecharts.svg), Wikimedia Commons, 2008. [CC BY 1.0](https://creativecommons.org/licenses/by/1.0/).
 3. Dimensionality figures redrawn from Solon Barocas, *Understanding Inscrutability*, presented at ["Algorithms and Explanations,"](https://www.law.nyu.edu/centers/ili/events/algorithms-and-explanations) Information Law Institute, NYU School of Law, 27–28 April 2017. Found by way of Meredith Broussard, *More Than a Glitch: Confronting Race, Gender, and Ability Bias in Tech* (MIT Press, 2023; ISBN 9780262047654, paperback 9780262548328), which cites Barocas and Chandler May on visualizing data relationships.
 4. 3D pie chart comparison: Cmglee, [*Misleading macworld 3d pie chart.svg*](https://commons.wikimedia.org/wiki/File:Misleading_macworld_3d_pie_chart.svg), Wikimedia Commons. [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0). Redrawn from the chart shown at Macworld 2008, via [Edward Tufte's notebook on pie charts](https://www.edwardtufte.com/notebook/pie-charts/).
