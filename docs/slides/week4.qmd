@@ -179,7 +179,7 @@ CS 418 · Week 4 · 🟠 Washington/Wells 🟠
 </script>
 
 ::: {.iframe-caption}
-Numbers drawn live from <a href="https://www.random.org/sequences/?min=1&max=62&col=1&format=plain&rnd=new">random.org/sequences/?min=1&max=62&col=1&format=plain&rnd=new</a> &mdash; a shuffled 1&ndash;62, first 12 taken, so no one is drawn twice
+Numbers drawn live from <a href="https://www.random.org/sequences/?min=1&max=62&col=1&format=plain&rnd=new">random.org/sequences/?min=1&max=62&col=1&format=plain&rnd=new</a> &mdash; shuffle 1&ndash;62, take first 12.
 :::
 
 
@@ -349,7 +349,7 @@ Numbers drawn live from <a href="https://www.random.org/sequences/?min=1&max=62&
 ::: {.dense}
 - Can we predict whether a movie will be commercially successful before its release?
 - How do factors such as budget, ratings, etc influence a movies financial success?
-- Which features — cast, genre, runtime, release window — best predict how highly audiences rate a film, rather than how much money it makes?
+- Which features (cast, genre, runtime, release window) best predict how highly audiences rate a film, rather than how much money it makes?
 - Do actor and director collaboration networks predict which films get made, and which of them succeed?
 - Which recommendation strategy actually works better: "people who liked this also liked…", or matching on genre, cast, and crew?
 - How much do critic scores and audience scores agree, and which genres do they disagree about most?
@@ -516,7 +516,7 @@ John W. Tukey
 :::
 
 ::: {.quote-source}
-*The Collected Works of John W. Tukey*, Vol. IV, ed. Lyle V. Jones (1986), p. 806 — quoted and sourced in [Brillinger, "Data Analysis, Exploratory" (2011)](https://www.stat.berkeley.edu/~brill/Papers/EDASage.pdf)
+*The Collected Works of John W. Tukey*, Vol. IV, ed. Lyle V. Jones (1986), p. 806: quoted and sourced in [Brillinger, "Data Analysis, Exploratory" (2011)](https://www.stat.berkeley.edu/~brill/Papers/EDASage.pdf)
 :::
 
 ---
@@ -557,10 +557,10 @@ Categories include:
 Some exploratory methods built into polars:
 
 ::: {.incremental}
-- `df.shape` — the dimensions of the dataframe (number of rows, number of columns)
-- `df.glimpse()` — name, type, and first values of each feature
-- `df.null_count()` — how many missing values each feature has
-- `df.describe()` — summary statistics (count, null count, mean, standard deviation, min/max, and quartiles) for each feature
+- `df.shape`: the dimensions of the dataframe (number of rows, number of columns)
+- `df.glimpse()`: name, type, and first values of each feature
+- `df.null_count()`: how many missing values each feature has
+- `df.describe()`: summary statistics (count, null count, mean, standard deviation, min/max, and quartiles) for each feature
 :::
 
 ```python
@@ -678,7 +678,7 @@ Take a picture of your worksheet, upload it in Canvas
 ::: {.dense}
 - Part I: review of weeks 2–4 (Bayesian vs. frequentist, feature types, Bayes' Theorem)
 - Part II: defining exploratory analysis
-- Part III: a preview of next week — choosing a visualization
+- Part III: a preview of next week: choosing a visualization
 :::
 
 ![](../assets/prairielearn/PL-logo-white-on-blue.svg){.figure .figure-sm alt="The PrairieLearn logo, a white line drawing of a purple coneflower on a dark blue panel"}
@@ -722,15 +722,15 @@ Jack Bandy
 ## Basic steps to scraping a website
 
 ::: {.aside-note}
-Week 2 covered *whether* to scrape — APIs first, terms of service, [*Sandvig v. Barr*](https://www.aclu.org/sites/default/files/field_document/sandvig_opinion.pdf). This is the *how*.
+Week 2 covered *whether* to scrape: APIs first, terms of service, [*Sandvig v. Barr*](https://www.aclu.org/sites/default/files/field_document/sandvig_opinion.pdf). This is the *how*.
 :::
 
 ::: {.incremental}
-1. **Request** the page — ask the server for the HTML, the same way a browser does
+1. **Request** the page: ask the server for the HTML, the same way a browser does
 2. **Parse** that HTML into a tree you can search
 3. **Select** the elements that hold the values you want
 4. **Extract** the text, one row per observation
-5. **Stamp** the row with the time you collected it — a scrape is a *snapshot*, not a fact
+5. **Stamp** the row with the time you collected it: a scrape is a *snapshot*, not a fact
 6. **Save** a tidy file you can re-read later
 :::
 
@@ -739,7 +739,7 @@ Week 2 covered *whether* to scrape — APIs first, terms of service, [*Sandvig v
 ## Our Target: CTA Train Tracker at UIC-Halsted {.smaller}
 
 ::: {.aside-note}
-[CTA Train Tracker — UIC-Halsted arrival estimates](https://www.transitchicago.com/traintracker/arrivaltimes/?sid=40350) (`sid=40350`). No login, no API key, one page per station.
+[CTA Train Tracker: UIC-Halsted arrival estimates](https://www.transitchicago.com/traintracker/arrivaltimes/?sid=40350) (`sid=40350`). No login, no API key, one page per station.
 :::
 
 :::: {.columns}
@@ -752,7 +752,7 @@ Week 2 covered *whether* to scrape — APIs first, terms of service, [*Sandvig v
 > Blue Line #143 to O'Hare &nbsp;&nbsp; **10** min
 
 - The page is *live*: the same URL says something different a minute from now
-- Nothing on it is stored for you — if you want history, you have to keep it
+- Nothing on it is stored for you: if you want history, you have to keep it
 :::
 
 ::: {.column width="58%"}
@@ -799,8 +799,7 @@ soup = BeautifulSoup(html, "html.parser")   # 2. parse: a searchable tree
 ::: {.fragment}
 - `requests.get(URL).text` is the whole page
     - about 250 KB of markup for nine arrival times
-- Record `collected` (datetime) **right next to the request**
-- timestamp: when the server answered.
+- Record `collected` (datetime) **right next to the request**: it stamps when the server answered.
 :::
 
 ---
@@ -826,7 +825,7 @@ for tag in soup.select(".estimated-arrivals-subheader, .estimated-arrivals-line"
         })
 ```
 
-`soup.select(...)` takes a **CSS selector** and returns matches in document order — which is what lets one loop handle headings and trains together.
+`soup.select(...)` takes a **CSS selector** and returns matches in document order: that is what lets one loop handle headings and trains together.
 
 ---
 
@@ -965,7 +964,7 @@ Use information from the sample to draw conclusions about the population.
 ::: {style="font-size:0.82em; padding-right:24px;"}
 - Each line is one value's distance from the mean.
 - Square them, average, take the root: that is $s$.
-- $s \approx 5.7$ — the **typical** distance, in years.
+- $s \approx 5.7$: the **typical** distance, in years.
 - The shaded band is $\bar{x} \pm s$.
 :::
 :::
@@ -1024,10 +1023,10 @@ box = pl.DataFrame({"x": np.zeros(len(vals)), "v": vals})
  + annotate("segment", x=-0.56, xend=-0.48, y=q1, yend=q1, color=INK)
  + annotate("segment", x=-0.56, xend=-0.48, y=q3, yend=q3, color=INK)
  + note(-0.62, (q1 + q3) / 2, "IQR\n50% of the data", ha="right", size=14)
- + note(0.3, q3, "Q3 — upper quartile", size=14)
+ + note(0.3, q3, "Q3: upper quartile", size=14)
  + note(0.3, med, "Median (Q2)", size=14)
- + note(0.3, q1, "Q1 — lower quartile", size=14)
- + note(0.3, hi, "Whisker — last point within 1.5 × IQR", size=14)
+ + note(0.3, q1, "Q1: lower quartile", size=14)
+ + note(0.3, hi, "Whisker: last point within 1.5 × IQR", size=14)
  + note(0.3, vals.max(), "Outliers", color=DARK, size=14)
  + scale_x_continuous(limits=(-1.25, 1.55))
  + theme_void()
@@ -1097,7 +1096,7 @@ lo, hi = q1 - 1.5 * iqr, q3 + 1.5 * iqr
 #| echo: false
 #| fig-width: 5.3
 #| fig-height: 4.4
-#| fig-alt: "Three stacked density curves — right-skewed, symmetric, and left-skewed — each with a solid line at the mean and a dashed line at the median; the two lines sit apart in the skewed panels, with the mean toward the long tail, and coincide in the symmetric panel"
+#| fig-alt: "Three stacked density curves (right-skewed, symmetric, and left-skewed), each with a solid line at the mean and a dashed line at the median; the two lines sit apart in the skewed panels, with the mean toward the long tail, and coincide in the symmetric panel"
 rng = np.random.default_rng(5)
 SHAPES = ["right-skewed", "symmetric", "left-skewed"]
 shapes = pl.DataFrame({
@@ -1175,7 +1174,7 @@ bars = pl.concat([counted(n, lab) for n, lab in zip([6, 20, 60], LEVELS)]
 :::: {.columns}
 ::: {.column width="38%"}
 ::: {.incremental style="font-size:0.82em; padding-right:24px;"}
-- **Standardize** (z-score): $(x - \bar{x})/s$ — center 0, spread 1.
+- **Standardize** (z-score): $(x - \bar{x})/s$: center 0, spread 1.
 - **Normalize** (min–max): rescale onto $[0, 1]$.
 - What changes in the picture(s)?
 :::
@@ -1233,7 +1232,7 @@ $$P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}$$
 
 
 ::: {.aside-note}
-*Computational and Inferential Thinking*, [Section 14.2: Variability](https://inferentialthinking.com/chapters/14/2/Variability.html). Holds for **any** distribution — skewed, bimodal, spiky, anything.
+*Computational and Inferential Thinking*, [Section 14.2: Variability](https://inferentialthinking.com/chapters/14/2/Variability.html). Holds for **any** distribution: skewed, bimodal, spiky, anything.
 :::
 
 | $k$ | At least this much is within $k$ SDs | At most this much is outside |
@@ -1256,7 +1255,7 @@ Suppose a week of scraped Blue Line trips from UIC-Halsted to O'Hare has **mean 
 :::
 
 ::: {.fragment style="font-size:0.9em;"}
-29 and 53 are $41 \mp 12$, so $k = 12/6 = 2$. &nbsp; $1 - 1/2^2 = 0.75$ — **at least 75%**
+29 and 53 are $41 \mp 12$, so $k = 12/6 = 2$. &nbsp; $1 - 1/2^2 = 0.75$: **at least 75%**
 :::
 
 ::: {.fragment}
@@ -1264,7 +1263,7 @@ Suppose a week of scraped Blue Line trips from UIC-Halsted to O'Hare has **mean 
 :::
 
 ::: {.fragment style="font-size:0.9em;"}
-$k = 18/6 = 3$. &nbsp; $1/3^2 \approx 0.111$ — **at most 11.1%** — and that is *both* tails together, so no more than 11.1% of trips are extreme in either direction.
+$k = 18/6 = 3$. &nbsp; $1/3^2 \approx 0.111$: **at most 11.1%**, and that counts *both* tails together.
 :::
 
 ---
@@ -1278,11 +1277,11 @@ Exam scores have **mean 74** and **standard deviation 8**.
 :::
 
 ::: {.fragment style="font-size:0.9em;"}
-We need $1 - 1/k^2 \ge 0.96$, so $1/k^2 \le 0.04$, so $k \ge 5$. &nbsp; $74 \pm 5(8)$ — **the interval $[34, 114]$**
+We need $1 - 1/k^2 \ge 0.96$, so $1/k^2 \le 0.04$, so $k \ge 5$. &nbsp; $74 \pm 5(8)$: **the interval $[34, 114]$**
 :::
 
 ::: {.fragment style="font-size:0.9em;"}
-Which is a *useless* interval — the exam is out of 100. That is the honest lesson: a distribution-free guarantee this strong costs you almost all of your precision.
+Which is a *useless* interval: the exam is out of 100. That is the honest lesson, though. A distribution-free guarantee this strong costs almost all your precision.
 :::
 
 ::: {.fragment}
@@ -1323,7 +1322,7 @@ For a **normal** distribution, 95% of values are within 2 SDs. Chebyshev only pr
 
 ::: {.incremental style="font-size:0.9em;"}
 - Chebyshev has to be true for *every* distribution at once, including the nastiest one you can construct.
-- The 68-95-99.7 rule is true for *one* distribution — the normal — and false in general.
+- The 68-95-99.7 rule is true for *one* distribution, the normal, and false in general.
 - So Chebyshev is a **guarantee**; the empirical rule is an **estimate that assumes a shape**.
 :::
 
@@ -1345,14 +1344,14 @@ Chebyshev's bound is *tight*: there really is a distribution with exactly 25% of
 $$\color{#f9461c}{P(A \mid B)} = \frac{P(B \mid A)\,\color{#f9461c}{P(A)}}{P(B)}$$
 
 ::: {.dense-smaller}
-- $P(A)$ — the **prior**. What you believe about $A$ *before* any evidence arrives.
+- $P(A)$: the **prior**. What you believe about $A$ *before* any evidence arrives.
     - *Charli:* 4% of adults develop lung cancer.
-- $P(A \mid B)$ — the **posterior**. What you believe about $A$ *after* $B$ is taken into account.
+- $P(A \mid B)$: the **posterior**. What you believe about $A$ *after* $B$ is taken into account.
     - *Charli:* 15%, once we know Charli smokes a pack a day.
 :::
 
 ::: {.fragment style="font-size:0.78em; margin-top:0.3em;"}
-Both are statements about **A**: the prior is where you start, the posterior is where you end. Everything else in the formula exists to carry you from one to the other.
+Both are statements about **A**. The prior is the start, posterior is the end.
 :::
 
 :::
@@ -1372,14 +1371,14 @@ Both are statements about **A**: the prior is where you start, the posterior is 
 $$P(A \mid B) = \frac{\color{#f9461c}{P(B \mid A)}\,P(A)}{\color{#f9461c}{P(B)}}$$
 
 ::: {.dense-smaller}
-- $P(B \mid A)$ — the **likelihood**. How expected $B$ would be *if $A$ were true*.
+- $P(B \mid A)$: the **likelihood**. How expected $B$ would be *if $A$ were true*.
     - *Charli:* 90% of people with lung cancer smoked.
-- $P(B)$ — the **evidence**, or marginal probability of $B$. How expected $B$ is *overall*, either way.
+- $P(B)$: the **evidence**, or marginal probability of $B$. How expected $B$ is *overall*, either way.
     - *Charli:* 24% of adults smoke.
 :::
 
 ::: {.fragment style="font-size:0.78em; margin-top:0.3em;"}
-$P(B \mid A)$ and $P(A \mid B)$ point in **opposite directions** — swapping them is the most common error with this formula. $P(B)$ is the normalizer: evidence that turns up all the time barely moves the belief.
+$P(B \mid A)$ and $P(A \mid B)$ point in **opposite directions**: swapping them is the most common error with this formula. $P(B)$ is the normalizer.
 :::
 
 :::
@@ -1390,7 +1389,7 @@ $P(B \mid A)$ and $P(A \mid B)$ point in **opposite directions** — swapping th
 
 ---
 
-## Charli, End to End {.smaller}
+## Charli, End2End {.smaller}
 
 ::: {.aside-note}
 The same example from [Week 2](week2.html). Lifetime risks from Villeneuve & Mao (1994); attribution figure from the [CDC](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
@@ -1419,7 +1418,7 @@ $$P(A \mid B) = \frac{(0.90)(0.04)}{0.24} = \frac{0.036}{0.24} = 0.15$$
 :::
 
 ::: {.fragment style="font-size:0.9em;"}
-The prior was 4%. The evidence roughly **quadrupled** it, to 15% — but it did not take it anywhere near 90%. A rare $A$ stays fairly rare even after evidence that points right at it.
+The prior was 4%. The evidence roughly **quadrupled** it, to 15%, but nowhere near 90%. A rare $A$ stays fairly rare even after evidence that points right at it.
 :::
 
 ::: {.fragment style="font-size:0.9em;"}
@@ -1617,6 +1616,21 @@ The dashed line on the next four slides is the same fitted line every time: $y =
 
 
 # Overview of Coding Exercise 01 {.section-header}
+
+
+## Any questions?
+
+- PrairieLearn Homeworks?
+- Coding exercise 01?
+- Group Projects?
+- Other logistics?
+
+---
+
+## Upload your worksheet
+
+Take a picture of your worksheet, upload it in Canvas
+
 
 
 # Sources {.sources}
