@@ -416,6 +416,13 @@ jobs:
       - name: Build project checkpoints
         run: python3 project/build-project-data.py
 
+      # Same arrangement again for the dataset index, generated from
+      # datasets/README.md into docs/datasets/index.html (gitignored). The data
+      # files themselves are not published; the page links to the folders on
+      # GitHub. Stdlib only.
+      - name: Build datasets page
+        run: python3 datasets/build-datasets-page.py
+
       # Strip dev/build cruft so we don't ship venvs and caches to GitHub Pages.
       # TODO: Verify the slide notebooks (docs/slides/week*.ipynb)
       - name: Prune build artifacts before upload

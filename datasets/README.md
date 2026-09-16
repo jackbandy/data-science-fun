@@ -12,6 +12,7 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
 - [chicago-tall-buildings](chicago-tall-buildings/) — Buildings with 10 or more stories in Chicago
 - [cook-county-home-sales-2025](cook-county-home-sales-2025/) — Residential property sales recorded in Cook County during 2025, de-identified
 - [cta-ridership](cta-ridership/) — CTA annual ridership totals
+- [cta-train-tracker-scraper](cta-train-tracker-scraper/) — two snapshots of the CTA Train Tracker arrival board at UIC-Halsted and Washington/Wells, with the scraper that took them
 - [datasaurus-dozen](datasaurus-dozen/) — thirteen two-variable datasets with near-identical summary statistics and wildly different shapes (Matejka & Fitzmaurice, CHI 2017)
 - [fake-news-twitter-2016-election](fake-news-twitter-2016-election/) — Replication archive for Vosoughi et al., *Science* 2019 study on fake news spread on Twitter
 - [galton-vox-populi-1907](galton-vox-populi-1907/) — Quantile summary of 787 weight estimates from Galton's 1907 "wisdom of crowds" experiment
