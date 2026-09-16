@@ -669,21 +669,6 @@ Take a picture of your worksheet, upload it in Canvas
 
 
 
-# Homework 5 {.section-header}
-
-## Homework 5 {.split}
-
-::: {.split-content .narrow-aside .fill-height}
-
-::: {.dense}
-- Part I: review of weeks 2–4 (Bayesian vs. frequentist, feature types, Bayes' Theorem)
-- Part II: defining exploratory analysis
-- Part III: a preview of next week: choosing a visualization
-:::
-
-![](../assets/prairielearn/PL-logo-white-on-blue.svg){.figure .figure-sm alt="The PrairieLearn logo, a white line drawing of a purple coneflower on a dark blue panel"}
-
-:::
 
 
 # Week 4, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop04-washington-wells-b.jpg" background-size="cover"}
@@ -703,14 +688,30 @@ Jack Bandy
 - Week 4: Washington/Wells
 - Day 2
     - Whirlwind demo: how to scrape a website
+    - Bayes' Anatomy
     - Mechanics of EDA
     - Chebyshev's bounds
-    - Anatomy of Bayes' Theorem
     - A motivating visualization
     - Coding Exercise 01
 :::
 
 ![](../assets/orange-line-map-stops/stop04-washington-wells.svg){.figure alt="Orange Line map with the Washington/Wells stop marked, the Week 4 stop"}
+
+:::
+
+# Homework 5 {.section-header .no-index}
+
+## Homework 5 {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {.dense}
+- Part I: review of weeks 2–4 (Bayesian vs. frequentist, feature types, Bayes' Theorem)
+- Part II: defining exploratory analysis
+- Part III: a preview of next week: choosing a visualization
+:::
+
+![](../assets/prairielearn/PL-logo-white-on-blue.svg){.figure .figure-sm alt="The PrairieLearn logo, a white line drawing of a purple coneflower on a dark blue panel"}
 
 :::
 
@@ -722,41 +723,41 @@ Jack Bandy
 ## Basic steps to scraping a website
 
 ::: {.aside-note}
-Week 2 covered *whether* to scrape: APIs first, terms of service, [*Sandvig v. Barr*](https://www.aclu.org/sites/default/files/field_document/sandvig_opinion.pdf). This is the *how*.
+Week 2 mentioned APIs first, terms of service, [*Sandvig v. Barr*](https://www.aclu.org/sites/default/files/field_document/sandvig_opinion.pdf), etc.
 :::
 
 ::: {.incremental}
-1. **Request** the page: ask the server for the HTML, the same way a browser does
-2. **Parse** that HTML into a tree you can search
+1. **Request** the page: ask the server for the HTML
+2. **Parse** that HTML into a structure you can search
 3. **Select** the elements that hold the values you want
 4. **Extract** the text, one row per observation
-5. **Stamp** the row with the time you collected it: a scrape is a *snapshot*, not a fact
+5. **Stamp** the row with the time you collected it
 6. **Save** a tidy file you can re-read later
 :::
 
 ---
 
-## Our Target: CTA Train Tracker at UIC-Halsted {.smaller}
+## Example: CTA Train Tracker at UIC-Halsted {.smaller}
 
 ::: {.aside-note}
-[CTA Train Tracker: UIC-Halsted arrival estimates](https://www.transitchicago.com/traintracker/arrivaltimes/?sid=40350) (`sid=40350`). No login, no API key, one page per station.
+[CTA Train Tracker: UIC-Halsted arrival estimates](https://www.transitchicago.com/traintracker/arrivaltimes/?sid=40350) (`sid=40350`)
 :::
 
 :::: {.columns}
 
 ::: {.column width="42%"}
-[WHAT A RIDER SEES]{.eyebrow}
+[WEBSITE DISPLAY]{.eyebrow}
 
 > **Service toward O'Hare**
 >
 > Blue Line #143 to O'Hare &nbsp;&nbsp; **10** min
 
-- The page is *live*: the same URL says something different a minute from now
-- Nothing on it is stored for you: if you want history, you have to keep it
+- The page is live, changes frequently
+- Nothing on it is stored
 :::
 
 ::: {.column width="58%"}
-[WHAT THE HTML SAYS]{.eyebrow}
+[HTML]{.eyebrow}
 
 ```html
 <div class="estimated-arrivals-subheader">
@@ -773,8 +774,7 @@ Week 2 covered *whether* to scrape: APIs first, terms of service, [*Sandvig v. B
 </a>
 ```
 
-- Those **class names** are our selectors
-- The direction is a **heading**, not a field: it sits *above* the trains it applies to, and is never repeated inside one
+- **class names** (e.g. "ea-line-time-big") will be our selectors
 :::
 
 ::::
@@ -858,9 +858,9 @@ shape: (9, 4)
 
 ---
 
-## Now Make It Answer a Question {.smaller}
+## Augmenting Scraped Data {.smaller}
 
-`shown` is what the sign said, but to check whether the sign was right, we need something else:
+`shown` is what the sign said, maybe not as meaningful as...
 
 ```python
 arrivals = (
@@ -893,15 +893,114 @@ arrivals = (
 
 ## Scraping Notes {.smaller}
 
-:::
-- **Be polite.** One request a minute or so. Check `/robots.txt`; set a `User-Agent` that says who you are.
+::: {}
+- Remember to look for existing datasets, APIs, etc. before scraping
+- **Be polite.** One request a minute or so. Check `/robots.txt`; set a `User-Agent` to identify your bot.
 - **The markup will change.** Class names change and scrapers "rot"
-- **`Due` is not a number.**
-- **Save the raw HTML**, at least while developing. Re-parsing a saved file is free, but you can never re-requesting a live page.
-- **If the numbers appear only after JavaScript runs**, `requests` will not see them, so you would need a real browser engine 👀
+- **`Due` is not a number** (at first)
+- **Save the raw HTML**, at least while developing. Re-parsing a saved file is free!
+- **If the numbers appear only after JavaScript runs**, `requests` will not see them, so you would need a real browser engine, or a way to simulate one 👀
 :::
 
 
+
+
+# Anatomy of Bayes' Theorem {.section-header}
+
+---
+
+## Worked Example: Charli {.smaller}
+
+::: {.aside-note}
+The same example from the appendix of [Week 2](week2.html). Lifetime risks from Villeneuve & Mao (1994); attribution figure from the [CDC](https://www.cdc.gov/lung-cancer/risk-factors/index.html). Component names follow *Computational and Inferential Thinking*, [Chapter 18: Updating Predictions](https://inferentialthinking.com/chapters/18/updating-predictions/).
+:::
+
+**What are the odds Charli has lung cancer, given that Charli smokes a pack a day?**
+
+:::: {.columns}
+
+::: {.column width="46%"}
+- $A$ = Charli has lung cancer &nbsp;&nbsp;
+- $B$ = Charli smokes a pack every day
+- Terminology:
+    - prior &nbsp; $P(A) = 0.04$
+    - likelihood &nbsp; $P(B \mid A) = 0.90$
+    - evidence &nbsp; $P(B) = 0.24$
+    - posterior &nbsp; $P(A \mid B) = \ ?$
+:::
+
+::: {.column width="52%"}
+
+::: {.fragment}
+$$P(A \mid B) = \frac{(0.90)(0.04)}{0.24} = \frac{0.036}{0.24} = 0.15$$
+:::
+
+::: {.fragment style="font-size:0.9em;"}
+The prior was 4% (probability that an adult has lung cancer). The evidence roughly **quadrupled** it, to 15%.
+:::
+
+::: {.fragment style="font-size:0.85em;"}
+Four moving parts: **prior**, **likelihood**, **evidence**, **posterior**.
+:::
+
+:::
+
+::::
+
+---
+
+## Bayes' Anatomy: the Probability of A {.split .smaller auto-animate=true}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+$$\color{#f9461c}{P(A \mid B)} = \frac{P(B \mid A)\,\color{#f9461c}{P(A)}}{P(B)}$$
+
+::: {.dense}
+- $P(A)$: the **prior**. What you believe about $A$ *before* any evidence arrives.
+    - Charli example: 4% of adults develop lung cancer.
+- $P(A \mid B)$: the **posterior**. What you believe about $A$ *after* $B$ is taken into account.
+    - Charli example: 15%, once we know Charli smokes a pack a day.
+:::
+
+::: {.fragment style="font-size:0.78em; margin-top:0.3em;"}
+- Both are statements about **A**.
+- The prior is the start, posterior is the end.
+:::
+
+:::
+
+![](../assets/bayes-diagnostic/bayes-theorem-visual-proof.svg){.figure alt="Pictorial proof of Bayes' theorem: a unit square split by the two events, showing that the joint probability can be read two ways"}
+
+:::
+
+---
+
+## Bayes' Anatomy: the Probability of B {.split .smaller}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+$$P(A \mid B) = \frac{\color{#f9461c}{P(B \mid A)}\,P(A)}{\color{#f9461c}{P(B)}}$$
+
+::: {.dense}
+- $P(B \mid A)$: the **likelihood**. How expected $B$ would be *if $A$ were true*.
+    - Charli example: 90% of people with lung cancer smoked.
+- $P(B)$: the **evidence**, or marginal probability of $B$. How expected $B$ is *overall*, either way.
+    - Charli example: 24% of adults smoke.
+:::
+
+::: {.fragment style="font-size:0.78em; margin-top:0.3em;"}
+$P(B \mid A)$ and $P(A \mid B)$ point in **opposite directions**: swapping them is a common error. $P(B)$ is the normalizer.
+:::
+
+:::
+
+![](../assets/bayes-diagnostic/bayes-theorem-visual-proof.svg){.figure alt="Pictorial proof of Bayes' theorem: a unit square split by the two events, showing that the joint probability can be read two ways"}
+
+:::
 
 
 # Mechanics of EDA {.section-header}
@@ -918,19 +1017,23 @@ The same five moves in both libraries [polars](https://docs.pola.rs/api/python/s
 | --- | --- | --- |
 | How big is the dataset? | `df.shape` &nbsp;*(attribute)* | `df.shape` |
 | What do the rows look like? | `df.head()` | `df.head()` |
-| What are the columns and types? | `df.glimpse()` | `df.info()` |
+| What are the columns, types? | `df.glimpse()` | `df.info()` |
 | What is missing? | `df.null_count()` | `df.isna().sum()` |
 | What are the numbers like? | `df.describe()` | `df.describe()` |
 
 ::: {.fragment style="margin-top:0.5em;"}
-Note: `shape` is an **attribute**, not a method! `df.shape`, not `df.shape()`. It is a plain tuple the frame already knows; the other four have to go do work.
+Note: `shape` is an **attribute**, not a method! `df.shape`, not `df.shape()`.
 :::
 
 ---
 
 
 
-## Descriptive vs. Inferential Statistics
+## Review: Descriptive vs. Inferential Statistics
+
+::: {.aside-note}
+*Learning Data Science*, [Section 2.2: Target Population, Access Frame, and Sample](https://learningds.org/ch/02/data_scope_construct.html)
+:::
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -958,6 +1061,10 @@ Use information from the sample to draw conclusions about the population.
 
 
 ## Standard Deviation as "Typical Distance" {.text-figure-slide}
+
+::: {.aside-note}
+*Computational and Inferential Thinking*, [Section 14.2: The Rough Size of Deviations from Average](https://inferentialthinking.com/chapters/14/2/variability/#the-rough-size-of-deviations-from-average)
+:::
 
 :::: {.columns}
 ::: {.column width="38%"}
@@ -1001,6 +1108,10 @@ s = ages.std(ddof=1)
 
 ## Anatomy of a Box Plot {.figure-slide}
 
+::: {.aside-note}
+*Think Stats* (3rd ed.), [Section 4.4: Percentile-Based Statistics](https://allendowney.github.io/ThinkStats/chap04.html#percentile-based-statistics)
+:::
+
 ```{python}
 #| echo: false
 #| fig-width: 10
@@ -1026,7 +1137,7 @@ box = pl.DataFrame({"x": np.zeros(len(vals)), "v": vals})
  + note(0.3, q3, "Q3: upper quartile", size=14)
  + note(0.3, med, "Median (Q2)", size=14)
  + note(0.3, q1, "Q1: lower quartile", size=14)
- + note(0.3, hi, "Whisker: last point within 1.5 × IQR", size=14)
+ + note(0.3, hi, "Whisker: last point within...?", size=14)
  + note(0.3, vals.max(), "Outliers", color=DARK, size=14)
  + scale_x_continuous(limits=(-1.25, 1.55))
  + theme_void()
@@ -1082,129 +1193,113 @@ lo, hi = q1 - 1.5 * iqr, q3 + 1.5 * iqr
 
 ## The Shape of a Distribution {.text-figure-slide}
 
+::: {.aside-note}
+*Learning Data Science*, [Section 10.2: What to Look For in a Distribution](https://learningds.org/ch/10/eda_distributions.html#what-to-look-for-in-a-distribution)
+:::
+
 :::: {.columns}
-::: {.column width="38%"}
-::: {.incremental style="font-size:0.82em; padding-right:24px;"}
-- **Skew** is the direction the long tail points.
-- "The mean chases the tail"
-- Mean > median ("right-skewed")
-- Mean ≈ median ("symmetric")
+::: {.column width="42%"}
+::: {style="font-size:0.72em; padding-right:20px;"}
+- **Skew** is the direction the long tail points: "the mean chases the tail".
+- Dashed line = **mean**
+- Solid line = **median**.
+
+::: {.fragment fragment-index=1}
+- Mean > median: **right-skewed**
+:::
+::: {.fragment fragment-index=2}
+- Mean ≈ median: **symmetric**
+:::
+::: {.fragment fragment-index=3}
+- Mean < median: **left-skewed**
 :::
 :::
-::: {.column width="62%"}
+:::
+::: {.column width="58%"}
 ```{python}
 #| echo: false
-#| fig-width: 5.3
-#| fig-height: 4.4
-#| fig-alt: "Three stacked density curves (right-skewed, symmetric, and left-skewed), each with a solid line at the mean and a dashed line at the median; the two lines sit apart in the skewed panels, with the mean toward the long tail, and coincide in the symmetric panel"
 rng = np.random.default_rng(5)
 SHAPES = ["right-skewed", "symmetric", "left-skewed"]
+# Three shapes on one x-axis: a lognormal shifted to sit under the symmetric
+# curve, and its mirror image, so the only thing that changes panel to panel is
+# which way the tail points.
 shapes = pl.DataFrame({
-    "shape": np.repeat(SHAPES, 600),
-    "v": np.concatenate([rng.lognormal(0, 0.6, 600),
-                         rng.normal(2, 0.6, 600),
-                         4 - rng.lognormal(0, 0.6, 600)])}
+    "shape": np.repeat(SHAPES, 900),
+    "v": np.concatenate([1.0 + rng.lognormal(0, 0.75, 900),
+                         rng.normal(2, 0.72, 900),
+                         3.0 - rng.lognormal(0, 0.75, 900)])}
 ).with_columns(pl.col("shape").cast(pl.Enum(SHAPES)))
 centers = shapes.group_by("shape").agg(pl.col("v").mean().alias("mean"),
                                        pl.col("v").median().alias("median"))
 
-(ggplot(shapes, aes("v"))
- + geom_density(fill=ORANGE, alpha=0.25, color=DARK, size=0.8)
- + geom_vline(centers, aes(xintercept="mean"), color=DARK, size=0.9)
- + geom_vline(centers, aes(xintercept="median"), color=TEAL, size=0.9, linetype="dashed")
- + facet_wrap("shape", ncol=1, scales="free")
- + labs(x="value", y="")
- + theme_minimal(base_size=13)
- + theme(strip_text=element_text(size=13, weight="bold", color=INK),
-         axis_text_y=element_blank(), panel_grid_minor=element_blank(),
-         figure_size=(5.3, 4.4)))
+def shape_plot(k):
+    """The three panels with only the first k drawn, for the .r-stack reveal.
+
+    The fill and the ink need different opacities when a panel is on, so each
+    gets its own identity-scaled alpha column rather than sharing one.
+    """
+    curves = upto(shapes, "shape", SHAPES, k, on=0.25).with_columns(
+        (pl.col("a") > 0).cast(pl.Float64).alias("ink"))
+    lines = upto(centers, "shape", SHAPES, k, on=1.0)
+    return (ggplot(curves, aes("v"))
+     + geom_density(aes(alpha="a"), fill=ORANGE, color="none")
+     + geom_line(aes(alpha="ink"), stat="density", color=DARK, size=0.8)
+     + geom_vline(lines, aes(xintercept="mean", alpha="a"), color=DARK, size=0.9,
+                  linetype="dashed")
+     + geom_vline(lines, aes(xintercept="median", alpha="a"), color=TEAL, size=0.9)
+     + scale_alpha_identity()
+     + coord_cartesian(xlim=(-0.6, 5.2))
+     + facet_wrap("shape", ncol=1, scales="free_y")
+     + labs(x="", y="")
+     + theme_minimal(base_size=13)
+     + theme(strip_text=element_text(size=13, weight="bold", color=INK),
+             axis_text_y=element_blank(), panel_grid_minor=element_blank(),
+             panel_spacing=0.14, figure_size=(5.3, 4.6)))
 ```
-:::
-::::
 
----
+::: {.r-stack}
 
-## Histograms and Bin Width {.text-figure-slide}
-
-:::: {.columns}
-::: {.column width="38%"}
-::: {.incremental style="font-size:0.82em; padding-right:24px;"}
-- Same 400 heights, three bin counts.
-- Too few bins hides shape
-- Too many bins shows noise.
-- Good to try more than one bin width
-:::
-:::
-::: {.column width="62%"}
+::: {.fragment .fade-out fragment-index=1}
 ```{python}
 #| echo: false
 #| fig-width: 5.3
-#| fig-height: 4.4
-#| fig-alt: "The same 400 heights drawn as three stacked histograms with 6, 20 and 60 bins; the 6-bin version is a coarse block, the 20-bin version shows a clean single peak, and the 60-bin version breaks into spiky counts"
-rng = np.random.default_rng(9)
-h = rng.normal(68, 3.2, 400)
-LEVELS = ["6 bins", "20 bins", "60 bins"]
-
-def counted(n, label):
-    """One np.histogram per bin count, so a single geom_col draws all three panels."""
-    cnt, edges = np.histogram(h, bins=n)
-    return pl.DataFrame({"mid": (edges[:-1] + edges[1:]) / 2,
-                         "count": cnt.astype(float),
-                         "w": np.repeat(edges[1] - edges[0], n),
-                         "bins": [label] * n})
-
-bars = pl.concat([counted(n, lab) for n, lab in zip([6, 20, 60], LEVELS)]
-                 ).with_columns(pl.col("bins").cast(pl.Enum(LEVELS)))
-
-(ggplot(bars, aes("mid", "count"))
- + geom_col(aes(width="w"), fill=ORANGE, alpha=0.8, color="white", size=0.4)
- + facet_wrap("bins", ncol=1, scales="free_y")
- + labs(x="height (in)", y="count")
- + theme_minimal(base_size=13)
- + theme(strip_text=element_text(size=13, weight="bold", color=INK),
-         panel_grid_minor=element_blank(), figure_size=(5.3, 4.4)))
+#| fig-height: 4.6
+#| fig-alt: "Three empty panels labelled right-skewed, symmetric and left-skewed, sharing one x-axis"
+shape_plot(0)
 ```
 :::
-::::
 
----
-
-## Standardize or Normalize? {.text-figure-slide}
-
-:::: {.columns}
-::: {.column width="38%"}
-::: {.incremental style="font-size:0.82em; padding-right:24px;"}
-- **Standardize** (z-score): $(x - \bar{x})/s$: center 0, spread 1.
-- **Normalize** (min–max): rescale onto $[0, 1]$.
-- What changes in the picture(s)?
-:::
-:::
-::: {.column width="62%"}
+::: {.fragment .fade-in-then-out fragment-index=1}
 ```{python}
 #| echo: false
 #| fig-width: 5.3
-#| fig-height: 4.0
-#| fig-alt: "The same 90 salaries plotted three times as a row of dots: once on the raw dollar axis, once on a z-score axis running from about −2 to 3, and once on a min–max axis from 0 to 1; the arrangement of the dots is identical in all three, only the axis labels differ"
-rng = np.random.default_rng(17)
-raw = rng.normal(72_000, 14_000, 90)
-FORMS = ["raw salary ($)", "z-score (standardized)", "min–max (normalized)"]
-scaled = pl.DataFrame({
-    "form": np.repeat(FORMS, len(raw)),
-    "v": np.concatenate([raw,
-                         (raw - raw.mean()) / raw.std(ddof=1),
-                         (raw - raw.min()) / (raw.max() - raw.min())]),
-    "y": np.tile(np.zeros(len(raw)), 3)}
-).with_columns(pl.col("form").cast(pl.Enum(FORMS)))
-
-(ggplot(scaled, aes("v", "y"))
- + geom_point(color=ORANGE, size=2.5, alpha=0.45)
- + facet_wrap("form", ncol=1, scales="free_x")
- + labs(x="", y="")
- + theme_minimal(base_size=13)
- + theme(strip_text=element_text(size=13, weight="bold", color=INK),
-         axis_text_y=element_blank(), panel_grid_major_y=element_blank(),
-         panel_grid_minor=element_blank(), figure_size=(5.3, 4.0)))
+#| fig-height: 4.6
+#| fig-alt: "Only the top panel is drawn: a right-skewed density with its long tail to the right, a dashed line at the mean sitting to the right of a solid line at the median"
+shape_plot(1)
 ```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+```{python}
+#| echo: false
+#| fig-width: 5.3
+#| fig-height: 4.6
+#| fig-alt: "The top two panels are drawn: the right-skewed density, and a symmetric density whose mean and median lines sit on top of each other"
+shape_plot(2)
+```
+:::
+
+::: {.fragment fragment-index=3}
+```{python}
+#| echo: false
+#| fig-width: 5.3
+#| fig-height: 4.6
+#| fig-alt: "All three panels are drawn: right-skewed, symmetric, and left-skewed, the last with its long tail to the left and the mean line to the left of the median"
+shape_plot(3)
+```
+:::
+
+:::
 :::
 ::::
 
@@ -1213,91 +1308,176 @@ scaled = pl.DataFrame({
 
 ---
 
-## Chebyshev's Bounds
+## Chebyshev's Bounds {.text-figure-slide}
 
 ::: {.aside-note}
-*Computational and Inferential Thinking*, [Section 14.2: Variability](https://inferentialthinking.com/chapters/14/2/variability/#chebychevs-bounds)
+*Computational and Inferential Thinking*, [Section 14.2: Chebychev's Bounds](https://inferentialthinking.com/chapters/14/2/variability/#chebychevs-bounds)
 :::
 
-- "For any distribution, at least $1 - 1/k^2$ of the data must lie within $k$ standard deviations of the mean."
-- For example, at least 75% of values fall within 2 standard deviations, even without assuming normality
-    - Chebyshev's inequality does not assume a bell curve!
+:::: {.columns}
+::: {.column width="42%"}
+::: {style="font-size:0.72em; padding-right:18px;"}
+- A random variable is **$k$ or more SDs from the mean**, at most, $1/k^2$ of the time: $P(|X - \mu| \ge k\sigma) \le 1/k^2$.
+- So at least $1 - 1/k^2$ of any distribution sits **within $k$ SDs**.
 
-$$P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}$$
+::: {.fragment fragment-index=3}
+- $k = 2$: at least **75%** within, at most **25%** beyond, again, for *any* distribution. No bell curve assumed!
+:::
+:::
+:::
+::: {.column width="58%"}
+```{python}
+#| echo: false
+rng = np.random.default_rng(418)
+# Deliberately nothing like a bell curve: two clumps plus a long right tail.
+x = np.concatenate([rng.normal(8, 1.2, 500), rng.normal(16, 1.0, 300),
+                    20 + rng.exponential(6, 200)])
+mu, sd, K = x.mean(), x.std(ddof=1), 2
+lo, hi = mu - K * sd, mu + K * sd
+cnt, edges = np.histogram(x, bins=46)
+mid = (edges[:-1] + edges[1:]) / 2
+WHERE = ["within", "beyond"]
+band = pl.DataFrame({"mid": mid, "count": cnt.astype(float),
+                     "w": np.repeat(edges[1] - edges[0], len(mid)),
+                     "where": np.where(np.abs(mid - mu) < K * sd, WHERE[0], WHERE[1])}
+        ).with_columns(pl.col("where").cast(pl.Enum(WHERE)))
+top = float(cnt.max())
+pad = (x.max() - lo) * 0.06
+
+def cheb_plot(stage):
+    """The bound, built up in four passes for the .r-stack reveal.
+
+    Stage 0 is the empty frame, 1 adds the bins, 2 adds the band and the mean
+    and SD lines, 3 colors the bins by which side of the band they fall on and
+    labels the two shares. Every stage keeps the same scales, so the panel does
+    not move as the layers arrive.
+    """
+    p = ggplot(band, aes("mid", "count"))
+    if stage >= 2:
+        p += annotate("rect", xmin=lo, xmax=hi, ymin=0, ymax=top * 1.34,
+                      fill=ORANGE, alpha=0.08)
+    if stage >= 1:
+        if stage >= 3:
+            p = (p + geom_col(aes(width="w", fill="where"), color="white", size=0.3)
+                   + scale_fill_manual({WHERE[0]: ORANGE, WHERE[1]: "#9aa3a6"}))
+        else:
+            p += geom_col(aes(width="w"), fill="#9aa3a6", color="white", size=0.3)
+    if stage >= 2:
+        p = (p + geom_vline(xintercept=mu, color=INK, size=0.9)
+               + geom_vline(xintercept=[lo, hi], color=DARK, size=0.9, linetype="dashed")
+               + note(mu, top * 1.22, "mean", ha="center")
+               + note(lo + pad * 0.3, top * 1.31, "mean − 2 SD", ha="left", color=DARK, size=12)
+               + note(hi - pad * 0.3, top * 1.31, "mean + 2 SD", ha="right", color=DARK, size=12))
+    if stage >= 3:
+        p = (p + note(mu, top * 0.80, "at least 75% of the data\nis in here", ha="center", size=14)
+               + note(x.max(), top * 0.30, "at most 25%\nout here", ha="right", color="#63696b", size=12))
+    return (p
+     + scale_y_continuous(limits=(0, top * 1.36), expand=(0, 0))
+     + coord_cartesian(xlim=(lo - pad, float(x.max()) + pad))
+     + labs(x="", y="count")
+     + theme_minimal(base_size=13)
+     + theme(legend_position="none", panel_grid_minor=element_blank(),
+             figure_size=(5.6, 4.2)))
+```
+
+::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.2
+#| fig-alt: "An empty plot frame with a count axis and no data drawn yet"
+cheb_plot(0)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{python}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.2
+#| fig-alt: "A grey histogram of a lumpy two-humped distribution with a long right tail, with no annotations yet"
+cheb_plot(1)
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+```{python}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.2
+#| fig-alt: "The same grey histogram with a solid line at the mean, dashed lines two standard deviations either side of it, and a lightly shaded band between them"
+cheb_plot(2)
+```
+:::
+
+::: {.fragment fragment-index=3}
+```{python}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.2
+#| fig-alt: "The finished figure: bars inside the band are orange and labelled as at least 75 percent of the data, the bars in the right tail outside it are grey and labelled as at most 25 percent"
+cheb_plot(3)
+```
+:::
+
+:::
+:::
+::::
 
 
 ---
 
-## The Bound, Tabulated {.smaller}
-
+## The Bound, All the Way Out {.figure-aside .smaller}
 
 ::: {.aside-note}
-*Computational and Inferential Thinking*, [Section 14.2: Variability](https://inferentialthinking.com/chapters/14/2/Variability.html). Holds for **any** distribution: skewed, bimodal, spiky, anything.
+*Computational and Inferential Thinking*, [Section 14.2: Chebychev's Bounds](https://inferentialthinking.com/chapters/14/2/variability/#chebychevs-bounds). Holds for **any** distribution: skewed, bimodal, spiky, anything.
 :::
 
-| $k$ | At least this much is within $k$ SDs | At most this much is outside |
+::: {.columns}
+::: {.column}
+- The bound is **loose** for every particular one
+- At $k = 1$ it promises basically nothing: 0% within one SD
+- It needs $k > 1$ before it says anything at all
+- only reaches 99% at $k = 10$
+- Compare $k = 2$: Chebyshev guarantees $1 - 1/2^2 = 75\%$, a normal curve delivers 95%
+
+:::
+::: {.column}
+
+::: {.dense-smaller}
+| $k$ | Within $k$ SDs of mean: at least $1 - 1/k^2$ | Beyond $k$ SDs from mean: at most $1/k^2$ |
 | --- | --- | --- |
-| 1 | $1 - 1/1 = 0\%$ | 100% |
-| 2 | $1 - 1/4 = 75\%$ | 25% |
-| 3 | $1 - 1/9 \approx 88.9\%$ | 11.1% |
-| 4 | $1 - 1/16 = 93.75\%$ | 6.25% |
-| 5 | $1 - 1/25 = 96\%$ | 4% |
-
-
----
-
-## Exercise 1: Ride Times {.smaller}
-
-Suppose a week of scraped Blue Line trips from UIC-Halsted to O'Hare has **mean 41 minutes** and **standard deviation 6 minutes**. The distribution is nothing like a bell curve.
-
-::: {.fragment}
-**(a)** At least what fraction of trips took between **29 and 53 minutes**?
+| 1 | 0% | 100% |
+| $\sqrt{2}$ | 50% | 50% |
+| 1.5 | 55.56% | 44.44% |
+| 2 | 75% | 25% |
+| $2\sqrt{2}$ | 87.5% | 12.5% |
+| 3 | 88.8889% | 11.1111% |
+| 4 | 93.75% | 6.25% |
+| 5 | 96% | 4% |
+| 6 | 97.2222% | 2.7778% |
+| 7 | 97.9592% | 2.0408% |
+| 8 | 98.4375% | 1.5625% |
+| 9 | 98.7654% | 1.2346% |
+| 10 | 99% | 1% |
 :::
 
-::: {.fragment style="font-size:0.9em;"}
-29 and 53 are $41 \mp 12$, so $k = 12/6 = 2$. &nbsp; $1 - 1/2^2 = 0.75$: **at least 75%**
+::: {.caption}
+Quotation and table from [Chebyshev's inequality](https://en.wikipedia.org/wiki/Chebyshev%27s_inequality), Wikipedia. [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 :::
 
-::: {.fragment}
-**(b)** At most what fraction took **more than 59 minutes or less than 23**?
+:::
 :::
 
-::: {.fragment style="font-size:0.9em;"}
-$k = 18/6 = 3$. &nbsp; $1/3^2 \approx 0.111$: **at most 11.1%**, and that counts *both* tails together.
-:::
-
----
-
-## Exercise 2: Working Backwards {.smaller}
-
-Exam scores have **mean 74** and **standard deviation 8**.
-
-::: {.fragment}
-**(a)** Give an interval that is guaranteed to hold **at least 96%** of the scores.
-:::
-
-::: {.fragment style="font-size:0.9em;"}
-We need $1 - 1/k^2 \ge 0.96$, so $1/k^2 \le 0.04$, so $k \ge 5$. &nbsp; $74 \pm 5(8)$: **the interval $[34, 114]$**
-:::
-
-::: {.fragment style="font-size:0.9em;"}
-Which is a *useless* interval: the exam is out of 100. That is the honest lesson, though. A distribution-free guarantee this strong costs almost all your precision.
-:::
-
-::: {.fragment}
-**(b)** A student scored **98**. Is that unusual?
-:::
-
-::: {.fragment style="font-size:0.9em;"}
-$z = (98 - 74)/8 = 3$. Chebyshev says at most $1/9 \approx 11\%$ of students are 3 SDs or more from the mean. Unusual, but Chebyshev cannot say *how* unusual.
-:::
 
 ---
 
 ## The Normal Curve and 68-95-99.7
 
 ::: {.aside-note}
-*Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/3/sd-and-the-normal-curve/)
+*Computational and Inferential Thinking*, [Section 14.3: How to Spot the SD on a Bell-Shaped Curve](https://inferentialthinking.com/chapters/14/3/sd-and-the-normal-curve/#how-to-spot-the-sd-on-a-bell-shaped-curve)
 :::
 
 For a roughly normal distribution, the empirical rule is:
@@ -1309,129 +1489,22 @@ For a roughly normal distribution, the empirical rule is:
 A useful trick / mental model for judging whether a value is unusually large or small, but only applies well to approximately bell-shaped data.
 
 
-
----
-
-## Exercise 3: Why the Gap? {.smaller}
-
-For a **normal** distribution, 95% of values are within 2 SDs. Chebyshev only promises **75%**.
-
-::: {.fragment}
-**Why is Chebyshev so much weaker?**
-:::
-
-::: {.incremental style="font-size:0.9em;"}
-- Chebyshev has to be true for *every* distribution at once, including the nastiest one you can construct.
-- The 68-95-99.7 rule is true for *one* distribution, the normal, and false in general.
-- So Chebyshev is a **guarantee**; the empirical rule is an **estimate that assumes a shape**.
-:::
-
-::: {.fragment style="margin-top:0.6em;"}
-Chebyshev's bound is *tight*: there really is a distribution with exactly 25% of its mass 2 SDs out. Put 1/8 of the data at $-2\sigma$, 1/8 at $+2\sigma$, and the remaining 3/4 exactly at the mean. Nothing is wasted, and nothing better can be promised.
-:::
-
-
-# Anatomy of Bayes' Theorem {.section-header}
-
----
-
-## Anatomy: the Probability of A {.split .smaller auto-animate=true}
-
-::: {.split-content .golden-columns}
-
-::: {}
-
-$$\color{#f9461c}{P(A \mid B)} = \frac{P(B \mid A)\,\color{#f9461c}{P(A)}}{P(B)}$$
-
-::: {.dense-smaller}
-- $P(A)$: the **prior**. What you believe about $A$ *before* any evidence arrives.
-    - *Charli:* 4% of adults develop lung cancer.
-- $P(A \mid B)$: the **posterior**. What you believe about $A$ *after* $B$ is taken into account.
-    - *Charli:* 15%, once we know Charli smokes a pack a day.
-:::
-
-::: {.fragment style="font-size:0.78em; margin-top:0.3em;"}
-Both are statements about **A**. The prior is the start, posterior is the end.
-:::
-
-:::
-
-![](../assets/bayes-diagnostic/bayes-theorem-visual-proof.svg){.figure alt="Pictorial proof of Bayes' theorem: a unit square split by the two events, showing that the joint probability can be read two ways"}
-
-:::
-
----
-
-## Anatomy: the Probability of B {.split .smaller auto-animate=true}
-
-::: {.split-content .golden-columns}
-
-::: {}
-
-$$P(A \mid B) = \frac{\color{#f9461c}{P(B \mid A)}\,P(A)}{\color{#f9461c}{P(B)}}$$
-
-::: {.dense-smaller}
-- $P(B \mid A)$: the **likelihood**. How expected $B$ would be *if $A$ were true*.
-    - *Charli:* 90% of people with lung cancer smoked.
-- $P(B)$: the **evidence**, or marginal probability of $B$. How expected $B$ is *overall*, either way.
-    - *Charli:* 24% of adults smoke.
-:::
-
-::: {.fragment style="font-size:0.78em; margin-top:0.3em;"}
-$P(B \mid A)$ and $P(A \mid B)$ point in **opposite directions**: swapping them is the most common error with this formula. $P(B)$ is the normalizer.
-:::
-
-:::
-
-![](../assets/bayes-diagnostic/bayes-theorem-visual-proof.svg){.figure alt="Pictorial proof of Bayes' theorem: a unit square split by the two events, showing that the joint probability can be read two ways"}
-
-:::
-
----
-
-## Charli, End2End {.smaller}
-
-::: {.aside-note}
-The same example from [Week 2](week2.html). Lifetime risks from Villeneuve & Mao (1994); attribution figure from the [CDC](https://www.cdc.gov/lung-cancer/risk-factors/index.html).
-:::
-
-**What are the odds Charli has lung cancer, given that Charli smokes a pack a day?**
-
-:::: {.columns}
-
-::: {.column width="46%"}
-$A$ = Charli has lung cancer &nbsp;&nbsp; $B$ = Charli smokes a pack every day
-
-::: {.dense}
-- prior &nbsp; $P(A) = 0.04$
-- likelihood &nbsp; $P(B \mid A) = 0.90$
-- evidence &nbsp; $P(B) = 0.24$
-- posterior &nbsp; $P(A \mid B) = \ ?$
-:::
-:::
-
-::: {.column width="52%"}
-[SOLUTION]{.eyebrow}
-
-::: {.fragment}
-$$P(A \mid B) = \frac{(0.90)(0.04)}{0.24} = \frac{0.036}{0.24} = 0.15$$
-:::
-
-::: {.fragment style="font-size:0.9em;"}
-The prior was 4%. The evidence roughly **quadrupled** it, to 15%, but nowhere near 90%. A rare $A$ stays fairly rare even after evidence that points right at it.
-:::
-
-::: {.fragment style="font-size:0.9em;"}
-When $P(B)$ is not handed to you, build it: $$P(B) = P(B \mid A)P(A) + P(B \mid A')P(A')$$
-:::
-:::
-
-::::
-
-
 # Motivating Visualization {.section-header}
 
+
 ---
+
+## Anscombe's Quartet
+
+::: {}
+- In 1973, the statistician **Francis Anscombe** published four small datasets
+- Discussed the habit of *computing* a dataset and never looking at it
+- The dashed line is the fitted line on the next four slides
+:::
+
+
+---
+
 
 ```{python}
 #| echo: false
@@ -1545,6 +1618,61 @@ A slightly noisy but linear relationship.
 
 ---
 
+## Anscombe II
+
+:::: {.columns}
+::: {.column width="36%"}
+::: {.fragment fragment-index=1 style="padding-right:28px;"}
+```{python}
+#| echo: false
+#| output: asis
+stats_table("I", "II")
+```
+:::
+:::
+::: {.column width="64%"}
+```{python}
+#| echo: false
+#| fig-alt: "Scatter plot of Anscombe's second dataset: eleven points tracing a smooth downward-opening curve that crosses the dashed straight line three times"
+anscombe_plot("II")
+```
+:::
+::::
+
+::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
+A perfect curve. The relationship is exact and is not a line.
+:::
+
+---
+
+## Anscombe III
+
+:::: {.columns}
+::: {.column width="36%"}
+::: {.fragment fragment-index=1 style="padding-right:28px;"}
+```{python}
+#| echo: false
+#| output: asis
+stats_table("I", "II", "III")
+```
+:::
+:::
+::: {.column width="64%"}
+```{python}
+#| echo: false
+#| fig-alt: "Scatter plot of Anscombe's third dataset: ten points lying exactly on a straight line, plus one far above it that pulls the dashed fitted line off the others"
+anscombe_plot("III")
+```
+:::
+::::
+
+::: {.fragment fragment-index=2 style="font-size:0.8em; margin-top:0.2em;"}
+Ten points on a perfect line, and one outlier that drags the fit.
+:::
+
+
+---
+
 
 ## Anscombe IV
 
@@ -1591,26 +1719,19 @@ Every $x$ is the same but one point that creates the slope.
          panel_spacing=0.05, figure_size=(10, 4.2)))
 ```
 
-::: {style="text-align:center; font-size:0.72em; margin-top:0.2em;"}
-Identical in all four: n = 11, mean of x = 9.00, mean of y = 7.50, sd of x = 3.32, sd of y = 2.03, r = 0.82, fitted line y = 0.5x + 3
+::: {style="text-align:center; font-size:0.78em; margin-top:0.3em; line-height:1.9;"}
+All four have the same&hellip;
+[&nbsp;`n` = 11]{.fragment}[,&nbsp; `mean` of x = 9.00]{.fragment}[,&nbsp; `mean` of y = 7.50]{.fragment}[,&nbsp; `sd` of x = 3.32]{.fragment}[,&nbsp; `sd` of y = 2.03]{.fragment}[,&nbsp; `r` = 0.82]{.fragment}[,&nbsp; fitted line y = 0.5x + 3]{.fragment}[.]{.fragment}
+
+::: {.fragment}
+[Every summary number is identical.]{.key}
+:::
 :::
 
 
 
 
----
 
-## Anscombe's Quartet
-
-::: {.incremental}
-- In 1973, the statistician **Francis Anscombe** published four small datasets
-- They all share the same mean of $x$, mean of $y$, standard deviation, correlation, and least-squares regression line.
-- Anscombe's target: the habit of *computing* a dataset and never *looking* at it.
-:::
-
-::: {.fragment style="font-size:0.85em; margin-top:0.8em;"}
-The dashed line on the next four slides is the same fitted line every time: $y = 0.5x + 3$.
-:::
 
 
 
@@ -1633,6 +1754,89 @@ Take a picture of your worksheet, upload it in Canvas
 
 
 
+# Appendix: Chebyshev Exercises {.section-header}
+
+## What's in the Appendix
+
+::: {.aside-note}
+*Computational and Inferential Thinking*, [Section 14.2: Chebychev's Bounds](https://inferentialthinking.com/chapters/14/2/variability/#chebychevs-bounds)
+:::
+
+Three worked exercises on Chebyshev's bound, for anyone who wants the practice:
+
+- Reading the bound off a mean and an SD
+- Working backwards from the coverage you want to the interval it costs
+- Why the bound is so much looser than the 68-95-99.7 rule
+
+---
+
+## Exercise 1: Ride Times {.smaller}
+
+Suppose a week of scraped Blue Line trips from UIC-Halsted to O'Hare has **mean 41 minutes** and **standard deviation 6 minutes**. The distribution is nothing like a bell curve.
+
+::: {.fragment}
+**(a)** At least what fraction of trips took between **29 and 53 minutes**?
+:::
+
+::: {.fragment style="font-size:0.9em;"}
+29 and 53 are $41 \mp 12$, so $k = 12/6 = 2$. &nbsp; $1 - 1/2^2 = 0.75$: **at least 75%**
+:::
+
+::: {.fragment}
+**(b)** At most what fraction took **more than 59 minutes or less than 23**?
+:::
+
+::: {.fragment style="font-size:0.9em;"}
+$k = 18/6 = 3$. &nbsp; $1/3^2 \approx 0.111$: **at most 11.1%**, and that counts *both* tails together.
+:::
+
+---
+
+## Exercise 2: Working Backwards {.smaller}
+
+Exam scores have **mean 74** and **standard deviation 8**.
+
+::: {.fragment}
+**(a)** Give an interval that is guaranteed to hold **at least 96%** of the scores.
+:::
+
+::: {.fragment style="font-size:0.9em;"}
+We need $1 - 1/k^2 \ge 0.96$, so $1/k^2 \le 0.04$, so $k \ge 5$. &nbsp; $74 \pm 5(8)$: **the interval $[34, 114]$**
+:::
+
+::: {.fragment style="font-size:0.9em;"}
+Which is a *useless* interval: the exam is out of 100. That is the honest lesson, though. A distribution-free guarantee this strong costs almost all your precision.
+:::
+
+::: {.fragment}
+**(b)** A student scored **98**. Is that unusual?
+:::
+
+::: {.fragment style="font-size:0.9em;"}
+$z = (98 - 74)/8 = 3$. Chebyshev says at most $1/9 \approx 11\%$ of students are 3 SDs or more from the mean. Unusual, but Chebyshev cannot say *how* unusual.
+:::
+
+---
+
+## Exercise 3: Why the Gap? {.smaller}
+
+For a **normal** distribution, 95% of values are within 2 SDs. Chebyshev only promises **75%**.
+
+::: {.fragment}
+**Why is Chebyshev so much weaker?**
+:::
+
+::: {.incremental style="font-size:0.9em;"}
+- Chebyshev has to be true for *every* distribution at once, including the nastiest one you can construct.
+- The 68-95-99.7 rule is true for *one* distribution, the normal, and false in general.
+- So Chebyshev is a **guarantee**; the empirical rule is an **estimate that assumes a shape**.
+:::
+
+::: {.fragment style="margin-top:0.6em;"}
+Chebyshev's bound is *tight*: there really is a distribution with exactly 25% of its mass 2 SDs out. Put 1/8 of the data at $-2\sigma$, 1/8 at $+2\sigma$, and the remaining 3/4 exactly at the mean. Nothing is wasted, and nothing better can be promised.
+:::
+
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week4.qmd>.
@@ -1641,7 +1845,7 @@ Take a picture of your worksheet, upload it in Canvas
 4. Bayes' Theorem diagram: Cmglee, [*Bayes theorem visual proof.svg*](https://commons.wikimedia.org/wiki/File:Bayes_theorem_visual_proof.svg), Wikimedia Commons. [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0). The four component names (prior, likelihood, evidence, posterior) follow *Computational and Inferential Thinking*, [Chapter 18: Updating Predictions](https://inferentialthinking.com/chapters/18/updating-predictions/), and match the wording of the Bayes questions in the course's PrairieLearn repository (`pl-uic-cs418`).
 5. Lung-cancer figures in the Charli example: lifetime risks from Villeneuve & Mao (1994); smoking attribution from the [CDC](https://www.cdc.gov/lung-cancer/risk-factors/index.html). The worked example is carried over from the Week 2 deck.
 6. Scraping demo: [CTA Train Tracker, UIC-Halsted arrival estimates](https://www.transitchicago.com/traintracker/arrivaltimes/?sid=40350) (stop `40350`), scraped 2026-09-15. Route colors follow the [CTA Trademark Guidelines for Developers](https://www.transitchicago.com/developers/branding/); this deck is not affiliated with or endorsed by CTA. Legal framing from Week 2: [*Sandvig v. Barr*, No. 16-1368 (D.D.C. Mar. 27, 2020)](https://www.aclu.org/sites/default/files/field_document/sandvig_opinion.pdf).
-7. Chebyshev's inequality and the empirical rule: *Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/why-the-mean-matters), esp. [Section 14.2: Variability](https://inferentialthinking.com/chapters/14/2/Variability.html). Exercises written for this deck.
+7. Chebyshev's inequality and the empirical rule: *Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/why-the-mean-matters), esp. [Section 14.2: Chebychev's Bounds](https://inferentialthinking.com/chapters/14/2/variability/#chebychevs-bounds) and [Section 14.3: How to Spot the SD on a Bell-Shaped Curve](https://inferentialthinking.com/chapters/14/3/sd-and-the-normal-curve/#how-to-spot-the-sd-on-a-bell-shaped-curve). Exercises written for this deck. The full tabulated bound and the quotation on “The Same Bound, All the Way Out” are from [Chebyshev's inequality](https://en.wikipedia.org/wiki/Chebyshev%27s_inequality), Wikipedia, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 8. Anscombe's quartet: F. J. Anscombe, ["Graphs in Statistical Analysis," *The American Statistician* 27, no. 1 (1973): 17–21](https://www.jstor.org/stable/2682899). The data ship with [plotnine](https://plotnine.org/).
 9. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 10. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
