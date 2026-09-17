@@ -1,7 +1,10 @@
 """
 Download income share time series from the World Inequality Database (WID.world).
 
-Uses the WID internal REST API (discovered from the open-source wid-r-tool package).
+Uses the same REST API as WID's own open-source R package, `wid` (see the note on the
+key below). Prefer the R package or a bulk download if you need this for anything
+beyond the course example; this script leans on an interface WID has not documented
+for third-party use, and it can change without notice.
 API base: https://rfap9nitz6.execute-api.eu-west-1.amazonaws.com/prod/
 
 Variables collected (pre-tax national income share, sptinc):
@@ -24,11 +27,20 @@ import json
 import urllib.request
 import csv
 
-API_KEY_HEX = "ad 81 41 c8 e0 74 8a 86 8f 01 3c 07 b6 59 4c 23 bd 73 2c e6 52 2b 42 1c e6 f7 90 a2 72 4f"
 API_BASE = "https://rfap9nitz6.execute-api.eu-west-1.amazonaws.com/prod/"
 
-key_bytes = bytes([int(x, 16) for x in API_KEY_HEX.split()])
-API_KEY = base64.b64encode(key_bytes).decode()
+# Not a personal credential and not a secret: these are the bytes of the shared client
+# key that WID themselves publish inside the `wid` R package, in R/sysdata.rda, which
+# base64-encodes them into the same x-api-key header this script sends. Source:
+# https://github.com/world-inequality-database/wid-r-tool (also on CRAN as `wid`).
+# Every user of that package sends this identical key, so there is nothing here to
+# rotate and nothing that a leak would grant that `install.packages("wid")` does not.
+# Written as bytes rather than the encoded string only to match the package's own
+# representation; this is deliberately NOT an attempt to hide a secret from scanners.
+WID_PACKAGE_KEY = bytes.fromhex(
+    "ad8141c8e0748a868f013c07b6594c23bd732ce6522b421ce6f790a2724f"
+)
+API_KEY = base64.b64encode(WID_PACKAGE_KEY).decode()
 
 COUNTRIES = {
     "US": "United States",
