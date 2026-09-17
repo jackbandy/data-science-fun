@@ -5,8 +5,9 @@
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -17,7 +18,7 @@
 \usepackage{array}
 
 % ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a stub. The watermark marks the PDF as unfinished so
+% This worksheet is still in progress. The watermark marks the PDF as unfinished so
 % nobody mistakes a placeholder for the real thing. Delete this block once the
 % worksheet has real content.
 \usepackage{draftwatermark}
@@ -39,54 +40,125 @@
 \hypersetup{colorlinks=false, hidelinks}
 
 % ── Convenience environments ──────────────────────────────────────────────────
-\newenvironment{problem}[1]{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
-  \textbf{Problem #1.}
-}{%
-  \end{mdframed}\vspace{0.5em}
-}
-
-\newenvironment{hint}{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
-  \textit{Hint:}
-}{%
-  \end{mdframed}\vspace{0.3em}
-}
-
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
+% Usage: \blankspace{6cm} — blank area for hand-written work, no rules
+\newcommand{\blankspace}[1]{%
   \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
   \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
+  \end{minipage}
   \vspace{0.3em}
+}
+
+% Usage: \guidedopen{title}{guided content}{guided workspace height}{open-ended workspace height}
+% Left: a titled, structured prompt with its own blank workspace. Right: a
+% fully blank workspace for open-ended exploration of the same topic (no
+% prompt text), sized so the two columns land at roughly the same total
+% height. Neither workspace is ruled.
+\newcommand{\guidedopen}[4]{%
+  \noindent\textbf{#1}\\[0.18em]
+  \noindent
+  \begin{minipage}[t]{0.485\textwidth}
+    #2
+    \blankspace{#3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.485\textwidth}
+    \blankspace{#4}
+  \end{minipage}
+  \\[0.4em]
+}
+
+% Usage: \panelbox{width}{height}{caption} — a framed drawing panel with `caption`
+% centered beneath it. An empty caption leaves the panel bare, with nothing
+% below the frame at all.
+\newcommand{\panelbox}[3]{%
+  \begin{minipage}[t]{\dimexpr#1+2\fboxsep+2\fboxrule\relax}
+    \framebox[#1][c]{\rule{0pt}{#2}}%
+    \if\relax\detokenize{#3}\relax\else
+      \\[0.25em]{\centering\small #3\par}%
+    \fi
+  \end{minipage}%
 }
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
 \noindent
 \begin{minipage}[t]{0.55\textwidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,9}} \\[0.3em]
-  {\large \textit{Week 5, Day 1: Descriptive Visualization}}
+  {\LARGE \textbf{Worksheet \#\,9}} \\[0.18em]
+  {\large \textit{Week 5, Day 1: Elements of visualization, choosing a plot, correlation, perception}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
-\vspace{0.2em}
+\vspace{0.6em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.1em}
+
+\noindent\underline{\textbf{Guided checkpoints (optional)}}
+\vspace{0.8em}
+
+% ── 1. Bertin's seven ────────────────────────────────────────────────────────
+\guidedopen{1. Bertin's Seven Visual Variables}{
+Name all seven.
+}{4.4cm}{5.3cm}
+
+\vfill
+
+% ── 2. Munzner's channels ────────────────────────────────────────────────────
+\guidedopen{2. Munzner's Magnitude Channels}{
+Rank the first five magnitude channels
+}{4.4cm}{5.3cm}
+
+\vfill
+
+% ── 3. Choosing a plot ───────────────────────────────────────────────────────
+\guidedopen{3. Choosing a Plot: One Quantitative Feature}{
+Name three plots for a single quantitative feature. 
+}{4.3cm}{5.4cm}
+
+\vfill
+
+\newpage
+
+% ── 4. Correlation ───────────────────────────────────────────────────────────
+\guidedopen{4. Pearson's Correlation Coefficient}{
+Sketch a scatter plot for each panel.
+
+\vspace{0.45em}
+
+\noindent
+\panelbox{2.3cm}{2.0cm}{$r \approx 0.9$}\hfill
+\panelbox{2.3cm}{2.0cm}{$r \approx 0$}\hfill
+\panelbox{2.3cm}{2.0cm}{$r \approx -0.5$}
+}{1.0cm}{5.5cm}
+
+\vfill
+
+% ── 5. Perception ────────────────────────────────────────────────────────────
+\guidedopen{5. Perception: Color, Length, and Ink}{
+TODO
+}{4.4cm}{5.4cm}
+
+\vfill
+
+% ── 6. TODO ──────────────────────────────────────────────────────────────────
+% Placeholder for a sixth checkpoint. Day-1 material not yet covered by a
+% problem above: exploratory vs. persuasive visualization, reading a histogram
+% by area, bivariate forms (two categorical / one of each), Simpson's paradox,
+% geospatial data, visualizing uncertainty, stacking vs. log axes, donut charts.
+\guidedopen{6. TODO}{
+TODO
+}{4.4cm}{5.2cm}
+
+\vfill
 
 \end{document}
