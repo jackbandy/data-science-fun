@@ -47,7 +47,7 @@ Check it:
 
 ```bash
 curl -X POST -H 'Content-Type: application/json' \
-  -d '{"assignment":"test","tool":"claude-code","event":"session-start","install":"testtesttest"}' \
+  -d '{"assignment":"selftest","tool":"selftest","event":"session-start","install":"testtesttest"}' \
   https://cs418-ai-usage.cowabunga.workers.dev
 curl https://cs418-ai-usage.cowabunga.workers.dev/stats.json
 ```
@@ -55,8 +55,9 @@ curl https://cs418-ai-usage.cowabunga.workers.dev/stats.json
 A test POST bumps the real headline counters too, so clean up all of the keys it touched, not just the assignment one:
 
 ```bash
-for k in total installs tool:test-tool installs:tool:test-tool assignment:test \
-         "day:$(date -u +%F)" seen:test:testtesttest; do
+for k in total installs tool:selftest installs:tool:selftest assignment:selftest \
+         "day:$(date -u +%F)" seen:selftest:testtesttest \
+         seen:selftest:selftest:testtesttest meta:seen-count; do
   npx wrangler kv key delete --binding COUNTS "$k" --remote
 done
 ```
@@ -67,7 +68,8 @@ The Worker is plain `fetch`-handler JavaScript with one KV binding, so it ports 
 
 ## Caveats worth knowing before you quote a number
 
-- **The endpoint is public, and its URL ships inside every student's assignment folder.** Anyone can POST to it, so the counts can be inflated by anyone who reads `record.sh`. Treat them as a rough signal. The per-submission `.ai-usage.log` files are the record you can actually audit.
+- **The endpoint is public, and its URL ships inside every student's assignment folder.** Anyone can POST to it, so the counts can be inflated by anyone who reads `record.sh`. Treat them as a rough signal. The per-submission `.ai-usage.log` files are the record you can actually audit. There is no fix for this: any credential shipped to students is a public credential. What the Worker does guarantee is that inflation stays *bounded* — `assignment` and `tool` are allowlisted in `worker.js`, so a flood can only move counters that already exist, never mint new KV keys or new rows on the Meta-Analytics page.
+- **A new assignment or tool must be added to `ASSIGNMENTS` / `TOOLS` in `worker.js` and redeployed**, or its sessions are rejected with a 400 and never counted. This is the deliberate cost of bounding the key space; `worker.test.mjs` covers the behaviour.
 - **KV is eventually consistent.** Two sessions starting in the same instant can lose one increment. Classroom volume makes this a rounding error; exact counts would need a Durable Object.
 - **Absence is not evidence.** A student with no recorded session may have used a tool this setup does not cover (a web chat interface, an IDE without hooks), declined the workspace-trust prompt, or opted out. Never use these counts for academic-integrity decisions — that is also what students are promised in the assignment README.
 - **Hooks only run in a trusted workspace.** Claude Code, Codex, and Cursor all gate project-level hooks behind a trust prompt, and Codex additionally asks the user to review the hook. A student who declines records nothing.

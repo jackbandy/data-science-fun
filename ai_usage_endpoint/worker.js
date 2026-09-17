@@ -13,9 +13,21 @@
 // meta_analytics_source/build_data.py reads /stats.json at site build time and writes
 // docs/meta-analytics/data/ai-usage.json, which the Meta-Analytics page plots.
 
-const FIELD = /^[a-z0-9][a-z0-9-]{0,31}$/; // keeps junk out of KV key names
+// Every counter key name is built out of `assignment` and `tool`, so both have to come
+// from a fixed list. The old open regex accepted ~36^32 names from an unauthenticated
+// POST, and each new name was a new permanent KV key.
+// ADD A ROW HERE when an assignment or tool ships, or its sessions will not be counted.
+const ASSIGNMENTS = new Set(["hw1", "00-systems-check", "01-gate-check", "02-tk", "03-tk", "04-tk", "selftest"]);
+const TOOLS = new Set(["claude-code", "codex", "cursor", "copilot", "gemini", "selftest"]);
+
 const INSTALL = /^[A-Za-z0-9-]{4,40}$/;
 const INSTALL_TTL = 60 * 60 * 24 * 365; // a distinct folder is counted once per year
+const MAX_BODY = 512; // the documented payload is ~120 bytes
+// `install` is generated client-side, so seen: keys are the one part of the key space a
+// flood can still grow. Past this many, counting carries on and only per-folder dedup
+// stops, which is the cheaper of the two things to lose.
+const MAX_SEEN = 5000;
+const SEEN_COUNT = "meta:seen-count";
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -32,9 +44,18 @@ async function bump(kv, key, by = 1) {
 }
 
 async function record(request, env) {
+  if (Number(request.headers.get("content-length")) > MAX_BODY) {
+    return new Response("too large", { status: 413, headers: CORS });
+  }
+
+  const raw = await request.text();
+  if (raw.length > MAX_BODY) {
+    return new Response("too large", { status: 413, headers: CORS });
+  }
+
   let body;
   try {
-    body = await request.json();
+    body = JSON.parse(raw);
   } catch {
     return new Response("bad json", { status: 400, headers: CORS });
   }
@@ -44,8 +65,10 @@ async function record(request, env) {
   const event = String(body.event || "");
   const install = String(body.install || "");
 
-  if (!FIELD.test(tool) || !FIELD.test(assignment) || !FIELD.test(event)) {
-    return new Response("bad fields", { status: 400, headers: CORS });
+  // A name that is not on a list is a name that would have become a new KV key. Answer
+  // 400 rather than 204 so a forgotten allowlist row looks like the bug it is.
+  if (!ASSIGNMENTS.has(assignment) || !TOOLS.has(tool)) {
+    return new Response("unknown assignment or tool", { status: 400, headers: CORS });
   }
   if (event !== "session-start") {
     return new Response(null, { status: 204, headers: CORS }); // only starts are counted
@@ -67,17 +90,24 @@ async function record(request, env) {
   // POST first claim the folder, and every other tool a student opened in the same
   // folder scored zero — so per-tool adoption read far lower than it was.
   if (INSTALL.test(install)) {
+    let seen = parseInt((await env.COUNTS.get(SEEN_COUNT)) || "0", 10) || 0;
+    const before = seen;
+
     const seenAny = `seen:${assignment}:${install}`;
-    if ((await env.COUNTS.get(seenAny)) === null) {
+    if (seen < MAX_SEEN && (await env.COUNTS.get(seenAny)) === null) {
       await env.COUNTS.put(seenAny, "1", { expirationTtl: INSTALL_TTL });
       await bump(env.COUNTS, "installs");
+      seen += 1;
     }
 
     const seenTool = `seen:${assignment}:${tool}:${install}`;
-    if ((await env.COUNTS.get(seenTool)) === null) {
+    if (seen < MAX_SEEN && (await env.COUNTS.get(seenTool)) === null) {
       await env.COUNTS.put(seenTool, "1", { expirationTtl: INSTALL_TTL });
       await bump(env.COUNTS, `installs:tool:${tool}`);
+      seen += 1;
     }
+
+    if (seen !== before) await env.COUNTS.put(SEEN_COUNT, String(seen));
   }
 
   return new Response(null, { status: 204, headers: CORS });
@@ -89,7 +119,7 @@ async function stats(env) {
   do {
     const page = await env.COUNTS.list({ cursor });
     for (const { name } of page.keys) {
-      if (name.startsWith("seen:")) continue;
+      if (name.startsWith("seen:") || name.startsWith("meta:")) continue;
       const value = parseInt((await env.COUNTS.get(name)) || "0", 10) || 0;
       if (name === "total") out.total = value;
       else if (name === "installs") out.installs = value;
