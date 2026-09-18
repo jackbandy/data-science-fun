@@ -14,12 +14,29 @@ is third-party artwork — the *data* has outside provenance, listed below.
 
 | Figures | Data | Source |
 | --- | --- | --- |
-| `two-categorical-*`, `box-by-category`, `violin-by-category`, `overlaid-*`, `three-univariate`, `conditioning-*`, `skew-*`, `overplot-*`, `smoothing-conditioned`, `color-*` | Cook County single-family home sales, 2025 | `datasets/cook-county-home-sales-2025` (Cook County Assessor's Office via the county open-data portal); see that dataset's README |
-| `context-*`, `stacked-area`, `unstacked-lines`, `log-lines` | CTA annual boarding totals by mode, 1988– | `datasets/cta-ridership/Annual_Boarding_Totals_20260527.csv`, Chicago Data Portal |
-| `area-vs-length` | Median 2019 weekday station entries, grouped by `'L'` line | `datasets/cta-ridership` daily station entries joined to `datasets/chicago-l-stations` route flags |
+| `two-categorical-*`, `box-by-category`, `violin-by-category`, `overlaid-*`, `three-univariate`, `conditioning-*`, `skew-*`, `overplot-*`, `smoothing-conditioned`, `color-*`, `histogram-area`, `uncertainty-intervals`, `correlation-matrix`, `scatterplot-matrix` | Cook County single-family home sales, 2025 | `datasets/cook-county-home-sales-2025` (Cook County Assessor's Office via the county open-data portal); see that dataset's README |
+| `context-*`, `stacked-area`, `unstacked-lines`, `log-lines`, `time-series-line`, `proportional-ink` | CTA annual boarding totals by mode, 1988– | `datasets/cta-ridership/Annual_Boarding_Totals_20260527.csv`, Chicago Data Portal |
+| `area-vs-length`, `geospatial-stations` | Median 2019 weekday station entries, grouped by `'L'` line | `datasets/cta-ridership` daily station entries joined to `datasets/chicago-l-stations` route flags |
 | `scale-two-axes`, `scale-one-axis`, `scale-percent` | Planned Parenthood cancer-screening and abortion service counts, 2006 and 2013 | The four numbers printed on the chart Rep. Jason Chaffetz displayed at the House Oversight Committee hearing of 29 September 2015, which reproduced a figure from an Americans United for Life report. Only the drawing changes between the three figures; the numbers do not. |
 | `kepler-linear`, `kepler-loglog` | Semi-major axis (AU) and orbital period (days) for six planets | Standard orbital elements, as printed on the reference slide; they agree with the IAU values to the digits shown |
-| `scatter-forms`, `spurious-random-walks`, `kde-*`, `smooth-*` | Synthetic | Generated with `numpy.random.default_rng`, seeded in the script. These figures illustrate *shapes*, not measurements, and each says so on the slide |
+| `scatter-forms`, `spurious-random-walks`, `kde-*`, `smooth-*`, `simpsons-paradox-*` | Synthetic | Generated with `numpy.random.default_rng`, seeded in the script. These figures illustrate *shapes*, not measurements, and each says so on the slide |
+
+## Arguments the figures are drawn to make
+
+* `histogram-area` follows the area principle and the density scale as set out
+  in Ani Adhikari, John DeNero and David Wagner, *Computational and Inferential
+  Thinking*, [§7.2](https://inferentialthinking.com/chapters/07/2/visualizing-numerical-distributions).
+  Bins and data are ours; the argument is theirs.
+* `proportional-ink` follows Carl Bergstrom and Jevin West, *Calling Bullshit*,
+  [7.3 "The Principle of Proportional Ink"](https://www.callingbullshit.org/tools/tools_proportional_ink.html).
+* `geospatial-stations` and `uncertainty-intervals` illustrate idioms from
+  Claus O. Wilke, *Fundamentals of Data Visualization* (O'Reilly, 2019),
+  [ch. 5](https://clauswilke.com/dataviz/directory-of-visualizations.html) and
+  [ch. 16](https://clauswilke.com/dataviz/visualizing-uncertainty.html).
+* `simpsons-paradox-pooled` / `-split` replace a pair of low-resolution raster
+  screenshots. The layout is modeled on Gordon Goodwin, ["Simpson's Paradox:
+  One Chart, Two Realities"](https://www.linkedin.com/pulse/simpsons-paradox-one-chart-two-realities-gordon-goodwin-hhhte);
+  the data are generated here, not taken from that post.
 
 ## Palettes
 

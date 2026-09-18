@@ -79,6 +79,104 @@ CS 418 · Week 5 · 🟠 Clark/Lake 🟠
 
 ---
 
+## Random Roll Call {.iframe-slide}
+<div class="random-draw" data-num="12" data-min="1" data-max="62">
+<div class="random-draw-frame">
+<div class="random-draw-numbers" role="status" aria-live="polite" data-placeholder="Press “Draw” for 12 random numbers between 1 and 62."></div>
+</div>
+<p class="random-draw-controls"><button type="button" class="random-draw-button">Draw</button> <label class="random-draw-sort"><input type="checkbox" class="random-draw-sort-input"> Sort</label> <span class="random-draw-status"></span></p>
+</div>
+
+<style>
+.random-draw { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.random-draw-frame { flex: 1; min-height: 0; display: flex; justify-content: center; }
+.random-draw-numbers { height: 100%; aspect-ratio: 1.618 / 1; max-width: 100%; border: 1px solid #999; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(2, 1fr); place-items: center; }
+.random-draw-numbers .random-draw-number { font-size: 3rem; font-weight: 700; line-height: 1; }
+.random-draw-numbers .random-draw-placeholder { grid-column: 1 / -1; grid-row: 1 / -1; text-align: center; font-size: 1.4rem; color: #555; padding: 0 1.5em; }
+.random-draw-controls { flex: none; margin: 12px 0 0; }
+.random-draw-button { font: inherit; font-size: 1.1rem; font-weight: 600; padding: 0.3em 1.2em; border: none; border-radius: 3px; background: #f9461c; color: #fff; cursor: pointer; }
+.random-draw-button:hover:not(:disabled) { background: #e03c14; }
+.random-draw-button:disabled { opacity: 0.6; cursor: default; }
+.random-draw-sort { font-size: 1rem; color: #555; margin-left: 0.75em; cursor: pointer; }
+.random-draw-status { font-size: 1rem; color: #555; margin-left: 0.75em; }
+</style>
+
+<script>
+(() => {
+  // The Sequence Generator, not the Integer Generator: /integers/ samples *with*
+  // replacement and silently ignores a `unique` parameter, so a roll call could
+  // name the same student twice. /sequences/ returns a shuffled permutation of
+  // min..max, and the first `num` of that is a sample without replacement.
+  const API = "https://www.random.org/sequences/";
+  function setup(root) {
+    if (root.dataset.wired) return;
+    root.dataset.wired = "1";
+    const out = root.querySelector(".random-draw-numbers");
+    const button = root.querySelector(".random-draw-button");
+    const status = root.querySelector(".random-draw-status");
+    const sortBox = root.querySelector(".random-draw-sort-input");
+    const num = root.dataset.num, min = root.dataset.min, max = root.dataset.max;
+    const url = API + "?min=" + min + "&max=" + max + "&col=1&format=plain&rnd=new";
+    let drawn = null;
+    function placeholder(text) {
+      out.innerHTML = "";
+      const p = document.createElement("div");
+      p.className = "random-draw-placeholder";
+      p.textContent = text;
+      out.appendChild(p);
+    }
+    function render() {
+      if (!drawn) return;
+      const numbers = sortBox.checked ? drawn.slice().sort(function (a, b) { return a - b; }) : drawn;
+      out.innerHTML = "";
+      numbers.forEach(function (n) {
+        const cell = document.createElement("div");
+        cell.className = "random-draw-number";
+        cell.textContent = n;
+        out.appendChild(cell);
+      });
+    }
+    function draw() {
+      button.disabled = true;
+      status.textContent = "drawing from random.org…";
+      fetch(url, { cache: "no-store" })
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+        .then(function (text) {
+          const numbers = text.trim().split(/\s+/).filter(Boolean).map(Number);
+          if (!numbers.length) throw new Error("empty response");
+          drawn = numbers.slice(0, Number(num));
+          render();
+          status.textContent = "true random numbers from random.org";
+        })
+        .catch(function (err) {
+          drawn = null;
+          placeholder("Could not reach random.org (" + err.message + "). Open the draw in a new tab instead.");
+          status.textContent = "";
+        })
+        .then(function () { button.disabled = false; });
+    }
+    button.addEventListener("click", draw);
+    sortBox.addEventListener("change", render);
+    placeholder(out.dataset.placeholder);
+  }
+  function init() {
+    document.querySelectorAll(".random-draw").forEach(setup);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+::: {.iframe-caption}
+Numbers drawn live from <a href="https://www.random.org/sequences/?min=1&max=62&col=1&format=plain&rnd=new">random.org/sequences/?min=1&max=62&col=1&format=plain&rnd=new</a> &mdash; shuffle 1&ndash;62, take first 12.
+:::
+
+---
+
+
 ## The Datasaurus Dozen: Same Statistics {.image-frame-slide auto-animate=true}
 
 ::: {.fragment}
@@ -144,7 +242,7 @@ print(
 
 ---
 
-## Map {.split}
+## Map: Day 1 {.split}
 
 ::: {.split-content .narrow-aside}
 
@@ -152,9 +250,8 @@ print(
 - Week 5: Clark/Lake
 - Day 1
     - Elements of visualization
-    - Choosing a plot
-    - Relationships & correlation
-    - Bivariate visualizations
+    - Distributions of one variable
+    - Relationships between variables
     - Perception: color & length
     - Pie & donut charts
 :::
@@ -439,7 +536,8 @@ mark_axes(ax)
 
 ## Munzner's Channels {.smaller}
 
-From Tamara Munzner's *Visualization Analysis & Design* (2014), which uses the term **channels** and splits them by what they can encode:
+From Tamara Munzner's *Visualization Analysis & Design* (2014), which uses the term **channels**. Ranking is based on the Cleveland & McGill graphical-perception experiments.
+ :
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -470,13 +568,10 @@ From Tamara Munzner's *Visualization Analysis & Design* (2014), which uses the t
 :::
 :::
 
-::: {.aside-note}
-The ranking is based on the Cleveland & McGill graphical-perception experiments.
-:::
 
 ---
 
-## Which Encoding for Which Data? {.image-frame-slide}
+## Cheat Sheet: Which Encoding for Which Data? {.image-frame-slide}
 
 
 <img src="../assets/iliinsky-visual-properties/iliinsky-visual-properties.svg" alt="Table of fifteen visual encodings : position, text labels, length, size, angle, pattern density, weight, saturation, color, shape, pattern texture, enclosure, line pattern, line endings and line weight. For each, the table gives an example mark, whether it is ordered, how many useful values it carries, and dots marking which of quantitative, ordinal, categorical and relational data it suits.">
@@ -485,14 +580,14 @@ The ranking is based on the Cleveland & McGill graphical-perception experiments.
 Based on Noah Iliinsky's table, complexdiagrams.com/properties (2012), CC BY-SA
 :::
 
-# Data Visualization {.section-header}
+# Distributions of One Variable {.section-header}
 
 ---
 
 ##  Kinds of Visualization
 
 ::: {}
-- **Exploratory Data Visualization:** figuring out what is true. Mostly for you.
+- **Exploratory Data Visualization:** figuring out what is true. Mostly for you and/or your team.
 - **Persuasive Data Visualization:** convincing other people something is true. Polished, for an audience.
 :::
 
@@ -658,9 +753,8 @@ A smoothed estimate of the density. **`adjust` scales the bandwidth:** the dashe
 
 ::: {}
 - **Look for:** skew, frequent and rare categories, invalid categories.
-- Consider grouping rare categories together and repeating the analysis.
-- For **ordinal** data (e.g. education level: < 12th, HS, Trade, Some College, College), keep the natural order : don't sort bars shortest to tallest.
-- **Dot plots** (Cleveland dot plots) make it easier to compare values than bars do.
+- For **ordinal** data (e.g. education level: < 12th, HS, Trade, Some College, College), keep the relevant order.
+- **Dot plots** (Cleveland dot plots) make it easier to compare
 :::
 
 
@@ -709,43 +803,66 @@ The bars keep the natural order of the levels, not shortest-to-tallest.
 ```
 
 ::: {style="font-size:0.6em; margin-top:0.2em;"}
-Same numbers as the bars, far less ink. The stem carries the value; the dot marks where it ends.
+Same numbers as the bars, less "ink."
 :::
 
 ---
 
-## Line Graphs and Time Series
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+## Line Graphs and Time Series {.figure-aside}
 
 ::: {.aside-note}
 *Computational and Inferential Thinking*, [Chapter 7: Visualization](https://inferentialthinking.com/chapters/07/visualization)
 :::
+
+::: {.columns}
+::: {.column}
+- A **line graph** connects points in the order of the x variable : usually time.
+- A line between two points implies order
+- When categories are on the x-axis, avoid lines.
+- *More on time series soon.*
+:::
+::: {.column}
+
+<img class="figure" src="../assets/viz-basics/time-series-line.svg" alt="Two panels of the same CTA annual rail boardings, 1999 to 2025. On the left the years are drawn as separate dots; on the right the same dots are connected, and the steady climb to 2015, the 2020 collapse and the partial recovery all become visible as one shape.">
+:::
 :::
 
 
 ---
 
-## Reading a Histogram by Area
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+## Reading a Histogram by Area {.figure-aside .smaller}
 
 ::: {.aside-note}
-*Computational and Inferential Thinking*, [Chapter 7: Visualization](https://inferentialthinking.com/chapters/07/visualization)
+*Computational and Inferential Thinking*, [Section 7.2: Visualizing Numerical Distributions](https://inferentialthinking.com/chapters/07/2/visualizing-numerical-distributions)
+:::
+
+::: {.columns}
+::: {.column}
+- In a bar chart, **height** is the value. In a histogram, **area** is the value.
+- The **area principle**: a two-dimensional figure should encode the magnitude in its *area*, not just its height.
+- So the height is $\dfrac{\text{percent in bin}}{\text{bin width}}$ : a **density**
+- All the areas sum to 100%.
+- Bins do not have to be equal width. If they are not, only the density scale is readable.
+:::
+::: {.column}
+
+<img class="figure" src="../assets/viz-basics/histogram-area.svg" alt="Two panels of the same Cook County sale prices in five uneven bins: four $100k bins and one $500k bin. On the density scale the wide bin is one of the shortest bars even though 35 percent of sales fall in it; plotted as raw counts the same bin is by far the tallest.">
+
+::: {.caption}
+The widest bin holds the most sales (35%) and is nearly the *shortest* bar : it is the least crowded.
+:::
 :::
 :::
 
 
 ---
 
-## Describing the Shape of Data
+## Vocabulary for Describing Common Shapes
 Many models assume features are **symmetric** and **unimodal**. Deviations can affect the validity of the model.
 
 ::: {}
 - **Symmetric** : looks the same on the left and right sides.
-- **Skewed** : one tail is longer than the other (right-skewed, left-skewed).
+- **Skewed** : one tail is longer than the other (right or left).
 - **Unimodal** : a single mode (peak).
 - **Multimodal** : multiple modes (peaks).
 :::
@@ -815,7 +932,7 @@ shape_plot(3)
 
 :::
 
-# Identifying Relationships {.section-header}
+# Relationships Between Variables {.section-header}
 
 ---
 
@@ -898,8 +1015,10 @@ The correlation coefficient measures the linear relationship between two feature
 
 ::: {}
 - The value is always between **-1 and 1**.
-- The sign gives the direction; the closer to -1 or 1, the **stronger** the relationship.
-- A coefficient of **0** means there is no *linear* relationship : which is not the same as no relationship at all.
+- The sign gives the direction
+- The closer to -1 or 1, the stronger the relationship.
+- A coefficient of **0** means there is no *linear* relationship
+    - not the same as no relationship
 :::
 
 ---
@@ -938,10 +1057,11 @@ stations = by_day.pivot("daytype", index="stationname", values="rides")
 
 ---
 
-## How strong is it?
+## How strong is it? (CTA Ridership)
 
 ```{python}
 #| echo: true
+# W = median weekday entries, A = median Saturday entries
 stations.select(pl.corr("W", "A")).item()
 ```
 
@@ -1038,7 +1158,7 @@ homes.height
 
 ---
 
-## How strong is it?
+## How strong is it? (Home Sales)
 
 ```{python}
 #| echo: true
@@ -1055,7 +1175,8 @@ Positive, but weaker than the CTA example (0.88).
 ::: {}
 - The points **fan out** as houses get larger
     - Small homes cluster in a price band, large homes all over
-- A single correlation coefficient reports one number for the whole cloud, and hides that the relationship is much tighter at one end than the other.
+- A single correlation coefficient reports one number for the whole cloud,
+- can hide a stronger relationship at one end versus the other.
 - Always look at the scatter plot.
 - **The coefficient is only a summary.**
 :::
@@ -1063,48 +1184,50 @@ Positive, but weaker than the CTA example (0.88).
 
 ---
 
-## Correlation Pitfalls: The Simpson's Paradox
+## Correlation Pitfalls: The Simpson's Paradox {.image-frame-slide}
 
-:::: {.split-content}
+::: {.columns}
+::: {.column width="50%"}
+<img class="figure" src="../assets/viz-basics/simpsons-paradox-pooled.svg" alt="Scatter plot of salary against years of seniority for 960 employees drawn as one grey cloud, with a fitted line falling from about $230k at half a year to about $100k at seven years.">
+:::
+::: {.column width="50%"}
+<img class="figure fragment" src="../assets/viz-basics/simpsons-paradox-split.svg" alt="The same 960 points colored by department. Data science sits high and junior, product in the middle, HR low and senior, and the fitted line within each department rises with seniority.">
+:::
+:::
 
-<img src="../assets/viz-basics/simpsons-paradox-1.png" alt="Seems like salary drops with seniority...">
-
-<img class="fragment" src="../assets/viz-basics/simpsons-paradox-2.png" alt="...unless you control for departments!">
-
-::::
+::: {.caption .fragment}
+Synthetic data. Pooled, salary **falls** with seniority; within every department it **rises**.
+:::
 
 ---
 
+## Simpson's Paradox in the Wild: Batting Averages {.smaller}
 
-## Concluding Notes
-::: {}
-**One-dimensional data**
-
-- Summarize with summary statistics (mean, standard deviation, max, min, quartiles).
-- Visualize the distribution with histograms and box plots.
+::: {.aside-note}
+Ken Ross, *A Mathematician at the Ballpark* : Derek Jeter and David Justice, 1995 and 1996.
 :::
 
-::: {}
-**Two-dimensional data**
-
-- Visualize the relationship with scatter plots.
-- Measure the relationship by computing correlations.
+::: {.batting}
+|                  | 1995 | 1996 | Combined |
+|------------------|:---:|:---:|:---:|
+| **Derek Jeter**  | 12/48 = .250 | 183/582 = .314 | 195/630 = **.310** |
+| **David Justice**| 104/411 = **.253** | 45/140 = **.321** | 149/551 = .270 |
 :::
 
-::: {}
-**High-dimensional data**
+<style>
+/* Four columns of the same width, so the two name cells stop eating the row
+   and no at-bats line has to wrap mid-fraction. */
+.batting td, .batting th { white-space: nowrap; }
+.batting td:first-child, .batting th:first-child { width: 25%; }
+.batting td:not(:first-child), .batting th:not(:first-child) { width: 25%; }
+</style>
 
-- Create a **scatterplot matrix** showing all pairwise scatter plots.
-- Create a **correlation matrix** showing all pairwise correlations.
+::: {.fragment}
+- Justice hit for a higher average in **each** season and a lower average **combined**
+- Check the at-bats:
+    - Jeter's better year is his "heavy" year
+    - Justice's better year is his "light" year
 :::
-
-::: {}
-**Correlations can mislead**
-
-- Additional variables may reveal unexpected and contrasting results. Always use your brain and think critically.
-:::
-
-# Bivariate Visualizations {.section-header}
 
 ---
 
@@ -1116,9 +1239,6 @@ Positive, but weaker than the CTA example (0.88).
 - Models are approximations. Prefer the simpler one until the data forces you to a more complex one.
 :::
 
-::: {style="margin-top:0.8em;"}
-The question a scatter plot answers first is not "how strong?" but **"what shape?"**
-:::
 
 ---
 
@@ -1127,7 +1247,7 @@ The question a scatter plot answers first is not "how strong?" but **"what shape
 <img src="../assets/viz-basics/scatter-forms.svg" alt="Four scatter plot panels. Simple linear: points rise in a straight band. Simple nonlinear: points curve upward. Unequal spread: points rise but fan out to the right. Complex nonlinear: points fall then rise in a U.">
 
 ::: {.caption}
-Synthetic data.
+Synthetic data, similar to PrairieLearn questions.
 :::
 
 ---
@@ -1186,31 +1306,47 @@ Note that none of these shows a relationship.
 
 ---
 
-## Geospatial Data
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+## Geospatial Data {.figure-aside}
 
 ::: {.aside-note}
 *Fundamentals of Data Visualization*, [Chapter 5: Directory of Visualizations](https://clauswilke.com/dataviz/directory-of-visualizations.html)
+:::
+
+::: {.columns}
+::: {.column}
+- A map already includes position it encodes where
+- data need a second channel.
+- **Choropleth**: color the regions.
+- **Proportional symbol**: size a mark at each point.
+- *More details soon.*
+:::
+::: {.column}
+
+<img class="figure" src="../assets/viz-basics/geospatial-stations.svg" alt="Map of Chicago with one orange circle per CTA 'L' station, each sized by its median 2019 weekday entries. The circles trace the shape of the rail system, and the largest circle by far sits downtown in the Loop.">
 :::
 :::
 
 
 ---
 
-## Visualizing Uncertainty
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+## Visualizing Uncertainty {.figure-aside}
 
 ::: {.aside-note}
 *Fundamentals of Data Visualization*, [Chapter 16: Visualizing Uncertainty](https://clauswilke.com/dataviz/visualizing-uncertainty.html)
 :::
+
+- Almost every number in a plot is an **estimate**
+- **Error bars** (or a band) show how the estimate could move.
+- *More details soon.*
+
+<img class="figure figure-sm" src="../assets/viz-basics/uncertainty-intervals.svg" alt="Two panels of the same four mean sale prices by bedroom count. On the left, plain grey bars. On the right, the same means as dots with 95 percent interval whiskers, and the 4- and 5-plus-bedroom intervals overlap substantially.">
+
+::: {.caption}
+The 4- and 5+ intervals overlap: on this sample those two means are not distinguishable.
 :::
 
 
-# Perception: Color {.section-header}
+# Perception: Color & Length {.section-header}
 
 ---
 
@@ -1220,10 +1356,10 @@ Note that none of these shows a relationship.
 ::: {.column width="38%"}
 ::: {.dense}
 ::: {}
-- Picking colors that work together is genuinely hard.
+- Picking colors that work together can be difficult
 - **7–10% of men** have red-green color vision deficiency (deuteranomaly is the common one).
 - Blue-yellow deficiency is far less common.
-- Red and green is the **default temptation** and the worst pair.
+- Red and green is the worst pair.
 :::
 :::
 :::
@@ -1243,7 +1379,7 @@ Simulation uses Viénot, Brettel & Mollon (1999). It is a check, not a claim abo
 <img src="../assets/viz-basics/color-redundant.svg" alt="The same three-series chart drawn in Okabe-Ito blue, vermillion and green with solid, dashed and dotted line styles, beside its deuteranope simulation. The three series remain distinguishable in both panels because the dash pattern carries the identity as well as the hue.">
 
 ::: {style="font-size:0.8em; margin-top:0.4em;"}
-In general, try to avoid letting hue be the only channel (add dash pattern, shape, or a direct label)
+In general, try to avoid hue being the only channel (add dash, shape, and/or direct label)
 :::
 
 ---
@@ -1278,7 +1414,7 @@ A colormap should have **uniform perceptual deltas**: equal steps in the data sh
 ::: {.dense}
 ::: {}
 - **Categorical** : pick a scheme that makes categories easy to *tell apart*. No order implied.
-- **Quantitative, low→high** : use a **sequential** scheme; light for low values.
+- **Quantitative, low→high** : use **sequential** schemes; light for low.
 - **Quantitative, two meaningful ends** : use a **diverging** scheme; light in the middle.
 - Getting this wrong is a *type error*, not a taste question.
 :::
@@ -1293,11 +1429,9 @@ Categorical row is the Okabe & Ito palette, ["Color Universal Design"](https://j
 :::
 :::
 
-# Perception: Length {.section-header}
-
 ---
 
-## Length Beats Area {.image-frame-slide}
+## Length Versus Area {.image-frame-slide}
 
 <img src="../assets/viz-basics/area-vs-length.svg" alt="Left: eight circles, one per CTA 'L' line, sized so that circle area encodes median weekday entries; the Red Line circle is the largest and the Yellow Line circle is a dot. Right: the same eight values as a dot plot on a common scale, where the Red Line's 180 thousand entries is plainly about three times the Orange Line's 59 thousand.">
 
@@ -1333,9 +1467,10 @@ Median 2019 weekday entries, summed by line. Stations serving several lines coun
 For each question, discuss with your elbow neighbors which plot(s) you could use:
 
 1. "What share of CTA trips are on rail?"
-2. "Did rail boardings recover after 2020?"
-3. "When did paratransit stop?"
-4. TODO add more
+2. "Did boardings recover after 2020?"
+3. "Where should CTA add service?"
+4. "Which stops are most active?"
+5. Others?
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -1355,7 +1490,7 @@ For each question, discuss with your elbow neighbors which plot(s) you could use
 ---
 
 
-## Pie vs. Bar Example {.image-frame-slide}
+## Pie vs. Bar Example: The Pies {.image-frame-slide}
 
 ::: {.content-visible when-format="html"}
 ![](../assets/pi-donut-demos/piecharts-remix01.svg)
@@ -1367,7 +1502,7 @@ For each question, discuss with your elbow neighbors which plot(s) you could use
 
 ---
 
-## Pie vs. Bar Example {.image-frame-slide}
+## Pie vs. Bar Example: The Bars {.image-frame-slide}
 
 ::: {.content-visible when-format="html"}
 ![](../assets/pi-donut-demos/piecharts-remix02.svg)
@@ -1395,11 +1530,38 @@ Schutz, [*Piecharts.svg*](https://commons.wikimedia.org/wiki/File:Piecharts.svg)
 
 ---
 
-## The Principle of Proportional Ink
+## The Principle of Proportional Ink {.figure-aside}
 
-::: {}
-- TK
-- TK
+::: {.aside-note}
+Bergstrom & West, *Calling Bullshit*, [7.3: The Principle of Proportional Ink](https://www.callingbullshit.org/tools/tools_proportional_ink.html)
+:::
+
+::: {.columns}
+::: {.column}
+- **The ink used should be proportional to the quantity shown.**
+- A bar is a length *from zero*.
+- Same rule condemns Steve Jobs' 3D pie chart
+- Lines and dots encode **position**, not length
+    - can start wherever the data starts
+:::
+::: {.column}
+
+<img class="figure" src="../assets/viz-basics/proportional-ink.svg" alt="Two bar charts of the same five CTA annual rail boarding totals, 2015 to 2019. Drawn from zero the bars are nearly equal and drift gently down; drawn from 210 million the 2019 bar is a small fraction of the 2015 bar and the decline looks like a collapse.">
+
+::: {.caption}
+Ridership fell, but the panels tell different stories.
+:::
+:::
+:::
+
+---
+
+## 3D Pie Chart in the Wild: Steve Jobs at Macworld 2008 {.image-frame-slide}
+
+![](../assets/pi-donut-demos/dsc_0143-golden.png){fig-alt="Steve Jobs' infamous U.S. SmartPhone Marketshare slide showing a 3D pie chart tilted toward the viewer. Apple's green slice sits at the front with a thick extruded edge. Source line reads Gartner for CQ3."}
+
+::: {.caption}
+Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24 to 10:10](https://www.youtube.com/watch?v=i9XU6wk_mWY&t=504s)
 :::
 
 ---
@@ -1417,21 +1579,13 @@ Schutz, [*Piecharts.svg*](https://commons.wikimedia.org/wiki/File:Piecharts.svg)
 
 ---
 
-## 3D Pie Chart in the Wild: Steve Jobs at Macworld 2008 {.image-frame-slide}
 
-![](../assets/pi-donut-demos/dsc_0143-golden.png){fig-alt="Steve Jobs' infamous U.S. SmartPhone Marketshare slide showing a 3D pie chart tilted toward the viewer. Apple's green slice sits at the front with a thick extruded edge. Source line reads Gartner for CQ3."}
 
-::: {.caption}
-Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24 to 10:10](https://www.youtube.com/watch?v=i9XU6wk_mWY&t=504s)
-:::
-
----
-
-## 3D Pie Chart in the Wild: Steve Jobs at Macworld 2008 {.image-frame-slide}
+## 3D Pie Chart in the Wild: Steve Jobs on Video {.iframe-slide}
 
 <iframe src="https://www.youtube-nocookie.com/embed/i9XU6wk_mWY?start=504&end=610&rel=0" title="Macworld San Francisco 2008 keynote : US smartphone market share segment (8:24–10:10)" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
-::: {.caption}
+::: {.iframe-caption}
 Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24 to 10:10](https://www.youtube.com/watch?v=i9XU6wk_mWY&t=504s)
 :::
 
@@ -1449,11 +1603,24 @@ Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24
 
 ---
 
-## The Donut Chart
+## The Donut Chart {.figure-aside}
 
+::: {.columns}
+::: {.column}
 - A **donut chart** is a pie chart with the center cut out
 - Keeps the "this is all part of a whole" message
 - Slices are still difficult to compare
+- Here are Steve Jobs' numbers again, as a donut
+:::
+::: {.column}
+
+<img class="figure" src="../assets/pi-donut-demos/macworld-donut.svg" alt="Donut chart of the same US smartphone market share numbers from the Macworld 2008 keynote: RIM 39.0%, Apple 19.5%, Palm 9.8%, Motorola 7.4%, Nokia 3.1% and Other 21.2%, in the same wedge order and colors as the flat pie chart.">
+
+::: {.caption}
+Same six numbers, same order, same colors : only the hole is new.
+:::
+:::
+:::
 
 ---
 
@@ -1468,6 +1635,37 @@ Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24
 :::
 
 
+---
+
+## Concluding Notes: Visual EDA
+
+::: {}
+**One-dimensional data**
+
+- Summarize with summary statistics (`df.describe()`)
+- Visualize the distribution with histograms and box plots.
+:::
+
+::: {}
+**Two-dimensional data**
+
+- Visualize the relationship with scatter plots.
+- Measure relationships with correlations.
+:::
+
+::: {}
+**High-dimensional data**
+
+- Create a **scatterplot matrix** (all pairwise scatter plots)
+- Create a **correlation matrix** (all pairwise correlations)
+:::
+
+::: {}
+**Correlations can mislead**
+
+- Additional variables may reveal unexpected and contrasting results.
+:::
+
 # Week 5, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
 
 <h2>Visualization, Continued</h2>
@@ -1477,18 +1675,18 @@ Jack Bandy
 
 ---
 
-## Map {.split}
+## Map: Day 2 {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
 - Week 5: Clark/Lake
 - Day 2
-    - Scale, conditioning, context
+    - Visualization considerations
+    - Scale, conditioning & context
     - Transformations
-    - Causality
-    - Large N and smoothing
-    - Dimensionality
+    - Correlation & causality
+    - Large N, smoothing & dimensionality
     - matplotlib & ggplot
 :::
 
@@ -1525,15 +1723,17 @@ Rubin's vase (Edgar Rubin, 1915) and "My Wife and My Mother-in-Law" (W. E. Hill,
 
 ::: {style="position:relative; flex:0 0 auto; width:798px; height:432px; margin:0.2em auto 1.1em;"}
 
-<img class="photo-card" src="../assets/abstraction/0-shapes.svg" alt="Five plain flat shapes in a row on a cream field: a yellow eight-pointed star, a red rounded square, a blue heart, a green tree and a purple lightning bolt" style="position:absolute; top:0px; left:0px; width:510px; height:315px;">
+<img class="photo-card" src="../assets/abstraction/0-shapes-orange.svg" alt="The same five flat shapes, every one of them in the same orange: shape varying on its own, with no colour to help" style="position:absolute; top:0px; left:0px; width:510px; height:315px;">
 
-<img class="fragment photo-card" src="../assets/abstraction/1-abstract-thought-inside-out_monster-verse.jpg" alt="Six pastel shapes drawn in a row on paper: a pink curved wedge, a yellow starburst, a blue blob, a purple squiggle, an orange rectangle and a green lollipop form" style="position:absolute; top:22.2px; left:57.6px; width:510px; height:315px;">
+<img class="fragment photo-card" src="../assets/abstraction/0-shapes.svg" alt="Five plain flat shapes in a row on a cream field: a yellow eight-pointed star, a red rounded square, a blue heart, a green tree and a purple lightning bolt" style="position:absolute; top:18.5px; left:48px; width:510px; height:315px;">
 
-<img class="fragment photo-card" src="../assets/abstraction/2-wiki-fandom-abstract.jpeg" alt="The same vocabulary of shapes, now overlapping in one composition: an orange squiggle, a red square, a navy hook, a green triangle, a yellow starburst on a magenta circle, a blue blob and a purple curl" style="position:absolute; top:44.4px; left:115.2px; width:510px; height:315px;">
+<img class="fragment photo-card" src="../assets/abstraction/1-abstract-thought-inside-out_monster-verse.jpg" alt="Six pastel shapes drawn in a row on paper: a pink curved wedge, a yellow starburst, a blue blob, a purple squiggle, an orange rectangle and a green lollipop form" style="position:absolute; top:37px; left:96px; width:510px; height:315px;">
 
-<img class="fragment photo-card" src="../assets/abstraction/3-abstract-thought-flat-shapes_animated-antic.jpeg" alt="Three flat shapes on white in the film: a yellow starburst, a pink curved wedge and a blue oval, with a hint of face parts inside the starburst" style="position:absolute; top:66.6px; left:172.8px; width:510px; height:315px;">
+<img class="fragment photo-card" src="../assets/abstraction/2-wiki-fandom-abstract.jpeg" alt="The same vocabulary of shapes, now overlapping in one composition: an orange squiggle, a red square, a navy hook, a green triangle, a yellow starburst on a magenta circle, a blue blob and a purple curl" style="position:absolute; top:55.5px; left:144px; width:510px; height:315px;">
 
-<img class="fragment photo-card" src="../assets/abstraction/4-abstract-thought-textured-collage_animated-antic.jpeg" alt="The same three forms as flat cut-paper collage figures, with eyes, mouths and limbs assembled from textured scraps, reading as three characters" style="position:absolute; top:88.8px; left:230.4px; width:510px; height:315px;">
+<img class="fragment photo-card" src="../assets/abstraction/3-abstract-thought-flat-shapes_animated-antic.jpeg" alt="Three flat shapes on white in the film: a yellow starburst, a pink curved wedge and a blue oval, with a hint of face parts inside the starburst" style="position:absolute; top:74px; left:192px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/abstraction/4-abstract-thought-textured-collage_animated-antic.jpeg" alt="The same three forms as flat cut-paper collage figures, with eyes, mouths and limbs assembled from textured scraps, reading as three characters" style="position:absolute; top:92.5px; left:240px; width:510px; height:315px;">
 
 <img class="fragment photo-card" src="../assets/abstraction/5-abstract-thought-blocky-shapes_animated-antic.jpeg" alt="The three characters as blocky, faceted three-dimensional figures, recognizable as Bing Bong, Joy and Sadness, with folded-paper objects tumbling around them" style="position:absolute; top:111px; left:288px; width:510px; height:315px;">
 
@@ -1572,7 +1772,7 @@ See [GitHub](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets
 :::
 
 
-# Scale {.section-header}
+# Scale, Conditioning & Context {.section-header}
 
 ---
 
@@ -1637,8 +1837,6 @@ Now the dominant fact is visible: cancer screenings **fell by half**, and aborti
 The argument was about **mix**, not counts. As a share, abortions went from 13% to 26% : which the original chart never actually showed, even though it was trying to.
 :::
 
-# Conditioning {.section-header}
-
 ---
 
 ## Conditioning
@@ -1698,8 +1896,6 @@ Median sale price, conditioned on bedroom count and on Chicago vs. suburban Cook
 ::: {style="font-size:0.78em; margin-top:0.3em;"}
 Dots put both values on a common scale. Lines make the **gap** itself the shape of the chart : which is the comparison we actually wanted.
 :::
-
-# Context {.section-header}
 
 ---
 
@@ -1889,7 +2085,49 @@ Exponential → log the **y**. Power law → log **both**.
 Same six planets. Log both axes and they fall on a line of slope $3/2$: the square of the orbital period is proportional to the cube of the semi-major axis.
 :::
 
-# Causality {.section-header}
+# Correlation and Causality {.section-header}
+
+---
+
+## The Correlation Matrix {.figure-aside}
+
+::: {.columns}
+::: {.column}
+- With $p$ variables there are $\binom{p}{2}$ pairs. A **correlation matrix** puts all of them in one table.
+- Symmetric, with 1.00 down the diagonal : so only one triangle carries information.
+- Color it on a **diverging** scale: two meaningful ends, a meaningful middle at zero.
+- Read it as a *shortlist*, not a result: it tells you which scatter plots to go draw.
+:::
+::: {.column}
+
+<img class="figure" src="../assets/viz-basics/correlation-matrix.svg" alt="Seven-by-seven correlation matrix of Cook County home sale variables, shaded orange for positive and blue-grey for negative. Building square footage correlates 0.77 with rooms and 0.69 with price; miles from the Loop correlates only minus 0.08 with price.">
+
+::: {.caption}
+Data: Cook County single-family sales, 2025.
+:::
+:::
+:::
+
+---
+
+## Reading a Correlation Matrix {.figure-aside}
+
+::: {.columns}
+::: {.column}
+- Every cell is one number standing in for a whole cloud : the Datasaurus problem, $\binom{p}{2}$ times over.
+- A near-zero cell is **not** "no relationship." Price vs. miles from the Loop is $-0.08$ because two effects cancel: far-out homes are bigger and newer, but less central.
+- A **scatterplot matrix** costs more ink and keeps the shape.
+- Correlation is still not causation : that is the next slide.
+:::
+::: {.column}
+
+<img class="figure" src="../assets/viz-basics/scatterplot-matrix.svg" alt="Four-by-four scatterplot matrix of price, building square footage, land square footage and year built for 1,400 Cook County sales, with a histogram of each variable on the diagonal. The year-built panels show two distinct clusters that no single correlation reports.">
+
+::: {.caption}
+Data: Cook County single-family sales, 2025.
+:::
+:::
+:::
 
 ---
 
@@ -1934,7 +2172,7 @@ Same six planets. Log both axes and they fall on a line of slope $3/2$: the squa
 We come back to this properly later in the course. For now, the visualization lesson is that **a chart cannot show you an arrow**.
 :::
 
-# Large N and Smoothing {.section-header}
+# Large N, Smoothing & Dimensionality {.section-header}
 
 ---
 
@@ -2134,8 +2372,6 @@ $g(x) = \sum_i \dfrac{K_h(x - x_i)\,y_i}{\sum_j K_h(x - x_j)}$ : a **weighted av
 :::
 :::
 
-# Dimensionality {.section-header}
-
 ---
 
 
@@ -2233,7 +2469,7 @@ The output of an actual four-layer network over the same two features.
 Figures from Solon Barocas and Chandler May, *Understanding Inscrutability* (NYU, 2017), found via Meredith Broussard, *More Than a Glitch* (MIT Press, 2023)
 :::
 
-# ggplot demo {.section-header}
+# matplotlib & ggplot {.section-header}
 
 ---
 
@@ -2356,7 +2592,7 @@ for i, (label, color, pct) in enumerate(zip(labels, colors, sizes)):
 
 ---
 
-## What do you think of this code? {.smaller .scrollable}
+## What do you think of this code? (Python) {.smaller .scrollable}
 
 ```{python}
 #| echo: true
@@ -2441,7 +2677,7 @@ df <- data.frame(
 
 ---
 
-## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+## Recreating the FIFA Chart: R / ggplot, Bare {.code-figure-slide}
 
 ```{r}
 #| echo: true
@@ -2454,7 +2690,7 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 
 ---
 
-## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+## Recreating the FIFA Chart: R / ggplot, Colors {.code-figure-slide}
 
 ```{r}
 #| echo: true
@@ -2470,7 +2706,7 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 
 ---
 
-## Recreating the FIFA Chart: R / ggplot {.code-figure-slide}
+## Recreating the FIFA Chart: R / ggplot, Labels {.code-figure-slide}
 
 ```{r}
 #| echo: true
@@ -2544,7 +2780,7 @@ donut + legend_panel +
 
 ---
 
-## What do you think of this code? {.smaller .scrollable}
+## What do you think of this code? (R) {.smaller .scrollable}
 
 ```{r}
 #| echo: true
@@ -2660,8 +2896,6 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 :::
 :::
 
-# Beyond the Basics {.section-header}
-
 ---
 
 ## Visualizations
@@ -2712,4 +2946,9 @@ ggplot(df, aes(x = 2, y = pct, fill = label)) +
 13. Color: Masataka Okabe and Kei Ito, ["Color Universal Design"](https://jfly.uni-koeln.de/color/) (2008); Françoise Viénot, Hans Brettel and John D. Mollon, "Digital video colourbars for testing dichromatic colour vision," *Color Research & Application* 24, no. 4 (1999): 243–252; Nathaniel Smith and Stéfan van der Walt, ["A Better Default Colormap for Matplotlib"](https://bids.github.io/colormap/) (SciPy 2015).
 14. Smoothing and the Cherry Blossom run analysis the Large-N section is modeled on: Deborah Nolan and Duncan Temple Lang, *Data Science in R: A Case Studies Approach to Computational Reasoning and Problem Solving* (CRC Press, 2015), ch. 2.
 15. Slide deck built with [Quarto](https://quarto.org/) revealjs. Title font is Big Shoulders; body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
-16. Simpson's Paradox: https://www.linkedin.com/pulse/simpsons-paradox-one-chart-two-realities-gordon-goodwin-hhhte
+16. Simpson's paradox figures are generated from synthetic data; the two-panel layout is modeled on Gordon Goodwin, ["Simpson's Paradox: One Chart, Two Realities"](https://www.linkedin.com/pulse/simpsons-paradox-one-chart-two-realities-gordon-goodwin-hhhte).
+17. Line graphs, the area principle, and the density scale: Ani Adhikari, John DeNero and David Wagner, *Computational and Inferential Thinking: The Foundations of Data Science*, [ch. 7](https://inferentialthinking.com/chapters/07/visualization) and [§7.2](https://inferentialthinking.com/chapters/07/2/visualizing-numerical-distributions). The area principle example there is from [Flowing Data](https://flowingdata.com/).
+18. Geospatial idioms and uncertainty: Claus O. Wilke, *Fundamentals of Data Visualization* (O'Reilly, 2019), [ch. 5](https://clauswilke.com/dataviz/directory-of-visualizations.html) and [ch. 16](https://clauswilke.com/dataviz/visualizing-uncertainty.html).
+19. The principle of proportional ink: Carl Bergstrom and Jevin West, *Calling Bullshit*, [7.3](https://www.callingbullshit.org/tools/tools_proportional_ink.html); the phrase is Bergstrom's restatement of Tufte's lie factor.
+20. Batting averages: Ken Ross, *A Mathematician at the Ballpark: Odds and Probabilities for Baseball Fans* (Pi Press, 2004); Derek Jeter's and David Justice's 1995 and 1996 lines are as published by [Baseball Reference](https://www.baseball-reference.com/).
+21. Donut version of the Macworld chart: drawn by `make_macworld_donut.py` in [docs/assets/pi-donut-demos](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/pi-donut-demos), from the market share figures (Gartner, CQ3 2007) printed on the keynote slide; wedge order and colors match the flat pie panel above.

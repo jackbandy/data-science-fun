@@ -37,6 +37,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import polars as pl
 from matplotlib import font_manager
+from matplotlib import patheffects as pe
 from matplotlib.lines import Line2D
 from matplotlib.patches import Circle
 
@@ -1497,6 +1498,449 @@ def smooth_6_bandwidth():
     title(ax, "Bandwidth is the knob")
     return fig
 
+
+
+# --------------------------------------------------------------------------
+# Line graphs and time series
+#
+# A time series is the one case where connecting the dots is not decoration:
+# the gaps between successive x values are real and ordered, so the segment
+# between two points is itself a claim about what happened in between.
+# --------------------------------------------------------------------------
+
+@figure("time-series-line")
+def time_series_line():
+    """The same yearly totals as points, then as a line.
+
+    Stacked rather than side by side: the two panels share one x-axis, so
+    reading down the column puts each year's dot directly above its segment.
+    """
+    a = annual_boardings().filter(pl.col("year") >= 1999)
+    yrs = a["year"].to_numpy()
+    rail = a["rail"].to_numpy() / 1e6
+    fig, axes = new_fig(width=560, height=620, nrows=2, sharex=True, sharey=True)
+    for ax, connect, heading in zip(axes, (False, True),
+                                    ("Points only", "Points connected in time order")):
+        ax.scatter(yrs, rail, s=26, color=QUIET if connect else ORANGE, zorder=3)
+        if connect:
+            ax.plot(yrs, rail, color=ORANGE, linewidth=2.6, zorder=4)
+        ax.set_xticks([2000, 2010, 2020])
+        ax.set_ylabel("Rail boardings (millions)")
+        tidy(ax)
+        title(ax, heading, size=14)
+    axes[0].set_ylim(0, 260)
+    axes[1].set_xlabel("Year")
+    fig.subplots_adjust(hspace=0.28)
+    fig.text(0.005, -0.02, "Data: CTA Annual Boarding Totals, Chicago Data Portal.",
+             fontsize=10.5, color=MUTED, ha="left")
+    return fig
+
+
+# --------------------------------------------------------------------------
+# Reading a histogram by area
+#
+# Straight out of *Computational and Inferential Thinking* 7.2: with unequal
+# bins the density scale is not a nicety, it is the difference between a
+# histogram and a picture that misreports the data. Same sale prices, same
+# uneven bins, two vertical axes.
+# --------------------------------------------------------------------------
+
+# Four $100k bins and one $500k bin at the top, where the sales thin out. The
+# wide bin holds the most sales of any bin and is still nearly the shortest
+# bar on the density scale -- which is the whole point.
+UNEVEN_BINS = np.array([0, 100, 200, 300, 400, 900], dtype=float)  # $1,000s
+
+
+def _uneven_hist():
+    price = homes().filter(pl.col("sale_price") < 900_000)["sale_price"].to_numpy() / 1e3
+    counts, _ = np.histogram(price, bins=UNEVEN_BINS)
+    widths = np.diff(UNEVEN_BINS)
+    percents = 100 * counts / counts.sum()
+    return counts, widths, percents
+
+
+def _uneven_axes(ax):
+    ax.set_xlim(UNEVEN_BINS[0], UNEVEN_BINS[-1])
+    ax.set_xticks(UNEVEN_BINS)
+    ax.set_xticklabels([f"{int(b)}" for b in UNEVEN_BINS])
+    ax.set_xlabel("Sale price ($1,000s)")
+    tidy(ax)
+
+
+@figure("histogram-area")
+def histogram_area():
+    """Density on top (a histogram), raw counts below (not one).
+
+    Stacked so the two vertical scales sit over one shared set of bin edges:
+    the bars are the same width in both panels and only their heights change.
+    """
+    counts, widths, percents = _uneven_hist()
+    fig, axes = new_fig(width=560, height=620, nrows=2, sharex=True)
+
+    # Height in "% per $10,000" rather than per dollar: same shape, readable ticks.
+    axes[0].bar(UNEVEN_BINS[:-1], 10 * percents / widths, width=widths, align="edge",
+                color=ORANGE, edgecolor=PAPER, linewidth=1.2, zorder=3)
+    for left, w, pct in zip(UNEVEN_BINS[:-1], widths, percents):
+        axes[0].annotate(f"{pct:.0f}%", xy=(left + w / 2, 10 * pct / w),
+                         xytext=(0, 7), textcoords="offset points", ha="center",
+                         color=INK, fontsize=11)
+    axes[0].set_ylim(0, 2.9)
+    axes[0].set_ylabel("% per $10,000")
+    _uneven_axes(axes[0])
+    title(axes[0], "Density scale: area is the percent", size=14)
+
+    axes[1].bar(UNEVEN_BINS[:-1], counts, width=widths, align="edge",
+                color=QUIET, edgecolor=PAPER, linewidth=1.2, zorder=3)
+    axes[1].set_ylabel("Number of sales")
+    axes[1].set_yticklabels([])
+    _uneven_axes(axes[1])
+    title(axes[1], "Counts: the wide bin takes over", size=14)
+
+    axes[0].set_xlabel("")
+    fig.subplots_adjust(hspace=0.3)
+    fig.text(0.005, -0.02,
+             "Data: Cook County single-family sales under $900k, 2025.",
+             fontsize=10.5, color=MUTED, ha="left")
+    return fig
+
+
+# --------------------------------------------------------------------------
+# Simpson's paradox — synthetic, three departments
+#
+# Salary rises with seniority inside every department, but senior people are
+# concentrated in the departments that pay least, so the pooled cloud slopes
+# the other way. The two figures share one dataset and one set of axes; only
+# the grouping changes.
+# --------------------------------------------------------------------------
+
+# Every department pays the same premium per year of seniority (RAISE). What
+# separates them is where they sit: the best-paid department is also the
+# youngest, so the between-department drop (about -$37k per year of mean
+# seniority) swamps the within-department rise and flips the pooled slope.
+RAISE = 17_000
+
+# (label, colour, mean seniority, mean salary)
+DEPTS = [("Data science", "#522398", 2.0, 225_000),
+         ("Product", "#00A1DE", 3.5, 165_000),
+         ("HR", ORANGE, 4.8, 120_000)]
+
+
+def _simpsons_data(seed=418):
+    rng = np.random.default_rng(seed)
+    rows = []
+    for name, color, mu, pay_mean in DEPTS:
+        # Resampled, not clipped: clipping stacks the tails into a visible
+        # stripe at the limits, which reads as a real feature of the data.
+        yrs = rng.normal(mu, 0.85, 320)
+        while (bad := (yrs < 0.4) | (yrs > 7.0)).any():
+            yrs[bad] = rng.normal(mu, 0.85, int(bad.sum()))
+        pay = pay_mean + RAISE * (yrs - mu) + rng.normal(0, 20_000, 320)
+        rows.append((name, color, yrs, pay))
+    return rows
+
+
+def _simpsons_axes(ax):
+    ax.set_xlim(0, 7.2)
+    ax.set_ylim(40_000, 300_000)
+    ax.set_yticks(np.arange(50_000, 300_001, 50_000))
+    ax.set_yticklabels([f"${v // 1000:.0f}k" for v in np.arange(50_000, 300_001, 50_000)])
+    ax.set_xlabel("Years of seniority")
+    ax.set_ylabel("Salary")
+    tidy(ax)
+
+
+def _fit_line(ax, x, y, color, lw=3.0):
+    """Least-squares line over the span of x actually observed."""
+    slope, intercept = np.polyfit(x, y, 1)
+    span = np.array([x.min(), x.max()])
+    ax.plot(span, intercept + slope * span, color=color, linewidth=lw, zorder=6)
+
+
+@figure("simpsons-paradox-pooled")
+def simpsons_paradox_pooled():
+    """Everyone in one cloud: pay looks like it falls with seniority."""
+    rows = _simpsons_data()
+    x = np.concatenate([r[2] for r in rows])
+    y = np.concatenate([r[3] for r in rows])
+    fig, ax = new_fig(width=620, height=540)
+    ax.scatter(x, y, s=9, color=QUIET, zorder=3)
+    _fit_line(ax, x, y, INK)
+    _simpsons_axes(ax)
+    title(ax, "Pooled: salary falls with seniority")
+    return fig
+
+
+@figure("simpsons-paradox-split")
+def simpsons_paradox_split():
+    """Split by department and every line tilts the other way."""
+    rows = _simpsons_data()
+    fig, ax = new_fig(width=620, height=540)
+    for name, color, xs, ys in rows:
+        ax.scatter(xs, ys, s=9, color=color, alpha=0.55, zorder=3)
+        _fit_line(ax, xs, ys, color)
+        # Label at the left end of each fitted line, inside the frame, so the
+        # three groups read without a legend and without widening the axes.
+        ax.annotate(name, xy=(xs.min(), np.polyval(np.polyfit(xs, ys, 1), xs.min())),
+                    xytext=(4, -8), textcoords="offset points", color=color,
+                    fontsize=13, fontweight="bold", va="top",
+                    path_effects=[pe.withStroke(linewidth=3.5, foreground=PAPER)])
+    _simpsons_axes(ax)
+    title(ax, "Within each department: salary rises")
+    return fig
+
+
+# --------------------------------------------------------------------------
+# Geospatial — one row per station, placed where the station is
+# --------------------------------------------------------------------------
+
+def _station_points() -> pl.DataFrame:
+    """2019 median weekday entries per 'L' station, with latitude and longitude."""
+    if "stations" not in _cache:
+        stops = pl.read_csv(
+            DATASETS / "chicago-l-stations" / "CTA_List_of_'L'_Stops_20260527.csv"
+        )
+        coords = (
+            stops.select("MAP_ID", "Location")
+            .unique(subset="MAP_ID")
+            .with_columns(
+                pl.col("Location").str.extract(r"\(([-0-9.]+),", 1).cast(pl.Float64).alias("lat"),
+                pl.col("Location").str.extract(r",\s*([-0-9.]+)\)", 1).cast(pl.Float64).alias("lon"),
+                pl.col("MAP_ID").cast(pl.Int64).alias("station_id"),
+            )
+            .drop_nulls(["lat", "lon"])
+        )
+        daily = pl.read_csv(
+            DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20260527.csv",
+            ignore_errors=True,
+        ).with_columns(pl.col("rides").cast(pl.Utf8).str.replace_all(",", "").cast(pl.Int64))
+        weekday = (
+            daily.filter(pl.col("date").str.ends_with("2019") & (pl.col("daytype") == "W"))
+            .group_by("station_id").agg(pl.col("rides").median().alias("rides"))
+            .with_columns(pl.col("station_id").cast(pl.Int64))
+        )
+        _cache["stations"] = coords.join(weekday, on="station_id")
+    return _cache["stations"]
+
+
+def _city_outline(ax):
+    """The city boundary, thinned, as a pale backdrop for the station dots."""
+    import json
+    geo = json.loads((DATASETS / "chicago-maps" / "chicago-city.geojson").read_text())
+    for feat in geo["features"]:
+        g = feat["geometry"]
+        polys = g["coordinates"] if g["type"] == "MultiPolygon" else [g["coordinates"]]
+        for poly in polys:
+            ring = np.asarray(poly[0], dtype=float)[::4]
+            ax.fill(ring[:, 0], ring[:, 1], facecolor=SOFT_GRAY,
+                    edgecolor=BORDER, linewidth=1.0, zorder=1)
+
+
+@figure("geospatial-stations")
+def geospatial_stations():
+    """Position carries the geography; area carries the ridership."""
+    pts = _station_points()
+    lon, lat = pts["lon"].to_numpy(), pts["lat"].to_numpy()
+    rides = pts["rides"].to_numpy().astype(float)
+
+    fig, ax = new_fig(width=620, height=780)
+    _city_outline(ax)
+    # Area proportional to ridership, per the area principle: a station with
+    # twice the entries gets twice the ink, not twice the radius.
+    ax.scatter(lon, lat, s=rides / 14, color=ORANGE, alpha=0.55,
+               edgecolor=ORANGE_DARK, linewidth=0.5, zorder=3)
+
+    for label, size in ((" 2,000", 2_000), (" 10,000", 10_000), (" 20,000", 20_000)):
+        ax.scatter([], [], s=size / 14, color=ORANGE, alpha=0.55,
+                   edgecolor=ORANGE_DARK, linewidth=0.5, label=label)
+    leg = ax.legend(frameon=False, fontsize=11, loc="lower left",
+                    labelspacing=1.5, borderpad=1.0, handletextpad=1.4,
+                    title="Median weekday entries")
+    leg.get_title().set_color(STEEL)
+    leg.get_title().set_fontsize(11)
+    for t in leg.get_texts():
+        t.set_color(STEEL)
+
+    ax.set_xlim(-87.95, -87.51)
+    ax.set_ylim(41.63, 42.07)
+    ax.set_aspect(1 / 0.745)  # Mercator correction at ~41.9 degrees north
+    ax.set_xticks([])
+    ax.set_yticks([])
+    for s in ax.spines.values():
+        s.set_visible(False)
+    title(ax, "Chicago 'L' stations, 2019")
+    fig.text(0.005, 0.0, "Data: CTA station entries and stop list, Chicago Data Portal.",
+             fontsize=10.5, color=MUTED, ha="left")
+    return fig
+
+
+# --------------------------------------------------------------------------
+# Uncertainty — the same four estimates, with and without their error bars
+# --------------------------------------------------------------------------
+
+@figure("uncertainty-intervals")
+def uncertainty_intervals():
+    """A mean is a guess about a population; the interval says how good a guess.
+
+    Drawn from a 40-sale sample of each group rather than all 22,000 rows.
+    With the full county the intervals are narrower than the marker and the
+    figure would argue the opposite of what it is here to argue: an estimate
+    off a handful of sales is exactly where the uncertainty lives.
+    """
+    df = _bedroom_frame().filter(pl.col("sale_price") < 2_000_000)
+    beds = ["2", "3", "4", "5+"]
+    rng = np.random.default_rng(418)
+    means, errs = [], []
+    for b in beds:
+        v = df.filter(pl.col("beds") == b)["sale_price"].to_numpy() / 1e3
+        v = rng.choice(v, 40, replace=False)
+        means.append(v.mean())
+        errs.append(1.96 * v.std(ddof=1) / np.sqrt(len(v)))  # 95% interval
+    means, errs = np.array(means), np.array(errs)
+
+    xs = np.arange(len(beds))
+    fig, axes = new_fig(height=380, ncols=2, sharey=True)
+
+    axes[0].bar(xs, means, width=0.5, color=QUIET, zorder=3)
+    title(axes[0], "Estimates alone", size=14)
+
+    axes[1].errorbar(xs, means, yerr=errs, fmt="o", markersize=9, color=ORANGE,
+                     ecolor=ORANGE, elinewidth=2.4, capsize=7, capthick=2.4, zorder=3)
+    title(axes[1], "Estimates with 95% intervals", size=14)
+
+    for ax in axes:
+        ax.set_xticks(xs)
+        ax.set_xticklabels(beds)
+        ax.set_xlim(-0.6, len(beds) - 0.4)
+        ax.set_xlabel("Bedrooms")
+        tidy(ax)
+    axes[0].set_ylim(0, (means + errs).max() * 1.2)
+    axes[0].set_ylabel("Mean sale price ($1,000s)")
+    fig.subplots_adjust(wspace=0.1)
+    fig.text(0.005, -0.03,
+             "Data: 40 sampled Cook County single-family sales per group, 2025.",
+             fontsize=10.5, color=MUTED, ha="left")
+    return fig
+
+
+# Proportional ink — the bar's ink is its value, so the baseline is not a
+# styling choice. Same four numbers, two baselines.
+# --------------------------------------------------------------------------
+
+@figure("proportional-ink")
+def proportional_ink():
+    """A truncated baseline multiplies the difference it draws.
+
+    CTA rail boardings fell about 10% over these five years. From zero the
+    bars say "roughly flat, drifting down"; from 210 million the same five
+    numbers say "collapse", because the ink is no longer the quantity -- it is
+    whatever is left above an arbitrary line.
+    """
+    a = annual_boardings().filter(pl.col("year").is_between(2015, 2019))
+    yrs = a["year"].to_numpy()
+    rail = a["rail"].to_numpy() / 1e6
+    xs = np.arange(len(yrs))
+    fig, axes = new_fig(height=380, ncols=2)
+
+    for ax, base, color, heading in (
+            (axes[0], 0.0, ORANGE, "From zero: ink is the quantity"),
+            (axes[1], 210.0, QUIET, "From 210M: ink is a leftover")):
+        ax.bar(xs, rail - base, bottom=base, width=0.6, color=color, zorder=3)
+        ax.set_xticks(xs)
+        ax.set_xticklabels([str(y) for y in yrs])
+        ax.set_ylim(base, rail.max() * (1.05 if base == 0 else 1.005))
+        ax.set_ylabel("Rail boardings (millions)")
+        tidy(ax)
+        title(ax, heading, size=14)
+
+    fig.subplots_adjust(wspace=0.26)
+    fig.text(0.005, -0.03, "Data: CTA Annual Boarding Totals, Chicago Data Portal.",
+             fontsize=10.5, color=MUTED, ha="left")
+    return fig
+
+
+# Correlation matrix — every pair at once
+# --------------------------------------------------------------------------
+
+CORR_VARS = [("sale_price", "Price"), ("building_sqft", "Building sqft"),
+             ("land_sqft", "Land sqft"), ("rooms", "Rooms"),
+             ("full_baths", "Full baths"), ("year_built", "Year built"),
+             ("miles_from_loop", "Miles from Loop")]
+
+LOOP = (41.8827, -87.6233)  # State and Madison, the origin of Chicago's grid
+
+
+def _with_distance(df: pl.DataFrame) -> pl.DataFrame:
+    """Straight-line miles from the Loop. Flat-earth is fine over one county."""
+    return df.drop_nulls(["latitude", "longitude"]).with_columns(
+        (((pl.col("latitude") - LOOP[0]) * 69.0) ** 2
+         + ((pl.col("longitude") - LOOP[1]) * 51.4) ** 2).sqrt().alias("miles_from_loop"))
+
+
+def _corr_frame() -> tuple[np.ndarray, list[str]]:
+    cols = [c for c, _ in CORR_VARS]
+    df = (_with_distance(homes()).filter(pl.col("sale_price") < 2_000_000)
+          .select(cols).drop_nulls())
+    m = np.corrcoef(df.to_numpy().T)
+    return m, [lab for _, lab in CORR_VARS]
+
+
+@figure("correlation-matrix")
+def correlation_matrix():
+    """One number per pair, laid out so the eye can scan for the strong ones."""
+    m, labels = _corr_frame()
+    n = len(labels)
+    fig, ax = new_fig(width=780, height=680)
+    # Diverging ramp: white at zero, orange for positive, steel for negative,
+    # because a correlation has two meaningful ends and a meaningful middle.
+    cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
+        "corr", ["#2C5F6B", "#FFFFFF", ORANGE])
+    ax.imshow(m, cmap=cmap, vmin=-1, vmax=1, zorder=2)
+    for i in range(n):
+        for j in range(n):
+            ax.text(j, i, f"{m[i, j]:.2f}".replace("-", "−"),
+                    ha="center", va="center", fontsize=12.5, zorder=3,
+                    color=PAPER if abs(m[i, j]) > 0.6 else INK)
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    ax.set_xticklabels(labels, rotation=30, ha="right")
+    ax.set_yticklabels(labels)
+    ax.tick_params(colors=STEEL, labelsize=12, length=0)
+    for s in ax.spines.values():
+        s.set_visible(False)
+    title(ax, "Cook County home sales, 2025")
+    return fig
+
+
+@figure("scatterplot-matrix")
+def scatterplot_matrix():
+    """The same pairs, drawn. Shape survives here and dies in the table."""
+    cols = ["sale_price", "building_sqft", "land_sqft", "year_built"]
+    labels = ["Price", "Building sqft", "Land sqft", "Year built"]
+    df = (homes().select(cols).drop_nulls()
+          .filter((pl.col("sale_price") < 1_200_000) & (pl.col("land_sqft") < 20_000))
+          .sample(1400, seed=418))
+    data = [df[c].to_numpy().astype(float) for c in cols]
+    n = len(cols)
+    fig, axes = new_fig(width=760, height=700, nrows=n, ncols=n)
+    for i in range(n):
+        for j in range(n):
+            ax = axes[i][j]
+            if i == j:
+                ax.hist(data[i], bins=26, color=BORDER, zorder=3)
+            else:
+                ax.scatter(data[j], data[i], s=3, color=ORANGE, alpha=0.25, zorder=3)
+            ax.set_xticks([])
+            ax.set_yticks([])
+            for s in ax.spines.values():
+                s.set(color=BORDER, linewidth=0.8)
+            if i == n - 1:
+                ax.set_xlabel(labels[j], fontsize=11, color=STEEL)
+            if j == 0:
+                ax.set_ylabel(labels[i], fontsize=11, color=STEEL)
+    fig.subplots_adjust(wspace=0.08, hspace=0.08)
+    fig.suptitle("Cook County home sales, 2025", fontsize=17, color=INK,
+                 x=0.09, ha="left")
+    return fig
 
 # --------------------------------------------------------------------------
 

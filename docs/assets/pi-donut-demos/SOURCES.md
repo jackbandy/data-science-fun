@@ -48,3 +48,10 @@
 - **Author of the original:** User:Cmglee (CMG Lee)
 - **License:** [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) — ShareAlike, inherited from the original, since these are derivative works
 - **Description:** The two panels of the comparison as separate files, so slides can place them side by side instead of stacked. Each keeps its own viewBox and the original's margins; nothing is redrawn or restyled. Regenerate with `python3 split_macworld_chart.py`.
+
+## macworld-donut.svg
+
+- **File:** `macworld-donut.svg`
+- **Drawn by:** `make_macworld_donut.py` in this folder (matplotlib). Not a derivative of the Wikimedia file: nothing is traced or copied, so this one is ours and carries no ShareAlike obligation.
+- **Data:** US smartphone market share, CQ3 2007 (Gartner), as printed on the Macworld keynote slide: RIM 39.0%, Other 21.2%, Apple 19.5%, Palm 9.8%, Motorola 7.4%, Nokia 3.1%.
+- **Description:** The same six numbers as a donut chart, for the "pie with the center cut out" slide. Wedge order (clockwise from 12 o'clock) and wedge colors are matched to `macworld-pie-2d.svg` on purpose, so the only visible change from the flat pie is the hole. Regenerate with `python3 make_macworld_donut.py`.
