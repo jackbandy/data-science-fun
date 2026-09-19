@@ -92,6 +92,11 @@ def main():
             f"# {GENERATED_NOTE}",
             f"# Source: project/{source.name}",
             "layout: project-checkpoint",
+            # Same stylesheet as the coding exercises: the checkpoint layout
+            # reuses their classes (.exercise-meta and friends), so without this
+            # the header strip renders unstyled.
+            "extra_css:",
+            "  - /css/exercises.css",
             f"title: {yaml_quote(title)}",
             f"number: {int(number)}",
             f"slug: {slug}",

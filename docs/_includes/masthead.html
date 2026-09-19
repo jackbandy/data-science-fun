@@ -27,10 +27,11 @@ live in css/masthead.css.
     <a href="/syllabus/"{% if page.nav == 'syllabus' %} aria-current="page"{% endif %}>Syllabus</a>
     <a href="/exercises.html"{% if page.nav == 'exercises' %} aria-current="page"{% endif %}>Exercises</a>
     <a href="/faq.html"{% if page.nav == 'faq' %} aria-current="page"{% endif %}>FAQ</a>
-    {%- assign morenav = "worksheets,timer,book,ideas,meta,films,spectrogram,datasets" | split: "," -%}
+    {%- assign morenav = "project,worksheets,timer,book,ideas,meta,films,spectrogram,datasets" | split: "," -%}
     <details class="site-nav-more"{% if morenav contains page.nav %} data-current="true"{% endif %}>
       <summary>More</summary>
       <div class="site-nav-more-menu">
+        <a href="/project/"{% if page.nav == 'project' %} aria-current="page"{% endif %}>Group Project Checkpoints</a>
         <a class="is-external" href="/timer/" target="_blank" rel="noopener"{% if page.nav == 'timer' %} aria-current="page"{% endif %}>Timer</a>
         <a class="is-external" href="/ethics-in-data-science/book/" target="_blank" rel="noopener"{% if page.nav == 'book' %} aria-current="page"{% endif %}>Mini-Book</a>
         <a href="/worksheets/"{% if page.nav == 'worksheets' %} aria-current="page"{% endif %}>Worksheets</a>
