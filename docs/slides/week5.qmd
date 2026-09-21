@@ -79,6 +79,25 @@ CS 418, Week 5 🟠 Clark/Lake 🟠
 
 ---
 
+## CS events this week! [WiCS](https://wics-uic.github.io/WiCS-Website/events/) {.image-frame-slide .announcements}
+
+:::: {.columns}
+::: {.column width="50%"}
+<img src="../assets/announcements/Tuesday%20-%20WiCS.png" class="figure" alt="WiCS flyer: 84.51° Project Showcase, Tuesday September 22nd, 4–6 PM, SELE 2268. RSVP at bit.ly/4xlrYc8">
+:::
+::: {.column width="50%"}
+<img src="../assets/announcements/Friday%20-%20WiCS.png" class="figure" alt="WiCS flyer: Annual WiCS Scavenger Hunt, Friday September 25th, 5–7:30 PM, CDRLC 1422, food provided, RSVP required at bit.ly/4inI3dH">
+:::
+::::
+
+<style>
+/* Flyers are portrait, so the slide gives them nearly all its height and the title takes as little as it can. */
+.announcements h2 { font-size: 1.1rem; border-bottom-width: 3px; margin: 0 0 12px; padding-bottom: 5px; }
+.announcements img { max-height: 72vh; width: auto; display: block; margin: 0 auto; }
+</style>
+
+---
+
 ## Random Roll Call {.iframe-slide}
 <div class="random-draw" data-num="12" data-min="1" data-max="62">
 <div class="random-draw-frame">
