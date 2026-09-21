@@ -69,7 +69,7 @@ Jack Bandy
 
 <h2>Visualization Basics</h2>
 
-CS 418 · Week 5 · 🟠 Clark/Lake 🟠
+CS 418, Week 5 🟠 Clark/Lake 🟠
 
 ---
 
@@ -642,7 +642,7 @@ Three groups together: a small one near 5, a big one near 30, and seven near 80.
 ```
 
 ::: {style="font-size:0.8em;"}
-Counts values falling in each bin. `bins` is the main knob to adjust.
+Counts values falling in each bin (`bins` is the main knob to adjust)
 :::
 
 ---
@@ -678,7 +678,7 @@ Counts values falling in each bin. `bins` is the main knob to adjust.
 ```
 
 ::: {style="font-size:0.8em;"}
-**Undersmoothed.** Most bins hold one or two points, so the bars mostly report sampling noise. The modes are in there, but you have to squint past the comb to find them.
+**Undersmoothed.** Most bins hold one or two points, so the bars mostly report sampling noise.
 :::
 
 ---
@@ -717,7 +717,7 @@ One tick per data point (no binning, no smoothing). Great for spotting gaps and 
 ```
 
 ::: {style="font-size:0.8em;"}
-A smoothed estimate of the density. **`adjust` scales the bandwidth:** the dashed curve is wigglier and chases noise, the solid one may smooth real structure away.
+A smoothed estimate of the density. **`adjust` scales the bandwidth:** the dashed curve is noisy, the solid one may smooth over real structure.
 :::
 
 ---
@@ -1011,7 +1011,7 @@ corr_plot(3)
 
 ## Correlation Coefficient
 
-The correlation coefficient measures the linear relationship between two features $X$ and $Y$. We'll look at **Pearson's correlation coefficient** first.
+The correlation coefficient measures the linear relationship between two features $X$ and $Y$. We'll use **Pearson's correlation coefficient** first.
 
 ::: {}
 - The value is always between **-1 and 1**.
@@ -1234,7 +1234,7 @@ Ken Ross, *A Mathematician at the Ballpark* : Derek Jeter and David Justice, 199
 ## Visualizing Bivariate Relationships
 
 ::: {}
-- A **scatter plot** uncovers the *form* of the relationship between two quantitative variables.
+- A **scatter plot** helps uncover the *form* of the relationship between two quantitative variables.
 - **Linear** relationships are the simplest to interpret : and there is a lot of clean statistical theory for them.
 - Models are approximations. Prefer the simpler one until the data forces you to a more complex one.
 :::
@@ -1278,7 +1278,7 @@ Synthetic data, similar to PrairieLearn questions.
 :::
 
 ::: {style="font-size:0.78em; margin-top:0.3em;"}
-(Note that a box plot cannot tell you a group is bimodal)
+(Note that a box plot cannot show if a group is bimodal)
 :::
 
 ---
@@ -1314,7 +1314,7 @@ Note that none of these shows a relationship.
 
 ::: {.columns}
 ::: {.column}
-- A map already includes position it encodes where
+- A map already includes position
 - data need a second channel.
 - **Choropleth**: color the regions.
 - **Proportional symbol**: size a mark at each point.
@@ -1359,7 +1359,7 @@ The 4- and 5+ intervals overlap: on this sample those two means are not distingu
 - Picking colors that work together can be difficult
 - **7–10% of men** have red-green color vision deficiency (deuteranomaly is the common one).
 - Blue-yellow deficiency is far less common.
-- Red and green is the worst pair.
+- Red and green is the worst pair (try to avoid)
 :::
 :::
 :::
@@ -1367,7 +1367,7 @@ The 4- and 5+ intervals overlap: on this sample those two means are not distingu
 <img class="figure" src="../assets/viz-basics/color-red-green.svg" alt="Two line charts side by side. On the left, three series of median 2025 sale price by bedroom count drawn in red, green and brown. On the right, the same chart run through a deuteranope simulation, where the red and green lines have collapsed into nearly the same olive colour.">
 
 ::: {.caption}
-Simulation uses Viénot, Brettel & Mollon (1999). It is a check, not a claim about what any particular person sees.
+Simulation uses Viénot, Brettel & Mollon (1999).
 :::
 :::
 :::
@@ -1413,10 +1413,11 @@ A colormap should have **uniform perceptual deltas**: equal steps in the data sh
 ::: {.column width="42%"}
 ::: {.dense}
 ::: {}
-- **Categorical** : pick a scheme that makes categories easy to *tell apart*. No order implied.
+- **Categorical** : pick a scheme that makes categories easy to *tell apart*.
+    - No order implied.
 - **Quantitative, low→high** : use **sequential** schemes; light for low.
 - **Quantitative, two meaningful ends** : use a **diverging** scheme; light in the middle.
-- Getting this wrong is a *type error*, not a taste question.
+- Getting this wrong can be a real mistake (not just aesthetic / subjective)
 :::
 :::
 :::
@@ -1470,7 +1471,7 @@ For each question, discuss with your elbow neighbors which plot(s) you could use
 2. "Did boardings recover after 2020?"
 3. "Where should CTA add service?"
 4. "Which stops are most active?"
-5. Others?
+5. Others? For your project maybe?
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -1538,10 +1539,10 @@ Bergstrom & West, *Calling Bullshit*, [7.3: The Principle of Proportional Ink](h
 
 ::: {.columns}
 ::: {.column}
-- **The ink used should be proportional to the quantity shown.**
-- A bar is a length *from zero*.
-- Same rule condemns Steve Jobs' 3D pie chart
-- Lines and dots encode **position**, not length
+- **The "ink" used should be directly proportional to the quantity shown.**
+- A bar is a length *from zero*
+- Same rule applies to Steve Jobs' 3D pie chart
+- Lines and dots encode **position**
     - can start wherever the data starts
 :::
 ::: {.column}
@@ -1573,8 +1574,8 @@ Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24
 - Why?
     - Perspective distorts angle and area
     - Slices in the front (near the viewer) look larger
-    - The tilt  changes how big a slice appears (independent of  data)
-    - A 3D pie adds a dimension that carries no information
+    - The tilt changes how big a slice appears (independent of data)
+    - adds a dimension that carries no information
 :::
 
 ---
@@ -1617,7 +1618,7 @@ Macworld San Francisco, 15 January 2008 : [smartphone market share segment, 8:24
 <img class="figure" src="../assets/pi-donut-demos/macworld-donut.svg" alt="Donut chart of the same US smartphone market share numbers from the Macworld 2008 keynote: RIM 39.0%, Apple 19.5%, Palm 9.8%, Motorola 7.4%, Nokia 3.1% and Other 21.2%, in the same wedge order and colors as the flat pie chart.">
 
 ::: {.caption}
-Same six numbers, same order, same colors : only the hole is new.
+Same six numbers, same order, same colors, as a donut (torus?)
 :::
 :::
 :::
@@ -1665,6 +1666,24 @@ Same six numbers, same order, same colors : only the hole is new.
 
 - Additional variables may reveal unexpected and contrasting results.
 :::
+
+---
+
+## Any questions?
+
+- PrairieLearn Homeworks?
+- Group Projects?
+- Coding Exercise 01?
+- Other logistics?
+- (You can also stay after class for questions)
+
+---
+
+## Upload your worksheet
+
+Take a picture of your worksheet, upload it in Canvas
+
+
 
 # Week 5, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop05-clark-lake-a.jpg" background-size="cover"}
 
