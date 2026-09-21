@@ -49,7 +49,7 @@ REPO_URL = "https://github.com/jackbandy/data-science-fun"
 # (syllabus + FAQ). An exercise names one in its frontmatter; the layout renders
 # the matching rulebook drawing. Labels and drawings live in
 # docs/_data/ai_signals.yml -- keep the two in step. "tk" means not decided yet.
-AI_POLICIES = {"double-red", "red-yellow", "double-yellow", "tk"}
+AI_POLICIES = {"double-red", "yellow-over-red", "double-yellow", "tk"}
 
 FOLDER_RE = re.compile(r'^(\d+)-(.+)$')
 
@@ -108,6 +108,35 @@ def convert_inline(text):
                   text)
     text = emphasize(text)
     return re.sub(r'\x00(\d+)\x00', lambda m: tokens[int(m.group(1))], text)
+
+
+TABLE_RULE_RE = re.compile(r'^\|(?:\s*:?-{1,}:?\s*\|)+$')
+
+
+def split_row(line):
+    return [c.strip() for c in line.strip().strip("|").split("|")]
+
+
+def cell_align(rule):
+    left, right = rule.startswith(":"), rule.endswith(":")
+    if left and right:
+        return "center"
+    return "right" if right else "left"
+
+
+def render_table(header, aligns, rows):
+    def cells(values, tag):
+        return "".join(
+            f'<{tag}{style(n)}>{convert_inline(html.escape(v))}</{tag}>'
+            for n, v in enumerate(values))
+
+    def style(n):
+        align = aligns[n] if n < len(aligns) else "left"
+        return "" if align == "left" else f' style="text-align:{align}"'
+
+    body = "".join(f"<tr>{cells(r, 'td')}</tr>" for r in rows)
+    return (f"<table><thead><tr>{cells(header, 'th')}</tr></thead>"
+            f"<tbody>{body}</tbody></table>")
 
 
 def convert_markdown(text):
@@ -173,6 +202,19 @@ def convert_markdown(text):
             flush_paragraph()
             close_list()
             out.append(f"<blockquote><p>{convert_inline(html.escape(quote.group(1)))}</p></blockquote>")
+            continue
+
+        if stripped.startswith("|") and i < len(lines) and TABLE_RULE_RE.match(lines[i].strip()):
+            flush_paragraph()
+            close_list()
+            aligns = [cell_align(c) for c in split_row(lines[i].strip())]
+            header = split_row(stripped)
+            i += 1
+            rows = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                rows.append(split_row(lines[i].strip()))
+                i += 1
+            out.append(render_table(header, aligns, rows))
             continue
 
         ordered = re.match(r'\d+\.\s+(.*)', stripped)

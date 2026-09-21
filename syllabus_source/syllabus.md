@@ -368,7 +368,7 @@ Just for fun, here is [[the full set of eleven signals]{.underline}](https://dod
 
 Each exercise will indicate which of these three applies. Note that use of AI/LLMs is never required. Please ask if you have any questions or uncertainties - again, when in doubt, it is better to check first.
 
-**Citing your use of AI/LLMs.** Whenever the signal is yellow-over-red or double yellow, if you do use an AI/LLM-based tool, include a citation, and be specific:
+**Citing your use of AI/LLMs.** Whenever the signal is yellow over red or double yellow, if you do use an AI/LLM-based tool, include a citation, and be specific:
 
 > I used [tool and version] to [what you asked it to do]. My prompt was: [prompt, or a summary if it was long]. Here is what I did with the output: [what you kept, changed, or threw away].
 

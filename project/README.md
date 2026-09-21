@@ -23,7 +23,7 @@ Frontmatter:
 | `summary` | one line, shown on the index and under the page title (required) |
 | `topic` | unit / topic label |
 | `due` | due date as students should read it |
-| `ai_policy` | `double-red`, `red-yellow`, `double-yellow`, or `tk` — the course's CTA signal aspect (see the [FAQ](https://dodatascience.fun/faq.html)) |
+| `ai_policy` | `double-red`, `yellow-over-red`, `double-yellow`, or `tk` — the course's CTA signal aspect (see the [FAQ](https://dodatascience.fun/faq.html)) |
 | `draft` | `true` to skip the file entirely, so an unfinished stub is not published |
 
 The first `# Heading` in the body becomes the title (removed from the body). A

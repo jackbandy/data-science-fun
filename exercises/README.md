@@ -23,7 +23,7 @@ exercises/
 | `summary` | one line, shown on the index card (required) |
 | `topic` | unit / topic label, e.g. `Exploratory data analysis` |
 | `due` | due date as students should read it |
-| `ai_policy` | `double-red`, `red-yellow`, `double-yellow`, or `tk` — the course's CTA signal aspect (see the [FAQ](https://dodatascience.fun/faq.html)) |
+| `ai_policy` | `double-red`, `yellow-over-red`, `double-yellow`, or `tk` — the course's CTA signal aspect (see the [FAQ](https://dodatascience.fun/faq.html)) |
 
 The first `# Heading` in the body becomes the title (removed from the body).
 
@@ -49,4 +49,4 @@ The generated files are not committed - they are gitignored. The Pages workflow 
 
 ## Markdown support
 
-The converter handles headings, paragraphs, ordered/unordered lists, fenced and inline code, blockquotes, `---`, links, bold, and italics. It does **not** currently do tables or images.
+The converter handles headings, paragraphs, ordered/unordered lists, fenced and inline code, blockquotes, `---`, links, bold, italics, and pipe tables (with `:--` / `--:` alignment). It does **not** currently do images.

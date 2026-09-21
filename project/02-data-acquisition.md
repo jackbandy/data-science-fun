@@ -2,7 +2,7 @@
 summary: Find, obtain, and describe datasets your group will work with
 topic: Obtaining data
 due: Sunday, September 27
-ai_policy: red-yellow
+ai_policy: yellow-over-red
 ---
 
 # Checkpoint Two: Data Acquisition
@@ -57,7 +57,7 @@ Five points available (one for each of the five prompts above):
 
 ## AI/LLM policy
 
-**Red/yellow. Proceed with caution on the main route.**
+**Yellow over red. Proceed with caution on the main route.**
 
 🟡 You may use AI/LLM-based tools to search for candidate datasets, and for the mechanics of getting a file into a dataframe, e.g. reading an API's documentation, working out the right `read_csv` arguments for an awkward file, browsing the web for relevant datasets, etc.
 

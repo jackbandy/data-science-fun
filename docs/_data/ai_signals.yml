@@ -10,11 +10,11 @@ double-red:
   meaning: "Stop and stay — no AI/LLM use at all."
   image: /assets/signals/signal-01-stop-stay.svg
   faq: /faq.html#double-red-no-aillm-based-tools
-red-yellow:
-  label: "Red/yellow"
+yellow-over-red:
+  label: "Yellow over red"
   meaning: "Proceed with caution on main route — scoped, optional AI/LLM use."
   image: /assets/signals/signal-02-caution-main.svg
-  faq: /faq.html#redyellow-limited-specific-use-of-aillm-based-tools
+  faq: /faq.html#yellow-over-red-limited-specific-use-of-aillm-based-tools
 double-yellow:
   label: "Double yellow"
   meaning: "Proceed with caution at restricted speed — you choose where the tools fit."

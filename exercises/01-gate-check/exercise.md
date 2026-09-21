@@ -2,7 +2,7 @@
 summary: Wrangle flight data with pandas; web scraping; ethics reflection
 topic: Data wrangling and web scraping
 due: Wednesday, September 30
-ai_policy: double-yellow
+ai_policy: yellow-over-red
 ---
 
 # Exercise One - Gate Check
@@ -22,7 +22,7 @@ Note that Part 1 uses `pandas`, not the `polars` we used in Exercise Zero. Both 
 
 ## Environment
 
-This exercise is autograded in a fixed environment, so your library versions need to match. Install [Anaconda](https://www.anaconda.com/download) for Python 3.13, then create and activate the course environment:
+This exercise is autograded in a fixed environment, for which your library versions will need to match. Install [Anaconda](https://www.anaconda.com/download) for Python 3.13, then create and activate the course environment:
 
 ```sh
 conda create -n cs418env python=3.13 anaconda
@@ -59,7 +59,9 @@ Two separate Gradescope submissions:
 1. **01 Coding Exercise (Written)** (60%): `hw1.ipynb` saved as a PDF, with all cells executed and *all outputs visible*. Save to PDF from your browser, or use `jupyter nbconvert hw1.ipynb --to html` followed by `python html_to_pdf.py` if the browser's output is cut off. Check the PDF before you submit it.
 2. **01 Coding Exercise (Code)** (40%): a zip containing `hw1part1.py`, `hw1part2.py`, and `hw1.ipynb`. Zip the *files*, not the folder that contains them, so they land at the root of the archive.
 
-You can submit to Gradescope as many times as you like; only the last submission counts, and if that one is late, the late policy applies to the whole exercise. All four parts are due at the same time.
+Only some of your answers get copied into the `.py` files: Questions 1.1 and 1.2 go into `hw1part1.py`, and Questions 2.1 through 2.6 go into `hw1part2.py`. Questions 1.3 and 2.7, the Part 1 practice cells, and Parts 3 and 4 live in the notebook only, and are graded from the PDF. Copy the functions over rather than rewriting them, so the two submissions agree.
+
+**You can submit to Gradescope as many times as you like** and you are encouraged to use this to your benefit. Note that only the last submission counts, and if that one is late, the late policy applies to the whole exercise. All four parts are due at the same time.
 
 ## How it's graded
 
@@ -67,15 +69,33 @@ The written submission is graded on completion: having run everything, shown the
 
 The code submission is graded by the autograder, which runs tests against `hw1part1.py` and `hw1part2.py` (not the notebook). The sample tests in `tests_sample_part1/` and `tests_sample_part2/` are a subset; the rest are hidden.
 
-Point values within the notebook: Questions 1.1-1.3 are 12%, 13%, and 5%; Questions 2.1-2.7 are 5%, 15%, 9%, 7%, 4%, 6%, and 4%; Questions 3.1-3.3 are 1%, 2%, and 2%; Part 4 is 5%.
+Point values within the notebook:
+
+| Part | Question | Weight |
+|:--|:--|--:|
+| Part 1 — `pandas` | Practice cells | 10% |
+| | 1.1 | 12% |
+| | 1.2 | 13% |
+| | 1.3 | 5% |
+| Part 2 — Web scraping | 2.1 | 5% |
+| | 2.2 | 15% |
+| | 2.3 | 9% |
+| | 2.4 | 7% |
+| | 2.5 | 4% |
+| | 2.6 | 6% |
+| | 2.7 | 4% |
+| Part 3 — Ethics | 3.1 | 1% |
+| | 3.2 | 2% |
+| | 3.3 | 2% |
+| Part 4 — AI statement | — | 5% |
 
 ## AI/LLM policy
 
-**Double yellow: proceed with caution at restricted speed.**
+**Yellow over red. Proceed with caution, stop ahead.**
 
-🟡 You choose where AI/LLM tools fit into your workflow on Parts 1 and 2, but every use is at reduced speed and full attention, and you should be prepared to justify it. Document your use in Part 4 of the notebook: which tools, on which parts, what you prompted, whether the answer was any good, and what you changed. That documentation is worth 5% of the exercise.
+🟡 You may use AI/LLM-based tools on Parts 1 and 2, the coding parts. Work at reduced speed and full attention, and be prepared to justify any use. Document it in Part 4 of the notebook: which tools, on which parts, what you prompted, whether the answer was any good, and what you changed. That documentation is worth 5% of the exercise.
 
-🔴 Part 3, the ethics questions, is yours to think through. Using an AI/LLM tool there defeats the point of the exercise.
+🔴 You may not use AI/LLM-based tools on Part 3, the ethics questions. Those are yours to think through with your own brain (otherwise there is no purpose in "completing" it).
 
 The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).
 

@@ -34,4 +34,4 @@ TK — the specific things being checked, stated plainly.
 
 ## AI/LLM policy
 
-TK — which aspect applies (`double-red`, `red-yellow`, or `double-yellow`; set it in the frontmatter above) and what that means here. The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).
+TK — which aspect applies (`double-red`, `yellow-over-red`, or `double-yellow`; set it in the frontmatter above) and what that means here. The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).

@@ -2,7 +2,7 @@
 summary: Share two or three research questions you would want to spend the semester on
 topic: Asking questions
 due: Wednesday, September 2
-ai_policy: red-yellow
+ai_policy: yellow-over-red
 ---
 
 # Checkpoint One - Question Memo
@@ -40,7 +40,7 @@ TODO — file, format, and where it goes (Canvas).
 
 ## AI/LLM policy
 
-**Red/yellow — proceed with caution on the main route.**
+**Yellow over red — proceed with caution on the main route.**
 
 🟡 You may use AI/LLM-based tools to search the web for studies and/or projects that pique your interest. For example, Google Scholar has a chatbot designed to surface relevant research studies: [scholar.google.com/scholar_labs](https://scholar.google.com/scholar_labs/search?hl=en). Use caution when working with these tools, and verify your sources.
 

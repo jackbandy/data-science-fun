@@ -29,4 +29,4 @@ Four points available:
 
 ## AI/LLM policy
 
-TODO — set the `ai_policy` frontmatter key above to `double-red`, `red-yellow`, or `double-yellow`, then say what that means here. The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).
+TODO — set the `ai_policy` frontmatter key above to `double-red`, `yellow-over-red`, or `double-yellow`, then say what that means here. The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).

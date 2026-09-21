@@ -109,7 +109,7 @@ My ideas/opinions on this topic continue to evolve - I would love to hear your t
 
 **Q: Will students be allowed to use AI/LLM-based tools in this class?**
 
-A: As of right now (August 1, 2026), I am planning three phases of the class, borrowed from CTA rail signal aspects rather than the usual red-yellow-green traffic light (see [`assets/signals`](assets/signals/) for the source rulebook page): (1) double red, (2) red/yellow, and (3) double yellow.
+A: As of right now (August 1, 2026), I am planning three phases of the class, borrowed from CTA rail signal aspects rather than the usual red-yellow-green traffic light (see [`assets/signals`](assets/signals/) for the source rulebook page): (1) double red, (2) yellow over red, and (3) double yellow.
 
 ### Double red: no AI/LLM-based tools
 
@@ -120,10 +120,10 @@ A: As of right now (August 1, 2026), I am planning three phases of the class, bo
 </div>
 </div>
 
-### Red/yellow: limited, specific use of AI/LLM-based tools
+### Yellow over red: limited, specific use of AI/LLM-based tools
 
 <div class="signal-aspect" markdown="1">
-![Red over yellow signal](assets/signals/signal-02-caution-main.svg)
+![Yellow over red signal](assets/signals/signal-02-caution-main.svg)
 <div class="signal-aspect-body" markdown="1">
 "Proceed with caution on main route, prepared to stop at next signal." A specific, carefully-scoped set of tasks where use of AI/LLM-based tools is allowed (but not required). Take the marshmallow test and see how you do. See how the tool fails, and decide if/when you find it useful, and pay close attention!
 </div>
