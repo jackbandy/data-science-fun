@@ -111,7 +111,8 @@ jobs:
           # R is only needed by week5.qmd (the one deck using `engine: knitr`).
           # Setting R up takes ~7 minutes, so skip it unless week5 is actually
           # in the render set. If another deck ever grows R chunks, add it here.
-          if echo "$SLIDES" | grep -qw 'week5.qmd'; then
+          # An empty SLIDES means "render all" to the build script, so it needs R too.
+          if [[ -z "$SLIDES" ]] || echo "$SLIDES" | grep -qw 'week5.qmd'; then
             echo "needs_r=true" >> "$GITHUB_OUTPUT"
           else
             echo "needs_r=false" >> "$GITHUB_OUTPUT"
