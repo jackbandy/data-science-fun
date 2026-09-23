@@ -5,8 +5,9 @@
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -16,14 +17,6 @@
 \usepackage{mdframed}
 \usepackage{array}
 
-% ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a stub. The watermark marks the PDF as unfinished so
-% nobody mistakes a placeholder for the real thing. Delete this block once the
-% worksheet has real content.
-\usepackage{draftwatermark}
-\SetWatermarkText{IN-PROGRESS}
-\SetWatermarkScale{2.2}
-\SetWatermarkLightness{0.85}
 
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -39,54 +32,125 @@
 \hypersetup{colorlinks=false, hidelinks}
 
 % ── Convenience environments ──────────────────────────────────────────────────
-\newenvironment{problem}[1]{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
-  \textbf{Problem #1.}
-}{%
-  \end{mdframed}\vspace{0.5em}
-}
-
-\newenvironment{hint}{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
-  \textit{Hint:}
-}{%
-  \end{mdframed}\vspace{0.3em}
-}
-
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
+% Usage: \blankspace{6cm} — blank area for hand-written work, no rules
+\newcommand{\blankspace}[1]{%
   \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
   \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
+  \end{minipage}
   \vspace{0.3em}
+}
+
+% Usage: \guidedopen{title}{guided content}{guided workspace height}{open-ended workspace height}
+% Left: a titled, structured prompt with its own blank workspace. Right: a
+% fully blank workspace for open-ended exploration of the same topic (no
+% prompt text), sized so the two columns land at roughly the same total
+% height. Neither workspace is ruled.
+\newcommand{\guidedopen}[4]{%
+  \noindent\textbf{#1}\\[0.18em]
+  \noindent
+  \begin{minipage}[t]{0.485\textwidth}
+    #2
+    \blankspace{#3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.485\textwidth}
+    \blankspace{#4}
+  \end{minipage}
+  \\[0.4em]
+}
+
+% Usage: \panelbox{width}{height}{caption} — a framed drawing panel with `caption`
+% centered beneath it. An empty caption leaves the panel bare, with nothing
+% below the frame at all.
+\newcommand{\panelbox}[3]{%
+  \begin{minipage}[t]{\dimexpr#1+2\fboxsep+2\fboxrule\relax}
+    \framebox[#1][c]{\rule{0pt}{#2}}%
+    \if\relax\detokenize{#3}\relax\else
+      \\[0.25em]{\centering\small #3\par}%
+    \fi
+  \end{minipage}%
 }
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
 \noindent
 \begin{minipage}[t]{0.55\textwidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,10}} \\[0.3em]
-  {\large \textit{Week 5, Day 2: Descriptive Visualization}}
+  {\LARGE \textbf{Worksheet \#\,10}} \\[0.18em]
+  {\large \textit{Week 5, Day 2: Relationships, context, transformations, correlation and causality}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
-\vspace{0.2em}
+\vspace{0.6em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.1em}
+
+\noindent\underline{\textbf{Guided checkpoints}}\\[0.2em]
+\noindent{\small For full credit, fill in the checkpoints. If you skip a checkpoint, you must include your own notes for full credit.}
+\vspace{0.8em}
+
+% ── 1. Bertin's seven, from memory ───────────────────────────────────────────
+\guidedopen{1. Warm-Up: Bertin's Seven, From Memory}{
+List all seven visual variables (ideally without looking at your notes).
+}{4.4cm}{5.3cm}
+
+\vfill
+
+% ── 2. Linear, nonlinear, non-monotonic ──────────────────────────────────────
+\guidedopen{2. Linear, Nonlinear, Non-Monotonic}{
+Sketch a shape for each panel.
+
+\vspace{0.45em}
+
+\noindent
+\panelbox{2.3cm}{2.0cm}{linear}\hfill
+\panelbox{2.3cm}{2.0cm}{nonlinear}\hfill
+\panelbox{2.3cm}{2.0cm}{non-monotonic}
+}{0.4cm}{3.9cm}
+
+\vfill
+
+% ── 3. What is missing? ──────────────────────────────────────────────────────
+\guidedopen{3. What Is Missing?}{
+List four things a chart needs so that someone can read it without you there.
+}{4.4cm}{5.3cm}
+
+\vfill
+
+\newpage
+
+% ── 4. Standardize or normalize ──────────────────────────────────────────────
+\guidedopen{4. Standardize or Normalize?}{
+Fill in the formula for each.
+
+\vspace{0.4em}
+
+{\small\renewcommand{\arraystretch}{2.2}%
+\noindent\begin{tabular}{@{}l >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{1.7cm}@{}}
+\toprule
+ & \textbf{Formula} & \textbf{Result} \\
+\midrule
+Standardize & & \\
+Normalize & & \\
+\bottomrule
+\end{tabular}}
+}{1.2cm}{4.6cm}
+
+\vspace{1.5em}
+
+% ── 5. Correlation and causation ─────────────────────────────────────────────
+\guidedopen{5. Correlation $\neq$ Causation}{
+Two series have ${r = 0.99}$. List three explanations other than $X \to Y$, and draw the fork.
+}{4.4cm}{5.3cm}
 
 \end{document}
