@@ -65,6 +65,40 @@ Jack Bandy
 
 ---
 
+# Interactive Visualization: Pyramids {.image-frame-slide}
+
+<object type="image/svg+xml" data="../assets/pyramid/comparison-of-pyramids-smil.svg" aria-label="Profiles of well-known pyramid and near-pyramid structures — from the Great Pyramid of Giza and the Pyramid of Djoser to the Louvre Pyramid, the Transamerica Pyramid, and the Ryugyong Hotel — all drawn to a common scale with a height axis in metres." style="width:auto; height:452px; aspect-ratio:560/350; display:block; margin:0 auto; background:#fff; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);"></object>
+
+::: {.caption}
+From [week 1](week1.html): click a structure. Cmglee, [*Comparison of pyramids SMIL*](https://commons.wikimedia.org/wiki/File:Comparison_of_pyramids_SMIL.svg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+:::
+
+
+
+---
+
+# A Bit About Fonts {.text-figure-slide}
+
+::: {.aside-note}
+*Fundamentals of Data Visualization*, [Chapter 24: Use Larger Axis Labels](https://clauswilke.com/dataviz/small-axis-labels.html)
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.dense}
+- "Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small." (Wilke)
+- Plotting libraries often have poor defaults, so set the size yourself
+- Each layer of the DIKW pyramid on the right uses a different font
+- Serif vs. Sans-serif
+:::
+:::
+::: {.column width="50%"}
+<img class="figure" src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The DIKW pyramid from week 1, each layer labeled in a different typeface: data in dotted type, information in pixel type, knowledge in handwriting, and wisdom in heavy italic">
+:::
+:::
+
+---
+
 # Time Series Visualization {.section-header}
 
 ---
@@ -1297,6 +1331,7 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 9. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 10. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 11. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+12. Axis label and font sizes: Claus O. Wilke, *Fundamentals of Data Visualization* (O'Reilly, 2019), [ch. 24](https://clauswilke.com/dataviz/small-axis-labels.html). DIKW pyramid figure from [week 1](week1.html).
 
 
 

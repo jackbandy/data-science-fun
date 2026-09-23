@@ -2727,9 +2727,25 @@ Tyler Vigen, [*Spurious Correlations*](https://www.tylervigen.com/spurious-corre
 - A correlation between $X$ and $Y$ is consistent with $X \to Y$, and also with:
     - **Reverse causation**: $Y \to X$.
     - **Common cause** (the fork, right): $Z$ causes both, so $X$ and $Y$ move together without touching.
+:::
+:::
+:::
+::: {.column width="54%"}
+<img class="figure" src="../assets/confounds/fork.svg" alt="Causal diagram with three boxes. A dark box labelled Z sits above two neutral boxes labelled X and Y, with arrows running from Z down to X and from Z down to Y. There is no arrow between X and Y.">
+:::
+:::
+
+---
+
+## Correlation ≠ Causation (continued) {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="46%"}
+::: {.dense}
+::: {}
+- A correlation between $X$ and $Y$ is also consistent with:
     - **Selection**: the data only include cases where $X$ or $Y$ passed some filter.
     - **Coincidence**: two trending series (like the random walks) line up by chance.
-- No amount of extra data points settles which it is.
 :::
 :::
 :::
@@ -2847,50 +2863,16 @@ $g(x) = \sum_i \dfrac{K_h(x - x_i)\,y_i}{\sum_j K_h(x - x_j)}$ : a **weighted av
 ## Additional Notes on Visualizations
 
 ::: {}
-- Separate style conventions (house rules, taste) from findings about what the eye can decode accurately.
-- Before trusting a chart, check its scale, what it conditions on, and what context it leaves out.
+- Style conventions ("taste") is different from leveraging what the eye can decode accurately.
+- Before trusting a chart, check scale, what it conditions on
 - A chart can show that two things move together; a causal claim needs evidence from outside the chart.
 - Interactive data viz:
     - D3: a JavaScript library with the most flexibility.
     - Vega-Lite / Altair, Plotly, Bokeh: declarative, and they embed in Jupyter notebooks.
-    - Interaction adds "detail on demand" (impossible on paper), and it also adds a way to hide things.
-- For more, UIC has an entire course: CS 424, Visualization and Visual Analytics.
+    - Interaction adds "detail on demand" (impossible on paper)
+- For more, UIC has an entire course! CS 424, Visualization and Visual Analytics.
 :::
 
-
----
-
-## Interactive Visualization: Pyramids {.image-frame-slide}
-
-<object type="image/svg+xml" data="../assets/pyramid/comparison-of-pyramids-smil.svg" aria-label="Profiles of well-known pyramid and near-pyramid structures — from the Great Pyramid of Giza and the Pyramid of Djoser to the Louvre Pyramid, the Transamerica Pyramid, and the Ryugyong Hotel — all drawn to a common scale with a height axis in metres." style="width:auto; height:452px; aspect-ratio:560/350; display:block; margin:0 auto; background:#fff; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);"></object>
-
-::: {.caption}
-From [week 1](week1.html): click a structure. Cmglee, [*Comparison of pyramids SMIL*](https://commons.wikimedia.org/wiki/File:Comparison_of_pyramids_SMIL.svg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
-:::
-
-
-
----
-
-## A Bit About Fonts {.text-figure-slide}
-
-::: {.aside-note}
-*Fundamentals of Data Visualization*, [Chapter 24: Use Larger Axis Labels](https://clauswilke.com/dataviz/small-axis-labels.html)
-:::
-
-::: {.columns}
-::: {.column width="50%"}
-::: {.dense}
-- "Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small." (Wilke)
-- Plotting libraries often have poor defaults, so set the size yourself
-- Each layer of the DIKW pyramid on the right uses a different font
-- Serif vs. Sans-serif
-:::
-:::
-::: {.column width="50%"}
-<img class="figure" src="../assets/pyramid/06-dikw-pyramid-full.svg" alt="The DIKW pyramid from week 1, each layer labeled in a different typeface: data in dotted type, information in pixel type, knowledge in handwriting, and wisdom in heavy italic">
-:::
-:::
 
 ---
 
@@ -3026,6 +3008,5 @@ $h$ decides how peaked or spread each kernel is.
 20. Batting averages: Ken Ross, *A Mathematician at the Ballpark: Odds and Probabilities for Baseball Fans* (Pi Press, 2004); Derek Jeter's and David Justice's 1995 and 1996 lines are as published by [Baseball Reference](https://www.baseball-reference.com/).
 21. Donut version of the Macworld chart: drawn by `make_macworld_donut.py` in [docs/assets/pi-donut-demos](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/pi-donut-demos), from the market share figures (Gartner, CQ3 2007) printed on the keynote slide; wedge order and colors match the flat pie panel above.
 22. Steve Ballmer clip: ["Steve Ballmer at NET Conference going crazy about Developers! | 1999"](https://www.youtube.com/watch?v=8fcSviC7cRM), Economic Archive (YouTube).
-23. Axis label and font sizes: Claus O. Wilke, *Fundamentals of Data Visualization* (O'Reilly, 2019), [ch. 24](https://clauswilke.com/dataviz/small-axis-labels.html). DIKW pyramid figure from [week 1](week1.html).
-24. Conditioning and small multiples: Claus O. Wilke, *Fundamentals of Data Visualization* (O'Reilly, 2019), [§21.1](https://clauswilke.com/dataviz/multi-panel-figures.html#small-multiples), which traces "small multiple" to Tufte (1990) and the "trellis plot" to Cleveland and colleagues at Bell Labs.
-25. Spurious correlations: Tyler Vigen, [*Spurious Correlations*](https://www.tylervigen.com/spurious-correlations), embedded live on the slide after "Can we conclude that one causes the other?"
+23. Conditioning and small multiples: Claus O. Wilke, *Fundamentals of Data Visualization* (O'Reilly, 2019), [§21.1](https://clauswilke.com/dataviz/multi-panel-figures.html#small-multiples), which traces "small multiple" to Tufte (1990) and the "trellis plot" to Cleveland and colleagues at Bell Labs.
+24. Spurious correlations: Tyler Vigen, [*Spurious Correlations*](https://www.tylervigen.com/spurious-correlations), embedded live on the slide after "Can we conclude that one causes the other?"
