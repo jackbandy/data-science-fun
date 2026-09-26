@@ -263,3 +263,9 @@ https://correlatesofwar.org
 	* h/t [Adam Koehler](https://cs.uic.edu/profiles/koehler-adam/)
 * Add color blindness material to visualization decks (week 5 / 6) — e.g. why the default red/green pairing fails, colorblind-safe palettes, etc.
 * Look into `raster=True` on the `geom_point` calls in the week 4 "Square Footage vs. Price" build-up. It is there purely for file size: 24,775 points as vector SVG is ~18 MB per figure, and that slide renders five of them (~90 MB); with raster the whole deck's figures come to 1.8 MB.
+* TODO review and choose video lecture(s) for week 7 (async days: hypothesis testing; estimation, sampling, randomness). Candidates, links and lengths checked on YouTube 2026-09-26:
+	* UC Berkeley Data 8 Sp23, [Lecture 18: Decisions and Uncertainty](https://www.youtube.com/watch?v=nwAz5hVhn3g) (56 min) — hypothesis testing, p-values; *Inferential Thinking* ch. 11
+	* UC Berkeley Data 8 Sp23, [Lecture 15: Sampling](https://www.youtube.com/watch?v=hAhGnR1DkFE) (45 min) — random sampling, empirical distributions; ch. 9–10
+	* UC Berkeley Data 8 Sp23, [Lecture 23: Confidence Intervals](https://www.youtube.com/watch?v=5Mb9RoO1pXY) (50 min) — bootstrap, estimation; ch. 13
+	* MIT 6.0002 (John Guttag), [Lecture 8: Sampling and Standard Error](https://www.youtube.com/watch?v=soZv_KKax3E) (46 min) — MIT OpenCourseWare
+	* MIT 18.650 (Philippe Rigollet), [Lecture 7: Parametric Hypothesis Testing](https://www.youtube.com/watch?v=phbw9r1iUDI) (78 min) — MIT OpenCourseWare; most mathematical, likely too heavy

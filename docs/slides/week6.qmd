@@ -1,5 +1,11 @@
 ---
+# NOTICE: The slide order in this deck was rearranged, and the visualization
+# rhetoric and TED slides were drafted, with an LLM-based coding tool. It is
+# maintained, reviewed, and vetted by humans.
 title: "Week 6 (CS 418 @ UIC)"
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
 jupyter: python3
 # Some code in this file was generated with LLM assistance.
 # It is maintained and vetted by jxb@uic.edu.
@@ -13,15 +19,7 @@ format:
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 6</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week6.html">dodatascience.fun/slides/week6</a></span>'
 ---
 
-# Week 6 Slide Deck {.course-title}
 
-## Visualizations
-
-Jack Bandy
-2026
-
-
----
 
 # Week 6, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
 
@@ -30,27 +28,23 @@ Jack Bandy
 Jack Bandy
 2026
 
+
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
+
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
-
----
-
-# Map {.split}
+## Map {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
 - Week 6: Washington/Wabash
 - Day 1
-    - Time Series Visualization
-    - Time Series Example: CTA Rides
-    - A Different Station: Washington/Wabash
-    - More Forecasting Models
-    - Bayesian Time Series
-    - Using the Model to Predict
-    - Visualizing Intervals
-    - Example: Hurricanes
+    - Data Visualization Demos
+    - Visualization Rhetoric & Fonts
+    - Visualizing Uncertainty
+    - Visualizing Time Series
+    - Example: CTA Ridership
 :::
 
 ![](../assets/orange-line-map-stops/stop07-washington-wabash.svg){.figure alt="Orange Line map with the Washington/Wabash stop marked, the Week 6 stop"}
@@ -59,13 +53,113 @@ Jack Bandy
 
 ---
 
-# Gapminder {.iframe-slide}
+---
 
-<iframe src="https://www.gapminder.org/tools/#$chart-type=bubbles&url=v2" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+## Example Viz 1 {.image-frame-slide}
+
+<img src="../assets/great-decoupling/great-decoupling-blank.svg" alt="Empty chart frame: the x-axis runs from 1947 to 2012 and the y-axis is an index from 50 to 450, with 1947 equal to 100. No data is plotted yet." style="max-height: 400px; margin-top: 10px;">
+
+::: {.caption}
+Recreated from Erik Brynjolfsson & Andrew McAfee, ["The Great Decoupling,"](https://hbr.org/2015/06/the-great-decoupling) *Harvard Business Review* (June 2015). Data: BLS and BEA via [FRED](https://fred.stlouisfed.org/); U.S. Census Bureau, [Table F-7](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-income-families.html).
+:::
+
 
 ---
 
-# Interactive Visualization: Pyramids {.image-frame-slide}
+## Example Viz 1: "The Great Decoupling" {.image-frame-slide}
+
+<img src="../assets/great-decoupling/great-decoupling-complete.svg" alt="Line chart of four U.S. series indexed to 1947 = 100. Labor productivity, real GDP per capita, private employment, and median family income rise together until about 1980. After that, median family income (orange) flattens near 235 by 2012 and private employment levels off near 290, while productivity climbs to about 420 and GDP per capita to about 365." style="max-height: 400px; margin-top: 10px;">
+
+::: {.caption}
+Recreated from Erik Brynjolfsson & Andrew McAfee, ["The Great Decoupling,"](https://hbr.org/2015/06/the-great-decoupling) *Harvard Business Review* (June 2015). Data: BLS and BEA via [FRED](https://fred.stlouisfed.org/); U.S. Census Bureau, [Table F-7](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-income-families.html).
+:::
+
+::: {.notes}
+Recreated from current FRED and Census data, so values differ slightly from the HBR original. Regenerate with docs/assets/great-decoupling/make_great_decoupling.py.
+:::
+
+---
+
+## Example Viz 2 {.image-frame-slide}
+
+
+<img src="../assets/newspaper-ad-revenue/newspaper-ad-revenue-blank.svg" alt="Empty chart frame: the x-axis runs from 1956 to 2022 and the y-axis shows advertising revenue from 0 to 250 billion 2022 dollars. No data is plotted yet." style="max-height: 400px; margin-top: 10px;">
+
+::: {.caption}
+Data: Pew Research Center, [Newspapers Fact Sheet](https://www.pewresearch.org/journalism/fact-sheet/newspapers/) (News Media Alliance through 2012; Pew estimates after); Google/Alphabet and Facebook/Meta 10-K and S-1 filings, [SEC EDGAR](https://www.sec.gov/edgar/search/). Adjusted for inflation with CPI-U.
+:::
+
+---
+
+## Example Viz 2: "Newspapers" {.image-frame-slide}
+
+
+<img src="../assets/newspaper-ad-revenue/newspaper-ad-revenue-newspapers.svg" alt="The same chart frame with one orange line: U.S. newspaper ad revenue rises slowly from about 35 billion 2022 dollars in 1956 to a peak of 83 billion in 2000, then collapses to about 10 billion by 2022, with the years after 2012 dashed as estimates." style="max-height: 400px; margin-top: 10px;">
+
+::: {.caption}
+Data: Pew Research Center, [Newspapers Fact Sheet](https://www.pewresearch.org/journalism/fact-sheet/newspapers/) (News Media Alliance through 2012; Pew estimates after); Google/Alphabet and Facebook/Meta 10-K and S-1 filings, [SEC EDGAR](https://www.sec.gov/edgar/search/). Adjusted for inflation with CPI-U.
+:::
+
+
+---
+
+## Example Viz 2: "Newspapers and Big Tech" {.image-frame-slide}
+
+
+<img src="../assets/newspaper-ad-revenue/newspaper-ad-revenue-complete.svg" alt="Line chart of advertising revenue in 2022 dollars. U.S. newspaper ad revenue (orange) rises slowly from about 35 billion in 1956 to a peak of 83 billion in 2000, then collapses to about 10 billion by 2022. Google's worldwide ad revenue starts near zero in 2001 and climbs to about 225 billion; Meta's starts in 2009 and reaches about 114 billion." style="max-height: 400px; margin-top: 10px;">
+
+::: {.caption}
+Data: Pew Research Center, [Newspapers Fact Sheet](https://www.pewresearch.org/journalism/fact-sheet/newspapers/) (News Media Alliance through 2012; Pew estimates after); Google/Alphabet and Facebook/Meta 10-K and S-1 filings, [SEC EDGAR](https://www.sec.gov/edgar/search/). Adjusted for inflation with CPI-U.
+:::
+
+::: {.notes}
+Newspapers are U.S.-only; Google and Meta are worldwide (about half of each is U.S.). Regenerate with docs/assets/newspaper-ad-revenue/make_newspaper_ad_revenue.py.
+:::
+
+---
+
+## Example Viz 3 {.image-frame-slide}
+
+<img src="../assets/dicaprio-ages/dicaprio-ages-blank.svg" alt="Empty chart frame: the x-axis lists each year from 1999 to 2022 and the y-axis shows age from 0 to 50 years. No data is plotted yet." style="max-height: 400px; margin-top: 10px;">
+
+::: {.caption}
+Chart: *Daily Mail*, posted by u/Far-Building3569, ["Leonardo DiCaprio's age contrasted with his girlfriends,"](https://www.reddit.com/r/charts/comments/1owzkul/leonardo_dicaprios_age_contrasted_with_his/) r/charts (14 Nov 2025).
+:::
+
+---
+
+## Example Viz: DiCaprio's Girlfriends {.image-frame-slide}
+
+<img src="../assets/dicaprio-ages/dicaprio-dating-history-daily-mail.jpg" alt="The original Daily Mail chart, titled Leonardo DiCaprio's Dating History. A yellow line shows Leo's age rising from 24 in 1999 to 47 in 2022; blue bars show his girlfriend's age each year, which stays between 18 and 25 and resets to about 20 with each new girlfriend. Photos and names below the axis: Gisele Bündchen, Bar Refaeli, Blake Lively, Erin Heatherton, Toni Garrn, Kelly Rohrbach, Nina Agdal, and Camila Morrone." style="max-height: 400px; margin-top: 10px;">
+
+::: {.caption}
+Chart: *Daily Mail*, posted by u/Far-Building3569, ["Leonardo DiCaprio's age contrasted with his girlfriends,"](https://www.reddit.com/r/charts/comments/1owzkul/leonardo_dicaprios_age_contrasted_with_his/) r/charts (14 Nov 2025).
+:::
+
+---
+
+## Gapminder: Hans Rosling at TED (2006) {.iframe-slide}
+
+<iframe src="https://www.youtube-nocookie.com/embed/hVimVzgtD6w?start=150&end=315&rel=0" title="Hans Rosling, The best stats you've ever seen, TED2006: the Gapminder bubble chart segment (2:30–5:15)" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+::: {.iframe-caption}
+Hans Rosling, ["The best stats you've ever seen,"](https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen) TED2006, Monterey, CA (February 2006): [bubble chart segment, 2:30 to 5:15](https://www.youtube.com/watch?v=hVimVzgtD6w&t=150s)
+:::
+
+::: {.notes}
+Clip runs from "This is where I realized that there was really a need to communicate" through the applause after "a completely new world." The YouTube upload runs about 27 seconds behind TED's own transcript, where the same segment is 2:04 to 4:48.
+:::
+
+---
+
+## Gapminder {.iframe-slide}
+
+<iframe src="https://www.gapminder.org/tools/#$chart-type=bubbles&url=v2" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+
+---
+
+## Interactive Visualization: Pyramids {.image-frame-slide}
 
 <object type="image/svg+xml" data="../assets/pyramid/comparison-of-pyramids-smil.svg" aria-label="Profiles of well-known pyramid and near-pyramid structures — from the Great Pyramid of Giza and the Pyramid of Djoser to the Louvre Pyramid, the Transamerica Pyramid, and the Ryugyong Hotel — all drawn to a common scale with a height axis in metres." style="width:auto; height:452px; aspect-ratio:560/350; display:block; margin:0 auto; background:#fff; border:1px solid rgba(0, 0, 0, 0.12); box-shadow:0 10px 28px rgba(0, 0, 0, 0.12);"></object>
 
@@ -74,10 +168,70 @@ From [week 1](week1.html): click a structure. Cmglee, [*Comparison of pyramids S
 :::
 
 
+# Visualization Rhetoric {.section-header}
+
+
+## Defining Visualization Rhetoric {.quote-slide}
+
+> "We use the term rhetoric to refer to the set of processes by which **intended meanings** are represented in the visualization...""
+
+::: {.attribution}
+Jessica Hullman & Nicholas Diakopoulos
+:::
+
+::: {.quote-source}
+["Visualization Rhetoric: Framing Effects in Narrative Visualization,"](https://doi.org/10.1109/TVCG.2011.255) *IEEE TVCG* 17(12), 2011, p. 2232.
+:::
+
+::: {.notes}
+The authors separate rhetoric from "bias": they "seek to objectively describe the rhetorical nature of visualization design rather than to comment on the appropriateness of persuasion in visualization design" (p. 2232).
+:::
 
 ---
 
-# A Bit About Fonts {.text-figure-slide}
+## Four "Editorial Layers"
+
+::: {.caption}
+Hullman & Diakopoulos, ["Visualization Rhetoric,"](https://doi.org/10.1109/TVCG.2011.255) *IEEE TVCG* (2011), pp. 2232–2233.
+:::
+
+"creating a visual representation necessitates simplification ... Thus a rhetorical dimension is present in any design."
+
+::: {.dense}
+| Layer | Where choices enter |
+|---|-----------|
+| **Data** | "what variables to include and which to leave out"; "removing outliers, scaling, or aggregating values" |
+| **Visual representation** | "how the data will be mapped to the visual domain" |
+| **Annotation** | titles, labels, callouts, "focusing a user's attention on specific areas in a graph" |
+| **Interactivity** | e.g. "navigation menus that limit the number of views of the data set that are possible" |
+:::
+
+::: {.fragment}
+"Yet omissions, emphases, and ambiguity can be accomplished at each level."
+:::
+
+---
+
+
+
+## Designer Responsibility {.quote-slide}
+
+> [T]he power of rhetorical techniques to manipulate user interpretations supports a call for increased responsibility among designers [and data scientists!] to consider the possibly unintended effects their choices may have.
+
+::: {.attribution}
+Jessica Hullman & Nicholas Diakopoulos
+:::
+
+::: {.quote-source}
+["Visualization Rhetoric: Framing Effects in Narrative Visualization,"](https://doi.org/10.1109/TVCG.2011.255) *IEEE TVCG* 17(12), 2011, p. 2239.
+:::
+
+
+
+# A Bit About Fonts {.section-header}
+
+
+## A Bit About Fonts {.text-figure-slide}
 
 ::: {.aside-note}
 *Fundamentals of Data Visualization*, [Chapter 24: Use Larger Axis Labels](https://clauswilke.com/dataviz/small-axis-labels.html)
@@ -99,46 +253,220 @@ From [week 1](week1.html): click a structure. Cmglee, [*Comparison of pyramids S
 
 ---
 
-# Time Series Visualization {.section-header}
+## Serif vs. Sans-Serif {.figure-aside}
+
+::: {.columns}
+::: {.column}
+- [Serif]{.term}: "a small line or stroke regularly attached to the end of a larger stroke in a letter or symbol"
+- [Serif typeface]{.term}: one that uses serifs (Times, Georgia)
+- [Sans-serif]{.term}: one that "does not include them" (Helvetica, Arial)
+- This deck is all sans-serif (Big Shoulders, Libre Franklin)
+:::
+::: {.column}
+[serif]{.eyebrow}
+
+<img src="../assets/serif-sans/serif-and-sans-serif-02.svg" alt="The letters AaBbCc in a serif typeface, Liberation Serif: small strokes finish the ends of the letters." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
+
+[serifs in red]{.eyebrow}
+
+<img src="../assets/serif-sans/serif-and-sans-serif-03.svg" alt="The same serif letters AaBbCc with every serif colored red: the feet of the A, the ends of the a and b, and the tips of the B and C." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
+
+[sans-serif]{.eyebrow}
+
+<img src="../assets/serif-sans/serif-and-sans-serif-01.svg" alt="The letters AaBbCc in a sans-serif typeface, Liberation Sans: strokes end plainly." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
+
+::: {.caption}
+Stannered after Chmod007, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Serif_and_sans-serif_03.svg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+:::
+:::
+:::
+
 
 ---
 
-# Time Series Basics
+## Choosing a Font Family in Matplotlib {.code-figure-slide}
 
-A **univariate time series** is a sequence of observations of the **same variable** collected over time
-- not just a "bag of values"
+```{python}
+#| echo: true
+#| fig-alt: "The word Data drawn twice in large type. Left, labeled family equals serif, in DejaVu Serif with small finishing strokes on the D and the a's. Right, labeled family equals sans-serif, in DejaVu Sans with plain stroke ends."
+import matplotlib.pyplot as plt
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
+for ax, family in zip(axes, ["serif", "sans-serif"]):
+    ax.text(0.5, 0.45, "Data", family=family, fontsize=96, ha="center", va="center")
+    ax.set_title(f'family="{family}"', fontsize=16)
+    ax.axis("off")
+```
 
-Two common goals of time series analysis:
+::: {.notes}
+Matplotlib's default font.family is sans-serif (DejaVu Sans); "serif" resolves to DejaVu Serif. Both ship with matplotlib, so this renders the same on every machine.
+:::
+
+
+# Visualizing Uncertainty {.section-header}
+
+
+## Ways to Visualize Intervals
+
+- **Summary** displays: error bars, shaded bands, violin plots
+- **Frequency** displays: quantile dotplots, icon arrays
+- **Ensemble** displays: draw many possible outcomes at once
+- **Animated** displays: Hypothetical Outcome Plots (HOPs)
+
+
+# Example: Hurricanes {.section-header}
+
+
+
+## The Cone of Uncertainty {.image-frame-slide auto-animate=true}
+
+<img data-id="cone-img" src="../assets/paper-figures/padilla-et-al-cogres-2017-fig1.png" alt="National Hurricane Center track forecast for Hurricane Gustav, 30 August 2008. A black line runs northwest from Cuba into Louisiana with hurricane symbols at forecast positions, surrounded by a white cone that widens with time." style="max-height: 440px; margin-top: 10px;">
+
+::: {.caption}
+Padilla, Ruginski & Creem-Regehr, ["Effects of Ensemble and Summary Displays on Interpretations of Geospatial Uncertainty Data,"](https://doi.org/10.1186/s41235-017-0076-1) *Cognitive Research* (2017), Fig. 1. CC BY 4.0.
+:::
+
+---
+
+## The Cone of Uncertainty {.split auto-animate=true}
+
+::: {.split-content .golden-columns}
+
+::: {}
+<img data-id="cone-img" src="../assets/paper-figures/padilla-et-al-cogres-2017-fig1.png" alt="National Hurricane Center track forecast for Hurricane Gustav, 30 August 2008. A black line runs northwest from Cuba into Louisiana with hurricane symbols at forecast positions, surrounded by a white cone that widens with time." style="max-height: 210px;">
+
+1. What does the white cone represent?
+2. Why does it get wider over time?
+3. Just outside the cone: evacuate?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+::: {.notes}
+The National Hurricane Center's standard forecast graphic uses a point that widens into a "swath" where the storm center might cross.
+:::
+
+---
+
+## What Do People Think the Cone Means?
 
 ::: {.incremental}
+- The cone shows where the **center** of the storm might go
+    - Width comes from *historical forecast error*
+    - not from the storm
+- But many readers see it as the **size of the storm**, growing over time
+- TK: Hullman — a visualization can be accurate and still be misread
+:::
+
+---
+
+## The Cone Today: Hurricane Polo {.image-frame-slide}
+
+<img src="../assets/hurricane-cone/nhc-polo-2026-09-26-adv24a-5day-cone.png" alt="National Hurricane Center 5-day forecast cone for Hurricane Polo, Intermediate Advisory 24A, 11 AM MST Saturday, September 26, 2026. The storm sits off southwest Mexico at 18.3 N, 112.2 W; a white cone curves north past the tip of Baja California, where a hurricane warning is posted, and widens into northern Mexico by Wednesday. A banner across the top reads: Note: The cone contains the probable path of the storm center but does not show the size of the storm. Hazardous conditions can occur outside of the cone." style="max-height: 420px; margin-top: 10px;">
+
+::: {.caption}
+NOAA/NWS National Hurricane Center, [Hurricane Polo](https://www.nhc.noaa.gov/archive/2026/POLO_graphics.php), Intermediate Advisory 24A, 11 AM MST, 26 September 2026. Public domain.
+:::
+
+
+---
+
+## Visualizing Multiple Possibilities {.image-frame-slide}
+
+Summary displays (a, c) vs. ensemble displays (b, d) of the same forecast.
+
+<img src="../assets/paper-figures/padilla-et-al-cogres-2017-fig2.png" alt="Four panels over maps of the Gulf Coast. Panels a and c show a shaded blue cone around a single forecast line. Panels b and d show hundreds of individual dark blue tracks fanning out from a common origin." style="max-height: 400px; margin-top: 12px;">
+
+---
+
+## One Hiccup with Multiple Possibilities {.split}
+
+:::: {.split-content}
+
+::: {}
+- some readers now over-weight the lines
+- "Damage is likely *where a line hits land*, and unlikely between them"
+- Each line is one draw, not a literal path/road
+:::
+
+<img src="../assets/paper-figures/padilla-et-al-cogres-2017-fig2b.png" alt="Hundreds of individual forecast tracks fanning out from a point near the Texas coast across the Gulf of Mexico, densest in the middle and sparse at the edges.">
+
+::::
+
+---
+
+## Hypothetical Outcome Plots (HOPs) {.split}
+
+:::: {.split-content}
+
+::: {}
+Instead of showing the distribution, **animate draws**.
+
+- Each frame is one plausible draw
+- Viewers judge uncertainty by watching many draws
+- Can be more accessible / readable for audiences
+:::
+
+::: {}
+<iframe src="../assets/hops/hop-live.html" title="Live hypothetical outcome plot: static error bars for A and B beside an animation that redraws one random value of each per frame" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid rgba(0, 0, 0, 0.12); box-shadow: 0 10px 28px rgba(0,0,0,0.12);"></iframe>
+
+::: {.caption}
+Live demo based on Hullman, Resnick & Adar, [*PLOS ONE*](https://doi.org/10.1371/journal.pone.0142444) (2015), Fig. 2.
+:::
+:::
+
+::::
+
+---
+
+## Live HOP Demo {.image-frame-slide}
+
+Two Orange Line stops, one real weekday per frame. Which stop is busier?
+
+<img src="../assets/hops/hops-ridership-ordering.gif" alt="Animation of a Hypothetical Outcome Plot. Two horizontal marks, labeled Halsted and 35th/Archer, jump to that day's entry count each frame, with the date shown in the corner. Neither stop stays on top: 35th/Archer is higher on a little over half the days. The busier stop each frame is drawn in orange." style="max-height: 440px; margin-top: 10px;">
+
+::: {.notes}
+Real CTA weekday entries, sampled at random from 2025 onward.
+
+The flips are not pure noise. Seasonal differences: — 35th/Archer leads on nearly every summer weekday, Halsted through much of the winter. The animation samples random weekdays. Setup for the decomposition material.
+
+Asset regenerated by docs/assets/hops/make_hops_animation.py.
+:::
+
+---
+
+## Notes on Uncertainty
+
+::: {.dense}
+- a visualization adopts and/or reinforces a mental model
+- ask/explore **"what will people conclude?"**
+- No display is neutral: "both summary and ensemble displays have inherent biases based on their salient visual features" (Padilla et al., 2017)
+    - Cone viewers said the storm got larger over time 70% of the time, vs. 39% for ensemble viewers (Padilla et al., 2017, Exp. 1)
+- Familiar ≠ easy: error bars "are difficult for users to accurately interpret," while "HOPs require relatively little background knowledge to interpret" (Hullman et al., 2015)
+- Text often carries the uncertainty: it "appeared more often in our sample via textual means" (Hullman & Diakopoulos, 2011)
+    - e.g. the note now printed on NHC's cone
+:::
+
+
+# Visualizing Time Series {.section-header}
+
+
+## Time Series Basics
+
+::: {.incremental}
+- A **univariate time series** is a sequence of observations of the same variable collected over time
+    - not just a "bag of values"
+- Two common goals of time series analysis:
 - **Understand** or explain processes that produced the data
 - **Forecast** future values of the series (i.e. prediction)
 :::
 
 ---
 
-# Time Series Examples
 
-::: {.incremental}
-- Airline passengers
-- Public transit ridership
-- Hourly/Daily/Monthly temperatures
-- Annual spending
-- Other time series you can think of?
-:::
 
----
-
-# Example Viz: The Great Decoupling
-
-::: {.incremental}
-- TK
-- TK
-:::
-
----
-
-# Why I love time series
+## Why I love time series
 
 ::: {.incremental}
 Time series can contextualize (almost) any arbitrary datum
@@ -152,7 +480,19 @@ Time series can contextualize (almost) any arbitrary datum
 
 ---
 
-# Airline Passengers: Setup
+## Time Series Examples
+
+::: {.incremental}
+- Airline passengers
+- Public transit ridership
+- Hourly/Daily/Monthly temperatures
+- Annual spending
+- Other time series you can think of?
+:::
+
+---
+
+## Airline Passengers: Setup
 
 ```{python}
 #| echo: true
@@ -167,10 +507,11 @@ airline.sample(5, seed=42).sort("Month")
 
 ---
 
-# Airline Passengers Example {.code-figure-slide}
+## Airline Passengers Example {.code-figure-slide auto-animate=true}
 
 ```{python}
 #| echo: true
+#| label: airline-line
 #| fig-alt: "Line plot of monthly international airline passengers from 1949 to 1960, showing an upward trend with repeating seasonal peaks each summer that grow larger over time"
 airline = airline.with_columns(pl.col("Month").str.to_date("%Y-%m-%d"))
 ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"])
@@ -180,34 +521,29 @@ plt.tight_layout()
 
 ---
 
-# Airline Passengers: What Do You Notice?
+## Airline Passengers: What Do You Notice? {.split auto-animate=true}
 
-::: {.columns}
-::: {.column width="50%"}
-::: {.incremental}
-- How to describe this series?
-- Overall trend(s)?
-- Seasonal changes?
-- Potential explanations?
+::: {.split-content .golden-columns}
+
+::: {}
+<img src="week6_files/figure-revealjs/airline-line-output-1.svg" alt="Line plot of monthly international airline passengers from 1949 to 1960, showing an upward trend with repeating seasonal peaks each summer that grow larger over time" style="max-height: 200px;">
+
+1. How to describe this series?
+2. Overall trend(s)? Seasonal changes?
+3. Potential explanations?
 :::
-:::
-::: {.column width="50%"}
-```{python}
-#| echo: false
-#| fig-alt: "Line plot of monthly international airline passengers from 1949 to 1960, showing an upward trend with repeating seasonal peaks each summer that grow larger over time"
-ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"])
-ax.set_ylim(bottom=0)
-plt.tight_layout()
-```
-:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
 :::
 
 ---
 
-# Rolling Average
+## Rolling Average
 
 ```{python}
 #| echo: true
+#| code-line-numbers: "2"
 airline = airline.with_columns(
     pl.col("Passengers").rolling_mean(window_size=12).alias("trend")
 )
@@ -216,7 +552,7 @@ airline.sample(5, seed=42).sort("Month")
 
 ---
 
-# Rolling Average {.code-figure-slide}
+## Rolling Average {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -231,21 +567,21 @@ plt.tight_layout()
 
 ---
 
-# Four-part Decomposition
+## Four-part Decomposition
 
 Time series can be decomposed into four parts:
 
 ::: {.incremental}
-- **Level** — Baseline average value
-- **Trend** — Long-term increase or decrease
-- **Seasonality** — Repeating periodic pattern(s)
-- **Noise** — Random/unexplained variation
+- **Level**: Baseline average value
+- **Trend**: Long-term increase or decrease
+- **Seasonality**: Repeating periodic pattern(s)
+- **Noise**: Random/unexplained variation
 :::
 
 
 ---
 
-# Additive vs. Multiplicative Seasonality
+## Additive vs. Multiplicative Seasonality
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -264,43 +600,86 @@ $$y(t) = T \times S \times N$$
 
 Seasonality **scales as the trendline continues** (bigger baseline means bigger swings).
 
-Use when amplitudes grow.
+Use when amplitudes grow over time.
 :::
 :::
 
-::: {.fragment}
-
-
-_(Basically, if peaks get taller as the series continues, use multiplicative.)_
-:::
 
 
 ---
 
-# Additive vs. Multiplicative: Side by Side {.code-figure-slide}
+## Additive vs. Multiplicative Example {.code-figure-side}
 
 ```{python}
 #| echo: true
-#| fig-alt: "Two side-by-side seasonal component plots: the additive model shows growing seasonal amplitude over time, while the multiplicative model shows a stable repeating wave, making clear the multiplicative model is the better fit"
-from statsmodels.tsa.seasonal import seasonal_decompose
-fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
-for model, ax in zip(["additive", "multiplicative"], axes):
-    r = seasonal_decompose(airline["Passengers"].to_numpy().astype(float), model=model, period=12)
-    ax.plot(r.seasonal[:36])
-    ax.set_title(f"{model.capitalize()}")
-    ax.set_xlabel("Month (first 3 years)")
-    ax.set_ylabel("Seasonal component", color="darkorange", fontweight="bold")
-    ax.axhline(0 if model == "additive" else 1, color="darkorange", linewidth=1.2, linestyle="--", alpha=0.6)
-    ax.tick_params(axis="y", colors="darkorange", labelsize=8)
-    ax.spines["left"].set_color("darkorange")
+#| fig-alt: "Two stacked toy series over four years of months, each with a dashed gray trend line rising from 100 to about 335, on a shared y-axis. Top, additive: the series hugs the trend with small swings that stay the same height the whole way. Bottom, multiplicative: the swings start small and grow much wider as the trend rises."
+import numpy as np
+t = np.arange(48)  # 48 months
+trend = 100 + 5 * t
+wave = np.sin(2 * np.pi * t / 12)
+add = trend + 12 * wave
+mult = trend * (1 + 0.45 * wave)
+fig, axes = plt.subplots(
+    2, 1, figsize=(5, 5),
+    sharex=True, sharey=True)
+toys = {"Additive": add,
+        "Multiplicative": mult}
+for ax, name in zip(axes, toys):
+    ax.plot(trend, "--", c="gray")
+    ax.plot(toys[name])
+    ax.set_title(name)
+axes[-1].set_xlabel("Month")
 plt.tight_layout()
 ```
 
+---
+
+## Additive vs. Multiplicative, Side by Side {.text-figure-slide}
+
+::: {.columns}
+::: {.column width="50%"}
+```{python}
+#| echo: true
+#| output: false
+from statsmodels.tsa.seasonal import (
+    seasonal_decompose)
+y = airline["Passengers"].to_numpy()
+fig, axes = plt.subplots(
+    1, 2, figsize=(5.6, 2.2))
+for ax, model, unit, base in zip(axes,
+        ["additive", "multiplicative"],
+        ["± passengers (k)", "× trend"],
+        [0, 1]):
+    r = seasonal_decompose(
+        y, model=model, period=12)
+    ax.plot(r.seasonal[:36])
+    ax.axhline(base, c="gray", ls="--")
+    ax.set(title=model, ylabel=unit,
+           xlabel="Month")
+plt.tight_layout()
+```
+:::
+::: {.column width="50%"}
+```{python}
+#| echo: false
+#| fig-alt: "Two side-by-side seasonal components from seasonal_decompose on the airline data, first three years. Both are the same repeating 12-month wave peaking in July. Left, additive: labeled in passengers (thousands) relative to trend, swinging from about -54 to +64 around a dashed zero line. Right, multiplicative: labeled as a multiple of trend, swinging from about 0.80 to 1.23 around a dashed line at 1."
+fig
+```
+
+::: {.dense-smaller}
+**The decomposition:** `seasonal_decompose` removes a 12-month moving-average trend, then averages what's left by calendar month. That average, repeated every year, is the seasonal component; the rest is residual.
+:::
+
+::: {.dense-smaller}
+**Reading the plots:** same wave, different units. Additive: July = trend **+64k** passengers. Multiplicative: July = trend **×1.23**, so the bump grows as the trend does.
+:::
+:::
+:::
 
 
 ---
 
-# Choosing a Seasonality Model
+## Choosing a Seasonality Model
 
 **Use additive when** seasonal swings are consistently the same size.
 
@@ -308,18 +687,15 @@ plt.tight_layout()
 
 **Use multiplicative when** seasonal swings scale with the trend.
 
-- _Example: airline passengers — summer peaks are larger as the overall baseline gets higher (more people are flying)._
+- _Example: airline passengers — summer peaks are larger as the overall baseline gets higher (more people flying)._
 
-Remember to plot the raw data, check if the peaks get taller.
+Plot the raw data and check if the peaks get taller.
 
 
 ---
 
 
-
-
-
-# `seasonal_decompose`: Four Components
+## `seasonal_decompose`: Four Components
 
 ```{python}
 #| echo: true
@@ -332,7 +708,7 @@ result = seasonal_decompose(values, model="multiplicative", period=12)
 
 ---
 
-# `seasonal_decompose`: Four Components {.code-figure-slide}
+## `seasonal_decompose`: Four Components {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -346,7 +722,7 @@ plt.tight_layout()
 
 ---
 
-# The Trend Component {.code-figure-slide}
+## The Trend Component {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -366,7 +742,7 @@ plt.tight_layout()
 
 ---
 
-# The Seasonal Component
+## The Seasonal Component
 
 ```{python}
 #| echo: true
@@ -383,7 +759,7 @@ We'll check to see if the seasonal factor stays **constant** over time (with a m
 
 ---
 
-# The Seasonal Component: Stable Over Time? {.code-figure-slide}
+## The Seasonal Component: Stable Over Time? {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -401,7 +777,7 @@ plt.tight_layout()
 
 ---
 
-# The Residuals {.code-figure-slide}
+## The Residuals {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -420,83 +796,10 @@ plt.tight_layout()
 ```
 
 
+# Time Series Example with CTA Rides {.section-header}
 
 
----
-
-# Stationarity
-
-- Some forecasting models assume stationarity
-- So you must know whether a series is stationary before modeling
-
-A stationary series is defined by:
-
-::: {.incremental}
-- **Constant mean** — no long-term drift up or down
-- **Constant variance** — spread stays the same over time
-- **No trend or seasonality**
-:::
-
-
----
-
-# Stationary? {.code-figure-slide}
-
-```{python}
-#| echo: true
-#| fig-alt: "Line plot of monthly airline passengers from 1949 to 1960, showing an upward trend with growing seasonal oscillations before differencing"
-airline_diff = airline.with_columns(
-    pl.col("Passengers").diff().alias("first_diff")
-).drop_nulls()
-
-ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"])
-ax.set_ylim(bottom=0)
-ax.set_ylabel("Passengers")
-ax.set_title("Original Series")
-plt.tight_layout()
-```
-
----
-
-# Making a Series Stationary: Differencing
-
-**Differencing** removes trend by computing the difference between consecutive observations:
-
-$$Y'_t = Y_t - Y_{t-1}$$
-
-This is called **first-order differencing** (difference order = 1).
-
-::: {.incremental}
-- (Recognize this concept?)
-- Repeat the process for stronger trends
-    - second-order differencing removes quadratic trends
-- _Example: if passengers are 100 → 120 → 139, the first differences are 20, 19 (much flatter)_
-:::
-
----
-
-
-# Differencing: Before and After {.code-figure-slide}
-
-```{python}
-#| echo: true
-#| fig-alt: "Two side-by-side panels: the original airline passenger series on the left with its upward trend and growing seasonal swings, and the first-order differenced series on the right oscillating around zero with no visible trend"
-fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
-sns.lineplot(x=airline["Month"], y=airline["Passengers"], ax=axes[0])
-axes[0].set_ylim(bottom=0); axes[0].set_title("Before: Original Series")
-sns.lineplot(x=airline_diff["Month"], y=airline_diff["first_diff"], ax=axes[1])
-axes[1].axhline(0, color="gray", linestyle="--", alpha=0.5)
-axes[1].set_ylabel("Difference"); axes[1].set_title("After: First-Order Differencing")
-plt.tight_layout()
-```
-
----
-
-# Time Series Example: CTA Rides {.section-header}
-
----
-
-# Load UIC-Halsted Daily Ridership
+## Load UIC-Halsted Daily Ridership
 
 ```{python}
 #| echo: true
@@ -507,7 +810,7 @@ uic.sample(5, seed=42)
 
 ---
 
-# Load UIC-Halsted Daily Ridership {.code-figure-slide}
+## Load UIC-Halsted Daily Ridership {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -526,7 +829,7 @@ plt.tight_layout()
 
 ---
 
-# Just for Fun {.code-figure-slide}
+## Just for Fun {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -542,8 +845,7 @@ plt.tight_layout()
 ---
 
 
-
-# Weekday variation {.code-figure-slide}
+## Weekday variation {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -559,7 +861,7 @@ plt.tight_layout()
 
 ---
 
-# Decomposing with Period = 7 {.code-figure-slide}
+## Decomposing with Period = 7 {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -574,7 +876,7 @@ plt.tight_layout()
 
 ---
 
-# Period=7 Decomposition: What's Still There? {.code-figure-slide}
+## Period=7 Decomposition: What's Still There? {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -593,7 +895,7 @@ plt.tight_layout()
 
 ---
 
-# Monthly Variation(s) for UIC-Halsted Stop {.code-figure-slide}
+## Monthly Variation(s) for UIC-Halsted Stop {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -611,7 +913,7 @@ plt.tight_layout()
 
 ---
 
-# MSTL: Multiple Seasonal Decomposition {.code-figure-slide}
+## MSTL: Multiple Seasonal Decomposition {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -627,37 +929,44 @@ plt.tight_layout()
 
 ---
 
-# Understanding the Decomposition {.text-figure-slide}
+## Understanding the Decomposition {.text-figure-slide}
 
 ::: {.columns}
-::: {.column width="50%"}
-::: {.incremental}
+::: {.column width="45%"}
+::: {.incremental .dense}
 - **Trend**: steady through ~2019, collapse in spring 2020 (COVID), gradual recovery
 - **Weekly seasonality**: weekday vs weekend ridership
 - **Annual seasonality**: dips in January, summer, and December (academic calendar)
 - **Residuals**: large spikes or dips mark unusual days — holidays, extreme weather, special events
 :::
 :::
-::: {.column width="50%"}
+::: {.column width="55%"}
 ```{python}
 #| echo: false
-#| fig-alt: "Five-panel MSTL decomposition of UIC-Halsted daily ridership showing observed, trend, weekly seasonal, annual seasonal, and residual components"
-fig = mstl.plot()
-_w = plt.rcParams["figure.figsize"][0]
-fig.set_size_inches(_w, _w * 1.618)
-fig.get_axes()[-1].set_xlabel("Day # (since Jan 2016)")
-plt.tight_layout()
+#| fig-alt: "Five-panel MSTL decomposition of UIC-Halsted daily ridership, 2016 onward, each panel labeled on its y-axis: Observed, Trend, Weekly (7-day) seasonal, Annual (365-day) seasonal, and Residual."
+panels = [
+    ("Observed", mstl.observed),
+    ("Trend", mstl.trend),
+    ("Weekly\n(7-day)", mstl.seasonal[:, 0]),
+    ("Annual\n(365-day)", mstl.seasonal[:, 1]),
+    ("Residual", mstl.resid),
+]
+with plt.rc_context({"font.size": 13}):
+    fig, axes = plt.subplots(len(panels), 1, sharex=True, figsize=(6.3, 5.4))
+    for ax, (label, y) in zip(axes, panels):
+        ax.plot(uic["date"], y, lw=0.6, color=CTA_BLUE)
+        ax.set_ylabel(label, rotation=0, ha="right", va="center")
+        ax.yaxis.set_major_locator(plt.MaxNLocator(3))
+    plt.tight_layout(h_pad=0.4)
 ```
 :::
 :::
 
----
 
-# A Different Station: Washington/Wabash {.section-header}
+# A Different Station (Washington/Wabash) {.section-header}
 
----
 
-# Load Washington/Wabash
+## Load Washington/Wabash
 
 ```{python}
 #| echo: true
@@ -674,7 +983,7 @@ wabash.sample(5, seed=42).sort("date")
 
 ---
 
-# Washington/Wabash: Ridership Over Time {.code-figure-slide}
+## Washington/Wabash Ridership Over Time {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -688,7 +997,7 @@ plt.tight_layout()
 
 ---
 
-# Washington/Wabash: Weekday Patterns {.code-figure-slide}
+## Washington/Wabash Daily Patterns {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -703,7 +1012,7 @@ plt.tight_layout()
 
 ---
 
-# Two Stations, Two Rhythms? (Weekday) {.code-figure-slide}
+## Two Stations, Two Rhythms? (Daily) {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -719,7 +1028,7 @@ plt.tight_layout()
 
 ---
 
-# Two Stations, Two Rhythms? (Monthly) {.code-figure-slide}
+## Two Stations, Two Rhythms? (Monthly) {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -736,10 +1045,8 @@ plt.tight_layout()
 
 ---
 
-# Intuition
+## Intuition
 
-
-- the Loop has more weekend traffic (shopping, tourism, events, etc.)
 - **Academic calendar**
     - UIC dips in January, summer, and December
     - the Loop's annual seasonal swing is weaker
@@ -747,34 +1054,126 @@ plt.tight_layout()
     - Washington/Wabash only opened in **Aug 2017**
     - (replaced Madison/Wabash and Randolph/Wabash)
     - its series is much shorter
+    - the Loop has more weekend traffic (shopping, tourism, events, etc.)
+
 
 ---
 
-# More Forecasting Models {.section-header}
+## Any questions?
+
+- PrairieLearn Homeworks?
+- Group Projects? (data acquisition checkpoint due Sunday)
+- Coding Exercise 01? (due Wednesday)
+- Other logistics?
+- (You can also stay after class for questions)
 
 ---
 
-# Forecasting Models: Overview
+## Upload your worksheet {#upload-worksheet-day-1}
 
-May be useful when working with more complex time series.
+Take a picture of your worksheet, upload it in Canvas
 
-::: {.incremental}
-- **AR(p)** — predict from the last *p* observations
-- **MA(q)** — predict from the last *q* forecast errors
-- **ARMA(p, q)** — combines AR and MA; requires a stationary series
-- **ARIMA(p, d, q)** — ARMA after *d* rounds of differencing; handles trend
-- **SARIMA(p, d, q)(P, D, Q)m** — adds seasonal AR, differencing, MA
+
+# Week 6, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
+
+<h2>Toward Causality</h2>
+
+Jack Bandy
+2026
+
+
+## Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+- Week 6: Washington/Wabash
+- Day 2
+    - Visualization Rhetoric, Continued
+    - Bayesian Time Series Modeling
+    - Moving Toward Causality
+:::
+
+![](../assets/orange-line-map-stops/stop07-washington-wabash.svg){.figure alt="Orange Line map with the Washington/Wabash stop marked, the Week 6 stop"}
+
 :::
 
 
+# Visualization Rhetoric, Continued {.section-header}
+
+
+## Misleading Axes
+
+::: {.caption}
+Bergstrom & West, *Calling Bullshit*, ["Misleading Axes on Graphs"](https://www.callingbullshit.org/tools/tools_misleading_axes.html) ([video 6.2](https://www.youtube.com/watch?v=9pNWVMxaFuM)).
+:::
+
+::: {.incremental .dense}
+- Bar charts: the axis should include zero (week 5: proportional ink)
+- Line charts: "a line graph does not need to include zero on the dependent variable axis"
+- Sometimes it *shouldn't*: a zero-based temperature chart made warming look flat; its designers "made graphical display choices that are inconsistent with the story they are telling"
+- Two y-axes can be rescaled until unrelated series seem to move together
+- "An axis should not change scales midstream"
+- An inverted axis can make a rise look like a fall
+:::
+
 ---
 
+## Same Data, Two Stories {.code-figure-slide}
 
-# Bayesian Time Series {.section-header}
+```{python}
+#| echo: true
+#| fig-alt: "Two line charts of UIC-Halsted rides per year. Left, 2023 to 2025 only, with the y-axis zoomed to the data: a steep climb titled 'Surging: up 37% since 2023'. Right, 2016 to 2025 with the y-axis from zero: a plateau near 1.7 million, a collapse to about half a million in 2020, and a partial recovery to 1.17 million, titled 'Still 32% below 2019'."
+yearly = (uic.group_by(pl.col("date").dt.year().alias("year"))
+          .agg(pl.col("rides").sum()).sort("year").filter(pl.col("year") <= 2025))
+recent = yearly.filter(pl.col("year") >= 2023)
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
+axes[0].plot(recent["year"], recent["rides"], marker="o", color=CTA_BLUE)
+axes[0].set(title="Surging: up 37% since 2023", xticks=[2023, 2024, 2025])
+axes[1].plot(yearly["year"], yearly["rides"], marker="o", color=CTA_BLUE)
+axes[1].set(title="Still 32% below 2019", ylim=(0, None))
+for ax in axes: ax.yaxis.set_major_formatter(lambda v, _: f"{v / 1e3:,.0f}k")
+plt.tight_layout()
+```
+
+::: {.notes}
+UIC-Halsted rides per year: 858,623 in 2023, 1,172,124 in 2025 (+37%); 1,729,039 in 2019, so 2025 is 32% below. Both panels are honest line charts; the window and the y-range pick the story. Hullman & Diakopoulos call the y-range version "axis thresholding" (information access rhetoric).
+:::
 
 ---
 
-# Why Bayesian?
+## Bubbles: Area, Not Radius {.code-figure-slide}
+
+::: {.caption}
+"In the Gapminder chart above, the area of each disk is proportional to the value indicated by size." Bergstrom & West, *Calling Bullshit*, ["The Principle of Proportional Ink"](https://www.callingbullshit.org/tools/tools_proportional_ink.html) ([video 6.6](https://www.youtube.com/watch?v=oNhusd3xFC4)).
+:::
+
+```{python}
+#| echo: false
+#| fig-alt: "UIC-Halsted rides in 2019 and 2021 drawn as pairs of circles. Left, area proportional to rides: the 2021 circle is a bit over half the width of the 2019 circle. Right, radius proportional to rides: the 2021 circle is under a third the width and looks about ten times smaller."
+import numpy as np
+from matplotlib.patches import Circle
+big, small = yearly.filter(pl.col("year").is_in([2019, 2021]))["rides"].to_list()
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
+scales = {"Area ∝ rides": np.sqrt, "Radius ∝ rides": lambda x: x}
+for ax, (title, radius) in zip(axes, scales.items()):
+    for x, v, label in [(0, big, "2019"), (2.3, small, "2021")]:
+        ax.add_patch(Circle((x, 0), radius(v / big), color=CTA_BLUE))
+        ax.annotate(label, (x, -1.3), ha="center")
+    ax.set(title=title, xlim=(-1.2, 3.5), ylim=(-1.5, 1.1), aspect="equal")
+    ax.axis("off")
+plt.tight_layout()
+```
+
+::: {.notes}
+2019 had about 3.1 times the rides of 2021. Scaling radius by value makes the area ratio about 9.8, a lie factor of about 3 (Tufte's term; Calling Bullshit uses it for a radius-scaled bubble chart with a lie factor of 2.5).
+:::
+
+
+# Time Series Modeling {.section-header}
+
+
+## Why Bayesian?
 
 ::: {.incremental}
 - Classical models usually just give a **single point forecast**
@@ -788,7 +1187,7 @@ May be useful when working with more complex time series.
 
 ---
 
-# A Bayesian Ridership Model
+## A Bayesian Ridership Model
 
 Let's start by modeling each day as **intercept + weekday effect + month effect + noise**, and let the data update our beliefs.
 
@@ -819,7 +1218,7 @@ with pm.Model() as model:
 
 ---
 
-# Posterior: Weekday Effects {.code-figure-slide}
+## Posterior: Weekday Effects {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -835,13 +1234,11 @@ ax.set(xlabel="Effect on daily rides (vs. average)", title="Posterior weekday ef
 plt.tight_layout()
 ```
 
----
 
 # Using the Model to Predict {.section-header}
 
----
 
-# Fitting and Forecasting
+## Fitting and Forecasting
 
 Each posterior draw is one **plausible version of the world**.
 
@@ -857,7 +1254,7 @@ Each posterior draw is one **plausible version of the world**.
 
 ---
 
-# Predicting a Given Day
+## Predicting a Given Day
 
 ```{python}
 #| echo: true
@@ -874,7 +1271,7 @@ def predict(day, mon):
 
 ---
 
-# Predicting a Given Day {.code-figure-slide}
+## Predicting a Given Day {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -893,7 +1290,7 @@ plt.tight_layout()
 
 ---
 
-# Reading the Predictions
+## Reading the Predictions
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -915,156 +1312,84 @@ plt.tight_layout()
 
 ---
 
-# Visualizing Intervals {.section-header}
+## Extrapolation: The 2156 Olympics
 
----
-
-# Ways to Visualize Intervals
-
-- **Summary** displays: error bars, shaded bands, violin plots
-- **Frequency** displays: quantile dotplots, icon arrays
-- **Ensemble** displays: draw many possible outcomes at once
-- **Animated** displays: Hypothetical Outcome Plots (HOPs)
-
-
----
-
-# Example: Hurricanes {.section-header}
-
----
-
-# The Cone of Uncertainty {.image-frame-slide}
-
-The National Hurricane Center's standard forecast graphic uses a point that widens into a "swath" where the storm center might cross.
-
-<img src="../assets/paper-figures/padilla-et-al-cogres-2017-fig1.png" alt="National Hurricane Center track forecast for Hurricane Gustav, 30 August 2008. A black line runs northwest from Cuba into Louisiana with hurricane symbols at forecast positions, surrounded by a white cone that widens with time." style="max-height: 420px; margin-top: 18px;">
-
-
----
-
-# What Do People Think the Cone Means?
+::: {.caption}
+Bergstrom & West, *Calling Bullshit*, ["Case Study: The Gender Gap in 100-meter Dash Times"](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html).
+:::
 
 ::: {.incremental}
-- The cone shows where the **center** of the storm might go
-    - Width comes from *historical forecast error*
-    - not from the storm
-- But many readers see it as the **size of the storm**, growing over time
-- TK: Hullman — a visualization can be accurate and still be misread
+- Tatem et al. (2004, *Nature*) fit straight lines to Olympic 100 m winning times
+    - women's times were falling faster, so the lines cross: women beat men in **2156**
+- 104 years of data, extended hundreds of years out
+    - "in the absence of any underlying conceptual or mechanistic model"
+- Our Bayesian model had the same limit: it only knows the weekdays and months it saw
 :::
 
 ---
 
-# Visualizing Multiple Possibilities {.image-frame-slide}
+## A Reply in *Nature* {.quote-slide}
 
-Summary displays (a, c) vs. ensemble displays (b, d) of the same forecast.
+> They omit to mention, however, that (according to their analysis) a far more interesting race should occur in about 2636, when times of less than zero seconds will be recorded.
 
-<img src="../assets/paper-figures/padilla-et-al-cogres-2017-fig2.png" alt="Four panels over maps of the Gulf Coast. Panels a and c show a shaded blue cone around a single forecast line. Panels b and d show hundreds of individual dark blue tracks fanning out from a common origin." style="max-height: 400px; margin-top: 12px;">
-
----
-
-# One Hiccup with Multiple POssibilities {.split}
-
-:::: {.split-content}
-
-::: {}
-- some readers now over-weight the lines themselves
-- "Damage is likely *where a line hits land*, and unlikely between them"
-- Each line is one draw, not a literal path/road
+::: {.attribution}
+Kenneth Rice
 :::
 
-<img src="../assets/paper-figures/padilla-et-al-cogres-2017-fig2b.png" alt="Hundreds of individual forecast tracks fanning out from a point near the Texas coast across the Gulf of Mexico, densest in the middle and sparse at the edges.">
-
-::::
-
----
-
-# Hypothetical Outcome Plots (HOPs) {.split}
-
-:::: {.split-content}
-
-::: {}
-Instead of showing the distribution, **animate draws**.
-
-- Each frame is one plausible outcome/draw
-- The audience estimates uncertainty by watching mlutiple draws
-- Can be more accessible / readable for audiences
+::: {.quote-source}
+"Sprint research runs into a credibility gap," [*Nature* 432:147 (2004)](https://doi.org/10.1038/432147b), responding to Tatem et al., ["Momentous sprint at the 2156 Olympics?"](https://doi.org/10.1038/431525a), *Nature* 431:525 (2004). Quoted in [*Calling Bullshit*](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html).
 :::
 
-<img class="figure" src="../assets/paper-figures/hullman-et-al-plosone-2015-fig2.png" alt="Three depictions of the same distribution: error bars, a violin plot, and selected frames of a Hypothetical Outcome Plot in which a horizontal line jumps to a different value in each frame.">
-
-::::
-
 ---
 
-# Live HOP Demo {.image-frame-slide}
+## Extrapolating CTA's Recovery {.code-figure-side}
 
-Two Orange Line stops, one real weekday per frame. Which stop is busier?
-
-<img src="../assets/hops/hops-ridership-ordering.gif" alt="Animation of a Hypothetical Outcome Plot. Two horizontal marks, labeled Halsted and 35th/Archer, jump to that day's entry count each frame, with the date shown in the corner. Neither stop stays on top: 35th/Archer is higher on a little over half the days. The busier stop each frame is drawn in orange." style="max-height: 440px; margin-top: 10px;">
+```{python}
+#| echo: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-alt: "UIC-Halsted rides per year from 2016 to 2025 with a dashed straight line fit to 2021 through 2025 and extended from 2014 to 2040. The line crosses zero in 2016, a year that actually had about 1.7 million rides, and climbs past 3 million by 2040, well above any year on record."
+rec = yearly.filter(pl.col("year") >= 2021)
+slope, intercept = np.polyfit(
+    rec["year"], rec["rides"], 1)
+years = np.arange(2014, 2041)
+ax = sns.lineplot(
+    x=yearly["year"], y=yearly["rides"],
+    marker="o", color=CTA_BLUE,
+    label="observed")
+ax.plot(years, slope * years + intercept,
+        "--", color="gray",
+        label="line fit to 2021–2025")
+ax.axhline(0, color="black", linewidth=0.8)
+ax.yaxis.set_major_formatter(
+    lambda v, _: f"{v / 1e3:,.0f}k")
+ax.set(xlabel="Year", ylabel="Rides/year")
+ax.legend()
+plt.tight_layout()
+```
 
 ::: {.notes}
-Real CTA weekday entries, sampled at random from 2025 onward.
-
-The flips are not pure noise. Seasonal differences: — 35th/Archer leads on nearly every summer weekday, Halsted through much of the winter. The animation samples random weekdays. Setup for the decomposition material.
-
-Asset regenerated by docs/assets/hops/make_hops_animation.py.
+The fit gains about 139,000 rides a year. Backward, it reaches zero in 2016 (actual: 1.73 million). Forward, 3.2 million a year by 2040, far above the 2019 peak. Same move as Rice's reply.
 :::
 
 ---
 
-# Notes on Uncertainty
+## Some Vocabulary for Modeling
 
 ::: {.incremental}
-- a visualization adopts and/or reinforces a mental model
-- ask/explore **"what will people conclude?"**
+- So far, the date was essentially the model: each step based on previous step
+- But ridership responds to factors (dare we say **causes??**), which can be identified and measured.
+- Could we treat each day as an **independent observation**?
+- Could we predict the observation based on **covariates** like enrollment, weekday, holiday, special event, weather, etc.?
+- This is a **causal** framing
+    - We can use it to design a regression model
 :::
 
----
-
-# Another Approach: Ignore Time
-
-So far, the date was essentially the model. But ridership responds to factors (dare we say **causes??**), which can be identified and measured.
-
-::: {.incremental}
-- Treat each day as an independent **observation** (a "unit"), not a step in a sequence.
-- Predict from **covariates**: enrollment, weekday, holiday, special event, weather, etc...
-    - What else comes to mind?
-- This is a **causal / regression** framing
-    - a preview of how we'll model
-:::
-
----
-
-# Week 6, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
-
-<h2>Moving Toward Causality</h2>
-
-Jack Bandy
-2026
-
----
-
-# Map {.split}
-
-::: {.split-content .narrow-aside}
-
-::: {}
-- Week 6: Washington/Wabash
-- Day 2
-    - Moving Toward Causality
-:::
-
-![](../assets/orange-line-map-stops/stop07-washington-wabash.svg){.figure alt="Orange Line map with the Washington/Wabash stop marked, the Week 6 stop"}
-
-:::
-
----
 
 # Moving Toward Causality {.section-header}
 
----
 
-# Causality Example: What Influences CTA Ridership? {.image-frame-slide}
+## Causality Example: What Influences CTA Ridership? {.image-frame-slide}
 
 Say we want to estimate how many people will go through the UIC-Halsted station on a given date. What would you want to know?
 
@@ -1073,7 +1398,7 @@ Say we want to estimate how many people will go through the UIC-Halsted station 
 
 ---
 
-# Causality Example: A Simple DAG for Ridership {.image-frame-slide}
+## Causality Example: A Simple DAG for Ridership {.image-frame-slide}
 
 ```{python}
 #| echo: false
@@ -1108,7 +1433,7 @@ plt.tight_layout()
 
 ---
 
-# Causality Example: Indirect Causes of Ridership
+## Causality Example: Indirect Causes of Ridership
 
 What drives daily ridership at a station? Not always directly — some causes work through **intermediate factors**.
 
@@ -1124,7 +1449,7 @@ What drives daily ridership at a station? Not always directly — some causes wo
 ---
 
 
-# Causality Example: A Hierarchical DAG for Ridership {.image-frame-slide}
+## Causality Example: A Hierarchical DAG for Ridership {.image-frame-slide}
 
 ```{python}
 #| echo: false
@@ -1176,7 +1501,7 @@ plt.tight_layout()
 
 ---
 
-# The Elemental Confounds
+## The Elemental Confounds
 
 For now, just know what they are (we will look at workflow implications soon).
 
@@ -1190,11 +1515,11 @@ For now, just know what they are (we will look at workflow implications soon).
 
 ---
 
-# The Fork {.split}
+## The Fork {.split}
 
 :::: {.split-content}
 
-::: {}
+::: {.dense}
 $Z$ causes $X$ **and** it causes $Y$.
 
 - So $X$ and $Y$ move together, even though neither one causes the other
@@ -1215,7 +1540,7 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 
 ---
 
-# The Pipe {.split}
+## The Pipe {.split}
 
 :::: {.split-content}
 
@@ -1238,7 +1563,7 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 
 ---
 
-# The Collider {.split}
+## The Collider {.split}
 
 :::: {.split-content}
 
@@ -1262,11 +1587,11 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 
 ---
 
-# Descendant Example: A Grill {.split}
+## Descendant Example: A Grill {.split}
 
 :::: {.split-content}
 
-::: {}
+::: {.dense}
 The gas level $X$ and the igniter $Y$ both feed the flame $Z$, and the flame decides how well the hotdog cooks $D$.
 
 - Imagine nobody wrote down the flame
@@ -1286,7 +1611,7 @@ Example from Christopher Hitchcock, ["Causal Models"](https://plato.stanford.edu
 
 ---
 
-# The Descendant {.split}
+## The Descendant {.split}
 
 :::: {.split-content}
 
@@ -1307,7 +1632,135 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 
 ::::
 
+
+# Appendix: Visualization Rhetoric {.section-header}
+
+
+## Families of Rhetorical Techniques
+
+::: {.caption}
+Hullman & Diakopoulos, ["Visualization Rhetoric,"](https://doi.org/10.1109/TVCG.2011.255) *IEEE TVCG* (2011), from 51 professionally-produced narrative visualizations, pp. 2233–2236.
+:::
+
+::: {.dense}
+| Family | Function | Examples from the paper |
+|---|---|---|
+| **Information access** | "limit the amount of information presented" | omission, axis thresholding, aggregating |
+| **Provenance** | "provide background information" | citing data sources, noting uncertainty |
+| **Mapping** | "map elements of the visualization to non-explicit concepts" | "up = more or better, down = less or bad"; party colors |
+| **Linguistic** | "an origin in linguistic rhetoric" | irony, metaphor, rhetorical questions, bold fonts |
+| **Procedural** | "constrain interaction over time" | default views, fixed comparisons |
+:::
+
+::: {.notes}
+Bridge to fonts: "Typographic emphases like font bolding or italicizing derives meaning from conventions long associated with typography" (p. 2235).
+
+Bridge to uncertainty: in their sample, uncertainty mostly appeared as text, and "The reliance on textual means may indicate a lack of adequate methods or commonly understood codes for visually representing uncertainty to non-experts" (p. 2234).
+:::
+
 ---
+
+## Viewing Codes: Denotation and Connotation
+
+::: {.caption}
+Hullman & Diakopoulos, ["Visualization Rhetoric,"](https://doi.org/10.1109/TVCG.2011.255) *IEEE TVCG* (2011), p. 2237.
+:::
+
+::: {.incremental}
+- [Denotation]{.term}: "descriptive elements, including either textual or visual statements (such as iconography) that directly attribute features to objects"
+- [Connotation]{.term}: "a secondary symbol cues, but does not directly associate, a meaning"
+- Chart types connote: "line graphs tend to evoke temporal interpretations regardless of the data"
+    - Heights of men and women drawn as a line: "as a person gets taller they become more male"
+:::
+
+::: {.notes}
+The height example is from the study they cite as [54]: Zacks & Tversky (1999), "Bars and lines: A study of graphic communication." This sets up the time series section: a line says "time" before anyone reads the axis.
+:::
+
+
+# Appendix: Forecasting Models {.section-header}
+
+
+## Stationarity
+
+- Some forecasting models assume stationarity
+- So you must know whether a series is stationary before modeling
+
+A stationary series is defined by:
+
+::: {.incremental}
+- **Constant mean** — no long-term drift up or down
+- **Constant variance** — spread stays the same over time
+- **No trend or seasonality**
+:::
+
+
+---
+
+## Stationary? {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line plot of monthly airline passengers from 1949 to 1960, showing an upward trend with growing seasonal oscillations before differencing"
+airline_diff = airline.with_columns(
+    pl.col("Passengers").diff().alias("first_diff")
+).drop_nulls()
+
+ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"])
+ax.set_ylim(bottom=0)
+ax.set_ylabel("Passengers")
+ax.set_title("Original Series")
+plt.tight_layout()
+```
+
+---
+
+## Making a Series Stationary: Differencing
+
+**Differencing** removes trend by computing the difference between consecutive observations:
+
+$$Y'_t = Y_t - Y_{t-1}$$
+
+This is called **first-order differencing** (difference order = 1).
+
+::: {.incremental}
+- (Recognize this concept?)
+- Repeat the process for stronger trends
+    - second-order differencing removes quadratic trends
+- _Example: if passengers are 100 → 120 → 139, the first differences are 20, 19 (much flatter)_
+:::
+
+---
+
+
+## Differencing: Before and After {.code-figure-slide}
+
+```{python}
+#| echo: true
+#| fig-alt: "Two side-by-side panels: the original airline passenger series on the left with its upward trend and growing seasonal swings, and the first-order differenced series on the right oscillating around zero with no visible trend"
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
+sns.lineplot(x=airline["Month"], y=airline["Passengers"], ax=axes[0])
+axes[0].set_ylim(bottom=0); axes[0].set_title("Before: Original Series")
+sns.lineplot(x=airline_diff["Month"], y=airline_diff["first_diff"], ax=axes[1])
+axes[1].axhline(0, color="gray", linestyle="--", alpha=0.5)
+axes[1].set_ylabel("Difference"); axes[1].set_title("After: First-Order Differencing")
+plt.tight_layout()
+```
+
+---
+
+## Forecasting Models: Overview
+
+May be useful when working with more complex time series.
+
+::: {.incremental}
+- **AR(p)** — predict from the last *p* observations
+- **MA(q)** — predict from the last *q* forecast errors
+- **ARMA(p, q)** — combines AR and MA; requires a stationary series
+- **ARIMA(p, d, q)** — ARMA after *d* rounds of differencing; handles trend
+- **SARIMA(p, d, q)(P, D, Q)m** — adds seasonal AR, differencing, MA
+:::
+
 
 # Sources {.sources}
 
@@ -1328,12 +1781,19 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
    - Jessica Hullman, Paul Resnick, Eytan Adar, ["Hypothetical Outcome Plots Outperform Error Bars and Violin Plots for Inferences about Reliability of Variable Ordering"](https://doi.org/10.1371/journal.pone.0142444), *PLOS ONE* 10(11):e0142444 (2015) — CC BY 4.0; source of the HOPs figure.
    - Alex Kale, Francis Nguyen, Matthew Kay, Jessica Hullman, ["Hypothetical Outcome Plots Help Untrained Observers Judge Trends in Ambiguous Data"](https://doi.org/10.1109/TVCG.2018.2864909), *IEEE TVCG* 25(1):892–902 (2019).
    - Lace Padilla, Matthew Kay, Jessica Hullman, ["Uncertainty Visualization"](https://doi.org/10.1002/9781118445112.stat08296), *Wiley StatsRef: Statistics Reference Online* (2021).
-9. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
-10. Slide deck built with [Quarto](https://quarto.org/) revealjs.
-11. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
-12. Axis label and font sizes: Claus O. Wilke, *Fundamentals of Data Visualization* (O'Reilly, 2019), [ch. 24](https://clauswilke.com/dataviz/small-axis-labels.html). DIKW pyramid figure from [week 1](week1.html).
 
+# Sources (continued) {.sources}
 
-
----
-
+9. The Great Decoupling: Erik Brynjolfsson & Andrew McAfee, ["The Great Decoupling"](https://hbr.org/2015/06/the-great-decoupling), *Harvard Business Review* (June 2015). Recreated from FRED series [OPHNFB](https://fred.stlouisfed.org/series/OPHNFB), [A939RX0Q048SBEA](https://fred.stlouisfed.org/series/A939RX0Q048SBEA), [USPRIV](https://fred.stlouisfed.org/series/USPRIV), and U.S. Census Bureau [Historical Income Table F-7](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-income-families.html).
+10. Newspapers vs. platforms: Pew Research Center, [Newspapers Fact Sheet](https://www.pewresearch.org/journalism/fact-sheet/newspapers/) (News Media Alliance data through 2012, Pew estimates 2013–2022); Google/Alphabet and Facebook/Meta advertising revenue from their 10-K and S-1 filings on [SEC EDGAR](https://www.sec.gov/edgar/search/); inflation-adjusted with CPI-U ([CPIAUCSL](https://fred.stlouisfed.org/series/CPIAUCSL)). Filing-by-filing sources in `docs/assets/newspaper-ad-revenue/SOURCES.md`.
+11. DiCaprio's girlfriends: *Daily Mail* chart as posted by u/Far-Building3569, ["Leonardo DiCaprio's age contrasted with his girlfriends"](https://www.reddit.com/r/charts/comments/1owzkul/leonardo_dicaprios_age_contrasted_with_his/), r/charts (14 Nov 2025); shown as posted, after a blank frame redrawn from its axes.
+12. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
+13. Slide deck built with [Quarto](https://quarto.org/) revealjs.
+14. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+15. Axis label and font sizes: Claus O. Wilke, *Fundamentals of Data Visualization* (O'Reilly, 2019), [ch. 24](https://clauswilke.com/dataviz/small-axis-labels.html). DIKW pyramid figure from [week 1](week1.html).
+16. Gapminder clip: Hans Rosling, ["The best stats you've ever seen"](https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen), TED2006, Monterey, CA (February 2006); segment 2:30–5:15 of the [TED upload on YouTube](https://www.youtube.com/watch?v=hVimVzgtD6w).
+17. Visualization rhetoric: Jessica Hullman and Nicholas Diakopoulos, ["Visualization Rhetoric: Framing Effects in Narrative Visualization"](https://doi.org/10.1109/TVCG.2011.255), *IEEE Transactions on Visualization and Computer Graphics* 17(12):2231–2240 (2011) ([author PDF](https://mucollective.northwestern.edu/files/2011-VisRhetoric-InfoVis.pdf)). The line-graph height example they cite is Jeff Zacks and Barbara Tversky, "Bars and Lines: A Study of Graphic Communication," *Memory & Cognition* 27(6) (1999).
+18. Current hurricane cone: NOAA/NWS National Hurricane Center, [Hurricane Polo graphics archive](https://www.nhc.noaa.gov/archive/2026/POLO_graphics.php), 5-day cone, Intermediate Advisory 24A, 11 AM MST, 26 September 2026; public domain. Download details in `docs/assets/hurricane-cone/SOURCES.md`. The live HOP demo (`docs/assets/hops/hop-live.html`) follows the error-bar vs. HOP comparison in Hullman, Resnick & Adar (2015), Fig. 2.
+19. Misleading axes and proportional ink: Carl T. Bergstrom and Jevin D. West, *Calling Bullshit*, ["Misleading Axes on Graphs"](https://www.callingbullshit.org/tools/tools_misleading_axes.html) and ["The Principle of Proportional Ink"](https://www.callingbullshit.org/tools/tools_proportional_ink.html); videos [6.2](https://www.youtube.com/watch?v=9pNWVMxaFuM) and [6.6](https://www.youtube.com/watch?v=oNhusd3xFC4).
+20. Extrapolation: Bergstrom and West, ["Case Study: The Gender Gap in 100-meter Dash Times"](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html); Andrew J. Tatem, Carlos A. Guerra, Peter M. Atkinson and Simon I. Hay, ["Momentous sprint at the 2156 Olympics?"](https://doi.org/10.1038/431525a), *Nature* 431:525 (2004); Kenneth Rice, ["Sprint research runs into a credibility gap"](https://doi.org/10.1038/432147b), *Nature* 432:147 (2004).
+21. Serif vs. sans-serif: definitions from Wikipedia, ["Serif"](https://en.wikipedia.org/w/index.php?title=Serif&oldid=1366160623) (revision of 26 July 2026); letter images by Stannered after Chmod007, Wikimedia Commons ([01](https://commons.wikimedia.org/wiki/File:Serif_and_sans-serif_01.svg), [02](https://commons.wikimedia.org/wiki/File:Serif_and_sans-serif_02.svg), [03](https://commons.wikimedia.org/wiki/File:Serif_and_sans-serif_03.svg)), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
