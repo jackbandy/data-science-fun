@@ -170,20 +170,22 @@ def build_figure():
     )
     ax.set_xlabel("Days late", fontsize=14, color=STEEL, labelpad=14)
 
-    ax.set_yticks(np.arange(0, 1.01, 0.25))
-    ax.set_yticklabels([f"{v:.0%}" for v in np.arange(0, 1.01, 0.25)])
+    ax.set_yticks(np.arange(0, 1.01, 0.20))
+    ax.set_yticklabels([f"{v:.0%}" for v in np.arange(0, 1.01, 0.20)])
+    ax.set_yticks(np.arange(0.10, 1.01, 0.20), minor=True)
     ax.set_ylabel(
         "Most credit the submission can earn",
         rotation=0, ha="left", va="bottom", fontsize=14, color=STEEL,
     )
     ax.yaxis.set_label_coords(0, 1.015)
     ax.tick_params(axis="y", colors=STEEL, labelsize=12)
+    ax.tick_params(axis="y", which="minor", length=0)
     ax.tick_params(axis="x", length=0, colors=STEEL)
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
     ax.spines["left"].set_color(BORDER)
     ax.spines["bottom"].set_color(BORDER)
-    ax.grid(axis="y", color=BORDER, linewidth=0.8, alpha=0.7)
+    ax.grid(axis="y", which="both", color=BORDER, linewidth=0.8, alpha=0.7)
     ax.set_axisbelow(True)
 
     ax.set_title(
