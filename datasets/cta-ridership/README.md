@@ -13,6 +13,11 @@ derived CSV of CTA annual ridership totals, prepared from public Chicago Transit
 
 - `Station_Entries_-_Daily_Totals_20260527.csv`: Daily station entry totals from the CTA ridership dataset. This file is about 60 MB (an exception to the repository's preferred file-size guideline).
 
+- `Station_Entries_UIC-Halsted_2025.csv`: only the UIC-Halsted (Blue Line, `station_id` 40350) rows for 2025 from the daily totals file above: 365 rows, about 17 KB, otherwise unchanged. The Python Yard (`docs/yard/`) demo reads this copy from GitHub by raw URL, because the full file is too big to download in a browser. `rides` keeps the source's thousands separators (`"1,004"`), so it reads in as text. Regenerate it with:
+  ```
+  { head -1 Station_Entries_-_Daily_Totals_20260527.csv; grep '^"40350",.*/2025",' Station_Entries_-_Daily_Totals_20260527.csv; } > Station_Entries_UIC-Halsted_2025.csv
+  ```
+
 ## Sources
 
 - City of Chicago Data Portal, annual boarding totals: https://data.cityofchicago.org/Transportation/CTA-Ridership-Annual-Boarding-Totals/w8km-9pzd
