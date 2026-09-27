@@ -91,6 +91,10 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  # Python Yard sources. JupyterLite builds them into _site/yard/ after Jekyll
+  # runs; without this, PLAN.md and SPECS.md would be published as pages and
+  # the raw sources would collide with that build.
+  - yard
 
 # Without this the github-pages gem applies jekyll-theme-primer and writes a
 # theme stylesheet into assets/css/; this site brings its own CSS.

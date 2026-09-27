@@ -38,6 +38,9 @@ syllabus_source/.tmp-build/
 # Prompt scratch files
 prompts.txt
 
+# Python Yard: local JupyterLite build (CI builds into _site/yard/)
+docs/yard/_output/
+
 # Sandbox downloader outputs
 sandbox/stanford-109-questions/downloads/
 sandbox/stanford-109-questions/download_stanford_109.py

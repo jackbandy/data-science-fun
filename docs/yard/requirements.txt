@@ -1,0 +1,5 @@
+# NOTICE: This file was modified by an LLM coding system.
+# Pinned together; bump both once per semester (see SPECS.md).
+jupyterlite-core==0.8.4
+jupyterlite-pyodide-kernel==0.8.6
+jupyter-server>=2,<3  # needed to index content/ at build time

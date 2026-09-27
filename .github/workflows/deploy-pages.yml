@@ -462,6 +462,18 @@ jobs:
           cp -R docs/.well-known/. _site/.well-known/
           ls -la _site/.well-known/
 
+      # The Python Yard (JupyterLite) is built after Jekyll, straight into
+      # _site/yard/. docs/_config.yml excludes docs/yard/, so Jekyll neither
+      # publishes the sources nor collides with this output. The build pins its
+      # own packages (docs/yard/requirements.txt) and bundles the lecture
+      # notebooks; datasets are read from GitHub at runtime. See docs/yard/PLAN.md.
+      - name: Build Python Yard
+        run: |
+          uv pip install --system -r docs/yard/requirements.txt
+          SKIP_VENV=1 bash docs/yard/build.sh _site/yard
+          test -f _site/yard/notebooks/index.html
+          test -f _site/yard/files/welcome.ipynb
+
       # Looks for links that point to internal pages or files that don't exist.
       # --offline means it only checks local files
       # Outside links are handled weekly - link-check-external.yml.
@@ -490,6 +502,7 @@ jobs:
             --exclude '\.pdf$'
             --exclude-path _site/slides/_libs
             --exclude-path _site/ethics-in-data-science/book/site_libs
+            --exclude-path _site/yard
             '_site/**/*.html'
           fail: true
 
