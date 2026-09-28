@@ -71,9 +71,9 @@ def _use_repo_font() -> str | None:
 
 def load_paired_weekdays() -> pl.DataFrame:
     """One row per weekday, with both stops' entries; dates present for both."""
-    matches = sorted(DATA_DIR.glob("Station_Entries_*.csv"))
+    matches = sorted(DATA_DIR.glob("Station_Entries_-_Daily_Totals_*.csv"))
     if not matches:
-        raise FileNotFoundError(f"no Station_Entries_*.csv in {DATA_DIR}")
+        raise FileNotFoundError(f"no Station_Entries_-_Daily_Totals_*.csv in {DATA_DIR}")
     csv_path = matches[-1]
 
     names = [name for name, _ in STOPS]
