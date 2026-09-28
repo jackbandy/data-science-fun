@@ -18,6 +18,8 @@ derived CSV of CTA annual ridership totals, prepared from public Chicago Transit
   { head -1 Station_Entries_-_Daily_Totals_20260527.csv; grep '^"40350",.*/2025",' Station_Entries_-_Daily_Totals_20260527.csv; } > Station_Entries_UIC-Halsted_2025.csv
   ```
 
+- `uic_halsted_posterior.nc`: the posterior draws (2 chains × 500) of the Week 6 Bayesian UIC-Halsted ridership model (intercept, weekday and month effects, sigma), saved as netCDF3 so `docs/slides/week6.qmd` loads it instead of sampling on every render. About 170 KB. Regenerate it after changing the model or the data with `fit_uic_halsted_posterior.py` (run instructions in its docstring); the script and the slide's model code must stay in sync.
+
 ## Sources
 
 - City of Chicago Data Portal, annual boarding totals: https://data.cityofchicago.org/Transportation/CTA-Ridership-Annual-Boarding-Totals/w8km-9pzd
