@@ -9,3 +9,13 @@ All three files are from one Wikimedia Commons series, "Recreated by User:Stanne
 | `serif-and-sans-serif-01.svg` | [File:Serif and sans-serif 01.svg](https://commons.wikimedia.org/wiki/File:Serif_and_sans-serif_01.svg) | "AaBbCc" in Liberation Sans (sans-serif) |
 | `serif-and-sans-serif-02.svg` | [File:Serif and sans-serif 02.svg](https://commons.wikimedia.org/wiki/File:Serif_and_sans-serif_02.svg) | "AaBbCc" in Liberation Serif |
 | `serif-and-sans-serif-03.svg` | [File:Serif and sans-serif 03.svg](https://commons.wikimedia.org/wiki/File:Serif_and_sans-serif_03.svg) | The same serif letters with the serifs in red |
+
+## Generated replacements (used in the Week 6 slides)
+
+`make_serif_figures.py` (`uvx --from fonttools python make_serif_figures.py`) sets "AaBbCc" in fonts bundled with macOS and writes the letters as outlined paths, so no font is embedded. The serifs-in-red idea follows the Commons series above; the red regions are hand-placed boxes over the Superclarendon outlines (`SERIF_BOXES` in the script).
+
+| File | Shows | Font |
+|---|---|---|
+| `serif-demo.svg` | "AaBbCc" with heavy bracketed serifs and ball terminals | Superclarendon Regular (`/System/Library/Fonts/Supplemental/SuperClarendon.ttc`) |
+| `serif-demo-marked.svg` | The same letters with serifs and terminals in red | Superclarendon Regular |
+| `sans-demo.svg` | "AaBbCc" with plain stroke ends | Helvetica (`/System/Library/Fonts/Helvetica.ttc`) |
