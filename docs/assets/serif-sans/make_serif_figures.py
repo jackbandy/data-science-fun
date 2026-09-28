@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the Week 6 serif vs. sans-serif letter figures: "AaBbCc" in Superclarendon, the same with its serifs in red, and in Helvetica.
+"""Generate the Week 6 serif vs. sans-serif letter figures: "data" in Superclarendon, the same with its serifs in red, and in Helvetica.
 
 Letters are outlined paths, so no font is embedded. Run with: uvx --from fonttools python make_serif_figures.py
 """
@@ -12,7 +12,7 @@ from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
 from fontTools.ttLib import TTCollection
 
-TEXT = "AaBbCc"
+TEXT = "data"
 WIDTH, HEIGHT = 1000, 260
 MARGIN = 20
 INK = "#111111"
@@ -25,12 +25,9 @@ SANS = ("/System/Library/Fonts/Helvetica.ttc", "Helvetica")
 # Boxes (font units, per glyph: x0, y0, x1, y1) around the parts of each serif or terminal that stick out past the main stroke.
 # Read off Superclarendon Regular outlines; the red fill is the glyph clipped to these boxes.
 SERIF_BOXES = {
-    "A": [(37, 0, 122, 100), (180, 0, 312, 100), (470, 0, 585, 100), (760, 0, 842, 100)],
+    "d": [(365, 668, 452, 770), (589, 0, 677, 110)],
     "a": [(70, 310, 215, 440), (560, -20, 660, 160)],
-    "B": [(37, 640, 122, 745), (37, 0, 122, 105)],
-    "b": [(0, 640, 95, 775)],
-    "C": [(660, 480, 750, 750)],
-    "c": [(390, 310, 545, 430)],
+    "t": [(300, -10, 400, 160)],
 }
 
 
@@ -83,9 +80,9 @@ def render(font, label: str, marked: bool = False) -> str:
 
 def main() -> None:
     serif, sans = load(*SERIF), load(*SANS)
-    (OUT_DIR / "serif-demo.svg").write_text(render(serif, "AaBbCc in Superclarendon, a serif typeface"))
-    (OUT_DIR / "serif-demo-marked.svg").write_text(render(serif, "AaBbCc in Superclarendon with the serifs in red", marked=True))
-    (OUT_DIR / "sans-demo.svg").write_text(render(sans, "AaBbCc in Helvetica, a sans-serif typeface"))
+    (OUT_DIR / "serif-demo.svg").write_text(render(serif, "data in Superclarendon, a serif typeface"))
+    (OUT_DIR / "serif-demo-marked.svg").write_text(render(serif, "data in Superclarendon with the serifs in red", marked=True))
+    (OUT_DIR / "sans-demo.svg").write_text(render(sans, "data in Helvetica, a sans-serif typeface"))
     print("wrote serif-demo.svg, serif-demo-marked.svg, sans-demo.svg")
 
 

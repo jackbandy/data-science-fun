@@ -1,7 +1,5 @@
 ---
-# NOTICE: The slide order in this deck was rearranged, and the visualization
-# rhetoric and TED slides were drafted, with an LLM-based coding tool. It is
-# maintained, reviewed, and vetted by humans.
+# NOTICE: The slide order in this deck was modified with an LLM-based coding tool.
 title: "Week 6 (CS 418 @ UIC)"
 # Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
 # that group the `##` slides beneath them into the navigation menu (press M).
@@ -30,6 +28,103 @@ Jack Bandy
 
 
 ## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop07-washington-wabash-b.jpg" background-size="cover"}
+
+---
+
+## Random Roll Call {.iframe-slide}
+<div class="random-draw" data-num="12" data-min="1" data-max="62">
+<div class="random-draw-frame">
+<div class="random-draw-numbers" role="status" aria-live="polite" data-placeholder="Press “Draw” for 12 random numbers between 1 and 62."></div>
+</div>
+<p class="random-draw-controls"><button type="button" class="random-draw-button">Draw</button> <label class="random-draw-sort"><input type="checkbox" class="random-draw-sort-input"> Sort</label> <span class="random-draw-status"></span></p>
+</div>
+
+<style>
+.random-draw { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.random-draw-frame { flex: 1; min-height: 0; display: flex; justify-content: center; }
+.random-draw-numbers { height: 100%; aspect-ratio: 1.618 / 1; max-width: 100%; border: 1px solid #999; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(2, 1fr); place-items: center; }
+.random-draw-numbers .random-draw-number { font-size: 3rem; font-weight: 700; line-height: 1; }
+.random-draw-numbers .random-draw-placeholder { grid-column: 1 / -1; grid-row: 1 / -1; text-align: center; font-size: 1.4rem; color: #555; padding: 0 1.5em; }
+.random-draw-controls { flex: none; margin: 12px 0 0; }
+.random-draw-button { font: inherit; font-size: 1.1rem; font-weight: 600; padding: 0.3em 1.2em; border: none; border-radius: 3px; background: #f9461c; color: #fff; cursor: pointer; }
+.random-draw-button:hover:not(:disabled) { background: #e03c14; }
+.random-draw-button:disabled { opacity: 0.6; cursor: default; }
+.random-draw-sort { font-size: 1rem; color: #555; margin-left: 0.75em; cursor: pointer; }
+.random-draw-status { font-size: 1rem; color: #555; margin-left: 0.75em; }
+</style>
+
+<script>
+(() => {
+  // The Sequence Generator, not the Integer Generator: /integers/ samples *with*
+  // replacement and silently ignores a `unique` parameter, so a roll call could
+  // name the same student twice. /sequences/ returns a shuffled permutation of
+  // min..max, and the first `num` of that is a sample without replacement.
+  const API = "https://www.random.org/sequences/";
+  function setup(root) {
+    if (root.dataset.wired) return;
+    root.dataset.wired = "1";
+    const out = root.querySelector(".random-draw-numbers");
+    const button = root.querySelector(".random-draw-button");
+    const status = root.querySelector(".random-draw-status");
+    const sortBox = root.querySelector(".random-draw-sort-input");
+    const num = root.dataset.num, min = root.dataset.min, max = root.dataset.max;
+    const url = API + "?min=" + min + "&max=" + max + "&col=1&format=plain&rnd=new";
+    let drawn = null;
+    function placeholder(text) {
+      out.innerHTML = "";
+      const p = document.createElement("div");
+      p.className = "random-draw-placeholder";
+      p.textContent = text;
+      out.appendChild(p);
+    }
+    function render() {
+      if (!drawn) return;
+      const numbers = sortBox.checked ? drawn.slice().sort(function (a, b) { return a - b; }) : drawn;
+      out.innerHTML = "";
+      numbers.forEach(function (n) {
+        const cell = document.createElement("div");
+        cell.className = "random-draw-number";
+        cell.textContent = n;
+        out.appendChild(cell);
+      });
+    }
+    function draw() {
+      button.disabled = true;
+      status.textContent = "drawing from random.org…";
+      fetch(url, { cache: "no-store" })
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+        .then(function (text) {
+          const numbers = text.trim().split(/\s+/).filter(Boolean).map(Number);
+          if (!numbers.length) throw new Error("empty response");
+          drawn = numbers.slice(0, Number(num));
+          render();
+          status.textContent = "true random numbers from random.org";
+        })
+        .catch(function (err) {
+          drawn = null;
+          placeholder("Could not reach random.org (" + err.message + "). Open the draw in a new tab instead.");
+          status.textContent = "";
+        })
+        .then(function () { button.disabled = false; });
+    }
+    button.addEventListener("click", draw);
+    sortBox.addEventListener("change", render);
+    placeholder(out.dataset.placeholder);
+  }
+  function init() {
+    document.querySelectorAll(".random-draw").forEach(setup);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+::: {.iframe-caption}
+Numbers drawn live from <a href="https://www.random.org/sequences/?min=1&max=62&col=1&format=plain&rnd=new">random.org/sequences/?min=1&max=62&col=1&format=plain&rnd=new</a> &mdash; shuffle 1&ndash;62, take first 12.
+:::
 
 ---
 
@@ -375,15 +470,15 @@ Arial, slightly stretched, on Pantone 3507C: the cover of Charli XCX's *Brat* (2
 ::: {.column}
 [serif]{.eyebrow}
 
-<img src="../assets/serif-sans/serif-demo.svg" alt="The letters AaBbCc in Superclarendon, a serif typeface with heavy bracketed slab serifs on the feet and tips of the letters and round ball ends on the a and c." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
+<img src="../assets/serif-sans/serif-demo.svg" alt="The word data in Superclarendon, a serif typeface with heavy bracketed slab serifs on the d, a round ball end on each a, and curled tails on the a and t." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
 
 [serifs in red]{.eyebrow}
 
-<img src="../assets/serif-sans/serif-demo-marked.svg" alt="The same Superclarendon letters with the serifs and terminals colored red: both sides of each foot of the A, the ball and tail of the a, the top-left and bottom-left serifs of the B, the top-left serif of the b, the vertical serif at the top of the C, and the ball of the c." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
+<img src="../assets/serif-sans/serif-demo-marked.svg" alt="The same Superclarendon word with the serifs and terminals colored red: the top-left serif and the foot of the d, the ball and tail of each a, and the tail of the t." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
 
 [sans-serif]{.eyebrow}
 
-<img src="../assets/serif-sans/sans-demo.svg" alt="The letters AaBbCc in Helvetica, a sans-serif typeface: strokes end plainly." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
+<img src="../assets/serif-sans/sans-demo.svg" alt="The word data in Helvetica, a sans-serif typeface: strokes end plainly." style="display:block; width: 85%; margin: 0.1em auto 0.5em;">
 
 ::: {.caption}
 Serif: Superclarendon. Sans-serif: Helvetica.
@@ -607,10 +702,9 @@ Asset regenerated by docs/assets/hops/make_summary_plots.py.
 ::: {.dense}
 - a visualization adopts and/or reinforces a mental model
 - ask/explore **"what will people conclude?"**
-- No display is neutral: "both summary and ensemble displays have inherent biases based on their salient visual features" (Padilla et al., 2017)
+- "both summary and ensemble displays have inherent biases based on their salient visual features" (Padilla et al., 2017)
     - Cone viewers said the storm got larger over time 70% of the time, vs. 39% for ensemble viewers (Padilla et al., 2017, Exp. 1)
-- Familiar ≠ easy: error bars "are difficult for users to accurately interpret," while "HOPs require relatively little background knowledge to interpret" (Hullman et al., 2015)
-- Text often carries the uncertainty: it "appeared more often in our sample via textual means" (Hullman & Diakopoulos, 2011)
+- Text often carries the uncertainty, though not necessarily ideal (Hullman & Diakopoulos, 2011)
     - e.g. the note now printed on NHC's cone
 :::
 

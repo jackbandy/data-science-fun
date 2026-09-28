@@ -12,10 +12,10 @@ All three files are from one Wikimedia Commons series, "Recreated by User:Stanne
 
 ## Generated replacements (used in the Week 6 slides)
 
-`make_serif_figures.py` (`uvx --from fonttools python make_serif_figures.py`) sets "AaBbCc" in fonts bundled with macOS and writes the letters as outlined paths, so no font is embedded. The serifs-in-red idea follows the Commons series above; the red regions are hand-placed boxes over the Superclarendon outlines (`SERIF_BOXES` in the script).
+`make_serif_figures.py` (`uvx --from fonttools python make_serif_figures.py`) sets "data" in fonts bundled with macOS and writes the letters as outlined paths, so no font is embedded. The serifs-in-red idea follows the Commons series above; the red regions are hand-placed boxes over the Superclarendon outlines (`SERIF_BOXES` in the script).
 
 | File | Shows | Font |
 |---|---|---|
-| `serif-demo.svg` | "AaBbCc" with heavy bracketed serifs and ball terminals | Superclarendon Regular (`/System/Library/Fonts/Supplemental/SuperClarendon.ttc`) |
+| `serif-demo.svg` | "data" with heavy bracketed serifs and ball terminals | Superclarendon Regular (`/System/Library/Fonts/Supplemental/SuperClarendon.ttc`) |
 | `serif-demo-marked.svg` | The same letters with serifs and terminals in red | Superclarendon Regular |
-| `sans-demo.svg` | "AaBbCc" with plain stroke ends | Helvetica (`/System/Library/Fonts/Helvetica.ttc`) |
+| `sans-demo.svg` | "data" with plain stroke ends | Helvetica (`/System/Library/Fonts/Helvetica.ttc`) |
