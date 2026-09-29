@@ -26,11 +26,11 @@ The data science lifecycle. Although each stage of the lifecycle requires some d
 
 The two previous chapters discussed limits in asking questions and obtaining data, which tend to be the starting points for data science lifecycles. Once equipped with question(s) and data, however limited both may be, the next step is to pursue understanding.
 
-In the ideal lifecycle, data scientists will be able to understand the data in ways that also help them understand the world. But for reasons that will be explored in this chapter, this is much easier said than done: "the data" and "the model" and "the world" are often disconnected in surprising ways.
+In the ideal lifecycle, data scientists will be able to understand the data in ways that also help them understand the world. But this is much easier said than done: "the data" and "the model" and "the world" are often disconnected in surprising ways.
 
-The first reason is named in this chapter's epigraph. George Box's 1976 paper "Science and Statistics" put it bluntly: "since all models are wrong the scientist cannot obtain a 'correct' one by excessive elaboration" [@box_science_and_statistics_1976]. The aphorism most people quote comes from a later textbook with Norman Draper: "Essentially, all models are wrong, but some are useful" [@box_draper_empirical_model_building_1987].
+One reason for this is named in this chapter's epigraph. George Box's 1976 paper "Science and Statistics" put it bluntly: "since all models are wrong the scientist cannot obtain a 'correct' one by excessive elaboration" [@box_science_and_statistics_1976]. An often-quoted version of this aphorism comes from a later textbook that Box wrote with Norman Draper: "Essentially, all models are wrong, but some are useful" [@box_draper_empirical_model_building_1987].
 
-[Chapter 1](01-working-toward-wisdom.md) noted that a similar principle holds before any modeling is done: all *data* are wrong, too. Data are representations of the real world (or what we call the real world), and a representation is never the thing it represents. Again, we might call this the **treachery of data**, after René Magritte's painting of a pipe over the caption *Ceci n'est pas une pipe* — "This is not a pipe."
+[Chapter 1](01-working-toward-wisdom.md) noted that a similar principle holds before any modeling is done: all *data* are wrong, too. Data are representations of the real world (or what we call the real world), and a representation is never the thing it represents. Again, we might call this the "treachery of data," after René Magritte's painting of a pipe over the caption *Ceci n'est pas une pipe* — "This is not a pipe."
 
 ::: {#fig-treachery-of-images}
 <img src="../../assets/art/magritte_treachery_of_images_1929.webp" alt="René Magritte's painting of a pipe with the caption 'Ceci n'est pas une pipe' (This is not a pipe)." style="width: 100%; height: auto; border: 1px solid var(--bs-border-color);" />
@@ -38,11 +38,11 @@ The first reason is named in this chapter's epigraph. George Box's 1976 paper "S
 René Magritte, *The Treachery of Images* (1929). The (image of a) painting of a pipe is not itself a pipe. Data are representations of the world, not the world itself. Source: [LACMA Collections](https://collections.lacma.org/object/31931), public domain in the United States.
 :::
 
-This chapter describes how and why data scientists can explore *which* aspects of the world were captured by some data and or some models. Perhaps more importantly, we will discuss ways to identify which parts of the world were left out of a given dataset and/or a given model.
+This chapter describes how and why data scientists can explore *which* aspects of the world were captured by some data and/or some models. Perhaps more importantly, we will discuss ways to identify which parts of the world were left out of a given dataset and/or a given model.
 
-Data scientists seeking real, useful understanding of the world will practice a keen awareness of what is not in their datasets and what is not in their models. They will also use this awareness to shape their research questions, their results, and the ways they communicate those results.
+Data scientists seeking real, useful understanding of the world will pursue an awareness of what is _not_ in their datasets and what is _not_ in their models. They will also use this awareness to improve their research questions, results, and the ways they communicate those results.
 
-To explore "understanding," we will draw three lessons from a classic puzzle in machine learning: (1) the model is not the world, (2) several models can look equally correct, and (3) a pattern in data is not a pattern in the world.
+To explore "understanding" and practice awareness, we will consider three lessons from a classic puzzle in machine learning: (1) the model is not the world, (2) several models can look equally correct, and (3) a pattern in data is not a pattern in the world.
 
 ## Three Lessons from Michalski's Trains
 
@@ -50,11 +50,13 @@ To explore "understanding," we will draw three lessons from a classic puzzle in 
 
 An early version of this "model != world" idea appears in Alfred Korzybski's 1931 paper (from this chapter's epigraph): "A map is not the territory it represents, but, if correct, it has a similar structure to the territory, which accounts for its usefulness" [@korzybski_non_aristotelian_1931].
 
-Chapter 1 described the not-a-triangle, or the attempt to represent a perfect triangle. Perfect triangles and perfect circles only exist as ideals. There is no way to create the true geometry of a triangle in the physical world.
+Chapter 1 described the not-a-triangle, or the attempt to represent a perfect triangle. Perfect triangles and perfect circles only exist as ideals. There is no way to create the true geometry of a two-dimensional triangle in the physical world.
 
-Even simple three-dimensional shapes, like cubes and spheres, cannot be rendered perfectly in our universe. Achim Leistner's silicon sphere, considered the "[world's roundest object](https://en.wikipedia.org/wiki/Achim_Leistner)" has a verifiable out-of-roundness value" a difference between the measurements of an ideal sphere and the really-existing measured object. It is more like a perfect sphere than any other known object, but it is not a sphere.
+Even simple three-dimensional shapes, like cubes and spheres, cannot be rendered perfectly in our universe. Achim Leistner's silicon sphere, considered the "[world's roundest object](https://en.wikipedia.org/wiki/Achim_Leistner)" has a verifiable out-of-roundness value," that is, a difference between the measurements of an ideal sphere and the really-existing measured object. It is _more_ like a perfect sphere than any other known object, but it is still not a sphere.
 
-Whereas chapter 1 offered a distinction between an ideal and a representation, here, we consider the distinction between a representation and a reality. Korzybski observed that maps are useful to the extent that they accurately represent territory; here, we observe that data (and/or models) are useful to the extent that they accurately represent reality.
+Whereas chapter 1 offered a distinction between an ideal and a representation, here, we consider the distinction between a representation and a reality. Korzybski observed that maps are useful to the extent that they accurately represent territory; here, we observe that data, as well as models, are useful to the extent that they accurately represent reality.
+
+Any image would work to illustrate this "model != world" concept. For continuity, we will use Michalski's trains which, of course, are not actually trains. They are _representations_ of trains, not real-world trains.
 
 
 ### Multiple Correct Models
@@ -108,16 +110,16 @@ TK
 
 ### Causes and confounds
 
-Understanding the world, more than understanding the data, is where questions of *causation* arise. [Chapter 1](01-working-toward-wisdom.md) noted that the frequentist/Bayesian debate has largely been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020]. That is, many scientists have converged around wanting to answer questions of the form, "what can we expect to happen from a given intervention?"
+Attempts to understand the world, perhaps moreso than attempts understanding the data, often lead to questions of *causation.* [Chapter 1](01-working-toward-wisdom.md) noted that the frequentist/Bayesian debate has largely been subsumed by the question of causal inference [@mcelreath_statistical_rethinking_2020]. That is, many scientists have converged around wanting to answer questions of the form, "what can we expect to happen as a result of a given intervention?"
 
-Causal modeling offers helpful standards for structural modeling via causal graphs (specifically, directed acyclic graphs, or DAGs) [@sep-causal-models], but it also opens up additional cans of worms. Namely, what does it actually mean for one thing to "cause" another thing? Here are some common complications in causal analysis:
+Causal modeling offers helpful methods for addressing questions of causality. It offers standards for structural modeling via causal graphs (specifically, directed acyclic graphs, or DAGs) [@sep-causal-models], however, it also opens up additional cans of worms for those who truly want to understand. Namely, what does it actually mean for one thing to "cause" another thing? Here are some common complications in causal analysis:
 
 * **Spurious regularities**: The rooster crows every morning right before sunrise, but the rooster does not *cause* the sun to rise. How do we separate real causes from things that just consistently show up at the same time?
 	* In structural modeling, this is a **fork**: some third factor drives two events without either causing the other. Notably, the rooster does not crow in reaction to sunlight [@shimmura_rooster_crowing_2013; @bushwick_rooster_crow_time_2013]. If the earth rotation caused the sunlight, and the sunlight caused the rooster to crow, this would be a "pipe" in structural modeling.
 * **Multiple necessary conditions**: When a fire needs heat, fuel, *and* oxygen, which one is considered "the cause" of the fire? How do we identify "necessary but insufficient" conditions?
 	* Structurally, this is a **collider**: several independent conditions point into the same effect.
 * **Causation without pattern**: How do we make sense of (or prove) one-time "causes" and effects that we cannot replicate? For example, how do we know the meteor caused dinosaur extinction?
-* **Common causes**: Ice cream sales and drownings rise and fall together, but ice cream does not cause drowning (and drowning does not cause ice cream sales). How do we figure out when there is an underlying third factor (in this case summer weather) that drives multiple effects?
+* **Common causes**: Ice cream sales and drownings rise and fall together, but ice cream does not cause drowning (and drowning does not cause ice cream sales). How do we figure out when there is an underlying third factor (in this case summer weather) that drives (i.e. causes) multiple effects?
 	* Structurally, this is another **fork**, where a third factor points to both measured variables.
 
 ::: {#fig-confound-fork}
