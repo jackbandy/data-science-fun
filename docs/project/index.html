@@ -65,3 +65,33 @@ extra_css:
     <p class="exercise-item-meta">Date TODO</p>
   </li>
 </ol>
+
+<details class="project-gallery-details">
+  <summary class="project-gallery-title">Group Project Gallery</summary>
+  <table class="project-gallery">
+    <tbody>
+      <tr><td><a class="exercise-item-title" href="https://github.com/anirudhk-tech/cs418-data-science">🚦 Chicago Traffic Analytics</a></td><td><a class="exercise-item-title" href="https://github.com/SaiKamalaksha/cs418-comparing-democracies">⚖️ Comparing Democracies</a></td></tr>
+      <tr><td><a class="exercise-item-title" href="https://github.com/IrfanOzmen/CS418_Economic_Trajectories_Group">💸 Economic Trajectories</a></td><td><a class="exercise-item-title" href="https://github.com/cmkhoa/cs418-formula-one">🏎️ F1 Analytics</a></td></tr>
+      <tr><td><a class="exercise-item-title" href="https://github.com/mishalsidd/cs418">🪾 Family Backgrounds and Outcomes</a></td><td><a class="exercise-item-title" href="https://github.com/mariotinoco517/CS418-flock-group-1">🔭1️⃣ Flock One (Safety)</a></td></tr>
+      <tr><td><a class="exercise-item-title" href="https://github.com/hackmad003/cs418-flock-research">🔭2️⃣ Flock Two (Expansion)</a></td><td><a class="exercise-item-title" href="https://github.com/acimma3/cs418-football">🏉 Football Analytics</a></td></tr>
+      <tr><td><a class="exercise-item-title" href="https://github.com/YoussefEgh/cs418-football">⚽️ Futbol Analytics</a></td><td><a class="exercise-item-title" href="https://github.com/Snehashharmaa/cs418-learning-without-ai">🤖📝 Learning With(out) AI</a></td></tr>
+      <tr><td><a class="exercise-item-title" href="https://github.com/gcisne4/cs418-Fitness-Analytics">🏆 Personal Exercise/Fitness Analytics</a></td><td><a class="exercise-item-title" href="https://github.com/zainabahmed4/cs418-phishing">🎣 Phishing</a></td></tr>
+      <tr><td><a class="exercise-item-title" href="https://github.com/kp5036/CS418_Social_Media">🕸️ Social Media and Society</a></td><td><a class="exercise-item-title" href="https://github.com/doctorplatypus/Socioeconomic-Health-Disparities">🏥 Socioeconomic Health Disparities</a></td></tr>
+      <tr><td><a class="exercise-item-title" href="https://github.com/Tpate33/cs418-ufc-fight-analysis">🎰 UFC Fight Analysis</a></td><td></td></tr>
+    </tbody>
+  </table>
+</details>
+
+<script>
+  // Shuffle on every load so no group is always listed first.
+  (function () {
+    var cells = Array.prototype.slice.call(document.querySelectorAll('.project-gallery td'))
+      .filter(function (td) { return td.firstElementChild; });
+    var links = cells.map(function (td) { return td.firstElementChild; });
+    for (var i = links.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = links[i]; links[i] = links[j]; links[j] = t;
+    }
+    cells.forEach(function (td, k) { td.appendChild(links[k]); });
+  })();
+</script>

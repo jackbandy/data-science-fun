@@ -87,6 +87,43 @@
   margin: 0;
 }
 
+/* ── Group project gallery (project/index.html) ── */
+/* Collapsed by default, styled like .notebook-preview's toggle. */
+.project-gallery-details {
+  margin-bottom: 48px;
+}
+
+.project-gallery-title {
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 900;
+  padding: 10px 14px;
+  border: 2px solid #e2e2e2;
+  border-radius: 5px;
+}
+
+.project-gallery-title:hover {
+  border-color: #f9461c;
+}
+
+.project-gallery-details[open] .project-gallery-title {
+  border-radius: 5px 5px 0 0;
+  border-bottom-color: #f9461c;
+  margin-bottom: 16px;
+}
+
+.project-gallery {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.project-gallery td {
+  width: 50%;
+  padding: 8px 14px;
+  vertical-align: top;
+}
+
 /* ── The signal (single exercise pages) ──
    The AI/LLM phase is a CTA signal *aspect*, not a traffic light: two lamps read
    together, so the badge is the FAQ's rulebook drawing rather than a coloured dot.
