@@ -18,6 +18,8 @@ https://link\.springer\.com
 https://dl\.acm\.org
 https://ieeexplore\.ieee\.org
 https://doi\.org
+# National Library of Australia catalogue record (Bradman photo credit in docs/assets/slides-misc/SOURCES.md); its bot detection times out the checker.
+^https?://nla\.gov\.au/nla\.pic-an23448715$
 
 # --- UIC / Canvas ------------------------------------------------------------
 # These require logging in, so the checker only ever reaches the login page.
