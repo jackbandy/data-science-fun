@@ -177,11 +177,12 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 - Each compiled deck produces an HTML file, a `_files/` support directory (CSS, JavaScript, other assets), and usually a PDF: HTML is required, PDF export is best-effort (non-blocking)
 - Jupyter-engine decks keep their executed notebook as `docs/slides/weekN.ipynb` - makes it easy to download and run the code
 	- **knitr**-engine decks (R + Python combos like Week 5) can't produce a notebook, so they link their `weekN.qmd` source instead
-- `shared/sync_slide_index.py` owns three regions of `docs/slides/index.html`, and pulls each from a different source. **Nothing it writes should ever be hand-edited** — `repo-checks.yml` re-runs the script and fails the build on any drift.
+- `shared/sync_slide_index.py` owns four regions of `docs/slides/index.html`, and pulls each from a different source. **Nothing it writes should ever be hand-edited** — `repo-checks.yml` re-runs the script and fails the build on any drift.
 	- **the topic bullets** ← the deck's own `{.section-header}` headings, one bullet each, deep-linked to that slide (add `.no-index` to a header to leave it off the list)
 	- **the "More:" bullet** ← the PDF, plus a notebook link if one exists, else the deck source
 	- **the parenthetical after each "Week N Slide Deck" title, and the Topics column of the slide-count table** ← `docs/_data/schedule.csv`, *not* the deck. This catches people out: to reword a deck's parenthetical you edit the CSV's `Topic` cells, and a stale `index.html` will look like the script is inventing changes when it is really just propagating a CSV edit you already made.
 	- the slide counts in that table are counted from the deck sources, so they move whenever you add or remove a slide
+	- **the "Click to jump to week" row at the top** ← one cell per week that has an index entry, linking to the `id="weekN"` the script puts on each title link
 	- run it after editing any deck heading **or** `schedule.csv`: `python3 docs/slides/shared/sync_slide_index.py docs/slides`
 	- the hand-written bullets it replaced are archived in `docs/slides/shared/0-old-outline.md`
 - The workflow should copy `docs/slides/week*.qmd` into `_site/slides/` after Jekyll runs

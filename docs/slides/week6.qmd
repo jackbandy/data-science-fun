@@ -1348,18 +1348,16 @@ Jack Bandy
 2026
 
 
-## Map {.split}
+## Map: Week 6, Day 2 (Washington/Wabash) {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Week 6: Washington/Wabash
-- Day 2
-    - Group Check-In Time
-    - Revisit Demo
-    - Concluding Notes on Rhetoric
-    - Time Series: From Viz to Models
-    - Elemental Confounds
+- Group Check-In Time
+- Revisit Demo
+- Concluding Notes on Rhetoric
+- Time Series: From Viz to Models
+- Elemental Confounds
 :::
 
 ![](../assets/orange-line-map-stops/stop07-washington-wabash.svg){.figure alt="Orange Line map with the Washington/Wabash stop marked, the Week 6 stop"}
@@ -1618,12 +1616,12 @@ plt.tight_layout()
 
 ## Preview: A Bayesian Ridership Model
 
-Date only, for now: each day is **intercept + weekday effect + month effect + noise** (none of the other DAG nodes yet).
+One station (UIC-Halsted, daily entries since 2023), and date only for now: each day is **intercept + weekday effect + month effect + noise** (none of the other DAG nodes yet).
 
 ```{python}
 #| echo: true
 #| eval: false
-# dow, month, y: weekday, month, and rides for each day since 2023
+# dow, month, y: weekday, month, and UIC-Halsted rides for each day since 2023
 with pm.Model() as model:
     intercept = pm.Normal("intercept", mu=y.mean(), sigma=2000)
     dow_eff   = pm.ZeroSumNormal("dow_eff", sigma=1500, shape=7)
@@ -1654,10 +1652,10 @@ post = idata.posterior
 dow_s = post["dow_eff"].values.reshape(-1, 7)
 means = dow_s.mean(0); lo, hi = np.percentile(dow_s, [5.5, 94.5], 0)
 fig, ax = plt.subplots(figsize=(7, 4.3))
-ax.errorbar(means, range(7), xerr=[means-lo, hi-means], fmt="o", color=CTA_BLUE, capsize=4)
+ax.errorbar(means, range(7), xerr=[means-lo, hi-means], fmt="o", color=CTA_BLUE, capsize=0)
 ax.axvline(0, color="gray", linestyle="--", alpha=0.5)
 ax.set_yticks(range(7)); ax.set_yticklabels(["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]); ax.invert_yaxis()
-ax.set(xlabel="Effect on daily rides (vs. average)", title="Posterior weekday effects (89% CI)")
+ax.set(xlabel="Effect on daily UIC-Halsted rides (vs. average)", title="UIC-Halsted: posterior weekday effects (89% CI)")
 plt.tight_layout()
 ```
 
@@ -1665,7 +1663,7 @@ plt.tight_layout()
 
 ## Predicting a Given Day
 
-Each posterior draw is one **plausible version of the world**, so one (weekday, month) pushed through every draw gives a **distribution** of rides.
+Each posterior draw is one **plausible version of the world**, so one (weekday, month) pushed through every draw gives a **distribution** of UIC-Halsted rides.
 
 ```{python}
 #| echo: false
@@ -1697,9 +1695,9 @@ draws = pl.concat(frames)
 ::: {.column width="50%"}
 ```{python}
 #| echo: false
-#| fig-alt: "Violin plot of the posterior predictive ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October. The September weekday distribution sits much higher than the December weekday and October weekend, each with visible spread."
+#| fig-alt: "Violin plot of the posterior predictive UIC-Halsted ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October. The September weekday distribution sits much higher than the December weekday and October weekend, each with visible spread."
 ax = sns.violinplot(x=draws["scenario"], y=draws["rides"], color=CTA_BLUE, cut=0)
-ax.set_ylim(bottom=0); ax.set_xlabel("")
+ax.set_ylim(bottom=0); ax.set_xlabel(""); ax.set_ylabel("UIC-Halsted rides")
 plt.tight_layout()
 ```
 :::
