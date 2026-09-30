@@ -80,7 +80,7 @@ Point values within the notebook:
 | | 2.6 | 14% |
 | Part 3 — AI statement | Q3 | 5% |
 
-**Extra credit (+1% to overall course grade)**: the 10 best visualizations and insights from Questions 2.4-2.6, (as judged by the TA, will each earn +1% to the overall course grade. To enter, mark the one visualization you want considered on Gradescope. We will showcase the winners in class.
+**Extra credit (+1% to overall course grade)**: the 10 best visualizations and insights from Questions 2.4-2.6 (as judged by the TA) will each earn +1% to the overall course grade. To enter, mark the one visualization you want considered on Gradescope. We will showcase the winners in class.
 
 ## AI/LLM policy
 
