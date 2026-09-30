@@ -163,7 +163,7 @@
 ## Week 7, Day 1 (2026-10-05)
 
 * Hypothesis testing
-* **Asynchronous (no in-person meeting)**
+* **Asynchronous: video lecture (no in-person meeting)**
 
 ### Sources
 
@@ -178,7 +178,7 @@
 * Estimation
 * Sampling
 * Randomness
-* **Asynchronous (no in-person meeting)**
+* **Week 7 Quiz (in class)**
 
 ### Sources
 
