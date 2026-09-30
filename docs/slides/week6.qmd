@@ -1618,9 +1618,7 @@ plt.tight_layout()
 
 One station (UIC-Halsted, daily entries since 2023), and date only for now: each day is **intercept + weekday effect + month effect + noise** (none of the other DAG nodes yet).
 
-```{python}
-#| echo: true
-#| eval: false
+```python
 # dow, month, y: weekday, month, and UIC-Halsted rides for each day since 2023
 with pm.Model() as model:
     intercept = pm.Normal("intercept", mu=y.mean(), sigma=2000)
