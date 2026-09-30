@@ -1355,33 +1355,52 @@ Jack Bandy
 ::: {}
 - Week 6: Washington/Wabash
 - Day 2
-    - Visualization Rhetoric, Continued
-    - Bayesian Time Series Modeling
-    - Moving Toward Causality
+    - Group Check-In Time
+    - Revisit Demo
+    - Concluding Notes on Rhetoric
+    - Time Series: From Viz to Models
+    - Elemental Confounds
 :::
 
 ![](../assets/orange-line-map-stops/stop07-washington-wabash.svg){.figure alt="Orange Line map with the Washington/Wabash stop marked, the Week 6 stop"}
 
 :::
 
+---
 
-# Visualization Rhetoric, Continued {.section-header}
+## Group Check-In Time {.image-frame-slide auto-animate=true}
 
+Try to sit with your group (new spots this week!)
 
-## Misleading Axes
+<img data-id="groups-img" src="../assets/art/LCC_C001_groups_rectangle_shuffled.svg" alt="Floor plan of UIC Lecture Center C001 with each project group's topic labeled on its section of seating, shuffled from last week's arrangement" style="max-height:545px; margin-top:8px;">
 
-::: {.caption}
-Bergstrom & West, *Calling Bullshit*, ["Misleading Axes on Graphs"](https://www.callingbullshit.org/tools/tools_misleading_axes.html) ([video 6.2](https://www.youtube.com/watch?v=9pNWVMxaFuM)).
+---
+
+## Group Check-In Time {.split auto-animate=true}
+
+::: {.split-content .golden-columns}
+
+::: {}
+<img data-id="groups-img" src="../assets/art/LCC_C001_groups_rectangle_shuffled.svg" alt="Floor plan of UIC Lecture Center C001 with each project group's topic labeled on its section of seating, shuffled from last week's arrangement" style="max-height: 210px;">
+
+1. Does your group have a name yet? If not, list a few ideas.
+2. What will *you* do next for your group project?
 :::
 
-::: {.incremental .dense}
-- Bar charts: the axis should include zero (week 5: proportional ink)
-- Line charts: "a line graph does not need to include zero on the dependent variable axis"
-- Sometimes it *shouldn't*: a zero-based temperature chart made warming look flat; its designers "made graphical display choices that are inconsistent with the story they are telling"
-- Two y-axes can be rescaled until unrelated series seem to move together
-- "An axis should not change scales midstream"
-- An inverted axis can make a rise look like a fall
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
 :::
+
+---
+
+## Revisit Demo
+
+- [Python Yard (beta)](https://dodatascience.fun/yard/notebooks/index.html?path=welcome.ipynb): open "Demo: a year at UIC-Halsted"
+- New: a four-part decomposition of 2025 ridership, one cell at a time
+- Back to [Monday's live demo](#live-demo) for the full 2016–2025 version
+
+
+# Concluding Notes on Visualization Rhetoric {.section-header}
 
 ---
 
@@ -1402,13 +1421,28 @@ for ax in axes: ax.yaxis.set_major_formatter(lambda v, _: f"{v / 1e3:,.0f}k")
 plt.tight_layout()
 ```
 
-::: {.notes}
-UIC-Halsted rides per year: 858,623 in 2023, 1,172,124 in 2025 (+37%); 1,729,039 in 2019, so 2025 is 32% below. Both panels are honest line charts; the window and the y-range pick the story. Hullman & Diakopoulos call the y-range version "axis thresholding" (information access rhetoric).
-:::
 
 ---
 
-## Bubbles: Area, Not Radius {.code-figure-slide}
+
+## Misleading Axes
+
+::: {.caption}
+Bergstrom & West, *Calling Bullshit*, ["Misleading Axes on Graphs"](https://www.callingbullshit.org/tools/tools_misleading_axes.html) ([video 6.2](https://www.youtube.com/watch?v=9pNWVMxaFuM)).
+:::
+
+::: {.dense}
+- Bar charts: the axis should include zero (week 5: proportional ink)
+- Line charts: does not need to include zero
+    - Sometimes it *shouldn't*: e.g. a zero-based temperature chart would make warming look flat;
+- "An axis should not change scales midstream"
+- An inverted axis can make a rise look like a fall
+:::
+
+
+---
+
+## Note for Bubbles: Area, Not Radius {.code-figure-slide}
 
 ::: {.caption}
 "In the Gapminder chart above, the area of each disk is proportional to the value indicated by size." Bergstrom & West, *Calling Bullshit*, ["The Principle of Proportional Ink"](https://www.callingbullshit.org/tools/tools_proportional_ink.html) ([video 6.6](https://www.youtube.com/watch?v=oNhusd3xFC4)).
@@ -1436,218 +1470,8 @@ plt.tight_layout()
 :::
 
 
-# Time Series Modeling {.section-header}
+# Time Series: From Viz to Models {.section-header}
 
-
-## Why Bayesian?
-
-::: {.incremental}
-- Classical models usually just give a **single point forecast**
-    - a Bayesian model returns a **full posterior distribution** for every quantity
-    - every estimate and prediction comes with a **credible interval**
-- **Priors** let you encode what you already know
-    - e.g. ridership can't be negative
-    - weekends will be different
-- Plays nicely with small data, missing days
-:::
-
----
-
-## A Bayesian Ridership Model
-
-Let's start by modeling each day as **intercept + weekday effect + month effect + noise**, and let the data update our beliefs.
-
-```{python}
-#| echo: true
-#| eval: false
-import numpy as np
-import pymc as pm
-
-recent = uic.filter(pl.col("date") >= pl.date(2023, 1, 1)).with_columns(
-    (pl.col("date").dt.weekday() - 1).alias("dow"),   # 0=Mon … 6=Sun
-    (pl.col("date").dt.month() - 1).alias("month"),    # 0=Jan … 11=Dec
-)
-dow   = recent["dow"].to_numpy()
-month = recent["month"].to_numpy()
-y     = recent["rides"].to_numpy().astype(float)
-
-with pm.Model() as model:
-    intercept = pm.Normal("intercept", mu=y.mean(), sigma=2000)
-    dow_eff   = pm.ZeroSumNormal("dow_eff", sigma=1500, shape=7)
-    month_eff = pm.ZeroSumNormal("month_eff", sigma=1500, shape=12)
-    sigma     = pm.HalfNormal("sigma", 2000)
-    mu = intercept + dow_eff[dow] + month_eff[month]
-    pm.Normal("obs", mu=mu, sigma=sigma, observed=y)
-    idata = pm.sample(500, tune=500, chains=2, cores=1,
-                      random_seed=0, progressbar=False)
-```
-
-```{python}
-#| echo: false
-#| output: false
-# Load the posterior saved by datasets/cta-ridership/fit_uic_halsted_posterior.py (same model as above) so rendering skips sampling.
-# A plain xarray DataTree, since arviz.InferenceData's constructor differs between ArviZ 0.x and 1.x.
-import xarray as xr
-idata = xr.DataTree.from_dict({"posterior": xr.load_dataset("../../datasets/cta-ridership/uic_halsted_posterior.nc", engine="scipy")})
-```
-
----
-
-## Posterior: Weekday Effects {.code-figure-slide}
-
-```{python}
-#| echo: true
-#| fig-alt: "Dot-and-interval plot of the posterior weekday effects on UIC-Halsted ridership. Weekdays sit well above zero and weekends well below, each shown with an 89% credible interval, so we see both the estimate and its uncertainty."
-post = idata.posterior
-dow_s = post["dow_eff"].values.reshape(-1, 7)
-means = dow_s.mean(0); lo, hi = np.percentile(dow_s, [5.5, 94.5], 0)
-fig, ax = plt.subplots(figsize=(7, 4.3))
-ax.errorbar(means, range(7), xerr=[means-lo, hi-means], fmt="o", color=CTA_BLUE, capsize=4)
-ax.axvline(0, color="gray", linestyle="--", alpha=0.5)
-ax.set_yticks(range(7)); ax.set_yticklabels(["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]); ax.invert_yaxis()
-ax.set(xlabel="Effect on daily rides (vs. average)", title="Posterior weekday effects (89% CI)")
-plt.tight_layout()
-```
-
-
-# Using the Model to Predict {.section-header}
-
-
-## Fitting and Forecasting
-
-Each posterior draw is one **plausible version of the world**.
-
-::: {.incremental}
-- To predict a new day:
-    - push **(weekday, month)** through *every* draw (every version of the world)
-- That gives a **distribution** of outcomes
-    - not just a single number!
-- The **spread** provides uncertainty
-    - only use **mean** if asked 🙂
-- e.g. "how many rides on a *Tuesday in December*?" → let's look!
-:::
-
----
-
-## Predicting a Given Day
-
-```{python}
-#| echo: true
-#| output: false
-intercept_s = post["intercept"].values.flatten()
-month_s     = post["month_eff"].values.reshape(-1, 12)
-sigma_s     = post["sigma"].values.flatten()
-rng = np.random.default_rng(0)
-
-def predict(day, mon):
-    mu = intercept_s + dow_s[:, day] + month_s[:, mon]
-    return rng.normal(mu, sigma_s)
-```
-
----
-
-## Predicting a Given Day {.code-figure-slide}
-
-```{python}
-#| echo: true
-#| fig-alt: "Violin plot of the posterior predictive ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October. The September weekday distribution sits much higher than the December weekday and October weekend, each with visible spread."
-scenarios = {"Tue · Dec": (1, 11), "Wed · Sep": (2, 8), "Sun · Oct": (6, 9)}
-frames = []
-for k, v in scenarios.items():
-    r = predict(*v)
-    frames.append(pl.DataFrame({"scenario": [k] * len(r), "rides": r}))
-draws = pl.concat(frames)
-ax = sns.violinplot(x=draws["scenario"], y=draws["rides"], color=CTA_BLUE, cut=0)
-ax.set_ylim(bottom=0); ax.set_xlabel("")
-ax.set_title("Predicted ridership (full posterior predictive)")
-plt.tight_layout()
-```
-
----
-
-## Reading the Predictions
-
-::: {.columns}
-::: {.column width="50%"}
-- **Tue in December**: ≈ 2,530 rides, 89% CI: 480 – 4,620
-- **Wed in September**: ≈ 5,150 rides, 89% CI: 2,950 – 7,260
-- **Sun in October**: ≈ 2,680 rides, 89% CI: 610 – 4,860
-- Intervals are wide (lots of **day-to-day noise** remains after weekday, month)
-:::
-::: {.column width="50%"}
-```{python}
-#| echo: false
-#| fig-alt: "Violin plot of the posterior predictive ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October."
-ax = sns.violinplot(x=draws["scenario"], y=draws["rides"], color=CTA_BLUE, cut=0)
-ax.set_ylim(bottom=0); ax.set_xlabel("")
-plt.tight_layout()
-```
-:::
-:::
-
----
-
-## Extrapolation: The 2156 Olympics
-
-::: {.caption}
-Bergstrom & West, *Calling Bullshit*, ["Case Study: The Gender Gap in 100-meter Dash Times"](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html).
-:::
-
-::: {.incremental}
-- Tatem et al. (2004, *Nature*) fit straight lines to Olympic 100 m winning times
-    - women's times were falling faster, so the lines cross: women beat men in **2156**
-- 104 years of data, extended hundreds of years out
-    - "in the absence of any underlying conceptual or mechanistic model"
-- Our Bayesian model had the same limit: it only knows the weekdays and months it saw
-:::
-
----
-
-## A Reply in *Nature* {.quote-slide}
-
-> They omit to mention, however, that (according to their analysis) a far more interesting race should occur in about 2636, when times of less than zero seconds will be recorded.
-
-::: {.attribution}
-Kenneth Rice
-:::
-
-::: {.quote-source}
-"Sprint research runs into a credibility gap," [*Nature* 432:147 (2004)](https://doi.org/10.1038/432147b), responding to Tatem et al., ["Momentous sprint at the 2156 Olympics?"](https://doi.org/10.1038/431525a), *Nature* 431:525 (2004). Quoted in [*Calling Bullshit*](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html).
-:::
-
----
-
-## Extrapolating CTA's Recovery {.code-figure-side}
-
-```{python}
-#| echo: true
-#| fig-width: 5
-#| fig-height: 4
-#| fig-alt: "UIC-Halsted rides per year from 2016 to 2025 with a dashed straight line fit to 2021 through 2025 and extended from 2014 to 2040. The line crosses zero in 2016, a year that actually had about 1.7 million rides, and climbs past 3 million by 2040, well above any year on record."
-rec = yearly.filter(pl.col("year") >= 2021)
-slope, intercept = np.polyfit(
-    rec["year"], rec["rides"], 1)
-years = np.arange(2014, 2041)
-ax = sns.lineplot(
-    x=yearly["year"], y=yearly["rides"],
-    marker="o", color=CTA_BLUE,
-    label="observed")
-ax.plot(years, slope * years + intercept,
-        "--", color="gray",
-        label="line fit to 2021–2025")
-ax.axhline(0, color="black", linewidth=0.8)
-ax.yaxis.set_major_formatter(
-    lambda v, _: f"{v / 1e3:,.0f}k")
-ax.set(xlabel="Year", ylabel="Rides/year")
-ax.legend()
-plt.tight_layout()
-```
-
-::: {.notes}
-The fit gains about 139,000 rides a year. Backward, it reaches zero in 2016 (actual: 1.73 million). Forward, 3.2 million a year by 2040, far above the 2019 peak. Same move as Rice's reply.
-:::
-
----
 
 ## Some Vocabulary for Modeling
 
@@ -1660,16 +1484,30 @@ The fit gains about 139,000 rides a year. Backward, it reaches zero in 2016 (act
     - We can use it to design a regression model
 :::
 
+---
 
-# Moving Toward Causality {.section-header}
-
-
-## Causality Example: What Influences CTA Ridership? {.image-frame-slide}
+## Covariates for Ridership {.image-frame-slide auto-animate=true}
 
 Say we want to estimate how many people will go through the UIC-Halsted station on a given date. What would you want to know?
 
-<img src="../assets/confounds/ridership-unknown-causes.svg" alt="Four blue circles, each labeled with a question mark, with arrows pointing to a box labeled Ridership." style="max-height: 420px; margin-top: 18px;">
+<img data-id="ridership-causes-img" src="../assets/confounds/ridership-unknown-causes.svg" alt="Four blue circles, each labeled with a question mark, with arrows pointing to a box labeled Ridership." style="max-height: 420px; margin-top: 18px;">
 
+---
+
+## Covariates for Ridership {.split auto-animate=true}
+
+::: {.split-content .golden-columns}
+
+::: {}
+<img data-id="ridership-causes-img" src="../assets/confounds/ridership-unknown-causes.svg" alt="Four blue circles, each labeled with a question mark, with arrows pointing to a box labeled Ridership." style="max-height: 210px;">
+
+1. What covariates could help predict daily ridership at UIC-Halsted?
+2. Why would each one affect ridership?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
 
 ---
 
@@ -1710,14 +1548,14 @@ plt.tight_layout()
 
 ## Causality Example: Indirect Causes of Ridership
 
-What drives daily ridership at a station? Not always directly — some causes work through **intermediate factors**.
+Some causes work through **intermediate factors**.
 
-::: {.incremental}
+::: {}
 - **UIC enrollment** + **month/term** + **weather** → **UIC student attendance**
 - **Weekday** + **holiday** → student attendance, **UIC staff on campus**
     - note the *academic calendar* affects students but **not** staff
 - **Special event** like concerts, games, speakers → directly boosts ridership (could also do this as a hierarchy)
-- **Ridership** ← student attendance + staff on campus + special events + etc.
+- **Ridership** ← student attendance + staff + special events + ...
 :::
 
 
@@ -1776,15 +1614,205 @@ plt.tight_layout()
 
 ---
 
+
+
+## Preview: A Bayesian Ridership Model
+
+Date only, for now: each day is **intercept + weekday effect + month effect + noise** (none of the other DAG nodes yet).
+
+```{python}
+#| echo: true
+#| eval: false
+# dow, month, y: weekday, month, and rides for each day since 2023
+with pm.Model() as model:
+    intercept = pm.Normal("intercept", mu=y.mean(), sigma=2000)
+    dow_eff   = pm.ZeroSumNormal("dow_eff", sigma=1500, shape=7)
+    month_eff = pm.ZeroSumNormal("month_eff", sigma=1500, shape=12)
+    sigma     = pm.HalfNormal("sigma", 2000)
+    mu = intercept + dow_eff[dow] + month_eff[month]
+    pm.Normal("obs", mu=mu, sigma=sigma, observed=y)
+    idata = pm.sample()
+```
+
+```{python}
+#| echo: false
+#| output: false
+# Load the posterior saved by datasets/cta-ridership/fit_uic_halsted_posterior.py (same model as above) so rendering skips sampling.
+# A plain xarray DataTree, since arviz.InferenceData's constructor differs between ArviZ 0.x and 1.x.
+import xarray as xr
+idata = xr.DataTree.from_dict({"posterior": xr.load_dataset("../../datasets/cta-ridership/uic_halsted_posterior.nc", engine="scipy")})
+```
+
+---
+
+## Example Posterior: Weekday Effects {.figure-slide}
+
+```{python}
+#| echo: false
+#| fig-alt: "Dot-and-interval plot of the posterior weekday effects on UIC-Halsted ridership. Weekdays sit well above zero and weekends well below, each shown with an 89% credible interval, so we see both the estimate and its uncertainty."
+post = idata.posterior
+dow_s = post["dow_eff"].values.reshape(-1, 7)
+means = dow_s.mean(0); lo, hi = np.percentile(dow_s, [5.5, 94.5], 0)
+fig, ax = plt.subplots(figsize=(7, 4.3))
+ax.errorbar(means, range(7), xerr=[means-lo, hi-means], fmt="o", color=CTA_BLUE, capsize=4)
+ax.axvline(0, color="gray", linestyle="--", alpha=0.5)
+ax.set_yticks(range(7)); ax.set_yticklabels(["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]); ax.invert_yaxis()
+ax.set(xlabel="Effect on daily rides (vs. average)", title="Posterior weekday effects (89% CI)")
+plt.tight_layout()
+```
+
+---
+
+## Predicting a Given Day
+
+Each posterior draw is one **plausible version of the world**, so one (weekday, month) pushed through every draw gives a **distribution** of rides.
+
+```{python}
+#| echo: false
+#| output: false
+intercept_s = post["intercept"].values.flatten()
+month_s     = post["month_eff"].values.reshape(-1, 12)
+sigma_s     = post["sigma"].values.flatten()
+rng = np.random.default_rng(0)
+
+def predict(day, mon):
+    mu = intercept_s + dow_s[:, day] + month_s[:, mon]
+    return rng.normal(mu, sigma_s)
+
+scenarios = {"Tue · Dec": (1, 11), "Wed · Sep": (2, 8), "Sun · Oct": (6, 9)}
+frames = []
+for k, v in scenarios.items():
+    r = predict(*v)
+    frames.append(pl.DataFrame({"scenario": [k] * len(r), "rides": r}))
+draws = pl.concat(frames)
+```
+
+::: {.columns}
+::: {.column width="50%"}
+- **Tue in December**: ≈ 2,530 rides, 89% CI: 480 – 4,620
+- **Wed in September**: ≈ 5,150 rides, 89% CI: 2,950 – 7,260
+- **Sun in October**: ≈ 2,680 rides, 89% CI: 610 – 4,860
+- Intervals are wide (lots of **day-to-day noise** remains after weekday, month)
+:::
+::: {.column width="50%"}
+```{python}
+#| echo: false
+#| fig-alt: "Violin plot of the posterior predictive ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October. The September weekday distribution sits much higher than the December weekday and October weekend, each with visible spread."
+ax = sns.violinplot(x=draws["scenario"], y=draws["rides"], color=CTA_BLUE, cut=0)
+ax.set_ylim(bottom=0); ax.set_xlabel("")
+plt.tight_layout()
+```
+:::
+:::
+
+---
+
+## Extrapolation Cautions: The 2156 Olympics {.split}
+
+:::: {.split-content}
+
+::: {.dense}
+- Olympic 100 m winning times since 1900
+- Tatem et al. (2004, *Nature*) had the filled dots
+- What will the winning times be in 50 years? In 150?
+:::
+
+::: {}
+<img class="figure" src="../assets/olympics-100m/olympics-100m-dots.svg" alt="Olympic 100 m winning times from 1900 to 2024, men in gray and women in orange, both drifting down over time with the women's times above the men's. Dots from 1900 to 2004 are filled; dots from 2008 to 2024 are hollow. The x-axis runs on, empty, to 2200.">
+
+::: {.caption}
+Bergstrom & West, *Calling Bullshit*, ["Case Study: The Gender Gap in 100-meter Dash Times"](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html). Data: Tatem et al. (2004), [Table S1](https://doi.org/10.1038/431525a); 2008–2024 from Wikipedia.
+:::
+:::
+
+::::
+
+---
+
+## Extrapolation: The 2156 Olympics {.split}
+
+:::: {.split-content}
+
+::: {.incremental .dense}
+- Tatem et al. (2004, *Nature*) fit straight lines to Olympic 100 m winning times
+    - women's times were falling faster, so the lines cross: women beat men in **2156**
+- 104 years of data, extended hundreds of years out
+    - "in the absence of any underlying conceptual or mechanistic model"
+:::
+
+::: {}
+<img class="figure" src="../assets/olympics-100m/olympics-100m-2156.svg" alt="Olympic 100 m winning times from 1900 to 2004 as filled dots, men in gray and women in orange, each with a straight fitted line. Dashed extensions of both lines descend until they meet at about 8.1 seconds in the 2150s, labeled 'The lines cross: women win in 2156?'. Hollow dots for 2008 to 2024 show the men near 9.6 to 9.8 seconds and the women near 10.6 to 10.8, above the women's dashed line.">
+
+::: {.caption}
+Bergstrom & West, *Calling Bullshit*, ["Case Study: The Gender Gap in 100-meter Dash Times"](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html). Data: Tatem et al. (2004), [Table S1](https://doi.org/10.1038/431525a); 2008–2024 from Wikipedia.
+:::
+:::
+
+::::
+
+::: {.notes}
+Refit on the paper's Table S1, the lines cross in 2152.6, so 2156 is the first Games after the crossing. The hollow 2008–2024 points were not in the fit: the men's sit near their line, the women's sit well above theirs (10.61–10.78 s vs. a predicted 10.3–10.6 s).
+:::
+
+---
+
+## A Reply in *Nature* {.quote-slide}
+
+> They omit to mention, however, that (according to their analysis) a far more interesting race should occur in about 2636, when times of less than zero seconds will be recorded.
+
+::: {.attribution}
+Kenneth Rice
+:::
+
+::: {.quote-source}
+Based on [*Nature* 432:147 (2004)](https://doi.org/10.1038/432147b), responding to Tatem et al., ["Momentous sprint at the 2156 Olympics?"](https://doi.org/10.1038/431525a), *Nature* 431:525 (2004). Quoted in [*Calling Bullshit*](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html).
+:::
+
+---
+
+## Extrapolating CTA's Recovery? {.code-figure-side}
+
+```{python}
+#| echo: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-alt: "UIC-Halsted rides per year from 2016 to 2025 with a dashed straight line fit to 2021 through 2025 and extended from 2014 to 2040. The line crosses zero in 2016, a year that actually had about 1.7 million rides, and climbs past 3 million by 2040, well above any year on record."
+rec = yearly.filter(pl.col("year") >= 2021)
+slope, intercept = np.polyfit(
+    rec["year"], rec["rides"], 1)
+years = np.arange(2014, 2041)
+ax = sns.lineplot(
+    x=yearly["year"], y=yearly["rides"],
+    marker="o", color=CTA_BLUE,
+    label="observed")
+ax.plot(years, slope * years + intercept,
+        "--", color="gray",
+        label="line fit to 2021–2025")
+ax.axhline(0, color="black", linewidth=0.8)
+ax.yaxis.set_major_formatter(
+    lambda v, _: f"{v / 1e3:,.0f}k")
+ax.set(xlabel="Year", ylabel="Rides/year")
+ax.legend()
+plt.tight_layout()
+```
+
+::: {.notes}
+The fit gains about 139,000 rides a year. Backward, it reaches zero in 2016 (actual: 1.73 million). Forward, 3.2 million a year by 2040, far above the 2019 peak. Same move as Rice's reply.
+:::
+
+
+# Moving Toward Causality {.section-header}
+
+
 ## The Elemental Confounds
 
 For now, just know what they are (we will look at workflow implications soon).
 
 ::: {.incremental}
-- **Fork** — $Z$ causes both: $X \leftarrow Z \rightarrow Y$
-- **Pipe** — $Z$ passes the effect along: $X \rightarrow Z \rightarrow Y$
-- **Collider** — $Z$ is caused by both: $X \rightarrow Z \leftarrow Y$
-- **Descendant** — $Z$ causes something else we measured
+- **Fork**
+- **Pipe**
+- **Collider**
+- **Descendant**
 :::
 
 
@@ -1799,8 +1827,9 @@ $Z$ causes $X$ **and** it causes $Y$.
 
 - So $X$ and $Y$ move together, even though neither one causes the other
 - More ice cream consumption, more drownings
-	- Both increase from Summer weather
+	- Both increase from Summer
 - The rooster crows, then the sun rises
+	- Both follow the Earth's rotation
 :::
 
 ::: {}
@@ -1819,18 +1848,19 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 
 :::: {.split-content}
 
-::: {}
+::: {.dense}
 $X$ causes $Z$, and $Z$ causes $Y$ ($Z$ is the step in between)
 
-- E.g. Weekday → students on campus → ridership
-- Hold "students on campus" fixed and the weekday looks like it does nothing
+- Amazon's résumé screener: gender → résumé content → score
+	- It never saw gender, but "women's" on a résumé still lowered the score
+- Hold $Z$ fixed (same résumé content) and $X$ looks like it does nothing
 :::
 
 ::: {}
 <img class="figure" src="../assets/confounds/pipe.svg" alt="Pipe DAG: X points to Z, which points to Y, in a horizontal chain. Z is filled dark to mark the in-between step.">
 
 ::: {.caption}
-Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020), ch. 6.
+Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020), ch. 6. Examples from [Chapter 4: Ethics in Understanding](../ethics-in-data-science/book/04-ethics-in-understanding.html).
 :::
 :::
 
@@ -1867,11 +1897,11 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 :::: {.split-content}
 
 ::: {.dense}
-The gas level $X$ and the igniter $Y$ both feed the flame $Z$, and the flame decides how well the hotdog cooks $D$.
+The gas level $X$ and the igniter $Y$ both feed the flame $Z$, and the flame decides how well the asaparagus cooks $D$.
 
 - Imagine nobody wrote down the flame
-- The only record is the doneness of the hotdog
-- Can the doneness of the hotdog stand in for the flame?
+- The only record is how the asaparagus came out
+- Can the doneness of the asaparagus stand in for the flame?
 :::
 
 ::: {}
@@ -1891,10 +1921,11 @@ Example from Christopher Hitchcock, ["Causal Models"](https://plato.stanford.edu
 :::: {.split-content}
 
 ::: {}
-$D$ doesn't cause anything, it's just a **side effect** of $Z$.
+$D$ doesn't cause anything, but is a side effect of $Z$.
 
 - Using $D$ is a bit like using $Z$, since $D$ carries *some* of $Z$'s information
 - Like a watered-down version of whatever $Z$ was
+- E.g. doneness of asparagus
 :::
 
 ::: {}
@@ -1906,6 +1937,23 @@ Based on Richard McElreath, *Statistical Rethinking*, 2nd ed. (CRC Press, 2020),
 :::
 
 ::::
+
+---
+
+## Any questions? {#any-questions-day-2}
+
+- PrairieLearn Homeworks?
+- Group Projects? (data acquisition checkpoint due Sunday)
+- Coding Exercise 01? (due tonight, 11:59pm)
+- Asynchronous class next Monday, Oct 5; quiz next Wednesday
+- Other logistics?
+- (You can also stay after class for questions)
+
+---
+
+## Upload your worksheet {#upload-worksheet-day-2}
+
+Take a picture of your worksheet, upload it in Canvas
 
 
 # Appendix: Visualization Rhetoric {.section-header}
@@ -2047,8 +2095,9 @@ May be useful when working with more complex time series.
    - Rdatasets mirror (CSV download): https://vincentarelbundock.github.io/Rdatasets/doc/datasets/AirPassengers.html
 4. CTA ridership data: [Chicago Data Portal — CTA Ridership: Station Entries — Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-Station-Entries-Daily-Totals/5neh-572f).
 5. Four elemental confounds: Richard McElreath, *Statistical Rethinking: A Bayesian Course with Examples in R and Stan*, 2nd ed. (CRC Press, 2020), ch. 6 — and the [Statistical Rethinking 2026 lecture series](https://github.com/rmcelreath/stat_rethinking_2026).
+   - Fork, pipe, collider, and descendant examples follow [Chapter 4: Ethics in Understanding](../ethics-in-data-science/book/04-ethics-in-understanding.html). Pipe examples: Jeffrey Dastin, ["Amazon Scraps Secret AI Recruiting Tool That Showed Bias against Women"](https://doi.org/10.1201/9781003278290-44), in Kirsten Martin (ed.), *Ethics of Data and Analytics* (Auerbach, 2022), 296–299; Charles Duhigg, ["How Companies Learn Your Secrets"](https://opencasebook.org/casebooks/521-internet-society-the-technologies-and-politics-of-control-spring-2019/resources/2.2.4-how-companies-learn-your-secrets-by-charles-duhigg-new-york-times-2012/), *The New York Times Magazine* (16 February 2012).
 6. W. Jake Thompson, [*Statistical Rethinking: Solutions (2nd ed.) — Ch. 6, The Haunted DAG & The Causal Terror*](https://sr2-solutions.wjakethompson.com/causes-confounds-colliders).
-7. Gas grill (descendant) example: Christopher Hitchcock, ["Causal Models"](https://plato.stanford.edu/archives/sum2024/entries/causal-models/), *The Stanford Encyclopedia of Philosophy* (Summer 2024) — as discussed in [Chapter 1: Working Toward Wisdom](../ethics-in-data-science/book/01-working-toward-wisdom.html).
+7. Gas grill (descendant) example: Christopher Hitchcock, ["Causal Models"](https://plato.stanford.edu/archives/sum2024/entries/causal-models/), *The Stanford Encyclopedia of Philosophy* (Summer 2024) — as discussed in [Chapter 4: Ethics in Understanding](../ethics-in-data-science/book/04-ethics-in-understanding.html).
 8. Uncertainty visualization and the hurricane "cone of uncertainty":
    - Jessica Hullman, ["Confronting Unknowns"](https://doi.org/10.1038/scientificamerican0919-80), *Scientific American* 321(3), p. 80 (September 2019) — published online as "How to Get Better at Embracing Unknowns."
    - Lace M. Padilla, Ian T. Ruginski, Sarah H. Creem-Regehr, ["Effects of Ensemble and Summary Displays on Interpretations of Geospatial Uncertainty Data"](https://doi.org/10.1186/s41235-017-0076-1), *Cognitive Research: Principles and Implications* 2(1):40 (2017) — CC BY 4.0; source of the cone and ensemble figures.
@@ -2070,6 +2119,6 @@ May be useful when working with more complex time series.
 17. Visualization rhetoric: Jessica Hullman and Nicholas Diakopoulos, ["Visualization Rhetoric: Framing Effects in Narrative Visualization"](https://doi.org/10.1109/TVCG.2011.255), *IEEE Transactions on Visualization and Computer Graphics* 17(12):2231–2240 (2011) ([author PDF](https://mucollective.northwestern.edu/files/2011-VisRhetoric-InfoVis.pdf)). The line-graph height example they cite is Jeff Zacks and Barbara Tversky, "Bars and Lines: A Study of Graphic Communication," *Memory & Cognition* 27(6) (1999).
 18. Current hurricane cone: NOAA/NWS National Hurricane Center, [Hurricane Polo graphics archive](https://www.nhc.noaa.gov/archive/2026/POLO_graphics.php), 5-day cone, Intermediate Advisory 24A, 11 AM MST, 26 September 2026; public domain. Download details in `docs/assets/hurricane-cone/SOURCES.md`. The live HOP demo (`docs/assets/hops/hop-live.html`) follows the error-bar vs. HOP comparison in Hullman, Resnick & Adar (2015), Fig. 2.
 19. Misleading axes and proportional ink: Carl T. Bergstrom and Jevin D. West, *Calling Bullshit*, ["Misleading Axes on Graphs"](https://www.callingbullshit.org/tools/tools_misleading_axes.html) and ["The Principle of Proportional Ink"](https://www.callingbullshit.org/tools/tools_proportional_ink.html); videos [6.2](https://www.youtube.com/watch?v=9pNWVMxaFuM) and [6.6](https://www.youtube.com/watch?v=oNhusd3xFC4).
-20. Extrapolation: Bergstrom and West, ["Case Study: The Gender Gap in 100-meter Dash Times"](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html); Andrew J. Tatem, Carlos A. Guerra, Peter M. Atkinson and Simon I. Hay, ["Momentous sprint at the 2156 Olympics?"](https://doi.org/10.1038/431525a), *Nature* 431:525 (2004); Kenneth Rice, ["Sprint research runs into a credibility gap"](https://doi.org/10.1038/432147b), *Nature* 432:147 (2004).
+20. Extrapolation: Bergstrom and West, ["Case Study: The Gender Gap in 100-meter Dash Times"](https://www.callingbullshit.org/case_studies/case_study_gender_gap_running.html); Andrew J. Tatem, Carlos A. Guerra, Peter M. Atkinson and Simon I. Hay, ["Momentous sprint at the 2156 Olympics?"](https://doi.org/10.1038/431525a), *Nature* 431:525 (2004); Kenneth Rice, ["Sprint research runs into a credibility gap"](https://doi.org/10.1038/432147b), *Nature* 432:147 (2004). The 2156 figure refits the paper's Supplementary Table S1 and adds 2008–2024 winning times from Wikipedia; details in `docs/assets/olympics-100m/SOURCES.md`.
 21. Serif vs. sans-serif: definitions from Wikipedia, ["Serif"](https://en.wikipedia.org/w/index.php?title=Serif&oldid=1366160623) (revision of 26 July 2026); letter images set in Superclarendon and Helvetica by `docs/assets/serif-sans/make_serif_figures.py`, with the serifs-in-red layout after Stannered and Chmod007's [Wikimedia Commons series](https://commons.wikimedia.org/wiki/File:Serif_and_sans-serif_03.svg).
 22. Recognize this font: Wikipedia, ["Papyrus (typeface)"](https://en.wikipedia.org/wiki/Papyrus_(typeface)) (Avatar logo); dafont forum, ["How can I get the new font of OR3"](https://www.dafont.com/forum/read/594399/how-can-i-get-the-new-font-of-or3) (Just Like Heaven by Jes Sheldon); Chequered Ink, [Hunters K-Pop](https://www.dafont.com/hunters-k-pop.font) (free for personal use); Wikipedia, ["Verdana"](https://en.wikipedia.org/wiki/Verdana) (IKEA); Wikipedia, ["Brat (album)"](https://en.wikipedia.org/wiki/Brat_(album)). Text is drawn as outlined paths; details in `docs/assets/recognize-this-font/SOURCES.md`.
