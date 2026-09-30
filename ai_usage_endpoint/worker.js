@@ -2,7 +2,7 @@
 //
 // Counts which tools are opened inside a course assignment folder: AI coding agents, editors, and notebook frontends.
 //
-// The assignment folders ship hook configs (.claude/, .codex/, .cursor/, .github/hooks/, .vscode/tasks.json, .idea/startup.xml) and a notebook import that POST one small JSON object here. Nothing about the student is sent: no name, username, hostname, email, IP-derived field, file path, code, or prompt text. This Worker stores counters only — never a request body, never a log line.
+// The assignment folders ship hook configs (.claude/, .codex/, .cursor/, .github/hooks/, .vscode/tasks.json) and a notebook import that POST one small JSON object here. Nothing about the student is sent: no name, username, hostname, email, IP-derived field, file path, code, or prompt text. This Worker stores counters only — never a request body, never a log line.
 //
 //   POST /            {"assignment":"hw2","tool":"claude-code","event":"session-start","install":"<random id>"}
 //   GET  /stats.json  {"generated":"…","total":N,"installs":N,"tools":{…},"editors":{…},"notebooks":{…},"assignments":{…},"days":{…}}
