@@ -374,7 +374,7 @@ def summary_table(slides_dir, weeks):
         )
     return [
         SUMMARY_BEGIN,
-        '<div class="schedule-table-wrap">',
+        '<div class="schedule-table-wrap slides-table-wrap">',
         '  <table class="schedule-table">',
         '    <thead>',
         '      <tr><th>Slide Deck</th><th>Slides</th><th>Topics</th></tr>',
