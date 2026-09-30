@@ -68,5 +68,26 @@ const check = (name, cond, extra = "") => { console.log((cond ? "PASS  " : "FAIL
   check("stats hides seen:/meta:", !JSON.stringify(out).includes("seen:") && !JSON.stringify(out).includes("meta:"));
 }
 
+// 6. editor opens and notebook kernel starts are counted in their own groups and never move the AI-agent headline
+{
+  const kv = makeKV();
+  const r1 = await worker.fetch(post({ assignment: "hw2", tool: "cursor", event: "folder-open", install: "3f9a1c22b0d74e88" }), { COUNTS: kv });
+  const r2 = await worker.fetch(post({ assignment: "hw2", tool: "jupyter", event: "kernel-start", install: "3f9a1c22b0d74e88" }), { COUNTS: kv });
+  check("editor open accepted", r1.status === 204, "status " + r1.status);
+  check("notebook start accepted", r2.status === 204, "status " + r2.status);
+  const out = await (await worker.fetch(new Request("https://x/stats.json"), { COUNTS: kv })).json();
+  check("editor counted", out.editors?.cursor?.sessions === 1 && out.editors?.cursor?.installs === 1, JSON.stringify(out.editors));
+  check("notebook counted", out.notebooks?.jupyter?.sessions === 1 && out.notebooks?.jupyter?.installs === 1, JSON.stringify(out.notebooks));
+  check("AI headline untouched", out.total === 0 && out.installs === 0 && Object.keys(out.tools).length === 0 && Object.keys(out.days).length === 0, JSON.stringify(out));
+}
+
+// 7. each event has its own list: an editor name cannot pass as an AI-agent session
+{
+  const kv = makeKV();
+  const r = await worker.fetch(post({ assignment: "hw2", tool: "vscode", event: "session-start", install: "abcd1234" }), { COUNTS: kv });
+  check("editor name rejected as agent session", r.status === 400, "status " + r.status);
+  check("rejected editor-as-agent writes nothing", kv.m.size === 0, "keys=" + [...kv.m.keys()]);
+}
+
 console.log(failed === 0 ? "\nALL PASS" : `\n${failed} FAILED`);
 process.exit(failed ? 1 : 0);
