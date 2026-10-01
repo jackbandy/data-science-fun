@@ -22,7 +22,7 @@ pyarrow
 # arviz's __init__ does `style.core.USER_LIBRARY_PATHS.append(...)`, which
 # then raises AttributeError. Capping here keeps 3.10.x, which still exposes
 # it. Lift once arviz imports matplotlib.style.core directly.
-matplotlib<3.11
+matplotlib<3.12
 statsmodels
 networkx
 pymc
