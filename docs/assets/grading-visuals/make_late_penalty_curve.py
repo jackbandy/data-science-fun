@@ -207,11 +207,14 @@ def main() -> None:
     # Text as paths: the SVG stays self-contained, per STYLE.md.
     plt.rcParams["svg.fonttype"] = "path"
 
-    out_path = OUT_DIR / f"{STEM}.svg"
+    svg_path = OUT_DIR / f"{STEM}.svg"
+    png_path = OUT_DIR / f"{STEM}.png"
     fig = build_figure()
-    fig.savefig(out_path, format="svg", facecolor=PAPER)
+    fig.savefig(svg_path, format="svg", facecolor=PAPER)
+    fig.savefig(png_path, format="png", facecolor=PAPER)
     plt.close(fig)
-    print(f"wrote {out_path.relative_to(REPO_ROOT)}")
+    print(f"wrote {svg_path.relative_to(REPO_ROOT)}")
+    print(f"wrote {png_path.relative_to(REPO_ROOT)}")
 
     for d in (0, 1, 2, 3, FLOOR_DAY, DAYS_SHOWN):
         print(f"  {d:>2} days late -> {credit(np.array([d]))[0]:.1%}")
