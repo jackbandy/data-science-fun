@@ -43,7 +43,7 @@ jobs:
     steps:
       # Full commit history is needed for the changed-files diff below
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           filter: blob:none
@@ -51,7 +51,7 @@ jobs:
       # Skipped on PRs because it needs permission to write to Pages
       - name: Set up Pages
         if: github.event_name != 'pull_request'
-        uses: actions/configure-pages@v6
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       # Detect which docs files changed to skip unchanged renders.
       - name: Detect changed files
@@ -119,12 +119,12 @@ jobs:
           fi
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
       - name: Set up Quarto (latest release)
-        uses: quarto-dev/quarto-actions/setup@v2
+        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
         with:
           version: release
 
@@ -139,7 +139,7 @@ jobs:
       # Cache the rendered book output
       - name: Restore Quarto book cache
         id: book-cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: docs/ethics-in-data-science/book
           key: book-${{ hashFiles('docs/ethics-in-data-science/**') }}
@@ -153,7 +153,7 @@ jobs:
 
       - name: Restore slides cache
         id: slides-cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             docs/slides/week*.html
@@ -192,14 +192,14 @@ jobs:
       # a runner with no Rscript.
       - name: Set up R
         if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
-        uses: r-lib/actions/setup-r@v2
+        uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
         with:
           r-version: release
           use-public-rspm: true
 
       - name: Cache R packages
         if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ env.R_LIBS_USER }}
           key: r-pkgs-${{ hashFiles('.github/workflows/deploy-pages.yml') }}
@@ -227,7 +227,7 @@ jobs:
       - name: Set up Node (>=22 for global WebSocket)
         if: github.event_name != 'pull_request'
         continue-on-error: true
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "22"
 
@@ -235,7 +235,7 @@ jobs:
         id: setup-chrome
         if: github.event_name != 'pull_request'
         continue-on-error: true
-        uses: browser-actions/setup-chrome@v2
+        uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2.2.0
 
       # Exporting all 13 decks takes ~2.5 minutes, so only the decks that need
       # a PDF get one. Two things put a deck on that list:
@@ -319,7 +319,7 @@ jobs:
       # TeX Live install and the render, keeps the "This version created" stamp
       - name: Restore syllabus cache
         id: syllabus-cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: docs/syllabus
           key: syllabus-${{ hashFiles('syllabus_source/**', 'docs/_data/schedule.csv', 'docs/assets/branding/uic-black-logo.svg') }}
@@ -387,7 +387,7 @@ jobs:
       # instead of every run. Not committed to the repo -- see
       # meta_analytics_source/english_frequencies.md for why.
       - name: Cache the English frequency baseline
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: meta_analytics_source/.cache
           key: english-frequencies-count_1w-v1
@@ -435,7 +435,7 @@ jobs:
 
       # Runs last, once every generated page is on disk.
       - name: Build site with Jekyll
-        uses: actions/jekyll-build-pages@v1
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
         with:
           source: ./docs
           destination: ./_site
@@ -448,11 +448,9 @@ jobs:
           cp docs/slides/week*.qmd _site/slides/
           ls -1 _site/slides/week*.qmd
 
-      # Also after Jekyll, and for a less happy reason: docs/_config.yml lists
-      # `.well-known` under `include:`, but the file was still 404ing in
-      # production while the identical setup on doethics.fun (built by the
-      # stock Pages builder, not this workflow) served it fine. Rather than
-      # keep guessing which step eats a dotfile, copy it into place afterward.
+      # Also after Jekyll, as a belt-and-braces copy of what `include:` in
+      # docs/_config.yml should already do. The real reason security.txt was
+      # 404ing is the upload step's dotfile filter; see "Prune dotfiles" below.
       # The step fails loudly if the source file is missing, so a rename can't
       # silently take security.txt off the site again.
       - name: Publish .well-known
@@ -493,7 +491,7 @@ jobs:
       # The errors still show up but they don't block a merge.
       - name: Check internal links
         continue-on-error: true
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: >-
             --offline
@@ -506,10 +504,21 @@ jobs:
             '_site/**/*.html'
           fail: true
 
+      # upload-pages-artifact drops every dotfile unless include-hidden-files
+      # is set -- that, not Jekyll, is what kept security.txt off the site.
+      # Turning it on would also publish any other dotfile the builds leave in
+      # _site (e.g. JupyterLite's state files), so prune those first and let
+      # .well-known/ be the only hidden path that ships.
+      - name: Prune dotfiles except .well-known
+        run: |
+          find _site -mindepth 1 -name '.*' ! -path '_site/.well-known' -prune -print -exec rm -rf {} +
+          test -f _site/.well-known/security.txt
+
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: _site
+          include-hidden-files: true
 
   # Publishing is a separate job
   deploy:
@@ -531,4 +540,4 @@ jobs:
       # check out or rebuild here.
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

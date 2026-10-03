@@ -36,7 +36,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # A pull_request build checks out a detached merge commit, which
           # cannot be pushed back. Take the PR's own branch instead. The
@@ -97,10 +97,10 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
 
@@ -132,9 +132,9 @@ jobs:
   duplicate-assets:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # Two known sets of duplicates are left in docs/, both deliberate:
+      # Known sets of duplicates left in docs/, all deliberate:
       #   - lifecycle-steps/ds-lifecycle-step5.svg and lifecycle/
       #     ds-lifecycle-v5.svg, the same final frame emitted by two generators
       #     that share their geometry.
@@ -142,6 +142,9 @@ jobs:
       #     the ethics book's page footer. It has its own copy because the
       #     footer is raw HTML in _quarto.yml, which Quarto does not scan for
       #     resources the way it scans the chapter bodies.
+      #   - privacy/, privacy-policy/, cookies/ and cookie-policy/index.html,
+      #     identical redirect stubs to security.html. Jekyll gives each file
+      #     one URL, so each shortcut needs its own copy.
       # The baseline is deliberately set above the current count, leaving room
       # for a few more copies before the check complains. Rather than fail on
       # the known sets, this only fails if the count goes past the baseline.

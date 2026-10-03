@@ -1,0 +1,31 @@
+/* NOTICE: This file was written by an LLM-based coding system (Claude Code). */
+
+/*-- scss:defaults --*/
+
+// Bootswatch's cosmo theme @imports Source Sans Pro from fonts.googleapis.com,
+// which hands every reader's IP address to Google. Switch that off and serve
+// the same family (its successor, Source Sans 3) from this domain instead.
+// See docs/assets/fonts/README.md.
+$web-font-path: false;
+$font-family-sans-serif: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+/*-- scss:rules --*/
+
+// Resolved relative to this file (docs/assets/fonts/); Quarto copies the font
+// into book/site_libs/ and rewrites the url, so it is served from this domain.
+
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("../assets/fonts/source-sans/SourceSans3VF-Upright.ttf.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("../assets/fonts/source-sans/SourceSans3VF-Italic.ttf.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+}

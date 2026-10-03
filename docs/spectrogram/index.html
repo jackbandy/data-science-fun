@@ -20,18 +20,7 @@
   {% include social-meta.html primary=true %}
   {% include icons.html theme_color='#ffffff' %}
   <link rel="stylesheet" href="spectrogram.css">
-  <script>
-    // Same trick as the class timer: inside an iframe (the course slides) the
-    // attribution footer is noise and the viewer has no way out of the frame,
-    // so swap it for a link to the real page. Set in <head> so the footer never
-    // flashes before it is hidden.
-    if (window.self !== window.top) {
-      document.documentElement.classList.add('embedded');
-      document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('openStandalone').href = window.location.href;
-      });
-    }
-  </script>
+  <script src="{{ site.baseurl }}/js/embedded.js"></script>
 </head>
 <body>
 

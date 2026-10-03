@@ -20,19 +20,7 @@
   {% include social-meta.html primary=true %}
   {% include icons.html %}
   <link rel="stylesheet" href="timer.css">
-  <script>
-    // Embedded in an iframe (the course slides) the attribution footer is noise,
-    // and the viewer has no way out of the frame. Swap it for a link to the real
-    // page. Set in <head> so the footer never flashes before it is hidden.
-    if (window.self !== window.top) {
-      document.documentElement.classList.add('embedded');
-      document.addEventListener('DOMContentLoaded', function () {
-        // Point at whatever copy of the timer is actually framed, so this works
-        // from the deployed site and from a local build alike.
-        document.getElementById('openStandalone').href = window.location.href;
-      });
-    }
-  </script>
+  <script src="{{ site.baseurl }}/js/embedded.js"></script>
 </head>
 <body>
 

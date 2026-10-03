@@ -34,22 +34,4 @@ The flower's hover spin is driven by the Web Animations API rather than CSS
 
   Note: this file was largely written by an LLM (Claude Code).
 -->
-<script>
-(function () {
-  var link = document.querySelector('.footer-flower');
-  if (!link || !link.animate) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var flower = link.querySelector('img');
-  var spin = flower.animate(
-    [{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }],
-    { duration: 8000, iterations: Infinity, easing: 'linear' }
-  );
-  spin.pause();
-
-  link.addEventListener('mouseenter', function () { spin.play(); });
-  link.addEventListener('mouseleave', function () { spin.pause(); });
-  link.addEventListener('focus', function () { spin.play(); });
-  link.addEventListener('blur', function () { spin.pause(); });
-})();
-</script>
+<script src="{{ site.baseurl }}/js/footer-flower.js"></script>

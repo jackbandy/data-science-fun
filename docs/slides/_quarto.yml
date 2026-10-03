@@ -8,6 +8,9 @@ format:
     slide-number: c
     controls: true
     progress: true
+    # MathML is written by Pandoc at build time, so slide math needs no script
+    # (this replaces MathJax 2.7.9 from jsDelivr, which had no SRI hash).
+    html-math-method: mathml
 
 # Every deck here keeps its executed notebook, so any deck with Python cells
 # produces a weekN.ipynb students can download. Decks with no executable code

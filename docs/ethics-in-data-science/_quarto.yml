@@ -39,7 +39,12 @@ filters:
 
 format:
   html:
-    theme: cosmo
+    # theme.scss turns off cosmo's Google Fonts import and self-hosts the font.
+    theme: [cosmo, theme.scss]
+    # MathML is written by Pandoc at build time, so math needs no script: this
+    # replaces the MathJax + polyfill tags Quarto would load from jsDelivr and
+    # cdnjs on every chapter with an equation.
+    html-math-method: mathml
     css: styles.css
     toc: true
     toc-depth: 2
