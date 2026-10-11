@@ -1,12 +1,18 @@
 % CS 418: Intro to Data Science — Worksheet 15 (15-week08-day1)
-% Week 8, Monday 2026-10-12
+% Week 8, Day 1
+% NOTICE: This worksheet was drafted by an LLM coding system from the
+% instructor's choice of checkpoints. It is maintained, reviewed, and vetted by humans.
 % Compile with: latexmk -pdf worksheet.tex
 
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
+% Never break a word across lines, including at hyphens ("Sans-Serif").
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -15,15 +21,6 @@
 \usepackage{fancyhdr}
 \usepackage{mdframed}
 \usepackage{array}
-
-% ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a stub. The watermark marks the PDF as unfinished so
-% nobody mistakes a placeholder for the real thing. Delete this block once the
-% worksheet has real content.
-\usepackage{draftwatermark}
-\SetWatermarkText{IN-PROGRESS}
-\SetWatermarkScale{2.2}
-\SetWatermarkLightness{0.85}
 
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -39,54 +36,139 @@
 \hypersetup{colorlinks=false, hidelinks}
 
 % ── Convenience environments ──────────────────────────────────────────────────
-\newenvironment{problem}[1]{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
-  \textbf{Problem #1.}
-}{%
-  \end{mdframed}\vspace{0.5em}
-}
-
-\newenvironment{hint}{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
-  \textit{Hint:}
-}{%
-  \end{mdframed}\vspace{0.3em}
-}
-
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
+% Usage: \blankspace{6cm} — blank area for hand-written work, no rules
+\newcommand{\blankspace}[1]{%
   \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
   \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
+  \end{minipage}
   \vspace{0.3em}
+}
+
+% Usage: \guidedopen{title}{guided content}{guided workspace height}{open-ended workspace height}
+% Left: a titled, structured prompt with its own blank workspace. Right: a
+% fully blank workspace for open-ended exploration of the same topic (no
+% prompt text), sized so the two columns land at roughly the same total
+% height. Neither workspace is ruled.
+\newcommand{\guidedopen}[4]{%
+  \noindent\textbf{#1}\\[0.18em]
+  \noindent
+  \begin{minipage}[t]{0.485\textwidth}
+    #2
+    \blankspace{#3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.485\textwidth}
+    \blankspace{#4}
+  \end{minipage}
+  \\[0.4em]
+}
+
+% Usage: \panelbox{width}{height}{caption} — a framed drawing panel with `caption`
+% centered beneath it. An empty caption leaves the panel bare, with nothing
+% below the frame at all.
+\newcommand{\panelbox}[3]{%
+  \begin{minipage}[t]{\dimexpr#1+2\fboxsep+2\fboxrule\relax}
+    \framebox[#1][c]{\rule{0pt}{#2}}%
+    \if\relax\detokenize{#3}\relax\else
+      \\[0.25em]{\centering\small #3\par}%
+    \fi
+  \end{minipage}%
 }
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
 \noindent
 \begin{minipage}[t]{0.55\textwidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,15}} \\[0.3em]
+  {\LARGE \textbf{Worksheet \#\,15}} \\[0.18em]
   {\large \textit{Week 8, Day 1: Linear regression}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
-\vspace{0.2em}
+\vspace{0.6em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.1em}
+
+\noindent\underline{\textbf{Guided checkpoints}}\\[0.2em]
+\noindent{\small For full credit, fill in the checkpoints. If you skip a checkpoint, you must include your own notes for full credit.}
+\vspace{0.8em}
+
+% ── 1. What is a model? ──────────────────────────────────────────────────────
+\guidedopen{1. What Is a Model?}{
+Write down a definition of a model, in your own words or from one of the examples on the slides.
+}{2.6cm}{3.6cm}
+
+\vfill
+
+% ── 2. All models ────────────────────────────────────────────────────────────
+\guidedopen{2. George Box}{
+Write down George Box's quote about ``all models.''
+}{1.8cm}{2.8cm}
+
+\vfill
+
+% ── 3. Mechanistic vs. statistical ───────────────────────────────────────────
+\guidedopen{3. Mechanistic or Statistical?}{
+For each example on the slide, circle M (mechanistic) or S (statistical), and give a short reason.
+
+\vspace{0.6em}
+(a) \quad M \quad / \quad S
+\vspace{1.3cm}
+
+(b) \quad M \quad / \quad S
+\vspace{1.3cm}
+
+(c) \quad M \quad / \quad S
+\vspace{1.3cm}
+
+(d) \quad M \quad / \quad S
+}{1.3cm}{8.6cm}
+
+\vfill
+
+\newpage
+
+% ── 4. The modeling process ──────────────────────────────────────────────────
+\guidedopen{4. The Modeling Process}{
+List the main steps of modeling, in order (e.g.\ what do we choose first?).
+
+\vspace{0.6em}
+1.
+\vspace{1.1cm}
+
+2.
+\vspace{1.1cm}
+
+3.
+\vspace{1.1cm}
+
+4.
+}{1.1cm}{6.4cm}
+
+\vfill
+
+% ── 5. TODO ──────────────────────────────────────────────────────────────────
+\guidedopen{5. TODO}{
+TODO
+}{5.0cm}{5.6cm}
+
+\vfill
+
+% ── 6. TODO ──────────────────────────────────────────────────────────────────
+\guidedopen{6. TODO}{
+TODO
+}{5.0cm}{5.6cm}
+
+\vfill
 
 \end{document}
