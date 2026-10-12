@@ -13,7 +13,8 @@ nbformat
 # For history: numba <=0.66 stopped at numpy<2.5 because it called
 # np.row_stack, which NumPy removed in 2.5. numba 0.67 fixed that.
 numpy<2.6
-polars
+# polars 2.0 removed DataFrame.__dataframe__, which seaborn 0.13 needs to accept polars frames (week6, week11). Lift once seaborn handles polars 2 natively.
+polars<2
 seaborn
 plotnine
 pyarrow
