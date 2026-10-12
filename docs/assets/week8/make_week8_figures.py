@@ -21,6 +21,7 @@ Usage:  python3 make_week8_figures.py [name ...]
 
 from __future__ import annotations
 
+import importlib.util
 import sys
 from pathlib import Path
 
@@ -90,6 +91,10 @@ def tidy(ax, *, grid="y", spines=("left", "bottom")):
 
 def save(fig, name):
     out = OUT_DIR / f"{name}.svg"
+    if isinstance(fig, str):  # already-rendered SVG markup
+        out.write_text(fig, encoding="utf-8")
+        print(f"  wrote {out.relative_to(REPO_ROOT)}")
+        return
     fig.savefig(out, format="svg", facecolor=PAPER, bbox_inches="tight",
                 pad_inches=0.12)
     plt.close(fig)
@@ -101,6 +106,17 @@ def dollars(v, _=None):
 
 
 _cache: dict[str, object] = {}
+
+
+def barocas():
+    """The Week 5 Barocas figure script, loaded for its 3D surface renderer."""
+    if "barocas" not in _cache:
+        path = OUT_DIR.parent / "barocas-inscrutability" / "make_inscrutability_figures.py"
+        spec = importlib.util.spec_from_file_location("make_inscrutability_figures", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _cache["barocas"] = module
+    return _cache["barocas"]
 
 
 def homes() -> pl.DataFrame:
@@ -215,7 +231,8 @@ def _overfit_sample() -> tuple[np.ndarray, np.ndarray]:
             df["sale_price"].to_numpy().astype(float))
 
 
-def _overfit(labeled: bool):
+def _overfit(labeled: bool, models: int = 3):
+    """Three panels of the same sales; only the first `models` panels get their fitted curve."""
     x, y = _overfit_sample()
     # Polynomials on standardized x, so the degree-10 fit stays numerically sane.
     mu, sd = x.mean(), x.std()
@@ -226,10 +243,12 @@ def _overfit(labeled: bool):
         ("C", 10, "Overfit", "chases the noise in 14 sales"),
     ]
     fig, axes = new_fig(width=1100, height=400, ncols=3, sharey=True)
-    for ax, (letter, deg, name, note) in zip(axes, fits):
-        coef = np.polyfit((x - mu) / sd, y, deg)
-        ax.plot(grid, np.polyval(coef, (grid - mu) / sd), color=ORANGE,
-                linewidth=2.6, zorder=2)
+    for i, (ax, (letter, deg, name, note)) in enumerate(zip(axes, fits)):
+        shown = i < models
+        if shown:
+            coef = np.polyfit((x - mu) / sd, y, deg)
+            ax.plot(grid, np.polyval(coef, (grid - mu) / sd), color=ORANGE,
+                    linewidth=2.6, zorder=2)
         ax.scatter(x, y, s=40, color=INK, zorder=3, edgecolor=PAPER, linewidth=0.8)
         ax.set(ylim=(0, 1_300_000))
         ax.yaxis.set_major_formatter(dollars)
@@ -238,13 +257,30 @@ def _overfit(labeled: bool):
         heading = f"{letter}. {name}" if labeled else letter
         # Same title pad in both versions, so the plain and labeled SVGs line
         # up when one replaces the other on the slide.
-        ax.set_title(heading, fontsize=18, color=INK, loc="left", pad=30)
+        # A panel without its curve keeps a transparent title, so every build step crops to the same bbox.
+        ax.set_title(heading, fontsize=18, color=INK, loc="left", pad=30,
+                     alpha=1 if shown else 0)
         if labeled:
             ax.text(0, 1.03, note, transform=ax.transAxes, fontsize=12,
                     color=STEEL, va="bottom")
         tidy(ax)
     fig.subplots_adjust(wspace=0.08)
     return fig
+
+
+@figure("overfit-data")
+def overfit_data():
+    return _overfit(labeled=False, models=0)
+
+
+@figure("overfit-a")
+def overfit_a():
+    return _overfit(labeled=False, models=1)
+
+
+@figure("overfit-ab")
+def overfit_ab():
+    return _overfit(labeled=False, models=2)
 
 
 @figure("overfit-abc")
@@ -255,6 +291,49 @@ def overfit_abc():
 @figure("overfit-abc-labeled")
 def overfit_abc_labeled():
     return _overfit(labeled=True)
+
+
+# --------------------------------------------------------------------------
+# Multiple linear regression
+# --------------------------------------------------------------------------
+
+@figure("house-plane-3d")
+def house_plane_3d():
+    """Plane of best fit for sale price on building sqft and bedrooms.
+
+    Drawn with the Week 5 Barocas renderer so it matches that deck's 3D boxes.
+    The plane is fit on every sale, matching the slide's printed coefficients;
+    only a sample of sales is drawn, so the cloud stays readable.
+    """
+    df = homes()
+    X = np.column_stack([np.ones(df.height), df["building_sqft"].to_numpy(),
+                         df["bedrooms"].to_numpy()]).astype(float)
+    theta = np.linalg.lstsq(X, df["sale_price"].to_numpy().astype(float), rcond=None)[0]
+
+    sqft_lo, sqft_hi, beds_lo, beds_hi = 500, 4000, 1, 6
+    shown = (df.filter(pl.col("building_sqft").is_between(sqft_lo, sqft_hi)
+                       & pl.col("bedrooms").is_between(beds_lo, beds_hi)
+                       & (pl.col("sale_price") < 1_500_000))
+             .sample(300, seed=418))
+    rng = np.random.default_rng(418)
+    # Jitter bedrooms so the points don't stack in six flat rows.
+    beds = shown["bedrooms"].to_numpy() + rng.uniform(-0.2, 0.2, shown.height)
+    # The renderer's near corner is the top of each floor axis; sqft runs the other way so it reads left to right and the plane's top faces the camera.
+    points = np.column_stack([
+        (sqft_hi - shown["building_sqft"].to_numpy()) / (sqft_hi - sqft_lo),
+        (np.clip(beds, beds_lo, beds_hi) - beds_lo) / (beds_hi - beds_lo),
+        shown["sale_price"].to_numpy(),
+    ])
+
+    def plane(beds_unit, sqft_unit):
+        return (theta[0] + theta[1] * (sqft_hi - sqft_unit * (sqft_hi - sqft_lo))
+                + theta[2] * (beds_lo + beds_unit * (beds_hi - beds_lo)))
+
+    return barocas().surface_figure(
+        plane, grid=10, z_fill=0.9, camera=(40.0, 20.0),
+        labels=("Bedrooms", "Building sqft", "Sale price"),
+        points=points, surface_opacity=0.8,
+    )
 
 
 # --------------------------------------------------------------------------

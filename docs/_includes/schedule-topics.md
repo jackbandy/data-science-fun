@@ -194,9 +194,13 @@
 
 ### Sources
 
+* *Learning Data Science*, [Chapter 4: Modeling with Summary Statistics](https://learningds.org/ch/04/modeling_intro.html)
 * *Learning Data Science*, [Chapter 15: Linear Models](https://learningds.org/ch/15/linear_intro.html)
+* *Learning Data Science*, [Chapter 16: Model Selection](https://learningds.org/ch/16/ms_intro.html)
 * *Data Science: A First Introduction*, [Chapter 8: Regression II — Linear Regression](https://python.datasciencebook.ca/regression2.html)
 * *The Art of Data Science*, [Chapter 7: Formal Modeling](https://bookdown.org/rdpeng/artofdatascience/chapter-formal.html)
+* *Data 100 Course Notes* (UC Berkeley), [Modeling & SLR](https://ds100.org/course-notes/modeling-slr)
+* *Introduction to Modern Statistics*, [Chapter 24: Inference for Linear Regression with a Single Predictor](https://openintro-ims.netlify.app/inf-model-slr.html)
 
 ## Week 8, Day 2 (2026-10-14)
 

@@ -1,5 +1,8 @@
 ---
 title: "Week 8 (CS 418 @ UIC)"
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
 jupyter: python3
 format:
   revealjs:
@@ -28,12 +31,11 @@ ORANGE = "#f9461c"
 
 # Week 8 Slide Deck {.course-title}
 
-## Linear Regression; Intro to Classification
+<h2>Linear Regression; Intro to Classification</h2>
 
 Jack Bandy
 2026
 
----
 
 # Week 8, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
 
@@ -41,11 +43,11 @@ CS 418 · Week 8 · 🟠 Roosevelt 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
 
 ---
 
-# Map {.split}
+## Map {.split}
 
 ::: {.split-content .narrow-aside}
 
@@ -53,28 +55,27 @@ CS 418 · Week 8 · 🟠 Roosevelt 🟠
 - Week 8: Roosevelt
 - Day 1
     - Intro to Modeling
-    - Linear Models
+    - Loss Functions
+    - Overfitting
+    - Simple Linear Regression
+    - LINE Criteria and Practice
+    - Multiple Linear Regression
 :::
 
 ![](../assets/orange-line-map-stops/stop09-roosevelt.svg){.figure alt="Orange Line map with the Roosevelt stop marked, the Week 8 stop"}
 
 :::
 
----
 
 # Intro to Modeling {.section-header}
 
 ---
 
-# The Data Science Lifecycle {.image-frame-slide}
+## The Data Science Lifecycle {.image-frame-slide}
 
-::: {.caption}
-Source: Sam Lau, Joey Gonzalez, and Deb Nolan, ["Linear Models"](https://learningds.org/ch/15/linear_intro.html), ch. 15 of *[Learning Data Science](https://learningds.org/)*.
-:::
 
-<img src="../assets/lifecycle/ds-lifecycle-v4.svg" style="max-height: 380px;" alt="The data science lifecycle with the 'understand the world' stage highlighted: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
+<img src="../assets/lifecycle/ds-lifecycle-v3.svg" style="max-height: 380px;" alt="The data science lifecycle with the 'understand the world' stage highlighted: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
 
-"Linear models are a popular tool in the last stage of the lifecycle: understanding the world."
 
 ::: {.notes}
 Review: weeks 1–3 asked questions and obtained data; weeks 4–6 were about understanding the data (EDA, visualization); week 7 started inference. Models are how we move from describing *this* data to saying something about the world it came from.
@@ -82,7 +83,7 @@ Review: weeks 1–3 asked questions and obtained data; weeks 4–6 were about un
 
 ---
 
-# What is a model?
+## What is a model?
 
 ::: {.caption}
 Sources: Data 100 course notes, UC Berkeley, ["Modeling & SLR"](https://ds100.org/course-notes/modeling-slr); Lau, Gonzalez, and Nolan, [*Learning Data Science*](https://learningds.org/ch/04/modeling_intro.html), ch. 4.
@@ -91,13 +92,13 @@ Sources: Data 100 course notes, UC Berkeley, ["Modeling & SLR"](https://ds100.or
 ::: {.incremental}
 - "A model is an idealized representation of a system. A system is a set of principles or procedures according to which something functions." (Data 100)
 - "We use models to approximate the signal, with the simplest of these being the constant model, where the signal is approximated by a single number, like the mean or median." (Lau, Gonzalez, and Nolan)
-- We **build** (or **fit**, or **train**) a model by estimating parameters from data
+- We **build** / **fit** / **train** a model by estimating parameters from data
     - then use it to predict or to explain a phenomenon
 :::
 
 ---
 
-# George Box {.quote-slide}
+## George Box {.quote-slide}
 
 > Essentially, all models are wrong, but some are useful.
 
@@ -111,11 +112,8 @@ George E. P. Box and Norman R. Draper, *Empirical Model-Building and Response Su
 
 ---
 
-# Physical vs. Statistical Models: Car MPG {.smaller}
+## Physical vs. Statistical Models: Car MPG {.smaller}
 
-::: {.caption}
-Sources: Data 100 course notes, UC Berkeley, ["Modeling & SLR"](https://ds100.org/course-notes/modeling-slr) ("Common Types of Models"); David J. C. MacKay, ["Cars II"](https://www.withouthotair.com/cA/page_254.shtml), technical ch. A of *Sustainable Energy — Without the Hot Air* (UIT Cambridge, 2009); R. Quinlan, [Auto MPG](https://doi.org/10.24432/C5859H) [Dataset], UCI Machine Learning Repository (1993).
-:::
 
 How many miles per gallon will a car get?
 
@@ -125,18 +123,18 @@ How many miles per gallon will a car get?
 **Physical (mechanistic) model**
 
 - Based on how the system works
-- braking, air resistance, rolling resistance, heat
-- can use equations based on real physics / measurements
-    - e.g. mass, frontal area, drag coefficient
+- braking, air resistance, rolling resistance, etc.
+- can use equations based on real physics, real measurements, "laws"
+    - e.g. mass, frontal area, drag coefficient, etc.
 :::
 
 ::: {.column width="50%"}
 **Statistical model**
 
 - Start from data about many cars.
-- Auto MPG data: 398 cars
-- no physics
-- Choose a form, e.g. $\text{mpg} \approx \theta_0 + \theta_1 \cdot \text{weight}$, and let the data estimate $\theta_0, \theta_1$.
+    - e.g. the classic auto MPG dataset has 398 cars
+- no physics needed
+- For example, we could predict MPG based on year manufactured, brand, seats, etc.
 :::
 
 ::::
@@ -144,26 +142,37 @@ How many miles per gallon will a car get?
 
 ---
 
-# Mechanistic or Statistical?
+## Mechanistic or Statistical? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+Which kind of model is each one? Why? Discuss with elbow neighbor(s).
+
+- **A.** Car mpg based on the year the car was manufactured
+- **B.** Car mpg based on the car's weight
+- **C.** Chicago temperature based on the day of the year (1-365)
+- **D.** Chicago temperature based on tilt of Earth's axis
 
 ::: {.caption}
 Sources: R. Quinlan, [Auto MPG](https://doi.org/10.24432/C5859H) [Dataset], UCI Machine Learning Repository (1993), whose variables include `model_year` and `weight`; NASA Space Place, ["What Causes the Seasons?"](https://spaceplace.nasa.gov/seasons/en/).
 :::
+:::
 
-Which kind of model is each one? Why? Discuss with a neighbor.
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
-- **A.** Car mpg based on the year the car was manufactured
-- **B.** Car mpg based on the car's weight
-- **C.** Temperature based on the day of the year
-- **D.** Temperature based on distance from the Sun and the tilt of Earth's axis
+:::
 
 ::: {.notes}
 A: statistical. The model year does not burn fuel; it stands in for changes in engines and regulation, so the relationship comes from data. B: either. Fitting mpg to weight across cars is statistical, but physics also says mass matters (MacKay: energy goes into braking, and kinetic energy is ½mv²), so a mechanistic model would include it too. C: statistical. The day of the year is a stand-in for the season; you would fit a seasonal curve to past temperatures. D: mechanistic, built from the physics of sunlight. Good follow-up: which input actually matters? NASA: "Earth's tilted axis causes the seasons," and in the Northern Hemisphere "we are having winter when Earth is closest to the Sun." The change in distance "does not make much difference to our weather." A mechanistic model makes you say which inputs matter and why.
 :::
 
+
+# Loss Functions {.section-header}
+
 ---
 
-# Setup: Cook County Home Sales, 2025
+## Setup: Cook County Home Sales, 2025
 
 Back to our running example: what does a home cost in Cook County?
 
@@ -174,7 +183,7 @@ sales = pl.read_csv("../../datasets/cook-county-home-sales-2025/cook-county-home
 homes = sales.filter(
     (pl.col("property_group") == "Single-Family")   # condos have no sqft
     & (pl.col("is_multisale") == False)             # one price per home
-    & (pl.col("sale_price") > 10_000)               # drop nominal transfers
+    & (pl.col("sale_price") > 10_000)               # drop transfers
     & pl.col("building_sqft").is_not_null()
 )
 homes.height
@@ -182,35 +191,29 @@ homes.height
 
 ---
 
-# The Parameter to Estimate: $\theta$
+## The Parameter to Estimate: $\theta$
 
 ::: {.caption}
 Source: Lau, Gonzalez, and Nolan, *Learning Data Science*, ["The Constant Model"](https://learningds.org/ch/04/modeling_simple.html) (§4.1) and ["Minimizing Loss"](https://learningds.org/ch/04/modeling_loss_functions.html) (§4.2).
 :::
 
-A simple model: every sale price is one number.
-
-$$\text{sale price} \approx \theta$$
-
-::: {.incremental}
-- "In modeling, $\theta$ is often referred to as a **parameter**." (Lau, Gonzalez, and Nolan)
-- $\hat{\theta}$ ("theta hat") is our **estimate**, computed from data: "of all the possible $\theta$ values, $\hat{\theta}$ is the one that produces the smallest average loss for our data." (Lau, Gonzalez, and Nolan)
-:::
+- In modeling, $\theta$ is often referred to as a **parameter**.
+- $\hat{\theta}$ ("theta hat") is the **estimate**, computed from data.
 
 ---
 
-# Which $\hat{\theta}$ would you pick?
+## Potential options for $\hat{\theta}$
 
 ::: {.caption}
 Adapted from Lau, Gonzalez, and Nolan, ["The Constant Model"](https://learningds.org/ch/04/modeling_simple.html), *Learning Data Science*, §4.1, which compares the mode, median, and mean of bus lateness.
 :::
 
-Choose $\hat{\theta}$ as:
+Options to choose for $\hat{\theta}$:
 
-- **A.** the price of one randomly selected sale
-- **B.** the mode of the prices
-- **C.** the mean of the prices
-- **D.** the median of the prices
+- the price of one randomly selected sale
+- the mode of the prices
+- the mean of the prices
+- the median of the prices
 
 . . .
 
@@ -220,31 +223,29 @@ prices = homes["sale_price"]
 print(f"mean = ${prices.mean():,.0f}   median = ${prices.median():,.0f}")
 ```
 
-Which is "best"?
+Which is better here?
 
 ---
 
-# Loss Functions
+## Loss Functions
 
 ::: {.caption}
 Source: Lau, Gonzalez, and Nolan, ["Minimizing Loss"](https://learningds.org/ch/04/modeling_loss_functions.html), *Learning Data Science*, §4.2.
 :::
 
-"A loss function is a mathematical function that takes in $\theta$ and a data value $y$. It outputs a single number, the loss, that measures how far away $\theta$ is from $y$."
+"A loss function ... takes in $\theta$ and a data value $y$. It outputs a single number, the loss, that measures how far away $\theta$ is from $y$."
 
-::: {.incremental}
 - Loss for one point: $\ell(\theta, y)$
     - Lower is better.
 - Average loss over all $n$ points:
 
 $$L(\theta, \mathbf{y}) = \frac{1}{n} \sum_{i=1}^{n} \ell(\theta, y_i)$$
 
-- **Fitting** the model means finding the $\hat{\theta}$ with the smallest average loss.
-:::
+- **Fitting** a model: find $\hat{\theta}$ with the smallest average loss.
 
 ---
 
-# Squared Loss vs. Absolute Loss (vs. ...) {.text-figure-slide}
+## Squared Loss vs. Absolute Loss (vs. ...) {.text-figure-slide}
 
 ::: {.caption}
 Sources: Lau, Gonzalez, and Nolan, *Learning Data Science*, [§4.2](https://learningds.org/ch/04/modeling_loss_functions.html), [§19.4](https://learningds.org/ch/19/class_loss.html), and [§20.2](https://learningds.org/ch/20/gd_example.html); Data 100 course notes, UC Berkeley, ["Constant Model, Loss, and Transformations"](https://ds100.org/course-notes/loss-transformations).
@@ -265,80 +266,13 @@ Sources: Lau, Gonzalez, and Nolan, *Learning Data Science*, [§4.2](https://lear
 :::
 :::
 
----
 
 
-
-# Minimizing Loss on Home Prices {.image-frame-slide}
-
-::: {.caption}
-Sources: Lau, Gonzalez, and Nolan, [*Learning Data Science*](https://learningds.org/ch/04/modeling_loss_functions.html), §4.2; Data 100 course notes, UC Berkeley, ["Constant Model, Loss, and Transformations"](https://ds100.org/course-notes/loss-transformations). Data: Cook County single-family sales, 2025.
-:::
-
-<img src="../assets/week8/house-average-loss.svg" style="max-height: 360px;" alt="Two curves of average loss for every candidate constant price theta from 100 thousand to 900 thousand dollars. The average squared loss is lowest at the mean sale price, about 465 thousand dollars; the average absolute loss is lowest at the median, 353 thousand dollars.">
-
-Squared loss → **mean**; absolute loss → **median**. Skewed prices pull them \$100k apart: "the MSE is sensitive to outliers, while the MAE is robust to outliers." (Data 100)
-
+# Overfitting {.section-header}
 
 ---
 
-# Bias and Variance {.figure-aside}
-
-::: {.caption}
-Source: Scott Fortmann-Roe, ["Understanding the Bias-Variance Tradeoff"](http://scott.fortmann-roe.com/docs/BiasVariance.html) (2012). Figure redrawn after his bulls-eye diagram.
-:::
-
-::: {.columns}
-::: {.column}
-::: {.dense}
-- "[I]magine you could repeat the whole model building process more than once." Each dot is one model.
-- **Bias**: "the difference between the expected (or average) prediction of our model and the correct value which we are trying to predict."
-- **Variance**: "the variability of a model prediction for a given data point."
-:::
-:::
-::: {.column}
-<img class="figure" src="../assets/week8/bias-variance-bullseye.svg" alt="Four bulls-eye targets in a two-by-two grid. Columns are low and high variance; rows are low and high bias. Low bias, low variance: dots clustered on the center. Low bias, high variance: dots scattered around the center. High bias, low variance: dots clustered tightly but off to the upper right. High bias, high variance: dots scattered and off-center.">
-:::
-:::
-
----
-
-# The Bias-Variance Tradeoff
-
-::: {.caption}
-Source: Scott Fortmann-Roe, ["Understanding the Bias-Variance Tradeoff"](http://scott.fortmann-roe.com/docs/BiasVariance.html) (2012), after Hastie, Tibshirani, and Friedman, *The Elements of Statistical Learning* (2009); Lau, Gonzalez, and Nolan, ["Model Bias and Variance"](https://learningds.org/ch/16/ms_risk.html), *Learning Data Science*, §16.6.
-:::
-
-$$\text{Err}(x) = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}$$
-
-::: {.incremental}
-- Irreducible error: "the noise term in the true relationship that cannot fundamentally be reduced by any model."
-- "Underfitting with too simple a model can lead to high model bias ..., and overfitting with too complex a model can result in high model variance." (Lau, Gonzalez, and Nolan)
-- common tradeoff between minimizing the bias and minimizing the variance
-:::
-
----
-
-# The Big Data Paradox
-
-::: {.caption}
-Source: Valerie C. Bradley, Shiro Kuriwaki, Michael Isakov, Dino Sejdinovic, Xiao-Li Meng, and Seth Flaxman, ["Unrepresentative Big Surveys Significantly Overestimated US Vaccine Uptake"](https://doi.org/10.1038/s41586-021-04198-4), *Nature* 600 (2021): 695–700. Via [Stephen Wild on Bluesky](https://bsky.app/profile/stephenjwild.bsky.social/post/3mxlur7jeo22c).
-:::
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **Discuss the big data paradox**: more data shrinks variance, not bias.
-- "Increasing data size shrinks confidence intervals but magnifies the effect of survey bias: an instance of the Big Data Paradox."
-- Delphi–Facebook (about 250,000 responses per week) overestimated May 2021 vaccine uptake by 17 percentage points; an Axios–Ipsos panel with about 1,000 per week was reliable.
-- "Our central message is that data quality matters more than data quantity."
-:::
-:::
-
----
-
-# Which model would you choose? {.image-frame-slide}
+## Which model would you choose? {.image-frame-slide}
 
 ::: {.caption}
 Idea after Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1, which fits polynomials of degree 1 to 12 to one data set. Data: 14 Cook County single-family sales, 2025.
@@ -346,24 +280,76 @@ Idea after Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/1
 
 Which of the following models would you choose to represent this data? Why?
 
-<img src="../assets/week8/overfit-abc.svg" alt="Three panels of the same 14 home sales, building square footage against sale price. A: a flat horizontal line. B: a straight line rising with square footage. C: a wildly wiggling curve that passes through nearly every point and shoots off the chart at the edges.">
+<img data-id="overfit-fig" src="../assets/week8/overfit-data.svg" alt="Three identical panels of the same 14 home sales, building square footage against sale price, with no model drawn yet.">
 
 ---
 
-# Underfitting and Overfitting {.image-frame-slide}
+## Which model would you choose? {.image-frame-slide}
 
 ::: {.caption}
-Sources: Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1.
+Idea after Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1, which fits polynomials of degree 1 to 12 to one data set. Data: 14 Cook County single-family sales, 2025.
 :::
 
-<img src="../assets/week8/overfit-abc-labeled.svg" alt="The same three panels, now labeled. A, underfit: one number for every home. B, just right: a line follows the trend. C, overfit: chases the noise in 14 sales.">
+Which of the following models would you choose to represent this data? Why?
+
+<img data-id="overfit-fig" src="../assets/week8/overfit-a.svg" alt="The same three panels of 14 home sales. Panel A now has a flat horizontal line; panels B and C still show only the points.">
+
+---
+
+## Which model would you choose? {.image-frame-slide}
+
+::: {.caption}
+Idea after Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1, which fits polynomials of degree 1 to 12 to one data set. Data: 14 Cook County single-family sales, 2025.
+:::
+
+Which of the following models would you choose to represent this data? Why?
+
+<img data-id="overfit-fig" src="../assets/week8/overfit-ab.svg" alt="The same three panels of 14 home sales. A: a flat horizontal line. B: a straight line rising with square footage. Panel C still shows only the points.">
+
+---
+
+## Which model would you choose? {.image-frame-slide auto-animate=true}
+
+::: {.caption}
+Idea after Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1, which fits polynomials of degree 1 to 12 to one data set. Data: 14 Cook County single-family sales, 2025.
+:::
+
+Which of the following models would you choose to represent this data? Why?
+
+<img data-id="overfit-fig" src="../assets/week8/overfit-abc.svg" alt="Three panels of the same 14 home sales, building square footage against sale price. A: a flat horizontal line. B: a straight line rising with square footage. C: a wildly wiggling curve that passes through nearly every point and shoots off the chart at the edges.">
+
+---
+
+## Discuss with your elbow neighbor(s) {.split auto-animate=true}
+
+::: {.split-content .golden-columns}
+
+::: {}
+Which model would you choose to represent this data? Why?
+
+<img data-id="overfit-fig" class="figure" src="../assets/week8/overfit-abc.svg" alt="Three panels of the same 14 home sales, building square footage against sale price. A: a flat horizontal line. B: a straight line rising with square footage. C: a wildly wiggling curve that passes through nearly every point and shoots off the chart at the edges.">
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## Underfitting and Overfitting {.image-frame-slide auto-animate=true}
+
+::: {.caption}
+Source: Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1.
+:::
+
+<img data-id="overfit-fig" src="../assets/week8/overfit-abc-labeled.svg" alt="The same three panels, now labeled. A, underfit: one number for every home. B, just right: a line follows the trend. C, overfit: chases the noise in 14 sales.">
 
 "Overfitting happens when the model follows the data too closely and picks up the variability in the random noise in the outcome. When this happens, new observations are not well-predicted."
 
 
 ---
 
-# Summary (So Far)
+## Summary (So Far)
 
 ::: {.caption}
 Source: Data 100 course notes, UC Berkeley, ["Modeling & SLR"](https://ds100.org/course-notes/modeling-slr), which calls this "the modeling process": choose a model, choose a loss function, fit the model, evaluate model performance.
@@ -372,19 +358,17 @@ Source: Data 100 course notes, UC Berkeley, ["Modeling & SLR"](https://ds100.org
 ::: {.incremental}
 1. **Define the model**: a simplified representation of the world.
     - Use domain knowledge
-    - keep it simple!"
+    - Try to keep it simple (for now)
 2. **Define the loss function**: how well one instance of the model "fits" the data (e.g. squared or absolute loss, averaged over the data).
-3. **Minimize the loss**: find $\hat{\theta}$, the parameter values with the smallest loss.
-    - does it generalize? Or did we under- or overfit?
+3. **Minimize the loss**: find $\hat{\theta}$, parameter values with smallest loss.
 :::
 
+
+# Simple Linear Regression {.section-header}
+
 ---
 
-# Linear Models {.section-header}
-
----
-
-# Linear Models
+## Linear Models
 
 ::: {.caption}
 Source: Lau, Gonzalez, and Nolan, ["Simple Linear Model"](https://learningds.org/ch/15/linear_simple.html) and ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §15.1 and §16.1.
@@ -395,20 +379,20 @@ Source: Lau, Gonzalez, and Nolan, ["Simple Linear Model"](https://learningds.org
 ::: {.incremental}
 - Constant model: $y \approx \theta$
 - Simple linear model: $y \approx \theta_0 + \theta_1 x$
-- Multiple linear model: $y \approx \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_p x_p$
-- "Linear" means linear in the parameters $\theta$. "Polynomials are still considered linear models." (Model C two slides ago was a linear model!)
+- "Linear" means linear in the parameters $\theta$.
+    - "Polynomials are still considered linear models." (e.g. Model C in the overfitting example was a linear model!)
 :::
 
 ---
 
-# Example: House Cost {.figure-aside}
+## Example: House Cost {.figure-aside}
 
 ::: {.columns}
 ::: {.column}
-- From Week 5: the correlation matrix for Cook County home sales
+- Correlation matrix for Cook County home sales (week 5)
 - Goal is to predict **price**
 - Building square footage strongly correlated with price
-- Recall the "cone shape," though
+- Recall the "cone shape"
     - (the scatter fans out for larger homes)
 :::
 ::: {.column}
@@ -423,7 +407,7 @@ Data: Cook County single-family sales, 2025.
 
 ---
 
-# Vocabulary for Simple Linear Regression {.smaller}
+## Vocabulary for Simple Linear Regression {.smaller}
 
 ::: {.caption}
 Source: Lau, Gonzalez, and Nolan, *Learning Data Science*, [§15.1](https://learningds.org/ch/15/linear_simple.html).
@@ -438,13 +422,15 @@ Simple linear regression models a linear relationship between two variables.
 - The variable being modeled or predicted is called the **response** (or outcome) variable.
 - The variable used to predict the response is called the **predictor** (or explanatory) variable.
 - Lau, Gonzalez, and Nolan recommend avoiding "independent/dependent": these names "connote a causal relationship."
-- One predictor gives a line
+- One predictor gives a line, $\hat{y} = \theta_0 + \theta_1 x$
+    - intercept $\theta_0$: the predicted value of $y$ when $x$ is zero
+    - slope $\theta_1$: how much the predicted value of $y$ changes for every one-unit increase in $x$
 
 :::
 
 ::: {.column width="45%"}
 
-![](../assets/week8/advertising-sales.svg)
+![](../assets/week8/advertising-sales.svg){alt="Scatter plot of sales against online advertising dollars, from 0 to about 9, with a least squares line rising steadily through a tight band of points."}
 
 
 :::
@@ -453,24 +439,7 @@ Simple linear regression models a linear relationship between two variables.
 
 ---
 
-# Linear regression equation {.smaller}
-A fitted model uses this regression line equation:
-
-$$\hat{y} = b_0 + b_1 x$$
-
-where
-
-::: {.incremental}
-- $\hat{y}$: the response variable, which we are trying to predict based on $x$
-- $x$: the predictor variable
-- $b_0$: the intercept, the predicted value of $y$ when $x$ is zero
-- $b_1$: the slope, how much the predicted value of $y$ changes for every one-unit increase in the value of $x$
-- Same line, other names: $\hat{\theta}_0 + \hat{\theta}_1 x$ (Lau, Gonzalez, and Nolan)
-:::
-
----
-
-# Least Squares: Pick the Line with the Smallest Loss
+## Least Squares: Pick the Line with the Smallest Loss
 
 ::: {.caption}
 Source: Lau, Gonzalez, and Nolan, *Learning Data Science*, [§15.1](https://learningds.org/ch/15/linear_simple.html) and [§15.3](https://learningds.org/ch/15/linear_simple_fit.html).
@@ -490,7 +459,7 @@ $$L(\theta_0, \theta_1) = \frac{1}{n} \sum_{i=1}^{n} \big(y_i - (\theta_0 + \the
 
 ---
 
-# Correlation coefficient {.smaller}
+## Correlation Coefficient: Recap from Week 5 {.smaller}
 
 The correlation coefficient $r$ measures the strength and direction of a linear relationship.
 
@@ -498,18 +467,16 @@ The correlation coefficient $r$ measures the strength and direction of a linear 
 
 ::: {.column width="55%"}
 
-::: {.incremental}
 - $r$ always falls between $-1$ and $+1$.
-- The sign gives the direction: positive rises, negative falls.
-- The closer $|r|$ is to 1, the tighter the points hug the line.
-- $r$ near 0 means no linear pattern — a curved one may still exist.
-:::
+- sign gives the direction: positive rises, negative falls.
+- $|r|$ closer to 1: points hug the line.
+- $r$ near 0 means no linear pattern (others may still exist)
 
 :::
 
 ::: {.column width="45%"}
 
-![](../assets/week8/correlation-strengths.svg)
+![](../assets/week8/correlation-strengths.svg){alt="Four scatter plots labeled r = +0.96, +0.42, +0.08, and −0.88: a tight rising band, a loose rising cloud, a shapeless cloud, and a tight falling band."}
 
 <p class="code-caption" style="margin-top:0.5em;">Same idea at four strengths</p>
 
@@ -520,26 +487,7 @@ The correlation coefficient $r$ measures the strength and direction of a linear 
 
 ---
 
-# Correlation coefficient example {.smaller}
-
-::: {style="font-size:1.5em;"}
-$$r = \frac{\sum (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum (x_i-\bar{x})^2 \; \sum (y_i-\bar{y})^2}}$$
-:::
-
-::: {.incremental}
-- Each term pairs how far a point sits from $\bar{x}$ with how far it sits from $\bar{y}$.
-- That product is positive when both deviate the same way, negative when they deviate oppositely.
-- The denominator rescales the total so the result always lands between $-1$ and $+1$.
-:::
-
-
-::: {.notes}
-Walk the numerator first: it is a sum of products of deviations, so it grows when x and y move together. The denominator is just normalization — it is what forces the range, and it is why r has no units.
-:::
-
----
-
-# The Least Squares Solution
+## The Least Squares Solution
 
 ::: {.caption}
 Sources: Lau, Gonzalez, and Nolan, ["Fitting the Simple Linear Model"](https://learningds.org/ch/15/linear_simple_fit.html), *Learning Data Science*, §15.3; Data 100 course notes, UC Berkeley, ["Modeling & SLR"](https://ds100.org/course-notes/modeling-slr).
@@ -559,7 +507,7 @@ $$\hat{\theta}_1 = r \, \frac{s_y}{s_x} \qquad \hat{\theta}_0 = \bar{y} - \hat{\
 
 ---
 
-# Fitting the House Model
+## Fitting the House Model
 
 ```{python}
 #| echo: true
@@ -586,7 +534,7 @@ Slope: each additional square foot is associated with roughly $426 more in sale 
 
 ---
 
-# The Fitted Line {.code-figure-slide}
+## The Fitted Line {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -601,9 +549,12 @@ Slope: each additional square foot is associated with roughly $426 more in sale 
  + theme_minimal())
 ```
 
+
+# LINE Criteria {.section-header}
+
 ---
 
-# Assumptions / Criteria
+## Assumptions / Criteria
 
 ::: {.caption}
 Source: Mine Çetinkaya-Rundel and Johanna Hardin, ["Inference for Linear Regression with a Single Predictor"](https://openintro-ims.netlify.app/inf-model-slr.html), §24.6 of *Introduction to Modern Statistics*, 2nd ed. (OpenIntro).
@@ -619,9 +570,507 @@ Source: Mine Çetinkaya-Rundel and Johanna Hardin, ["Inference for Linear Regres
 - "The linearity, normality, and equality of variance conditions usually can be assessed through residual plots," using residuals $y_i - \hat{y}_i$.
 :::
 
+
+# Practice: LINE Criteria {.section-header}
+
 ---
 
-# Residuals for the House Model {.code-figure-slide}
+## How to Practice
+
+::: {.caption}
+Source: Çetinkaya-Rundel and Hardin, ["Inference for Linear Regression with a Single Predictor"](https://openintro-ims.netlify.app/inf-model-slr.html), *Introduction to Modern Statistics*, 2nd ed., §24.6. Each example's data source is printed under its plots.
+:::
+
+Each example checks one criterion.
+
+- **Linearity**: residuals vs. $x$ should show no leftover pattern.
+- **Independence**: residuals in the order collected should show no runs or waves.
+- **Nearly normal residuals**: the histogram should look like a bell.
+- **Equal variability**: residuals vs. fitted values should be an even band.
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-b-v0.svg" alt="Linearity practice: a scatter plot of synthetic data B, a quadratic curve, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-b-v1.svg" alt="Linearity practice: the same data with its least-squares line, next to a plot of residuals against x, which shows U-shaped residuals.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-b-v2.svg" alt="Linearity practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-c-v0.svg" alt="Linearity practice: a scatter plot of synthetic data A, a straight line plus normal noise, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-c-v1.svg" alt="Linearity practice: the same data with its least-squares line, next to a plot of residuals against x, which shows a patternless band of residuals.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-c-v2.svg" alt="Linearity practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-a-v0.svg" alt="Linearity practice: a scatter plot of 300 Cook County home sales from 2025, log building square footage against log sale price, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-a-v1.svg" alt="Linearity practice: the same data with its least-squares line, next to a plot of residuals against x, which shows no curve left in the residuals.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-a-v2.svg" alt="Linearity practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-c-v0.svg" alt="Linearity practice: a scatter plot of synthetic data C, a saturating curve, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-c-v1.svg" alt="Linearity practice: the same data with its least-squares line, next to a plot of residuals against x, which shows an upside-down U in the residuals.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-c-v2.svg" alt="Linearity practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-a-v0.svg" alt="Linearity practice: a scatter plot of CTA rail boardings by year, 1988 to 2025, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-a-v1.svg" alt="Linearity practice: the same data with its least-squares line, next to a plot of residuals against x, which shows residuals that dip, climb, then crash in 2020.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/linearity-negative-example-a-v2.svg" alt="Linearity practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-b-v0.svg" alt="Linearity practice: a scatter plot of Olympic men's against women's 100 m winning times at the same Games, 1928 to 2024, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-b-v1.svg" alt="Linearity practice: the same data with its least-squares line, next to a plot of residuals against x, which shows residuals scattered evenly around zero.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/linearity-positive-example-b-v2.svg" alt="Linearity practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-c-v0.svg" alt="Independent observations practice: a scatter plot of synthetic data D, with independent normal errors, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-c-v1.svg" alt="Independent observations practice: the same data with its least-squares line, next to a plot of residuals in the order the data were collected, which shows jagged residuals with no runs.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-c-v2.svg" alt="Independent observations practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-c-v0.svg" alt="Independent observations practice: a scatter plot of synthetic data E, whose errors each carry over 85 percent of the previous one, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-c-v1.svg" alt="Independent observations practice: the same data with its least-squares line, next to a plot of residuals in the order the data were collected, which shows slow drifts, with each residual near the last.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-c-v2.svg" alt="Independent observations practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-a-v0.svg" alt="Independent observations practice: a scatter plot of monthly airline passengers, 1949 to 1960, on a log scale, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-a-v1.svg" alt="Independent observations practice: the same data with its least-squares line, next to a plot of residuals in the order the data were collected, which shows a repeating yearly wave.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-a-v2.svg" alt="Independent observations practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-a-v0.svg" alt="Independent observations practice: a scatter plot of 300 Cook County home sales from 2025, log-log, ordered by sale date, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-a-v1.svg" alt="Independent observations practice: the same data with its least-squares line, next to a plot of residuals in the order the data were collected, which shows no runs or waves across the year.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-a-v2.svg" alt="Independent observations practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-b-v0.svg" alt="Independent observations practice: a scatter plot of Chicago buildings with 10 or more stories, stories against units, ordered by year built, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-b-v1.svg" alt="Independent observations practice: the same data with its least-squares line, next to a plot of residuals in the order the data were collected, which shows neighbors in time that don't track each other.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/independence-positive-example-b-v2.svg" alt="Independent observations practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-b-v0.svg" alt="Independent observations practice: a scatter plot of weekday entries at the CTA UIC-Halsted station in 2025, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-b-v1.svg" alt="Independent observations practice: the same data with its least-squares line, next to a plot of residuals in the order the data were collected, which shows long runs above and below zero that line up with the academic calendar.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/independence-negative-example-b-v2.svg" alt="Independent observations practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-c-v0.svg" alt="Nearly normal residuals practice: a scatter plot of synthetic data H, with exponential errors shifted to mean zero, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-c-v1.svg" alt="Nearly normal residuals practice: the same data with its least-squares line, next to a histogram of the residuals with a normal curve overlaid, which shows right skew: a pile-up just below zero and a long right tail.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-c-v2.svg" alt="Nearly normal residuals practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-b-v0.svg" alt="Nearly normal residuals practice: a scatter plot of synthetic data F, 200 points with normal errors, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-b-v1.svg" alt="Nearly normal residuals practice: the same data with its least-squares line, next to a histogram of the residuals with a normal curve overlaid, which shows a bell shape.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-b-v2.svg" alt="Nearly normal residuals practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-a-v0.svg" alt="Nearly normal residuals practice: a scatter plot of Olympic men's 100 m winning times by year, 1948 to 2024, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-a-v1.svg" alt="Nearly normal residuals practice: the same data with its least-squares line, next to a histogram of the residuals with a normal curve overlaid, which shows a rough bell shape from only 20 points.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-a-v2.svg" alt="Nearly normal residuals practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-a-v0.svg" alt="Nearly normal residuals practice: a scatter plot of IMDb's 1,000 most-rated movies, release year against number of ratings, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-a-v1.svg" alt="Nearly normal residuals practice: the same data with its least-squares line, next to a histogram of the residuals with a normal curve overlaid, which shows strong right skew: a wall just below zero and a long right tail.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-a-v2.svg" alt="Nearly normal residuals practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-c-v0.svg" alt="Nearly normal residuals practice: a scatter plot of synthetic data G, 400 points with normal errors, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-c-v1.svg" alt="Nearly normal residuals practice: the same data with its least-squares line, next to a histogram of the residuals with a normal curve overlaid, which shows a bell shape.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/normality-positive-example-c-v2.svg" alt="Nearly normal residuals practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-b-v0.svg" alt="Nearly normal residuals practice: a scatter plot of US presidential elections, year against each candidate's vote share, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-b-v1.svg" alt="Nearly normal residuals practice: the same data with its least-squares line, next to a histogram of the residuals with a normal curve overlaid, which shows two humps, with almost nothing near zero.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/normality-negative-example-b-v2.svg" alt="Nearly normal residuals practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-b-v0.svg" alt="Equal variability practice: a scatter plot of synthetic data I, 150 points with constant-variance errors, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-b-v1.svg" alt="Equal variability practice: the same data with its least-squares line, next to a plot of residuals against fitted values, which shows an even band of residuals.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-b-v2.svg" alt="Equal variability practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-c-v0.svg" alt="Equal variability practice: a scatter plot of synthetic data K, whose error spread shrinks as x grows, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-c-v1.svg" alt="Equal variability practice: the same data with its least-squares line, next to a plot of residuals against fitted values, which shows residuals whose spread changes steadily with the fitted value.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-c-v2.svg" alt="Equal variability practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-a-v0.svg" alt="Equal variability practice: a scatter plot of CTA 'L' stations in 2025, average weekday against weekend and holiday entries, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-a-v1.svg" alt="Equal variability practice: the same data with its least-squares line, next to a plot of residuals against fitted values, which shows a tight band for small stations and a wide fan for the busiest.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-a-v2.svg" alt="Equal variability practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-a-v0.svg" alt="Equal variability practice: a scatter plot of IMDb movies, runtime against average rating, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-a-v1.svg" alt="Equal variability practice: the same data with its least-squares line, next to a plot of residuals against fitted values, which shows a roughly even band of residuals.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-a-v2.svg" alt="Equal variability practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-b-v0.svg" alt="Equal variability practice: a scatter plot of monthly airline passengers, 1949 to 1960, on the raw scale, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-b-v1.svg" alt="Equal variability practice: the same data with its least-squares line, next to a plot of residuals against fitted values, which shows residuals that fan out as traffic grows.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-negative-example-b-v2.svg" alt="Equal variability practice: the same two panels, stamped 'Does not meet criteria' in orange.">
+:::
+
+::::
+
+---
+
+## {.image-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-c-v0.svg" alt="Equal variability practice: a scatter plot of synthetic data J, 60 points with constant-variance errors, with no line or diagnostic yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-c-v1.svg" alt="Equal variability practice: the same data with its least-squares line, next to a plot of residuals against fitted values, which shows an even band of residuals.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/linear-model-criteria-assumptions/equal-variability-positive-example-c-v2.svg" alt="Equal variability practice: the same two panels, stamped 'Meets criteria' in orange.">
+:::
+
+::::
+
+---
+
+## Residuals for the House Model {.code-figure-slide}
 
 ```{python}
 #| echo: true
@@ -640,7 +1089,7 @@ homes = homes.with_columns((pl.col("sale_price") - predicted).alias("residual"))
 
 ---
 
-# Which Assumptions Hold?
+## Which Assumptions Hold?
 
 Look back at the residual plot.
 
@@ -655,7 +1104,102 @@ Look back at the residual plot.
 The fan is the Week 5 "cone shape" again, and the pattern OpenIntro (IMS §24.6) calls "the most common pattern observed when this condition fails: the variability of y is larger when x is larger." So equal variability fails. A log transform of price (Week 5 log-linearize slide) often stabilizes this. Independence is about the data design: sales in the same neighborhood share unmeasured factors.
 :::
 
+# Multiple Linear Regression {.section-header}
+
 ---
+
+## Bedrooms Alone: A Line {.code-figure-slide}
+
+```{python}
+#| echo: true
+def fit(cols):
+    # Design matrix: a column of 1s for the intercept, then one column per predictor
+    X = np.column_stack([np.ones(homes.height)] + [homes[c].to_numpy() for c in cols])
+    # lstsq returns the thetas with the smallest sum of squared residuals
+    return np.linalg.lstsq(X, y, rcond=None)[0]
+
+theta = fit(["bedrooms"])
+print(f"bedrooms only:   {theta[1]:+,.0f} per bedroom")
+```
+
+```{python}
+#| echo: false
+#| fig-alt: "Scatter plot of Cook County single-family home sales, number of bedrooms from 1 to 8 against sale price up to two million dollars, with the points jittered sideways into vertical bands at each bedroom count and an orange least squares line rising steeply from left to right"
+(ggplot(homes, aes("bedrooms", "sale_price"))
+ + geom_point(color="#777777", alpha=0.08, size=0.8, raster=True,
+              position=position_jitter(width=0.2, height=0, random_state=418))
+ + geom_abline(intercept=theta[0], slope=theta[1], color=ORANGE, size=1.2)
+ + scale_y_continuous(limits=(0, 2_000_000),
+                      labels=lambda v: [f"${x/1e6:g}M" for x in v])
+ + scale_x_continuous(limits=(0.5, 8.5), breaks=range(1, 9))
+ + labs(x="Bedrooms", y="Sale price")
+ + theme_minimal())
+```
+
+::: {.notes}
+Alone, bedrooms stands in for size: bigger homes have more bedrooms, so the line climbs about $270k per bedroom.
+:::
+
+---
+
+## Square Footage + Bedrooms: A Plane {.image-frame-slide}
+
+::: {.caption}
+Figure after Timbers, Campbell, Lee, Ostblom, and Heagy, ["Multivariable Linear Regression"](https://python.datasciencebook.ca/regression2.html#multivariable-linear-regression), *Data Science: A First Introduction with Python*, §8.6, Fig. 8.7. Data: Cook County single-family sales, 2025; plane fit on all sales, 300 shown. Box drawn like the Week 5 Barocas figures.
+:::
+
+```{python}
+#| echo: true
+theta = fit(["building_sqft", "bedrooms"])
+print(f"sqft + bedrooms: {theta[1]:+,.0f} per sqft, {theta[2]:+,.0f} per bedroom")
+```
+
+<img src="../assets/week8/house-plane-3d.svg" style="max-height: 320px;" alt="Three-dimensional box with bedrooms and building square footage along the floor and sale price as the height, holding 300 Cook County home sales as dots. A shaded orange plane climbs steeply in the square footage direction and stays nearly level in the bedrooms direction; dots below the plane show faintly through it.">
+
+. . .
+
+Why does the bedroom slope collapse once square footage is in the model?
+
+::: {.notes}
+One predictor fits a line; two fit a plane. This one climbs with square footage and barely tilts with bedrooms. Holding square footage fixed, an extra bedroom means the same space split into more rooms, so the slope drops from about +$270k to about −$17k. The sign is not trustworthy: drop homes over 4,000 sq ft and it turns slightly positive (about +$6k). That is the instability Lau, Gonzalez, and Nolan and Timbers et al. (§8.7.2, "Multicollinearity") warn about when predictors are correlated. Adding bedrooms barely improves the fit (RMSE about $392k either way). scikit-learn's LinearRegression gives the same thetas; DSFAI §8.6 runs this exact model (sqft + beds) on Sacramento homes. DSFAI recommends against 3D charts in general and uses one "only to illustrate what the regression plane looks like for learning purposes." Same here: with three or more predictors there is no picture, only the equation.
+:::
+
+---
+
+## Multiple Linear Regression
+
+::: {.caption}
+Sources: Lau, Gonzalez, and Nolan, ["Multiple Linear Model"](https://learningds.org/ch/15/linear_multi.html), *Learning Data Science*, §15.4; Timbers, Campbell, Lee, Ostblom, and Heagy, ["Multivariable Linear Regression"](https://python.datasciencebook.ca/regression2.html#multivariable-linear-regression), *Data Science: A First Introduction with Python*, §8.6.
+:::
+
+"The multiple linear model ... uses more than one feature to predict (or describe or explain) the outcome." (Lau, Gonzalez, and Nolan)
+
+$$\hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_p x_p$$
+
+::: {.incremental}
+- Same three steps: model, average squared loss, minimize (now over $p + 1$ parameters).
+- With two predictors, the predictions "form a flat plane" instead of a line. (Timbers et al.)
+- Read each slope in the presence of the others: "Holding fixed the values of the other variables in the model ..., an increase of 1 unit in $x$ corresponds to a $\theta_1$ change in $y$, on average." (Lau, Gonzalez, and Nolan)
+- "When two explanatory features are highly correlated, their coefficients in the model may be unstable." (Lau, Gonzalez, and Nolan)
+:::
+
+---
+
+## Any questions?
+
+<!-- TODO: add this week's deadlines, as in Week 6 -->
+- PrairieLearn Homeworks?
+- Group Projects?
+- Other logistics?
+- (You can also stay after class for questions)
+
+---
+
+## Upload your worksheet {#upload-worksheet-day-1}
+
+Take a picture of your worksheet, upload it in Canvas
+
+# That's All for Today, See You Wednesday! {.section-header .no-index}
 
 # Week 8, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
 
@@ -666,7 +1210,7 @@ Jack Bandy
 
 ---
 
-# Map {.split}
+## Map {.split}
 
 ::: {.split-content .narrow-aside}
 
@@ -680,14 +1224,13 @@ Jack Bandy
 
 :::
 
----
 
 
 # Intro to Classification {.section-header}
 
 ---
 
-# What is classification? {.smaller}
+## What is classification? {.smaller}
 Classification is the task of predicting the class label of an observation from a set of predictor variables.
 
 :::: {.columns}
@@ -717,7 +1260,69 @@ Classification is the task of predicting the class label of an observation from 
 Anchor this against regression, which the class has just seen: the same structure of predictors and a response, but the response is now categorical. Fitting to known examples and predicting for new ones carries over unchanged.
 :::
 
+
+# Appendix: Bias and Variance {.section-header}
+
 ---
+
+## Bias and Variance {.figure-aside}
+
+::: {.caption}
+Source: Scott Fortmann-Roe, ["Understanding the Bias-Variance Tradeoff"](http://scott.fortmann-roe.com/docs/BiasVariance.html) (2012). Figure redrawn after his bulls-eye diagram.
+:::
+
+::: {.columns}
+::: {.column}
+::: {.dense}
+- Consider each dot as one model
+- The orange center is the target
+- **Bias**: "the difference between the expected (or average) prediction of our model and the correct value which we are trying to predict."
+- **Variance**: "the variability of a model prediction for a given data point."
+:::
+:::
+::: {.column}
+<img class="figure" src="../assets/week8/bias-variance-bullseye.svg" alt="Four bulls-eye targets in a two-by-two grid. Columns are low and high variance; rows are low and high bias. Low bias, low variance: dots clustered on the center. Low bias, high variance: dots scattered around the center. High bias, low variance: dots clustered tightly but off to the upper right. High bias, high variance: dots scattered and off-center.">
+:::
+:::
+
+---
+
+## The Bias-Variance Tradeoff
+
+::: {.caption}
+Source: Scott Fortmann-Roe, ["Understanding the Bias-Variance Tradeoff"](http://scott.fortmann-roe.com/docs/BiasVariance.html) (2012), after Hastie, Tibshirani, and Friedman, *The Elements of Statistical Learning* (2009); Lau, Gonzalez, and Nolan, ["Model Bias and Variance"](https://learningds.org/ch/16/ms_risk.html), *Learning Data Science*, §16.6.
+:::
+
+$$\text{Err}(x) = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}$$
+
+::: {.incremental}
+- Irreducible error: "the noise term in the true relationship that cannot fundamentally be reduced by any model."
+- "Underfitting with too simple a model can lead to high model bias ..., and overfitting with too complex a model can result in high model variance." (Lau, Gonzalez, and Nolan)
+- common tradeoff between minimizing the bias and minimizing the variance
+:::
+
+
+# Appendix: The Big Data Paradox {.section-header}
+
+---
+
+## The Big Data Paradox
+
+::: {.caption}
+Source: Valerie C. Bradley, Shiro Kuriwaki, Michael Isakov, Dino Sejdinovic, Xiao-Li Meng, and Seth Flaxman, ["Unrepresentative Big Surveys Significantly Overestimated US Vaccine Uptake"](https://doi.org/10.1038/s41586-021-04198-4), *Nature* 600 (2021): 695–700. Via [Stephen Wild on Bluesky](https://bsky.app/profile/stephenjwild.bsky.social/post/3mxlur7jeo22c).
+:::
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **Discuss the big data paradox**: more data shrinks variance, not bias.
+- "Increasing data size shrinks confidence intervals but magnifies the effect of survey bias: an instance of the Big Data Paradox."
+- Delphi–Facebook (about 250,000 responses per week) overestimated May 2021 vaccine uptake by 17 percentage points; an Axios–Ipsos panel with about 1,000 per week was reliable.
+- "Our central message is that data quality matters more than data quantity."
+:::
+:::
+
 
 # Sources {.sources}
 
@@ -725,11 +1330,14 @@ Anchor this against regression, which the class has just seen: the same structur
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
-5. Sam Lau, Joey Gonzalez, and Deb Nolan, *[Learning Data Science](https://learningds.org/)* (O'Reilly, 2023), ch. 4 ("Modeling with Summary Statistics"), ch. 15 ("Linear Models"), and §16.1 ("Overfitting").
+5. Sam Lau, Joey Gonzalez, and Deb Nolan, *[Learning Data Science](https://learningds.org/)* (O'Reilly, 2023), ch. 4 ("Modeling with Summary Statistics"), ch. 15 ("Linear Models"), §16.1 ("Overfitting"), and §16.6 ("Model Bias and Variance").
 6. Scott Fortmann-Roe, ["Understanding the Bias-Variance Tradeoff"](http://scott.fortmann-roe.com/docs/BiasVariance.html) (June 2012). The bulls-eye figure is redrawn after his.
 7. George E. P. Box and Norman R. Draper, *Empirical Model-Building and Response Surfaces* (Wiley, 1987), p. 424.
 8. David J. C. MacKay, *[Sustainable Energy — Without the Hot Air](https://www.withouthotair.com/)* (UIT Cambridge, 2009), technical ch. A, ["Cars II"](https://www.withouthotair.com/cA/page_254.shtml).
 9. R. Quinlan, [Auto MPG](https://doi.org/10.24432/C5859H) [Dataset], UCI Machine Learning Repository (1993), CC BY 4.0.
 10. Data 100 course notes, *[Principles and Techniques of Data Science](https://ds100.org/course-notes/)*, UC Berkeley: ["Modeling & SLR"](https://ds100.org/course-notes/modeling-slr) and ["Constant Model, Loss, and Transformations"](https://ds100.org/course-notes/loss-transformations).
-11. Mine Çetinkaya-Rundel and Johanna Hardin, *[Introduction to Modern Statistics](https://openintro-ims.netlify.app/)*, 2nd ed. (OpenIntro), §24.6.
-12. Gonzalo Bello Lander, CS 418 Lecture 09 ("Introduction to Data Modeling") and Lecture 10 ("Regression (I): Simple Linear Regression"), 2026; Elena Zheleva, CS 418 lecture slides, Feb. 12 and 17, 2026.
+11. Mine Çetinkaya-Rundel and Johanna Hardin, *[Introduction to Modern Statistics](https://openintro-ims.netlify.app/)*, 2nd ed. (OpenIntro), §7.1.3 and §24.6.
+12. Tiffany Timbers, Trevor Campbell, Melissa Lee, Joel Ostblom, and Lindsey Heagy, *[Data Science: A First Introduction with Python](https://python.datasciencebook.ca/)*, ch. 8 ("Regression II: Linear Regression"), §8.6 and §8.7.
+13. Penn State, [STAT 462 §6.1, "MLR Model Assumptions"](https://online.stat.psu.edu/stat462/node/145/), for the alternate LINE names on the practice figures.
+14. LINE practice data: Cook County Assessor's Office home sales (2025); Olympic 100 m winning times (Tatem et al., *Nature* 431:525, 2004, plus Wikipedia for 2008–2024); airline passengers, 1949–1960 (Box and Jenkins, *Time Series Analysis*, 1976); CTA ridership and Chicago building footprints (City of Chicago Data Portal); US presidential elections (Data 100 `elections.csv`); IMDb non-commercial datasets (June 2026). Details in the repo's [`assets/linear-model-criteria-assumptions/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/linear-model-criteria-assumptions/SOURCES.md).
+15. Gonzalo Bello Lander, CS 418 Lecture 09 ("Introduction to Data Modeling") and Lecture 10 ("Regression (I): Simple Linear Regression"), 2026; Elena Zheleva, CS 418 lecture slides, Feb. 12 and 17, 2026.

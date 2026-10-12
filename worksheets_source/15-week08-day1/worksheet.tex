@@ -75,6 +75,16 @@
   \end{minipage}%
 }
 
+% Usage: \axespanel{width}{height}{caption} — a \panelbox with faint axes: the y-axis centered, the x-axis near the bottom.
+\newcommand{\axespanel}[3]{%
+  \begin{minipage}[t]{\dimexpr#1+2\fboxsep+2\fboxrule\relax}
+    \framebox[#1][c]{\rule{0pt}{#2}%
+      \makebox[0pt][c]{\textcolor{black!25}{\rule{0.6pt}{#2}}}%
+      \makebox[0pt][c]{\textcolor{black!25}{\raisebox{\dimexpr#2/6\relax}{\rule{#1}{0.6pt}}}}}%
+    \\[0.25em]{\centering\small #3\par}%
+  \end{minipage}%
+}
+
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
 \RaggedRight
@@ -106,68 +116,119 @@
 % ── 1. What is a model? ──────────────────────────────────────────────────────
 \guidedopen{1. What Is a Model?}{
 Write down a definition of a model, in your own words or from one of the examples on the slides.
-}{2.6cm}{3.6cm}
+}{1.2cm}{2.2cm}
 
 \vfill
 
 % ── 2. All models ────────────────────────────────────────────────────────────
 \guidedopen{2. George Box}{
 Write down George Box's quote about ``all models.''
-}{1.8cm}{2.8cm}
+}{0.8cm}{1.4cm}
 
 \vfill
 
 % ── 3. Mechanistic vs. statistical ───────────────────────────────────────────
 \guidedopen{3. Mechanistic or Statistical?}{
-For each example on the slide, circle M (mechanistic) or S (statistical), and give a short reason.
+Write down each example and whether it is mechanical or statistical.
 
-\vspace{0.6em}
-(a) \quad M \quad / \quad S
-\vspace{1.3cm}
+\vspace{0.5em}
+A.
+\vspace{0.65cm}
 
-(b) \quad M \quad / \quad S
-\vspace{1.3cm}
+B.
+\vspace{0.65cm}
 
-(c) \quad M \quad / \quad S
-\vspace{1.3cm}
+C.
+\vspace{0.65cm}
 
-(d) \quad M \quad / \quad S
-}{1.3cm}{8.6cm}
+D.
+}{0.65cm}{5.4cm}
+
+\vfill
+
+% ── 4. Loss function ─────────────────────────────────────────────────────────
+\guidedopen{4. Loss Functions}{
+Write the average loss $L(\theta, \mathbf{y})$ from the slides, then explain it in plain language.
+
+\vspace{0.5em}
+Formula:
+\vspace{1.2cm}
+
+In plain language:
+}{1.3cm}{4.4cm}
 
 \vfill
 
 \newpage
 
-% ── 4. The modeling process ──────────────────────────────────────────────────
-\guidedopen{4. The Modeling Process}{
-List the main steps of modeling, in order (e.g.\ what do we choose first?).
+% ── 5. Squared vs. absolute error ────────────────────────────────────────────
+\guidedopen{5. Squared vs. Absolute Error}{
+Sketch each loss against the error $y - \theta$.
 
-\vspace{0.6em}
+\vspace{0.45em}
+
+\noindent
+\axespanel{3.7cm}{2.7cm}{squared error}\hfill
+\axespanel{3.7cm}{2.7cm}{absolute error}
+}{0.2cm}{3.8cm}
+
+\vfill
+
+% ── 6. The modeling process ──────────────────────────────────────────────────
+\guidedopen{6. The Modeling Process}{
+List the main steps of modeling, in order.
+
+\vspace{0.5em}
 1.
-\vspace{1.1cm}
+\vspace{0.6cm}
 
 2.
-\vspace{1.1cm}
+\vspace{0.6cm}
 
 3.
-\vspace{1.1cm}
+\vspace{0.6cm}
 
 4.
-}{1.1cm}{6.4cm}
+}{0.6cm}{4.0cm}
 
 \vfill
 
-% ── 5. TODO ──────────────────────────────────────────────────────────────────
-\guidedopen{5. TODO}{
-TODO
-}{5.0cm}{5.6cm}
+% ── 7. Constant and simple linear ────────────────────────────────────────────
+\guidedopen{7. Linear Models}{
+Write the equation for each model.
+
+\vspace{0.5em}
+Constant model:
+\vspace{0.8cm}
+
+Simple linear regression:
+}{0.8cm}{2.4cm}
 
 \vfill
 
-% ── 6. TODO ──────────────────────────────────────────────────────────────────
-\guidedopen{6. TODO}{
-TODO
-}{5.0cm}{5.6cm}
+% ── 8. LINE ──────────────────────────────────────────────────────────────────
+\guidedopen{8. LINE}{
+Name each LINE criterion and what it requires.
+
+\vspace{0.5em}
+L:
+\vspace{0.7cm}
+
+I:
+\vspace{0.7cm}
+
+N:
+\vspace{0.7cm}
+
+E:
+}{0.7cm}{4.2cm}
+
+\vfill
+
+% ── 9. Multiple linear ───────────────────────────────────────────────────────
+\guidedopen{9. Multiple Linear Regression}{
+Write the equation for multiple linear regression.
+}{0.8cm}{1.4cm}
 
 \vfill
 

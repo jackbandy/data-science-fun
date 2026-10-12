@@ -327,6 +327,7 @@ const browser = spawn(chrome, [
   "--no-sandbox",
   "--no-first-run",
   "--no-default-browser-check",
+  "--use-mock-keychain",
   "--force-color-profile=srgb",
   `--user-data-dir=${userData}`,
   "--remote-debugging-address=127.0.0.1",

@@ -171,15 +171,22 @@ def surface_figure(
     z_fill: float = 1.0,
     mesh_width: float = 0.8,
     camera=DEFAULT_CAMERA,
+    labels=("Outstanding Debts", "Income", "Credit Score"),
+    points=None,
+    surface_opacity: float = 1.0,
 ) -> str:
     """Render credit score = fn(debts, income) over the unit square, inside a box.
 
     World axes follow the camera note above: x is income, y is outstanding debts.
+    `labels` name the (y, x, z) edges. `points` is an optional (n, 3) array of
+    (x, y, z) in the same units as the plot: x and y on the unit square, z on
+    fn's scale, so scattered data lines up with the surface fit to it.
     """
     axis = np.linspace(0.0, 1.0, grid + 1)
     gx, gy = np.meshgrid(axis, axis, indexing="ij")
     gz = np.asarray(fn(gy, gx), dtype=float)
-    gz = (gz - gz.min()) / (gz.max() - gz.min())
+    z_min, z_max = gz.min(), gz.max()
+    gz = (gz - z_min) / (z_max - z_min)
     gz = 0.5 + (gz - 0.5) * z_fill  # gentler relationships need not fill the box
 
     # Centre the box on the origin so the projection stays balanced.
@@ -210,13 +217,26 @@ def surface_figure(
             dz_dx = (gz[i + 1, j] - gz[i, j] + gz[i + 1, j + 1] - gz[i, j + 1]) / 2
             dz_dy = (gz[i, j + 1] - gz[i, j] + gz[i + 1, j + 1] - gz[i + 1, j]) / 2
             normal = (-dz_dx * z_extent / step, -dz_dy * z_extent / step, 1.0)
-            points = " ".join(f"{x:.2f},{y:.2f}" for x, y, _ in screen)
+            outline = " ".join(f"{x:.2f},{y:.2f}" for x, y, _ in screen)
+            opacity = f' fill-opacity="{surface_opacity}"' if surface_opacity < 1 else ""
             primitives.append(
                 (
                     sum(p[2] for p in screen) / 4,
-                    f'  <polygon points="{points}" fill="{shade(normal)}" '
+                    f'  <polygon points="{outline}" fill="{shade(normal)}"{opacity} '
                     f'stroke="{MESH_STROKE}" stroke-width="{mesh_width}" '
                     'stroke-linejoin="round" stroke-opacity="0.55"/>',
+                )
+            )
+
+    if points is not None:
+        for px, py, pz in points:
+            pz = 0.5 + ((pz - z_min) / (z_max - z_min) - 0.5) * z_fill
+            sx, sy, depth = to_screen((px - 0.5, py - 0.5, (pz - 0.5) * z_extent))
+            primitives.append(
+                (
+                    depth,
+                    f'  <circle cx="{sx:.1f}" cy="{sy:.1f}" r="3.2" fill="{INK}" '
+                    'fill-opacity="0.55"/>',
                 )
             )
 
@@ -243,11 +263,12 @@ def surface_figure(
     z_bottom = -0.5 * z_extent
     z_top = 0.5 * z_extent
     # The two edges meeting at the near corner, plus the leftmost vertical edge.
-    body.append(edge_label("Outstanding Debts", (0.5, 0.5, z_bottom), (0.5, -0.5, z_bottom), to_screen, 30))
-    body.append(edge_label("Income", (0.5, 0.5, z_bottom), (-0.5, 0.5, z_bottom), to_screen, 30))
+    y_label, x_label, z_label = labels
+    body.append(edge_label(y_label, (0.5, 0.5, z_bottom), (0.5, -0.5, z_bottom), to_screen, 30))
+    body.append(edge_label(x_label, (0.5, 0.5, z_bottom), (-0.5, 0.5, z_bottom), to_screen, 30))
     body.append(
         edge_label(
-            "Credit Score", (0.5, -0.5, z_bottom), (0.5, -0.5, z_top), to_screen, 20, upright=True
+            z_label, (0.5, -0.5, z_bottom), (0.5, -0.5, z_top), to_screen, 20, upright=True
         )
     )
 
