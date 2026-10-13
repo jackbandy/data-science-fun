@@ -168,9 +168,8 @@ In order to provide a final letter grade at the end of the class, I will use the
 | &nbsp;&nbsp;&nbsp;*Data acquisition* | |
 | &nbsp;&nbsp;&nbsp;*EDA* | |
 | &nbsp;&nbsp;&nbsp;*Data documentation* | |
-| &nbsp;&nbsp;&nbsp;*Rhetorical analysis* | |
-| &nbsp;&nbsp;&nbsp;*Public repository* | |
-| &nbsp;&nbsp;&nbsp;*Written report* | |
+| &nbsp;&nbsp;&nbsp;*Narrative analysis* | |
+| &nbsp;&nbsp;&nbsp;*Public-facing report* | |
 | &nbsp;&nbsp;&nbsp;*Presentation* | |
 | &nbsp;&nbsp;&nbsp;*Peer assessment* | |
 | **PrairieLearn Homeworks** | **15%** |
