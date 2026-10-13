@@ -30,12 +30,12 @@ trap 'rm -rf "$STAGE"' EXIT
 cp -R "$YARD/content/." "$STAGE/"
 # The executed lecture notebooks, so File → Open… lists them next to welcome.ipynb.
 cp "$REPO"/docs/slides/week*.ipynb "$STAGE/"
+# One notebook per PrairieLearn variant, opened from the question at notebooks/index.html?path=pl/athlete-endorsements/<seed>/athlete-endorsements.ipynb
+python3 "$YARD/pl/athlete-endorsements/make_notebooks.py" "$STAGE/pl/athlete-endorsements"
 
 # --lite-dir picks up jupyter-lite.json; build from inside the stage so the
 # .jupyterlite.doit.db cache lands in the temp dir, not the repo.
 (cd "$STAGE" && jupyter lite build --lite-dir "$YARD" --contents "$STAGE" --output-dir "$OUT")
-# Launcher pages for PrairieLearn questions: /yard/pl/<question>/?seed=<word> opens the REPL with that variant's starter code.
-cp -R "$YARD/pl" "$OUT/"
 
 if [[ -n "${SERVE:-}" ]]; then
   echo "Starter notebook: http://localhost:8000/notebooks/index.html?path=welcome.ipynb"

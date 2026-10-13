@@ -60,9 +60,9 @@ What the prototype turned up:
 
 `docs/_includes/masthead.html` has `<a class="is-external" href="/yard/notebooks/index.html?path=welcome.ipynb" target="_blank" rel="noopener">Python Yard (beta)</a>` in the More menu, after Mini-Book. Drop "(beta)" here, in `jupyter-lite.json` and in the starter notebook together when it graduates. There is no `yard` key in `morenav`: that only marks Jekyll pages with `nav: yard`, and no Yard page is a Jekyll page.
 
-## PrairieLearn launchers
+## PrairieLearn notebooks
 
-`pl/<question>/` holds a launcher page for a PrairieLearn question, so a question can link to `https://dodatascience.fun/yard/pl/<question>/?seed=<word>` and open the REPL with that variant's starter code (`?code=...&execute=0`, which fills the prompt cell without running it). `build.sh` copies `pl/` into the output after the JupyterLite build. Each launcher has `starter.py.tmpl`, the dataset, and an `open.js` that rebuilds the variant's sample from the seed word. The sampling in `open.js` must match the question's `server.py`: `pl/athlete-endorsements/` pairs with `athlete-endorsements-slr-code` in the `pl-uic-cs418` repo, and its `athletes.csv` is a copy of that question's file.
+`pl/<question>/` holds a script that writes one notebook per PrairieLearn variant into the Yard's contents, so a question can link to `https://dodatascience.fun/yard/notebooks/index.html?path=pl/<question>/<seed>/<question>.ipynb` and open the Notebook view with that variant's data and starter code. `build.sh` runs the script into the staged contents before the JupyterLite build. Each variant folder holds the notebook and its own `athletes.csv`, so the notebook reads the data with the same `pl.read_csv("athletes.csv")` line as PrairieLearn. `pl/athlete-endorsements/` pairs with `athlete-endorsements-slr-code` in the `pl-uic-cs418` repo: `make_notebooks.py` copies `SEED_WORDS`, `_sample_rows()` and `_x_new()` from that question's `server.py`, and `athletes.csv` is a copy of that question's file. Keep all of them in step.
 
 ## Performance (measured 2026-09-27)
 

@@ -471,7 +471,7 @@ jobs:
           SKIP_VENV=1 bash docs/yard/build.sh _site/yard
           test -f _site/yard/notebooks/index.html
           test -f _site/yard/files/welcome.ipynb
-          test -f _site/yard/pl/athlete-endorsements/index.html
+          test -f _site/yard/files/pl/athlete-endorsements/acorn/athlete-endorsements.ipynb
 
       # Looks for links that point to internal pages or files that don't exist.
       # --offline means it only checks local files
