@@ -211,6 +211,16 @@
 * *Learning Data Science*, [Chapter 19: Classification](https://learningds.org/ch/19/class_intro.html)
 * *Data Science: A First Introduction*, [Chapter 5: Classification I — Training and Predicting](https://python.datasciencebook.ca/classification1.html)
 * *Computational and Inferential Thinking*, [Chapter 17: Classification](https://inferentialthinking.com/chapters/17/classification)
+* Andrew Ng, *Stanford CS229: Machine Learning* (Autumn 2018)
+	* [Lecture 5: GDA & Naive Bayes](https://www.youtube.com/watch?v=nt63k3bfXS0) (video, 79 min)
+	* [Lecture 6: Support Vector Machines](https://www.youtube.com/watch?v=lDwow4aOrtg) (video, 81 min)
+* *StatQuest* (Josh Starmer)
+	* [Decision and Classification Trees, Clearly Explained](https://www.youtube.com/watch?v=_L39rN6gz7Y) (video, 18 min)
+	* [K-nearest neighbors, Clearly Explained](https://www.youtube.com/watch?v=HVXime0nQeI) (video, 6 min)
+* Varada Kolhatkar, *Applied Machine Learning* (UBC CPSC 330)
+	* [2.3: Decision Trees](https://www.youtube.com/watch?v=Hcf19Ij35rA) (video, 13 min)
+	* [4.2: k-Nearest Neighbours](https://www.youtube.com/watch?v=bENDqXKJLmg) (video, 13 min)
+	* [4.3: kNNs continued](https://www.youtube.com/watch?v=IRGbqi5S9gQ) (video, 8 min)
 
 ## Week 9, Day 1 (2026-10-19)
 

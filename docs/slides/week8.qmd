@@ -1217,13 +1217,222 @@ Jack Bandy
 ::: {}
 - Week 8: Roosevelt
 - Day 2
+    - Where We Left Off
+    - When Regression Doesn't Fit
     - Intro to Classification
+    - Four Classifiers: A Preview
+    - Training, Validation, and Test Sets
 :::
 
 ![](../assets/orange-line-map-stops/stop09-roosevelt.svg){.figure alt="Orange Line map with the Roosevelt stop marked, the Week 8 stop"}
 
 :::
 
+
+# Where We Left Off {.section-header}
+
+---
+
+## The Modeling Process, So Far {.figure-aside}
+
+
+::: {.columns}
+::: {.column}
+::: {.dense}
+1. Define the model: $\hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2$
+2. Define the loss: average squared loss (MSE)
+3. Minimize the loss: find $\hat{\theta}$
+- The response $y$ was sale price, a number on a continuous scale.
+- So every prediction $\hat{y}$ was a number too: a price.
+- Overfitting: a model can fit the data in hand and still predict new data badly.
+:::
+:::
+::: {.column}
+<img class="figure" src="../assets/week8/house-plane-3d.svg" alt="Three-dimensional box with bedrooms and building square footage along the floor and sale price as the height, holding 300 Cook County home sales as dots, with a shaded orange regression plane through them.">
+:::
+:::
+
+
+---
+
+
+## Two Kinds of Supervised Learning
+
+::: {.caption}
+Hal Daumé III, [*A Course in Machine Learning*](http://ciml.info/), v0.99, ch. 1 ("Decision Trees").
+:::
+
+"At a basic level, machine learning is about predicting the future based on the past." (Daumé)
+
+::: {.incremental}
+- **Regression**: predict a real value (e.g., sale price, % tip).
+- **Classification**: predict a categorical value.
+    - Binary: a yes/no response (e.g., spam or not spam).
+    - Multiclass: one of several classes (e.g., country of origin).
+- Both start from examples where we already know the answer, which is what makes them *supervised*.
+:::
+
+
+# When Regression Doesn't Fit {.section-header}
+
+---
+
+
+
+## Public or Private? {.image-frame-slide}
+
+A school has 20,000 undergraduates and charges \$14,000 in in-state tuition and fees. Public or private?
+
+::::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week8/cls-universities-scatter-plain-no-uic.svg" style="max-height: 440px;" alt="Scatter plot of 1,717 colleges, undergraduate enrollment against in-state tuition and fees, with every point in the same gray and no classes or schools marked yet.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week8/cls-universities-scatter-plain.svg" style="max-height: 440px;" alt="Scatter plot of 1,717 colleges, undergraduate enrollment against in-state tuition and fees, with every point in the same gray and no classes shown yet. UIC is marked near 22,000 undergraduates and 14,000 dollars.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week8/cls-universities-scatter.svg" style="max-height: 440px;" alt="Scatter plot of 1,717 U.S. colleges, undergraduate enrollment against in-state tuition and fees, both on log scales. Public schools, orange triangles, form a band from about 5,000 to 20,000 dollars in tuition and from a few hundred to 60,000 students. Private nonprofits, gray circles, sit above them at 20,000 to 60,000 dollars, plus a tail of small, cheaper colleges to the left. UIC is marked among the public schools, near 22,000 undergraduates and 14,000 dollars.">
+:::
+
+:::::
+
+::: {.caption}
+Data: U.S. Department of Education, [College Scorecard](https://collegescorecard.ed.gov/data/), most-recent institution file (June 2026 release): 1,717 predominantly bachelor's-granting schools, public or private nonprofit, that report in-state tuition and fees.
+:::
+
+
+---
+
+## Spam or Not? {.image-frame-slide}
+
+::: {.caption}
+Data: Mark Hopkins, Erik Reeber, George Forman, and Jaap Suermondt, [Spambase](https://doi.org/10.24432/C53G6X), UCI Machine Learning Repository (1999), CC BY 4.0. 1,200 of 4,601 emails shown.
+:::
+
+An email is 1% exclamation points, and its runs of capital letters average 5 long. Spam?
+
+::::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week8/cls-spam-scatter-plain.svg" style="max-height: 440px;" alt="Scatter plot of 1,200 emails, exclamation-point share against average run of capital letters, with every point in the same gray and no classes shown yet.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week8/cls-spam-scatter.svg" style="max-height: 440px;" alt="Scatter plot of 1,200 emails, the share of characters that are exclamation points against the average run of capital letters, both on log scales. About half the emails have no exclamation points and form a vertical stripe at zero, mixing spam and not spam. Among the rest, spam, orange triangles, sits higher and further right than non-spam, gray circles.">
+:::
+
+:::::
+
+
+---
+
+## Adélie or Gentoo Penguin? {.image-frame-slide}
+
+::: {.caption}
+Data: Kristen B. Gorman, Tony D. Williams, and William R. Fraser, [*PLoS ONE*](https://doi.org/10.1371/journal.pone.0090081) 9(3): e90081 (2014), via Allison Horst, Alison Hill, and Kristen Gorman, [palmerpenguins](https://doi.org/10.5281/zenodo.3960218) (2020), CC0. 274 penguins near Palmer Station, Antarctica, 2007–2009.
+:::
+
+A penguin's bill is 45 mm long and 15 mm deep. Adélie or Gentoo?
+
+::::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week8/cls-penguins-scatter-plain.svg" style="max-height: 440px;" alt="Scatter plot of 274 penguins, bill length against bill depth, with every point in the same gray and no species shown yet. Two clusters are already visible.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week8/cls-penguins-scatter.svg" style="max-height: 440px;" alt="Scatter plot of 151 Adélie and 123 Gentoo penguins, bill length against bill depth in millimeters. Adélie, gray circles, cluster at short, deep bills (about 39 mm long, 18 mm deep). Gentoo, orange triangles, cluster at long, shallow bills (about 47 mm long, 15 mm deep). The two clusters do not overlap.">
+:::
+
+:::::
+
+---
+
+## Malignant or Benign? {.image-frame-slide}
+
+::: {.caption}
+Data: William Wolberg, Olvi Mangasarian, Nick Street, and W. Street, [Breast Cancer Wisconsin (Diagnostic)](https://doi.org/10.24432/C5DW2B), UCI Machine Learning Repository (1993), CC BY 4.0. 569 biopsies: 357 benign, 212 malignant.
+:::
+
+A biopsy's cell nuclei have a mean radius of 15 and a mean texture of 22. Malignant or benign?
+
+::::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week8/cls-tumors-scatter-plain.svg" style="max-height: 440px;" alt="Scatter plot of 569 biopsies, mean nucleus radius against mean texture, with every point in the same gray and no diagnoses shown yet.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week8/cls-tumors-scatter.svg" style="max-height: 440px;" alt="Scatter plot of 569 breast biopsies, mean radius of the cell nuclei against mean texture. Benign samples, gray circles, sit at smaller radii, mostly 8 to 15. Malignant samples, orange triangles, sit at larger radii, mostly 15 to 25, and slightly higher texture. The groups overlap between radius 13 and 17.">
+:::
+
+:::::
+
+
+
+---
+
+## Chicago or the Suburbs? {.image-frame-slide}
+
+::: {.caption}
+Data: Cook County single-family sales, 2025 (Day 1), 1,000 of 24,764 shown, with lot size from the Assessor; 2020 census tract housing units and land area, U.S. Census Bureau [TIGERweb](https://tigerweb.geo.census.gov/).
+:::
+
+A home on a 5,000-square-foot lot sold in a census tract with 3,000 housing units per square mile. Chicago or the suburbs?
+
+::::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week8/cls-cook-county-scatter-plain.svg" style="max-height: 420px;" alt="Scatter plot of 1,000 Cook County home sales, lot size against housing units per square mile in the tract, with every point in the same gray and no city or suburb labels shown yet.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week8/cls-cook-county-scatter.svg" style="max-height: 420px;" alt="Scatter plot of 1,000 Cook County home sales, lot size in square feet against housing units per square mile in the sale's census tract, both on log scales. Chicago sales, orange triangles, crowd the upper left: lots of about 3,000 to 5,000 square feet in tracts with 3,000 to 10,000 housing units per square mile. Suburban sales, gray circles, spread to the lower right, with larger lots and sparser tracts, but many suburban sales overlap the Chicago cluster.">
+:::
+
+:::::
+
+
+---
+
+## Five Yes/No Questions
+
+::: {.caption}
+Data for all five: [`datasets/classification-examples`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/classification-examples) in the course repo, with sources in its README.
+:::
+
+Each has two numeric inputs and one yes/no output.
+
+| Question | Inputs | Data |
+|---|---|---|
+| Public or private university? | undergraduate enrollment, in-state tuition | College Scorecard |
+| Spam or not? | "!" frequency, runs of CAPITALS | UCI Spambase |
+| Adélie or Gentoo penguin? | bill length, bill depth | Palmer Penguins |
+| Malignant or benign tumor? | cell nucleus radius, texture | UCI Breast Cancer Wisconsin |
+| Chicago or the suburbs? | lot size, housing units per square mile | Cook County home sales, 2020 census |
+
+---
+
+## A Decision Boundary {.figure-aside}
+
+::: {.caption}
+Data: College Scorecard, as above. Boundary from a linear support vector machine fit to both inputs (more on Week 9 Wednesday).
+:::
+
+::: {.columns}
+::: {.column width="55%"}
+<img class="figure" src="../assets/week8/cls-universities-boundary.svg" alt="The enrollment and in-state tuition scatter plot of public and private schools, now split by a straight diagonal boundary. The lower-right region, shaded light orange, is predicted public; the upper-left region, shaded light gray, is predicted private. Nearly all orange triangles fall on the orange side and nearly all gray circles on the gray side; the mistakes sit near the line.">
+:::
+::: {.column width="45%"}
+- A classifier splits the input space into regions, one label per region.
+- The line where the label changes is the **decision boundary**.
+- Points on the wrong side are mistakes: this line gets 93 of 1,717 schools wrong.
+- Different classifiers draw different boundaries from the same data.
+:::
+:::
 
 
 # Intro to Classification {.section-header}
@@ -1237,28 +1446,296 @@ Classification is the task of predicting the class label of an observation from 
 
 ::: {.column width="55%"}
 
-::: {.incremental}
 - The response variable is categorical rather than continuous.
 - Predictor variables may be numeric, categorical, or a mixture.
 - The model is fitted on training observations with known labels.
 - Each new observation is assigned to one of the defined classes.
-:::
 
 :::
 
 ::: {.column width="45%"}
 
-![](../assets/week8/classification-classes.svg)
+![](../assets/week8/cls-universities-boundary.svg){alt="TODO"}
 
-<p class="code-caption" style="margin-top:0.5em;">Two features from a labelled set of emails</p>
+<p class="code-caption" style="margin-top:0.5em;">Two features </p>
 
 :::
 
 ::::
 
-::: {.notes}
-Anchor this against regression, which the class has just seen: the same structure of predictors and a response, but the response is now categorical. Fitting to known examples and predicting for new ones carries over unchanged.
+
+---
+
+## The Same Three Steps
+
+
+::: {.incremental}
+- Input: training examples $\{(\mathbf{x}^{(1)}, y^{(1)}), \ldots, (\mathbf{x}^{(n)}, y^{(n)})\}$ from an unknown distribution.
+- Model: a hypothesis $h$ that maps features to a class, $h: X \to Y$.
+- Loss: compare the true class $y$ with the prediction $h(\mathbf{x})$. The simplest is **0-1 loss**:
+
+    $$\ell(y, h(\mathbf{x})) = \begin{cases} 0 & \text{if } y = h(\mathbf{x}) \\ 1 & \text{otherwise} \end{cases}$$
+
+- Averaged over the data, 0-1 loss is the **error rate**: the portion of examples the classifier gets wrong.
+- Minimize: find the $h$ with the lowest error, on future examples, not only the training data.
 :::
+
+
+
+# Four Classifiers: A Preview {.section-header}
+
+---
+
+## Four Classifiers
+
+
+| Method | How it assigns a class | More in |
+|---|---|---|
+| Decision tree | Asks a sequence of questions about the features, ending at a leaf with a label | Week 9, Monday |
+| Naive Bayes | Picks the class with the highest probability, using Bayes' theorem | Today |
+| $k$-nearest neighbors | Takes a vote among the $k$ most similar training examples | Today |
+| Support vector machine | Draws the separating line (hyperplane) with the widest margin | Week 9, Wednesday |
+
+<!-- TODO: Naive Bayes and kNN have no day of their own on the schedule; confirm "Today" is right or point to a later day. -->
+
+---
+
+
+
+## $k$-Nearest Neighbors {.smaller}
+
+"If it walks like a duck, quacks like a duck, and looks like a duck, then it's probably a duck."
+
+- "assigns class labels to observations based on the class labels of the $k$ 'most similar' observations"
+- Choose a distance (e.g., Euclidean) and a number of neighbors $k$.
+- For a new point: find its $k$ nearest training examples, take a majority vote.
+- "If $k$ is too small, then the classifier may be susceptible to overfitting due to noise." Too large, and the vote includes points "that are not similar enough."
+- No model to train (a "lazy learner"), but "Sensitive to the scale of the data."
+
+---
+
+## Try It {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+
+TODO
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+
+
+---
+
+## Naive Bayes {.smaller}
+
+
+a probabilistic model that uses Bayes' Theorem for classification
+
+$$P(y \mid X) = \frac{P(X \mid y)\, P(y)}{P(X)}$$
+
+- Example: "free" appears in 250 of 1,000 spam emails and 10 of 1,000 non-spam emails. Assume spam and non-spam are equally likely.
+
+$$P(\text{spam} \mid \text{free}) = \frac{0.25 \times 0.5}{0.25 \times 0.5 + 0.01 \times 0.5} \approx 0.96$$
+
+- With many features, the "naive" step assumes they are independent once the class is known: $P(X_1, \ldots, X_p \mid y) = \prod_{i=1}^{p} P(X_i \mid y)$.
+- Pro: gives "probabilities that quantify the uncertainty in predictions." Con: the independence assumption "often does not hold in practice."
+
+---
+
+
+## Same Data, Four Boundaries
+
+::: {.caption}
+Each panel is a scikit-learn classifier fit to all the points shown: a decision tree of depth 3, Gaussian naive Bayes, $k$-nearest neighbors with $k = 15$, and a linear SVM (the last two on standardized features). Data are the same as previous slides. Made with help from LLMs.
+:::
+
+::: {.panel-tabset}
+
+### Universities
+
+<img src="../assets/week8/cls-universities-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: undergraduate enrollment against in-state tuition. All four mark the low-tuition, larger schools as public: the tree with a box, naive Bayes with an oval, k-nearest neighbors with a ragged edge, and the linear SVM with one diagonal line.">
+
+### Spam
+
+<img src="../assets/week8/cls-spam-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: exclamation-point share against average capital-letter run. Every method marks only the lower-left corner, few exclamation points and short capital runs, as not spam, and the rest as spam; the corner is boxy for the tree, rounded for naive Bayes, ragged for k-nearest neighbors, and cut by a diagonal line for the SVM.">
+
+### Penguins
+
+<img src="../assets/week8/cls-penguins-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: bill length against bill depth. All four methods separate the two clusters cleanly; only the shape of the boundary between them differs: a step for the tree, a curve for naive Bayes, a slightly wiggly line for k-nearest neighbors, and a straight line for the SVM.">
+
+### Tumors
+
+<img src="../assets/week8/cls-tumors-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: mean nucleus radius against texture. All four methods put the boundary near a radius of 14 to 17, leaning so that higher texture tips a sample toward malignant; the tree's boundary is a set of steps, naive Bayes curves around the benign cluster, k-nearest neighbors is ragged, and the SVM is a straight line.">
+
+### Chicago
+
+<img src="../assets/week8/cls-cook-county-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: lot size against housing units per square mile. All four mark the small-lot, dense corner as Chicago: the tree with one box, naive Bayes with a curved region, k-nearest neighbors with a ragged region, and the linear SVM with everything above a rising diagonal line.">
+
+:::
+
+::: {.notes}
+Shapes to point out: the tree's boundaries are made of horizontal and vertical steps (Bello Lander's "rectilinear decision boundaries"); kNN's boundary follows the points and gets ragged where the classes overlap; the linear SVM can only draw one straight line. On the penguins all four agree, so the method matters most where the classes overlap. These are fit on every point, so they say nothing yet about how well each would do on new data; that is the last section today.
+:::
+
+---
+
+## Four Classifiers, Side by Side {.smaller}
+
+::: {.dense}
+| | Decision tree | Naive Bayes | $k$NN | SVM |
+|---|---|---|---|---|
+| Decides by | a path of feature tests | the most probable class | a vote of $k$ neighbors | the side of a hyperplane |
+| Boundary | rectilinear | follows the class distributions | any shape | linear, or curved with a kernel |
+| Key hyperparameter | max depth | (few) | $k$ | $C$, kernel |
+| Strength | interpretable | probabilities | no training; flexible | maximum margin |
+| Weakness | easy to overfit | assumes independence | slow to predict; scale-sensitive | slow to train |
+:::
+
+---
+
+## In SciKit, We all Fam
+
+
+In scikit-learn, each of the four classifiers is a different object with the same `fit` and `predict`:
+
+```python
+from sklearn import tree, naive_bayes, neighbors, svm
+
+model = tree.DecisionTreeClassifier(max_depth=3)
+# model = naive_bayes.GaussianNB()
+# model = neighbors.KNeighborsClassifier(n_neighbors=5)
+# model = svm.SVC(C=1.0, kernel="rbf")
+
+model.fit(X_train, y_train)      # learn from labeled examples
+model.predict(X_test)            # predict classes for new ones
+```
+
+. . .
+
+- Where do `X_train` and `X_test` come from?
+
+
+# Training, Validation, and Test Sets {.section-header}
+
+---
+
+## Back to Overfitting
+
+::: {.caption}
+Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1.
+:::
+
+::: {.incremental}
+- Day 1, Model C: a curve through nearly every point, and "new observations are not well-predicted."
+- Same for classifiers
+- $h$ overfits if $\text{error}_{\text{true}}(h) > \text{error}_{\text{train}}(h)$.
+- Problem: "we don't know $\text{error}_{\text{true}}(h)$!"
+- Standard approach: set aside a testing set from the available data, and don't look at them during training! (pretend we have not seen them).
+:::
+
+---
+
+## Parameters vs. Hyperparameters
+
+
+
+::: {.incremental}
+- **Parameters** are learned from the training data.
+    - Regression: the $\theta$s. Decision tree: "the nodes and branches."
+- A **hyperparameter** is a "parameter that controls other parameters of the model."
+    - Max tree depth, $k$ in $k$NN, $C$ in an SVM, the polynomial degree of Day 1's Model C.
+:::
+
+---
+
+## Three Sets
+
+
+<div style="display:flex; gap:4px; margin:0.4em 0 0.8em; font-weight:600; color:#fff; text-align:center;">
+<div style="flex:70; background:#555; padding:0.5em 0; border-radius:4px;">Training 70%</div>
+<div style="flex:10; background:#f9461c; padding:0.5em 0; border-radius:4px;">Val.</div>
+<div style="flex:20; background:#222; padding:0.5em 0; border-radius:4px;">Test 20%</div>
+</div>
+
+::: {.incremental}
+- Training set: Used to learn the parameters of the ML model
+- Validation set (tuning/development/held-out data): can use to learn hyperparameter(s)
+- Test set: Used to evaluate how well we're doing on new unseen examples.
+:::
+
+---
+
+
+
+
+
+## How to Split
+
+::: {.incremental}
+- How? Randomly, Temporally, Geographically... Depends on application (often random).
+- What size? "Typically between 75%-25% and 90%-10%."
+    - "Larger training set → more complex models"
+    - "Larger test set → better estimate of generalization error"
+- Which would you use for daily CTA ridership? For Cook County home sales?
+:::
+
+
+---
+
+## Cross-Validation
+
+
+Cross validation simulates multiple train test-splits on the training data.
+
+<div style="display:grid; grid-template-columns: auto repeat(5, 1fr); gap:4px; max-width:720px; margin:0.4em 0; font-size:0.7em; font-weight:600; text-align:center;">
+<div style="text-align:right; padding-right:0.4em;">Split 1</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
+<div style="text-align:right; padding-right:0.4em;">Split 2</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
+<div style="text-align:right; padding-right:0.4em;">Split 3</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
+<div style="text-align:right; padding-right:0.4em;">Split 4</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div>
+<div style="text-align:right; padding-right:0.4em;">Split 5</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div>
+</div>
+
+::: {.incremental}
+- 5-fold: cut the training data into 5 folds; each fold takes one turn as the validation set (V) while the rest train (T).
+- Pick the hyperparameter setting with the best average validation error across folds.
+- "You can only use the test dataset once after deciding on the model."
+:::
+
+---
+
+## The Full Workflow
+
+
+::: {.incremental}
+1. "Split your data into training and test sets (e.g., 80%-20%)"
+2. "Use only the training data when designing, training, and tuning the model"
+    - use cross-validation to choose hyperparameters; "Do not look at the test data"
+3. "Commit to your final model and train once more using only the training data (including validation)."
+4. "Test the final model using the test data."
+5. "Train on all available data and ship it!"
+:::
+
+---
+
+## Any questions? {#any-questions-day-2}
+
+- PrairieLearn Homeworks?
+- Group Projects?
+- Other logistics?
+- (You can also stay after class for questions)
+
+---
+
+## Upload your worksheet {#upload-worksheet-day-2}
+
+Take a picture of your worksheet, upload it in Canvas
+
+# That's All for Today, See You Monday! {.section-header .no-index}
 
 
 # Appendix: Bias and Variance {.section-header}
@@ -1341,3 +1818,7 @@ Source: Valerie C. Bradley, Shiro Kuriwaki, Michael Isakov, Dino Sejdinovic, Xia
 13. Penn State, [STAT 462 §6.1, "MLR Model Assumptions"](https://online.stat.psu.edu/stat462/node/145/), for the alternate LINE names on the practice figures.
 14. LINE practice data: Cook County Assessor's Office home sales (2025); Olympic 100 m winning times (Tatem et al., *Nature* 431:525, 2004, plus Wikipedia for 2008–2024); airline passengers, 1949–1960 (Box and Jenkins, *Time Series Analysis*, 1976); CTA ridership and Chicago building footprints (City of Chicago Data Portal); US presidential elections (Data 100 `elections.csv`); IMDb non-commercial datasets (June 2026). Details in the repo's [`assets/linear-model-criteria-assumptions/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/linear-model-criteria-assumptions/SOURCES.md).
 15. Gonzalo Bello Lander, CS 418 Lecture 09 ("Introduction to Data Modeling") and Lecture 10 ("Regression (I): Simple Linear Regression"), 2026; Elena Zheleva, CS 418 lecture slides, Feb. 12 and 17, 2026.
+16. Gonzalo Bello Lander, CS 418 Lecture 12 ("Classification (I): Basic Concepts & Decision Trees") and Lecture 13 ("Classification (II): More Classification Techniques"), 2026; Elena Zheleva, CS 418 lecture slides, Feb. 19, Feb. 24, Feb. 26, and Mar. 3, 2026.
+17. Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)*, v0.99, ch. 1 ("Decision Trees").
+18. scikit-learn developers, [API reference](https://scikit-learn.org/stable/api/index.html), for the classifier class names on the "In SciKit, We all Fam" slide.
+19. Classification examples (Day 2), via the repo's [`datasets/classification-examples`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/classification-examples): U.S. Department of Education, [College Scorecard](https://collegescorecard.ed.gov/data/) (June 2026 release); Mark Hopkins, Erik Reeber, George Forman, and Jaap Suermondt, [Spambase](https://doi.org/10.24432/C53G6X), UCI Machine Learning Repository (1999), CC BY 4.0; Allison Horst, Alison Hill, and Kristen Gorman, [palmerpenguins](https://doi.org/10.5281/zenodo.3960218) (2020), CC0, with data from Kristen B. Gorman, Tony D. Williams, and William R. Fraser, [*PLoS ONE*](https://doi.org/10.1371/journal.pone.0090081) 9(3): e90081 (2014); William Wolberg, Olvi Mangasarian, Nick Street, and W. Street, [Breast Cancer Wisconsin (Diagnostic)](https://doi.org/10.24432/C5DW2B), UCI Machine Learning Repository (1993), CC BY 4.0; U.S. Census Bureau, [TIGERweb](https://tigerweb.geo.census.gov/) 2020 census tracts.

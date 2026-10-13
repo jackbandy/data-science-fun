@@ -15,8 +15,11 @@ Data:
     Fortmann-Roe, "Understanding the Bias-Variance Tradeoff" (2012). See
     SOURCES.md in this folder.
   * The loss-function curves are plain math, no data.
+  * The Day 2 classification figures (cls-*) read datasets/classification-examples/
+    and need scikit-learn, which the slide venv does not include.
 
 Usage:  python3 make_week8_figures.py [name ...]
+        uv run --with scikit-learn --with polars --with matplotlib python3 make_week8_figures.py cls-...
 """
 
 from __future__ import annotations
@@ -334,6 +337,215 @@ def house_plane_3d():
         labels=("Bedrooms", "Building sqft", "Sale price"),
         points=points, surface_opacity=0.8,
     )
+
+
+# --------------------------------------------------------------------------
+# Classification (Day 2): five two-feature, yes/no examples
+# --------------------------------------------------------------------------
+# Each example is fit and drawn in "plot space": skewed features are logged
+# first, so a boundary drawn on the figure is the boundary the model learned.
+
+CLASS_DATA = DATASETS / "classification-examples"
+CLASS_EXAMPLES = ("universities", "spam", "penguins", "tumors", "cook-county")
+YES_FILL = "#FDD5CA"   # light tint of ORANGE: region predicted "yes"
+NO_FILL = "#E9E9E7"    # light neutral: region predicted "no"
+
+
+def _log_ticks(values, fmt, offset=0.0):
+    return [np.log10(v + offset) for v in values], [fmt(v) for v in values]
+
+
+def _count(v):
+    return f"{v / 1e3:g}k" if v >= 1e3 else f"{v:g}"
+
+
+def cls_example(name: str) -> dict:
+    """Features X (n x 2, plot space), labels y (True = the orange class), axis text."""
+    key = f"cls-{name}"
+    if key in _cache:
+        return _cache[key]
+    if name == "universities":
+        df = pl.read_csv(CLASS_DATA / "college-scorecard.csv",
+                         null_values=["NA", "NULL", "PrivacySuppressed"], infer_schema_length=None).filter(
+            (pl.col("PREDDEG") == 3) & pl.col("CONTROL").is_in([1, 2])
+            & (pl.col("UGDS") > 0) & (pl.col("TUITIONFEE_IN") > 0))
+        X = np.column_stack([np.log10(df["UGDS"].to_numpy()), np.log10(df["TUITIONFEE_IN"].to_numpy())])
+        uic = int(np.flatnonzero(df["UNITID"].to_numpy() == 145600)[0])
+        ex = dict(X=X, y=(df["CONTROL"] == 1).to_numpy(), yes="Public", no="Private nonprofit",
+                  xlabel="Undergraduate enrollment (log scale)", ylabel="In-state tuition and fees (log scale)",
+                  xticks=_log_ticks([10, 100, 1_000, 10_000, 100_000], _count),
+                  yticks=_log_ticks([1_000, 3_000, 10_000, 30_000, 60_000], lambda v: f"${_count(v)}"),
+                  highlight=(X[uic], "UIC"), legend_loc="lower right")
+    elif name == "spam":
+        df = pl.read_csv(CLASS_DATA / "spambase.csv", infer_schema_length=None).sample(1200, seed=418)
+        # Half the emails have no "!", so offset by 0.01 before logging.
+        X = np.column_stack([np.log10(df["char_freq_!"].to_numpy() + 0.01),
+                             np.log10(df["capital_run_length_average"].to_numpy())])
+        ex = dict(X=X, y=(df["spam"] == 1).to_numpy(), yes="Spam", no="Not spam",
+                  xlabel='"!" as a % of characters (log scale)',
+                  ylabel="Average run of CAPITALS (log scale)",
+                  xticks=_log_ticks([0, 0.1, 1, 10], lambda v: f"{v:g}%", offset=0.01),
+                  yticks=_log_ticks([1, 3, 10, 30, 100], lambda v: f"{v:g}"))
+    elif name == "penguins":
+        df = pl.read_csv(CLASS_DATA / "penguins.csv", null_values="NA").filter(
+            pl.col("species").is_in(["Adelie", "Gentoo"])
+            & pl.col("bill_length_mm").is_not_null() & pl.col("bill_depth_mm").is_not_null())
+        ex = dict(X=df.select("bill_length_mm", "bill_depth_mm").to_numpy(),
+                  y=(df["species"] == "Gentoo").to_numpy(), yes="Gentoo", no="Adélie",
+                  xlabel="Bill length (mm)", ylabel="Bill depth (mm)")
+    elif name == "tumors":
+        df = pl.read_csv(CLASS_DATA / "wdbc.csv")
+        ex = dict(X=df.select("radius_mean", "texture_mean").to_numpy(),
+                  y=(df["diagnosis"] == "M").to_numpy(), yes="Malignant", no="Benign",
+                  xlabel="Mean radius of cell nuclei", ylabel="Mean texture of cell nuclei")
+    elif name == "cook-county":
+        df = pl.read_csv(CLASS_DATA / "cook-county-sales-density.csv", infer_schema_length=None).filter(
+            (pl.col("property_group") == "Single-Family") & (~pl.col("is_multisale"))
+            & (pl.col("sale_price") > 10_000) & pl.col("building_sqft").is_not_null()
+            & (pl.col("land_sqft") > 0) & pl.col("housing_units_per_sq_mi").is_not_null()).sample(1000, seed=418)
+        ex = dict(X=np.column_stack([np.log10(df["land_sqft"].to_numpy()),
+                                     np.log10(df["housing_units_per_sq_mi"].to_numpy())]),
+                  y=df["in_chicago"].to_numpy(), yes="Chicago", no="Suburban Cook County",
+                  xlabel="Lot size, square feet (log scale)",
+                  ylabel="Housing units per sq. mile in the tract (log scale)",
+                  xticks=_log_ticks([1_000, 3_000, 10_000, 30_000, 100_000], _count),
+                  yticks=_log_ticks([300, 1_000, 3_000, 10_000, 30_000], _count))
+    else:
+        raise KeyError(name)
+    _cache[key] = ex
+    return ex
+
+
+def _cls_axes(ax, ex, *, labels=True):
+    tidy(ax, grid="both")
+    if "xticks" in ex:
+        ax.set_xticks(*ex["xticks"])
+    if "yticks" in ex:
+        ax.set_yticks(*ex["yticks"])
+    if labels:
+        ax.set(xlabel=ex["xlabel"], ylabel=ex["ylabel"])
+
+
+def _cls_points(ax, ex, size=22, legend=True, plain=False, highlight=True):
+    X, y = ex["X"], ex["y"]
+    if plain:  # the "before" frame: same points and axes, no labels revealed
+        ax.scatter(*X.T, s=size, marker="o", color=MUTED, alpha=0.55, linewidths=0, zorder=3)
+    else:
+        # Shape doubles the color cue: circles for "no", triangles for "yes".
+        ax.scatter(*X[~y].T, s=size, marker="o", color=MUTED, alpha=0.55, linewidths=0, label=ex["no"], zorder=3)
+        ax.scatter(*X[y].T, s=size * 1.2, marker="^", color=ORANGE, alpha=0.7, linewidths=0, label=ex["yes"], zorder=3)
+    if legend and not plain:
+        ax.legend(loc=ex.get("legend_loc", "upper right"), frameon=True, facecolor=PAPER, edgecolor=BORDER, fontsize=12,
+                  labelcolor=INK, markerscale=1.6)
+    if highlight and "highlight" in ex:
+        (hx, hy), text = ex["highlight"]
+        ax.scatter([hx], [hy], s=size * 4, marker="o" if plain else "^", facecolor=MUTED if plain else ORANGE,
+                   edgecolor=INK, linewidth=1.5, zorder=4)
+        ax.annotate(text, (hx, hy), xytext=(10, -14), textcoords="offset points", color=INK, fontsize=13, zorder=4)
+
+
+def _cls_regions(ax, model, ex, n=600):
+    """Shade each region by the class the fitted model predicts there."""
+    X = ex["X"]
+    pad = 0.04 * (X.max(axis=0) - X.min(axis=0))
+    (x0, y0), (x1, y1) = X.min(axis=0) - pad, X.max(axis=0) + pad
+    gx, gy = np.meshgrid(np.linspace(x0, x1, n), np.linspace(y0, y1, n))
+    z = model.predict(np.column_stack([gx.ravel(), gy.ravel()])).reshape(gx.shape).astype(float)
+    ax.contourf(gx, gy, z, levels=[-0.5, 0.5, 1.5], colors=[NO_FILL, YES_FILL], zorder=1)
+    ax.contour(gx, gy, z, levels=[0.5], colors=[INK], linewidths=1.2, zorder=2)
+    ax.set(xlim=(x0, x1), ylim=(y0, y1))
+
+
+def _cls_models():
+    # scikit-learn is not in the slide venv; run with `uv run --with scikit-learn ...`.
+    from sklearn.naive_bayes import GaussianNB
+    from sklearn.neighbors import KNeighborsClassifier
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.svm import SVC
+    from sklearn.tree import DecisionTreeClassifier
+    # kNN and the SVM measure distance, so both get standardized features.
+    return [
+        ("Decision tree (depth 3)", DecisionTreeClassifier(max_depth=3, random_state=418)),
+        ("Naive Bayes", GaussianNB()),
+        ("k-nearest neighbors (k = 15)", make_pipeline(StandardScaler(), KNeighborsClassifier(n_neighbors=15))),
+        ("Linear SVM", make_pipeline(StandardScaler(), SVC(kernel="linear", C=1.0))),
+    ]
+
+
+def _cls_scatter(name, plain=False, highlight=True):
+    def build():
+        ex = cls_example(name)
+        fig, ax = new_fig(width=900)
+        _cls_points(ax, ex, plain=plain, highlight=highlight)
+        _cls_axes(ax, ex)
+        return fig
+    return build
+
+
+def _cls_four(name):
+    def build():
+        ex = cls_example(name)
+        fig, axes = new_fig(width=1400, height=400, ncols=4, sharex=True, sharey=True)
+        for i, (ax, (title, model)) in enumerate(zip(axes, _cls_models())):
+            model.fit(ex["X"], ex["y"])
+            _cls_regions(ax, model, ex)
+            _cls_points(ax, ex, size=8, legend=False)
+            _cls_axes(ax, ex, labels=False)
+            ax.set_title(title, color=INK, fontsize=14, loc="left")
+            if i:
+                ax.tick_params(labelleft=False)
+        fig.supxlabel(ex["xlabel"], color=STEEL, fontsize=13)
+        fig.supylabel(ex["ylabel"], color=STEEL, fontsize=13)
+        fig.tight_layout()
+        return fig
+    return build
+
+
+for _name in CLASS_EXAMPLES:
+    figure(f"cls-{_name}-scatter")(_cls_scatter(_name))
+    figure(f"cls-{_name}-scatter-plain")(_cls_scatter(_name, plain=True))
+    figure(f"cls-{_name}-four-boundaries")(_cls_four(_name))
+figure("cls-universities-scatter-plain-no-uic")(_cls_scatter("universities", plain=True, highlight=False))
+
+
+@figure("cls-universities-line")
+def cls_universities_line():
+    """Least squares on a 0/1 response: the line runs past both 0 and 1."""
+    ex = cls_example("universities")
+    x, y = ex["X"][:, 0], ex["y"].astype(float)
+    slope, intercept = np.polyfit(x, y, 1)
+    rng = np.random.default_rng(418)
+    fig, ax = new_fig(width=900)
+    for value, color, marker in [(0, MUTED, "o"), (1, ORANGE, "^")]:
+        m = y == value
+        ax.scatter(x[m], y[m] + rng.uniform(-0.04, 0.04, m.sum()), s=18, marker=marker,
+                   color=color, alpha=0.5, linewidths=0, zorder=3)
+    xs = np.linspace(x.min(), x.max(), 200)
+    ax.plot(xs, intercept + slope * xs, color=INK, linewidth=2.5, zorder=4)
+    for level in (0, 1):
+        ax.axhline(level, color=QUIET, linewidth=1, linestyle=(0, (4, 4)), zorder=2)
+    lo, hi = intercept + slope * xs[0], intercept + slope * xs[-1]
+    ax.annotate(f"predicts {lo:.2f}", (xs[0], lo), xytext=(4, 14), textcoords="offset points", color=INK, fontsize=14)
+    ax.annotate(f"predicts {hi:.2f}", (xs[-1], hi), xytext=(-4, 14), textcoords="offset points",
+                color=INK, fontsize=14, ha="right")
+    tidy(ax, grid="both")
+    ax.set_xticks(*ex["xticks"])
+    ax.set_yticks([-0.5, 0, 0.5, 1], ["-0.5", "0 (private)", "0.5", "1 (public)"])
+    ax.set(ylim=(-0.95, 1.35), xlabel=ex["xlabel"], ylabel="Public? (least squares fit)")
+    return fig
+
+
+@figure("cls-universities-boundary")
+def cls_universities_boundary():
+    ex = cls_example("universities")
+    title, model = _cls_models()[3]
+    model.fit(ex["X"], ex["y"])
+    fig, ax = new_fig(width=900)
+    _cls_regions(ax, model, ex)
+    _cls_points(ax, ex)
+    _cls_axes(ax, ex)
+    return fig
 
 
 # --------------------------------------------------------------------------

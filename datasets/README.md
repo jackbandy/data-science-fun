@@ -10,6 +10,7 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
 - [chicago-movies-in-parks](chicago-movies-in-parks/) — City of Chicago "Movies in the Parks" event listings
 - [chicago-street-names](chicago-street-names/) — Chicago street names with suffix and address range fields
 - [chicago-tall-buildings](chicago-tall-buildings/) — Buildings with 10 or more stories in Chicago
+- [classification-examples](classification-examples/) — five two-feature, yes/no examples for the Week 8 classification slides: universities, spam, penguins, breast tumors, and Cook County homes by lot size and census tract housing density
 - [cook-county-home-sales-2025](cook-county-home-sales-2025/) — Residential property sales recorded in Cook County during 2025, de-identified
 - [cta-ridership](cta-ridership/) — CTA annual ridership totals
 - [cta-train-tracker-scraper](cta-train-tracker-scraper/) — two snapshots of the CTA Train Tracker arrival board at UIC-Halsted and Washington/Wells, with the scraper that took them
