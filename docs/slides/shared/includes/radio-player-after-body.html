@@ -3,9 +3,9 @@
 // Shows on photo-title slides only; stays visible while playing so the stream
 // can always be stopped. Stream URL comes from the station's .pls/.m3u
 // playlists (https://us7.maindigitalstream.com/4672/?pl=vlc) — a plain
-// Shoutcast MP3 an <audio> element can play directly.
+// Shoutcast MP3 an <audio> element can play directly. A slide with data-radio-src (and optional data-radio-label) plays that file on loop instead.
 (() => {
-  const STREAM_URL = "https://us2.maindigitalstream.com/ssl/UIC";
+  const STREAM = { src: "https://us2.maindigitalstream.com/ssl/UIC", label: "UIC Radio", title: "UIC Radio (uicradio.net)", live: true };
   // Both icons share one 16x16 viewBox so the pill never resizes mid-swap.
   const SVG = (body) =>
     '<svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" ' +
@@ -20,16 +20,34 @@
   let button = null;
   let audio = null;
   let tries = 0;
+  let source = STREAM;
+
+  function slideSource() {
+    const slide = Reveal.getCurrentSlide();
+    const src = slide && slide.dataset.radioSrc;
+    if (!src) return STREAM;
+    const label = slide.dataset.radioLabel || "Music";
+    return { src, label, title: label, live: false };
+  }
 
   function setState(playing, loading) {
     button.classList.toggle("radio-playing", playing);
     button.classList.toggle("radio-loading", !!loading);
     button.querySelector(".radio-toggle-icon").innerHTML = playing ? SOUND : PLAY;
+    button.querySelector(".radio-toggle-label").textContent = source.label;
     button.setAttribute("aria-pressed", playing ? "true" : "false");
     button.setAttribute(
       "title",
-      playing ? "Stop UIC Radio" : "Play UIC Radio (uicradio.net)"
+      playing ? "Stop " + source.label : "Play " + source.title
     );
+  }
+
+  // While stopped, the button follows the current slide's source; while playing it keeps its own.
+  function syncSource() {
+    if (!button || (audio && !audio.paused)) return;
+    source = slideSource();
+    button.classList.remove("radio-error");
+    setState(false, false);
   }
 
   function toggle() {
@@ -41,7 +59,7 @@
       audio.addEventListener("error", () => {
         setState(false, false);
         button.classList.add("radio-error");
-        button.setAttribute("title", "UIC Radio stream unavailable");
+        button.setAttribute("title", source.label + " unavailable");
       });
     }
 
@@ -55,8 +73,10 @@
     }
 
     button.classList.remove("radio-error");
-    // Cache-buster keeps a replay from resuming a stale buffered segment.
-    audio.src = STREAM_URL + "?_=" + Date.now();
+    source = slideSource();
+    // Cache-buster keeps a replay of the live stream from resuming a stale buffered segment.
+    audio.src = source.live ? source.src + "?_=" + Date.now() : source.src;
+    audio.loop = !source.live;
     setState(false, true);
     const played = audio.play();
     if (played && played.catch) played.catch(() => setState(false, false));
@@ -86,6 +106,8 @@
   function boot() {
     if (!window.Reveal) { window.setTimeout(boot, 50); return; }
     Reveal.on("ready", install);
+    Reveal.on("ready", syncSource);
+    Reveal.on("slidechanged", syncSource);
     install();
   }
 

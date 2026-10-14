@@ -354,8 +354,10 @@ def schedule_topics(slides_dir):
             if not week.isdigit() or not topic or topic.lower() == 'n/a':
                 continue
             seen = by_week.setdefault(int(week), [])
-            if topic not in seen:
-                seen.append(topic)
+            # Split first so a topic carried into the next day ("Linear regression; Intro to ...") isn't listed twice
+            for part in (p.strip() for p in topic.split(';')):
+                if part and part not in seen:
+                    seen.append(part)
     return {week: '; '.join(topics) for week, topics in by_week.items()}
 
 

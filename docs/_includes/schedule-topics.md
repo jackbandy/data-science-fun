@@ -204,16 +204,28 @@
 
 ## Week 8, Day 2 (2026-10-14)
 
-* Classification
+* Linear regression, continued: the modeling process so far
+* Intro to classification: classes, decision boundaries, and 0-1 loss
+* A brief overview of four classifiers: decision trees, naive Bayes, k-nearest neighbors, and support vector machines
+* Training, validation, and test sets; cross-validation
 
 ### Sources
 
 * *Learning Data Science*, [Chapter 19: Classification](https://learningds.org/ch/19/class_intro.html)
 * *Data Science: A First Introduction*, [Chapter 5: Classification I — Training and Predicting](https://python.datasciencebook.ca/classification1.html)
 * *Computational and Inferential Thinking*, [Chapter 17: Classification](https://inferentialthinking.com/chapters/17/classification)
-* Andrew Ng, *Stanford CS229: Machine Learning* (Autumn 2018)
-	* [Lecture 5: GDA & Naive Bayes](https://www.youtube.com/watch?v=nt63k3bfXS0) (video, 79 min)
-	* [Lecture 6: Support Vector Machines](https://www.youtube.com/watch?v=lDwow4aOrtg) (video, 81 min)
+
+## Week 9, Day 1 (2026-10-19)
+
+* Decision trees
+* k-nearest neighbors
+
+### Sources
+
+* *Data Science: A First Introduction*, [Chapter 5: Classification I — Training and Predicting](https://python.datasciencebook.ca/classification1.html) (continued)
+* *A Course in Machine Learning*, [Chapter 1: Decision Trees](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf)
+* *Introduction to Statistical Learning*, [Chapter 8: Tree-Based Methods](https://www.statlearning.com)
+* *Python Data Science Handbook*, [Decision Trees and Random Forests](https://jakevdp.github.io/PythonDataScienceHandbook/05.08-random-forests.html)
 * *StatQuest* (Josh Starmer)
 	* [Decision and Classification Trees, Clearly Explained](https://www.youtube.com/watch?v=_L39rN6gz7Y) (video, 18 min)
 	* [K-nearest neighbors, Clearly Explained](https://www.youtube.com/watch?v=HVXime0nQeI) (video, 6 min)
@@ -222,19 +234,9 @@
 	* [4.2: k-Nearest Neighbours](https://www.youtube.com/watch?v=bENDqXKJLmg) (video, 13 min)
 	* [4.3: kNNs continued](https://www.youtube.com/watch?v=IRGbqi5S9gQ) (video, 8 min)
 
-## Week 9, Day 1 (2026-10-19)
-
-* Decision trees
-
-### Sources
-
-* *Data Science: A First Introduction*, [Chapter 5: Classification I — Training and Predicting](https://python.datasciencebook.ca/classification1.html) (continued)
-* *A Course in Machine Learning*, [Chapter 1: Decision Trees](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf)
-* *Introduction to Statistical Learning*, [Chapter 8: Tree-Based Methods](https://www.statlearning.com)
-* *Python Data Science Handbook*, [Decision Trees and Random Forests](https://jakevdp.github.io/PythonDataScienceHandbook/05.08-random-forests.html)
-
 ## Week 9, Day 2 (2026-10-21)
 
+* Naive Bayes
 * Support vector machines
 * Kernels
 
@@ -243,6 +245,9 @@
 * *A Course in Machine Learning*, [Chapter 11: Kernel Methods](http://ciml.info/dl/v0_99/ciml-v0_99-ch11.pdf)
 * *Introduction to Statistical Learning*, [Chapter 9: Support Vector Machines](https://www.statlearning.com)
 * *Python Data Science Handbook*, [Support Vector Machines](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html)
+* Andrew Ng, *Stanford CS229: Machine Learning* (Autumn 2018)
+	* [Lecture 5: GDA & Naive Bayes](https://www.youtube.com/watch?v=nt63k3bfXS0) (video, 79 min)
+	* [Lecture 6: Support Vector Machines](https://www.youtube.com/watch?v=lDwow4aOrtg) (video, 81 min)
 
 ## Week 10, Day 1 (2026-10-26)
 

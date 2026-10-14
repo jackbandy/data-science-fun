@@ -69,3 +69,7 @@ The Brown Bluff and Hope Bay photos are from the northern Antarctic Peninsula, t
    - Author: Liam Quinn
    - Date and place: January 19, 2011; Cooper Bay, South Georgia
    - License: [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)
+
+## Bill close-ups (`bills/`)
+
+`bills/<name>-bill.jpg` is a square crop of the head from `<name>.jpg` above, resized to 600 × 600 and re-saved as JPEG (quality 85), made October 14, 2026 for the Week 8 "Compare the Bills" slide. Same authors and licenses as the source photos. Crop boxes (width × height + x + y, in the downscaled files above): adelie-01 520×520+1050+390; adelie-02 800×800+480+400; adelie-03 700×700+1100+650; adelie-04 560×560+1560+370; adelie-05 600×600+1350+700; gentoo-01 460×460+1125+300; gentoo-02 800×800+820+240; gentoo-03 600×600+880+220; gentoo-04 2000×2000+900+0; gentoo-05 800×800+300+260.

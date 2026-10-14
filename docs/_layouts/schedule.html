@@ -72,6 +72,13 @@ layout: default
   {%- endfor -%}
   </ul>
 
+  <p class="week-jump-label">Click to jump to week</p>
+  <div class="week-jump-wrap">
+    <table class="week-jump">
+      <tr>{% for week in weeks %}<td><a href="#week-{{ week.name }}">{{ week.name }}</a></td>{% endfor %}</tr>
+    </table>
+  </div>
+
   <div class="rail">
   {%- assign prevunit = "" -%}
   {%- for week in weeks -%}

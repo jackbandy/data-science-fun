@@ -10,6 +10,8 @@ format:
     fig-width: 5
     fig-height: 3.09
     auto-stretch: false
+    include-after-body:
+      - shared/includes/penguin-parade-after-body.html
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 8</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week8.html">dodatascience.fun/slides/week8</a></span>'
 ---
 
@@ -1201,7 +1203,14 @@ Take a picture of your worksheet, upload it in Canvas
 
 # That's All for Today, See You Wednesday! {.section-header .no-index}
 
-# Week 8, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover"}
+# Week 8, Day 2 {#experimental-penguin-title-slide .course-title .photo-title .experimental-penguin-title-slide data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover" data-radio-src="../assets/penguins/characters/lane8/penguine-parade-loop.mp3" data-radio-label="Penguin Parade"}
+
+<h2>Intro to Classification</h2>
+
+Jack Bandy
+2026
+
+# Week 8, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop09-roosevelt-c.jpg" background-size="cover" data-radio-src="../assets/penguins/characters/lane8/penguine-parade-loop.mp3" data-radio-label="Penguin Parade"}
 
 <h2>Intro to Classification</h2>
 
@@ -1210,18 +1219,17 @@ Jack Bandy
 
 ---
 
-## Map {.split}
+## Map for Week 8, Day 2 (Roosevelt) {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Week 8: Roosevelt
-- Day 2
-    - Where We Left Off
-    - When Regression Doesn't Fit
-    - Intro to Classification
-    - Four Classifiers: A Preview
-    - Training, Validation, and Test Sets
+- Review from Last Class
+- From Regression to Classification
+- Intro to Classification
+- Training, Validation, and Test Sets
+- Four Approaches to Classification
+- Group Project Check-In
 :::
 
 ![](../assets/orange-line-map-stops/stop09-roosevelt.svg){.figure alt="Orange Line map with the Roosevelt stop marked, the Week 8 stop"}
@@ -1229,55 +1237,185 @@ Jack Bandy
 :::
 
 
-# Where We Left Off {.section-header}
+# Review from Last Class {.section-header}
 
 ---
 
-## The Modeling Process, So Far {.figure-aside}
+## Review from Last Class {.split}
 
+::: {.split-content .golden-columns}
 
-::: {.columns}
-::: {.column}
-::: {.dense}
-1. Define the model: $\hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2$
-2. Define the loss: average squared loss (MSE)
-3. Minimize the loss: find $\hat{\theta}$
-- The response $y$ was sale price, a number on a continuous scale.
-- So every prediction $\hat{y}$ was a number too: a price.
-- Overfitting: a model can fit the data in hand and still predict new data badly.
-:::
-:::
-::: {.column}
-<img class="figure" src="../assets/week8/house-plane-3d.svg" alt="Three-dimensional box with bedrooms and building square footage along the floor and sale price as the height, holding 300 Cook County home sales as dots, with a shaded orange regression plane through them.">
-:::
+::: {}
+
+With your elbow neighbor(s), from memory:
+
+1. What are the four steps to modeling?
+2. What are the four LINE criteria for linear regression?
 :::
 
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
 
 ---
 
+## Four Steps to Modeling {.split}
 
-## Two Kinds of Supervised Learning
+
+::: {.split-content .golden-columns}
+
+::: {}
+1. **Choose a model**
+2. **Choose a loss function**
+3. **Fit the model**
+4. **Evaluate model performance**
+:::
+
+<img class="figure" src="../assets/week8/msi-model-loop-golden.jpg" style="max-height: 470px;" alt="A scale model of downtown Chicago at the Museum of Science and Industry: model skyscrapers, buses, and taxis, with an elevated train track on steel supports curving through the lower right, like the Loop tracks the Orange Line runs on.">
+
+:::
 
 ::: {.caption}
-Hal Daumé III, [*A Course in Machine Learning*](http://ciml.info/), v0.99, ch. 1 ("Decision Trees").
+Steps quoted from Data 100 course notes, UC Berkeley, ["Modeling & SLR"](https://ds100.org/course-notes/modeling-slr). Photo: Warren LeMay, [model of downtown Chicago and the elevated Loop tracks](https://commons.wikimedia.org/wiki/File:Chicago,_Model_Train_Diorama,_Museum_of_Science_and_Industry,_Jackson_Park,_Lake_Shore_Drive_and_57th_Street,_Hyde_Park,_Chicago,_IL_(54211856727).jpg) at the Museum of Science and Industry (2024), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0), cropped.
 :::
 
+---
+
+## LINE Criteria for Linear Regression
+
+::: {.caption}
+Source: Mine Çetinkaya-Rundel and Johanna Hardin, ["Inference for Linear Regression with a Single Predictor"](https://openintro-ims.netlify.app/inf-model-slr.html), §24.6 of *Introduction to Modern Statistics*, 2nd ed. (OpenIntro).
+:::
+
+| | Criterion | Check with residuals |
+|-|----------|--------|
+| **L** | Linear trend | Residuals vs. $x$ show no leftover pattern |
+| **I** | Independent observations | Residuals, in order, show no patterns (like runs or waves) |
+| **N** | Nearly normal residuals | The histogram of residuals looks like a bell |
+| **E** | Equal variability |Residuals vs. fitted values form an even band |
+
+
+# From Regression to Classification {.section-header}
+
+---
+
+## Kinds of Supervised Learning {.split}
+
+::: {.caption}
+Hal Daumé III, [*A Course in Machine Learning*](http://ciml.info/), v0.99, ch. 1 ("Decision Trees"). Figure: synthetic data.
+:::
+
+::: {.split-content .golden-columns}
+
+::: {}
 "At a basic level, machine learning is about predicting the future based on the past." (Daumé)
 
 ::: {.incremental}
-- **Regression**: predict a real value (e.g., sale price, % tip).
+- **Regression**: predict a real value (e.g., ridership, home price).
 - **Classification**: predict a categorical value.
     - Binary: a yes/no response (e.g., spam or not spam).
-    - Multiclass: one of several classes (e.g., country of origin).
+    - Multiclass: one of several classes (e.g., a region of the U.S.).
 - Both start from examples where we already know the answer, which is what makes them *supervised*.
 :::
+:::
 
+<img class="figure" src="../assets/week8/supervised-two-kinds.svg" style="max-height: 480px;" alt="Two stacked panels of synthetic data. Top, regression: black points rising from left to right with an orange line of best fit through them, predicting a number. Bottom, classification: gray circles in the upper left and orange triangles in the lower right, split by a straight boundary into a gray region and a light orange region, predicting a class.">
 
-# When Regression Doesn't Fit {.section-header}
+:::
+
+<style>
+/* Golden-portrait tiles so landscape and portrait photos line up in one row. */
+.penguin-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 0.6em; }
+/* Pandoc wraps the images in one <p>; let them be the grid items instead. */
+.penguin-grid > p, .bill-grid > p { display: contents; }
+.penguin-grid img { width: 100%; aspect-ratio: 1 / 1.618; object-fit: cover; margin: 0; border-radius: 3px; }
+.bill-grid { display: grid; grid-template-columns: auto repeat(5, 1fr); gap: 8px; align-items: center; margin-top: 0.4em; }
+.bill-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; margin: 0; border-radius: 3px; }
+.bill-grid .bill-label { font-weight: 600; padding-right: 0.4em; text-align: right; }
+</style>
 
 ---
 
+## Adélie Penguins
 
+::: {.caption}
+Photos, left to right: Godot13 (first three, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)), Jason Auch ([CC BY 2.0](https://creativecommons.org/licenses/by/2.0)), Gregory "Slobirdr" Smith ([CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)), via Wikimedia Commons; cropped. Links in [`assets/penguins/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/penguins/SOURCES.md).
+:::
+
+<div class="penguin-grid">
+<img src="../assets/penguins/adelie-01.jpg" alt="An Adélie penguin standing on snow, wings out: all-black head, white eye ring, short dark bill.">
+<img src="../assets/penguins/adelie-02.jpg" alt="An Adélie penguin on a dark rock, calling with its short black bill open.">
+<img src="../assets/penguins/adelie-03.jpg" alt="An Adélie penguin walking across pebbles, its short, stubby bill in profile.">
+<img src="../assets/penguins/adelie-04.jpg" alt="Two Adélie penguins on an ice shore with the sea behind them.">
+<img src="../assets/penguins/adelie-05.jpg" alt="Three Adélie penguins on a block of snow by the sea.">
+</div>
+
+---
+
+## Gentoo Penguins
+
+::: {.caption}
+Photos, left to right: Godot13 (first three, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)), Gilad Rom ([CC BY 2.0](https://creativecommons.org/licenses/by/2.0)), Liam Quinn ([CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)), via Wikimedia Commons; cropped. Links in [`assets/penguins/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/penguins/SOURCES.md).
+:::
+
+<div class="penguin-grid">
+<img src="../assets/penguins/gentoo-01.jpg" alt="A Gentoo penguin on a nest of pebbles with a chick beside it: white band over the head, orange bill.">
+<img src="../assets/penguins/gentoo-02.jpg" alt="A Gentoo penguin standing on rounded stones, looking down along its long orange bill.">
+<img src="../assets/penguins/gentoo-03.jpg" alt="A Gentoo penguin on dark pebbles in front of a pale blue iceberg.">
+<img src="../assets/penguins/gentoo-04.jpg" alt="Close-up of a Gentoo penguin's head: white patch above the eye and a long, narrow orange bill with a dark tip.">
+<img src="../assets/penguins/gentoo-05.jpg" alt="A Gentoo penguin stepping across wet stones by the water, orange bill and orange feet.">
+</div>
+
+---
+
+## Compare the Bills
+
+::: {.caption}
+Close crops of the same ten photos.
+:::
+
+<div class="bill-grid">
+<span class="bill-label">Adélie</span>
+<img src="../assets/penguins/bills/adelie-01-bill.jpg" alt="Adélie head, front view: short, dark bill.">
+<img src="../assets/penguins/bills/adelie-02-bill.jpg" alt="Adélie head in profile, bill open: short and deep at the base.">
+<img src="../assets/penguins/bills/adelie-03-bill.jpg" alt="Adélie head in profile: stubby black bill.">
+<img src="../assets/penguins/bills/adelie-04-bill.jpg" alt="Adélie head in profile: short dark bill.">
+<img src="../assets/penguins/bills/adelie-05-bill.jpg" alt="Adélie head in profile: short bill with a hooked tip.">
+<span class="bill-label">Gentoo</span>
+<img src="../assets/penguins/bills/gentoo-01-bill.jpg" alt="Gentoo head, front view: orange bill.">
+<img src="../assets/penguins/bills/gentoo-02-bill.jpg" alt="Gentoo head looking down: long, thin orange bill.">
+<img src="../assets/penguins/bills/gentoo-03-bill.jpg" alt="Gentoo head in profile: long orange bill.">
+<img src="../assets/penguins/bills/gentoo-04-bill.jpg" alt="Gentoo head close-up in profile: long, narrow orange bill with a dark tip.">
+<img src="../assets/penguins/bills/gentoo-05-bill.jpg" alt="Gentoo head in profile: long, thin orange bill.">
+</div>
+
+::: {.notes}
+Ask: what would you measure to tell them apart? Gentoo bills are longer and shallower; Adélie bills are shorter and deeper. Those are the two inputs on the next slide.
+:::
+
+---
+
+## Adélie or Gentoo Penguin? {.image-frame-slide}
+
+::: {.caption}
+Data: Kristen B. Gorman, Tony D. Williams, and William R. Fraser, [*PLoS ONE*](https://doi.org/10.1371/journal.pone.0090081) 9(3): e90081 (2014), via Allison Horst, Alison Hill, and Kristen Gorman, [palmerpenguins](https://doi.org/10.5281/zenodo.3960218) (2020), CC0. 274 penguins near Palmer Station, Antarctica, 2007–2009.
+:::
+
+A penguin's bill is 45 mm long and 15 mm deep. Adélie or Gentoo?
+
+::::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week8/cls-penguins-scatter-plain.svg" style="max-height: 440px;" alt="Scatter plot of 274 penguins, bill length against bill depth, with every point in the same gray and no species shown yet. Two clusters are already visible.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week8/cls-penguins-scatter.svg" style="max-height: 440px;" alt="Scatter plot of 151 Adélie and 123 Gentoo penguins, bill length against bill depth in millimeters. Adélie, gray circles, cluster at short, deep bills (about 39 mm long, 18 mm deep). Gentoo, orange triangles, cluster at long, shallow bills (about 47 mm long, 15 mm deep). The two clusters do not overlap.">
+:::
+
+:::::
+
+---
 
 ## Public or Private? {.image-frame-slide}
 
@@ -1303,6 +1441,27 @@ A school has 20,000 undergraduates and charges \$14,000 in in-state tuition and 
 Data: U.S. Department of Education, [College Scorecard](https://collegescorecard.ed.gov/data/), most-recent institution file (June 2026 release): 1,717 predominantly bachelor's-granting schools, public or private nonprofit, that report in-state tuition and fees.
 :::
 
+---
+
+## Chicago or the Suburbs? {.image-frame-slide}
+
+::: {.caption}
+Data: Cook County single-family sales, 2025 (Day 1), 1,000 of 24,764 shown, with lot size from the Assessor; 2020 census tract housing units and land area, U.S. Census Bureau [TIGERweb](https://tigerweb.geo.census.gov/).
+:::
+
+A home on a 5,000-square-foot lot sold in a census tract with 3,000 housing units per square mile. Chicago or the suburbs?
+
+::::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week8/cls-cook-county-scatter-plain.svg" style="max-height: 420px;" alt="Scatter plot of 1,000 Cook County home sales, lot size against housing units per square mile in the tract, with every point in the same gray and no city or suburb labels shown yet.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week8/cls-cook-county-scatter.svg" style="max-height: 420px;" alt="Scatter plot of 1,000 Cook County home sales, lot size in square feet against housing units per square mile in the sale's census tract, both on log scales. Chicago sales, orange triangles, crowd the upper left: lots of about 3,000 to 5,000 square feet in tracts with 3,000 to 10,000 housing units per square mile. Suburban sales, gray circles, spread to the lower right, with larger lots and sparser tracts, but many suburban sales overlap the Chicago cluster.">
+:::
+
+:::::
 
 ---
 
@@ -1322,29 +1481,6 @@ An email is 1% exclamation points, and its runs of capital letters average 5 lon
 
 ::: {.fragment fragment-index=1}
 <img src="../assets/week8/cls-spam-scatter.svg" style="max-height: 440px;" alt="Scatter plot of 1,200 emails, the share of characters that are exclamation points against the average run of capital letters, both on log scales. About half the emails have no exclamation points and form a vertical stripe at zero, mixing spam and not spam. Among the rest, spam, orange triangles, sits higher and further right than non-spam, gray circles.">
-:::
-
-:::::
-
-
----
-
-## Adélie or Gentoo Penguin? {.image-frame-slide}
-
-::: {.caption}
-Data: Kristen B. Gorman, Tony D. Williams, and William R. Fraser, [*PLoS ONE*](https://doi.org/10.1371/journal.pone.0090081) 9(3): e90081 (2014), via Allison Horst, Alison Hill, and Kristen Gorman, [palmerpenguins](https://doi.org/10.5281/zenodo.3960218) (2020), CC0. 274 penguins near Palmer Station, Antarctica, 2007–2009.
-:::
-
-A penguin's bill is 45 mm long and 15 mm deep. Adélie or Gentoo?
-
-::::: {.r-stack}
-
-::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week8/cls-penguins-scatter-plain.svg" style="max-height: 440px;" alt="Scatter plot of 274 penguins, bill length against bill depth, with every point in the same gray and no species shown yet. Two clusters are already visible.">
-:::
-
-::: {.fragment fragment-index=1}
-<img src="../assets/week8/cls-penguins-scatter.svg" style="max-height: 440px;" alt="Scatter plot of 151 Adélie and 123 Gentoo penguins, bill length against bill depth in millimeters. Adélie, gray circles, cluster at short, deep bills (about 39 mm long, 18 mm deep). Gentoo, orange triangles, cluster at long, shallow bills (about 47 mm long, 15 mm deep). The two clusters do not overlap.">
 :::
 
 :::::
@@ -1371,67 +1507,45 @@ A biopsy's cell nuclei have a mean radius of 15 and a mean texture of 22. Malign
 
 :::::
 
-
-
----
-
-## Chicago or the Suburbs? {.image-frame-slide}
-
-::: {.caption}
-Data: Cook County single-family sales, 2025 (Day 1), 1,000 of 24,764 shown, with lot size from the Assessor; 2020 census tract housing units and land area, U.S. Census Bureau [TIGERweb](https://tigerweb.geo.census.gov/).
-:::
-
-A home on a 5,000-square-foot lot sold in a census tract with 3,000 housing units per square mile. Chicago or the suburbs?
-
-::::: {.r-stack}
-
-::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week8/cls-cook-county-scatter-plain.svg" style="max-height: 420px;" alt="Scatter plot of 1,000 Cook County home sales, lot size against housing units per square mile in the tract, with every point in the same gray and no city or suburb labels shown yet.">
-:::
-
-::: {.fragment fragment-index=1}
-<img src="../assets/week8/cls-cook-county-scatter.svg" style="max-height: 420px;" alt="Scatter plot of 1,000 Cook County home sales, lot size in square feet against housing units per square mile in the sale's census tract, both on log scales. Chicago sales, orange triangles, crowd the upper left: lots of about 3,000 to 5,000 square feet in tracts with 3,000 to 10,000 housing units per square mile. Suburban sales, gray circles, spread to the lower right, with larger lots and sparser tracts, but many suburban sales overlap the Chicago cluster.">
-:::
-
-:::::
-
-
 ---
 
 ## Five Yes/No Questions
 
-::: {.caption}
-Data for all five: [`datasets/classification-examples`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/classification-examples) in the course repo, with sources in its README.
-:::
+
 
 Each has two numeric inputs and one yes/no output.
 
 | Question | Inputs | Data |
 |---|---|---|
-| Public or private university? | undergraduate enrollment, in-state tuition | College Scorecard |
-| Spam or not? | "!" frequency, runs of CAPITALS | UCI Spambase |
 | Adélie or Gentoo penguin? | bill length, bill depth | Palmer Penguins |
-| Malignant or benign tumor? | cell nucleus radius, texture | UCI Breast Cancer Wisconsin |
+| Public or private university? | undergraduate enrollment, in-state tuition | College Scorecard |
 | Chicago or the suburbs? | lot size, housing units per square mile | Cook County home sales, 2020 census |
+| Spam or not? | "!" frequency, runs of CAPITALS | UCI Spambase |
+| Malignant or benign tumor? | cell nucleus radius, texture | UCI Breast Cancer Wisconsin |
 
+
+::: {.caption}
+Data for all five is at [`datasets/classification-examples`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/classification-examples) in the course repo
+:::
 ---
 
 ## A Decision Boundary {.figure-aside}
 
-::: {.caption}
-Data: College Scorecard, as above. Boundary from a linear support vector machine fit to both inputs (more on Week 9 Wednesday).
-:::
+
 
 ::: {.columns}
-::: {.column width="55%"}
-<img class="figure" src="../assets/week8/cls-universities-boundary.svg" alt="The enrollment and in-state tuition scatter plot of public and private schools, now split by a straight diagonal boundary. The lower-right region, shaded light orange, is predicted public; the upper-left region, shaded light gray, is predicted private. Nearly all orange triangles fall on the orange side and nearly all gray circles on the gray side; the mistakes sit near the line.">
-:::
 ::: {.column width="45%"}
 - A classifier splits the input space into regions, one label per region.
 - The line where the label changes is the **decision boundary**.
 - Points on the wrong side are mistakes: this line gets 93 of 1,717 schools wrong.
 - Different classifiers draw different boundaries from the same data.
 :::
+::: {.column width="55%"}
+<img class="figure" src="../assets/week8/cls-universities-boundary.svg" alt="The enrollment and in-state tuition scatter plot of public and private schools, now split by a straight diagonal boundary. The lower-right region, shaded light orange, is predicted public; the upper-left region, shaded light gray, is predicted private. Nearly all orange triangles fall on the orange side and nearly all gray circles on the gray side; the mistakes sit near the line.">
+:::
+:::
+::: {.caption}
+Data: College Scorecard. Boundary from a linear support vector machine fit to both inputs (more on Week 9 Wednesday).
 :::
 
 
@@ -1455,48 +1569,225 @@ Classification is the task of predicting the class label of an observation from 
 
 ::: {.column width="45%"}
 
-![](../assets/week8/cls-universities-boundary.svg){alt="TODO"}
+![](../assets/week8/cls-penguins-scatter.svg){alt="Scatter plot of 151 Adélie and 123 Gentoo penguins, bill length against bill depth in millimeters. Adélie, gray circles, cluster at short, deep bills; Gentoo, orange triangles, cluster at long, shallow bills."}
 
-<p class="code-caption" style="margin-top:0.5em;">Two features </p>
+<p class="code-caption" style="margin-top:0.5em;">Two predictors (bill length and depth), two classes (Adélie and Gentoo).</p>
 
 :::
 
 ::::
 
+---
+
+## Key Vocabulary
+
+::: {.incremental}
+- **Ground truth**: the correct label for each observation, recorded by someone who checked.
+    - For the penguins: the species that researchers at Palmer Station recorded for each bird.
+- **Training set**: labeled observations the model learns from.
+    - The model sees both the bill measurements and the species.
+- **Testing set**: labeled observations held back from training, used only to measure how well the model predicts new data.
+    - The model sees the bill measurements; we compare its guesses to the ground truth.
+:::
 
 ---
 
-## The Same Three Steps
+## The Same Four Steps
 
+Input: training examples $\{(\mathbf{x}^{(1)}, y^{(1)}), \ldots, (\mathbf{x}^{(n)}, y^{(n)})\}$ from an unknown distribution.
 
 ::: {.incremental}
-- Input: training examples $\{(\mathbf{x}^{(1)}, y^{(1)}), \ldots, (\mathbf{x}^{(n)}, y^{(n)})\}$ from an unknown distribution.
-- Model: a hypothesis $h$ that maps features to a class, $h: X \to Y$.
-- Loss: compare the true class $y$ with the prediction $h(\mathbf{x})$. The simplest is **0-1 loss**:
+1. Choose a model: a hypothesis $h$ that maps features to a class, $h: X \to Y$.
+2. Choose a loss: compare the true class $y$ with the prediction $h(\mathbf{x})$. The simplest is **0-1 loss**:
 
     $$\ell(y, h(\mathbf{x})) = \begin{cases} 0 & \text{if } y = h(\mathbf{x}) \\ 1 & \text{otherwise} \end{cases}$$
 
-- Averaged over the data, 0-1 loss is the **error rate**: the portion of examples the classifier gets wrong.
-- Minimize: find the $h$ with the lowest error, on future examples, not only the training data.
+    Averaged over the data, 0-1 loss is the **error rate**: the portion of examples the classifier gets wrong.
+3. Fit: find the $h$ with the lowest error on the training set.
+4. Evaluate: measure the error on the testing set, which stands in for future examples.
+:::
+
+
+# Training, Validation, and Test Sets {.section-header}
+
+---
+
+## Back to Overfitting
+
+::: {.caption}
+Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1.
+:::
+
+- Day 1, Model C: a curve through nearly every point, and "new observations are not well-predicted."
+- Same for classifiers
+- $h$ overfits if $\text{error}_{\text{true}}(h) > \text{error}_{\text{train}}(h)$.
+- Problem: "we don't know $\text{error}_{\text{true}}(h)$!"
+- Standard approach: set aside a testing set from the available data, and don't look at them during training! Ever!
+
+---
+
+## Three Sets
+
+
+<div style="display:flex; gap:4px; margin:0.4em 0 0.8em; font-weight:600; color:#fff; text-align:center;">
+<div style="flex:70; background:#555; padding:0.5em 0; border-radius:4px;">Training 70%</div>
+<div style="flex:10; background:#f9461c; padding:0.5em 0; border-radius:4px;">Val.</div>
+<div style="flex:20; background:#222; padding:0.5em 0; border-radius:4px;">Test 20%</div>
+</div>
+
+::: {.incremental}
+- Training set: Used to learn the parameters of the ML model
+- Validation set (tuning/development/held-out data): can use to learn hyperparameter(s)
+- Test set: Used to evaluate how well we're doing on new unseen examples.
+:::
+
+---
+
+## Can You Tell a Penguin by Its Bill? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+A researcher measures a new penguin's bill: 45 mm long, 15 mm deep.
+
+::: {.incremental}
+- Can a model predict the species from the bill alone?
+- How would we know whether its answer is any good?
+- Use the three sets.
+:::
+:::
+
+<img class="figure" src="../assets/week8/cls-penguins-scatter-plain.svg" alt="Scatter plot of 274 penguins, bill length against bill depth, with every point in the same gray and no species shown. Two clusters are visible.">
+
+:::
+
+---
+
+## Step 1: Split the Penguins {.image-frame-slide}
+
+::: {.caption}
+Data: Palmer Penguins, as above. Split at random with scikit-learn's `train_test_split` (`random_state=418`), stratified so each set keeps the same share of each species.
+:::
+
+The model sees the species of the training penguins only. The other two sets keep their labels hidden.
+
+<img src="../assets/week8/cls-penguins-split.svg" style="max-height: 400px;" alt="Three scatter plots of bill length against bill depth on the same axes. Training set, 191 penguins: Adélie as gray circles at short, deep bills and Gentoo as orange triangles at long, shallow bills. Validation set, 28 penguins, and test set, 55 penguins: hollow circles with no species shown, in the same two clusters.">
+
+---
+
+## $k$NN Intuition {.split}
+
+::: {.caption}
+Data: the 191 training penguins from Step 1. Distances use standardized features, so one standard deviation of length (about 5 mm) counts the same as one of depth (about 2 mm).
+:::
+
+::: {.split-content .golden-columns}
+
+::: {}
+To classify a new penguin, find the $k$ closest training penguins and take a vote. Here $k = 5$.
+
+::: {.incremental}
+- Penguin 1 (45 mm long, 15 mm deep, the bill from before): all 5 neighbors are Gentoo, so predict Gentoo.
+- Penguin 2 (45 mm long, 17 mm deep): 3 Gentoo and 2 Adélie, so predict Gentoo by a closer vote.
+- $k$, the number of neighbors who vote, is up to us.
+:::
+:::
+
+<img class="figure" src="../assets/week8/cls-penguins-knn-intuition.svg" alt="Close-up of the training penguins, bill length against bill depth: Adélie as gray circles at upper left, Gentoo as orange triangles at lower right. Two new penguins are marked 1 and 2, each with lines to its 5 nearest training penguins inside a dashed circle. Penguin 1, at 45 mm by 15 mm, sits inside the Gentoo cluster: 5 of 5 Gentoo. Penguin 2, at 45 mm by 17 mm, sits between the clusters with a larger circle: 3 of 5 Gentoo.">
+
+:::
+
+---
+
+## Parameters vs. Hyperparameters
+
+
+
+::: {.incremental}
+- **Parameters** are learned from the training data.
+    - Regression: the $\theta$s. Decision tree: "the nodes and branches."
+- A **hyperparameter** is a "parameter that controls other parameters of the model."
+    - Max tree depth, $k$ in $k$NN, $C$ in an SVM, the polynomial degree of Day 1's Model C.
+- The validation set picks the hyperparameter; the training set fits the parameters.
+:::
+
+---
+
+## Step 2: Fit on Training, Tune on Validation {.image-frame-slide}
+
+::: {.caption}
+$k$-nearest neighbors (standardized features): a new penguin gets the species most common among the $k$ closest training penguins. More on this classifier after this section.
+:::
+
+Three values of the hyperparameter $k$, each fit on the 191 training penguins and scored on the 28 validation penguins:
+
+<img src="../assets/week8/cls-penguins-validation.svg" style="max-height: 400px;" alt="Three panels of bill length against bill depth, each shading the region k-nearest neighbors predicts as Adélie (gray) or Gentoo (orange), with the 28 validation penguins on top. k = 1: a jagged diagonal boundary, 28 of 28 correct. k = 15: a smoother diagonal boundary, 28 of 28 correct. k = 191: the whole plot is gray, every penguin predicted Adélie, 15 of 28 correct.">
+
+::: {.notes}
+With k = 191 every training penguin votes, and there are more Adélie (106) than Gentoo (85), so it predicts Adélie everywhere: underfitting. k = 1 and k = 15 tie on validation; we keep 15, the smoother boundary, which depends less on any single odd neighbor.
+:::
+
+---
+
+## Step 3: Test Once {.image-frame-slide}
+
+Commit to $k = 15$, refit on training + validation (219 penguins), then score the 55 test penguins one time.
+
+<img src="../assets/week8/cls-penguins-test.svg" style="max-height: 400px;" alt="Bill length against bill depth with the k = 15 boundary running diagonally: gray region predicted Adélie at upper left, orange region predicted Gentoo at lower right. The 55 test penguins are drawn with their recorded species, and every Adélie falls in the gray region and every Gentoo in the orange: 55 of 55 correct.">
+
+::: {.fragment}
+For these two species, yes: the bill alone is enough.
+:::
+
+---
+
+## How to Split
+
+::: {.incremental}
+- How? Randomly, Temporally, Geographically... Depends on application (often random).
+- What size? "Typically between 75%-25% and 90%-10%."
+    - "Larger training set → more complex models"
+    - "Larger test set → better estimate of generalization error"
+- Which would you use for daily CTA ridership? For Cook County home sales?
+:::
+
+
+---
+
+## Cross-Validation
+
+
+Cross-validation simulates multiple train-test splits on the training data.
+
+<div style="display:grid; grid-template-columns: auto repeat(5, 1fr); gap:4px; max-width:720px; margin:0.4em 0; font-size:0.7em; font-weight:600; text-align:center;">
+<div style="text-align:right; padding-right:0.4em;">Split 1</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
+<div style="text-align:right; padding-right:0.4em;">Split 2</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
+<div style="text-align:right; padding-right:0.4em;">Split 3</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
+<div style="text-align:right; padding-right:0.4em;">Split 4</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div>
+<div style="text-align:right; padding-right:0.4em;">Split 5</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div>
+</div>
+
+::: {.incremental}
+- 5-fold: cut the training data into 5 folds; each fold takes one turn as the validation set (V) while the rest train (T).
+- Pick the hyperparameter setting with the best average validation error across folds.
+- "You can only use the test dataset once after deciding on the model."
 :::
 
 
 
-# Four Classifiers: A Preview {.section-header}
+# Four Approaches to Classification {.section-header}
 
 ---
 
-## Four Classifiers
+## Four Approaches to Classification
 
 
 | Method | How it assigns a class | More in |
 |---|---|---|
+| $k$-nearest neighbors | Takes a vote among the $k$ most similar training examples | Week 9, Monday |
 | Decision tree | Asks a sequence of questions about the features, ending at a leaf with a label | Week 9, Monday |
-| Naive Bayes | Picks the class with the highest probability, using Bayes' theorem | Today |
-| $k$-nearest neighbors | Takes a vote among the $k$ most similar training examples | Today |
+| Naive Bayes | Picks the class with the highest probability, using Bayes' theorem | Week 9, Wednesday |
 | Support vector machine | Draws the separating line (hyperplane) with the widest margin | Week 9, Wednesday |
-
-<!-- TODO: Naive Bayes and kNN have no day of their own on the schedule; confirm "Today" is right or point to a later day. -->
 
 ---
 
@@ -1556,30 +1847,30 @@ Each panel is a scikit-learn classifier fit to all the points shown: a decision 
 
 ::: {.panel-tabset}
 
-### Universities
-
-<img src="../assets/week8/cls-universities-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: undergraduate enrollment against in-state tuition. All four mark the low-tuition, larger schools as public: the tree with a box, naive Bayes with an oval, k-nearest neighbors with a ragged edge, and the linear SVM with one diagonal line.">
-
-### Spam
-
-<img src="../assets/week8/cls-spam-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: exclamation-point share against average capital-letter run. Every method marks only the lower-left corner, few exclamation points and short capital runs, as not spam, and the rest as spam; the corner is boxy for the tree, rounded for naive Bayes, ragged for k-nearest neighbors, and cut by a diagonal line for the SVM.">
-
 ### Penguins
 
 <img src="../assets/week8/cls-penguins-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: bill length against bill depth. All four methods separate the two clusters cleanly; only the shape of the boundary between them differs: a step for the tree, a curve for naive Bayes, a slightly wiggly line for k-nearest neighbors, and a straight line for the SVM.">
 
-### Tumors
+### Universities
 
-<img src="../assets/week8/cls-tumors-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: mean nucleus radius against texture. All four methods put the boundary near a radius of 14 to 17, leaning so that higher texture tips a sample toward malignant; the tree's boundary is a set of steps, naive Bayes curves around the benign cluster, k-nearest neighbors is ragged, and the SVM is a straight line.">
+<img src="../assets/week8/cls-universities-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: undergraduate enrollment against in-state tuition. All four mark the low-tuition, larger schools as public: the tree with a box, naive Bayes with an oval, k-nearest neighbors with a ragged edge, and the linear SVM with one diagonal line.">
 
 ### Chicago
 
 <img src="../assets/week8/cls-cook-county-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: lot size against housing units per square mile. All four mark the small-lot, dense corner as Chicago: the tree with one box, naive Bayes with a curved region, k-nearest neighbors with a ragged region, and the linear SVM with everything above a rising diagonal line.">
 
+### Spam
+
+<img src="../assets/week8/cls-spam-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: exclamation-point share against average capital-letter run. Every method marks only the lower-left corner, few exclamation points and short capital runs, as not spam, and the rest as spam; the corner is boxy for the tree, rounded for naive Bayes, ragged for k-nearest neighbors, and cut by a diagonal line for the SVM.">
+
+### Tumors
+
+<img src="../assets/week8/cls-tumors-four-boundaries.svg" style="max-height: 380px;" alt="Four panels, one per classifier (decision tree of depth 3, naive Bayes, k-nearest neighbors with k = 15, linear SVM), each shading the region it predicts for each class over the same scatter plot: mean nucleus radius against texture. All four methods put the boundary near a radius of 14 to 17, leaning so that higher texture tips a sample toward malignant; the tree's boundary is a set of steps, naive Bayes curves around the benign cluster, k-nearest neighbors is ragged, and the SVM is a straight line.">
+
 :::
 
 ::: {.notes}
-Shapes to point out: the tree's boundaries are made of horizontal and vertical steps (Bello Lander's "rectilinear decision boundaries"); kNN's boundary follows the points and gets ragged where the classes overlap; the linear SVM can only draw one straight line. On the penguins all four agree, so the method matters most where the classes overlap. These are fit on every point, so they say nothing yet about how well each would do on new data; that is the last section today.
+Shapes to point out: the tree's boundaries are made of horizontal and vertical steps (Bello Lander's "rectilinear decision boundaries"); kNN's boundary follows the points and gets ragged where the classes overlap; the linear SVM can only draw one straight line. On the penguins all four agree, so the method matters most where the classes overlap. These are fit on every point, with no test set, so they say nothing about how well each would do on new data.
 :::
 
 ---
@@ -1617,107 +1908,22 @@ model.predict(X_test)            # predict classes for new ones
 
 . . .
 
-- Where do `X_train` and `X_test` come from?
-
-
-# Training, Validation, and Test Sets {.section-header}
+- `X_train` and `y_train` are the training set; `X_test` is the test set, scored once at the end.
 
 ---
 
-## Back to Overfitting
+## Group Project Check-In {.split}
 
-::: {.caption}
-Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1.
+::: {.split-content .golden-columns}
+
+::: {}
+With your group:
+
+- Write down two ideas for using a regression model and/or a classifier in your project.
 :::
 
-::: {.incremental}
-- Day 1, Model C: a curve through nearly every point, and "new observations are not well-predicted."
-- Same for classifiers
-- $h$ overfits if $\text{error}_{\text{true}}(h) > \text{error}_{\text{train}}(h)$.
-- Problem: "we don't know $\text{error}_{\text{true}}(h)$!"
-- Standard approach: set aside a testing set from the available data, and don't look at them during training! (pretend we have not seen them).
-:::
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
----
-
-## Parameters vs. Hyperparameters
-
-
-
-::: {.incremental}
-- **Parameters** are learned from the training data.
-    - Regression: the $\theta$s. Decision tree: "the nodes and branches."
-- A **hyperparameter** is a "parameter that controls other parameters of the model."
-    - Max tree depth, $k$ in $k$NN, $C$ in an SVM, the polynomial degree of Day 1's Model C.
-:::
-
----
-
-## Three Sets
-
-
-<div style="display:flex; gap:4px; margin:0.4em 0 0.8em; font-weight:600; color:#fff; text-align:center;">
-<div style="flex:70; background:#555; padding:0.5em 0; border-radius:4px;">Training 70%</div>
-<div style="flex:10; background:#f9461c; padding:0.5em 0; border-radius:4px;">Val.</div>
-<div style="flex:20; background:#222; padding:0.5em 0; border-radius:4px;">Test 20%</div>
-</div>
-
-::: {.incremental}
-- Training set: Used to learn the parameters of the ML model
-- Validation set (tuning/development/held-out data): can use to learn hyperparameter(s)
-- Test set: Used to evaluate how well we're doing on new unseen examples.
-:::
-
----
-
-
-
-
-
-## How to Split
-
-::: {.incremental}
-- How? Randomly, Temporally, Geographically... Depends on application (often random).
-- What size? "Typically between 75%-25% and 90%-10%."
-    - "Larger training set → more complex models"
-    - "Larger test set → better estimate of generalization error"
-- Which would you use for daily CTA ridership? For Cook County home sales?
-:::
-
-
----
-
-## Cross-Validation
-
-
-Cross validation simulates multiple train test-splits on the training data.
-
-<div style="display:grid; grid-template-columns: auto repeat(5, 1fr); gap:4px; max-width:720px; margin:0.4em 0; font-size:0.7em; font-weight:600; text-align:center;">
-<div style="text-align:right; padding-right:0.4em;">Split 1</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
-<div style="text-align:right; padding-right:0.4em;">Split 2</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
-<div style="text-align:right; padding-right:0.4em;">Split 3</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div>
-<div style="text-align:right; padding-right:0.4em;">Split 4</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div><div style="background:#555; color:#fff;">T</div>
-<div style="text-align:right; padding-right:0.4em;">Split 5</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#555; color:#fff;">T</div><div style="background:#f9461c; color:#fff;">V</div>
-</div>
-
-::: {.incremental}
-- 5-fold: cut the training data into 5 folds; each fold takes one turn as the validation set (V) while the rest train (T).
-- Pick the hyperparameter setting with the best average validation error across folds.
-- "You can only use the test dataset once after deciding on the model."
-:::
-
----
-
-## The Full Workflow
-
-
-::: {.incremental}
-1. "Split your data into training and test sets (e.g., 80%-20%)"
-2. "Use only the training data when designing, training, and tuning the model"
-    - use cross-validation to choose hyperparameters; "Do not look at the test data"
-3. "Commit to your final model and train once more using only the training data (including validation)."
-4. "Test the final model using the test data."
-5. "Train on all available data and ship it!"
 :::
 
 ---
@@ -1822,3 +2028,5 @@ Source: Valerie C. Bradley, Shiro Kuriwaki, Michael Isakov, Dino Sejdinovic, Xia
 17. Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)*, v0.99, ch. 1 ("Decision Trees").
 18. scikit-learn developers, [API reference](https://scikit-learn.org/stable/api/index.html), for the classifier class names on the "In SciKit, We all Fam" slide.
 19. Classification examples (Day 2), via the repo's [`datasets/classification-examples`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/classification-examples): U.S. Department of Education, [College Scorecard](https://collegescorecard.ed.gov/data/) (June 2026 release); Mark Hopkins, Erik Reeber, George Forman, and Jaap Suermondt, [Spambase](https://doi.org/10.24432/C53G6X), UCI Machine Learning Repository (1999), CC BY 4.0; Allison Horst, Alison Hill, and Kristen Gorman, [palmerpenguins](https://doi.org/10.5281/zenodo.3960218) (2020), CC0, with data from Kristen B. Gorman, Tony D. Williams, and William R. Fraser, [*PLoS ONE*](https://doi.org/10.1371/journal.pone.0090081) 9(3): e90081 (2014); William Wolberg, Olvi Mangasarian, Nick Street, and W. Street, [Breast Cancer Wisconsin (Diagnostic)](https://doi.org/10.24432/C5DW2B), UCI Machine Learning Repository (1993), CC BY 4.0; U.S. Census Bureau, [TIGERweb](https://tigerweb.geo.census.gov/) 2020 census tracts.
+20. Penguin photos (Day 2): Godot13, Jason Auch, Gregory "Slobirdr" Smith, Gilad Rom, and Liam Quinn, via Wikimedia Commons (CC BY-SA 4.0, CC BY-SA 2.0, CC BY 2.0); cropped. Per-photo links and licenses in the repo's [`assets/penguins/SOURCES.md`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/penguins/SOURCES.md).
+21. Warren LeMay, ["Chicago, Model Train Diorama, Museum of Science and Industry"](https://commons.wikimedia.org/wiki/File:Chicago,_Model_Train_Diorama,_Museum_of_Science_and_Industry,_Jackson_Park,_Lake_Shore_Drive_and_57th_Street,_Hyde_Park,_Chicago,_IL_(54211856727).jpg) (February 17, 2024), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0); cropped to a golden rectangle.

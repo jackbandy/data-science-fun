@@ -1,0 +1,106 @@
+<script src="../assets/penguins/parade/manifest.js"></script>
+<script>
+// Experimental penguin parade (week8.qmd, #experimental-penguin-title-slide only). While the footer button plays this slide's track, a random cut-out penguin from assets/penguins/parade/ crosses right to left on either the footer or the slide's orange rule. Over ten minutes of play they arrive more often (every 6 s down to every 2 s) and grow from 50-100 px to 1/4-1/2 of the screen height.
+(() => {
+  const SLIDE_CLASS = "experimental-penguin-title-slide";
+  const BASE = "../assets/penguins/parade/";
+  const FIRST_GAP_MS = 6000;
+  const LAST_GAP_MS = 2000;
+  const GROW_S = 600;
+
+  let front = null;
+  let back = null;
+  let timer = null;
+  let playedMs = 0;
+  let lastTick = 0;
+
+  function active() {
+    const slide = window.Reveal && Reveal.getCurrentSlide();
+    const button = document.querySelector(".reveal .footer .radio-toggle");
+    return !!(slide && slide.classList.contains(SLIDE_CLASS) && button && button.classList.contains("radio-playing") && slide.dataset.radioLabel === button.querySelector(".radio-toggle-label").textContent);
+  }
+
+  function layer(z) {
+    const el = document.createElement("div");
+    el.className = "penguin-parade";
+    el.style.cssText = "position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:" + z;
+    document.querySelector(".reveal").appendChild(el);
+    return el;
+  }
+
+  function spawn() {
+    const clips = window.PENGUIN_PARADE.clips;
+    const clip = clips[Math.floor(Math.random() * clips.length)];
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    const scale = Reveal.getScale();
+    const p = progress();
+    const lo = 50 * scale + p * (H / 4 - 50 * scale);
+    const hi = 100 * scale + p * (H / 2 - 100 * scale);
+    const h = lo + Math.random() * (hi - lo);
+    const w = h * clip.width / clip.height;
+
+    const footer = document.querySelector(".reveal .footer").getBoundingClientRect();
+    const rule = Reveal.getCurrentSlide().getBoundingClientRect();
+    const img = document.createElement("img");
+    img.src = BASE + clip.src;
+    img.alt = "";
+    img.style.cssText = "position:absolute;left:0;height:" + h + "px;width:" + w + "px;filter:drop-shadow(0 0 3px rgba(0,0,0,0.35));will-change:transform";
+    if (clip.bust) {
+      // Busts are cut off at the bottom, so they rise from behind the footer instead of standing on a line.
+      img.style.bottom = "0";
+      back.appendChild(img);
+    } else {
+      // Put the clip's measured foot row exactly on the footer's top edge or the top of the orange rule.
+      const ground = Math.random() < 0.5 ? footer.top : rule.top;
+      img.style.top = ground - h * clip.foot + "px";
+      front.appendChild(img);
+    }
+
+    // Strutting clips walk at their own pace so the feet don't slide; the rest drift slowly.
+    const speed = clip.walk ? clip.walk * h : (40 * scale + 0.25 * h) * (0.85 + Math.random() * 0.3);
+    const anim = img.animate([{ transform: "translateX(" + W + "px)" }, { transform: "translateX(" + -w + "px)" }], { duration: (W + w) / speed * 1000, easing: "linear" });
+    anim.onfinish = () => img.remove();
+  }
+
+  function progress() {
+    return Math.min(playedMs / 1000 / GROW_S, 1);
+  }
+
+  function schedule() {
+    spawn();
+    timer = window.setTimeout(schedule, FIRST_GAP_MS + progress() * (LAST_GAP_MS - FIRST_GAP_MS));
+  }
+
+  function tick() {
+    const now = performance.now();
+    const on = active();
+    if (on && lastTick) playedMs += now - lastTick;
+    lastTick = on ? now : 0;
+    if (on && !timer) {
+      schedule();
+    } else if (!on && timer) {
+      window.clearTimeout(timer);
+      timer = null;
+    }
+  }
+
+  function clearOffSlide() {
+    const slide = Reveal.getCurrentSlide();
+    if (slide && slide.classList.contains(SLIDE_CLASS)) return;
+    front.replaceChildren();
+    back.replaceChildren();
+  }
+
+  function boot() {
+    if (!window.Reveal || !window.PENGUIN_PARADE || !document.querySelector(".reveal .footer")) { window.setTimeout(boot, 100); return; }
+    if (front) return;
+    back = layer(19);
+    front = layer(25);
+    Reveal.on("slidechanged", clearOffSlide);
+    window.setInterval(tick, 200);
+  }
+
+  document.addEventListener("DOMContentLoaded", boot);
+})();
+</script>

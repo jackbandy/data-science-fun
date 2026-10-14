@@ -548,6 +548,172 @@ def cls_universities_boundary():
     return fig
 
 
+# Penguin walk-through of training, validation, and test sets: 70/10/20,
+# stratified by species so each set keeps the Adélie-to-Gentoo ratio.
+PENGUIN_KS = (1, 15, 191)
+PENGUIN_K = 15
+
+
+def penguin_split() -> dict[str, dict]:
+    if "penguin-split" not in _cache:
+        from sklearn.model_selection import train_test_split
+        ex = cls_example("penguins")
+        X_rest, X_test, y_rest, y_test = train_test_split(ex["X"], ex["y"], test_size=0.2, random_state=418, stratify=ex["y"])
+        X_train, X_val, y_train, y_val = train_test_split(X_rest, y_rest, test_size=0.125, random_state=418, stratify=y_rest)
+        _cache["penguin-split"] = {name: {**ex, "X": X, "y": y} for name, X, y in [
+            ("train", X_train, y_train), ("val", X_val, y_val), ("test", X_test, y_test)]}
+    return _cache["penguin-split"]
+
+
+def _knn(k):
+    from sklearn.neighbors import KNeighborsClassifier
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
+    return make_pipeline(StandardScaler(), KNeighborsClassifier(n_neighbors=k))
+
+
+def _hidden_points(ax, ex, size=22):
+    """Held-out penguins whose species the model is not shown."""
+    ax.scatter(*ex["X"].T, s=size, marker="o", facecolors="none", edgecolors=STEEL, linewidths=1, zorder=3)
+
+
+def _same_limits(axes):
+    X = cls_example("penguins")["X"]
+    pad = 0.04 * (X.max(axis=0) - X.min(axis=0))
+    for ax in axes:
+        ax.set(xlim=(X[:, 0].min() - pad[0], X[:, 0].max() + pad[0]), ylim=(X[:, 1].min() - pad[1], X[:, 1].max() + pad[1]))
+
+
+@figure("cls-penguins-split")
+def cls_penguins_split():
+    sets = penguin_split()
+    fig, axes = new_fig(width=1200, height=420, ncols=3, sharex=True, sharey=True)
+    titles = {"train": "Training set", "val": "Validation set", "test": "Test set"}
+    for i, (ax, (name, ex)) in enumerate(zip(axes, sets.items())):
+        if name == "train":
+            _cls_points(ax, ex, size=14, legend=False)
+            ax.legend(loc="lower left", frameon=True, facecolor=PAPER, edgecolor=BORDER, fontsize=11, labelcolor=INK, markerscale=1.4)
+        else:
+            _hidden_points(ax, ex, size=18)
+        _cls_axes(ax, ex, labels=False)
+        ax.set_title(f"{titles[name]}: {len(ex['y'])} penguins", color=INK, fontsize=14, loc="left")
+        if i:
+            ax.tick_params(labelleft=False)
+    _same_limits(axes)
+    ex = sets["train"]
+    fig.supxlabel(ex["xlabel"], color=STEEL, fontsize=13)
+    fig.supylabel(ex["ylabel"], color=STEEL, fontsize=13)
+    fig.tight_layout()
+    return fig
+
+
+@figure("cls-penguins-validation")
+def cls_penguins_validation():
+    """kNN fit on the training set for three values of k, scored on the validation set."""
+    sets = penguin_split()
+    train, val = sets["train"], sets["val"]
+    fig, axes = new_fig(width=1200, height=420, ncols=3, sharex=True, sharey=True)
+    for i, (ax, k) in enumerate(zip(axes, PENGUIN_KS)):
+        model = _knn(k).fit(train["X"], train["y"])
+        correct = int((model.predict(val["X"]) == val["y"]).sum())
+        _cls_regions(ax, model, cls_example("penguins"))
+        _cls_points(ax, val, size=26, legend=False)
+        _cls_axes(ax, val, labels=False)
+        ax.set_title(f"k = {k}: {correct} of {len(val['y'])} correct", color=INK, fontsize=14, loc="left")
+        print(f"    k = {k}: {correct} of {len(val['y'])} validation penguins correct")
+        if i:
+            ax.tick_params(labelleft=False)
+    ex = train
+    fig.supxlabel(ex["xlabel"], color=STEEL, fontsize=13)
+    fig.supylabel(ex["ylabel"], color=STEEL, fontsize=13)
+    fig.tight_layout()
+    return fig
+
+
+@figure("cls-penguins-test")
+def cls_penguins_test():
+    """The chosen k refit on training + validation, then scored once on the test set."""
+    sets = penguin_split()
+    train, val, test = sets["train"], sets["val"], sets["test"]
+    model = _knn(PENGUIN_K).fit(np.vstack([train["X"], val["X"]]), np.concatenate([train["y"], val["y"]]))
+    wrong = model.predict(test["X"]) != test["y"]
+    fig, ax = new_fig(width=900)
+    _cls_regions(ax, model, cls_example("penguins"))
+    _cls_points(ax, test, size=30)
+    if wrong.any():
+        ax.scatter(*test["X"][wrong].T, s=260, facecolors="none", edgecolors=INK, linewidths=1.5, zorder=4)
+    _cls_axes(ax, test)
+    ax.set_title(f"k = {PENGUIN_K}: {int((~wrong).sum())} of {len(wrong)} test penguins correct", color=INK, fontsize=15, loc="left")
+    print(f"    test: {int((~wrong).sum())} of {len(wrong)} correct")
+    return fig
+
+
+# Two new penguins, one easy vote and one close vote, for the kNN intuition slide.
+KNN_QUERIES = ((45.0, 15.0), (45.0, 17.0))
+KNN_INTUITION_K = 5
+
+
+@figure("cls-penguins-knn-intuition")
+def cls_penguins_knn_intuition():
+    """Each new penguin's 5 nearest training penguins, measured on standardized features."""
+    from matplotlib.patches import Ellipse
+    train = penguin_split()["train"]
+    X, y = train["X"], train["y"]
+    sd = X.std(axis=0)
+    fig, ax = new_fig(width=760, height=760)
+    _cls_points(ax, train, size=46)
+    for i, q in enumerate(np.array(KNN_QUERIES), start=1):
+        dist = np.linalg.norm((X - q) / sd, axis=1)
+        near = np.argsort(dist)[:KNN_INTUITION_K]
+        for j in near:
+            ax.plot([q[0], X[j, 0]], [q[1], X[j, 1]], color=INK, linewidth=1.2, zorder=2)
+        r = dist[near].max() * 1.15
+        # A circle in standardized units, which the axes' aspect makes look round.
+        ax.add_patch(Ellipse(q, 2 * r * sd[0], 2 * r * sd[1], facecolor="none", edgecolor=INK, linewidth=1.2, linestyle=(0, (4, 3)), zorder=2))
+        ax.scatter(*q, s=170, marker="o", facecolor=PAPER, edgecolor=INK, linewidth=2, zorder=5)
+        ax.text(*q, str(i), color=INK, fontsize=11, ha="center", va="center", zorder=6)
+        gentoo = int(y[near].sum())
+        ax.annotate(f"{gentoo} of {KNN_INTUITION_K} Gentoo", q, xytext=(q[0] + r * sd[0] + 0.3, q[1]), color=INK, fontsize=14, va="center", bbox=dict(facecolor=PAPER, edgecolor="none", alpha=0.85, pad=2), zorder=6)
+        print(f"    penguin {i} {tuple(q)}: {gentoo} of {KNN_INTUITION_K} nearest are Gentoo")
+    _cls_axes(ax, train)
+    # Equal standardized units on both axes, so distance on the page is the distance kNN uses.
+    ax.set(xlim=(37, 53), ylim=(13.6, 19.4), aspect=sd[0] / sd[1])
+    return fig
+
+
+@figure("supervised-two-kinds")
+def supervised_two_kinds():
+    """Synthetic data: a line through numeric responses above, a boundary between two classes below."""
+    rng = np.random.default_rng(418)
+    fig, (top, bottom) = new_fig(width=480, height=640, nrows=2)
+
+    x = rng.uniform(0, 10, 30)
+    y = 2 + 0.8 * x + rng.normal(0, 1.2, x.size)
+    slope, intercept = np.polyfit(x, y, 1)
+    xs = np.array([0, 10])
+    top.plot(xs, intercept + slope * xs, color=ORANGE, linewidth=2.6, zorder=2)
+    top.scatter(x, y, s=34, color=INK, zorder=3, edgecolor=PAPER, linewidth=0.8)
+    top.set_title("Regression: predict a number", color=INK, fontsize=15, loc="left")
+    top.set(xlabel="Feature $x$", ylabel="Response $y$")
+
+    n = 30
+    yes = rng.normal([6.5, 3.5], 1.1, size=(n, 2))
+    no = rng.normal([3.5, 6.5], 1.1, size=(n, 2))
+    ex = dict(X=np.vstack([no, yes]), y=np.r_[np.zeros(n, bool), np.ones(n, bool)], yes="Class B", no="Class A")
+    _title, model = _cls_models()[3]
+    model.fit(ex["X"], ex["y"])
+    _cls_regions(bottom, model, ex)
+    _cls_points(bottom, ex, size=34, legend=False)
+    bottom.set_title("Classification: predict a class", color=INK, fontsize=15, loc="left")
+    bottom.set(xlabel="Feature $x_1$", ylabel="Feature $x_2$")
+
+    for ax in (top, bottom):
+        tidy(ax, grid=None)
+        ax.set(xticks=[], yticks=[])
+    fig.tight_layout(h_pad=1.6)
+    return fig
+
+
 # --------------------------------------------------------------------------
 
 def main(argv: list[str]) -> None:
