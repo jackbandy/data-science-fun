@@ -79,9 +79,6 @@ CS 418 · Week 8 · 🟠 Roosevelt 🟠
 <img src="../assets/lifecycle/ds-lifecycle-v3.svg" style="max-height: 380px;" alt="The data science lifecycle with the 'understand the world' stage highlighted: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
 
 
-::: {.notes}
-Review: weeks 1–3 asked questions and obtained data; weeks 4–6 were about understanding the data (EDA, visualization); week 7 started inference. Models are how we move from describing *this* data to saying something about the world it came from.
-:::
 
 ---
 
@@ -165,9 +162,6 @@ Sources: R. Quinlan, [Auto MPG](https://doi.org/10.24432/C5859H) [Dataset], UCI 
 
 :::
 
-::: {.notes}
-A: statistical. The model year does not burn fuel; it stands in for changes in engines and regulation, so the relationship comes from data. B: either. Fitting mpg to weight across cars is statistical, but physics also says mass matters (MacKay: energy goes into braking, and kinetic energy is ½mv²), so a mechanistic model would include it too. C: statistical. The day of the year is a stand-in for the season; you would fit a seasonal curve to past temperatures. D: mechanistic, built from the physics of sunlight. Good follow-up: which input actually matters? NASA: "Earth's tilted axis causes the seasons," and in the Northern Hemisphere "we are having winter when Earth is closest to the Sun." The change in distance "does not make much difference to our weather." A mechanistic model makes you say which inputs matter and why.
-:::
 
 
 # Loss Functions {.section-header}
@@ -530,9 +524,7 @@ print(f"r = {r:.3f}   slope = {theta_1:,.0f}   intercept = {theta_0:,.0f}")
 
 - How would you interpret the slope? The intercept?
 
-::: {.notes}
-Slope: each additional square foot is associated with roughly $426 more in sale price, on average. Intercept: the predicted price of a 0 sq ft home is negative, which is meaningless; the intercept is an extrapolation far outside the data. "Associated with": this is not a causal claim (Week 7).
-:::
+
 
 ---
 
@@ -1102,9 +1094,7 @@ Look back at the residual plot.
 - What could we change: a log transformation (Week 5), more predictors, a different model?
 :::
 
-::: {.notes}
-The fan is the Week 5 "cone shape" again, and the pattern OpenIntro (IMS §24.6) calls "the most common pattern observed when this condition fails: the variability of y is larger when x is larger." So equal variability fails. A log transform of price (Week 5 log-linearize slide) often stabilizes this. Independence is about the data design: sales in the same neighborhood share unmeasured factors.
-:::
+
 
 # Multiple Linear Regression {.section-header}
 
@@ -1138,9 +1128,7 @@ print(f"bedrooms only:   {theta[1]:+,.0f} per bedroom")
  + theme_minimal())
 ```
 
-::: {.notes}
-Alone, bedrooms stands in for size: bigger homes have more bedrooms, so the line climbs about $270k per bedroom.
-:::
+
 
 ---
 
@@ -1162,9 +1150,6 @@ Figure after Timbers, Campbell, Lee, Ostblom, and Heagy, ["Multivariable Linear 
 
 Why does the bedroom slope collapse once square footage is in the model?
 
-::: {.notes}
-One predictor fits a line; two fit a plane. This one climbs with square footage and barely tilts with bedrooms. Holding square footage fixed, an extra bedroom means the same space split into more rooms, so the slope drops from about +$270k to about −$17k. The sign is not trustworthy: drop homes over 4,000 sq ft and it turns slightly positive (about +$6k). That is the instability Lau, Gonzalez, and Nolan and Timbers et al. (§8.7.2, "Multicollinearity") warn about when predictors are correlated. Adding bedrooms barely improves the fit (RMSE about $392k either way). scikit-learn's LinearRegression gives the same thetas; DSFAI §8.6 runs this exact model (sqft + beds) on Sacramento homes. DSFAI recommends against 3D charts in general and uses one "only to illustrate what the regression plane looks like for learning purposes." Same here: with three or more predictors there is no picture, only the equation.
-:::
 
 ---
 
@@ -1307,13 +1292,12 @@ Source: Mine Çetinkaya-Rundel and Johanna Hardin, ["Inference for Linear Regres
 
 ::: {.dense}
 
-::: {.incremental}
 - **Regression**: predict a real value (e.g., ridership, home price).
 - **Classification**: predict a category.
     - Binary: a yes/no response (e.g., spam or not spam).
     - Multiclass: one of several classes (e.g., a region of the U.S.).
 - Both start from examples where we already know the answer (hence "supervised")
-:::
+
 :::
 
 <img class="figure" src="../assets/week8/supervised-two-kinds.svg" style="max-height: 480px;" alt="Two stacked panels of the same 30 synthetic students, with hours studied from 0 to 10 on the shared horizontal axis. Top, regression: exam scores rise with hours, an orange line of best fit predicts the score, and a dashed line marks a passing score of 70. Bottom, classification: the same students sorted into a Fail row of gray circles and a Pass row of orange triangles, split by a vertical boundary near 5 hours into a gray fail region and a light orange pass region; two students who passed fall just left of it and one who failed just right of it.">
@@ -1630,11 +1614,9 @@ Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfi
 <div style="flex:20; background:#222; padding:0.5em 0; border-radius:4px;">Test 20%</div>
 </div>
 
-::: {.incremental}
 - Training set: Used to learn the parameters of the ML model
 - Validation set (tuning/development/held-out data): can use to learn hyperparameter(s)
 - Test set: Used to evaluate how well we're doing on new unseen examples.
-:::
 
 ---
 
@@ -1645,11 +1627,9 @@ Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfi
 ::: {}
 A researcher measures a new penguin's bill: 45 mm long, 15 mm deep.
 
-::: {.incremental}
 - Can a model predict the species from the bill alone?
 - How would we know whether its answer is any good?
-- Use the three sets.
-:::
+- Use the three sets (train, test, validate)
 :::
 
 <img class="figure" src="../assets/week8/cls-penguins-scatter-plain.svg" alt="Scatter plot of 274 penguins, bill length against bill depth, with every point in the same gray and no species shown. Two clusters are visible.">
@@ -1658,9 +1638,9 @@ A researcher measures a new penguin's bill: 45 mm long, 15 mm deep.
 
 ---
 
-## Step 1: Split the Penguins {.image-frame-slide}
+## Splitting the Penguins {.image-frame-slide}
 
-The model sees the species of the training penguins only. The other two sets keep their labels hidden.
+The model sees the species of the training penguins only.
 
 <img src="../assets/week8/cls-penguins-split.svg" style="max-height: 400px;" alt="Three scatter plots of bill length against bill depth on the same axes. Training set, 191 penguins: Adélie as gray circles at short, deep bills and Gentoo as orange triangles at long, shallow bills. Validation set, 28 penguins, and test set, 55 penguins: hollow circles with no species shown, in the same two clusters.">
 
@@ -1724,14 +1704,12 @@ Data: the 191 training penguins from Step 1. Distances use standardized features
 
 
 
-::: {.incremental}
 - **Parameters** are learned from the training data.
     - Regression: the $\theta$s. Decision tree: "the nodes and branches."
 - A **hyperparameter** is a "parameter that controls other parameters of the model."
     - $k$ in $k$NN
     - also Max tree depth, $C$ in an SVM, polynomial degree of Day 1's Model C.
 - The validation set picks the hyperparameter; the training set fits the parameters.
-:::
 
 ---
 
@@ -1745,9 +1723,6 @@ Three values of the hyperparameter $k$, each fit on the 191 training penguins an
 $k$-nearest neighbors (standardized features): a new penguin gets the species most common among the $k$ closest training penguins. More on this classifier after this section.
 :::
 
-::: {.notes}
-With k = 191 every training penguin votes, and there are more Adélie (106) than Gentoo (85), so it predicts Adélie everywhere: underfitting. k = 1 and k = 15 tie on validation; we keep 15, the smoother boundary, which depends less on any single odd neighbor.
-:::
 
 ---
 
@@ -1763,15 +1738,13 @@ For these two species, yes: the bill alone is enough.
 
 ---
 
-## How to Split
+## How to Split Train/Test/Validation?
 
-::: {.incremental}
 - How? Randomly, Temporally, Geographically... Depends on application (often random).
 - What size? "Typically between 75%-25% and 90%-10%."
     - "Larger training set → more complex models"
     - "Larger test set → better estimate of generalization error"
 - Which would you use for daily CTA ridership? For Cook County home sales?
-:::
 
 
 ---
@@ -1875,9 +1848,7 @@ TODO
 Each panel is a scikit-learn classifier fit to all the points shown: a decision tree of depth 3, Gaussian naive Bayes, $k$-nearest neighbors with $k = 15$, and a linear SVM (the last two on standardized features). Data are the same as previous slides. Made with help from LLMs.
 :::
 
-::: {.notes}
-Shapes to point out: the tree's boundaries are made of horizontal and vertical steps (Bello Lander's "rectilinear decision boundaries"); kNN's boundary follows the points and gets ragged where the classes overlap; the linear SVM can only draw one straight line. On the penguins all four agree, so the method matters most where the classes overlap. These are fit on every point, with no test set, so they say nothing about how well each would do on new data.
-:::
+
 
 ---
 
@@ -1985,11 +1956,9 @@ Source: Scott Fortmann-Roe, ["Understanding the Bias-Variance Tradeoff"](http://
 
 $$\text{Err}(x) = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}$$
 
-::: {.incremental}
 - Irreducible error: "the noise term in the true relationship that cannot fundamentally be reduced by any model."
 - "Underfitting with too simple a model can lead to high model bias ..., and overfitting with too complex a model can result in high model variance." (Lau, Gonzalez, and Nolan)
 - common tradeoff between minimizing the bias and minimizing the variance
-:::
 
 
 # Appendix: The Big Data Paradox {.section-header}
