@@ -41,6 +41,12 @@ if ! command -v "$QUARTO_CMD" >/dev/null 2>&1; then
   exit 1
 fi
 
+# The pre-commit hook keeps index.html in step with the decks, but git never enables repo hooks on clone, so turn it on here unless some hooks path is already set.
+if [[ -z "$(git -C "$SLIDES_DIR" config --get core.hooksPath 2>/dev/null)" ]] && git -C "$SLIDES_DIR" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$SLIDES_DIR" config core.hooksPath .githooks
+  echo "[quarto] Enabled the repo's git hooks (core.hooksPath=.githooks); see CONTRIBUTING.md."
+fi
+
 # Set up Python environment via uv if available.
 # SKIP_VENV=true uses the already-active Python environment instead (CI installs
 # dependencies system-wide, so building a second env here would be redundant).

@@ -4,7 +4,7 @@ NOTICE: this file was drafted by an LLM coding system and has not yet been revie
 
 Still images and dance GIFs of ten fictional penguin characters, gathered for the Week 8 "penguin parade" slides. Downloaded October 14, 2026. Files named `still-1`/`still-2` and `dance-1`/`dance-2` inside one folder per character. Verification performed on every file: type check with `file` (image data, never HTML), dimensions with `sips`, frame inspection on the GIFs.
 
-Scope note: every character here is a third-party copyrighted character (film/TV studio, record label, or individual artist). The sources are GIF platforms (GIPHY, Tenor, GIFDB), fan wikis, press-image galleries, and screencap sites, and none of the film/TV material carries a free license. These are for use in the course deck, treated like fair-use teaching images; keep the attributions below if the deck gains a credits slide. Two files are the exception: the two Tux stills are CC0.
+Scope note: every character here is a third-party copyrighted character (film/TV studio, record label, or individual artist). The sources are GIF platforms (GIPHY, Tenor, GIFDB), fan wikis, press-image galleries, and screencap sites, and none of the film/TV material carries a free license. These are for use in the course deck, treated like fair-use teaching images; keep the attributions below if the deck gains a credits slide. The exceptions: the two Tux stills are CC0, and the Arctic Antics clips are from a 1930 film in the US public domain.
 
 ## Mumble (Happy Feet)
 
@@ -41,6 +41,9 @@ Skipper, Kowalski, Rico, and Private; stills are press images from Penguins of M
 - **dance-1.gif** (480 × 270, 14-frame loop)
    - What's shown: all four penguins in a synchronized side-step line dance, no watermark
    - Source: [GIPHY page](https://giphy.com/gifs/dance-penguins-danse-Er22KKA7vzZJK), [direct GIF](https://media.giphy.com/media/Er22KKA7vzZJK/giphy.gif); posted by "AIDES" (French HIV/AIDS NGO), sourced from a YouTube video
+- **dance-1-hd.mp4** (1,080 × 608, 24 frames at 25 fps, downloaded October 14, 2026)
+   - What's shown: the same line dance as dance-1.gif, from GIPHY's HD rendition of the same post: over twice the resolution and 24 frames instead of 14
+   - Source: [direct MP4](https://media.giphy.com/media/Er22KKA7vzZJK/giphy-hd.mp4); the post's `source.gif` rendition is a "This content is not available" placeholder
 - **dance-2.gif** (498 × 286, 41-frame loop)
    - What's shown: two of the penguins doing the 90s-style wave dance, "MOVE IT MOVE IT!!!" caption in the frames
    - Source: [Tenor page](https://tenor.com/view/i-like-to-move-it-move-it-penguins-of-madagascar-dance-gif-14454345477479482941), [direct GIF](https://media1.tenor.com/m/yJgmoR3wRj0AAAAC/i-like-to-move-it-move-it-penguins-of-madagascar.gif)
@@ -88,6 +91,9 @@ The one freely licensed set. Still images CC0. Customary attribution for the des
 - **dance-2.gif** (260 × 312, 12 frames)
    - What's shown: clean 3D Tux (SuperTux-style model) doing an arms-out jumping dance on white, loops
    - Source: [Tenor search page](https://tenor.com/search/linux-penguin-gifs), [direct GIF](https://media1.tenor.com/m/Ry_PKIggWaAAAAAd/penguin-jumping.gif); license unstated, creator not identified
+- **dance-2-smooth.png** (260 × 312, animated PNG, 60 frames at 30 ms, made October 14, 2026)
+   - What's shown: dance-2.gif with four in-between frames after each of its 12 frames (wrapping from the last back to the first), so the loop keeps its 1.8 s timing at five times the frame rate
+   - Made with: [rife-ncnn-vulkan](https://github.com/nihui/rife-ncnn-vulkan) release 20221029, model `rife-v4.6`, run once per frame pair as `rife-ncnn-vulkan -m rife-v4.6 -0 A.png -1 B.png -s 0.2` (and 0.4, 0.6, 0.8), then saved losslessly with Pillow
 
 ## Pingu
 
@@ -184,6 +190,10 @@ The squeaky-toy penguin from Pixar's Toy Story 2 (1999). Stills are Blu-ray capt
 - **dance-2.gif** (480 × 270, ~1.4 s loop)
    - What's shown: the same song-and-dance loop, slightly different cut, small "Disney+" watermark lower right
    - Source: [GIPHY page](https://giphy.com/gifs/disneyplus-disney-penguin-penguins-emA3S1IWETT6p8fvGo) on the official Disney+ channel, [direct GIF](https://media.giphy.com/media/emA3S1IWETT6p8fvGo/giphy.gif)
+- **dance-3.gif** (500 × 280, 8 frames, downloaded October 14, 2026)
+   - What's shown: full-body Wheezy in Andy's room twirling the toy microphone beside Mr. Mike, a different scene from dance-1/dance-2
+   - Source: [GIPHY page](https://giphy.com/gifs/swag-penguin-toy-story-3-vuPffhfwHawZq) (titled "Toy Story 3 Swag", though the scene is from Toy Story 2), [direct GIF](https://media.giphy.com/media/vuPffhfwHawZq/giphy.gif)
+   - Caveat: not used in the parade; Apple Vision lifts Wheezy and Mr. Mike as one subject in half the frames. The other Wheezy GIF on GIPHY's Disney channel ([TdKp51b3bXekU](https://giphy.com/gifs/disney-pixar-toy-story-2-wheezy-TdKp51b3bXekU)) is byte-identical to dance-1.gif
 
 ## Pablo (The Backyardigans)
 
@@ -204,3 +214,19 @@ Official character art for the Nickelodeon series (2004-2013), hosted on the Bac
    - What's shown: Pablo and Uniqua doing a hip-hop dance routine in the backyard, series theme-song footage
    - Source: [GIFDB page](https://gifdb.com/gif/backyardigans-uniqua-pablo-hip-hop-dance-hbwhwt5eso3c1r39.html), [direct GIF](https://gifdb.com/images/high/backyardigans-uniqua-pablo-hip-hop-dance-hbwhwt5eso3c1r39.gif)
    - Re-encoded: the 690 × 500 source (10.4 MB) was downscaled to 480 px wide with ffmpeg to fit the 8 MB cap
+
+## Arctic Antics (1930)
+
+Silly Symphonies short, Walt Disney Productions, distributed by Columbia Pictures, directed by Burt Gillett (Ub Iwerks credited). Released June 26, 1930 per [Wikipedia](https://en.wikipedia.org/wiki/Arctic_Antics), citing Merritt and Kaufman, *Walt Disney's Silly Symphonies* (2016), pp. 76–77; a 1930 publication entered the US public domain on January 1, 2026. The penguins are generic, unnamed characters. The film's seal dances (the four-dancer chorus line and the solo dancer in the ring of seals) look like penguins in small copies but are seals, so they are left out.
+
+All three clips are cut from the Internet Archive item [arctic-antics-restoredtitles](https://archive.org/details/arctic-antics-restoredtitles) ([direct MP4](https://archive.org/download/arctic-antics-restoredtitles/ARCTIC-ANTICS-RESTOREDTITLES.ia.mp4), 1,326 × 1,080, 30 fps), downloaded October 14, 2026. The uploader recreated the title cards; none of the clips include them. Each clip went through ffmpeg's `decimate` filter to drop the 3:2 pulldown duplicate in every five frames, giving back the film's 24 fps, and was re-encoded as H.264 with no audio (CRF 19 for dance-1 and dance-2 to stay under 8 MB, CRF 16 for the smaller cropped dance-3).
+
+- **dance-1.mp4** (1,326 × 1,080, 192 frames at 24 fps)
+   - What's shown: a round-bellied penguin waddling and turning in place on the ice
+   - Cut: 5:09.75–5:17.70, stopping before the penguin squawks at the camera
+- **dance-2.mp4** (1,326 × 1,080, 219 frames at 24 fps)
+   - What's shown: the same round-bellied penguin doing a side-step dance while two small penguins watch
+   - Cut: 6:25.90–6:35.00
+- **dance-3.mp4** (1,026 × 550, 103 frames at 24 fps)
+   - What's shown: six penguins marching in step in a line, close shot
+   - Cut: 6:38.75–6:43.00, cropped to `1026:550:300:450` (ffmpeg `crop` w:h:x:y), which leaves out the leading penguin (Vision drops him in some frames) and the empty sky and ice

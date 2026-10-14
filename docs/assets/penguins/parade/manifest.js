@@ -3,6 +3,30 @@ window.PENGUIN_PARADE = {
   "bpm": 125,
   "clips": [
     {
+      "src": "arctic-antics-dance-1.gif",
+      "width": 279,
+      "height": 400,
+      "beats": 4,
+      "bust": false,
+      "foot": 0.9163
+    },
+    {
+      "src": "arctic-antics-dance-2.gif",
+      "width": 462,
+      "height": 400,
+      "beats": 8,
+      "bust": false,
+      "foot": 0.9275
+    },
+    {
+      "src": "arctic-antics-dance-3.gif",
+      "width": 968,
+      "height": 307,
+      "beats": 7,
+      "bust": false,
+      "foot": 0.9674
+    },
+    {
       "src": "chilly-willy-dance-1.gif",
       "width": 148,
       "height": 279,
@@ -37,11 +61,11 @@ window.PENGUIN_PARADE = {
     },
     {
       "src": "madagascar-dance-1.gif",
-      "width": 449,
-      "height": 241,
-      "beats": 3,
+      "width": 840,
+      "height": 400,
+      "beats": 1,
       "bust": false,
-      "foot": 0.9834
+      "foot": 0.99
     },
     {
       "src": "madagascar-dance-2.gif",
@@ -125,9 +149,9 @@ window.PENGUIN_PARADE = {
     },
     {
       "src": "wheezy-dance-1.gif",
-      "width": 700,
-      "height": 394,
-      "beats": 3,
+      "width": 484,
+      "height": 392,
+      "beats": 1,
       "bust": true,
       "foot": 1.0
     }

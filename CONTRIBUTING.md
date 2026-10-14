@@ -21,10 +21,7 @@ If you are working from a clone, turn on the repo's git hooks once:
 git config core.hooksPath .githooks
 ```
 
-That installs a pre-commit hook which re-runs the slide index generator
-whenever you commit a change to a deck, so `docs/slides/index.html` cannot
-fall out of step with it. Editing through GitHub's web editor instead? Nothing
-to do -- CI does the same sync on your pull request.
+That installs a pre-commit hook which re-runs the slide index generator whenever you commit a change to a deck, so `docs/slides/index.html` cannot fall out of step with it. `docs/slides/shared/build_all_quarto.sh` also runs this command for you the first time you render, if no hooks path is set yet. Editing through GitHub's web editor instead? Nothing to do -- CI does the same sync on your pull request.
 
 Key resources as you edit:
 

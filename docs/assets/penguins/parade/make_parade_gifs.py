@@ -47,22 +47,32 @@ class Clip:
     pick: str = "all"
     # Keep only the largest connected blob (drops props and background characters that Vision lifts too).
     largest: bool = False
+    # Shave thin parts off the mask before picking blobs (see clean), in source pixels.
+    trim: int = 0
     # The clip walks across the frame: cancel the drift so it struts in place, and report its pace.
     walk: bool = False
     # Loop the whole clip even when a shorter loop has a cleaner seam (keeps one-off moments like a blink).
     whole: bool = False
+    # Drop frames before this one (an opening that Vision can't separate from the background).
+    first: int = 0
     # Drop frames from here on (an uploader's crossfade back to the start).
     last: int | None = None
+    # Loop length in beats when the detected tempo picks a worse one.
+    beats: int | None = None
     dither: bool = True
 
 
-# Skipped on purpose: chilly-willy/dance-2 (axe and dog, no dance), pingu/dance-2 (Vision lifts the toy box with Pingu), pablo/dance-2 (cuts to a close-up; the wide shot lasts under a second), and the duplicate cuts mumble/dance-1, madagascar/dance-2 (captioned), madagascar/dance-3 (220 px copy), gunter/dance-1 and wheezy/dance-2 (smaller framings of the same scenes).
+# Skipped on purpose: chilly-willy/dance-2 (axe and dog, no dance), pingu/dance-2 (Vision lifts the toy box with Pingu), pablo/dance-2 (cuts to a close-up; the wide shot lasts under a second), wheezy/dance-3 (Vision merges Wheezy with Mr. Mike in half the frames), and the duplicate cuts mumble/dance-1, madagascar/dance-1 (480 px copy of dance-1-hd), madagascar/dance-2 (captioned), madagascar/dance-3 (220 px copy), tux/dance-2 (the 12 frames dance-2-smooth interpolates), gunter/dance-1 and wheezy/dance-2 (smaller framings of the same scenes).
 CLIPS = {
+    "arctic-antics-dance-1": Clip("arctic-antics/dance-1.mp4", dither=False),
+    "arctic-antics-dance-2": Clip("arctic-antics/dance-2.mp4", largest=True, dither=False),
+    "arctic-antics-dance-3": Clip("arctic-antics/dance-3.mp4", dither=False),
     "chilly-willy-dance-1": Clip("chilly-willy/dance-1.gif", whole=True, dither=False),
     "feathers-mcgraw-dance-1": Clip("feathers-mcgraw/dance-1.gif", dither=False),
     "feathers-mcgraw-dance-2": Clip("feathers-mcgraw/dance-2.gif", walk=True, dither=False),
     "gunter-dance-2": Clip("gunter/dance-2.gif", dither=False),
-    "madagascar-dance-1": Clip("madagascar/dance-1.gif"),
+    # The side-step only; from frame 16 the four turn to face the camera and never turn back.
+    "madagascar-dance-1": Clip("madagascar/dance-1-hd.mp4", last=16),
     "madagascar-dance-2": Clip("madagascar/dance-2-nocaption.gif", last=41),
     "madagascar-dance-4": Clip("madagascar/dance-4.gif"),
     "madagascar-dance-5": Clip("madagascar/dance-5.gif"),
@@ -72,8 +82,10 @@ CLIPS = {
     "pororo-dance-1": Clip("pororo/dance-1.gif"),
     "pororo-dance-2": Clip("pororo/dance-2.gif"),
     "tux-dance-1": Clip("tux/dance-1.gif"),
-    "tux-dance-2": Clip("tux/dance-2.gif"),
-    "wheezy-dance-1": Clip("wheezy/dance-1.gif", largest=True),
+    # One jump per bar, the speed the 12-frame original played at.
+    "tux-dance-2": Clip("tux/dance-2-smooth.png", beats=4),
+    # Vision fuses the Barbies behind him into Wheezy's mask: whole legs (plus the swinging mic and the stage block) before frame 8, slivers that trim shaves off in 8-11, and from 12 a leg too wide to trim.
+    "wheezy-dance-1": Clip("wheezy/dance-1.gif", largest=True, trim=20, first=8, last=12),
 }
 
 
@@ -86,6 +98,8 @@ def vision_tool() -> Path:
 
 
 def load_frames(path: Path) -> tuple[list[np.ndarray], list[int]]:
+    if path.suffix == ".mp4":
+        return load_video(path)
     im = Image.open(path)
     frames, delays = [], []
     for k in range(im.n_frames):
@@ -95,6 +109,16 @@ def load_frames(path: Path) -> tuple[list[np.ndarray], list[int]]:
         cs = round(im.info.get("duration", 100) / 10)
         delays.append(cs if cs >= 2 else 10)
     return frames, delays
+
+
+def load_video(path: Path) -> tuple[list[np.ndarray], list[int]]:
+    """Every frame of a video via ffmpeg (GIF hosts often serve their sharpest, highest-frame-rate rendition as MP4)."""
+    probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height,r_frame_rate", "-of", "csv=p=0", str(path)], check=True, capture_output=True, text=True).stdout.split(",")
+    w, h = int(probe[0]), int(probe[1])
+    num, den = map(int, probe[2].split("/"))
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], check=True, capture_output=True).stdout
+    frames = list(np.frombuffer(raw, np.uint8).reshape(-1, h, w, 3))
+    return frames, [round(100 * den / num)] * len(frames)
 
 
 def vision_masks(frames: list[np.ndarray], pick: str) -> list[np.ndarray]:
@@ -127,9 +151,13 @@ def vision_masks(frames: list[np.ndarray], pick: str) -> list[np.ndarray]:
     return masks
 
 
-def clean(mask: np.ndarray, largest: bool) -> np.ndarray:
+def clean(mask: np.ndarray, largest: bool, trim: int = 0) -> np.ndarray:
     """Drop specks (and with largest=True, every blob but the biggest) from a soft mask."""
-    labels, n = ndimage.label(mask > 0.5)
+    on = mask > 0.5
+    if trim:
+        # Shaves off anything that sticks out of the outline less than 2 * trim px wide, like a background character's leg fused to the subject.
+        on = ndimage.binary_opening(on, structure=ndimage.generate_binary_structure(2, 2), iterations=trim)
+    labels, n = ndimage.label(on)
     if n == 0:
         return mask
     areas = ndimage.sum(np.ones_like(mask), labels, range(1, n + 1))
@@ -312,8 +340,8 @@ def write_gif(path: Path, rgbs: list[np.ndarray], alphas: list[np.ndarray], dela
 
 def make(name: str, clip: Clip) -> dict:
     frames, delays = load_frames(CHARACTERS / clip.src)
-    frames, delays = frames[:clip.last], delays[:clip.last]
-    masks = [clean(m, clip.largest) for m in vision_masks(frames, clip.pick)]
+    frames, delays = frames[clip.first:clip.last], delays[clip.first:clip.last]
+    masks = [clean(m, clip.largest, clip.trim) for m in vision_masks(frames, clip.pick)]
     usable = [bool((m > 0.5).sum() > 100) for m in masks]
     pace = None
     if clip.walk:
@@ -327,7 +355,7 @@ def make(name: str, clip: Clip) -> dict:
         order += list(range(j - 2, i, -1))
     seconds = sum(delays[f] for f in order) / 100
     beat, strength = dance_beat(D, delays, order)
-    beats = beats_for(seconds, beat, strength)
+    beats = clip.beats or beats_for(seconds, beat, strength)
 
     on = np.any([m > 0.5 for m in masks[i:j]], axis=0)
     rows, cols = np.flatnonzero(on.any(axis=1)), np.flatnonzero(on.any(axis=0))

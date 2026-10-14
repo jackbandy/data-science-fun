@@ -653,9 +653,11 @@ KNN_QUERIES = ((45.0, 15.0), (45.0, 17.0))
 KNN_INTUITION_K = 5
 
 
-@figure("cls-penguins-knn-intuition")
-def cls_penguins_knn_intuition():
-    """Each new penguin's 5 nearest training penguins, measured on standardized features."""
+def _knn_intuition(stage):
+    """Each new penguin's 5 nearest training penguins, measured on standardized features.
+
+    Stages build up one slide step at a time: 0 is the data alone; each new penguin then adds two steps, first its mark, then its neighbors and vote.
+    """
     from matplotlib.patches import Ellipse
     train = penguin_split()["train"]
     X, y = train["X"], train["y"]
@@ -663,6 +665,12 @@ def cls_penguins_knn_intuition():
     fig, ax = new_fig(width=760, height=760)
     _cls_points(ax, train, size=46)
     for i, q in enumerate(np.array(KNN_QUERIES), start=1):
+        if stage < 2 * i - 1:
+            break
+        if stage == 2 * i - 1:
+            ax.scatter(*q, s=170, marker="o", facecolor=PAPER, edgecolor=INK, linewidth=2, zorder=5)
+            ax.text(*q, str(i), color=INK, fontsize=11, ha="center", va="center", zorder=6)
+            continue
         dist = np.linalg.norm((X - q) / sd, axis=1)
         near = np.argsort(dist)[:KNN_INTUITION_K]
         for j in near:
@@ -681,35 +689,47 @@ def cls_penguins_knn_intuition():
     return fig
 
 
+# The slide steps through these in order; the unsuffixed name is the finished figure.
+for _stage, _name in enumerate(["cls-penguins-knn-intuition-data", "cls-penguins-knn-intuition-1", "cls-penguins-knn-intuition-1-vote", "cls-penguins-knn-intuition-2", "cls-penguins-knn-intuition"]):
+    figure(_name)(lambda stage=_stage: _knn_intuition(stage))
+
+
 @figure("supervised-two-kinds")
 def supervised_two_kinds():
-    """Synthetic data: a line through numeric responses above, a boundary between two classes below."""
+    """One synthetic dataset, two questions: predict each student's exam score (above) or whether they pass (below)."""
     rng = np.random.default_rng(418)
-    fig, (top, bottom) = new_fig(width=480, height=640, nrows=2)
+    fig, (top, bottom) = new_fig(width=480, height=640, nrows=2, sharex=True)
 
-    x = rng.uniform(0, 10, 30)
-    y = 2 + 0.8 * x + rng.normal(0, 1.2, x.size)
-    slope, intercept = np.polyfit(x, y, 1)
-    xs = np.array([0, 10])
+    hours = rng.uniform(0, 10, 30)
+    score = np.clip(45 + 5 * hours + rng.normal(0, 7, hours.size), 0, 100)
+    passed = score >= 70
+    xlim = (-0.4, 10.4)
+
+    slope, intercept = np.polyfit(hours, score, 1)
+    xs = np.array(xlim)
     top.plot(xs, intercept + slope * xs, color=ORANGE, linewidth=2.6, zorder=2)
-    top.scatter(x, y, s=34, color=INK, zorder=3, edgecolor=PAPER, linewidth=0.8)
-    top.set_title("Regression: predict a number", color=INK, fontsize=15, loc="left")
-    top.set(xlabel="Feature $x$", ylabel="Response $y$")
+    top.axhline(70, color=QUIET, linestyle="--", linewidth=1, zorder=1)
+    top.scatter(hours, score, s=34, color=INK, zorder=3, edgecolor=PAPER, linewidth=0.8)
+    top.set_title("Regression: predict the score", color=INK, fontsize=15, loc="left")
+    top.set(ylabel="Exam score", ylim=(30, 105), yticks=[40, 70, 100])
 
-    n = 30
-    yes = rng.normal([6.5, 3.5], 1.1, size=(n, 2))
-    no = rng.normal([3.5, 6.5], 1.1, size=(n, 2))
-    ex = dict(X=np.vstack([no, yes]), y=np.r_[np.zeros(n, bool), np.ones(n, bool)], yes="Class B", no="Class A")
+    # Same students, same input; the label is now pass/fail (score of 70 or more) instead of the score.
     _title, model = _cls_models()[3]
-    model.fit(ex["X"], ex["y"])
-    _cls_regions(bottom, model, ex)
-    _cls_points(bottom, ex, size=34, legend=False)
-    bottom.set_title("Classification: predict a class", color=INK, fontsize=15, loc="left")
-    bottom.set(xlabel="Feature $x_1$", ylabel="Feature $x_2$")
+    model.fit(hours[:, None], passed)
+    grid = np.linspace(*xlim, 600)
+    cut = grid[np.argmax(model.predict(grid[:, None]))]
+    bottom.axvspan(xlim[0], cut, color=NO_FILL, zorder=1)
+    bottom.axvspan(cut, xlim[1], color=YES_FILL, zorder=1)
+    bottom.axvline(cut, color=INK, linewidth=1.2, zorder=2)
+    row = passed + rng.uniform(-0.12, 0.12, hours.size)
+    bottom.scatter(hours[~passed], row[~passed], s=34, marker="o", color=MUTED, alpha=0.8, linewidths=0, zorder=3)
+    bottom.scatter(hours[passed], row[passed], s=41, marker="^", color=ORANGE, alpha=0.85, linewidths=0, zorder=3)
+    bottom.set_title("Classification: predict pass or fail", color=INK, fontsize=15, loc="left")
+    bottom.set(xlabel="Hours studied", ylim=(-0.5, 1.5), yticks=[0, 1], yticklabels=["Fail", "Pass"])
 
     for ax in (top, bottom):
         tidy(ax, grid=None)
-        ax.set(xticks=[], yticks=[])
+        ax.set(xlim=xlim, xticks=[0, 5, 10])
     fig.tight_layout(h_pad=1.6)
     return fig
 
