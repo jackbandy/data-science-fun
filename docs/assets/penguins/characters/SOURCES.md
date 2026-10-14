@@ -1,10 +1,10 @@
 # Sources — `assets/penguins/characters`
 
-NOTICE: this file was drafted by an LLM coding system and has not yet been reviewed.
+NOTICE: this file was initially drafted by an LLM coding system.
 
 Still images and dance GIFs of ten fictional penguin characters, gathered for the Week 8 "penguin parade" slides. Downloaded October 14, 2026. Files named `still-1`/`still-2` and `dance-1`/`dance-2` inside one folder per character. Verification performed on every file: type check with `file` (image data, never HTML), dimensions with `sips`, frame inspection on the GIFs.
 
-Scope note: every character here is a third-party copyrighted character (film/TV studio, record label, or individual artist). The sources are GIF platforms (GIPHY, Tenor, GIFDB), fan wikis, press-image galleries, and screencap sites, and none of the film/TV material carries a free license. These are for use in the course deck, treated like fair-use teaching images; keep the attributions below if the deck gains a credits slide. The exceptions: the two Tux stills are CC0, and the Arctic Antics clips are from a 1930 film in the US public domain.
+The sources are GIF platforms (GIPHY, Tenor, GIFDB), fan wikis, press-image galleries, and screencap sites, and none of the film/TV material carries a free license. These are for use in the course deck, treated like fair-use teaching images. The exceptions: the two Tux stills are CC0, and the Arctic Antics clips are from a 1930 film in the US public domain.
 
 ## Mumble (Happy Feet)
 

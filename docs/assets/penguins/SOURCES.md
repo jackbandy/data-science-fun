@@ -1,8 +1,6 @@
 # Sources — `assets/penguins`
 
-NOTICE: this file was drafted by an LLM coding system and has not yet been reviewed.
-
-Photos of the two species in the Week 8 "Adélie or Gentoo?" classification example. All are from Wikimedia Commons, downloaded October 13, 2026. Change made to every file: downscaled so the long edge is at most 3,000 px and re-saved as JPEG (quality 88). Species were checked by eye against the field marks: Adélie has an all-black head with a white eye ring; Gentoo has a white band over the head and an orange bill.
+NOTICE: this file was initially drafted by an LLM coding system.
 
 The Brown Bluff and Hope Bay photos are from the northern Antarctic Peninsula, the same region as the Palmer Penguins data (Palmer Station, Anvers Island).
 
