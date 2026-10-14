@@ -20,6 +20,8 @@ https://ieeexplore\.ieee\.org
 https://doi\.org
 # National Library of Australia catalogue record (Bradman photo credit in docs/assets/slides-misc/SOURCES.md); its bot detection times out the checker.
 ^https?://nla\.gov\.au/nla\.pic-an23448715$
+# FRED drops automated requests (HTTP/2 stream reset, HTTP/1.1 timeout) while the Wayback Machine captured the same series pages with 200s in Sep–Oct 2026.
+https://fred\.stlouisfed\.org
 
 # --- UIC / Canvas ------------------------------------------------------------
 # These require logging in, so the checker only ever reaches the login page.
