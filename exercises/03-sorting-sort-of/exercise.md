@@ -15,9 +15,17 @@ This exercise sorts tweets from six political accounts into two parties. You wil
 
 **Download `cs418-fa26-ce03.zip` from Canvas.** As with the earlier exercises, the starter files are distributed only through Canvas, not through the course repository. Open `hw3.ipynb` and follow the instructions there, which cover the environment, what to submit to Gradescope, and how each question is graded.
 
+You are welcome to work together with other students on this exercise if you want to, but **everyone must submit their own copy**.
+
 ## AI/LLM policy
 
-**Yellow over red. Proceed with caution, stop ahead.** You may use AI/LLM-based tools on this exercise. Part D asks you to use the Gemini API directly. Document any other use in Q16 of the notebook. The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).
+**Yellow over red. Proceed with caution, stop ahead.**
+
+🟡 You may use AI/LLM-based tools on the text processing, feature construction, classification, and LLM questions (Q1-Q14). Part D asks you to use the Gemini API directly. Work carefully and be prepared to justify any use. Document any other use in Q16 of the notebook: which tools, on which parts, what you prompted, whether the answer was any good, and what you changed. That documentation is worth 5% of the exercise.
+
+🔴 You may not use AI/LLM-based tools on Q15, the ethics and machine learning questions. Those are yours to think through with your own brain.
+
+The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).
 
 ## Note on tool counting
 

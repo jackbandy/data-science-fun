@@ -46,8 +46,8 @@ The zip folder contains:
 
 Two separate Gradescope submissions:
 
-1. **02 Coding Exercise - Written**: `hw2.ipynb` saved as a PDF, with all cells executed and *all outputs visible*, including every plot. Tag each question when you upload. Save to PDF from your browser, or use `jupyter nbconvert hw2.ipynb --to html` followed by `python html_to_pdf.py` if the browser's output is cut off. Check the PDF before you submit it.
-2. **02 Coding Exercise - Code**: your completed `hw2.ipynb`.
+1. **02 Coding Exercise (Written)**: `hw2.ipynb` saved as a PDF, with all cells executed and *all outputs visible*, including every plot. Tag each question when you upload. Save to PDF from your browser, or use `jupyter nbconvert hw2.ipynb --to html` followed by `python html_to_pdf.py` if the browser's output is cut off. Check the PDF before you submit it.
+2. **02 Coding Exercise (Code)**: your completed `hw2.ipynb`.
 
 If either submission is missing, you lose 50% of the exercise.
 
