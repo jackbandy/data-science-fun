@@ -80,14 +80,28 @@ def tidy(ax, *, grid="y", spines=("left", "bottom")):
     for lbl in (ax.xaxis.label, ax.yaxis.label):
         lbl.set_color(STEEL)
         lbl.set_fontsize(14)
-    # Horizontal y-axis label across the top of the axis (STYLE.md), so it reads without tilting your head.
-    ax.yaxis.label.set(rotation=0, ha="left", va="bottom")
-    ax.yaxis.set_label_coords(0, 1.025)
     return ax
+
+
+def horizontal_ylabels(fig):
+    """STYLE.md: y-axis labels run horizontally across the top of the axis, and any title moves up to clear them."""
+    for ax in fig.axes:
+        label = ax.yaxis.label
+        # A label the figure already turned horizontal (e.g. row labels in a small-multiples grid) keeps its own placement.
+        if not label.get_text().strip() or label.get_rotation() == 0 or ax.name != "rectilinear" or ax.get_label() == "<colorbar>":
+            continue
+        right = ax.yaxis.get_label_position() == "right"
+        label.set(rotation=0, ha="right" if right else "left", va="bottom")
+        ax.yaxis.set_label_coords(1 if right else 0, 1.025)
+        pad = max(30, ax.titleOffsetTrans.get_matrix()[1, 2] * 72 / fig.dpi)
+        for loc, title in (("left", ax._left_title), ("center", ax.title), ("right", ax._right_title)):
+            if title.get_text():
+                ax.set_title(title.get_text(), loc=loc, pad=pad, fontsize=title.get_fontsize(), color=title.get_color(), fontweight=title.get_fontweight())
 
 
 def save(fig, name):
     out = OUT_DIR / f"{name}.svg"
+    horizontal_ylabels(fig)
     fig.savefig(out, format="svg", facecolor=PAPER, bbox_inches="tight", pad_inches=0.12)
     plt.close(fig)
     print(f"  wrote {out.relative_to(REPO_ROOT)}")

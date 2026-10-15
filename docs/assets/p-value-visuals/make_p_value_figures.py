@@ -81,14 +81,28 @@ def tidy(ax, *, grid="y", spines=("left", "bottom")):
     for lbl in (ax.xaxis.label, ax.yaxis.label):
         lbl.set_color(STEEL)
         lbl.set_fontsize(14)
-    # Horizontal y-axis label across the top of the axis (STYLE.md), so it reads without tilting your head.
-    ax.yaxis.label.set(rotation=0, ha="left", va="bottom")
-    ax.yaxis.set_label_coords(0, 1.025)
     return ax
+
+
+def horizontal_ylabels(fig):
+    """STYLE.md: y-axis labels run horizontally across the top of the axis, and any title moves up to clear them."""
+    for ax in fig.axes:
+        label = ax.yaxis.label
+        # A label the figure already turned horizontal (e.g. row labels in a small-multiples grid) keeps its own placement.
+        if not label.get_text().strip() or label.get_rotation() == 0 or ax.name != "rectilinear" or ax.get_label() == "<colorbar>":
+            continue
+        right = ax.yaxis.get_label_position() == "right"
+        label.set(rotation=0, ha="right" if right else "left", va="bottom")
+        ax.yaxis.set_label_coords(1 if right else 0, 1.025)
+        pad = max(30, ax.titleOffsetTrans.get_matrix()[1, 2] * 72 / fig.dpi)
+        for loc, title in (("left", ax._left_title), ("center", ax.title), ("right", ax._right_title)):
+            if title.get_text():
+                ax.set_title(title.get_text(), loc=loc, pad=pad, fontsize=title.get_fontsize(), color=title.get_color(), fontweight=title.get_fontweight())
 
 
 def save(fig, name):
     out = OUT_DIR / f"{name}.svg"
+    horizontal_ylabels(fig)
     fig.savefig(out, format="svg", facecolor=PAPER, bbox_inches="tight", pad_inches=0.12)
     plt.close(fig)
     print(f"  wrote {out.relative_to(REPO_ROOT)}")
@@ -220,7 +234,7 @@ def p_value_distributions():
         patches[0].set_facecolor(ORANGE)
         share = np.mean(np.array(ps) < 0.05)
         ax.text(0.1, counts.max() * 0.9 if ax is axes[1] else 4200, f"{share:.0%} of p-values < .05", color=ORANGE_DARK, fontsize=14)
-        ax.set_title(title, fontsize=16, color=INK, loc="left", pad=34)
+        ax.set_title(title, fontsize=16, color=INK, loc="left", pad=10)
         ax.set_xlabel("p-value")
         tidy(ax)
     axes[0].set_ylabel("Replications (of 10,000)")

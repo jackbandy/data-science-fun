@@ -101,9 +101,6 @@ def tidy(ax, *, grid="y", spines=("left", "bottom")):
     for lbl in (ax.xaxis.label, ax.yaxis.label):
         lbl.set_color(STEEL)
         lbl.set_fontsize(13)
-    # Horizontal y-axis label across the top of the axis (STYLE.md), so it reads without tilting your head.
-    ax.yaxis.label.set(rotation=0, ha="left", va="bottom")
-    ax.yaxis.set_label_coords(0, 1.025)
     return ax
 
 
@@ -111,8 +108,25 @@ def title(ax, text, *, pad=14, size=17, color=INK):
     ax.set_title(text, fontsize=size, color=color, pad=pad, loc="left")
 
 
+def horizontal_ylabels(fig):
+    """STYLE.md: y-axis labels run horizontally across the top of the axis, and any title moves up to clear them."""
+    for ax in fig.axes:
+        label = ax.yaxis.label
+        # A label the figure already turned horizontal (e.g. row labels in a small-multiples grid) keeps its own placement.
+        if not label.get_text().strip() or label.get_rotation() == 0 or ax.name != "rectilinear" or ax.get_label() == "<colorbar>":
+            continue
+        right = ax.yaxis.get_label_position() == "right"
+        label.set(rotation=0, ha="right" if right else "left", va="bottom")
+        ax.yaxis.set_label_coords(1 if right else 0, 1.025)
+        pad = max(30, ax.titleOffsetTrans.get_matrix()[1, 2] * 72 / fig.dpi)
+        for loc, title in (("left", ax._left_title), ("center", ax.title), ("right", ax._right_title)):
+            if title.get_text():
+                ax.set_title(title.get_text(), loc=loc, pad=pad, fontsize=title.get_fontsize(), color=title.get_color(), fontweight=title.get_fontweight())
+
+
 def save(fig, name):
     out = OUT_DIR / f"{name}.svg"
+    horizontal_ylabels(fig)
     fig.savefig(out, format="svg", facecolor=PAPER, bbox_inches="tight",
                 pad_inches=0.12)
     plt.close(fig)
@@ -1533,7 +1547,7 @@ def time_series_line():
         title(ax, heading, size=14)
     axes[0].set_ylim(0, 260)
     axes[1].set_xlabel("Year")
-    fig.subplots_adjust(hspace=0.28)
+    fig.subplots_adjust(hspace=0.55)
     fig.text(0.005, -0.02, "Data: CTA Annual Boarding Totals, Chicago Data Portal.",
              fontsize=10.5, color=MUTED, ha="left")
     return fig
@@ -1600,7 +1614,7 @@ def histogram_area():
     title(axes[1], "Counts: the wide bin takes over", size=14)
 
     axes[0].set_xlabel("")
-    fig.subplots_adjust(hspace=0.3)
+    fig.subplots_adjust(hspace=0.55)
     fig.text(0.005, -0.02,
              "Data: Cook County single-family sales under $900k, 2025.",
              fontsize=10.5, color=MUTED, ha="left")
@@ -1939,7 +1953,7 @@ def scatterplot_matrix():
             if i == n - 1:
                 ax.set_xlabel(labels[j], fontsize=11, color=STEEL)
             if j == 0:
-                ax.set_ylabel(labels[i], fontsize=11, color=STEEL)
+                ax.set_ylabel(labels[i], fontsize=11, color=STEEL, rotation=0, ha="right", va="center")
     fig.subplots_adjust(wspace=0.08, hspace=0.08)
     fig.suptitle("Cook County home sales, 2025", fontsize=17, color=INK,
                  x=0.09, ha="left")

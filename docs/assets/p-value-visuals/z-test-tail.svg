@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-10-15T14:16:19.761770</dc:date>
+    <dc:date>2026-10-15T14:20:22.311984</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -885,7 +885,7 @@ z
    <g id="matplotlib.axis_2"/>
    <g id="PolyCollection_1">
     <defs>
-     <path id="m53a5cb1695" d="M 34.003636 -39.862813 
+     <path id="m5a0f7a1ccc" d="M 34.003636 -39.862813 
 L 34.003636 -40.574712 
 L 35.020215 -40.610464 
 L 36.036794 -40.647856 
@@ -1310,19 +1310,19 @@ L 34.003636 -39.862813
 z
 " style="stroke: #f9461c; stroke-opacity: 0.85"/>
     </defs>
-    <g clip-path="url(#p41915f5a4d)">
-     <use xlink:href="#m53a5cb1695" x="0" y="391.122012" style="fill: #f9461c; fill-opacity: 0.85; stroke: #f9461c; stroke-opacity: 0.85"/>
+    <g clip-path="url(#p1adfe1f81d)">
+     <use xlink:href="#m5a0f7a1ccc" x="0" y="391.122012" style="fill: #f9461c; fill-opacity: 0.85; stroke: #f9461c; stroke-opacity: 0.85"/>
     </g>
    </g>
    <g id="line2d_8">
     <path d="M 168.441516 351.2592 
 L 168.441516 8.64 
-" clip-path="url(#p41915f5a4d)" style="fill: none; stroke-dasharray: 4.8,4.8; stroke-dashoffset: 0; stroke: #565a5c; stroke-width: 1.2"/>
+" clip-path="url(#p1adfe1f81d)" style="fill: none; stroke-dasharray: 4.8,4.8; stroke-dashoffset: 0; stroke: #565a5c; stroke-width: 1.2"/>
    </g>
    <g id="line2d_9">
     <path d="M 247.420519 351.2592 
 L 247.420519 8.64 
-" clip-path="url(#p41915f5a4d)" style="fill: none; stroke: #1a1a1a; stroke-linecap: square"/>
+" clip-path="url(#p1adfe1f81d)" style="fill: none; stroke: #1a1a1a; stroke-linecap: square"/>
    </g>
    <g id="patch_3">
     <path d="M 8.64 351.2592 
@@ -1443,7 +1443,7 @@ L 528.060842 349.933647
 L 538.226628 350.435055 
 L 541.276364 350.5473 
 L 541.276364 350.5473 
-" clip-path="url(#p41915f5a4d)" style="fill: none; stroke: #1a1a1a; stroke-width: 2; stroke-linecap: square"/>
+" clip-path="url(#p1adfe1f81d)" style="fill: none; stroke: #1a1a1a; stroke-width: 2; stroke-linecap: square"/>
    </g>
    <g id="text_9">
     <!-- $\alpha$ = .05 cutoff -->
@@ -2074,7 +2074,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p41915f5a4d">
+  <clipPath id="p1adfe1f81d">
    <rect x="8.64" y="8.64" width="558" height="342.6192"/>
   </clipPath>
  </defs>

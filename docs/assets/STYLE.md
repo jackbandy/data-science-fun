@@ -39,6 +39,15 @@ We follow the [CTA Trademark Guidelines for Developers](https://www.transitchica
 - `PHI = (1 + 5**0.5) / 2`; derive short side from long, e.g. 1000 × 618 (`round(WIDTH / PHI)`)
 - see `lifecycle/make_lifecycle_figures.py`
 
+## Axis labels
+
+- y-axis labels are horizontal, never rotated 90°: left-aligned across the top of the axis (`rotation=0, ha="left", va="bottom"`, `ax.yaxis.set_label_coords(0, 1.025)`), so they read without tilting your head
+- a right-hand (twin) axis label goes top-right instead (`ha="right"`, coords `(1, 1.025)`)
+- an axis title sits above the y-axis label, not on top of it; stacked panels need enough `hspace` for both
+- small-multiples grids may put row labels horizontally to the left of each row (`rotation=0, ha="right", va="center"`)
+- for a row of panels sharing one y-axis, put the shared label once, horizontally above the row
+- the matplotlib generators apply this in `save()` via `horizontal_ylabels(fig)` (e.g. `p-value-visuals/make_p_value_figures.py`), so a label set after `tidy()` still gets it
+
 ## Arrows
 
 Defaults from `lifecycle/ds-lifecycle-v*.svg`:
@@ -61,6 +70,7 @@ Defaults from `lifecycle/ds-lifecycle-v*.svg`:
 - **og:image rasters** — social scrapers don't render SVG, so the homepage `og:image` (`assets/orange-line/orange-line-trace-with-stops.png`) is a PNG derived from the source SVG, which stays canonical: render at ~4× (`cairosvg --scale 4`), then `magick … -trim +repage -bordercolor none -border <~5% of long side> -strip -define png:compression-level=9` — trims transparent edges, re-adds an equal margin to keep the art centered, strips metadata, max-compresses; keep the transparent background
 - **Self-hosted embedded fonts** — fonts in `assets/fonts/` (OFL, with `OFL.txt`), never a CDN; standalone SVGs embed a base64 `woff2` data URL
 - **`SOURCES.md` per folder** — any dir with third-party/remixed material lists each file's source + license
+- **Folders by topic, not by week** — e.g. `p-value-visuals/`, `sampling-visuals/`, `coin-flip-worldviews/`, each with its own generator script and `SOURCES.md`, so a figure can move between decks without moving files
 - **Rounded-rect nodes** — `rx="6"`, 3px stroke, neutral fill, centered multi-line text
 - **Generated variant sets** — step figures come from a Python generator emitting numbered variants (`v0` plain, `v1…vN` each highlighting one step); keep the script as source of truth
 - **Orange-line transit motif** — Chicago / CTA Orange Line is the recurring theme
