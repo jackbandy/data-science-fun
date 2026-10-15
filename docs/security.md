@@ -10,7 +10,7 @@ description: Privacy and security policy for dodatascience.fun
 
 ## Privacy
 
-This site collects nothing. No analytics, no cookies, no accounts, no advertising, no profiling. GitHub pages and GitHub itself collects basic traffic data, although it seems pretty unreliable...
+This site collects nothing. No analytics, no cookies, no accounts, no advertising, no profiling. GitHub Pages and GitHub itself collect basic traffic data, although it seems pretty unreliable...
 
 ### No analytics, no cookies
 
@@ -20,7 +20,7 @@ There are also no accounts, no logins, no comment system, and no newsletter, so 
 
 ### Third-party requests
 
-The core pages (home, syllabus, FAQ, worksheets, exercises) are self-contained: HTML, CSS, fonts, and a few small JavaScript files, all served from this domain. The **mini-book** (`/ethics-in-data-science/book/`) is now self-contained too: its font is self-hosted, and its math is rendered as MathML when the book is built, not loaded from a CDN.
+The core pages (home, syllabus, FAQ, worksheets, exercises) are self-contained: HTML, CSS, fonts, and a few small JavaScript files, all served from this domain. The **mini-book** (`/ethics-in-data-science/book/`) is self-contained too: its font is self-hosted, and its math is rendered as MathML when the book is built, not loaded from a CDN.
 
 Two areas do reach outside the domain, and you should know about them:
 
@@ -75,6 +75,6 @@ Include as much of the following as you can:
 
 This site follows the principles of [GitHub's Safe Harbor Policy](https://docs.github.com/en/site-policy/security-policies/github-bug-bounty-program-legal-safe-harbor). Good-faith research consistent with that policy is welcome. There is no bug bounty — this is a very simple course site — but I'm glad to say thanks and/or credit you somewhere.
 
-Machine-readable contact details: [security.txt](/.well-known/security.txt).
+Machine-readable contact details: [security.txt](https://dodatascience.fun/.well-known/security.txt).
 
 *Last reviewed: 3 October 2026.*

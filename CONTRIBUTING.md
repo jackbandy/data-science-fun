@@ -5,7 +5,7 @@ Thanks for contributing! This repo holds materials for a section of CS 418 (Intr
 A quick pull request should work fine for things like:
 * fixing a typo
 * rephrasing a bulletpoint
-* preparing a broken link
+* repairing a broken link
 
 If you want to make a larger change (e.g. a new section of slides, a new chapter in the mini-book), consider opening a GitHub issue first.
 
@@ -15,7 +15,7 @@ If you want to make a larger change (e.g. a new section of slides, a new chapter
 
 [Fork the repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo), then clone your fork.
 
-If you are working from a clone, turn on the repo's git hooks once:
+Then turn on the repo's git hooks once:
 
 ```bash
 git config core.hooksPath .githooks
@@ -37,34 +37,17 @@ Prose-only fixes usually need none of this — GitHub's web editor is fine.
 
 ## Development
 
-Preview the site:
-
-```bash
-python3 exercises/build-exercises-data.py  # writes files jekyll needs
-cd docs
-bundle install          # first time only
-bundle exec jekyll serve # http://localhost:4000
-```
-
-
-
-Build the slides:
-
-```bash
-cd docs/slides
-shared/build_all_quarto.sh                   # HTML only
-BUILD_PDFS=true shared/build_all_quarto.sh   # include PDFs
-```
-
-Quarto output (slides, mini-book) is served as-is, so `quarto preview` works for those.
+Commands for previewing the site and building the slides are in the "Local Preview" and "Slide build" sections under [Technical details](README.md#technical-details) in the README.
 
 A few important conventions:
 
 - **The `.qmd` is the slide source.** Don't edit `docs/slides/week*.html` (it is generated and gitignored)
-- **Parts of `docs/slides/index.html` are generated.** The per-deck bullets and the slide-count table are written by `docs/slides/shared/sync_slide_index.py`. To change a topic's wording, edit that deck's `{.section-header}` heading, and it will get propagated. Don't hand-edit the generated lines -- the pre-commit hook and CI both overwrite them from the deck sources.
+- **Parts of `docs/slides/index.html` are auto-generated.** As in, deterministically generated, not LLM-generated.
+	- The per-deck bullets, the parenthetical after each deck title, the slide-count table, and the jump-to-week row are written by `docs/slides/shared/sync_slide_index.py`. To change a topic's wording, edit that deck's `{.section-header}` heading, and it should get propagated. 
+	- The parenthetical after each deck title comes from the `Topic` cells in `docs/_data/schedule.csv` instead. Don't hand-edit the generated lines, as the pre-commit hook and CI both overwrite them from the deck sources.
 - **The schedule lives in just one place:** `docs/_data/schedule.csv`. The homepage table, the syllabus, and `/schedule.html` all read from that csv. Add new columns at the end if needed (the first five are matched positionally by `schedule.lua`, and trailing ones (`Date`, `Notes`, `Unit`) are ignored by both tables)
 - **Day-by-day detail/source material goes in `docs/_includes/schedule-topics.md`,** not in the CSV: one `## Week N, Day M` section per class meeting, with the topics as bullets and any readings or links under a `### Sources` subheading.
-- **Images go in `docs/assets/<topic>/`,** ideally one folder per topic, so a figure can be referenced by several decks and site pages . Put a new figure in an existing topic folder when one fits, otherwise make a new one.
+- **Images go in `docs/assets/<topic>/`,** ideally one folder per topic, so a figure can be referenced by several decks and site pages. Put a new figure in an existing topic folder when one fits, otherwise make a new one.
 - **Use SVG whenever possible.** It stays sharp at any projector resolution, keeps the repo small, and text inside it stays selectable and searchable. Reserve PNG/JPG for photographs, archival screenshots, etc. where a vector version isn't possible.
 - **Check citations against a primary source.** Prefer sources with a DOI, which can be automatically cross-checked with `https://api.crossref.org/works/<doi>`
 
@@ -80,18 +63,15 @@ A few important conventions:
 	- `sandbox/` is intended as a quarantine for LLM-generated and experimental work
 	- See the "Note on LLM use" section of the [README](README.md) for more details
 - Link any issue your PR resolves so it closes on merge.
+- Contributions are licensed the same way as the rest of the repo: MIT for code, CC BY-NC-SA 4.0 for everything else (see the License section of the [README](README.md#license)).
 
 The checks in `.github/workflows/repo-checks.yml` run on every PR: the slide index generator must match what's committed, Python and shell scripts must pass a lint for real errors, and no new duplicate files under `docs/`. These are currently non-blocking, but please look at the output.
 
-The slide index one repairs itself rather than just complaining: if your branch
-is out of step, CI regenerates `docs/slides/index.html` and pushes that commit
-to your branch, so **pull before you push again**. On a pull request from a
-fork the token is read-only and it can't do that, so there it fails with the
-command to run yourself.
+The slide index one repairs itself rather than just complaining: if your branch is out of step, CI regenerates `docs/slides/index.html` and pushes that commit to your branch, so **pull before you push again**. On a pull request from a fork the token is read-only and it can't do that, so there it fails with the command to run yourself.
 
 ## After your change is merged
 
 Woohoo! Thanks for contributing! Your GitHub profile should now show up under the 'Contributors' portion of the repo page 🤠
 
-Pushes to `main` that touch `docs/` or `syllabus_source/` should trigger `.github/workflows/deploy-pages.yml`, which renders the Quarto decks and mini-book, builds the syllabus, runs Jekyll, and publishes to [dodatascience.fun](https://dodatascience.fun/). It's usually live a few minutes after the merge.
+Pushes to `main` that touch `docs/`, `syllabus_source/`, `exercises/`, `project/`, or `meta_analytics_source/` should trigger `.github/workflows/deploy-pages.yml` (which also runs every Thursday on a schedule), which renders the Quarto decks and mini-book, builds the syllabus, runs Jekyll, and publishes to [dodatascience.fun](https://dodatascience.fun/). It's usually live a few minutes after the merge.
 

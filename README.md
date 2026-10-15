@@ -4,7 +4,7 @@
 
 These are in-progress materials for a section of CS 418 (Intro to Data Science) in Fall 2026. This repository is intended as the main container for reference materials, including slides, worksheets, demo code, etc. 
 
-Materials are under active development during Summer 2026. The public-facing site, [DoDataScience.fun](https://dodatascience.fun/), lives at the `docs/` folder, deployed via GitHub Pages.
+The public-facing site, [DoDataScience.fun](https://dodatascience.fun/), lives at the `docs/` folder, deployed via GitHub Pages.
 
 For in-class worksheets, the goal is to create a library of accessible, hand-written / hand-drawn exercises, inspired by [Tom Yeh's "AI by Hand" series](https://www.byhand.ai).
 
@@ -22,31 +22,11 @@ This repo holds the raw files (mostly markdown files) that are assembled and pub
 | FAQ | `docs/faq.md` | [/faq.html](https://dodatascience.fun/faq.html) |
 | Worksheets | `worksheets_source/*/worksheet.tex` | `/worksheets/` |
 
-
-To preview the site locally:
-
-```bash
-python3 exercises/build-exercises-data.py  # required: see note below
-cd docs
-bundle install          # first time only
-bundle exec jekyll serve
-```
-
-Run the exercises script first on a fresh clone. It writes `docs/_data/exercises.yml`, `docs/_includes/exercises-about.html` and `docs/exercises/`, all generated from `exercises/*/exercise.md` and all gitignored, and Jekyll aborts with `Liquid error: Cannot sort a null object` if they are absent.
-
-Quarto output (slides, mini-book) is served as-is, so use `quarto preview` for local previews.
-
 Technical details of each build are in the collapsible sections below.
-
-## Course topics
-
-The "ground truth" for the week-by-week schedule is [`docs/_data/schedule.csv`](docs/_data/schedule.csv).
-
-What happens on each individual day, including links to source materials, is in [`docs/_includes/schedule-topics.md`](docs/_includes/schedule-topics.md) and is published at [/schedule.html](https://dodatascience.fun/schedule.html).
 
 ## Note on LLM use
 
-The `sandbox/` folder is a quarantine zone for anything modified by an LLM. My philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html), but in short: I use them sparingly, and with caution, sort of like a credit card. If I do not have sufficient "money" (understanding) to "pay back" (explain, modify, rewrite, etc.) what I "buy" (generate), I probably should use a different tool, or do some learning.
+The `sandbox/` folder is a quarantine zone for anything modified by an LLM. Some philosophy on LLM usage is [here](https://jackbandy.com/text/llm-code-philosophy.html), but in short: I use them sparingly, and with caution, sort of like a credit card. If I do not have sufficient "money" (understanding) to "pay back" (explain, modify, rewrite, etc.) what I "buy" (generate), I probably should use a different tool, or do some learning.
 
 In some cases, I move things out of the `sandbox/` after editing and testing and verification. In practice, this means that LLMs may be adjusting or improving some workflows that would otherwise require lots of time/tedium (e.g. the syllabus build workflow and other GitHub action setups). This allows me to focus more on writing/thinking, planning, and teaching (at least that is the theory, and has mostly been my experience so far).
 
@@ -58,7 +38,7 @@ All other materials hand-typed with 🩵 in Chicago, IL.
 
 ## License
 
-By default, the materials here are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/) (CC BY-NC-SA 4.0). The full legal code is in [`LICENSE`](LICENSE).
+By default, the materials here are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/) (CC BY-NC-SA 4.0). The full legal code is in [`CC-BY-NC-SA-4.0.txt`](CC-BY-NC-SA-4.0.txt).
 
 Their purpose is to educate, so feel free to use them, remix them, teach with them, etc., given:
 
@@ -67,49 +47,13 @@ Their purpose is to educate, so feel free to use them, remix them, teach with th
 - **NonCommercial** — not for commercial or profit-driven use. plz.
 - **ShareAlike** — distribute your adaptations under this license
 
-**Third-party material keeps its own terms.** The decks include some photos, figures, and diagrams from other people under their own licenses (various CC BY-SA versions, a few images used under fair use). Those are credited on each deck's Sources slide and are not covered by the blanket license above.
+**Third-party material.** The decks include some photos, figures, and diagrams from other people under their own licenses (various CC BY-SA versions, a few images used under fair use). Those are credited on each deck's Sources slide.
+
+**Code.** The website and other public-facing materials are CC BY-NC-SA, but Creative Commons says "We recommend against using Creative Commons licenses for software" ([CC FAQ](https://creativecommons.org/faq/)), so all the code in this repo is under the [MIT License](LICENSE) instead. That includes scripts, build tooling, workflows, and the code in slides, exercises, and notebooks. Third-party code keeps its own license.
 
 ---
 
 # Technical details
-
-<details>
-<summary><strong>Dependencies (and who installs them)</strong></summary>
-
-Nothing here is vendored: every build tool is installed by `.github/workflows/deploy-pages.yml`
-on each run, so that workflow is the ground truth for versions. This table restates it.
-
-| Tool | Version pinned in CI | Needed for | Declared in |
-| --- | --- | --- | --- |
-| Ruby | `>= 3.0, < 4.0` | Jekyll site build | `docs/Gemfile` |
-| Jekyll (via `github-pages` gem) | whatever `github-pages` resolves to | masthead/includes, `/schedule.html`, homepage table | `docs/Gemfile` |
-| Python | 3.12 | executing slide code chunks | `deploy-pages.yml`, `repo-checks.yml` |
-| Python packages | see file (several deliberate caps) | slide figures and models | `docs/slides/shared/requirements.txt` |
-| `uv` | latest | installs the Python packages | `deploy-pages.yml`, `shared/build_all_quarto.sh` |
-| Quarto | `release` (latest) | renders every deck and the mini-book | `deploy-pages.yml` |
-| R | `release` | **week 5 only** — it uses `engine: knitr` and shells out to `Rscript` | `deploy-pages.yml` |
-| R packages | unpinned, latest | `knitr`, `rmarkdown`, `reticulate`, `here`, `ggplot2`, `ggtext`, `patchwork`, `svglite` | `deploy-pages.yml` (inline `Rscript -e`) |
-| Node | 22 | Quarto tooling | `deploy-pages.yml` |
-| Chromium | latest | slide PDF export only — non-blocking, `continue-on-error` | `deploy-pages.yml` |
-| pandoc, `librsvg2-bin`, fontconfig, `fonts-liberation`, `texlive-xetex`, `texlive-latex-recommended`, `texlive-latex-extra`, `texlive-fonts-recommended`, `texlive-plain-generic` | Ubuntu runner's apt | syllabus HTML + PDF | `deploy-pages.yml` (apt-get step) |
-| `latexmk` | local install | worksheet PDFs — **not built in CI**, run by hand | `worksheets_source/build.sh` |
-| `ruff` | latest | lint check (`E9,F63,F7,F82`, `sandbox/` excluded) | `repo-checks.yml` |
-| `lychee` | `lycheeverse/lychee-action@v2` | link checking | `deploy-pages.yml`, `link-check-external.yml` |
-
-**Notes:**
-
-- The Python caps in `requirements.txt` are load-bearing and commented in place: `numpy<2.5`
-  (numba/arviz), `matplotlib<3.11` (arviz's `style.core` import), `arviz<1.3`. Lifting one
-  without reading its comment will break a slide render.
-- R is the odd one out. Quarto's setup action does not bundle it, and only week 5 needs it —
-  `build_all_quarto.sh` *skips* any knitr deck when `Rscript` is missing rather than failing,
-  so a local build without R silently produces one fewer deck.
-- Locally, `build_all_quarto.sh` makes its own `docs/slides/.venv` with `uv`. CI sets
-  `SKIP_VENV=true` and installs into the runner's Python instead.
-- Worksheets are the one output with no CI path: `worksheets_source/build.sh` runs on your
-  machine and the PDFs under `docs/worksheets/` are committed.
-
-</details>
 
 <details>
 <summary><strong>Repository layout</strong></summary>
@@ -145,10 +89,46 @@ data-science-fun/
 ├── worksheets_source/           # Worksheet source and build script
 ├── sandbox/                     # Quarantine for LLM-modified or experimental content
 ├── CONTRIBUTING.md              # How to report issues / suggest changes
-├── LICENSE                      # CC BY-NC-SA 4.0
+├── CC-BY-NC-SA-4.0.txt          # License for materials
+├── LICENSE                      # MIT (code)
 ├── NOTES.md                     # Working notes and planning
 └── README.md                    # This file
 ```
+
+</details>
+
+<details>
+<summary><strong>Dependencies</strong></summary>
+
+Every build tool is installed by `.github/workflows/deploy-pages.yml` on each run, so that workflow is the ground truth for versions.
+
+| Tool | Version pinned in CI | Needed for | Declared in |
+| --- | --- | --- | --- |
+| Ruby | `>= 3.0, < 4.0` | Jekyll site build | `docs/Gemfile` |
+| Jekyll (via `github-pages` gem) | whatever `github-pages` resolves to | masthead/includes, `/schedule.html`, homepage table | `docs/Gemfile` |
+| Python | 3.12 | executing slide code chunks | `deploy-pages.yml`, `repo-checks.yml` |
+| Python packages | see file (several deliberate caps) | slide figures and models | `docs/slides/shared/requirements.txt` |
+| `uv` | latest | installs the Python packages | `deploy-pages.yml`, `shared/build_all_quarto.sh` |
+| Quarto | `release` (latest) | renders every deck and the mini-book | `deploy-pages.yml` |
+| R | `release` | **week 5 only** — it uses `engine: knitr` and shells out to `Rscript` | `deploy-pages.yml` |
+| R packages | unpinned, latest | `knitr`, `rmarkdown`, `reticulate`, `here`, `ggplot2`, `ggtext`, `patchwork`, `svglite` | `deploy-pages.yml` (inline `Rscript -e`) |
+| Node | 22 | Quarto tooling | `deploy-pages.yml` |
+| Chromium | latest | slide PDF export only — non-blocking, `continue-on-error` | `deploy-pages.yml` |
+| pandoc, `librsvg2-bin`, fontconfig, `fonts-liberation`, `texlive-xetex`, `texlive-latex-recommended`, `texlive-latex-extra`, `texlive-fonts-recommended`, `texlive-plain-generic` | Ubuntu runner's apt | syllabus HTML + PDF | `deploy-pages.yml` (apt-get step) |
+| `latexmk` | local install | worksheet PDFs — **not built in CI**, run by hand | `worksheets_source/build.sh` |
+| `ruff` | latest | lint check (`E9,F63,F7,F82`, `sandbox/` excluded) | `repo-checks.yml` |
+| `lychee` | `lycheeverse/lychee-action@v2` | link checking | `deploy-pages.yml`, `link-check-external.yml` |
+
+**Notes:**
+
+- The Python caps in `requirements.txt` are: `numpy<2.5`
+  (numba/arviz), `matplotlib<3.11` (arviz's `style.core` import), `arviz<1.3`. Lifting one
+  without reading its comment will break a slide render.
+- R is the odd one out. Quarto's setup action does not bundle it, and only week 5 needs it as of right now —
+  `build_all_quarto.sh` *skips* any knitr deck when `Rscript` is missing rather than failing,
+  so a local build without R produces one fewer deck.
+- Locally, `build_all_quarto.sh` makes its own `docs/slides/.venv` with `uv`. CI sets
+  `SKIP_VENV=true` and installs into the runner's Python instead.
 
 </details>
 
@@ -172,7 +152,7 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 - Every deck opens each class day the same way: a `# Week N, Day 1` / `# Week N, Day 2` title slide, the full-bleed stop photo, then a `# Map {.split}` slide whose left column lists that day's `{.section-header}` topics and whose right column is the week's stop from `docs/assets/orange-line-map-stops/`.
 - Quarto revealjs HTML depends on the `*_files/` directories for styles to load properly on GitHub Pages.
 - Slides use SVGs and other vector formats whenever possible.
-- More complicated than Google Slides? Yes. Worth it for freedom, portability, accessibility, etc.? For now, yes.
+- More complicated than Google Slides? Yes. Worth it for freedom, portability, accessibility, etc.? For now, yes, I think...
 - `deploy-pages.yml` renders the decks on every push (cache output and re-render only changed sources)
 - Each compiled deck produces an HTML file, a `_files/` support directory (CSS, JavaScript, other assets), and usually a PDF: HTML is required, PDF export is best-effort (non-blocking)
 - Jupyter-engine decks keep their executed notebook as `docs/slides/weekN.ipynb` - makes it easy to download and run the code
@@ -258,7 +238,7 @@ push to main
 Still early, but worksheet LaTeX sources and build support live in `worksheets_source/`.
 
 - Run `worksheets_source/build.sh` to compile every `worksheet.tex`.
-- Compiled PDFs are published under `docs/worksheets/`.
+- Worksheets are the one output with no CI path: `worksheets_source/build.sh` runs on your machine and the PDFs under `docs/worksheets/` are committed.
 - Source directories do not retain generated worksheet PDFs.
 
 </details>
@@ -295,11 +275,7 @@ The Quarto mini-book for "Ethics in Data Science" lives at `docs/ethics-in-data-
                   [dodatascience.fun/ethics-in-data-science/book/]
 ```
 
-- On pushes to `main`, the GitHub workflow renders the book with `quarto render docs/ethics-in-data-science`.
-- Jekyll then builds `docs/` into `_site/`, which is uploaded as the Pages artifact.
 - GitHub Pages serves that artifact directly, so the generated `docs/ethics-in-data-science/book/` output is not tracked in git.
-- This keeps Quarto output separate from version control
-- You can preview changes locally with `quarto render`
 - **The book stays independent of Jekyll.** Its `.md` sources are listed in `docs/_config.yml`'s `exclude`, so Jekyll does not try to render them. Editing and previewing the book is pure Quarto.
 
 </details>
@@ -326,18 +302,31 @@ nav: slides     # optional; marks the active nav link
 ---
 ```
 
+`nav` accepts `home`, `slides`, `book`, `syllabus`, `faq`, or `timer`, and adds `aria-current="page"` to that link.
+
 Two pages skip that layout:
 
 - `docs/index.html` — hand-written social/OG meta for the landing page.
 - `syllabus_source/template.html` — a Pandoc template that emits front matter and `{% include masthead.html %}` into `docs/syllabus/index.html` (Jekyll expands it)
 
-`nav` accepts `home`, `slides`, `book`, `syllabus`, `faq`, or `timer`, and adds `aria-current="page"` to that link.
-
 </details>
 
 <details>
-<summary><strong>Previewing the site locally</strong></summary>
+<summary><strong>Local Preview</strong></summary>
 
-The includes and the FAQ are assembled by Jekyll, so a plain static file server will show `{% include ... %}` as literal text — use `bundle exec jekyll serve` (see the Overview above), which serves the site at <http://localhost:4000> and rebuilds on save.
+To preview the site locally:
+
+```bash
+python3 exercises/build-exercises-data.py  # required: see note below
+cd docs
+bundle install          # first time only
+bundle exec jekyll serve
+```
+
+Run the exercises script first on a fresh clone. It writes `docs/_data/exercises.yml`, `docs/_includes/exercises-about.html` and `docs/exercises/`, all generated from `exercises/*/exercise.md` and all gitignored, and Jekyll aborts with `Liquid error: Cannot sort a null object` if they are absent.
+
+Quarto output (slides, mini-book) is served as-is, so use `quarto preview` for local previews.
+
+The includes and the FAQ are assembled by Jekyll, so a plain static file server will show `{% include ... %}` as literal text — use `bundle exec jekyll serve`, which serves the site at <http://localhost:4000> and rebuilds on save.
 
 </details>

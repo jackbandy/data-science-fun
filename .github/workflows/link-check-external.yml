@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       # --root-dir points at docs/, which is the site root Jekyll publishes, so
-      # root-relative links (docs/security.md's "/.well-known/security.txt")
+      # root-relative links (the mini-book PDF links in docs/_includes/schedule-topics.md)
       # resolve to the file they will resolve to on the live site. Without it
       # lychee cannot build a URL at all and reports a hard error for a link
       # that is fine. --exclude '^/' stays as a backstop for root-relative
