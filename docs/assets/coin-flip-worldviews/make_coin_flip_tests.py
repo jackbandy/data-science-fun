@@ -20,6 +20,8 @@ import matplotlib
 
 matplotlib.use("Agg")
 
+import itertools
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import font_manager
@@ -106,7 +108,7 @@ def save(fig, name):
 
 def _flip_grid(ax, flips, title):
     longest = run = 1
-    for a, b in zip(flips, flips[1:]):
+    for a, b in itertools.pairwise(flips):
         run = run + 1 if a == b else 1
         longest = max(longest, run)
     for i, f in enumerate(flips):
@@ -127,7 +129,7 @@ def coin_null_distribution():
     p = pmf[extreme].sum()
     fig, ax = new_fig()
     ax.bar(k, pmf, color=np.where(extreme, ORANGE, QUIET), width=0.8, zorder=3)
-    ax.annotate("observed:\n10 heads", xy=(10, pmf[10] + 0.004), xytext=(11.6, 0.15), color=INK, fontsize=14, ha="center", arrowprops=dict(arrowstyle="-", color=STEEL, lw=1))
+    ax.annotate("observed:\n10 heads", xy=(10, pmf[10] + 0.004), xytext=(11.6, 0.15), color=INK, fontsize=14, ha="center", arrowprops={"arrowstyle": "-", "color": STEEL, "lw": 1})
     ax.text(0.02, 0.97, f"If $H_0$ (fair coin) is true,\nP(this extreme or more) = {p:.2f}", transform=ax.transAxes, color=ORANGE_DARK, fontsize=15, va="top")
     ax.set(xticks=k, xlabel="Number of heads in 14 flips", ylabel="Probability if the coin is fair")
     tidy(ax)
@@ -148,7 +150,7 @@ def power_coin():
     ax.plot(ns, power, color=ORANGE, linewidth=3, zorder=3)
     p14 = power[ns == 14][0]
     ax.scatter([14], [p14], color=INK, s=50, zorder=4)
-    ax.annotate(f"14 flips: rejects only {p14:.0%} of the time", xy=(14, p14), xytext=(30, 0.12), color=INK, fontsize=14, arrowprops=dict(arrowstyle="-", color=STEEL, lw=1))
+    ax.annotate(f"14 flips: rejects only {p14:.0%} of the time", xy=(14, p14), xytext=(30, 0.12), color=INK, fontsize=14, arrowprops={"arrowstyle": "-", "color": STEEL, "lw": 1})
     ax.axhline(0.8, color=STEEL, linewidth=1, linestyle=(0, (4, 4)))
     ax.text(150, 0.82, "80% power", color=STEEL, fontsize=13, ha="right")
     ax.set(ylim=(0, 1.02), xlim=(0, 152), xlabel="Number of flips", ylabel="Power: P(reject $H_0$)")
