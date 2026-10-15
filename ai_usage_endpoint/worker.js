@@ -13,7 +13,7 @@
 
 // Every counter key name is built out of `assignment` and `tool`, so both have to come from a fixed list. The old open regex accepted ~36^32 names from an unauthenticated POST, and each new name was a new permanent KV key.
 // ADD A ROW HERE when an assignment or tool ships, or its sessions will not be counted.
-const ASSIGNMENTS = new Set(["hw1", "hw2", "00-systems-check", "01-gate-check", "02-tk", "03-tk", "04-tk", "selftest"]);
+const ASSIGNMENTS = new Set(["hw1", "hw2", "hw3", "00-systems-check", "01-gate-check", "02-tk", "03-tk", "04-tk", "selftest"]);
 const TOOLS = new Set(["claude-code", "codex", "cursor", "copilot", "copilot-vscode", "gemini", "selftest"]);
 const EDITORS = new Set(["vscode", "vscode-insiders", "vscodium", "cursor", "windsurf", "positron", "kiro", "trae", "antigravity", "void", "pycharm", "dataspell", "intellij", "other", "selftest"]);
 const NOTEBOOKS = new Set([...EDITORS, "jupyter", "colab", "kaggle", "spyder", "ipython", "python"]);

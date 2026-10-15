@@ -438,18 +438,20 @@ def build_ai_usage() -> dict | None:
         print(f"could not read {url} ({exc}); skipping ai-usage.json", file=sys.stderr)
         return None
 
-    tools = payload.get("tools") or {}
-    rows = sorted(
-        (
-            {
-                "tool": tool,
-                "sessions": int(counts.get("sessions", 0)),
-                "installs": int(counts.get("installs", 0)),
-            }
-            for tool, counts in tools.items()
-        ),
-        key=lambda row: (-row["sessions"], row["tool"]),
-    )
+    def rows(group: str) -> list[dict]:
+        # For editors "sessions" is folder opens and for notebooks it is kernel starts; the Worker keeps one shape for all three groups.
+        return sorted(
+            (
+                {
+                    "tool": tool,
+                    "sessions": int(counts.get("sessions", 0)),
+                    "installs": int(counts.get("installs", 0)),
+                }
+                for tool, counts in (payload.get(group) or {}).items()
+            ),
+            key=lambda row: (-row["sessions"], row["tool"]),
+        )
+
     days = payload.get("days") or {}
 
     return {
@@ -457,7 +459,9 @@ def build_ai_usage() -> dict | None:
         "counted_through": payload.get("generated"),
         "total_sessions": int(payload.get("total", 0)),
         "total_installs": int(payload.get("installs", 0)),
-        "tools": rows,
+        "tools": rows("tools"),
+        "editors": rows("editors"),
+        "notebooks": rows("notebooks"),
         "assignments": payload.get("assignments") or {},
         "days": dict(sorted(days.items())),
     }

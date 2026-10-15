@@ -770,6 +770,34 @@
     return true;
   }
 
+  // Editors and notebook apps share the AI chart's bars but get their own section, so an editor opening a folder never reads as AI use. Each chart shows only once its group has a count.
+  function renderOtherTools(data) {
+    var shown = false;
+    [
+      { key: "editors", ariaLabel: "Editors opening course assignment folders, by editor" },
+      { key: "notebooks", ariaLabel: "Notebook kernels started in course assignment folders, by app" }
+    ].forEach(function (group) {
+      var rows = data[group.key] || [];
+      if (!rows.length) return;
+      var plot = document.getElementById(group.key + "-plot");
+      document.getElementById(group.key + "-heading").hidden = false;
+      plot.hidden = false;
+      drawBars({
+        container: plot,
+        ariaLabel: group.ariaLabel,
+        rows: rows.map(function (row) {
+          return {
+            label: row.tool,
+            value: row.sessions,
+            note: num(row.sessions) + " (" + plural(row.installs, "folder", "folders") + ")"
+          };
+        })
+      });
+      shown = true;
+    });
+    return shown;
+  }
+
   load(
     "data/ai-usage.json",
     function (data) {
@@ -779,6 +807,10 @@
       if (renderAiUsage(data)) {
         document.getElementById("ai-usage").hidden = false;
         stamp("ai-usage-generated", data.generated);
+      }
+      if (renderOtherTools(data)) {
+        document.getElementById("other-tools").hidden = false;
+        stamp("other-tools-generated", data.generated);
       }
     },
     function () {

@@ -64,6 +64,23 @@ extra_css:
   </p>
 </section>
 
+<section class="meta-section" id="other-tools" hidden>
+  <h2>Editors and notebook apps</h2>
+  <p>
+    The same folders also count the tools that are not AI agents: an editor opening the folder (VS Code and its forks, through a <code>.vscode/tasks.json</code> task) and a notebook kernel starting (the notebook's first cell, which names the app running it: Jupyter, VS Code, Colab, PyCharm, ...). These are kept apart from the AI numbers above.
+  </p>
+
+  <h3 id="editors-heading" hidden>Folder opens, by editor</h3>
+  <div id="editors-plot" class="meta-loading" hidden></div>
+
+  <h3 id="notebooks-heading" hidden>Kernel starts, by notebook app</h3>
+  <div id="notebooks-plot" class="meta-loading" hidden></div>
+
+  <p class="meta-note">
+    Both undercount. VS Code runs folder tasks only in a trusted folder and only after a one-time "allow automatic tasks" prompt, and a kernel is counted only once its first cell runs. Last built <span id="other-tools-generated">—</span>.
+  </p>
+</section>
+
 <section class="meta-section" id="words">
   <h2>Word frequencies</h2>
   <p>
