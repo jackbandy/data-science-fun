@@ -2,7 +2,7 @@
 ## Materials for CS 418: Intro to Data Science
 ### University of Illinois Chicago (UIC)
 
-These are in-progress materials for a section of CS 418 (Intro to Data Science) in Fall 2026. This repository is intended as the main container for reference materials, including slides, worksheets, demo code, etc. 
+These are in-progress materials for a section of [CS 418 (Intro to Data Science)](https://catalog.uic.edu/search/?P=CS%20418) in Fall 2026. This repository is intended as the main container for reference materials, including slides, worksheets, demo code, etc. 
 
 The public-facing site, [DoDataScience.fun](https://dodatascience.fun/), lives at the `docs/` folder, deployed via GitHub Pages.
 
