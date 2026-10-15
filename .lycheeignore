@@ -36,6 +36,8 @@ https://.*\.uic\.edu/.*login
 # `openssl s_client -connect www.uic.edu:443` verifies cleanly.
 ^https://www\.uic\.edu/?$
 
+^https://online\.stat\.psu\.edu/stat462/node/145/?$
+
 # --- Slow from CI, fine for real people --------------------------------------
 # Serves in well under a second from a normal connection but has timed out
 # against the 20s limit from GitHub's runners. The link itself is good.
