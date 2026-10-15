@@ -101,6 +101,9 @@ def tidy(ax, *, grid="y", spines=("left", "bottom")):
     for lbl in (ax.xaxis.label, ax.yaxis.label):
         lbl.set_color(STEEL)
         lbl.set_fontsize(13)
+    # Horizontal y-axis label across the top of the axis (STYLE.md), so it reads without tilting your head.
+    ax.yaxis.label.set(rotation=0, ha="left", va="bottom")
+    ax.yaxis.set_label_coords(0, 1.025)
     return ax
 
 

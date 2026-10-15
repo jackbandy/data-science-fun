@@ -1,0 +1,179 @@
+#!/usr/bin/env python3
+"""Coin-flip hypothesis-test and randomness figures for the Week 7 slides.
+
+The Week 2 coin (10 heads in 14 flips, see make_coin_flip_worldviews.py) as a hypothesis test: its null distribution and the power of 14 flips, plus a streaks figure for "what does random look like?"
+
+NOTICE: this file was substantially drafted by an LLM coding system and has not yet been reviewed. Check every figure against the slide it illustrates.
+
+Follows docs/assets/STYLE.md: golden-ratio canvases, grayscale neutrals with orange reserved for the focal element, horizontal y-axis labels, vendored Libre Franklin drawn as paths so each SVG is self-contained. Everything is exact binomial math or simulated with a fixed seed.
+
+Usage:  python3 make_coin_flip_tests.py [name ...]
+        (docs/slides/.venv has every dependency: numpy, scipy, matplotlib)
+"""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import font_manager
+from scipy import stats
+
+OUT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = OUT_DIR.parents[2]
+FONT_PATH = OUT_DIR.parent / "fonts" / "libre-franklin" / "LibreFranklin-Regular.ttf"
+
+# STYLE.md palette
+INK = "#1A1A1A"
+STEEL = "#565A5C"
+MUTED = "#777777"
+QUIET = "#AAAAAA"
+BORDER = "#DDDDDD"
+SOFT_GRAY = "#F4F4F2"
+PAPER = "#FFFFFF"
+ORANGE = "#F9461C"
+ORANGE_DARK = "#C83214"
+
+PHI = (1 + 5**0.5) / 2
+WIDTH_PX = 1000
+DPI = 100
+SEED = 418
+
+FIGURES: dict[str, callable] = {}
+
+
+def figure(name: str):
+    """Register a builder under the filename stem it writes."""
+    def wrap(fn):
+        FIGURES[name] = fn
+        return fn
+    return wrap
+
+
+def new_fig(width=WIDTH_PX, height=None, **kw):
+    height = height or round(width / PHI)
+    fig, ax = plt.subplots(figsize=(width / DPI, height / DPI), dpi=DPI, **kw)
+    fig.patch.set_facecolor(PAPER)
+    for a in np.atleast_1d(ax).ravel():
+        a.set_facecolor(PAPER)
+    return fig, ax
+
+
+def tidy(ax, *, grid="y", spines=("left", "bottom")):
+    """The deck's default axis furniture: two hairline spines, one grid."""
+    for side in ("top", "right", "left", "bottom"):
+        ax.spines[side].set_visible(side in spines)
+        ax.spines[side].set_color(BORDER)
+    if grid:
+        ax.grid(axis=grid, color=BORDER, linewidth=0.8, alpha=0.7)
+    ax.set_axisbelow(True)
+    ax.tick_params(colors=STEEL, labelsize=12, length=0)
+    for lbl in (ax.xaxis.label, ax.yaxis.label):
+        lbl.set_color(STEEL)
+        lbl.set_fontsize(14)
+    # Horizontal y-axis label across the top of the axis (STYLE.md), so it reads without tilting your head.
+    ax.yaxis.label.set(rotation=0, ha="left", va="bottom")
+    ax.yaxis.set_label_coords(0, 1.025)
+    return ax
+
+
+def save(fig, name):
+    out = OUT_DIR / f"{name}.svg"
+    fig.savefig(out, format="svg", facecolor=PAPER, bbox_inches="tight", pad_inches=0.12)
+    plt.close(fig)
+    print(f"  wrote {out.relative_to(REPO_ROOT)}")
+
+
+def _flip_grid(ax, flips, title):
+    longest = run = 1
+    for a, b in zip(flips, flips[1:]):
+        run = run + 1 if a == b else 1
+        longest = max(longest, run)
+    for i, f in enumerate(flips):
+        r, c = divmod(i, 20)
+        ax.add_patch(plt.Rectangle((c, -r), 0.86, 0.86, color=ORANGE if f else BORDER))
+    ax.set_title(f"{title}   (longest streak: {longest})", fontsize=15, color=INK, loc="left", pad=6)
+    ax.set(xlim=(-0.2, 20), ylim=(-4.2, 1))
+    ax.set_aspect("equal")
+    ax.axis("off")
+
+
+@figure("coin-null-distribution")
+def coin_null_distribution():
+    """Heads in 14 flips of a fair coin; the bars at least as extreme as 10 heads make up the two-sided p-value."""
+    k = np.arange(15)
+    pmf = stats.binom.pmf(k, 14, 0.5)
+    extreme = (k >= 10) | (k <= 4)
+    p = pmf[extreme].sum()
+    fig, ax = new_fig()
+    ax.bar(k, pmf, color=np.where(extreme, ORANGE, QUIET), width=0.8, zorder=3)
+    ax.annotate("observed:\n10 heads", xy=(10, pmf[10] + 0.004), xytext=(11.6, 0.15), color=INK, fontsize=14, ha="center", arrowprops=dict(arrowstyle="-", color=STEEL, lw=1))
+    ax.text(0.02, 0.97, f"If $H_0$ (fair coin) is true,\nP(this extreme or more) = {p:.2f}", transform=ax.transAxes, color=ORANGE_DARK, fontsize=15, va="top")
+    ax.set(xticks=k, xlabel="Number of heads in 14 flips", ylabel="Probability if the coin is fair")
+    tidy(ax)
+    return fig
+
+
+@figure("power-coin")
+def power_coin():
+    """How often a two-sided binomial test at alpha = .05 rejects 'fair' for a coin that lands heads 70% of the time."""
+    ns = np.arange(5, 151)
+    power = []
+    for n in ns:
+        k = np.arange(n + 1)
+        pvals = np.array([stats.binomtest(int(i), int(n), 0.5).pvalue for i in k])
+        power.append(stats.binom.pmf(k, n, 0.7)[pvals < 0.05].sum())
+    power = np.array(power)
+    fig, ax = new_fig()
+    ax.plot(ns, power, color=ORANGE, linewidth=3, zorder=3)
+    p14 = power[ns == 14][0]
+    ax.scatter([14], [p14], color=INK, s=50, zorder=4)
+    ax.annotate(f"14 flips: rejects only {p14:.0%} of the time", xy=(14, p14), xytext=(30, 0.12), color=INK, fontsize=14, arrowprops=dict(arrowstyle="-", color=STEEL, lw=1))
+    ax.axhline(0.8, color=STEEL, linewidth=1, linestyle=(0, (4, 4)))
+    ax.text(150, 0.82, "80% power", color=STEEL, fontsize=13, ha="right")
+    ax.set(ylim=(0, 1.02), xlim=(0, 152), xlabel="Number of flips", ylabel="Power: P(reject $H_0$)")
+    ax.yaxis.set_major_formatter(lambda v, _: f"{v:.0%}")
+    ax.set_title("A coin that lands heads 70% of the time", fontsize=16, color=INK, loc="left", pad=34)
+    tidy(ax)
+    return fig
+
+
+@figure("streaks")
+def streaks():
+    """100 fair coin flips beside 100 'flips' that switch too often, the way people tend to write random sequences."""
+    rng = np.random.default_rng(SEED)
+    fair = rng.integers(0, 2, 100)
+    switchy = [int(rng.integers(0, 2))]
+    for _ in range(99):
+        switchy.append(1 - switchy[-1] if rng.random() < 0.7 else switchy[-1])
+    fig, axes = new_fig(height=560, nrows=2)
+    _flip_grid(axes[0], list(switchy), "Sequence A")
+    _flip_grid(axes[1], list(fair), "Sequence B")
+    fig.subplots_adjust(hspace=0.25)
+    return fig
+
+
+def main(argv: list[str]) -> None:
+    if FONT_PATH.exists():
+        font_manager.fontManager.addfont(str(FONT_PATH))
+        plt.rcParams["font.family"] = font_manager.FontProperties(fname=str(FONT_PATH)).get_name()
+    # Text as paths, per STYLE.md: the SVG stays self-contained.
+    plt.rcParams["svg.fonttype"] = "path"
+
+    wanted = argv or list(FIGURES)
+    unknown = [name for name in wanted if name not in FIGURES]
+    if unknown:
+        raise SystemExit(f"unknown figure(s): {', '.join(unknown)}\navailable: {', '.join(FIGURES)}")
+    print(f"writing {len(wanted)} figure(s) to {OUT_DIR.relative_to(REPO_ROOT)}")
+    for name in wanted:
+        save(FIGURES[name](), name)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

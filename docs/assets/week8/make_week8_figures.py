@@ -89,7 +89,15 @@ def tidy(ax, *, grid="y", spines=("left", "bottom")):
     for lbl in (ax.xaxis.label, ax.yaxis.label):
         lbl.set_color(STEEL)
         lbl.set_fontsize(13)
+    # Horizontal y-axis label across the top of the axis (STYLE.md), so it reads without tilting your head.
+    ax.yaxis.label.set(rotation=0, ha="left", va="bottom")
+    ax.yaxis.set_label_coords(0, 1.025)
     return ax
+
+
+def supylabel_top(fig, text):
+    """A shared y-axis label for a row of panels, horizontal above them like tidy() does for one axis."""
+    fig.text(0, 1.0, text, color=STEEL, fontsize=13, ha="left", va="bottom")
 
 
 def save(fig, name):
@@ -496,8 +504,8 @@ def _cls_four(name):
             if i:
                 ax.tick_params(labelleft=False)
         fig.supxlabel(ex["xlabel"], color=STEEL, fontsize=13)
-        fig.supylabel(ex["ylabel"], color=STEEL, fontsize=13)
         fig.tight_layout()
+        supylabel_top(fig, ex["ylabel"])
         return fig
     return build
 
@@ -602,8 +610,8 @@ def cls_penguins_split():
     _same_limits(axes)
     ex = sets["train"]
     fig.supxlabel(ex["xlabel"], color=STEEL, fontsize=13)
-    fig.supylabel(ex["ylabel"], color=STEEL, fontsize=13)
     fig.tight_layout()
+    supylabel_top(fig, ex["ylabel"])
     return fig
 
 
@@ -625,8 +633,8 @@ def cls_penguins_validation():
             ax.tick_params(labelleft=False)
     ex = train
     fig.supxlabel(ex["xlabel"], color=STEEL, fontsize=13)
-    fig.supylabel(ex["ylabel"], color=STEEL, fontsize=13)
     fig.tight_layout()
+    supylabel_top(fig, ex["ylabel"])
     return fig
 
 
