@@ -106,15 +106,22 @@ def save(fig, name):
     print(f"  wrote {out.relative_to(REPO_ROOT)}")
 
 
-def _flip_grid(ax, flips, title):
-    longest = run = 1
-    for a, b in itertools.pairwise(flips):
-        run = run + 1 if a == b else 1
-        longest = max(longest, run)
+def _flip_grid(ax, flips, title, *, annotate, streak=4):
+    """Draw 100 flips as a 5 x 20 grid; annotated, it outlines every flip in a run of `streak` or more and states the run counts."""
+    run_len = []
+    start = 0
+    for i in range(1, len(flips) + 1):
+        if i == len(flips) or flips[i] != flips[start]:
+            run_len += [i - start] * (i - start)
+            start = i
+    switches = sum(a != b for a, b in itertools.pairwise(flips))
+    long_runs = sum(1 for i, n in enumerate(run_len) if n >= streak and (i == 0 or flips[i] != flips[i - 1]))
     for i, f in enumerate(flips):
         r, c = divmod(i, 20)
-        ax.add_patch(plt.Rectangle((c, -r), 0.86, 0.86, color=ORANGE if f else BORDER))
-    ax.set_title(f"{title}   (longest streak: {longest})", fontsize=15, color=INK, loc="left", pad=6)
+        in_streak = annotate and run_len[i] >= streak
+        ax.add_patch(plt.Rectangle((c, -r), 0.86, 0.86, facecolor=ORANGE if f else BORDER, edgecolor=INK if in_streak else "none", linewidth=2.5 if in_streak else 0))
+    label = f"{title}: {switches} switches, longest streak {max(run_len)}, {long_runs} streaks of {streak}+ (outlined)" if annotate else title
+    ax.set_title(label, fontsize=15, color=INK, loc="left", pad=6)
     ax.set(xlim=(-0.2, 20), ylim=(-4.2, 1))
     ax.set_aspect("equal")
     ax.axis("off")
@@ -160,19 +167,31 @@ def power_coin():
     return fig
 
 
-@figure("streaks")
-def streaks():
-    """100 fair coin flips beside 100 'flips' that switch too often, the way people tend to write random sequences."""
+def _streaks(annotate):
+    """100 fair coin flips beside 100 made-up 'flips' written the way people tend to: switching too often and never repeating more than three times."""
     rng = np.random.default_rng(SEED)
     fair = rng.integers(0, 2, 100)
     switchy = [int(rng.integers(0, 2))]
     for _ in range(99):
-        switchy.append(1 - switchy[-1] if rng.random() < 0.7 else switchy[-1])
+        too_long = len(switchy) >= 3 and switchy[-1] == switchy[-2] == switchy[-3]
+        switchy.append(1 - switchy[-1] if too_long or rng.random() < 0.7 else switchy[-1])
     fig, axes = new_fig(height=560, nrows=2)
-    _flip_grid(axes[0], list(switchy), "Sequence A")
-    _flip_grid(axes[1], list(fair), "Sequence B")
+    _flip_grid(axes[0], list(switchy), "Sequence A", annotate=annotate)
+    _flip_grid(axes[1], list(fair), "Sequence B", annotate=annotate)
     fig.subplots_adjust(hspace=0.25)
     return fig
+
+
+@figure("streaks-plain")
+def streaks_plain():
+    """The two sequences with no hints, for asking which one is random."""
+    return _streaks(annotate=False)
+
+
+@figure("streaks")
+def streaks():
+    """The same two sequences with switches and long streaks marked, for the answer."""
+    return _streaks(annotate=True)
 
 
 def main(argv: list[str]) -> None:
