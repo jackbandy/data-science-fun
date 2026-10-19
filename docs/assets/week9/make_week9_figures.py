@@ -438,6 +438,47 @@ def choose_k(step):
     return fig
 
 
+@steps("k-accuracy", 3)
+def k_accuracy(step):
+    """Train vs. held-out accuracy as k grows, averaged over 40 draws; `depth_accuracy`'s data."""
+    ks = np.array([1, 3, 5, 7, 9, 11, 15, 21, 31, 41, 51, 75, 101, 125, 149])  # odd, so votes never tie
+    train, test = np.zeros(len(ks)), np.zeros(len(ks))
+    reps = 40
+    for r in range(reps):
+        rng = np.random.default_rng(1000 + r)
+        Xtr, ytr = two_class(150, rng, flip=0.1)
+        Xte, yte = two_class(1500, rng, flip=0.1)
+        for i, k in enumerate(ks):
+            m = KNeighborsClassifier(n_neighbors=int(k)).fit(Xtr, ytr)
+            train[i] += m.score(Xtr, ytr)
+            test[i] += m.score(Xte, yte)
+    train /= reps
+    test /= reps
+    fig, ax = new_fig(height=560)
+    tidy(ax, grid="y")
+    ax.plot(ks, train, color=STEEL, lw=3, marker="o", ms=6)
+    ax.text(ks[-1] * 1.12, train[-1], "training", color=STEEL, fontsize=16, va="bottom")
+    if step >= 1:
+        ax.plot(ks, test, color=ORANGE, lw=3, marker="o", ms=6)
+        ax.text(ks[-1] * 1.12, test[-1], "held-out", color=ORANGE, fontsize=16, va="top")
+    if step >= 2:
+        b = int(np.argmax(test))
+        ax.scatter([ks[b]], [test[b]], s=260, facecolor="none", edgecolor=INK, lw=2.2, zorder=5)
+        ax.annotate(f"best held-out: k = {ks[b]}", (ks[b], test[b]), xytext=(6, 0.94),
+                    fontsize=16, color=INK, arrowprops=dict(arrowstyle="-", color=INK, lw=1.2))
+        ax.text(1, 0.56, "overfit\n(k = 1)", fontsize=14, color=STEEL)
+        ax.text(105, 0.6, "underfit\n(k ≈ N)", fontsize=14, color=STEEL, ha="right")
+    ax.set_xscale("log")
+    ax.set_xlim(0.8, 330)
+    ax.set_ylim(0.5, 1.02)
+    ax.set_xticks([1, 3, 10, 30, 100])
+    ax.set_xticklabels(["1", "3", "10", "30", "100"])
+    ax.set_xlabel("k (number of neighbors, log scale)")
+    ax.set_ylabel("accuracy")
+    ax.yaxis.set_major_formatter(lambda v, _: f"{v:.0%}")
+    return fig
+
+
 # ------------------------------------------------------ k-NN pitfalls
 
 # Week 8's study-hours students (`supervised-two-kinds` in week8/make_week8_figures.py), same seed and draws, so the points match last week's slide. Pass (score of 70 or more) is the positive class.

@@ -34,7 +34,7 @@ CS 418 · Week 9 · 🟠 Halsted 🟠
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Collect Data From Neighbors
+- Data From Neighbors
 - Similarity Metrics
 - Distance Metrics
 - k-NN Details
@@ -75,7 +75,6 @@ Worksheet checkpoint 1:
 - Fill in the **Self** column: 1 if you have taken the course, 0 if not.
 - Talk to five classmates and fill in a column for each one.
     - Only one of the five can be in your project group.
-- Keep your table: today's examples use exactly this kind of data.
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -90,14 +89,14 @@ Worksheet checkpoint 1:
 Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf) ("Geometry and Nearest Neighbors").
 :::
 
-"suppose you need to predict whether Alice will like Algorithms. Perhaps we can try to find another student who is most 'similar' to Alice, in terms of favorite courses." (CIML)
+suppose you need to predict whether Alice will like [a class]. Perhaps we can try to find another student who is most 'similar' to Alice, in terms of favorite courses.
 
 ::: {.incremental}
 - Our version: did Alice take **CS 412** (Intro to Machine Learning)?
     - **predictors $X$**: the other 11 courses, took it (1) or not (0)
     - **class label $y$**: took CS 412 (▲) or not (●)
-- "If it walks like a duck, quacks like a duck, and looks like a duck, then it's probably a duck."
-- A $k$-nearest neighbors classifier assigns class labels to observations based on the class labels of the $k$ 'most similar' observations ($k$ nearest neighbors).
+- "If it walks like a duck, quacks like a duck, and looks like a duck..."
+- A $k$-nearest neighbors classifier assigns class labels to observations based on the class labels of the $k$ 'most similar' observations
 :::
 
 ---
@@ -132,15 +131,16 @@ Synthetic: 20 classmates and Alice, from the code demo's generator.
 Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf), §3.1 ("From Data to Feature Vectors").
 :::
 
-- Alice $= (0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0)$
-    - one entry per course, CS 100 through CS 488.
+- Obviously a student is much more than a vector
+- Example: Alice $= (0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0)$
+    - one entry per course
 
 ::: {.incremental}
 - prediction tasks as mapping inputs to outputs
     - each input is "nothing more than lists of feature values." (CIML)
 - Binary features become 0 (for false) or 1 (for true)
 - Categorical features (say, major: CS, DS, or CE)
-    - with V possible values get mapped to V-many binary indicator features.
+    - map to V-many binary indicator features.
     - Why not CS = 0, DS = 1, CE = 2?
     - That model suggests that CS is closer to DS than to CE
 :::
@@ -149,7 +149,7 @@ Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIM
 
 ---
 
-## Similarity for Binary Features {.smaller}
+## Similarity Metrics for Binary Features {.smaller}
 
 $N_{11}$: attributes where both $a$ and $b$ are 1; $N_{00}$: both 0; $N_{10}$, $N_{01}$: they disagree.
 
@@ -362,12 +362,20 @@ Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)*, v0.99, [ch.
 
 ---
 
-## Memorizing or Generalizing?
+## Memorizing or Generalizing? {.split}
 
+::: {.split-content .golden-columns}
+
+::: {}
 Worksheet checkpoint 5:
 
 - In your own words, what is the difference between memorizing and generalizing?
 - With $k = 1$, every training point's nearest neighbor is itself. Is that memorizing or generalizing? Why?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
 
 ---
 
@@ -376,7 +384,8 @@ Worksheet checkpoint 5:
 ::: {.incremental}
 - with K = 1, risk of overfitting
 - if K is large (for instance, K = N), then KNN-Predict will always predict the majority class (underfitting)
-- "So, K is a **hyperparameter** of the KNN algorithm that allows us to trade-off between overfitting (small value of K) and underfitting (large value of K)." (CIML)
+- K is a **hyperparameter** of the KNN algorithm
+    - trade-off between overfitting (small value of K) and underfitting (large value of K).
 - "a learned model with a decision boundary that is really jagged (like the coastline of Norway) is really complex and prone to overfitting."
 - "A learned model with a decision boundary that is really simple (like the bounary [*sic*] between Arizona and Utah) is potentially underfit." (CIML)
 :::
@@ -403,6 +412,30 @@ Worksheet checkpoint 5:
 
 ::: {.caption}
 The code demo's 1,000 synthetic students: 600 training, 200 validation, Jaccard similarity.
+:::
+
+---
+
+## k Is a Hyperparameter {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/k-accuracy-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Training accuracy against k on a log scale from 1 to 149: 100 percent at k equals 1, falling to about 83 percent by k of 21, then dropping to about 56 percent near k equals N.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/k-accuracy-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Added in orange, held-out accuracy: about 74 percent at k equals 1, rising to about 82 percent, flat through k of 100, then dropping to about 54 percent.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/k-accuracy-v2.svg" class="figure figure-plain" style="max-height:420px" alt="The peak of the held-out curve is circled, labeled best held-out: k equals 75. Left end labeled overfit, k equals 1; right end labeled underfit, k near N.">
+:::
+
+::::
+
+::: {.caption}
+"So, K is a hyperparameter of the KNN algorithm that allows us to trade-off between overfitting (small value of K) and underfitting (large value of K)." (CIML). Synthetic data, 10% labels flipped; average of 40 draws of 150 training and 1,500 held-out points.
 :::
 
 ---
@@ -482,20 +515,20 @@ Day of birth is noise, but its range (1 to 31) dwarfs hours (0 to 10), so it dec
 ::: {.column width="50%"}
 **Advantages**
 
-- "Does not require training a model (lazy learner)."
-- "Applicable to categorical and numeric attributes."
-- "Makes no assumptions about the probability distribution of the data."
-- "Flexibility. Can produce decision boundaries of any shape."
+- Does not require training a model (lazy learner)
+- Applicable to categorical and numeric attributes.
+- no assumptions/criterion about the probability distribution of the data
+- can produce decision boundaries of any shape
 :::
 
 ::: {.column width="50%"}
 **Disadvantages**
 
-- "Classifying each observation from the test set can be computationally expensive."
-- "Easy to overfit due to noise or high dimensionality."
-- "Sensitive to redundant or irrelevant attributes."
-- "Sensitive to the scale of the data."
-- "No descriptive value. Does not provide a model of the relationship between the class label and the attributes."
+- can be computationally expensive.
+- Easy to overfit (due to noise or high dimensionality)
+- Sensitive to redundant or irrelevant attributes
+- sensitive to the scale of the data
+- No descriptive value, i.e. no meaningful relationship between the class label and the attributes, other than "looks similar to other examples"
 :::
 
 ::::
@@ -540,40 +573,6 @@ To classify, "follow the decision tree from the root node to a leaf node." ([Bel
 
 ---
 
-## Elbow Neighbor Exercise
-
-:::: {.columns}
-
-::: {.column width="55%"}
-:::: {.r-stack}
-
-::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/tax-tree-v0.svg" class="figure figure-plain" style="max-height:380px" alt="The tax-cheating decision tree.">
-:::
-
-::: {.fragment fragment-index=1}
-<img src="../assets/week9/tax-path-ex.svg" class="figure figure-plain" style="max-height:380px" alt="The path Refund, No, Marital Status, Single, Taxable Income, over 80K, YES, in orange. Caption: D, single, no refund, income 85K, over 80K, so YES.">
-:::
-
-::::
-:::
-
-::: {.column width="45%"}
-According to this tree, which of these people will cheat on their taxes?
-
-- **A.** Divorced, got a refund, taxable income 90K.
-- **B.** Single, no refund, taxable income 60K.
-- **C.** Married, no refund, taxable income 75K.
-- **D.** Single, no refund, taxable income 85K.
-
-::: {.fragment fragment-index=1}
-A: Refund = Yes, so NO. B: under 80K, so NO. C: Married, so NO.
-:::
-:::
-
-::::
-
----
 
 ## Example Tree: Hours Studied {.image-frame-slide}
 
@@ -689,12 +688,12 @@ Sources: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CI
 
 ::: {.incremental}
 - "It is computationally infeasible to consider all of these to try to choose the 'best' one." (CIML)
-    - "Finding the best tree is NP-Hard!" (Zheleva)
-- Instead, "we will build our decision tree greedily. We will begin by asking: If I could only ask one question, what question would I ask?" (CIML)
-- The greedy strategy (Bello):
-    1. "Start with a single node containing all observations in the training set (root node)."
-    2. "Split node into sub-nodes based on an attribute that optimizes certain splitting criterion."
-    3. "Repeat on each sub-node until reaching certain stopping criterion."
+    - NP-Hard! (according to Prof. Zheleva)
+- Instead, "we will build our decision tree greedily. We will begin by asking: If I could only ask one question, what question would I ask?"
+-  greedy strategy:
+    1. Start with a single node containing all observations in the training set (root node).
+    2. Split node into sub-nodes based on an attribute that optimizes certain splitting criterion.
+    3. Repeat on each sub-node until reaching certain stopping criterion.
 :::
 
 ---
@@ -780,16 +779,14 @@ CS 251 splits no one: all 20 took it (it's the CS 418 prerequisite).
 ## How Much Does a Split Help?
 
 ::: {.caption}
-Sources: CIML §1.3; Gonzalo Bello Lander, CS 418 Lecture 12 (2026), slides 14–16; scikit-learn user guide, ["Classification criteria"](https://scikit-learn.org/stable/modules/tree.html#classification-criteria).
+See also scikit-learn user guide, ["Classification criteria"](https://scikit-learn.org/stable/modules/tree.html#classification-criteria).
 :::
 
-Worksheet checkpoint 7: try one of these on your good and bad splits from checkpoint 6.
 
 - **Majority vote**: guess the majority class on each side and count how many are right; higher is better. (CIML §1.3)
-- **Information gain**: parent entropy minus the size-weighted entropy of the children; higher is better. (Bello)
+- **Information gain**: the drop in entropy from the split, parent entropy minus the size-weighted entropy of the children; higher is better.
     - $H = -\sum_k p_k \log_2 p_k$. The parent, 20 pass and 10 fail, has $H \approx 0.918$.
 - **Gini impurity**: $G = 1 - \sum_k p_k^2$, scikit-learn's default criterion; lower in the children is better.
-- Check with "Studied more than 6 hours?": majority vote $10 + 17 = 27$ of 30; $IG = 0.918 - \tfrac{13}{30}(0.779) - \tfrac{17}{30}(0) \approx 0.58$.
 - We'll talk about these metrics more soon.
 
 ---
@@ -1096,6 +1093,30 @@ Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIM
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/depth-accuracy-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Training accuracy against max depth from 0 to 15: it climbs from about 53 percent to 100 percent and never goes down.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/depth-accuracy-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Added in orange, held-out accuracy: it rises to about 79 percent near depth 3, then slowly falls to about 73 percent.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/depth-accuracy-v2.svg" class="figure figure-plain" style="max-height:420px" alt="The peak of the held-out curve is circled, labeled best held-out: depth 3. Left end labeled underfit, empty tree; right end labeled overfit, near-full tree.">
+:::
+
+::::
+
+::: {.caption}
+"By playing with this depth knob, we can adjust between underfitting (the empty tree, depth = 0) and overfitting (the full tree, depth = ∞). Such a knob is called a hyperparameter." (CIML §2.6). Synthetic data, 10% labels flipped; average of 40 draws of 150 training and 1,500 held-out points.
+:::
+
+---
+
+## Choosing Depth on a Bigger Class {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
 <img src="../assets/week9/survey-depth-accuracy-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Training accuracy against max depth from 0 to 10: it climbs from about 71 percent to about 88 percent and never goes down.">
 :::
 
@@ -1110,7 +1131,7 @@ Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIM
 ::::
 
 ::: {.caption}
-"By playing with this depth knob, we can adjust between underfitting (the empty tree, depth = 0) and overfitting (the full tree, depth = ∞). Such a knob is called a hyperparameter." (CIML §2.6). The code demo's 1,000 synthetic students.
+The code demo's 1,000 synthetic students: 600 training, 200 validation, entropy splits.
 :::
 
 ---
