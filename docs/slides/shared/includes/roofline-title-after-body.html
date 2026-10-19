@@ -1,0 +1,85 @@
+<style>
+/* Experimental roofline title (week9.qmd, .experimental-roofline-title only). The slide's own h1/p stay in the DOM for the menu and screen readers; the visible copy is drawn along the photo's roofline by the script below. */
+.reveal .slides section.experimental-roofline-title > h1,
+.reveal .slides section.experimental-roofline-title > p { visibility: hidden; }
+.reveal .slides section.experimental-roofline-title { border-top: none; }
+.roofline-title-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.roofline-title-overlay line { stroke: #f9461c; stroke-linecap: butt; }
+/* Same faces and whites as the .photo-title h1 and p on other weeks' title slides. */
+.roofline-title-overlay .roofline-title-main { font-family: "Big Shoulders", "Arial Narrow", Arial, sans-serif; font-weight: 700; fill: #fff; filter: url(#roofline-title-main-shadow); }
+.roofline-title-overlay .roofline-title-sub { font-family: "ITC Franklin Gothic", "Libre Franklin", "Franklin Gothic", "Franklin Gothic Medium", Arial, sans-serif; fill: rgba(255, 255, 255, 0.94); filter: url(#roofline-title-sub-shadow); }
+</style>
+<script>
+// Experimental roofline title. A slide with class experimental-roofline-title and data-roofline="x1 y1 x2 y2" (photo pixels, against data-roofline-image="width height") gets an orange line drawn along that edge of its background photo, running 5% past both edges of the frame, with the h1 sitting on the line and the first p hanging below it. The SVG lives in the slide's background element and uses preserveAspectRatio slice, the SVG twin of background-size: cover, so the line stays on the roof at any window shape and in print.
+(() => {
+  const NS = "http://www.w3.org/2000/svg";
+  // Sizes in photo pixels; the 4032x3024 Halsted photo shows ~2268 px of height in a 16:9 window, so 3.15 px ≈ 1 slide px.
+  const STROKE = 36;
+  const TITLE_SIZE = 270;
+  const SUB_SIZE = 72;
+  const GAP = 22;
+  const OVERHANG = 0.05;
+  // Darker than the 0.55/0.6 text-shadows on other photo titles: this text sits on pale sky and snow. Each pair is a tight shadow for edges plus a wide one for glow.
+  const SHADOWS = {
+    "roofline-title-main-shadow": [[6, 10, 0.6], [6, 40, 0.55]],
+    "roofline-title-sub-shadow": [[3, 5, 0.85], [3, 22, 0.7]],
+  };
+
+  function el(name, attrs) {
+    const node = document.createElementNS(NS, name);
+    for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+    return node;
+  }
+
+  function shadowDefs() {
+    const defs = el("defs", {});
+    for (const [id, layers] of Object.entries(SHADOWS)) {
+      const filter = el("filter", { id, x: "-20%", y: "-100%", width: "140%", height: "300%" });
+      for (const [dy, blur, opacity] of layers) filter.appendChild(el("feDropShadow", { dx: 0, dy, stdDeviation: blur, "flood-color": "#000", "flood-opacity": opacity }));
+      defs.appendChild(filter);
+    }
+    return defs;
+  }
+
+  function draw(slide) {
+    const background = Reveal.getSlideBackground(slide);
+    if (!background || background.querySelector(".roofline-title-overlay")) return;
+    const [x1, y1, x2, y2] = slide.dataset.roofline.split(/\s+/).map(Number);
+    const [w, h] = slide.dataset.rooflineImage.split(/\s+/).map(Number);
+    const inset = Number(slide.dataset.rooflineInset || 0);
+    const radians = Math.atan2(y2 - y1, x2 - x1);
+    // Distance along the roofline from (x1, y1) to where it crosses photo column x.
+    const along = (x) => (x - x1) / Math.cos(radians);
+
+    const svg = el("svg", { class: "roofline-title-overlay", viewBox: `0 0 ${w} ${h}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true" });
+    svg.appendChild(shadowDefs());
+    const group = el("g", { transform: `translate(${x1} ${y1}) rotate(${radians * 180 / Math.PI})` });
+    group.appendChild(el("line", { x1: along(-OVERHANG * w), y1: 0, x2: along((1 + OVERHANG) * w), y2: 0, "stroke-width": STROKE }));
+
+    const title = el("text", { class: "roofline-title-main", x: inset, y: -(STROKE / 2 + GAP), "font-size": TITLE_SIZE });
+    title.textContent = slide.querySelector("h1").textContent.trim();
+    group.appendChild(title);
+
+    const subtitle = slide.querySelector(":scope > p");
+    if (subtitle) {
+      const sub = el("text", { class: "roofline-title-sub", x: inset, y: STROKE / 2 + GAP, "font-size": SUB_SIZE, "dominant-baseline": "hanging" });
+      sub.textContent = subtitle.textContent.trim();
+      group.appendChild(sub);
+    }
+
+    svg.appendChild(group);
+    background.appendChild(svg);
+  }
+
+  function drawAll() {
+    document.querySelectorAll(".reveal .slides section.experimental-roofline-title[data-roofline]").forEach(draw);
+  }
+
+  function boot() {
+    if (!window.Reveal || !Reveal.isReady()) { window.setTimeout(boot, 50); return; }
+    drawAll();
+  }
+
+  document.addEventListener("DOMContentLoaded", boot);
+})();
+</script>

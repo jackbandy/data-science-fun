@@ -25,6 +25,8 @@ pyarrow
 # it. Lift once arviz imports matplotlib.style.core directly.
 matplotlib<3.12
 statsmodels
+# week9's k-NN and decision tree demo; 1.x API (KNeighborsClassifier, plot_tree).
+scikit-learn>=1.5,<2
 # week8's R-style plot(lm) diagnostics; 0.x, so cap at the next minor in case the API moves.
 lmdiag>=0.4.1,<0.5
 networkx

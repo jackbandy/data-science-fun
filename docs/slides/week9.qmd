@@ -1,40 +1,45 @@
 ---
 title: "Week 9 (CS 418 @ UIC)"
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
+jupyter: python3
 format:
   revealjs:
+    fig-format: svg
+    include-after-body:
+      - shared/includes/roofline-title-after-body.html
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 9</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week9.html">dodatascience.fun/slides/week9</a></span>'
 ---
 
-
 # Week 9 Slide Deck {.course-title}
 
-## Decision Trees and KNNs; SVMs and Kernels
+<h2>Decision Trees and KNNs; SVMs and Kernels</h2>
 
 Jack Bandy
 2026
 
----
-
-# Week 9, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
+# Week 9, Day 1 {.course-title .photo-title .experimental-roofline-title data-state="photo-title" data-roofline="890 952 4032 786" data-roofline-image="4032 3024" data-roofline-inset="160" background-image="../assets/orange-line-stops-better/stop10-halsted-b.jpg" background-size="cover"}
 
 CS 418 · Week 9 · 🟠 Halsted 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop10-halsted-b.jpg" background-size="cover"}
 
 ---
 
-# Map for Week 9, Day 1 {.split}
+## Map for Week 9, Day 1 {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Week 9: Halsted (Day 1)
-- Day 1
-    - Classification Review
-    - k-Nearest Neighbors
-    - Decision Trees
+- Collect Data From Neighbors
+- Similarity Metrics
+- Distance Metrics
+- k-NN Details
+- Decision Tree Examples
+- Decision Tree Details
 :::
 
 ![](../assets/orange-line-map-stops/stop10-halsted.svg){.figure alt="Orange Line map with the Halsted stop marked, the Week 9 stop"}
@@ -43,164 +48,155 @@ CS 418 · Week 9 · 🟠 Halsted 🟠
 
 ---
 
-# Classification Review {.section-header}
+## Any questions? {#any-questions-day-1}
+
+- PrairieLearn Homeworks?
+- Group Projects?
+- Week 9 Quiz is Wednesday, in class
+- Other logistics?
+- (You can also stay after class for questions)
+
+
+# Collect Data From Neighbors {.section-header}
 
 ---
 
-# Training, Testing, Validation, and Development Sets
+## The Self
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+---
 
-::: {.dense}
-- **TK**: training / testing / validation / development sets
+## Find Your Neighbors {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+Worksheet checkpoint 1:
+
+- Fill in the **Self** column: 1 if you have taken the course, 0 if not.
+- Talk to five classmates and fill in a column for each one.
+    - Only one of the five can be in your project group.
+- Keep your table: today's examples use exactly this kind of data.
 :::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
 :::
 
 ---
 
-# Review: The Classification Setup
-
-
-::: {style="text-align:center; font-size:1.2em; margin:0.4em 0 0.6em;"}
-**predictors $X$** &nbsp;⟶&nbsp; [classifier]{style="border:3px solid #1a1a1a; border-radius:6px; padding:0.1em 0.5em;"} &nbsp;⟶&nbsp; **class label $y$**
-:::
-
-::: {.incremental}
-- A classification model (or classifier) takes as input the values of the predictors and returns as output the class label.
-- **Binary**: "trying to predict a simple yes/no response. For instance, predict whether Alice will enjoy a course or not." (CIML)
-- **Multiclass**: "trying to put an example into one of a number of classes. For instance, predict whether a news story is about entertainment, sports, politics, religion, etc." (CIML)
-:::
-
-
-
----
-
-# Review: The Confusion Matrix {.smaller}
+## Predict Alice From Her Classmates
 
 ::: {.caption}
-Source: Gonzalo Bello Lander, CS 418 Lecture 12, "Classification (I)" (2026), slides 3–5.
+Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf) ("Geometry and Nearest Neighbors").
 :::
 
-:::: {.columns}
-
-::: {.column width="45%"}
-
-|  | Predicted P ($y=1$) | Predicted N ($y=0$) |
-|---|:---:|:---:|
-| **True P ($y=1$)** | TP | FN |
-| **True N ($y=0$)** | FP | TN |
-
-:::
-
-::: {.column width="55%"}
+"suppose you need to predict whether Alice will like Algorithms. Perhaps we can try to find another student who is most 'similar' to Alice, in terms of favorite courses." (CIML)
 
 ::: {.incremental}
-- Accuracy $= \frac{TP+TN}{TP+FP+TN+FN}$: "how many observations were classified correctly"
-    - (or [`sklearn.metrics.accuracy_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html) 🙂)
-- Precision $= \frac{TP}{TP+FP}$: "how many observations classified as positive were indeed positive"
-    - (or [`sklearn.metrics.precision_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_score.html) 🙂)
-- Recall $= \frac{TP}{TP+FN}$: "how many positive observations were classified correctly"
-    - (or [`sklearn.metrics.recall_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.recall_score.html) 🙂)
-- $F_1 = \frac{2 \cdot \text{Recall} \cdot \text{Precision}}{\text{Recall} + \text{Precision}}$: "measures trade-off between precision and recall"
-    - (or [`sklearn.metrics.f1_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) 🙂)
-:::
-
-:::
-
-::::
-
----
-
-
-# Memorizing vs. Generalizing
-
-::: {.caption}
-Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 1](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf), §1.1 ("What Does it Mean to Learn?").
-:::
-
-Alice is taking a machine learning course, and her teacher Bob writes the exam. What makes a reasonable exam?
-
-::: {.incremental}
-- **Unfair**: "If Bob spends the entire semester talking about machine learning, and then gives Alice an exam on History of Pottery, then Alice's performance on this exam will not be representative of her learning."
-- **Memorization**: "if the exam only asks questions that Bob has answered exactly during lectures, then this is also a bad test of Alice's learning, especially if it's an 'open notes' exam."
-- **Generalization**: "What is desired is that Alice observes specific examples from the course, and then has to answer new, but related questions on the exam. This tests whether Alice has the ability to generalize."
-:::
-
-
-
----
-
-# Generalization {.quote-slide}
-
-> Generalization is perhaps the most central concept in machine learning.
-
-::: {.attribution}
-Hal Daumé III
-:::
-
-::: {.quote-source}
-Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)*, v0.99, [ch. 1](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf), §1.1.
-:::
-
----
-
-# k-Nearest Neighbors {.section-header}
-
----
-
-# Predict Alice From Jeremy
-
-::: {.caption}
-Sources: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf) ("Geometry and Nearest Neighbors")
-:::
-
-::: {.incremental}
-- suppose you need to predict whether Alice will like CS 418
-- try to find another student who is most 'similar' to Alice, in terms of favorite courses.
-    - Say this student is Jeremy.
-    - If Jeremy liked CS 418, then we might guess that Alice will as well.
+- Our version: did Alice take **CS 412** (Intro to Machine Learning)?
+    - **predictors $X$**: the other 11 courses, took it (1) or not (0)
+    - **class label $y$**: took CS 412 (▲) or not (●)
 - "If it walks like a duck, quacks like a duck, and looks like a duck, then it's probably a duck."
 - A $k$-nearest neighbors classifier assigns class labels to observations based on the class labels of the $k$ 'most similar' observations ($k$ nearest neighbors).
 :::
 
-
 ---
 
-# k-NN, One Step at a Time {.image-frame-slide}
+## Synthetic Class Survey {.image-frame-slide}
 
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/knn-steps-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Seventeen training points on a plane: orange triangles clustered upper right, gray circles lower left, and one gray circle sitting inside the triangle cluster.">
+<img src="../assets/week9/survey-grid-v0.svg" class="figure figure-plain" style="max-height:440px" alt="A grid like worksheet checkpoint 1: twelve course rows, CS 100 through CS 488, and twenty classmate columns. A filled square means the classmate took the course. Every classmate took CS 251.">
 :::
 
 ::: {.fragment .fade-in-then-out fragment-index=1}
-<img src="../assets/week9/knn-steps-v1.svg" class="figure figure-plain" style="max-height:440px" alt="The same points plus a new square marked with a question mark inside the triangle cluster, right next to the stray circle.">
+<img src="../assets/week9/survey-grid-v1.svg" class="figure figure-plain" style="max-height:440px" alt="The CS 412 row moves below a dashed line and becomes the label: six orange triangles for classmates who took CS 412 and fourteen gray circles for those who did not.">
 :::
 
-::: {.fragment .fade-in-then-out fragment-index=2}
-<img src="../assets/week9/knn-steps-v2.svg" class="figure figure-plain" style="max-height:440px" alt="Dashed gray lines run from the question mark to every training point.">
-:::
-
-::: {.fragment .fade-in-then-out fragment-index=3}
-<img src="../assets/week9/knn-steps-v3.svg" class="figure figure-plain" style="max-height:440px" alt="A small circle around the question mark holds only its single nearest neighbor, the stray circle, so the question mark becomes a gray circle.">
-:::
-
-::: {.fragment fragment-index=4}
-<img src="../assets/week9/knn-steps-v4.svg" class="figure figure-plain" style="max-height:440px" alt="A larger circle holds the three nearest neighbors, the stray circle and two triangles, so the question mark becomes an orange triangle.">
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/survey-grid-v2.svg" class="figure figure-plain" style="max-height:440px" alt="A new column for Alice, outlined: she took CS 251, CS 401, CS 411, and CS 480. Her CS 412 cell is a question mark.">
 :::
 
 ::::
 
 ::: {.caption}
-Synthetic points. The setup follows CIML Fig. 3.4, where the test point "should be positive, but its NN is actually a negative point that's noisy."
+Synthetic: 20 classmates and Alice, from the code demo's generator.
 :::
-
 
 ---
 
-# Distance Metrics {.smaller}
+## Each Student as a Vector
+
+::: {.caption}
+Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf), §3.1 ("From Data to Feature Vectors").
+:::
+
+- Alice $= (0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0)$
+    - one entry per course, CS 100 through CS 488.
+
+::: {.incremental}
+- prediction tasks as mapping inputs to outputs
+    - each input is "nothing more than lists of feature values." (CIML)
+- Binary features become 0 (for false) or 1 (for true)
+- Categorical features (say, major: CS, DS, or CE)
+    - with V possible values get mapped to V-many binary indicator features.
+    - Why not CS = 0, DS = 1, CE = 2?
+    - That model suggests that CS is closer to DS than to CE
+:::
+
+# Similarity Metrics {.section-header}
+
+---
+
+## Similarity for Binary Features {.smaller}
+
+$N_{11}$: attributes where both $a$ and $b$ are 1; $N_{00}$: both 0; $N_{10}$, $N_{01}$: they disagree.
+
+:::: {.columns}
+
+::: {.column width="45%"}
+- **Jaccard**: $S(a, b) = \dfrac{N_{11}}{N_{01} + N_{10} + N_{11}}$
+    - (or [`sklearn.metrics.jaccard_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.jaccard_score.html) 🙂)
+- **Simple matching (SMC)**: $S(a, b) = \dfrac{N_{00} + N_{11}}{N_{00} + N_{01} + N_{10} + N_{11}}$
+    - (or 1 − [`scipy.spatial.distance.hamming`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.hamming.html) 🙂)
+:::
+
+::: {.column width="55%"}
+<img src="../assets/week9/survey-pair-v2.svg" class="figure figure-plain" style="max-height:260px" alt="Alice and classmate number 5 with each course labeled by type: N11 for CS 251, 401, 411, and 480; N01 for CS 301, 361, and 424; N00 for the other four. N11 is 4, N10 is 0, N01 is 3, N00 is 4. Jaccard is 4 out of 7, about 0.571; SMC is 8 out of 11, about 0.727.">
+:::
+
+::::
+
+::: {.incremental}
+- difference: does a shared 0 count as agreement?
+:::
+
+---
+
+## Who Is Alice's Nearest Neighbor? {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/survey-neighbors-v0.svg" class="figure figure-plain" style="max-height:440px" alt="All twenty classmates ranked by Jaccard similarity to Alice. Number 5 is first at 0.571, then numbers 3 and 6 tied at 0.500.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/survey-neighbors-v1.svg" class="figure figure-plain" style="max-height:440px" alt="Added on the right: the same classmates ranked by SMC. Number 6 is first at 0.818, ahead of a six-way tie at 0.727 that includes number 5.">
+:::
+
+::::
+
+::: {.caption}
+#6 took only CS 251 and CS 480, so they match Alice mostly on shared 0s, which SMC counts and Jaccard ignores.
+:::
+
+# Distance Metrics {.section-header}
+
+---
+
+## Distance Metrics {.smaller}
 
 
 Used to measure the dissimilarity between two observations. For continuous attributes, with $p$ attributes:
@@ -214,7 +210,7 @@ Used to measure the dissimilarity between two observations. For continuous attri
 
 ---
 
-# Worked Example: $a = (3, 4)$ and $b = (2, 2)$
+## Worked Example: $a = (3, 4)$ and $b = (2, 2)$
 
 ::: {.caption}
 Source: Gonzalo Bello Lander, CS 418 Lecture 13, "Classification (II)" (2026), slide 5.
@@ -260,54 +256,44 @@ $|3 - 2| + |4 - 2| = 1 + 2 = 3$
 
 ::::
 
-
 ---
 
-# Similarity for Binary Features {.smaller}
+## Distance on 0/1 Data {.image-frame-slide}
 
-$N_{11}$: attributes where both $a$ and $b$ are 1; $N_{00}$: both 0; $N_{10}$, $N_{01}$: they disagree.
+:::: {.r-stack}
 
-:::: {.columns}
-
-::: {.column width="50%"}
-- **Jaccard**: $S(a, b) = \dfrac{N_{11}}{N_{01} + N_{10} + N_{11}}$
-    - (or [`sklearn.metrics.jaccard_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.jaccard_score.html) 🙂)
-- **Simple matching (SMC)**: $S(a, b) = \dfrac{N_{00} + N_{11}}{N_{00} + N_{01} + N_{10} + N_{11}}$
-    - (or 1 − [`scipy.spatial.distance.hamming`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.hamming.html) 🙂)
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/survey-pair-v0.svg" class="figure figure-plain" style="max-height:330px" alt="Alice and classmate number 5 side by side, one column per course from CS 100 to CS 488. Filled squares mark courses taken.">
 :::
 
-::: {.column width="50%"}
-
-|  | attr. 1 | attr. 2 | attr. 3 |
-|---|:---:|:---:|:---:|
-| $a$ | 1 | 1 | 0 |
-| $b$ | 1 | 0 | 0 |
-| type | $N_{11}$ | $N_{10}$ | $N_{00}$ |
-
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/survey-pair-v1.svg" class="figure figure-plain" style="max-height:330px" alt="Orange boxes mark the three courses where they differ, CS 301, CS 361, and CS 424, all taken by number 5 but not Alice. Manhattan distance is 3; Euclidean distance is the square root of 3, about 1.73.">
 :::
 
 ::::
 
 ::: {.incremental}
-- Jaccard: $\frac{1}{0 + 1 + 1} = 0.5$ &nbsp;&nbsp; SMC: $\frac{1 + 1}{1 + 0 + 1 + 1} \approx 0.667$
-- difference: does a shared 0 count as agreement?
+- Each $|a_i - b_i|$ is 1 where they differ and 0 where they agree
+    - Manhattan distance just counts the courses that differ
+- Euclidean distance is the square root of that same count
+    - both metrics rank classmates the same way
 :::
 
-
+# k-NN Details {.section-header}
 
 ---
 
-# The k-NN Algorithm {.smaller}
+## The k-NN Algorithm {.smaller}
 
 ::: {.caption}
-Sources: Gonzalo Bello Lander, CS 418 Lecture 13, "Classification (II)" (2026), slides 3 and 9; Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf), §3.2 and Algorithm 3.
+Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf), §3.2 and Algorithm 3.
 :::
 
-1. "Choose a proximity metric and a number of nearest neighbors $k$."
-2. "For each observation $z$ in the test set:"
-    1. "Compute the distance or similarity between $z$ and every observation in the training set."
-    2. "Select the $k$ observations most similar to $z$ ($k$ nearest neighbors)."
-    3. "Assign a class label to $z$ based on the class labels of its $k$ nearest neighbors." (majority vote)
+1. Choose a proximity metric and a number of nearest neighbors $k$.
+2. For each observation $z$ in the test set:
+    1. Compute the distance or similarity between $z$ and every observation in the training set.
+    2. Select the $k$ observations most similar to $z$ ($k$ nearest neighbors).
+    3. Assign a class label to $z$ based on the class labels of its $k$ nearest neighbors. (majority vote)
 
 ::: {.incremental}
 - Note there actually is no 'training' phase for K-nearest neighbors
@@ -316,39 +302,112 @@ Sources: Gonzalo Bello Lander, CS 418 Lecture 13, "Classification (II)" (2026), 
 - Why is it a good idea to use an odd number for K?
 :::
 
-
 ---
 
-# Lazy Learning: The Data Is the Model {.image-frame-slide}
+## k-NN for Alice, One Step at a Time {.image-frame-slide}
 
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/knn-lazy-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Two training points, one triangle and one circle. The plane is split by one straight boundary: orange tint on the triangle side, gray on the circle side.">
+<img src="../assets/week9/survey-knn-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Alice's seven most similar classmates by Jaccard similarity, each with their CS 412 answer: number 5, 0.571, took it; numbers 3 and 6, 0.500, did not; number 12, 0.429, took it; numbers 2, 13, and 19, 0.400, did not.">
 :::
 
 ::: {.fragment .fade-in-then-out fragment-index=1}
-<img src="../assets/week9/knn-lazy-v1.svg" class="figure figure-plain" style="max-height:440px" alt="Four training points. The straight boundary shifts.">
+<img src="../assets/week9/survey-knn-v1.svg" class="figure figure-plain" style="max-height:420px" alt="A box around the single nearest neighbor, number 5. k equals 1: one triangle versus zero circles, so predict triangle.">
 :::
 
 ::: {.fragment .fade-in-then-out fragment-index=2}
-<img src="../assets/week9/knn-lazy-v2.svg" class="figure figure-plain" style="max-height:440px" alt="Eight training points. The boundary bends where new points arrive.">
+<img src="../assets/week9/survey-knn-v2.svg" class="figure figure-plain" style="max-height:420px" alt="A dashed box around the three nearest neighbors. k equals 3: one triangle versus two circles, so predict circle.">
 :::
 
 ::: {.fragment fragment-index=3}
-<img src="../assets/week9/knn-lazy-v3.svg" class="figure figure-plain" style="max-height:440px" alt="All seventeen training points. The boundary is jagged and has a notch around the stray circle inside the triangle cluster.">
+<img src="../assets/week9/survey-knn-v3.svg" class="figure figure-plain" style="max-height:420px" alt="Alice's real answer is revealed: circle, she did not take CS 412. The k equals 1 prediction is marked wrong and the k equals 3 prediction right.">
 :::
 
 ::::
 
 ::: {.caption}
-"This line is called the decision boundary for this classifier. It is the line with positive land on one side and negative land on the other side." (CIML §3.3). Synthetic points, 1-nearest neighbor.
+One neighbor "cannot consider the 'preponderance of evidence'." (CIML Fig. 3.4). What would $k = 2$ do?
 :::
-
 
 ---
 
-# Choosing k {.image-frame-slide}
+## Memorizing vs. Generalizing
+
+::: {.caption}
+Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 1](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf), §1.1 ("What Does it Mean to Learn?").
+:::
+
+Alice is taking a machine learning course, and her teacher Bob writes the exam. What makes a reasonable exam?
+
+::: {.incremental}
+- **Unfair**: "If Bob spends the entire semester talking about machine learning, and then gives Alice an exam on History of Pottery, then Alice's performance on this exam will not be representative of her learning."
+- **Memorization**: "if the exam only asks questions that Bob has answered exactly during lectures, then this is also a bad test of Alice's learning, especially if it's an 'open notes' exam."
+- **Generalization**: "What is desired is that Alice observes specific examples from the course, and then has to answer new, but related questions on the exam. This tests whether Alice has the ability to generalize."
+:::
+
+---
+
+## Generalization {.quote-slide}
+
+> Generalization is perhaps the most central concept in machine learning.
+
+::: {.attribution}
+Hal Daumé III
+:::
+
+::: {.quote-source}
+Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)*, v0.99, [ch. 1](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf), §1.1.
+:::
+
+---
+
+## Memorizing or Generalizing?
+
+Worksheet checkpoint 5:
+
+- In your own words, what is the difference between memorizing and generalizing?
+- With $k = 1$, every training point's nearest neighbor is itself. Is that memorizing or generalizing? Why?
+
+---
+
+## Choosing k: Overfitting vs. Underfitting
+
+::: {.incremental}
+- with K = 1, risk of overfitting
+- if K is large (for instance, K = N), then KNN-Predict will always predict the majority class (underfitting)
+- "So, K is a **hyperparameter** of the KNN algorithm that allows us to trade-off between overfitting (small value of K) and underfitting (large value of K)." (CIML)
+- "a learned model with a decision boundary that is really jagged (like the coastline of Norway) is really complex and prone to overfitting."
+- "A learned model with a decision boundary that is really simple (like the bounary [*sic*] between Arizona and Utah) is potentially underfit." (CIML)
+:::
+
+---
+
+## Choosing k on a Bigger Class {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/survey-choose-k-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Validation accuracy against k on a log scale from 1 to 599: 70 percent at k equals 1, rising to the mid 80s between about 5 and 75, then falling.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/survey-choose-k-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Added: a dashed line at 74 percent, the accuracy of always guessing circle. At k of 301 and above the curve sits on that line.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/survey-choose-k-v2.svg" class="figure figure-plain" style="max-height:420px" alt="The best point is circled: k equals 15, 86 percent. The left end is labeled small k, overfit; the right end k near N, underfit.">
+:::
+
+::::
+
+::: {.caption}
+The code demo's 1,000 synthetic students: 600 training, 200 validation, Jaccard similarity.
+:::
+
+---
+
+## Example: Choosing k in Two Dimensions {.image-frame-slide}
 
 :::: {.r-stack}
 
@@ -371,97 +430,52 @@ Sources: Gonzalo Bello Lander, CS 418 Lecture 13, "Classification (II)" (2026), 
 ::::
 
 ::: {.caption}
-Synthetic data with three labels deliberately flipped.
+The decision boundary is "the line with positive land on one side and negative land on the other side." (CIML §3.3). Synthetic; three labels flipped on purpose.
 :::
 
 ---
 
-# Choosing k: Overfitting vs. Underfitting
-
-::: {.incremental}
-- "with K = 1, we run the risk of overfitting. On the other hand, if K is large (for instance, K = N), then KNN-Predict will always predict the majority class. Clearly that is underfitting." (CIML)
-- "So, K is a **hyperparameter** of the KNN algorithm that allows us to trade-off between overfitting (small value of K) and underfitting (large value of K)." (CIML)
-- "a learned model with a decision boundary that is really jagged (like the coastline of Norway) is really complex and prone to overfitting. A learned model with a decision boundary that is really simple (like the bounary [*sic*] between Arizona and Utah) is potentially underfit." (CIML)
-:::
-
-
----
-
-# Elbow Neighbor Exercise {.smaller}
-
-:::: {.columns}
-
-::: {.column width="40%"}
-
-|  | $A$ | $B$ | Class |
-|---|:---:|:---:|:---:|
-| $x_1$ | 2.5 | 3.5 | ▲ |
-| $x_2$ | 1.5 | 4.0 | ▲ |
-| $x_3$ | 5.0 | 1.5 | ● |
-| $x_4$ | 4.0 | 2.5 | ● |
-| $x_5$ | 2.0 | 1.0 | ▲ |
-
-Classify $z = (3.0, 2.0)$ with $k$-NN and Euclidean distance. How would you classify $z$ if...
-
-- **a.** $k = 1$?
-- **b.** $k = 2$?
-- **c.** $k = 3$?
-
-:::
-
-::: {.column width="60%"}
-<img src="../assets/week9/ex13-1-v1.svg" class="figure figure-plain" style="max-height:440px" alt="The five training points plotted on axes A and B, with triangles at x1, x2, x5, circles at x3, x4, and z marked by a square at (3, 2).">
-:::
-
-::::
-
-
-
-
----
-
-# Feature Scale {.image-frame-slide}
+## Pitfall: Irrelevant Features {.image-frame-slide}
 
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/ski-scale-v0.svg" class="figure figure-plain" style="max-height:460px" alt="Ten skis and ten snowboards plotted by length and width, both in centimeters, at equal scale. Skis are narrow triangles; snowboards are wide circles. A long snowboard is ringed; its three nearest neighbors are snowboards, so it is predicted snowboard.">
+<img src="../assets/week9/survey-month-v0.svg" class="figure figure-plain" style="max-height:440px" alt="All twenty classmates ranked by Manhattan distance to Alice, the number of courses that differ. Number 6 is nearest, with 2.">
 :::
 
 ::: {.fragment fragment-index=1}
-<img src="../assets/week9/ski-scale-v1.svg" class="figure figure-plain" style="max-height:460px" alt="Top: the same correct prediction in centimeters. Bottom: the same boards with length in millimeters, drawn at equal scale. Width differences now look flat, the neighbor circle reaches across both widths, the three nearest neighbors are skis of similar length, and the snowboard is predicted ski.">
+<img src="../assets/week9/survey-month-v1.svg" class="figure figure-plain" style="max-height:440px" alt="Each bar gets an orange extension for the gap between that classmate's birth month and Alice's, month 4. Number 6, born in month 1, falls to a total of 5. Number 5, born in month 4, becomes nearest with a total of 3.">
 :::
 
 ::::
 
 ::: {.caption}
-Synthetic boards. Example after CIML §3.2 (Figs. 3.5–3.7): "a KNN classifier will effectively ignore the width values and classify almost purely based on height."
+Add a synthetic birth month (1 to 12): one month counts as much as one course. "every feature is used, and they are all used the same amount." (CIML §3.2)
 :::
-
 
 ---
 
-# Pitfall: Irrelevant Features {.image-frame-slide}
+## Example: Hours Studied and Day of Birth {.image-frame-slide}
 
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/irrelevant-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Twelve points on one line: circles on the left, triangles on the right. A test point just right of center has neighbors triangle, triangle, circle, so it is predicted triangle.">
+<img src="../assets/week9/hours-knn-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Week 8's 30 students by hours studied, failed in a lower row of gray circles and passed in an upper row of orange triangles. A new student who studied 1 hour has 5 nearest neighbors who all failed, so k-NN with k equals 5 predicts fail.">
 :::
 
 ::: {.fragment fragment-index=1}
-<img src="../assets/week9/irrelevant-v1.svg" class="figure figure-plain" style="max-height:440px" alt="The same points spread out vertically by a random second feature. The test point's three nearest neighbors are now all circles, so it is predicted circle.">
+<img src="../assets/week9/hours-knn-v1.svg" class="figure figure-plain" style="max-height:440px" alt="The same students drawn to scale, with day of month born, 1 to 31, along the bottom and hours studied, 0 to 10, up the side. The new student, born on the 17th, studied 1 hour; their 5 nearest neighbors were born on nearby days: 3 who passed after studying about 7 hours and 2 who failed, so k-NN predicts pass. Dashed lines join the new student to each neighbor.">
 :::
 
 ::::
 
 ::: {.caption}
-"every feature is used, and they are all used the same amount. This means that if you have data with only a few relevant features and lots of irrelevant features, KNN is likely to do poorly." (CIML §3.2). Synthetic points.
+Day of birth is noise, but its range (1 to 31) dwarfs hours (0 to 10), so it decides who is "near."
 :::
 
 ---
 
-# k-NN: Pros and Cons {.smaller}
+## k-NN: Pros and Cons {.smaller}
 
 :::: {.columns}
 
@@ -486,14 +500,11 @@ Synthetic boards. Example after CIML §3.2 (Figs. 3.5–3.7): "a KNN classifier 
 
 ::::
 
+# Decision Tree Examples {.section-header}
 
 ---
 
-# Decision Trees {.section-header}
-
----
-
-# Anatomy of a Decision Tree {.image-frame-slide}
+## Example Tree: Tax Avoidance {.image-frame-slide}
 
 :::: {.r-stack}
 
@@ -513,46 +524,38 @@ Synthetic boards. Example after CIML §3.2 (Figs. 3.5–3.7): "a KNN classifier 
 <img src="../assets/week9/tax-tree-v3.svg" class="figure figure-plain" style="max-height:420px" alt="The same tree with the four NO and YES leaves filled dark, labeled leaf nodes, each holds a class label.">
 :::
 
-::: {.fragment fragment-index=4}
+::: {.fragment .fade-in-then-out fragment-index=4}
 <img src="../assets/week9/tax-tree-v4.svg" class="figure figure-plain" style="max-height:420px" alt="The same tree with every connecting line drawn in orange, labeled branches, connections between nodes.">
+:::
+
+::: {.fragment fragment-index=5}
+<img src="../assets/week9/tax-path-a.svg" class="figure figure-plain" style="max-height:420px" alt="The path Refund, No, Marital Status, Single, Taxable Income, over 80K, YES, drawn in orange. Caption: single, no refund, income 100K, so YES.">
 :::
 
 ::::
 
 ::: {.caption}
-Example based on slides from [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/).
+To classify, "follow the decision tree from the root node to a leaf node." ([Bello](https://cs.uic.edu/profiles/gonzalo-bello/), Lecture 12, slides 8–11)
 :::
-
 
 ---
 
-# Classify: Walk From Root to Leaf {.image-frame-slide}
-
-:::: {.r-stack}
-
-::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/tax-tree-v0.svg" class="figure figure-plain" style="max-height:420px" alt="The tax-cheating decision tree, nothing highlighted.">
-:::
-
-::: {.fragment .fade-in-then-out fragment-index=1}
-<img src="../assets/week9/tax-path-a.svg" class="figure figure-plain" style="max-height:420px" alt="The path Refund, No, Marital Status, Single, Taxable Income, over 80K, YES, drawn in orange. Caption: single, no refund, income 100K, so YES.">
-:::
-
-::: {.fragment fragment-index=2}
-<img src="../assets/week9/tax-path-b.svg" class="figure figure-plain" style="max-height:420px" alt="The path Refund, No, Marital Status, Married, NO, drawn in orange. Caption: married, no refund, income 40K, so NO, and income is never asked.">
-:::
-
-::::
-
-
----
-
-# Elbow Neighbor Exercise
+## Elbow Neighbor Exercise
 
 :::: {.columns}
 
 ::: {.column width="55%"}
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
 <img src="../assets/week9/tax-tree-v0.svg" class="figure figure-plain" style="max-height:380px" alt="The tax-cheating decision tree.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/tax-path-ex.svg" class="figure figure-plain" style="max-height:380px" alt="The path Refund, No, Marital Status, Single, Taxable Income, over 80K, YES, in orange. Caption: D, single, no refund, income 85K, over 80K, so YES.">
+:::
+
+::::
 :::
 
 ::: {.column width="45%"}
@@ -562,36 +565,141 @@ According to this tree, which of these people will cheat on their taxes?
 - **B.** Single, no refund, taxable income 60K.
 - **C.** Married, no refund, taxable income 75K.
 - **D.** Single, no refund, taxable income 85K.
+
+::: {.fragment fragment-index=1}
+A: Refund = Yes, so NO. B: under 80K, so NO. C: Married, so NO.
+:::
 :::
 
 ::::
 
 ---
 
-# Elbow Neighbor Exercise: Answer {.image-frame-slide}
+## Example Tree: Hours Studied {.image-frame-slide}
 
-<img src="../assets/week9/tax-path-ex.svg" class="figure figure-plain" style="max-height:420px" alt="The path Refund, No, Marital Status, Single, Taxable Income, over 80K, YES, in orange. Caption: D, single, no refund, income 85K, over 80K, so YES.">
+:::: {.r-stack}
 
-::: {.incremental}
-- A: Refund = Yes, so NO. &nbsp; B: under 80K, so NO. &nbsp; C: Married, so NO.
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/hours-threshold-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Week 8's 30 students by hours studied: failed in a lower row of gray circles, passed in an upper row of orange triangles.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/hours-threshold-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Faint dashed vertical lines at the midpoints between consecutive sorted hours: the candidate thresholds.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/hours-threshold-v2.svg" class="figure figure-plain" style="max-height:420px" alt="One solid line at 6.11 hours splits the students: gray tint below, orange tint above, where all 17 passed. A small tree beside it: hours at most 6.11, yes leads to fail, with 3 who passed and 10 who failed; no leads to pass, with 17 who passed and 0 who failed.">
+:::
+
+::::
+
+::: {.caption}
+"for real-valued features, the decision tree nodes are parameterized by a feature and a threshold for that feature." (CIML §3.3). 6.11 is scikit-learn's pick.
 :::
 
 ---
 
-# Which Tree?
+## Is This a Good Split? (1 of 4) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/split-quiz-hours-v0.svg" class="figure figure-plain" style="max-height:420px" alt="20 students who passed and 10 who failed, split on Studied more than 6 hours? No: 3 pass, 10 fail. Yes: 17 pass, 0 fail.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/split-quiz-hours-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Under each child: 77% fail on the no side, 100% pass on the yes side. Good split: each side is mostly one class.">
+:::
+
+::::
+
+::: {.caption}
+The split from the last slide.
+:::
+
+---
+
+## Is This a Good Split? (2 of 4) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/split-quiz-birthday-v0.svg" class="figure figure-plain" style="max-height:420px" alt="20 students who passed and 10 who failed, split on Born on or before the 15th? No: 10 pass, 5 fail. Yes: 10 pass, 5 fail.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/split-quiz-birthday-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Under each child: 67% pass on both sides. Bad split: each side looks like the whole class, 67% pass.">
+:::
+
+::::
+
+::: {.caption}
+Day of birth is random noise.
+:::
+
+---
+
+## Is This a Good Split? (3 of 4) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/split-quiz-seat-v0.svg" class="figure figure-plain" style="max-height:420px" alt="20 students who passed and 10 who failed, split on Sits on the left side of the room? No: 11 pass, 5 fail. Yes: 9 pass, 5 fail.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/split-quiz-seat-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Under each child: 69% pass on the no side, 64% pass on the yes side. Bad split: each side looks like the whole class, 67% pass.">
+:::
+
+::::
+
+::: {.caption}
+Synthetic data.
+:::
+
+---
+
+## Is This a Good Split? (4 of 4) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/split-quiz-practice-v0.svg" class="figure figure-plain" style="max-height:420px" alt="20 students who passed and 10 who failed, split on Took the practice exam? No: 2 pass, 9 fail. Yes: 18 pass, 1 fail.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/split-quiz-practice-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Under each child: 82% fail on the no side, 95% pass on the yes side. Good split: each side is mostly one class.">
+:::
+
+::::
+
+::: {.caption}
+Synthetic data.
+:::
+
+# Decision Tree Details {.section-header}
+
+---
+
+## Which Tree?
+
+::: {.caption}
+Sources: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 1](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf), §1.3; Gonzalo Bello Lander, CS 418 Lecture 12 (2026), slide 12; Elena Zheleva, CS 418 lecture slides, Feb. 19, 2026.
+:::
 
 ::: {.incremental}
-- computationally infeasible to consider all possible trees to try to choose the 'best' one." (CIML)
+- "It is computationally infeasible to consider all of these to try to choose the 'best' one." (CIML)
     - "Finding the best tree is NP-Hard!" (Zheleva)
-- build decision tree greedily
-    - TODO add steps
+- Instead, "we will build our decision tree greedily. We will begin by asking: If I could only ask one question, what question would I ask?" (CIML)
+- The greedy strategy (Bello):
+    1. "Start with a single node containing all observations in the training set (root node)."
+    2. "Split node into sub-nodes based on an attribute that optimizes certain splitting criterion."
+    3. "Repeat on each sub-node until reaching certain stopping criterion."
 :::
-
-
 
 ---
 
-# Scoring a Split: Majority Vote {.image-frame-slide}
+## Scoring a Split: Majority Vote {.image-frame-slide}
 
 :::: {.r-stack}
 
@@ -610,35 +718,145 @@ According to this tree, which of these people will cheat on their taxes?
 ::::
 
 ::: {.caption}
-Invented counts. Scoring rule from CIML §1.3 (where the example is course ratings): "if I made that guess on the training data, how well would I have done? In particular, how many examples would I classify correctly?"
+Synthetic data. CIML §1.3: "if I made that guess on the training data, how well would I have done?"
 :::
-
-
 
 ---
 
-# When Majority Vote Can't Decide {.image-frame-slide}
+## Majority Vote on the Survey {.image-frame-slide}
 
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/majority-tie-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Two candidate splits of the same 1,200 examples, 800 yes and 400 no. Feature 1 makes two children of 400 yes, 200 no each. Feature 2 makes children of 250 yes, 240 no and 550 yes, 160 no. Both have error 400 out of 1200.">
+<img src="../assets/week9/survey-majority-v0.svg" class="figure figure-plain" style="max-height:420px" alt="A bar for the 20 classmates: 6 took CS 412, shown in orange, and 14 did not, in gray. Below it, the question: Took CS 424?">
 :::
 
-::: {.fragment fragment-index=1}
-<img src="../assets/week9/majority-tie-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Added: weighted entropy 0.92 for Feature 1 and 0.86 for Feature 2, highlighted as lower.">
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/survey-majority-v1.svg" class="figure figure-plain" style="max-height:420px" alt="The bar splits in two. No: 0 took CS 412, 12 did not. Yes: 6 took it, 2 did not.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/survey-majority-v2.svg" class="figure figure-plain" style="max-height:420px" alt="Under each child: guess circle, 12 of 12 correct; guess triangle, 6 of 8 correct. Score equals 12 plus 6 equals 18 out of 20.">
 :::
 
 ::::
 
 ::: {.caption}
-Source: Elena Zheleva, CS 418 lecture slides, Feb. 19, 2026 (after Marine Carpuat). "Both have the same error rate!!! Which is 'progressing more' towards a lower error?"
+"Took CS 424?" (Visualization) is one of the 11 questions we could ask first.
 :::
-
 
 ---
 
-# Entropy: How Much Does a Split Help Distinguish Classes? {.smaller}
+## If You Could Ask Only One Question {.image-frame-slide}
+
+<img src="../assets/week9/survey-split-scores-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Every course as a candidate first question, scored by majority vote out of 20. CS 424 and CS 411 tie at 18. CS 488 scores 15. Every other course scores 14, the same as asking no question and guessing circle for everyone. CS 251 is left out because every classmate took it.">
+
+::: {.caption}
+CS 251 splits no one: all 20 took it (it's the CS 418 prerequisite).
+:::
+
+---
+
+## When Majority Vote Can't Decide {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/survey-tie-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Two candidate splits of the same 20 classmates, 6 who took CS 412 and 14 who did not. Took CS 424: no gives 0 and 12, yes gives 6 and 2. Took CS 411: no gives 2 and 14, yes gives 4 and 0. Both get 2 out of 20 wrong.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/survey-tie-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Added: weighted entropy 0.324 for CS 424, highlighted as lower, and 0.435 for CS 411.">
+:::
+
+::::
+
+::: {.caption}
+"Both have the same error rate!!! Which is 'progressing more' towards a lower error?" Elena Zheleva, CS 418 lecture slides, Feb. 19, 2026 (after Marine Carpuat).
+:::
+
+---
+
+## How Much Does a Split Help?
+
+::: {.caption}
+Sources: CIML §1.3; Gonzalo Bello Lander, CS 418 Lecture 12 (2026), slides 14–16; scikit-learn user guide, ["Classification criteria"](https://scikit-learn.org/stable/modules/tree.html#classification-criteria).
+:::
+
+Worksheet checkpoint 7: try one of these on your good and bad splits from checkpoint 6.
+
+- **Majority vote**: guess the majority class on each side and count how many are right; higher is better. (CIML §1.3)
+- **Information gain**: parent entropy minus the size-weighted entropy of the children; higher is better. (Bello)
+    - $H = -\sum_k p_k \log_2 p_k$. The parent, 20 pass and 10 fail, has $H \approx 0.918$.
+- **Gini impurity**: $G = 1 - \sum_k p_k^2$, scikit-learn's default criterion; lower in the children is better.
+- Check with "Studied more than 6 hours?": majority vote $10 + 17 = 27$ of 30; $IG = 0.918 - \tfrac{13}{30}(0.779) - \tfrac{17}{30}(0) \approx 0.58$.
+- We'll talk about these metrics more soon.
+
+---
+
+## Upload your worksheet {#upload-worksheet-day-1}
+
+Take a picture of your worksheet, upload it in Canvas
+
+# That's All for Today, See You Wednesday! {.section-header .no-index}
+
+# Week 9, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop10-halsted-b.jpg" background-size="cover"}
+
+<h2>SVMs and Kernels</h2>
+
+Jack Bandy
+2026
+
+---
+
+## Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+- Week 9: Halsted
+- Day 2
+    - Support Vector Machines
+    - Kernels
+:::
+
+![](../assets/orange-line-map-stops/stop10-halsted.svg){.figure alt="Orange Line map with the Halsted stop marked, the Week 9 stop"}
+
+:::
+
+# Support Vector Machines {.section-header}
+
+---
+
+## Support Vector Machines
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
+
+# Kernels {.section-header}
+
+---
+
+## Kernels
+
+::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
+[TODO]{.eyebrow .todo}
+
+::: {.dense}
+- **TK**
+:::
+:::
+
+# Appendix: Entropy and Information Gain {.section-header}
+
+---
+
+## Entropy: How Much Does a Split Help Distinguish Classes? {.smaller}
 
 ::: {.caption}
 Source: Gonzalo Bello Lander, CS 418 Lecture 12, "Classification (I)" (2026), slides 14–16. Figure after Sebastian Raschka, "[Why are we growing decision trees via entropy instead of the classification error?](https://sebastianraschka.com/faq/docs/decisiontree-error-vs-entropy.html)": "if we have 2 entropy values (left and right child node), the average will fall onto the straight, connecting line."
@@ -646,7 +864,7 @@ Source: Gonzalo Bello Lander, CS 418 Lecture 12, "Classification (I)" (2026), sl
 
 :::: {.columns}
 
-::: {.column width="45%"}
+::: {.column width="40%"}
 "Entropy measures the impurity of a node of the tree."
 
 $$H(v_m) = -\sum_k p(y_k \mid v_m) \log_2 p(y_k \mid v_m)$$
@@ -662,34 +880,33 @@ $$H(v_m) = -\sum_k p(y_k \mid v_m) \log_2 p(y_k \mid v_m)$$
 
 :::
 
-::: {.column width="55%"}
+::: {.column width="60%"}
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/entropy-curve-v0.svg" class="figure figure-plain" style="max-height:400px" alt="Binary entropy curve: zero at share 0 and share 1, rising to a peak of 1 at share 0.5.">
+<img src="../assets/week9/survey-entropy-curve-v0.svg" class="figure figure-plain" style="max-height:400px" alt="Binary entropy curve: zero at share 0 and share 1, rising to a peak of 1 at share 0.5.">
 :::
 
 ::: {.fragment .fade-in-then-out fragment-index=1}
-<img src="../assets/week9/entropy-curve-v1.svg" class="figure figure-plain" style="max-height:400px" alt="The parent node, 5 and 5, marked at the peak of the curve: share 0.5, entropy 1.">
+<img src="../assets/week9/survey-entropy-curve-v1.svg" class="figure figure-plain" style="max-height:400px" alt="The parent node, 6 who took CS 412 and 14 who did not, marked on the curve at share 0.3, entropy 0.881.">
 :::
 
 ::: {.fragment .fade-in-then-out fragment-index=2}
-<img src="../assets/week9/entropy-curve-v2.svg" class="figure figure-plain" style="max-height:400px" alt="The X a children marked in gray at shares 0.4 and 0.6, joined by a dashed line. Their average, 0.971, sits on that line just under the parent; the small drop, 0.029, is bracketed.">
+<img src="../assets/week9/survey-entropy-curve-v2.svg" class="figure figure-plain" style="max-height:400px" alt="The CS 411 children in gray at shares 0.125 and 1, joined by a dashed line. Their weighted average, 0.435, sits on that line directly below the parent; the drop, 0.446, is bracketed.">
 :::
 
 ::: {.fragment fragment-index=3}
-<img src="../assets/week9/entropy-curve-v3.svg" class="figure figure-plain" style="max-height:400px" alt="Added in orange: the X b children at shares 0.2 and 0.8, joined by a dashed line at entropy 0.722. The drop from the parent, 0.278, is bracketed and much larger than X a's.">
+<img src="../assets/week9/survey-entropy-curve-v3.svg" class="figure figure-plain" style="max-height:400px" alt="Added in orange: the CS 424 children at shares 0 and 0.75, joined by a dashed line. Their weighted average, 0.324, sits lower, so the drop from the parent, 0.557, is larger than CS 411's.">
 :::
 
 ::::
 :::
 
 ::::
-
 
 ---
 
-# Information Gain {.smaller}
+## Information Gain {.smaller}
 
 "Information gain measures the difference in entropy resulting from splitting a node of the tree on a given attribute."
 
@@ -705,11 +922,9 @@ $$IG(X_i, v_m) = H(v_m) - \sum_{h=1}^{M} \frac{N_h}{N} H(v_h)$$
 - "Information gain is the splitting criterion function used by the ID3 and the C4.5 algorithms."
 :::
 
-
 ---
 
-
-# How Much Does This Question Help Us Distinguish Between Classes? {.image-frame-slide}
+## How Much Does This Question Help Us Distinguish Between Classes? {.image-frame-slide}
 
 :::: {.r-stack}
 
@@ -731,11 +946,9 @@ $$IG(X_i, v_m) = H(v_m) - \sum_{h=1}^{M} \frac{N_h}{N} H(v_h)$$
 
 ::::
 
-
-
 ---
 
-# How Much Does This Question Help Us Distinguish Between Classes? {.smaller}
+## How Much Does This Question Help Us Distinguish Between Classes? {.smaller}
 
 **Parent**, 9 Cubs / 11 Sox:
 
@@ -750,7 +963,55 @@ $$H = -\tfrac{9}{20}\log_2\tfrac{9}{20} - \tfrac{11}{20}\log_2\tfrac{11}{20} \ap
 
 ---
 
-# Worked Example {.image-frame-slide}
+## Information Gain for "Took CS 424?" {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/survey-split-entropy-v0.svg" class="figure figure-plain" style="max-height:420px" alt="The survey split: 6 who took CS 412 and 14 who did not, split on Took CS 424? No: 0 and 12. Yes: 6 and 2.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/survey-split-entropy-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Added beside the parent: entropy 0.881.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+<img src="../assets/week9/survey-split-entropy-v2.svg" class="figure figure-plain" style="max-height:420px" alt="Added under each child: entropy 0.000 for the pure no side, 0.811 for the yes side.">
+:::
+
+::: {.fragment fragment-index=3}
+<img src="../assets/week9/survey-split-entropy-v3.svg" class="figure figure-plain" style="max-height:420px" alt="Added in orange: information gain equals 0.881 minus 12 twentieths times 0.000 minus 8 twentieths times 0.811, which is 0.557.">
+:::
+
+::::
+
+::: {.caption}
+Unequal children (12 and 8), so the weights are $\tfrac{12}{20}$ and $\tfrac{8}{20}$.
+:::
+
+---
+
+## The Greedy Choice {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/survey-split-scores-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Every course scored by majority vote: CS 424 and CS 411 tie at 18 out of 20.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/survey-split-scores-v1.svg" class="figure figure-plain" style="max-height:440px" alt="Added on the right: information gain for every course. CS 424 is highest at 0.557, then CS 411 at 0.446, CS 301 at 0.108, and the rest below 0.1. CS 361 gains nothing.">
+:::
+
+::::
+
+::: {.caption}
+The root asks "Took CS 424?"; the same search then repeats inside each child.
+:::
+
+---
+
+## Worked Example {.image-frame-slide}
 
 :::: {.r-stack}
 
@@ -772,64 +1033,50 @@ $$H = -\tfrac{9}{20}\log_2\tfrac{9}{20} - \tfrac{11}{20}\log_2\tfrac{11}{20} \ap
 Source: Gonzalo Bello Lander, CS 418 Lecture 12, "Classification (I)" (2026), slides 16–18. Parent: $H(v_0) = -\frac{5}{10}\log_2\frac{5}{10} - \frac{5}{10}\log_2\frac{5}{10} = 1$. "Splitting on $X_b$ is better than splitting on $X_a$."
 :::
 
+# Appendix: Growing and Tuning a Tree {.section-header}
 
 ---
 
-# Continuous Features: Thresholds {.image-frame-slide}
+## Growing the Tree, One Level at a Time {.image-frame-slide}
 
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/ski-threshold-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Skis as orange triangles and snowboards as gray circles, plotted by length and width in centimeters.">
+<img src="../assets/week9/survey-tree-grow-v0.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 0: a single leaf holding all 20 classmates, 6 who took CS 412 and 14 who did not. It predicts circle for everyone: 70 percent training accuracy.">
 :::
 
 ::: {.fragment .fade-in-then-out fragment-index=1}
-<img src="../assets/week9/ski-threshold-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Faint dashed horizontal lines at the midpoints between consecutive sorted widths: the candidate thresholds.">
+<img src="../assets/week9/survey-tree-grow-v1.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 1: the root asks Took CS 424? No leads to a leaf with 0 and 12, predicting circle. Yes leads to a leaf with 6 and 2, predicting triangle. 90 percent training accuracy.">
 :::
 
-::: {.fragment fragment-index=2}
-<img src="../assets/week9/ski-threshold-v2.svg" class="figure figure-plain" style="max-height:420px" alt="One solid line at width 17.75 centimeters splits the plane: skis below in orange tint, snowboards above in gray. A small tree beside it: width at most 17.75, yes leads to ski, no leads to board.">
+::: {.fragment .fade-in-then-out fragment-index=2}
+<img src="../assets/week9/survey-tree-grow-v2.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 2: the yes side asks Took CS 411? No gives a 2 and 2 tie, predicting circle; yes gives 4 and 0, predicting triangle. Still 90 percent training accuracy.">
+:::
+
+::: {.fragment fragment-index=3}
+<img src="../assets/week9/survey-tree-grow-v3.svg" class="figure figure-plain" style="max-height:430px" alt="The full tree, depth 4: under the 2 and 2 tie it asks Took CS 427? and then Took CS 488?, ending in leaves of 1 and 0, 0 and 2, and 1 and 0. 100 percent training accuracy.">
 :::
 
 ::::
 
 ::: {.caption}
-"for real-valued features, the decision tree nodes are parameterized by a feature and a threshold for that feature." (CIML §3.3, ski vs. snowboard, Fig. 3.11). Synthetic boards.
+To separate the last four classmates, the full tree asks about CS 427 and CS 488 (tied at that node; scikit-learn picked CS 427).
 :::
 
 ---
 
-# Growing a Tree, One Level at a Time {.image-frame-slide}
+## Classify Alice: Walk From Root to Leaf {.image-frame-slide}
 
-:::: {.r-stack}
+<img src="../assets/week9/survey-tree-path.svg" class="figure figure-plain" style="max-height:320px" alt="The full survey tree with Alice's path in orange: Took CS 424? No, to the leaf with 0 who took CS 412 and 12 who did not. The tree predicts circle after one question.">
 
-::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/tree-grow-v0.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 0, the empty tree: the 60-point data set with the whole plane tinted gray, one leaf predicting circle for everything, 55 percent training accuracy.">
+::: {.incremental}
+- One question, and Alice lands in a leaf where none of the 12 classmates took CS 412. Correct!
+- Had the root been "Took CS 411?", Alice (who took CS 411) would land in the 4 ▲ / 0 ● leaf, and the tree would predict ▲.
 :::
-
-::: {.fragment .fade-in-then-out fragment-index=1}
-<img src="../assets/week9/tree-grow-v1.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 1: one vertical cut splits the plane; the tree beside it has a root question on x1 and two leaves. Training accuracy rises to about 82 percent.">
-:::
-
-::: {.fragment .fade-in-then-out fragment-index=2}
-<img src="../assets/week9/tree-grow-v2.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 2: each half is cut again, horizontally, making four rectangles; the tree has four leaves.">
-:::
-
-::: {.fragment .fade-in-then-out fragment-index=3}
-<img src="../assets/week9/tree-grow-v3.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 3: more cuts make smaller rectangles; the tree has eight leaves, about 92 percent training accuracy.">
-:::
-
-::: {.fragment fragment-index=4}
-<img src="../assets/week9/tree-grow-v4.svg" class="figure figure-plain" style="max-height:430px" alt="The full tree: many thin rectangles, some wrapped around single points, 100 percent training accuracy; too many leaves to draw.">
-:::
-
-::::
-
-
 
 ---
 
-# Empty Tree vs. Full Tree
+## Empty Tree vs. Full Tree
 
 ::: {.caption}
 Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIML), v0.99, [ch. 2](http://ciml.info/dl/v0_99/ciml-v0_99-ch02.pdf)
@@ -844,31 +1091,31 @@ Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIM
 
 ---
 
-# Max Depth Is a Hyperparameter {.image-frame-slide}
+## Max Depth Is a Hyperparameter {.image-frame-slide}
 
 :::: {.r-stack}
 
 ::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/depth-accuracy-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Training accuracy against max depth from 0 to 15: it climbs from about 53 percent to 100 percent and never goes down.">
+<img src="../assets/week9/survey-depth-accuracy-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Training accuracy against max depth from 0 to 10: it climbs from about 71 percent to about 88 percent and never goes down.">
 :::
 
 ::: {.fragment .fade-in-then-out fragment-index=1}
-<img src="../assets/week9/depth-accuracy-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Added in orange, held-out accuracy: it rises to about 79 percent near depth 3, then slowly falls to about 73 percent.">
+<img src="../assets/week9/survey-depth-accuracy-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Added in orange, validation accuracy: it rises to about 87 percent at depth 3, then falls to about 80 percent.">
 :::
 
 ::: {.fragment fragment-index=2}
-<img src="../assets/week9/depth-accuracy-v2.svg" class="figure figure-plain" style="max-height:420px" alt="The peak of the held-out curve is circled, labeled best held-out: depth 3. Left end labeled underfit, empty tree; right end labeled overfit, near-full tree.">
+<img src="../assets/week9/survey-depth-accuracy-v2.svg" class="figure figure-plain" style="max-height:420px" alt="The peak of the validation curve is circled, labeled best validation: depth 3. Left end labeled underfit, empty tree; right end labeled overfit, deep tree.">
 :::
 
 ::::
 
 ::: {.caption}
-"By playing with this depth knob, we can adjust between underfitting (the empty tree, depth = 0) and overfitting (the full tree, depth = ∞). Such a knob is called a hyperparameter." (CIML §2.6). Synthetic data, 10% labels flipped; average of 40 draws of 150 training and 1,500 held-out points.
+"By playing with this depth knob, we can adjust between underfitting (the empty tree, depth = 0) and overfitting (the full tree, depth = ∞). Such a knob is called a hyperparameter." (CIML §2.6). The code demo's 1,000 synthetic students.
 :::
 
 ---
 
-# Tuning Max Depth Without Cheating
+## Tuning Max Depth Without Cheating
 
 ::: {.incremental}
 - Tune on training data?
@@ -880,7 +1127,7 @@ Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIM
 
 ---
 
-# Occam's Razor {.quote-slide}
+## Occam's Razor {.quote-slide}
 
 > Among competing hypotheses, the one that makes the fewest assumptions should be selected.
 
@@ -888,12 +1135,9 @@ Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)* (CIM
 A common paraphrase of William of Ockham (c. 1287–1347)
 :::
 
-
-
-
 ---
 
-# R2D3: A Visual Introduction to Machine Learning {.iframe-slide}
+## R2D3: A Visual Introduction to Machine Learning {.iframe-slide}
 
 <iframe src="https://r2d3.us/visual-intro-to-machine-learning-part-1/" title="R2D3, A Visual Introduction to Machine Learning, Part 1" loading="lazy" style="border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
@@ -901,30 +1145,9 @@ A common paraphrase of William of Ockham (c. 1287–1347)
 Stephanie Yee and Tony Chu, "A Visual Introduction to Machine Learning, Part 1," R2D3: <https://r2d3.us/visual-intro-to-machine-learning-part-1/>
 :::
 
-
-
 ---
 
-# Decision Trees in scikit-learn
-
-```python
-from sklearn.tree import DecisionTreeClassifier
-
-model = DecisionTreeClassifier(criterion="entropy", max_depth=3)
-model.fit(X_train, y_train)        # learn the splits
-model.predict(X_test)              # walk each row from root to leaf
-model.score(X_test, y_test)        # accuracy on held-out data
-```
-
-::: {.incremental}
-- `criterion`: default is `"gini"`
-    - `"entropy"` and `"log_loss"`
-- [`max_depth`](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html): default `None`. "If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples." The default is the full tree.
-:::
-
----
-
-# Decision Trees: Pros and Cons {.smaller}
+## Decision Trees: Pros and Cons {.smaller}
 
 ::: {.caption}
 Jake VanderPlas, *[Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/05.08-random-forests.html)*, "In-Depth: Decision Trees and Random Forests."
@@ -954,73 +1177,384 @@ Jake VanderPlas, *[Python Data Science Handbook](https://jakevdp.github.io/Pytho
 
 ::::
 
+# Appendix: Code Demo {.section-header}
 
 ---
 
-# Week 9, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop10-halsted-a.jpg" background-size="cover"}
+## The Plan
 
-<h2>SVMs and Kernels</h2>
-
-Jack Bandy
-2026
-
----
-
-# Map {.split}
-
-::: {.split-content .narrow-aside}
-
-::: {}
-- Week 9: Halsted
-- Day 2
-    - Support Vector Machines
-    - Kernels
-:::
-
-![](../assets/orange-line-map-stops/stop10-halsted.svg){.figure alt="Orange Line map with the Halsted stop marked, the Week 9 stop"}
-
+::: {.incremental}
+- Same survey, bigger class: 1,000 synthetic students.
+- Split them: 60% training, 20% validation, 20% test.
+- $k$-NN: pick $k$ on the validation set.
+- Decision tree: pick `max_depth` on the validation set.
+- Touch the test set once, at the very end.
+- Run it yourself: [Python Yard (beta)](https://dodatascience.fun/yard/notebooks/index.html?path=week9.ipynb), notebook `week9.ipynb`.
 :::
 
 ---
 
+## Simulate the Survey
 
-# Support Vector Machines {.section-header}
+```python
+def make_survey(n, seed=418):
+    rng = np.random.default_rng(seed)
+    senior = rng.random(n) < 0.5   # hidden: further along in the major
+    ai_fan = rng.random(n) < 0.45  # hidden: into AI and data
+    ...
+    survey = {
+        "CS 411": took(np.where(ai_fan, 0.85, 0.05) * np.where(senior, 1, 0.7)),
+        "CS 424": took(np.where(ai_fan, 0.6, 0.1)),
+        ...                                     # 9 more courses
+    }
+    survey["CS 412"] = took(np.where(ai_fan, 0.9, 0.03) * np.where(senior, 1, 0.5))
+```
+
+```{python}
+#| echo: false
+import numpy as np
+import polars as pl
+
+def make_survey(n, seed=418):
+    rng = np.random.default_rng(seed)
+    senior = rng.random(n) < 0.5   # hidden: further along in the major
+    ai_fan = rng.random(n) < 0.45  # hidden: into AI and data
+    gamer = rng.random(n) < 0.25   # hidden: into games and art
+    def took(p):                   # 1 with probability p, else 0
+        return (rng.random(n) < p).astype(int)
+    survey = {
+        "CS 100": took(0.08),
+        "CS 251": np.ones(n, int),  # the prerequisite for CS 418
+        "CS 301": took(np.where(senior, 0.85, 0.35)),
+        "CS 361": took(np.where(senior, 0.8, 0.3)),
+        "CS 401": took(np.where(senior, 0.75, 0.15)),
+        "CS 411": took(np.where(ai_fan, 0.85, 0.05) * np.where(senior, 1, 0.7)),
+        "CS 424": took(np.where(ai_fan, 0.6, 0.1)),
+        "CS 426": took(np.where(gamer, 0.6, 0.05)),
+        "CS 427": took(np.where(gamer, 0.5, 0.05)),
+        "CS 480": took(np.where(senior, 0.5, 0.2)),
+        "CS 488": took(0.12),
+    }
+    survey["CS 412"] = took(np.where(ai_fan, 0.9, 0.03) * np.where(senior, 1, 0.5))
+    return pl.DataFrame(survey)
+```
+
+::: {.incremental}
+- Each student gets hidden traits; each course is a coin flip whose odds depend on them.
+- CS 412 depends on the hidden traits, never directly on other courses. The models only see the courses.
+- Full code: `make_survey` in [`week9.ipynb`](https://dodatascience.fun/yard/notebooks/index.html?path=week9.ipynb).
+:::
 
 ---
 
-# Support Vector Machines
+## The Survey as a Table
+
+```{python}
+#| echo: true
+survey = make_survey(1000)
+survey.head(5)
+```
+
+---
+
+## Features, Label, and Three Sets
+
+```{python}
+#| echo: true
+from sklearn.model_selection import train_test_split
+
+courses = [c for c in survey.columns if c != "CS 412"]
+X = survey.select(courses).to_numpy().astype(bool)  # took it or not, 11 courses
+y = survey["CS 412"].to_numpy()                      # the label: took CS 412?
+
+# 20% test, then 25% of the rest (20% overall) for validation
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=0)
+X_train, X_val, y_train, y_val = train_test_split(
+    X_train, y_train, test_size=0.25, random_state=0)
+print(len(y_train), "training,", len(y_val), "validation,", len(y_test), "test")
+```
+
+---
+
+## k-NN in Three Lines
+
+```{python}
+#| echo: true
+from sklearn.neighbors import KNeighborsClassifier
+
+knn = KNeighborsClassifier(n_neighbors=5, metric="jaccard")
+knn.fit(X_train, y_train)                 # lazy: this just stores the training data
+print(f"validation accuracy: {knn.score(X_val, y_val):.1%}")
+```
+
+::: {.incremental}
+- `metric="jaccard"`: shared 0s don't count toward similarity.
+- The default metric is Minkowski with $p = 2$, which is Euclidean distance.
+:::
+
+---
+
+## Choose k on the Validation Set {.code-figure-slide .nostretch}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line chart of validation accuracy against k on a log scale, for k from 1 to 401. Accuracy starts at 70 percent at k equals 1, rises to the mid 80s between roughly k equals 5 and k equals 51, peaking at 86.5 percent at k equals 15, then falls to 74 percent at k equals 401."
+import matplotlib.pyplot as plt
+
+ks = [1, 3, 5, 9, 15, 25, 51, 101, 201, 401]
+val_acc = []
+for k in ks:
+    model = KNeighborsClassifier(n_neighbors=k, metric="jaccard").fit(X_train, y_train)
+    val_acc.append(model.score(X_val, y_val))
+best_k = ks[int(np.argmax(val_acc))]
+
+fig, ax = plt.subplots(figsize=(7, 3))
+ax.plot(ks, val_acc, marker="o", color="#f9461c")
+ax.set(xscale="log", xlabel="k", ylabel="validation accuracy", title=f"best k = {best_k}")
+plt.show()
+```
+
+---
+
+## A Decision Tree in Three Lines {.code-figure-slide .nostretch}
+
+```{python}
+#| echo: true
+#| fig-alt: "A depth-2 decision tree drawn by scikit-learn's plot_tree. The root asks whether CS 411 is at most 0.5, that is, not taken. The not-taken side asks about CS 424 and the taken side about CS 361. Each box lists the entropy, the number of training students, the class counts, and the predicted class."
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+
+tree = DecisionTreeClassifier(criterion="entropy", max_depth=2, random_state=0)
+tree.fit(X_train, y_train)                # greedy: best question first
+fig, ax = plt.subplots(figsize=(11, 3.6))
+plot_tree(tree, feature_names=courses, class_names=["didn't take 412", "took 412"], ax=ax)
+plt.show()
+```
+
+::: {.caption}
+With 600 students the root asks about CS 411, not CS 424 as in our class of 20. "Small changes in the data can lead to large changes in the structure of decision trees." (Bello)
+:::
+
+---
+
+## Choose max_depth on the Validation Set {.code-figure-slide .nostretch}
+
+```{python}
+#| echo: true
+#| fig-alt: "Line chart of training and validation accuracy against max depth from 1 to 10. Training accuracy climbs steadily. Validation accuracy peaks around depth 3, then drifts down."
+depths = range(1, 11)
+trees = [DecisionTreeClassifier(criterion="entropy", max_depth=d, random_state=0)
+         .fit(X_train, y_train) for d in depths]
+train_acc = [t.score(X_train, y_train) for t in trees]
+val_acc = [t.score(X_val, y_val) for t in trees]
+best_depth = depths[int(np.argmax(val_acc))]
+
+fig, ax = plt.subplots(figsize=(7, 3))
+ax.plot(depths, train_acc, marker="o", color="#565a5c", label="training")
+ax.plot(depths, val_acc, marker="o", color="#f9461c", label="validation")
+ax.set(xlabel="max_depth", ylabel="accuracy", title=f"best depth = {best_depth}")
+ax.legend()
+plt.show()
+```
+
+---
+
+## Test Once, Then Ask About Alice
+
+```{python}
+#| echo: true
+final_knn = KNeighborsClassifier(n_neighbors=best_k, metric="jaccard")
+final_tree = DecisionTreeClassifier(
+    criterion="entropy", max_depth=best_depth, random_state=0)
+for model in (final_knn, final_tree):
+    model.fit(X_train, y_train)
+    print(f"{type(model).__name__}: test accuracy {model.score(X_test, y_test):.1%}")
+
+# Alice took CS 251, 401, 411, and 480
+alice = np.array([[c in ("CS 251", "CS 401", "CS 411", "CS 480") for c in courses]])
+print("k-NN:", final_knn.predict(alice)[0], "  tree:", final_tree.predict(alice)[0])
+```
+
+::: {.incremental}
+- `1` means "took CS 412", `0` means "didn't".
+- Try it with your own row from the worksheet!
+:::
+
+---
+
+## Decision Trees in scikit-learn
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+
+model = DecisionTreeClassifier(criterion="entropy", max_depth=3)
+model.fit(X_train, y_train)        # learn the splits
+model.predict(X_test)              # walk each row from root to leaf
+model.score(X_test, y_test)        # accuracy on held-out data
+```
+
+::: {.incremental}
+- `criterion`: default is `"gini"`
+    - `"entropy"` and `"log_loss"`
+- [`max_depth`](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html): default `None`. "If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples." The default is the full tree.
+:::
+
+# Appendix: Classification Review {.section-header}
+
+---
+
+## Training, Testing, Validation, and Development Sets
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{.eyebrow .todo}
 
 ::: {.dense}
-- **TK**
+- **TK**: training / testing / validation / development sets
 :::
 :::
 
 ---
 
-# Kernels {.section-header}
+## Review: The Classification Setup
+
+
+::: {style="text-align:center; font-size:1.2em; margin:0.4em 0 0.6em;"}
+**predictors $X$** &nbsp;⟶&nbsp; [classifier]{style="border:3px solid #1a1a1a; border-radius:6px; padding:0.1em 0.5em;"} &nbsp;⟶&nbsp; **class label $y$**
+:::
+
+::: {.incremental}
+- A classification model (or classifier) takes as input the values of the predictors and returns as output the class label.
+- **Binary**: "trying to predict a simple yes/no response. For instance, predict whether Alice will enjoy a course or not." (CIML)
+- **Multiclass**: "trying to put an example into one of a number of classes. For instance, predict whether a news story is about entertainment, sports, politics, religion, etc." (CIML)
+:::
 
 ---
 
-# Kernels
+## Review: The Confusion Matrix {.smaller}
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK**
+::: {.caption}
+Source: Gonzalo Bello Lander, CS 418 Lecture 12, "Classification (I)" (2026), slides 3–5.
 :::
+
+:::: {.columns}
+
+::: {.column width="45%"}
+
+|  | Predicted P ($y=1$) | Predicted N ($y=0$) |
+|---|:---:|:---:|
+| **True P ($y=1$)** | TP | FN |
+| **True N ($y=0$)** | FP | TN |
+
+:::
+
+::: {.column width="55%"}
+
+::: {.incremental}
+- Accuracy $= \frac{TP+TN}{TP+FP+TN+FN}$: "how many observations were classified correctly"
+    - (or [`sklearn.metrics.accuracy_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html) 🙂)
+- Precision $= \frac{TP}{TP+FP}$: "how many observations classified as positive were indeed positive"
+    - (or [`sklearn.metrics.precision_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_score.html) 🙂)
+- Recall $= \frac{TP}{TP+FN}$: "how many positive observations were classified correctly"
+    - (or [`sklearn.metrics.recall_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.recall_score.html) 🙂)
+- $F_1 = \frac{2 \cdot \text{Recall} \cdot \text{Precision}}{\text{Recall} + \text{Precision}}$: "measures trade-off between precision and recall"
+    - (or [`sklearn.metrics.f1_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) 🙂)
+:::
+
+:::
+
+::::
+
+# Appendix: More Examples {.section-header}
+
+---
+
+## Example: k-NN in Two Dimensions {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/knn-steps-v3.svg" class="figure figure-plain" style="max-height:440px" alt="Seventeen training points: orange triangles upper right, gray circles lower left, one stray circle inside the triangle cluster. A small circle around the question mark holds only its single nearest neighbor, the stray circle, so the question mark becomes a gray circle.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/knn-steps-v4.svg" class="figure figure-plain" style="max-height:440px" alt="A larger circle holds the three nearest neighbors, the stray circle and two triangles, so the question mark becomes an orange triangle.">
+:::
+
+::::
+
+::: {.caption}
+Synthetic, after CIML Fig. 3.4, where the test point "should be positive, but its NN is actually a negative point that's noisy."
 :::
 
 ---
+
+## Example: Lazy Learning, the Data Is the Model {.image-frame-slide}
+
+<img src="../assets/week9/knn-lazy-v3.svg" class="figure figure-plain" style="max-height:440px" alt="Seventeen training points with the 1-nearest-neighbor decision boundary: jagged, with a notch around the stray circle inside the triangle cluster.">
+
+::: {.caption}
+"This line is called the decision boundary for this classifier. It is the line with positive land on one side and negative land on the other side." (CIML §3.3). Synthetic points, $k = 1$.
+:::
+
+---
+
+## Example: Irrelevant Features in Two Dimensions {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/irrelevant-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Twelve points on one line: circles on the left, triangles on the right. A test point just right of center has neighbors triangle, triangle, circle, so it is predicted triangle.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/irrelevant-v1.svg" class="figure figure-plain" style="max-height:440px" alt="The same points spread out vertically by a random second feature. The test point's three nearest neighbors are now all circles, so it is predicted circle.">
+:::
+
+::::
+
+::: {.caption}
+"every feature is used, and they are all used the same amount. This means that if you have data with only a few relevant features and lots of irrelevant features, KNN is likely to do poorly." (CIML §3.2). Synthetic points.
+:::
+
+---
+
+## Example: Same Error, Different Entropy {.image-frame-slide}
+
+<img src="../assets/week9/majority-tie-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Two candidate splits of the same 1,200 examples, 800 yes and 400 no. Feature 1 makes two children of 400 yes, 200 no each. Feature 2 makes children of 250 yes, 240 no and 550 yes, 160 no. Both have error 400 out of 1200; weighted entropy is 0.92 for Feature 1 and 0.86 for Feature 2.">
+
+::: {.caption}
+Source: Elena Zheleva, CS 418 lecture slides, Feb. 19, 2026 (after Marine Carpuat). "Both have the same error rate!!! Which is 'progressing more' towards a lower error?"
+:::
+
+---
+
+## Example: Growing a Tree in Two Dimensions {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/tree-grow-v1.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 1: one vertical cut splits the plane; the tree beside it has a root question on x1 and two leaves. Training accuracy rises to about 82 percent.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/tree-grow-v3.svg" class="figure figure-plain" style="max-height:430px" alt="Depth 3: more cuts make smaller rectangles; the tree has eight leaves, about 92 percent training accuracy.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/tree-grow-v4.svg" class="figure figure-plain" style="max-height:430px" alt="The full tree: many thin rectangles, some wrapped around single points, 100 percent training accuracy; too many leaves to draw.">
+:::
+
+::::
+
+::: {.caption}
+Every split is an axis-aligned cut. Synthetic; three labels flipped on purpose.
+:::
 
 # Appendix: Minkowski Distance {.section-header}
 
 ---
 
-# Minkowski Distance
+## Minkowski Distance
 
 A family of distances for continuous attributes, with $p$ attributes:
 
@@ -1028,13 +1562,11 @@ A family of distances for continuous attributes, with $p$ attributes:
     - $r = 1$ gives Manhattan; $r = 2$ gives Euclidean
     - (or [`scipy.spatial.distance.minkowski`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.minkowski.html), with `p` = $r$ 🙂)
 
----
-
 # Appendix: Pruning {.section-header}
 
 ---
 
-# Pruning
+## Pruning
 
 "In some cases, we may want to stop the decision tree induction algorithm early to avoid overfitting." (Bello)
 
@@ -1043,8 +1575,6 @@ A family of distances for continuous attributes, with $p$ attributes:
 - **Post-pruning**: "the decision tree is initially grown to its maximum size and is then trimmed. The tree pruning step terminates when no further improvement in the estimate of the generalization error is observed." (Bello)
 - Pruning has "the advantage that different branches can have different depths, accounting for the fact that the amount of data that gets passed down each branch might differ dramatically." (CIML)
 :::
-
----
 
 # Sources {.sources}
 
@@ -1059,4 +1589,5 @@ A family of distances for continuous attributes, with $p$ attributes:
 9. Stephanie Yee and Tony Chu, ["A Visual Introduction to Machine Learning, Part 1"](https://r2d3.us/visual-intro-to-machine-learning-part-1/), R2D3.
 10. Sebastian Raschka, ["Why are we growing decision trees via entropy instead of the classification error?"](https://sebastianraschka.com/faq/docs/decisiontree-error-vs-entropy.html), Machine Learning FAQ.
 11. scikit-learn developers, [`DecisionTreeClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html) documentation, v1.8.
-12. Week 9 figures: [`make_week9_figures.py`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/week9/make_week9_figures.py); point clouds and ski/snowboard data are synthetic.
+12. Week 9 figures: [`make_week9_figures.py`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/week9/make_week9_figures.py); the class survey, birth months, point clouds, and study-hours students (Week 8's, plus a random day of month born), and practice-exam and seat splits are synthetic. The survey uses the same generator as the code demo.
+13. scikit-learn developers, [`KNeighborsClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html) and [`plot_tree`](https://scikit-learn.org/stable/modules/generated/sklearn.tree.plot_tree.html) documentation.

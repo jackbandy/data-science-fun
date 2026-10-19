@@ -13,9 +13,9 @@ thing (a data point, a distance, a split) to the one before, for the deck's
 r-stack fragments.
 
 Color and shape carry the class everywhere in this deck:
-  * positive class (+, "yes", "like", ski): orange triangle. It is the class
+  * positive class (+, "yes", "like", pass): orange triangle. It is the class
     the classifier is looking for, so it gets the accent color.
-  * negative class (-, "no", "hate", snowboard): steel-gray circle with a
+  * negative class (-, "no", "hate", fail): steel-gray circle with a
     white minus inside, keeping the - of the CIML and Lecture 13 notation.
   * a point still waiting for a label: white square with "?".
   Shapes repeat the color so the slides survive grayscale printing. Figure text
@@ -29,7 +29,10 @@ and saved without tight cropping, so every frame lines up exactly.
 Data:
   * Exercise 12.4 / 13.1 numbers, the tax-cheating tree, and the 18/20 and
     400/1200 split counts are copied from the cited lecture slides and CIML.
-  * The ski/snowboard boards and the two-class point clouds are synthetic.
+  * The study-hours students (Week 8's, plus a random day of month born) and
+    the two-class point clouds are synthetic.
+  * The class survey (`survey-*` figures, the deck's running example) is
+    synthetic, from `make_survey`, the same generator as the code demo.
   See SOURCES.md in this folder.
 
 Usage:  python3 make_week9_figures.py [name ...]
@@ -49,6 +52,7 @@ import numpy as np
 from matplotlib import font_manager
 from matplotlib.patches import Circle, FancyBboxPatch
 from matplotlib.path import Path as MPath
+from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 
@@ -436,61 +440,76 @@ def choose_k(step):
 
 # ------------------------------------------------------ k-NN pitfalls
 
-# Synthetic boards. Ski is the positive class, as in CIML Fig. 3.6.
-SKI_LEN = np.array([152, 158, 164, 166, 169, 171, 176, 181, 186, 190])
-SKI_WID = np.array([8.0, 9.5, 7.5, 10.5, 8.5, 11.5, 9.0, 10.0, 12.0, 8.8])
-BOARD_LEN = np.array([136, 140, 144, 147, 150, 153, 156, 159, 161, 163])
-BOARD_WID = np.array([24.0, 25.5, 23.5, 26.0, 24.5, 27.0, 25.0, 26.5, 24.8, 25.8])
-BOARDS_Y = np.r_[np.ones(10), -np.ones(10)]
-BOARD_Q = np.array([167.0, 25.0])  # a long snowboard
+# Week 8's study-hours students (`supervised-two-kinds` in week8/make_week8_figures.py), same seed and draws, so the points match last week's slide. Pass (score of 70 or more) is the positive class.
+# Day of month born is pure noise. Seed 182 is picked from 300 so that "born on or before the 15th?" gains exactly nothing and k-NN visibly follows birthdays; across the 300 seeds the median share of the plane whose prediction flips is 28% (38% here).
+HOURS_K = 5
+HOURS_Q = (1.0, 17)  # a new student: studied 1 hour, born on the 17th
 
 
-def boards(length_scale=1.0):
-    X = np.c_[np.r_[SKI_LEN, BOARD_LEN] * length_scale, np.r_[SKI_WID, BOARD_WID]]
-    q = BOARD_Q * (length_scale, 1.0)
-    return X, q
+def study_hours():
+    """(hours studied, Week 8's jitter for the pass/fail rows, day of month born, passed)."""
+    rng = np.random.default_rng(418)
+    hours = rng.uniform(0, 10, 30)
+    score = np.clip(45 + 5 * hours + rng.normal(0, 7, hours.size), 0, 100)
+    jitter = rng.uniform(-0.12, 0.12, hours.size)
+    day = np.random.default_rng(182).integers(1, 32, hours.size)
+    return hours, jitter, day, (score >= 70).astype(int)
 
 
-def scale_panel(ax, length_scale, unit):
-    X, q = boards(length_scale)
-    d = np.linalg.norm(X - q, axis=1)
-    order = np.argsort(d)
-    pred = 1 if BOARDS_Y[order[:3]].sum() > 0 else -1
-    ax.set_xlim(128 * length_scale, 196 * length_scale)
-    if length_scale == 1.0:
-        ax.set_ylim(0, 32)
-    else:
-        # Same 1:1 aspect; the extra room shows how flat the width axis is.
-        ax.set_ylim(-110, 140)
-        ax.set_yticks([0, 25])
-    ax.set_aspect("equal")
+HOURS_XLIM = (-0.4, 10.4)
+
+
+def pass_fail_rows(ax, *, ylim=(-0.7, 1.7)):
+    """Week 8's layout: hours along x, a fail row and a pass row."""
+    ax.set_xlim(*HOURS_XLIM)
+    ax.set_ylim(*ylim)
     tidy(ax, grid=None)
-    ax.set_xlabel(f"length ({unit})")
-    ax.set_ylabel("width\n(cm)", rotation=0, labelpad=26, va="center")
-    points(ax, X, BOARDS_Y, size=120)
-    ring(ax, q, radius_for(3, d))
-    halo(ax, X[order[:3]], size=330)
-    query(ax, q, pred, size=330)
-    return pred
+    ax.set_xticks([0, 2, 4, 6, 8, 10])
+    ax.set_yticks([0, 1], ["fail", "pass"])
+    ax.tick_params(axis="y", labelsize=15)
+    ax.set_xlabel("hours studied")
 
 
-@steps("ski-scale", 2)
-def ski_scale(step):
+@steps("hours-knn", 2)
+def hours_knn(step):
+    """k-NN on hours studied alone (Week 8's layout), then with day of month born added in raw units.
+
+    The second frame is drawn at equal scale, one day as long as one hour, so the ringed neighbors are visibly the nearest points. That only fits a slide with days along x, so hours move to the y-axis.
+    """
+    hours, jitter, day, y = study_hours()
     if step == 0:
-        fig, ax = new_fig(height=560)
-        pred = scale_panel(ax, 1.0, "cm")
-        note(ax, "Length and width both in cm: 3 nearest are snowboards "
-                 + (NEG_GLYPH if pred == -1 else POS_GLYPH), size=16)
-        ax.text(0.02, 0.97, f"{POS_GLYPH} ski   {NEG_GLYPH} snowboard", transform=ax.transAxes,
-                fontsize=14, color=STEEL, va="top")
-        return fig
-    fig, (top, bot) = new_fig(height=820, nrows=2,
-                              gridspec_kw={"height_ratios": [1, 1.1], "hspace": 0.45})
-    scale_panel(top, 1.0, "cm")
-    note(top, f"Length in cm: predict snowboard ({NEG_GLYPH}), correct", size=16)
-    scale_panel(bot, 10.0, "mm")
-    note(bot, f"Same boards, length in mm: width barely matters; predict ski ({POS_GLYPH}), wrong",
-         size=16)
+        fig, ax = fixed_fig(left=130, right=30, top=56, bottom=72)
+        X, q = np.c_[hours, y + jitter], (HOURS_Q[0], 0.5)
+        d = np.abs(hours - q[0])
+        pass_fail_rows(ax)
+        lead = "Hours studied only"
+    else:
+        # Same 1000 x 618 canvas as frame 0, so the r-stack frames cover each other; the margins leave an equal-scale 32 x 11.2 plot area.
+        fig, ax = fixed_fig(left=130, right=30, top=160, bottom=164)
+        X, q = np.c_[day, hours], HOURS_Q[::-1]
+        d = np.linalg.norm(X - q, axis=1)
+        ax.set_xlim(0, 32)
+        ax.set_ylim(-0.6, 10.6)
+        ax.set_aspect("equal")
+        tidy(ax, grid=None)
+        ax.set_xticks([1, 5, 10, 15, 20, 25, 31])
+        ax.set_yticks([0, 5, 10])
+        ax.set_xlabel("day of month born")
+        ax.set_ylabel("hours\nstudied", rotation=0, labelpad=30, va="center")
+        lead = "Add day of month born"
+    near = np.argsort(d)[:HOURS_K]
+    pred = int(y[near].sum() * 2 > HOURS_K)
+    for j in near:
+        ax.plot([q[0], X[j, 0]], [q[1], X[j, 1]], color=INK, lw=1.4, ls=(0, (4, 3)), zorder=2)
+    points(ax, X, y, size=120)
+    halo(ax, X[near], size=330)
+    query(ax, q, pred, size=330)
+    n_pos = int(y[near].sum())
+    note(ax, f"{lead}: the {HOURS_K} nearest are {n_pos} {POS_GLYPH} and {HOURS_K - n_pos} {NEG_GLYPH}, "
+             f"so predict {'pass' if pred else 'fail'}", size=17)
+    # Below the axis on the equal-scale frame, where points fill the lower-right corner.
+    ax.text(0.99, 0.02 if step == 0 else -0.2, f"{POS_GLYPH} pass   {NEG_GLYPH} fail", transform=ax.transAxes, fontsize=14,
+            color=STEEL, ha="right", va="bottom" if step == 0 else "top", bbox=dict(facecolor=PAPER, edgecolor="none", pad=2), zorder=8)
     return fig
 
 
@@ -773,6 +792,45 @@ def majority_tie(step):
     return fig
 
 
+def split_quiz_kids(key):
+    """(question, [no child, yes child] as (pass, fail), good?) for the 30 study-hours students.
+
+    Hours and birthday split the real synthetic data; the seat and practice-exam counts are invented to sum to the same 20 pass / 10 fail.
+    Information gain: hours 0.581, birthday 0.000, seat 0.002, practice exam 0.479.
+    """
+    hours, _, day, y = study_hours()
+    if key == "hours":
+        m = hours > 6
+        return "Studied more than 6 hours?", [(int(y[~m].sum()), int((1 - y[~m]).sum())), (int(y[m].sum()), int((1 - y[m]).sum()))], True
+    if key == "birthday":
+        m = day <= 15
+        return "Born on or before the 15th?", [(int(y[~m].sum()), int((1 - y[~m]).sum())), (int(y[m].sum()), int((1 - y[m]).sum()))], False
+    if key == "seat":
+        return "Sits on the left side of the room?", [(11, 5), (9, 5)], False
+    return "Took the practice exam?", [(2, 9), (18, 1)], True
+
+
+def split_quiz(key, step):
+    """Is this a good split? The question and children first, then the class mix of each child and a verdict, before any scoring rule."""
+    question, kids, good = split_quiz_kids(key)
+    fig, ax = new_fig(height=560)
+    ax.set_xlim(-4, 4)
+    ax.set_ylim(-1.0, 3.7)
+    ax.axis("off")
+    notes = None
+    if step == 1:
+        notes = [f"{max(p, f) / (p + f):.0%} {'pass' if p >= f else 'fail'}" for p, f in kids]
+    split_diagram(ax, (20, 10), kids, ["no", "yes"], question, notes, names=("pass", "fail"))
+    if step == 1:
+        verdict = "Good split: each side is mostly one class" if good else "Bad split: each side looks like the whole class (67% pass)"
+        ax.text(0, -0.85, verdict, ha="center", fontsize=19, color=ORANGE if good else INK, fontweight="bold")
+    return fig
+
+
+for _key in ("hours", "birthday", "seat", "practice"):
+    steps(f"split-quiz-{_key}", 2)(lambda step, key=_key: split_quiz(key, step))
+
+
 def H(p):
     p = np.asarray(p, float)
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -855,39 +913,39 @@ def entropy_curve(step):
 
 # ------------------------------------------- continuous features: thresholds
 
-@steps("ski-threshold", 3)
-def ski_threshold(step):
-    X, _ = boards()
-    fig, (ax, tx) = new_fig(height=560, ncols=2,
-                            gridspec_kw={"width_ratios": [2.3, 1], "wspace": 0.08})
-    widths = np.sort(X[:, 1])
-    cut = (SKI_WID.max() + BOARD_WID.min()) / 2
-    ax.set_xlim(128, 196)
-    ax.set_ylim(0, 32)
-    ax.set_aspect("equal")
-    tidy(ax, grid=None)
-    ax.set_xlabel("length (cm)")
-    ax.set_ylabel("width\n(cm)", rotation=0, labelpad=26, va="center")
+@steps("hours-threshold", 3)
+def hours_threshold(step):
+    """A one-question tree on hours studied: the points, every candidate threshold, then the one scikit-learn's tree picks."""
+    hours, jitter, _, y = study_hours()
+    fig, (ax, tx) = new_fig(height=560, ncols=2, gridspec_kw={"width_ratios": [2.3, 1], "wspace": 0.08})
+    stump = DecisionTreeClassifier(criterion="entropy", max_depth=1).fit(hours[:, None], y)
+    cut = stump.tree_.threshold[0]
+    below, above = hours <= cut, hours > cut
+    pass_fail_rows(ax)
     tx.axis("off")
     tx.set_xlim(0, 4)
     tx.set_ylim(0, 4)
+    if step == 0:
+        note(ax, f"30 students: passed ({POS_GLYPH}) or failed ({NEG_GLYPH})", size=16)
     if step == 1:
-        for m in (widths[1:] + widths[:-1]) / 2:
-            ax.axhline(m, color=QUIET, lw=1, ls=(0, (3, 3)), zorder=1)
-        note(ax, "Candidate thresholds: midpoints between sorted widths", size=16)
+        s = np.sort(hours)
+        for m in (s[1:] + s[:-1]) / 2:
+            ax.axvline(m, color=QUIET, lw=1, ls=(0, (3, 3)), zorder=1)
+        note(ax, "Candidate thresholds: midpoints between sorted hours", size=16)
     if step == 2:
-        ax.axhspan(0, cut, color=POS_TINT, zorder=0)
-        ax.axhspan(cut, 32, color=NEG_TINT, zorder=0)
-        ax.axhline(cut, color=INK, lw=2, zorder=1)
-        note(ax, f"Best threshold: width ≤ {cut:.2f} cm (both children pure)", size=16)
-        node_box(tx, (2, 3.1), f"width ≤ {cut:.2f}", w=2.6, size=15)
-        node_box(tx, (1, 1.2), f"ski {POS_GLYPH}", leaf=True, w=1.5, size=15, edge=INK)
-        node_box(tx, (3, 1.2), f"board {NEG_GLYPH}", leaf=True, w=1.7, size=15)
+        ax.axvspan(HOURS_XLIM[0], cut, color=NEG_TINT, zorder=0)
+        ax.axvspan(cut, HOURS_XLIM[1], color=POS_TINT, zorder=0)
+        ax.axvline(cut, color=INK, lw=2, zorder=1)
+        note(ax, f"Split at {cut:.2f} hours: all {above.sum()} students above it passed", size=16)
+        node_box(tx, (2, 3.1), f"hours ≤ {cut:.2f}", w=2.6, size=15)
+        node_box(tx, (1, 1.2), f"fail {NEG_GLYPH}", leaf=True, w=1.5, size=15)
+        node_box(tx, (3, 1.2), f"pass {POS_GLYPH}", leaf=True, w=1.5, size=15)
         edge(tx, (2, 3.1), (1, 1.2), "yes", side="left", size=14)
         edge(tx, (2, 3.1), (3, 1.2), "no", side="right", size=14)
-    if step == 0:
-        note(ax, f"Skis ({POS_GLYPH}) and snowboards ({NEG_GLYPH}), two continuous features", size=16)
-    points(ax, X, BOARDS_Y, size=120)
+        for x, m in ((1, below), (3, above)):
+            tx.text(x, 0.55, f"{y[m].sum()} {POS_GLYPH}  {(1 - y[m]).sum()} {NEG_GLYPH}", ha="center", va="top",
+                    fontsize=14, color=STEEL)
+    points(ax, np.c_[hours, y + jitter], y, size=120)
     return fig
 
 
@@ -1066,6 +1124,611 @@ def depth_accuracy(step):
     ax.set_xticks(depths[::2])
     ax.set_xlabel("max_depth")
     ax.set_ylabel("accuracy")
+    ax.yaxis.set_major_formatter(lambda v, _: f"{v:.0%}")
+    return fig
+
+
+# ------------------------------------------- the class survey (running example)
+
+# The worksheet's 12 courses: CS 412 is the label, the other 11 are features.
+SURVEY_COURSES = ["CS 100", "CS 251", "CS 301", "CS 361", "CS 401", "CS 411",
+                  "CS 424", "CS 426", "CS 427", "CS 480", "CS 488"]
+SURVEY_LABEL = "CS 412"
+
+
+def make_survey(n, seed=418):
+    """Synthetic course survey: 1 = took the course. Same draws as `make_survey` in week9.qmd's code demo; keep the two copies in sync."""
+    rng = np.random.default_rng(seed)
+    senior = rng.random(n) < 0.5   # hidden: further along in the major
+    ai_fan = rng.random(n) < 0.45  # hidden: into AI and data
+    gamer = rng.random(n) < 0.25   # hidden: into games and art
+
+    def took(p):  # 1 with probability p, else 0
+        return (rng.random(n) < p).astype(int)
+
+    survey = {
+        "CS 100": took(0.08),
+        "CS 251": np.ones(n, int),  # the prerequisite for CS 418
+        "CS 301": took(np.where(senior, 0.85, 0.35)),
+        "CS 361": took(np.where(senior, 0.8, 0.3)),
+        "CS 401": took(np.where(senior, 0.75, 0.15)),
+        "CS 411": took(np.where(ai_fan, 0.85, 0.05) * np.where(senior, 1, 0.7)),
+        "CS 424": took(np.where(ai_fan, 0.6, 0.1)),
+        "CS 426": took(np.where(gamer, 0.6, 0.05)),
+        "CS 427": took(np.where(gamer, 0.5, 0.05)),
+        "CS 480": took(np.where(senior, 0.5, 0.2)),
+        "CS 488": took(0.12),
+    }
+    survey["CS 412"] = took(np.where(ai_fan, 0.9, 0.03) * np.where(senior, 1, 0.5))
+    return survey
+
+
+def class_survey():
+    """20 classmates and Alice: rows 0-19 and row 33 of make_survey(60, seed=18981).
+
+    Seed and row were found by search so every teaching point shows up in the data (see SOURCES.md).
+    """
+    s = make_survey(60, seed=18981)
+    X = np.column_stack([s[c] for c in SURVEY_COURSES])
+    y = s[SURVEY_LABEL]
+    return X[:20], y[:20], X[33], int(y[33])
+
+
+def big_survey():
+    """The demo's 1,000 students, split 600 / 200 / 200 exactly as in week9.qmd."""
+    s = make_survey(1000, seed=418)
+    X = np.column_stack([s[c] for c in SURVEY_COURSES]).astype(bool)
+    y = s[SURVEY_LABEL]
+    X_tr, _, y_tr, _ = train_test_split(X, y, test_size=0.2, random_state=0)  # the test set stays untouched
+    X_tr, X_va, y_tr, y_va = train_test_split(X_tr, y_tr, test_size=0.25, random_state=0)
+    return X_tr, y_tr, X_va, y_va
+
+
+ALICE_MONTH_SEED = 0  # birth months for the irrelevant-feature slide
+
+
+def birth_months():
+    months = np.random.default_rng(ALICE_MONTH_SEED).integers(1, 13, 21)
+    return months[:20], int(months[20])
+
+
+def pair_counts(Xc, a):
+    """N11, N10, N01, N00 between Alice (a) and each classmate, as in Bello's notation."""
+    n11 = ((a == 1) & (Xc == 1)).sum(1)
+    n10 = ((a == 1) & (Xc == 0)).sum(1)
+    n01 = ((a == 0) & (Xc == 1)).sum(1)
+    n00 = ((a == 0) & (Xc == 0)).sum(1)
+    return n11, n10, n01, n00
+
+
+def jaccard_smc(Xc, a):
+    n11, n10, n01, n00 = pair_counts(Xc, a)
+    return n11 / (n11 + n10 + n01), (n11 + n00) / Xc.shape[1]
+
+
+def top_ylabel(ax, text):
+    """STYLE.md: horizontal y-axis label, left-aligned above the axis."""
+    ax.set_ylabel(text, rotation=0, ha="left", va="bottom", color=STEEL, fontsize=15)
+    ax.yaxis.set_label_coords(0, 1.025)
+
+
+def cell(ax, xy, on, *, size=0.8, on_color=STEEL, edge=BORDER, lw=1.0, zorder=3):
+    """One survey answer: a filled square for 1, an empty one for 0."""
+    ax.add_patch(plt.Rectangle((xy[0] - size / 2, xy[1] - size / 2), size, size,
+                               facecolor=on_color if on else PAPER,
+                               edgecolor=on_color if on else edge, lw=lw, zorder=zorder))
+
+
+@steps("survey-grid", 3)
+def survey_grid(step):
+    """The whole class survey, laid out like worksheet checkpoint 1: courses as rows, students as columns."""
+    Xc, yc, a, _ = class_survey()
+    fig, ax = new_fig(height=600)
+    ax.set_xlim(-3.4, 22.8)
+    ax.set_ylim(-13.0, 2.0)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    label_y = -11.9
+    for i, course in enumerate(SURVEY_COURSES + [SURVEY_LABEL]):
+        y = -i if i < len(SURVEY_COURSES) else label_y
+        hot = course == SURVEY_LABEL and step >= 1
+        ax.text(-0.7, y, course, ha="right", va="center", fontsize=13,
+                color=ORANGE if hot else INK, fontweight="bold" if hot else "normal")
+    if step >= 1:
+        ax.text(-0.7, label_y - 0.85, "(label)", ha="right", va="center", fontsize=12, color=ORANGE)
+        ax.plot([-3.2, 22.6], [(label_y - 10) / 2] * 2, color=QUIET, lw=1, ls=(0, (4, 3)))
+    for j in range(20):
+        ax.text(j, 1.0, str(j + 1), ha="center", va="center", fontsize=11, color=STEEL)
+        for i in range(len(SURVEY_COURSES)):
+            cell(ax, (j, -i), Xc[j, i])
+        if step == 0:
+            cell(ax, (j, label_y), yc[j])
+        else:
+            points(ax, [(j, label_y)], [yc[j]], size=110)
+    ax.text(9.5, 1.85, "classmate", ha="center", va="center", fontsize=12, color=STEEL)
+    if step >= 2:
+        ax.text(21.2, 1.0, "Alice", ha="center", va="center", fontsize=13, color=INK, fontweight="bold")
+        ax.add_patch(plt.Rectangle((20.5, label_y - 0.65), 1.4, -label_y + 0.65 + 0.55, fill=False, edgecolor=INK, lw=2, zorder=5))
+        for i in range(len(SURVEY_COURSES)):
+            cell(ax, (21.2, -i), a[i])
+        query(ax, (21.2, label_y), size=300)
+    return fig
+
+
+ALICE_PAIR = 4  # classmate #5: Alice's nearest neighbor by Jaccard
+
+
+@steps("survey-pair", 3)
+def survey_pair(step):
+    """Alice next to classmate #5, one column per course: disagreements, then the four N counts."""
+    Xc, _, a, _ = class_survey()
+    b = Xc[ALICE_PAIR]
+    fig, ax = new_fig(height=380)
+    ax.set_xlim(-2.6, 11.0)
+    ax.set_ylim(-3.3, 2.1)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    for i, course in enumerate(SURVEY_COURSES):
+        ax.text(i, 1.65, course.split()[1], ha="center", va="center", fontsize=13, color=STEEL)
+    ax.text(-0.75, 1.65, "CS", ha="right", va="center", fontsize=13, color=STEEL)
+    for row, (name, v) in enumerate((("Alice", a), (f"#{ALICE_PAIR + 1}", b))):
+        ax.text(-0.75, 0.7 - row, name, ha="right", va="center", fontsize=15, color=INK)
+        for i in range(len(SURVEY_COURSES)):
+            cell(ax, (i, 0.7 - row), v[i])
+    diff = a != b
+    if step == 1:
+        for i in np.flatnonzero(diff):
+            ax.add_patch(plt.Rectangle((i - 0.5, -0.8), 1.0, 2.0, fill=False, edgecolor=ORANGE, lw=3, zorder=5))
+        d = int(diff.sum())
+        ax.text(5, -1.45, f"{d} courses differ", ha="center", va="center", fontsize=17, color=ORANGE, fontweight="bold")
+        ax.text(5, -2.35, f"Manhattan = {d}      Euclidean = √{d} ≈ {d ** 0.5:.2f}", ha="center", va="center", fontsize=17, color=INK)
+    if step == 2:
+        kinds = {(1, 1): "$N_{11}$", (1, 0): "$N_{10}$", (0, 1): "$N_{01}$", (0, 0): "$N_{00}$"}
+        for i in range(len(SURVEY_COURSES)):
+            k = (int(a[i]), int(b[i]))
+            ax.text(i, -1.2, kinds[k], ha="center", va="center", fontsize=13,
+                    color=ORANGE if k == (1, 1) else (QUIET if k == (0, 0) else INK))
+        n11, n10, n01, n00 = (int(v[ALICE_PAIR]) for v in pair_counts(Xc, a))
+        ax.text(5, -2.0, f"$N_{{11}}$ = {n11}    $N_{{10}}$ = {n10}    $N_{{01}}$ = {n01}    $N_{{00}}$ = {n00}",
+                ha="center", va="center", fontsize=16, color=INK)
+        ax.text(5, -2.85, f"Jaccard = {n11}/{n11 + n10 + n01} ≈ {n11 / (n11 + n10 + n01):.3f}      "
+                          f"SMC = {n11 + n00}/11 ≈ {(n11 + n00) / 11:.3f}",
+                ha="center", va="center", fontsize=16, color=ORANGE, fontweight="bold")
+    return fig
+
+
+def ranked_bars(ax, values, title, *, top_color=ORANGE, fmt="{:.3f}", xmax=1.0):
+    """Every classmate as a bar, sorted high to low; ties keep classmate order."""
+    order = np.argsort(-values, kind="stable")
+    best = values[order[0]]
+    for r, j in enumerate(order):
+        hot = values[j] == best
+        ax.barh(-r, values[j], height=0.72, color=top_color if hot else QUIET, zorder=2)
+        ax.text(-0.01 * xmax, -r, f"#{j + 1}", ha="right", va="center", fontsize=11,
+                color=INK if hot else STEEL, fontweight="bold" if hot else "normal")
+        ax.text(values[j] + 0.01 * xmax, -r, fmt.format(values[j]), ha="left", va="center",
+                fontsize=10, color=INK if hot else STEEL)
+    ax.set_xlim(0, xmax * 1.12)
+    ax.set_ylim(-len(values) + 0.4, 0.8)
+    ax.axis("off")
+    ax.text(0, 1.3, title, ha="left", va="bottom", fontsize=15, color=INK)
+    return order
+
+
+@steps("survey-neighbors", 2)
+def survey_neighbors(step):
+    """All 20 classmates ranked by Jaccard, then by SMC: the nearest neighbor changes."""
+    Xc, _, a, _ = class_survey()
+    jac, smc = jaccard_smc(Xc, a)
+    fig, (lx, rx) = new_fig(height=600, ncols=2, gridspec_kw={"wspace": 0.25})
+    ranked_bars(lx, jac, "Jaccard: only shared 1s count")
+    if step >= 1:
+        ranked_bars(rx, smc, "SMC: shared 0s count too")
+    else:
+        rx.axis("off")
+    return fig
+
+
+KNN_SHOW = 7  # the 7 most similar classmates (5th through 7th tie)
+
+
+@steps("survey-knn", 4)
+def survey_knn(step):
+    """k-NN for Alice: classmates ranked by Jaccard similarity, each with their CS 412 answer."""
+    Xc, yc, a, ya = class_survey()
+    jac, _ = jaccard_smc(Xc, a)
+    order = np.argsort(-jac, kind="stable")[:KNN_SHOW]
+    fig, (ax, tx) = new_fig(height=520, ncols=2, gridspec_kw={"width_ratios": [1.25, 1], "wspace": 0.05})
+    for r, j in enumerate(order):
+        ax.barh(-r, jac[j], height=0.66, color=QUIET, zorder=2)
+        ax.text(-0.02, -r, f"#{j + 1}", ha="right", va="center", fontsize=14, color=INK)
+        ax.text(jac[j] + 0.015, -r, f"{jac[j]:.3f}", ha="left", va="center", fontsize=12, color=STEEL)
+        points(ax, [(0.78, -r)], [yc[j]], size=150)
+    ax.text(0, 0.9, "Jaccard similarity", ha="left", va="bottom", fontsize=14, color=STEEL)
+    ax.text(0.78, 0.9, "took 412?", ha="center", va="bottom", fontsize=14, color=STEEL)
+    ax.set_xlim(-0.12, 1.05)
+    ax.set_ylim(-KNN_SHOW + 0.3, 1.6)
+    ax.axis("off")
+    tx.axis("off")
+    tx.set_xlim(0, 1)
+    tx.set_ylim(0, 1)
+    rows = [(1, 0.78), (3, 0.5)]
+    for k, ty in rows[:min(step, 2)]:
+        votes = yc[order[:k]]
+        n_pos, n_neg = int(votes.sum()), int(k - votes.sum())
+        pred = 1 if n_pos > n_neg else 0
+        ax.add_patch(plt.Rectangle((-0.11, -k + 0.5), 0.99, k, fill=False, edgecolor=INK, lw=2,
+                                   ls="-" if k == 1 else (0, (5, 3)), zorder=5))
+        ax.text(0.9, -k + 0.55, f"k = {k}", ha="left", va="bottom", fontsize=14, color=INK)
+        tx.text(0.02, ty, f"k = {k}:  {n_pos} {POS_GLYPH}  vs.  {n_neg} {NEG_GLYPH}", fontsize=18, color=INK, va="center")
+        tx.text(0.02, ty - 0.09, f"predict {POS_GLYPH if pred else NEG_GLYPH}", fontsize=18,
+                color=ORANGE if pred else STEEL, va="center", fontweight="bold")
+        if step >= 3:
+            ok = pred == ya
+            tx.text(0.62, ty - 0.09, "right" if ok else "wrong", fontsize=17, va="center",
+                    color=INK if ok else ORANGE)
+    if step >= 3:
+        tx.text(0.02, 0.2, f"Alice's real answer: {POS_GLYPH if ya else NEG_GLYPH}\n"
+                           f"(she did not take CS 412)", fontsize=16, color=INK, va="center", linespacing=1.5)
+    return fig
+
+
+@steps("survey-month", 2)
+def survey_month(step):
+    """Add an irrelevant, large-scale feature (birth month) and Manhattan distance picks a new nearest neighbor."""
+    Xc, _, a, _ = class_survey()
+    months, alice_month = birth_months()
+    courses = (Xc != a).sum(1)
+    gap = np.abs(months - alice_month)
+    total = courses + (gap if step >= 1 else 0)
+    order = np.argsort(courses, kind="stable")
+    best = total.min()
+    fig, ax = new_fig(height=600)
+    for r, j in enumerate(order):
+        hot = total[j] == best
+        ax.barh(-r, courses[j], height=0.72, color=INK if hot else QUIET, zorder=2)
+        if step >= 1:
+            ax.barh(-r, gap[j], left=courses[j], height=0.72, color=ORANGE, alpha=1.0 if hot else 0.45, zorder=2)
+        ax.text(-0.15, -r, f"#{j + 1}", ha="right", va="center", fontsize=11,
+                color=INK if hot else STEEL, fontweight="bold" if hot else "normal")
+        label = f"{courses[j]}" if step == 0 else f"{courses[j]} + {gap[j]} = {total[j]}   (month {months[j]})"
+        ax.text(total[j] + 0.15, -r, label, ha="left", va="center", fontsize=10, color=INK if hot else STEEL)
+    ax.set_xlim(0, 17)
+    ax.set_ylim(-19.6, 1.6)
+    ax.axis("off")
+    if step == 0:
+        ax.text(0, 1.0, "Manhattan distance to Alice = number of courses that differ", fontsize=15, color=INK)
+    else:
+        ax.text(0, 1.0, f"Add birth month (Alice: {alice_month}): distance = courses that differ + |month gap|",
+                fontsize=15, color=INK)
+    return fig
+
+
+@steps("survey-choose-k", 3)
+def survey_choose_k(step):
+    """Validation accuracy against k on the demo's 1,000 students (600 training, 200 validation)."""
+    X_tr, y_tr, X_va, y_va = big_survey()
+    ks = np.array([1, 3, 5, 7, 9, 11, 15, 21, 31, 41, 51, 75, 101, 151, 201, 301, 451, 599])
+    acc = np.array([KNeighborsClassifier(n_neighbors=int(k), metric="jaccard").fit(X_tr, y_tr).score(X_va, y_va)
+                    for k in ks])
+    majority = max(y_va.mean(), 1 - y_va.mean())
+    fig, ax = new_fig(height=540)
+    tidy(ax, grid="y")
+    ax.plot(ks, acc, color=ORANGE, lw=3, marker="o", ms=6, zorder=3)
+    if step >= 1:
+        ax.axhline(majority, color=STEEL, lw=1.5, ls=(0, (5, 3)), zorder=2)
+        ax.text(ks[-1], majority - 0.008, f"always guess {NEG_GLYPH}: {majority:.0%}", ha="right", va="top",
+                fontsize=14, color=STEEL)
+    if step >= 2:
+        b = int(np.argmax(acc))
+        ax.scatter([ks[b]], [acc[b]], s=260, facecolor="none", edgecolor=INK, lw=2.2, zorder=5)
+        ax.annotate(f"best: k = {ks[b]} ({acc[b]:.0%})", (ks[b], acc[b]), xytext=(ks[b] * 2.2, acc[b] + 0.03),
+                    fontsize=15, color=INK, arrowprops=dict(arrowstyle="-", color=INK, lw=1.2))
+        ax.text(1, acc[0] - 0.03, "small k:\noverfit", fontsize=14, color=STEEL, va="top")
+        ax.text(599, acc[-1] + 0.03, "k ≈ N:\nunderfit", fontsize=14, color=STEEL, ha="right", va="bottom")
+    ax.set_xscale("log")
+    ax.set_xticks([1, 3, 10, 30, 100, 300, 599])
+    ax.set_xticklabels(["1", "3", "10", "30", "100", "300", "599"])
+    ax.set_ylim(0.6, 0.95)
+    ax.set_xlabel("k (number of neighbors, log scale)")
+    top_ylabel(ax, "validation accuracy")
+    ax.yaxis.set_major_formatter(lambda v, _: f"{v:.0%}")
+    return fig
+
+
+def survey_splits():
+    """(course, majority-vote score, information gain, children) for every course at the root."""
+    Xc, yc, _, _ = class_survey()
+    out = []
+    for i, course in enumerate(SURVEY_COURSES):
+        kids = [(int(yc[Xc[:, i] == v].sum()), int((1 - yc[Xc[:, i] == v]).sum())) for v in (0, 1)]
+        if min(sum(k) for k in kids) == 0:
+            out.append((course, None, None, kids))
+            continue
+        score = sum(max(k) for k in kids)
+        h_root = H(yc.mean())
+        ig = h_root - sum(sum(k) / len(yc) * H(k[0] / sum(k)) for k in kids)
+        out.append((course, score, float(ig), kids))
+    return out
+
+
+@steps("survey-split-scores", 2)
+def survey_split_scores(step):
+    """Every course as a candidate root question: majority-vote score, then information gain."""
+    rows = [r for r in survey_splits() if r[1] is not None]
+    rows.sort(key=lambda r: -r[2])
+    best_score = max(r[1] for r in rows)
+    best_ig = rows[0][2]
+    fig, (lx, rx) = new_fig(height=560, ncols=2, gridspec_kw={"wspace": 0.35})
+    n = len(rows)
+    for r, (course, score, ig, _) in enumerate(rows):
+        tie = score == best_score
+        lx.plot([12, score], [-r, -r], color=BORDER, lw=2, zorder=1)
+        lx.scatter([score], [-r], s=150, color=INK if tie else QUIET, zorder=3)
+        lx.text(11.6, -r, course, ha="right", va="center", fontsize=13, color=INK if tie else STEEL,
+                fontweight="bold" if tie else "normal")
+        lx.text(score + 0.3, -r, f"{score}/20", ha="left", va="center", fontsize=11, color=STEEL)
+        if step >= 1:
+            hot = ig == best_ig
+            rx.barh(-r, ig, height=0.66, color=ORANGE if hot else QUIET, zorder=2)
+            rx.text(-0.01, -r, course, ha="right", va="center", fontsize=13, color=INK if hot else STEEL,
+                    fontweight="bold" if hot else "normal")
+            rx.text(ig + 0.01, -r, f"{ig:.3f}", ha="left", va="center", fontsize=11, color=STEEL)
+    lx.plot([14, 14], [-n + 0.4, 0.6], color=STEEL, lw=1.2, ls=(0, (5, 3)), zorder=0)
+    lx.text(14, -n + 0.1, f"no question: guess {NEG_GLYPH} for all = 14/20", ha="center", va="top", fontsize=11, color=STEEL)
+    lx.set_xlim(12, 20.5)
+    lx.set_ylim(-n - 0.6, 1.9)
+    lx.axis("off")
+    lx.text(12, 1.6, "majority vote: correct out of 20", ha="left", va="bottom", fontsize=14, color=INK)
+    rx.set_xlim(0, 0.68)
+    rx.set_ylim(-n - 0.6, 1.9)
+    rx.axis("off")
+    if step >= 1:
+        rx.text(0, 1.6, "information gain", ha="left", va="bottom", fontsize=14, color=INK)
+    fig.text(0.5, 0.01, "CS 251 left out: all 20 classmates took it (the prerequisite), so it splits no one",
+             ha="center", fontsize=12, color=STEEL)
+    return fig
+
+
+SURVEY_NAMES = (POS_GLYPH, NEG_GLYPH)
+
+
+def survey_kids(course):
+    return next(r[3] for r in survey_splits() if r[0] == course)
+
+
+@steps("survey-majority", 3)
+def survey_majority(step):
+    """CIML §1.3's majority-vote score for the best survey question, "Took CS 424?"."""
+    fig, ax = new_fig(height=560)
+    ax.set_xlim(-4, 4)
+    ax.set_ylim(-1.0, 3.7)
+    ax.axis("off")
+    kids = survey_kids("CS 424")
+    notes = None
+    if step == 2:
+        notes = [f"guess {NEG_GLYPH}:\n{kids[0][1]} of {sum(kids[0])} correct",
+                 f"guess {POS_GLYPH}:\n{kids[1][0]} of {sum(kids[1])} correct"]
+    split_diagram(ax, (6, 14), kids, ["no", "yes"], "Took CS 424?", notes, names=SURVEY_NAMES,
+                  show_children=step >= 1)
+    if step == 2:
+        ax.text(0, -0.85, f"score = {kids[0][1]} + {kids[1][0]} = {kids[0][1] + kids[1][0]} / 20", ha="center",
+                fontsize=19, color=ORANGE, fontweight="bold")
+    return fig
+
+
+def weighted_entropy(kids):
+    """Size-weighted child entropy from the 3-decimal child values the slides print, so the arithmetic checks by hand."""
+    n = sum(sum(k) for k in kids)
+    return sum(sum(k) / n * round(float(H(k[0] / sum(k))), 3) for k in kids)
+
+
+@steps("survey-tie", 2)
+def survey_tie(step):
+    """CS 424 and CS 411 both score 18/20 by majority vote; weighted entropy separates them."""
+    fig, ax = new_fig(height=520)
+    ax.set_xlim(-8.2, 8.2)
+    ax.set_ylim(-1.0, 4.0)
+    ax.axis("off")
+    pair = [(-4.1, "CS 424"), (4.1, "CS 411")]
+    ents = {c: weighted_entropy(survey_kids(c)) for _, c in pair}
+    for cx, course in pair:
+        kids = survey_kids(course)
+        split_diagram(ax, (6, 14), kids, ["no", "yes"], f"Took {course}?", names=SURVEY_NAMES, cx=cx, span=3.6)
+        wrong = min(kids[0]) + min(kids[1])
+        ax.text(cx, 0.15, f"wrong: {wrong} / 20", ha="center", fontsize=16, color=INK)
+        if step >= 1:
+            hot = ents[course] == min(ents.values())
+            ax.text(cx, -0.4, f"weighted entropy: {ents[course]:.3f}", ha="center", fontsize=16,
+                    color=ORANGE if hot else INK, fontweight="bold" if hot else "normal")
+    return fig
+
+
+@steps("survey-split-entropy", 4)
+def survey_split_entropy(step):
+    """The "Took CS 424?" split scored with entropy: parent H, each child's H, then the information gain."""
+    fig, ax = new_fig(height=560)
+    ax.set_xlim(-4, 4)
+    ax.set_ylim(-1.0, 3.7)
+    ax.axis("off")
+    root, kids = (6, 14), survey_kids("CS 424")
+    h_root = H(root[0] / sum(root))
+    h_kids = [H(p / (p + q)) for p, q in kids]
+    n = [p + q for p, q in kids]
+    gain = h_root - sum(k / 20 * h for k, h in zip(n, h_kids))
+    notes = [f"H = {h:.3f}" for h in h_kids] if step >= 2 else None
+    split_diagram(ax, root, kids, ["no", "yes"], "Took CS 424?", notes, names=SURVEY_NAMES)
+    if step >= 1:
+        ax.text(1.3, 3.0, f"H = {h_root:.3f}", ha="left", va="center", fontsize=15, color=INK)
+    if step >= 3:
+        ax.text(0, -0.85, f"IG = {h_root:.3f} − ({n[0]}/20)({h_kids[0]:.3f}) − ({n[1]}/20)({h_kids[1]:.3f})"
+                          f" = {gain:.3f}", ha="center", fontsize=19, color=ORANGE, fontweight="bold")
+    return fig
+
+
+@steps("survey-entropy-curve", 4)
+def survey_entropy_curve(step):
+    """Information gain read off the entropy curve (after Raschka's FAQ figure) for the two tied survey questions.
+
+    The size-weighted average of the children's shares is the parent's share, so each split's average
+    entropy sits on its chord directly below the parent; the drop is the gain.
+    """
+    fig, ax = fixed_fig(left=95, right=330, top=40, bottom=70)
+    p = np.linspace(0, 1, 401)
+    ax.plot(p, H(p), color=INK, lw=3, zorder=2)
+    tidy(ax, grid="y")
+    ax.set_xlim(-0.02, 1.02)
+    ax.set_ylim(0, 1.12)
+    ax.set_xlabel(f"share of the node that took CS 412 ({POS_GLYPH})")
+    top_ylabel(ax, "entropy H")
+    ax.text(0.02, 0.06, "pure: H = 0", fontsize=15, color=STEEL)
+    ax.text(0.98, 0.06, "pure: H = 0", fontsize=15, color=STEEL, ha="right")
+    root = 6 / 20
+    if step == 0:
+        ax.text(0.5, 1.04, "50/50: H = 1", fontsize=15, color=STEEL, ha="center")
+        return fig
+    ax.scatter([root], [H(root)], s=170, color=INK, zorder=6)
+    ax.annotate(f"parent: 6 {POS_GLYPH} / 14 {NEG_GLYPH}\nH = {H(root):.3f}", (root, H(root)), xytext=(0.02, 1.0),
+                fontsize=14, color=INK, ha="left", va="center", linespacing=1.4,
+                arrowprops=dict(arrowstyle="-", color=INK, lw=1.2, shrinkB=8))
+    # (course, color, bracket x, text-block xy)
+    splits = [("CS 411", STEEL, 0.285, (1.05, 0.75)), ("CS 424", ORANGE, 0.315, (1.05, 0.45))]
+    for course, col, bx, (tx, ty) in splits[:step - 1]:
+        kids = survey_kids(course)
+        shares = [k[0] / sum(k) for k in kids]
+        avg = weighted_entropy(kids)
+        gain = H(root) - avg
+        ax.plot(shares, [H(s) for s in shares], color=col, lw=2, ls=(0, (5, 3)), zorder=3)
+        ax.scatter(shares, [H(s) for s in shares], s=130, color=col, zorder=5)
+        ax.scatter([root], [avg], s=130, facecolor=PAPER, edgecolor=col, lw=2.5, zorder=5)
+        ax.plot([bx, bx], [avg, H(root)], color=col, lw=2.5, zorder=4)
+        for yv in (avg, H(root)):
+            ax.plot([bx - 0.01, bx + 0.01], [yv, yv], color=col, lw=2.5, zorder=4)
+        ax.text(tx, ty, f"Took {course}?\nchildren average H = {avg:.3f}\n"
+                        f"gain = {H(root):.3f} − {avg:.3f} = {gain:.3f}",
+                ha="left", va="center", fontsize=14, color=col, linespacing=1.5, transform=ax.get_yaxis_transform(),
+                clip_on=False)
+    return fig
+
+
+def survey_tree():
+    Xc, yc, _, _ = class_survey()
+    return DecisionTreeClassifier(criterion="entropy", random_state=0).fit(Xc, yc)
+
+
+def draw_course_tree(ax, tree, *, max_depth=None, path=(), note_text=None):
+    """Draw the survey tree with course questions. Node positions come from the full tree, so a
+    depth-limited version keeps every node in place and only turns the deepest nodes into leaves."""
+    Xc, yc, _, _ = class_survey()
+    t = tree.tree_
+    visits = tree.decision_path(Xc).toarray().astype(bool)
+    n_pos = (visits & (yc[:, None] == 1)).sum(0)
+    n_neg = (visits & (yc[:, None] == 0)).sum(0)
+    pos, leaves = {}, []
+
+    def walk(node, depth):
+        if t.feature[node] < 0:
+            pos[node] = (len(leaves), depth)
+            leaves.append(node)
+            return pos[node][0]
+        xs = [walk(t.children_left[node], depth + 1), walk(t.children_right[node], depth + 1)]
+        pos[node] = (sum(xs) / 2, depth)
+        return pos[node][0]
+
+    walk(0, 0)
+    sx, sy = 2.9, 1.3
+    xy = {n: (x * sx, -d * sy) for n, (x, d) in pos.items()}
+    deep = max(d for _, d in pos.values())
+    limit = deep if max_depth is None else max_depth
+    shown = {n for n, (_, d) in pos.items() if d <= limit}
+    internal = {n for n in shown if t.feature[n] >= 0 and pos[n][1] < limit}
+    on_path = set(zip(path, path[1:]))
+    for n in internal:
+        for child, lbl, side in ((t.children_left[n], "no", "left"), (t.children_right[n], "yes", "right")):
+            hot = (n, child) in on_path
+            edge(ax, xy[n], xy[child], lbl, side=side, color=ORANGE if hot else INK, lw=5 if hot else 3)
+    for n in shown:
+        on = n in path
+        if n in internal:
+            node_box(ax, xy[n], f"Took {SURVEY_COURSES[t.feature[n]]}?", size=15,
+                     edge=ORANGE if on else INK, lw=5 if on else 3)
+        else:
+            pred = 1 if n_pos[n] > n_neg[n] else 0
+            node_box(ax, xy[n], f"{n_pos[n]} {POS_GLYPH} / {n_neg[n]} {NEG_GLYPH}", leaf=True, size=15,
+                     fill=POS_TINT if pred else NEG_TINT, edge=ORANGE if on else INK, lw=5 if on else 3, w=2.5)
+    ax.set_xlim(-1.6, (max(x for x, _ in pos.values())) * sx + 1.6)
+    ax.set_ylim(-deep * sy - 0.9, 0.9)
+    ax.axis("off")
+    ax.text(ax.get_xlim()[0], -deep * sy - 0.75,
+            f"leaf color = prediction: orange {POS_GLYPH} took CS 412, gray {NEG_GLYPH} did not (a tie goes to {NEG_GLYPH})",
+            fontsize=13, color=STEEL, va="center")
+    if note_text:
+        ax.text(ax.get_xlim()[0], 0.75, note_text, fontsize=16, color=INK, va="center")
+
+
+@steps("survey-tree-grow", 4)
+def survey_tree_grow(step):
+    """Greedy growth on the 20 classmates: depth 0, 1, 2, then the full tree."""
+    Xc, yc, _, _ = class_survey()
+    tree = survey_tree()
+    depth = [0, 1, 2, None][step]
+    if depth == 0:
+        acc = max(yc.mean(), 1 - yc.mean())
+    else:
+        acc = DecisionTreeClassifier(criterion="entropy", max_depth=depth, random_state=0).fit(Xc, yc).score(Xc, yc)
+    label = "full tree" if depth is None else f"depth {depth}"
+    fig, ax = new_fig(height=600)
+    draw_course_tree(ax, tree, max_depth=depth, note_text=f"{label}: training accuracy {acc:.0%}")
+    return fig
+
+
+@figure("survey-tree-path")
+def survey_tree_path():
+    """Alice walks the full tree from the root: one question, then a leaf."""
+    _, _, a, _ = class_survey()
+    tree = survey_tree()
+    path = list(np.flatnonzero(tree.decision_path(a.reshape(1, -1)).toarray()[0]))
+    pred = int(tree.predict(a.reshape(1, -1))[0])
+    fig, ax = new_fig(height=600)
+    draw_course_tree(ax, tree, path=path,
+                     note_text=f"Alice: took CS 424? no  →  predict {POS_GLYPH if pred else NEG_GLYPH}")
+    return fig
+
+
+@steps("survey-depth-accuracy", 3)
+def survey_depth_accuracy(step):
+    """Training vs. validation accuracy against max_depth on the demo's 1,000 students."""
+    X_tr, y_tr, X_va, y_va = big_survey()
+    depths = np.arange(0, 11)
+    train, val = [], []
+    for d in depths:
+        if d == 0:
+            maj = int(y_tr.mean() > 0.5)
+            train.append((y_tr == maj).mean())
+            val.append((y_va == maj).mean())
+        else:
+            m = DecisionTreeClassifier(criterion="entropy", max_depth=int(d), random_state=0).fit(X_tr, y_tr)
+            train.append(m.score(X_tr, y_tr))
+            val.append(m.score(X_va, y_va))
+    fig, ax = new_fig(height=540)
+    tidy(ax, grid="y")
+    ax.plot(depths, train, color=STEEL, lw=3, marker="o", ms=6)
+    ax.text(depths[-1] + 0.25, train[-1], "training", color=STEEL, fontsize=16, va="center")
+    if step >= 1:
+        ax.plot(depths, val, color=ORANGE, lw=3, marker="o", ms=6)
+        ax.text(depths[-1] + 0.25, val[-1], "validation", color=ORANGE, fontsize=16, va="center")
+    if step >= 2:
+        best = int(depths[int(np.argmax(val))])
+        ax.scatter([best], [max(val)], s=260, facecolor="none", edgecolor=INK, lw=2.2, zorder=5)
+        ax.annotate(f"best validation: depth {best}", (best, max(val)), xytext=(best + 1.5, max(val) + 0.05),
+                    fontsize=16, color=INK, arrowprops=dict(arrowstyle="-", color=INK, lw=1.2))
+        ax.text(0, 0.66, "underfit\n(empty tree)", fontsize=14, color=STEEL)
+        ax.text(10, 0.66, "overfit\n(deep tree)", fontsize=14, color=STEEL, ha="right")
+    ax.set_xlim(-0.4, 12.2)
+    ax.set_ylim(0.65, 0.95)
+    ax.set_xticks(depths)
+    ax.set_xlabel("max_depth")
+    top_ylabel(ax, "accuracy")
     ax.yaxis.set_major_formatter(lambda v, _: f"{v:.0%}")
     return fig
 

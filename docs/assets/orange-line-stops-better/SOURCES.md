@@ -34,6 +34,7 @@ Files are at the highest available resolution from the source.
 
 ### 10. Halsted
 - **stop10-halsted-a.jpg** — [Wikimedia Commons: Halsted CTA Orange Line.jpg](https://commons.wikimedia.org/wiki/File:Halsted_CTA_Orange_Line.jpg) — License: CC BY-SA 4.0 — Author: Zol87 from Chicago, Illinois, USA — 2592×1944
+- **stop10-halsted-b.jpg** — [Wikimedia Commons: Orange Line Train at Halsted Station, Halsted Street and Archer Avenue, Bridgeport, Chicago, IL (54834305072).jpg](https://commons.wikimedia.org/wiki/File:Orange_Line_Train_at_Halsted_Station,_Halsted_Street_and_Archer_Avenue,_Bridgeport,_Chicago,_IL_(54834305072).jpg) — License: CC BY-SA 4.0 — Author: Warren LeMay from Chicago, IL, United States — 4032×3024
 
 ### 11. Ashland
 - **stop11-ashland-a.jpg** — [Wikimedia Commons: Entrance to Ashland station, December 2018.JPG](https://commons.wikimedia.org/wiki/File:Entrance_to_Ashland_station,_December_2018.JPG) — License: CC BY-SA 3.0 — Author: Pi.1415926535 — 5184×3888

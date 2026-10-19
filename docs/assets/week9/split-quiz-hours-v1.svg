@@ -1,0 +1,1245 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="575.28pt" height="327.744pt" viewBox="0 0 575.28 327.744" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-19T10:47:44.000609</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.8.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 327.744 
+L 575.28 327.744 
+L 575.28 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <path d="M 287.64 107.724255 
+L 169.065 161.890315 
+" clip-path="url(#pe24244ad4c)" style="fill: none; stroke: #1a1a1a; stroke-width: 2.5; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 287.64 107.724255 
+L 406.215 161.890315 
+" clip-path="url(#pe24244ad4c)" style="fill: none; stroke: #1a1a1a; stroke-width: 2.5; stroke-linecap: square"/>
+   </g>
+   <g id="patch_2">
+    <path d="M 210.915 68.751115 
+L 313.215 68.751115 
+L 313.215 41.007523 
+L 210.915 41.007523 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: #f9461c; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 313.215 68.751115 
+L 364.365 68.751115 
+L 364.365 41.007523 
+L 313.215 41.007523 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: #aaaaaa; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <!-- 20 pass / 10 fail -->
+    <g style="fill: #1a1a1a" transform="translate(233.518125 31.926906) scale(0.15 -0.15)">
+     <defs>
+      <path id="LibreFranklin-Regular-32" d="M 1850 1990 
+Q 2208 2330 2422 2582 
+Q 2637 2835 2729 3052 
+Q 2822 3270 2822 3501 
+Q 2822 3776 2681 3961 
+Q 2541 4147 2326 4240 
+Q 2112 4333 1875 4333 
+Q 1600 4333 1299 4189 
+Q 998 4045 781 3699 
+Q 768 3674 733 3664 
+Q 698 3654 653 3686 
+L 371 3853 
+Q 288 3910 346 3994 
+Q 640 4422 1056 4617 
+Q 1472 4813 1926 4813 
+Q 2330 4813 2669 4665 
+Q 3008 4518 3213 4224 
+Q 3418 3930 3418 3482 
+Q 3418 3200 3318 2950 
+Q 3219 2701 2992 2429 
+Q 2765 2157 2387 1805 
+L 1101 595 
+Q 1062 563 1072 540 
+Q 1082 518 1139 518 
+L 3386 518 
+Q 3469 518 3469 448 
+L 3469 77 
+Q 3469 0 3386 0 
+L 416 0 
+Q 314 0 314 102 
+L 314 365 
+Q 314 429 342 483 
+Q 371 538 486 634 
+L 1850 1990 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-30" d="M 2208 4813 
+Q 2707 4813 3110 4531 
+Q 3514 4250 3747 3702 
+Q 3981 3155 3981 2362 
+Q 3981 1574 3747 1033 
+Q 3514 493 3110 217 
+Q 2707 -58 2202 -58 
+Q 1690 -58 1286 217 
+Q 883 493 652 1027 
+Q 422 1562 422 2355 
+Q 422 3149 656 3699 
+Q 890 4250 1296 4531 
+Q 1702 4813 2208 4813 
+z
+M 2208 410 
+Q 2733 410 3043 864 
+Q 3354 1318 3354 2362 
+Q 3354 3411 3040 3878 
+Q 2726 4346 2202 4346 
+Q 1683 4346 1366 3875 
+Q 1050 3405 1050 2362 
+Q 1050 1325 1366 867 
+Q 1683 410 2208 410 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-20" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-70" d="M 934 3392 
+Q 1024 3392 1024 3296 
+L 1024 3027 
+Q 1024 2925 1107 3002 
+Q 1178 3072 1299 3181 
+Q 1421 3290 1616 3373 
+Q 1811 3456 2112 3456 
+Q 2502 3456 2822 3267 
+Q 3142 3078 3328 2700 
+Q 3514 2323 3514 1747 
+Q 3514 1171 3328 768 
+Q 3142 365 2812 150 
+Q 2483 -64 2042 -64 
+Q 1747 -64 1520 29 
+Q 1293 122 1133 256 
+Q 1075 307 1052 297 
+Q 1030 288 1030 218 
+L 1030 -973 
+Q 1030 -1056 960 -1056 
+L 563 -1056 
+Q 493 -1056 493 -973 
+L 493 3290 
+Q 493 3392 595 3392 
+L 934 3392 
+z
+M 1030 749 
+Q 1222 550 1433 438 
+Q 1645 326 1901 326 
+Q 2362 326 2662 684 
+Q 2963 1043 2963 1741 
+Q 2963 2208 2822 2502 
+Q 2682 2797 2448 2931 
+Q 2214 3066 1933 3066 
+Q 1670 3066 1465 2950 
+Q 1261 2835 1145 2665 
+Q 1030 2496 1030 2330 
+L 1030 749 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-61" d="M 2445 410 
+Q 2208 179 1929 57 
+Q 1651 -64 1312 -64 
+Q 813 -64 525 189 
+Q 237 442 237 864 
+Q 237 1370 672 1667 
+Q 1107 1965 1926 2016 
+L 2426 2054 
+Q 2528 2061 2528 2150 
+L 2528 2323 
+Q 2528 2669 2313 2870 
+Q 2099 3072 1734 3072 
+Q 1171 3072 819 2560 
+Q 781 2502 723 2522 
+L 384 2637 
+Q 358 2650 352 2669 
+Q 346 2688 371 2739 
+Q 557 3066 905 3261 
+Q 1254 3456 1760 3456 
+Q 2400 3456 2726 3161 
+Q 3053 2867 3053 2362 
+L 3053 96 
+Q 3053 0 2963 0 
+L 2637 0 
+Q 2560 0 2554 102 
+L 2541 397 
+Q 2528 486 2445 410 
+z
+M 2528 1626 
+Q 2528 1734 2438 1728 
+L 2016 1690 
+Q 1427 1651 1100 1459 
+Q 774 1267 774 928 
+Q 774 653 969 493 
+Q 1165 333 1498 333 
+Q 1702 333 1891 406 
+Q 2080 480 2227 595 
+Q 2528 845 2528 1094 
+L 2528 1626 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-73" d="M 2528 2643 
+Q 2394 2835 2166 2956 
+Q 1939 3078 1619 3078 
+Q 1274 3078 1046 2931 
+Q 819 2784 819 2534 
+Q 819 2406 918 2281 
+Q 1018 2157 1338 2061 
+L 2150 1818 
+Q 2586 1696 2784 1465 
+Q 2982 1235 2982 934 
+Q 2982 634 2803 410 
+Q 2624 186 2310 61 
+Q 1997 -64 1600 -64 
+Q 1094 -64 713 134 
+Q 333 333 179 640 
+Q 141 710 192 742 
+L 442 883 
+Q 506 915 538 877 
+Q 691 634 950 480 
+Q 1210 326 1606 326 
+Q 1971 333 2224 480 
+Q 2477 627 2477 877 
+Q 2477 1050 2336 1174 
+Q 2195 1299 1850 1395 
+L 1190 1581 
+Q 710 1709 515 1926 
+Q 320 2144 320 2438 
+Q 314 2739 480 2969 
+Q 646 3200 940 3328 
+Q 1235 3456 1626 3456 
+Q 2054 3456 2387 3293 
+Q 2720 3130 2899 2861 
+Q 2938 2797 2893 2771 
+L 2624 2624 
+Q 2573 2592 2528 2643 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-2f" d="M 134 -275 
+Q 64 -275 83 -224 
+L 1683 4691 
+Q 1702 4749 1766 4749 
+L 2048 4749 
+Q 2131 4749 2099 4646 
+L 525 -198 
+Q 499 -275 410 -275 
+L 134 -275 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-31" d="M 2637 486 
+Q 2707 486 2707 422 
+L 2707 64 
+Q 2707 0 2637 0 
+L 390 0 
+Q 320 0 320 64 
+L 320 422 
+Q 320 486 390 486 
+L 1197 486 
+Q 1248 486 1248 518 
+L 1248 4038 
+Q 1248 4109 1190 4090 
+L 397 3795 
+Q 314 3770 314 3872 
+L 314 4128 
+Q 314 4173 326 4189 
+Q 339 4205 378 4224 
+L 1325 4698 
+Q 1427 4749 1517 4749 
+L 1792 4749 
+Q 1862 4749 1862 4672 
+L 1862 531 
+Q 1862 486 1901 486 
+L 2637 486 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-66" d="M 2208 3392 
+Q 2272 3392 2272 3328 
+L 2272 3053 
+Q 2272 2995 2208 2995 
+L 1478 2995 
+Q 1427 2995 1427 2938 
+L 1427 90 
+Q 1427 0 1350 0 
+L 960 0 
+Q 890 0 890 83 
+L 890 2944 
+Q 890 2995 845 2995 
+L 218 2995 
+Q 154 2995 154 3053 
+L 154 3328 
+Q 154 3392 224 3392 
+L 832 3392 
+Q 890 3392 890 3456 
+L 890 3923 
+Q 890 4326 1088 4537 
+Q 1286 4749 1690 4749 
+L 2221 4749 
+Q 2304 4749 2304 4672 
+L 2304 4422 
+Q 2304 4358 2234 4358 
+L 1786 4358 
+Q 1587 4358 1500 4233 
+Q 1414 4109 1414 3898 
+L 1414 3450 
+Q 1414 3392 1472 3392 
+L 2208 3392 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-69" d="M 1056 4122 
+Q 1056 4000 941 4000 
+L 570 4000 
+Q 474 4000 474 4109 
+L 474 4646 
+Q 474 4749 563 4749 
+L 966 4749 
+Q 1056 4749 1056 4653 
+L 1056 4122 
+z
+M 1030 109 
+Q 1030 0 915 0 
+L 589 0 
+Q 493 0 493 90 
+L 493 3302 
+Q 493 3392 570 3392 
+L 960 3392 
+Q 1030 3392 1030 3309 
+L 1030 109 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-6c" d="M 1037 109 
+Q 1037 0 922 0 
+L 589 0 
+Q 493 0 493 90 
+L 499 4659 
+Q 499 4749 576 4749 
+L 960 4749 
+Q 1037 4749 1037 4666 
+L 1037 109 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibreFranklin-Regular-32"/>
+     <use xlink:href="#LibreFranklin-Regular-30" x="59.899994"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="128.699982"/>
+     <use xlink:href="#LibreFranklin-Regular-70" x="150.199966"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="209.899963"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="264.699951"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="315.899948"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="367.099945"/>
+     <use xlink:href="#LibreFranklin-Regular-2f" x="388.59993"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="422.799927"/>
+     <use xlink:href="#LibreFranklin-Regular-31" x="444.299911"/>
+     <use xlink:href="#LibreFranklin-Regular-30" x="490.799896"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="559.599884"/>
+     <use xlink:href="#LibreFranklin-Regular-66" x="581.099869"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="618.999863"/>
+     <use xlink:href="#LibreFranklin-Regular-69" x="673.79985"/>
+     <use xlink:href="#LibreFranklin-Regular-6c" x="697.699844"/>
+    </g>
+   </g>
+   <g id="text_2">
+    <!-- Studied more than 6 hours? -->
+    <g style="fill: #1a1a1a" transform="translate(184.45375 89.871479) scale(0.16 -0.16)">
+     <defs>
+      <path id="LibreFranklin-Regular-53" d="M 3187 3866 
+Q 3021 4064 2758 4205 
+Q 2496 4346 2099 4346 
+Q 1619 4346 1344 4134 
+Q 1069 3923 1069 3546 
+Q 1069 3437 1117 3305 
+Q 1165 3174 1312 3046 
+Q 1459 2918 1754 2816 
+L 2682 2509 
+Q 3258 2317 3504 2000 
+Q 3750 1683 3750 1254 
+Q 3750 634 3296 285 
+Q 2842 -64 2054 -64 
+Q 1478 -64 1040 141 
+Q 602 346 333 736 
+Q 275 819 371 890 
+L 602 1050 
+Q 704 1120 762 1050 
+Q 934 832 1104 688 
+Q 1274 544 1491 473 
+Q 1709 403 2029 403 
+Q 2534 403 2848 585 
+Q 3162 768 3162 1190 
+Q 3162 1427 3018 1606 
+Q 2874 1786 2438 1946 
+L 1466 2278 
+Q 934 2464 707 2793 
+Q 480 3123 480 3488 
+Q 480 3891 685 4188 
+Q 890 4486 1254 4649 
+Q 1619 4813 2099 4813 
+Q 2579 4813 2956 4643 
+Q 3334 4474 3597 4179 
+Q 3616 4154 3625 4122 
+Q 3635 4090 3597 4058 
+L 3302 3827 
+Q 3258 3795 3187 3866 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-74" d="M 1389 2995 
+Q 1338 2995 1338 2938 
+L 1338 909 
+Q 1338 608 1440 505 
+Q 1542 403 1747 403 
+L 2189 403 
+Q 2259 403 2259 333 
+L 2253 115 
+Q 2253 51 2176 32 
+Q 2106 19 1994 12 
+Q 1882 6 1766 3 
+Q 1651 0 1574 0 
+Q 1171 0 985 189 
+Q 800 378 800 787 
+L 800 2925 
+Q 800 2995 736 2995 
+L 224 2995 
+Q 154 2995 154 3059 
+L 154 3328 
+Q 154 3392 218 3392 
+L 762 3392 
+Q 806 3392 806 3443 
+L 877 4461 
+Q 883 4544 947 4544 
+L 1267 4544 
+Q 1344 4544 1344 4454 
+L 1344 3443 
+Q 1344 3392 1395 3392 
+L 2202 3392 
+Q 2272 3392 2272 3334 
+L 2272 3059 
+Q 2272 2995 2202 2995 
+L 1389 2995 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-75" d="M 1645 358 
+Q 1920 358 2173 508 
+Q 2426 659 2675 915 
+L 2675 3302 
+Q 2675 3392 2778 3392 
+L 3130 3392 
+Q 3219 3392 3219 3302 
+L 3206 83 
+Q 3206 0 3136 0 
+L 2765 0 
+Q 2694 0 2694 70 
+L 2694 448 
+Q 2694 518 2637 467 
+Q 2285 166 2013 51 
+Q 1741 -64 1472 -64 
+Q 1030 -64 739 201 
+Q 448 467 448 915 
+L 448 3296 
+Q 448 3392 544 3392 
+L 902 3392 
+Q 986 3392 986 3302 
+L 986 1056 
+Q 986 742 1162 550 
+Q 1338 358 1645 358 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-64" d="M 2906 0 
+Q 2816 0 2816 90 
+L 2816 365 
+Q 2816 467 2733 390 
+Q 2662 314 2531 208 
+Q 2400 102 2201 19 
+Q 2003 -64 1728 -64 
+Q 1331 -64 1008 125 
+Q 685 314 496 694 
+Q 307 1075 307 1645 
+Q 307 2189 499 2595 
+Q 691 3002 1027 3229 
+Q 1363 3456 1805 3456 
+Q 2118 3456 2329 3353 
+Q 2541 3251 2701 3117 
+Q 2803 3034 2803 3162 
+L 2803 4666 
+Q 2803 4749 2874 4749 
+L 3264 4749 
+Q 3334 4749 3334 4666 
+L 3334 102 
+Q 3334 0 3232 0 
+L 2906 0 
+z
+M 2797 2643 
+Q 2598 2842 2393 2950 
+Q 2189 3059 1933 3059 
+Q 1466 3059 1162 2704 
+Q 858 2349 858 1664 
+Q 858 1197 998 899 
+Q 1139 602 1376 464 
+Q 1613 326 1894 326 
+Q 2150 326 2355 448 
+Q 2560 570 2678 749 
+Q 2797 928 2797 1101 
+L 2797 2643 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-65" d="M 851 1485 
+Q 851 1171 1001 912 
+Q 1152 653 1405 499 
+Q 1658 346 1971 346 
+Q 2605 346 2970 877 
+Q 3008 922 3059 896 
+L 3328 762 
+Q 3386 730 3341 672 
+Q 3085 282 2739 109 
+Q 2394 -64 1920 -64 
+Q 1446 -64 1078 153 
+Q 710 371 502 761 
+Q 294 1152 294 1664 
+Q 294 2214 508 2617 
+Q 723 3021 1091 3238 
+Q 1459 3456 1914 3456 
+Q 2611 3456 3033 2998 
+Q 3456 2541 3456 1722 
+Q 3456 1670 3446 1625 
+Q 3437 1581 3360 1581 
+L 909 1581 
+Q 851 1581 851 1485 
+z
+M 2810 1933 
+Q 2874 1933 2896 1949 
+Q 2918 1965 2918 2022 
+Q 2918 2298 2800 2538 
+Q 2682 2778 2461 2925 
+Q 2240 3072 1926 3072 
+Q 1581 3072 1344 2905 
+Q 1107 2739 985 2480 
+Q 864 2221 864 1933 
+L 2810 1933 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-6d" d="M 582 0 
+Q 493 0 493 83 
+L 493 3309 
+Q 493 3392 563 3392 
+L 947 3392 
+Q 1011 3392 1011 3322 
+L 1011 2950 
+Q 1011 2880 1075 2931 
+Q 1382 3181 1635 3318 
+Q 1888 3456 2208 3456 
+Q 2592 3456 2816 3283 
+Q 3040 3110 3117 2893 
+Q 3130 2861 3155 2870 
+Q 3181 2880 3206 2906 
+Q 3507 3162 3776 3309 
+Q 4045 3456 4365 3456 
+Q 4832 3456 5088 3190 
+Q 5344 2925 5344 2483 
+L 5344 102 
+Q 5344 0 5248 0 
+L 4890 0 
+Q 4806 0 4806 83 
+L 4806 2368 
+Q 4806 2675 4656 2854 
+Q 4506 3034 4192 3034 
+Q 3904 3034 3670 2883 
+Q 3437 2733 3277 2598 
+Q 3187 2509 3187 2413 
+L 3187 102 
+Q 3187 0 3091 0 
+L 2733 0 
+Q 2650 0 2650 83 
+L 2650 2368 
+Q 2650 2675 2502 2854 
+Q 2355 3034 2035 3034 
+Q 1760 3034 1539 2902 
+Q 1318 2771 1030 2515 
+L 1030 96 
+Q 1030 0 934 0 
+L 582 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-6f" d="M 1914 -64 
+Q 1427 -64 1062 157 
+Q 698 378 496 771 
+Q 294 1165 294 1677 
+Q 294 2202 502 2602 
+Q 710 3002 1075 3229 
+Q 1440 3456 1920 3456 
+Q 2406 3456 2768 3229 
+Q 3130 3002 3331 2602 
+Q 3533 2202 3533 1683 
+Q 3533 1171 3331 777 
+Q 3130 384 2765 160 
+Q 2400 -64 1914 -64 
+z
+M 1926 339 
+Q 2426 339 2704 700 
+Q 2982 1062 2982 1696 
+Q 2982 2323 2697 2691 
+Q 2413 3059 1920 3059 
+Q 1421 3059 1133 2691 
+Q 845 2323 845 1696 
+Q 845 1062 1133 700 
+Q 1421 339 1926 339 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-72" d="M 582 0 
+Q 493 0 493 83 
+L 493 3309 
+Q 493 3392 563 3392 
+L 934 3392 
+Q 1005 3392 1005 3322 
+L 1005 2906 
+Q 1005 2867 1024 2860 
+Q 1043 2854 1075 2886 
+Q 1562 3456 2067 3456 
+Q 2291 3456 2291 3373 
+L 2291 2989 
+Q 2291 2925 2234 2938 
+Q 2176 2944 2102 2950 
+Q 2029 2957 1946 2957 
+Q 1760 2957 1545 2848 
+Q 1331 2739 1180 2569 
+Q 1030 2400 1030 2214 
+L 1030 96 
+Q 1030 0 934 0 
+L 582 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-68" d="M 582 0 
+Q 499 0 499 83 
+L 499 4666 
+Q 499 4749 570 4749 
+L 947 4749 
+Q 1018 4749 1018 4672 
+L 1018 2963 
+Q 1018 2893 1075 2944 
+Q 1414 3206 1673 3331 
+Q 1933 3456 2259 3456 
+Q 2758 3456 3020 3190 
+Q 3283 2925 3283 2483 
+L 3283 102 
+Q 3283 0 3187 0 
+L 2829 0 
+Q 2746 0 2746 83 
+L 2746 2368 
+Q 2746 2675 2586 2854 
+Q 2426 3034 2080 3034 
+Q 1792 3034 1565 2902 
+Q 1338 2771 1037 2515 
+L 1037 96 
+Q 1037 0 934 0 
+L 582 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-6e" d="M 582 0 
+Q 493 0 493 83 
+L 493 3309 
+Q 493 3392 563 3392 
+L 947 3392 
+Q 1018 3392 1018 3322 
+L 1018 2950 
+Q 1018 2880 1075 2931 
+Q 1395 3181 1657 3318 
+Q 1920 3456 2253 3456 
+Q 2752 3456 3017 3190 
+Q 3283 2925 3283 2490 
+L 3283 102 
+Q 3283 0 3187 0 
+L 2829 0 
+Q 2746 0 2746 83 
+L 2746 2368 
+Q 2746 2675 2586 2854 
+Q 2426 3034 2080 3034 
+Q 1792 3034 1565 2902 
+Q 1338 2771 1030 2515 
+L 1030 96 
+Q 1030 0 934 0 
+L 582 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-36" d="M 2362 4806 
+Q 2842 4806 3146 4614 
+Q 3450 4422 3610 4186 
+Q 3622 4160 3625 4131 
+Q 3629 4102 3590 4083 
+L 3226 3936 
+Q 3194 3917 3168 3933 
+Q 3142 3949 3130 3974 
+Q 2989 4141 2813 4243 
+Q 2637 4346 2368 4346 
+Q 1907 4346 1609 4122 
+Q 1312 3898 1171 3510 
+Q 1030 3123 1030 2637 
+Q 1030 2528 1049 2499 
+Q 1069 2470 1146 2509 
+Q 1389 2630 1670 2732 
+Q 1952 2835 2330 2835 
+Q 2822 2835 3171 2652 
+Q 3520 2470 3702 2156 
+Q 3885 1843 3885 1446 
+Q 3885 992 3664 656 
+Q 3443 320 3068 131 
+Q 2694 -58 2234 -58 
+Q 1670 -58 1264 220 
+Q 858 499 640 1027 
+Q 422 1555 422 2304 
+Q 422 3085 656 3645 
+Q 890 4205 1325 4505 
+Q 1760 4806 2362 4806 
+z
+M 2259 2387 
+Q 2086 2387 1884 2348 
+Q 1683 2310 1494 2243 
+Q 1306 2176 1171 2093 
+Q 1094 2042 1068 1987 
+Q 1043 1933 1043 1818 
+Q 1043 1587 1113 1337 
+Q 1184 1088 1331 873 
+Q 1478 659 1702 524 
+Q 1926 390 2234 390 
+Q 2528 390 2765 528 
+Q 3002 666 3139 899 
+Q 3277 1133 3277 1421 
+Q 3277 1690 3155 1910 
+Q 3034 2131 2803 2259 
+Q 2573 2387 2259 2387 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-3f" d="M 218 3872 
+Q 154 3891 186 3955 
+Q 384 4358 784 4585 
+Q 1184 4813 1696 4813 
+Q 2131 4813 2451 4665 
+Q 2771 4518 2950 4262 
+Q 3130 4006 3130 3667 
+Q 3130 3341 2995 3101 
+Q 2861 2861 2665 2659 
+Q 2470 2458 2275 2256 
+Q 2080 2054 1945 1814 
+Q 1811 1574 1811 1248 
+Q 1811 1171 1734 1171 
+L 1427 1171 
+Q 1344 1171 1344 1261 
+Q 1344 1626 1469 1891 
+Q 1594 2157 1776 2368 
+Q 1958 2579 2140 2774 
+Q 2323 2970 2448 3178 
+Q 2573 3386 2573 3648 
+Q 2573 3987 2329 4188 
+Q 2086 4390 1690 4390 
+Q 1472 4390 1264 4310 
+Q 1056 4230 896 4096 
+Q 736 3962 659 3789 
+Q 634 3738 582 3757 
+L 218 3872 
+z
+M 1907 102 
+Q 1907 0 1786 0 
+L 1338 0 
+Q 1248 0 1248 90 
+L 1248 634 
+Q 1248 710 1312 710 
+L 1843 710 
+Q 1907 710 1907 640 
+L 1907 102 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibreFranklin-Regular-53"/>
+     <use xlink:href="#LibreFranklin-Regular-74" x="64.099991"/>
+     <use xlink:href="#LibreFranklin-Regular-75" x="102.799988"/>
+     <use xlink:href="#LibreFranklin-Regular-64" x="160.699982"/>
+     <use xlink:href="#LibreFranklin-Regular-69" x="220.599976"/>
+     <use xlink:href="#LibreFranklin-Regular-65" x="244.499969"/>
+     <use xlink:href="#LibreFranklin-Regular-64" x="302.59996"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="362.499954"/>
+     <use xlink:href="#LibreFranklin-Regular-6d" x="383.999939"/>
+     <use xlink:href="#LibreFranklin-Regular-6f" x="474.59993"/>
+     <use xlink:href="#LibreFranklin-Regular-72" x="534.499924"/>
+     <use xlink:href="#LibreFranklin-Regular-65" x="572.799911"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="630.899902"/>
+     <use xlink:href="#LibreFranklin-Regular-74" x="652.399887"/>
+     <use xlink:href="#LibreFranklin-Regular-68" x="691.099884"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="749.499878"/>
+     <use xlink:href="#LibreFranklin-Regular-6e" x="804.299866"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="862.69986"/>
+     <use xlink:href="#LibreFranklin-Regular-36" x="884.199844"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="950.299835"/>
+     <use xlink:href="#LibreFranklin-Regular-68" x="971.79982"/>
+     <use xlink:href="#LibreFranklin-Regular-6f" x="1030.199814"/>
+     <use xlink:href="#LibreFranklin-Regular-75" x="1090.099808"/>
+     <use xlink:href="#LibreFranklin-Regular-72" x="1147.999802"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="1186.299789"/>
+     <use xlink:href="#LibreFranklin-Regular-3f" x="1237.499786"/>
+    </g>
+   </g>
+   <g id="text_3">
+    <!-- no -->
+    <g style="fill: #565a5c" transform="translate(201.32625 130.843915) scale(0.14 -0.14)">
+     <use xlink:href="#LibreFranklin-Regular-6e"/>
+     <use xlink:href="#LibreFranklin-Regular-6f" x="58.399994"/>
+    </g>
+   </g>
+   <g id="patch_4">
+    <path d="M 92.34 190.95503 
+L 127.751538 190.95503 
+L 127.751538 163.211438 
+L 92.34 163.211438 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: #f9461c; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 127.751538 190.95503 
+L 245.79 190.95503 
+L 245.79 163.211438 
+L 127.751538 163.211438 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: #aaaaaa; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_4">
+    <!-- 3 pass / 10 fail -->
+    <g style="fill: #1a1a1a" transform="translate(119.788828 208.841116) scale(0.15 -0.15)">
+     <defs>
+      <path id="LibreFranklin-Regular-33" d="M 493 4083 
+Q 448 4128 493 4179 
+Q 787 4499 1161 4656 
+Q 1536 4813 1971 4813 
+Q 2464 4813 2822 4656 
+Q 3181 4499 3376 4227 
+Q 3571 3955 3571 3610 
+Q 3571 3264 3356 2985 
+Q 3142 2707 2758 2573 
+Q 2618 2528 2758 2483 
+Q 3021 2413 3238 2249 
+Q 3456 2086 3587 1849 
+Q 3718 1613 3718 1312 
+Q 3718 915 3513 604 
+Q 3309 294 2902 115 
+Q 2496 -64 1888 -64 
+Q 902 -64 288 614 
+Q 243 672 307 723 
+L 582 941 
+Q 621 973 643 969 
+Q 666 966 685 941 
+Q 973 646 1267 524 
+Q 1562 403 1933 403 
+Q 2490 403 2800 652 
+Q 3110 902 3110 1293 
+Q 3110 1600 2937 1811 
+Q 2765 2022 2489 2131 
+Q 2214 2240 1907 2240 
+L 1338 2246 
+Q 1261 2246 1261 2310 
+L 1261 2643 
+Q 1261 2701 1338 2707 
+L 1798 2714 
+Q 2125 2714 2390 2829 
+Q 2656 2944 2813 3139 
+Q 2970 3334 2970 3584 
+Q 2970 3910 2691 4131 
+Q 2413 4352 1978 4352 
+Q 1645 4352 1363 4224 
+Q 1082 4096 832 3859 
+Q 774 3802 717 3859 
+L 493 4083 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibreFranklin-Regular-33"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="64.099991"/>
+     <use xlink:href="#LibreFranklin-Regular-70" x="85.599976"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="145.299973"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="200.09996"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="251.299957"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="302.499954"/>
+     <use xlink:href="#LibreFranklin-Regular-2f" x="323.999939"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="358.199936"/>
+     <use xlink:href="#LibreFranklin-Regular-31" x="379.699921"/>
+     <use xlink:href="#LibreFranklin-Regular-30" x="426.199905"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="494.999893"/>
+     <use xlink:href="#LibreFranklin-Regular-66" x="516.499878"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="554.399872"/>
+     <use xlink:href="#LibreFranklin-Regular-69" x="609.19986"/>
+     <use xlink:href="#LibreFranklin-Regular-6c" x="633.099854"/>
+    </g>
+   </g>
+   <g id="text_5">
+    <!-- 77% fail -->
+    <g style="fill: #1a1a1a" transform="translate(141.058359 231.150213) scale(0.15 -0.15)">
+     <defs>
+      <path id="LibreFranklin-Regular-37" d="M 3456 4749 
+Q 3558 4749 3552 4672 
+L 3546 4442 
+Q 3546 4339 3456 4211 
+Q 3200 3834 2960 3386 
+Q 2720 2938 2515 2474 
+Q 2310 2010 2147 1571 
+Q 1984 1133 1875 758 
+Q 1766 384 1728 122 
+Q 1715 0 1632 0 
+L 1126 0 
+Q 1018 0 1050 109 
+Q 1165 582 1398 1222 
+Q 1632 1862 1993 2608 
+Q 2355 3354 2861 4147 
+Q 2918 4237 2816 4237 
+L 339 4237 
+Q 262 4237 269 4314 
+L 307 4685 
+Q 314 4749 403 4749 
+L 3456 4749 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-25" d="M 1466 2106 
+Q 979 2106 665 2467 
+Q 352 2829 352 3462 
+Q 352 3878 496 4182 
+Q 640 4486 893 4652 
+Q 1146 4819 1466 4819 
+Q 1786 4819 2032 4652 
+Q 2278 4486 2422 4182 
+Q 2566 3878 2566 3462 
+Q 2566 2829 2256 2467 
+Q 1946 2106 1466 2106 
+z
+M 1574 32 
+Q 1536 -26 1453 -26 
+L 1286 -26 
+Q 1229 -26 1219 12 
+Q 1210 51 1235 96 
+L 4333 4755 
+Q 4352 4787 4377 4793 
+Q 4403 4800 4435 4800 
+L 4646 4800 
+Q 4730 4800 4685 4730 
+L 1574 32 
+z
+M 1459 2419 
+Q 1786 2419 1965 2707 
+Q 2144 2995 2144 3456 
+Q 2144 3923 1965 4217 
+Q 1786 4512 1459 4512 
+Q 1133 4512 953 4217 
+Q 774 3923 774 3456 
+Q 774 2995 953 2707 
+Q 1133 2419 1459 2419 
+z
+M 4410 -64 
+Q 3923 -64 3609 297 
+Q 3296 659 3296 1293 
+Q 3296 1709 3440 2016 
+Q 3584 2323 3837 2486 
+Q 4090 2650 4410 2650 
+Q 4723 2650 4972 2486 
+Q 5222 2323 5366 2016 
+Q 5510 1709 5510 1293 
+Q 5510 659 5200 297 
+Q 4890 -64 4410 -64 
+z
+M 4403 250 
+Q 4717 250 4902 541 
+Q 5088 832 5088 1286 
+Q 5088 1747 4902 2044 
+Q 4717 2342 4403 2342 
+Q 4090 2342 3904 2041 
+Q 3718 1741 3718 1286 
+Q 3718 838 3904 544 
+Q 4090 250 4403 250 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibreFranklin-Regular-37"/>
+     <use xlink:href="#LibreFranklin-Regular-37" x="59.899994"/>
+     <use xlink:href="#LibreFranklin-Regular-25" x="119.799988"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="211.399979"/>
+     <use xlink:href="#LibreFranklin-Regular-66" x="232.899963"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="270.799957"/>
+     <use xlink:href="#LibreFranklin-Regular-69" x="325.599945"/>
+     <use xlink:href="#LibreFranklin-Regular-6c" x="349.499939"/>
+    </g>
+   </g>
+   <g id="text_6">
+    <!-- yes -->
+    <g style="fill: #565a5c" transform="translate(357.39 130.843915) scale(0.14 -0.14)">
+     <defs>
+      <path id="LibreFranklin-Regular-79" d="M 678 -1056 
+Q 486 -1056 387 -1046 
+Q 288 -1037 288 -973 
+L 288 -723 
+Q 288 -678 323 -659 
+Q 358 -640 467 -640 
+L 870 -640 
+Q 1011 -640 1126 -547 
+Q 1242 -454 1318 -316 
+Q 1395 -179 1417 -32 
+Q 1440 115 1402 224 
+L 179 3283 
+Q 160 3328 179 3360 
+Q 198 3392 250 3392 
+L 646 3392 
+Q 723 3392 749 3322 
+L 1702 838 
+Q 1728 781 1760 781 
+Q 1792 781 1818 858 
+L 2758 3322 
+Q 2790 3392 2848 3392 
+L 3149 3392 
+Q 3194 3392 3210 3363 
+Q 3226 3334 3213 3302 
+L 1805 -301 
+Q 1626 -755 1360 -905 
+Q 1094 -1056 678 -1056 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibreFranklin-Regular-79"/>
+     <use xlink:href="#LibreFranklin-Regular-65" x="52.999985"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="111.099976"/>
+    </g>
+   </g>
+   <g id="patch_6">
+    <path d="M 329.49 190.95503 
+L 482.94 190.95503 
+L 482.94 163.211438 
+L 329.49 163.211438 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: #f9461c; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 482.94 190.95503 
+L 482.94 190.95503 
+L 482.94 163.211438 
+L 482.94 163.211438 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: #aaaaaa; stroke: #ffffff; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_7">
+    <!-- 17 pass / 0 fail -->
+    <g style="fill: #1a1a1a" transform="translate(357.252891 208.841116) scale(0.15 -0.15)">
+     <use xlink:href="#LibreFranklin-Regular-31"/>
+     <use xlink:href="#LibreFranklin-Regular-37" x="46.499985"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="106.399979"/>
+     <use xlink:href="#LibreFranklin-Regular-70" x="127.899963"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="187.59996"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="242.399948"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="293.599945"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="344.799942"/>
+     <use xlink:href="#LibreFranklin-Regular-2f" x="366.299927"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="400.499924"/>
+     <use xlink:href="#LibreFranklin-Regular-30" x="421.999908"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="490.799896"/>
+     <use xlink:href="#LibreFranklin-Regular-66" x="512.299881"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="550.199875"/>
+     <use xlink:href="#LibreFranklin-Regular-69" x="604.999863"/>
+     <use xlink:href="#LibreFranklin-Regular-6c" x="628.899857"/>
+    </g>
+   </g>
+   <g id="text_8">
+    <!-- 100% pass -->
+    <g style="fill: #1a1a1a" transform="translate(367.657969 231.314276) scale(0.15 -0.15)">
+     <use xlink:href="#LibreFranklin-Regular-31"/>
+     <use xlink:href="#LibreFranklin-Regular-30" x="46.499985"/>
+     <use xlink:href="#LibreFranklin-Regular-30" x="115.299973"/>
+     <use xlink:href="#LibreFranklin-Regular-25" x="184.09996"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="275.699951"/>
+     <use xlink:href="#LibreFranklin-Regular-70" x="297.199936"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="356.899933"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="411.699921"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="462.899918"/>
+    </g>
+   </g>
+   <g id="text_9">
+    <!-- Good split: each side is mostly one class -->
+    <g style="fill: #f9461c" transform="translate(112.345703 309.195574) scale(0.19 -0.19)">
+     <defs>
+      <path id="LibreFranklin-Regular-47" d="M 2400 -64 
+Q 1786 -64 1341 227 
+Q 896 518 656 1062 
+Q 416 1606 416 2355 
+Q 416 3130 665 3680 
+Q 915 4230 1366 4521 
+Q 1818 4813 2426 4813 
+Q 2874 4813 3248 4633 
+Q 3622 4454 3868 4160 
+Q 4115 3866 4166 3533 
+Q 4179 3443 4115 3430 
+L 3654 3360 
+Q 3597 3354 3584 3424 
+Q 3539 3680 3379 3888 
+Q 3219 4096 2972 4221 
+Q 2726 4346 2419 4346 
+Q 1760 4346 1408 3846 
+Q 1056 3347 1056 2394 
+Q 1056 1389 1411 896 
+Q 1766 403 2432 403 
+Q 2848 403 3120 585 
+Q 3392 768 3533 1037 
+Q 3674 1306 3693 1562 
+L 3693 1946 
+Q 3706 2016 3629 2016 
+L 2586 2016 
+Q 2515 2016 2515 2080 
+L 2515 2355 
+Q 2515 2413 2579 2413 
+L 4166 2413 
+Q 4262 2413 4262 2330 
+L 4262 83 
+Q 4262 0 4186 0 
+L 4038 0 
+Q 3994 0 3965 13 
+Q 3936 26 3923 77 
+L 3853 672 
+Q 3840 736 3795 666 
+Q 3610 378 3277 157 
+Q 2944 -64 2400 -64 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-3a" d="M 992 2630 
+Q 992 2528 877 2528 
+L 429 2528 
+Q 333 2528 333 2624 
+L 333 3162 
+Q 333 3245 403 3245 
+L 928 3245 
+Q 992 3245 992 3174 
+L 992 2630 
+z
+M 992 122 
+Q 992 19 877 19 
+L 429 19 
+Q 333 19 333 109 
+L 333 653 
+Q 333 730 403 730 
+L 928 730 
+Q 992 730 992 659 
+L 992 122 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibreFranklin-Regular-63" d="M 1901 3456 
+Q 2394 3456 2720 3222 
+Q 3046 2989 3226 2662 
+Q 3264 2586 3194 2566 
+L 2842 2483 
+Q 2790 2464 2758 2528 
+Q 2566 2790 2377 2924 
+Q 2189 3059 1933 3059 
+Q 1440 3059 1142 2694 
+Q 845 2330 845 1696 
+Q 845 1056 1145 694 
+Q 1446 333 1946 333 
+Q 2253 333 2477 486 
+Q 2701 640 2886 934 
+Q 2918 979 2970 960 
+L 3245 858 
+Q 3290 838 3270 774 
+Q 3085 435 2745 185 
+Q 2406 -64 1901 -64 
+Q 1427 -64 1065 157 
+Q 704 378 499 771 
+Q 294 1165 294 1683 
+Q 294 2202 502 2602 
+Q 710 3002 1072 3229 
+Q 1434 3456 1901 3456 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibreFranklin-Regular-47"/>
+     <use xlink:href="#LibreFranklin-Regular-6f" x="73.899994"/>
+     <use xlink:href="#LibreFranklin-Regular-6f" x="133.799988"/>
+     <use xlink:href="#LibreFranklin-Regular-64" x="193.699982"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="253.599976"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="275.09996"/>
+     <use xlink:href="#LibreFranklin-Regular-70" x="326.299957"/>
+     <use xlink:href="#LibreFranklin-Regular-6c" x="385.999954"/>
+     <use xlink:href="#LibreFranklin-Regular-69" x="409.899948"/>
+     <use xlink:href="#LibreFranklin-Regular-74" x="433.799942"/>
+     <use xlink:href="#LibreFranklin-Regular-3a" x="472.499939"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="493.399933"/>
+     <use xlink:href="#LibreFranklin-Regular-65" x="514.899918"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="572.999908"/>
+     <use xlink:href="#LibreFranklin-Regular-63" x="627.799896"/>
+     <use xlink:href="#LibreFranklin-Regular-68" x="681.999893"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="740.399887"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="761.899872"/>
+     <use xlink:href="#LibreFranklin-Regular-69" x="813.099869"/>
+     <use xlink:href="#LibreFranklin-Regular-64" x="836.999863"/>
+     <use xlink:href="#LibreFranklin-Regular-65" x="896.899857"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="954.999847"/>
+     <use xlink:href="#LibreFranklin-Regular-69" x="976.499832"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="1000.399826"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="1051.599823"/>
+     <use xlink:href="#LibreFranklin-Regular-6d" x="1073.099808"/>
+     <use xlink:href="#LibreFranklin-Regular-6f" x="1163.699799"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="1223.599792"/>
+     <use xlink:href="#LibreFranklin-Regular-74" x="1274.799789"/>
+     <use xlink:href="#LibreFranklin-Regular-6c" x="1313.499786"/>
+     <use xlink:href="#LibreFranklin-Regular-79" x="1337.39978"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="1390.399765"/>
+     <use xlink:href="#LibreFranklin-Regular-6f" x="1411.89975"/>
+     <use xlink:href="#LibreFranklin-Regular-6e" x="1471.799744"/>
+     <use xlink:href="#LibreFranklin-Regular-65" x="1530.199738"/>
+     <use xlink:href="#LibreFranklin-Regular-20" x="1588.299728"/>
+     <use xlink:href="#LibreFranklin-Regular-63" x="1609.799713"/>
+     <use xlink:href="#LibreFranklin-Regular-6c" x="1663.99971"/>
+     <use xlink:href="#LibreFranklin-Regular-61" x="1687.899704"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="1742.699692"/>
+     <use xlink:href="#LibreFranklin-Regular-73" x="1793.899689"/>
+    </g>
+   </g>
+   <g id="patch_8">
+    <path d="M 210.915 68.751115 
+L 364.365 68.751115 
+L 364.365 41.007523 
+L 210.915 41.007523 
+L 210.915 68.751115 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: none; stroke: #1a1a1a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 92.34 190.95503 
+L 245.79 190.95503 
+L 245.79 163.211438 
+L 92.34 163.211438 
+L 92.34 190.95503 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: none; stroke: #1a1a1a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 329.49 190.95503 
+L 482.94 190.95503 
+L 482.94 163.211438 
+L 329.49 163.211438 
+L 329.49 190.95503 
+z
+" clip-path="url(#pe24244ad4c)" style="fill: none; stroke: #1a1a1a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pe24244ad4c">
+   <rect x="8.64" y="8.64" width="558" height="310.464"/>
+  </clipPath>
+ </defs>
+</svg>

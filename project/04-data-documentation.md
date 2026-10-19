@@ -1,9 +1,8 @@
 ---
 summary: Write a formal "datasheet" for your dataset(s)
 topic: Documenting data
-due: Wednesday, October 21
+due: Wednesday, October 28
 ai_policy: yellow-over-red
-draft: true
 ---
 
 # Checkpoint Four: Data Documentation
@@ -14,7 +13,7 @@ To help cement this decision, this checkpoint asks for more formal documentation
 
 You might think of your "audience" as a group of students in CS 418 in the year 3026. Although your GitHub profile is no longer active in 3026, the group has recovered your repository from the [arctic code vault](https://archiveprogram.github.com/arctic-vault/), and they want to know whether they can trust and reuse your data for historic research.
 
-Most of you are documenting data that someone else collected, and some questions can only be answered by others. IN such cases, try to find their documentation, cite it, and quote it in as much detail as possible. Write "not documented by the publisher" when appropriate.
+Most of you are documenting data that someone else collected, and some questions can only be answered by others. In such cases, try to find their documentation, cite it, and quote it in as much detail as possible. Write "not documented by the publisher" when appropriate.
 
 ## What to do
 
@@ -38,7 +37,17 @@ Work in the same GitHub repository as the previous checkpoints.
 
 ## Formatting Note
 
-I recommend putting your data sheet in a "nutrition label" style, based on Holland et al.'s [Dataset Nutrition Label](https://arxiv.org/abs/1805.03677). This makes for a very readable summary, including written metadata with statistics and plots. Alternative formats are listed in the sources section below.
+I recommend putting your datasheet in a "nutrition label" style, based on Holland et al.'s [Dataset Nutrition Label](https://arxiv.org/abs/1805.03677). This makes for a very readable summary, including written metadata with statistics and plots. Alternative formats are listed in the sources section below.
+
+For example, here is the summary card from Bandy and Vincent's [retrospective datasheet for BookCorpus](https://arxiv.org/abs/2105.05241) ([PDF](/assets/datasheets/bookcorpus-data-card.pdf), and an [Overleaf template](https://www.overleaf.com/read/dqwhpqnvftky) you can copy and modify):
+
+![Summary data card for BookCorpus, in the style of a nutrition label](/assets/datasheets/bookcorpus-data-card.svg){: width="400"}
+
+The [Data Nutrition Project](https://datanutrition.org/label/) publishes more labels in this style, including:
+
+- [ASL Citizen](https://labelmaker.datanutrition.org/label/d3e1b747-7306-4cbf-8bef-f4422749e8d8), crowdsourced videos of American Sign Language signs, collected with consent.
+- [2024 ISIC Challenge SLICE-3D](https://labelmaker.datanutrition.org/label/6167d533-9d94-4afd-8e74-b3187175bc19), de-identified images of skin lesions.
+- [Measuring Massive Multitask Language Understanding](https://labelmaker.datanutrition.org/label/2d5e0059-94ae-40c5-b65a-f7abc6d13e7f), a multiple-choice benchmark for language models.
 
 ## Sources
 
@@ -74,9 +83,9 @@ Six points available (one for each step above):
 1. Datasheets: each primary dataset has a datasheet covering the seven sections, with answers cited to the publisher's documentation, and gaps marked as undocumented.
 2. Scope: each research question has its target population, access frame, and sample named, with a statement of who or what is missing and what that limits.
 3. Codebook: every column used in the analysis, including derived columns, has its type, units, meaning, range or allowed values, missing-value coding, and origin.
-4. Recipe: the steps from raw files to the analysis dataframe are listed in order, each linked to code, with row counts for every join.
-5. Access and reuse: each dataset has a persistent link, access date or version, format, and license, and the secondary datasets have their short entries.
-6. People in the data: the document names whose lives the data describes, who could be misrepresented or harmed, and what that means for the project's claims.
+4. Recipe: the steps from raw files to the analysis dataframe are listed in order, each linked to code, with the key and the matched and unmatched row counts for every join.
+5. Access and reuse: each dataset has a persistent link, access date or version, format, license or terms of use, and a statement of whether others may reuse your processed data.
+6. People in the data: the document describes how people are represented in the data and which groups could be (mis)represented, or, if the data does not describe people, who may be affected by decisions made using it.
 
 ## AI/LLM policy
 
