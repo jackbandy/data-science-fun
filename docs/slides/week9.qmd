@@ -832,7 +832,6 @@ CS 418 · Week 9 · 🟠 Halsted 🟠
 - Jaccard: shared 1s out of everything either one has
 - SMC: all agreements (shared 1s and shared 0s) out of everything
 - Does a shared 0 count?
-- TODO make this incremental reveal
 :::
 
 
@@ -1061,7 +1060,6 @@ Sources: [VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-
 <img src="../assets/week9/svm-lines-v2.svg" class="figure" style="max-height:400px" alt="Line B in orange with a gray band around it reaching the closest penguin on each side, edged by dashed lines. Distances to the closest penguin, in standard units: A 0.19, B 0.47, C 0.20.">
 
 - Margin: the empty band around the line; the SVM picks the widest
-- Predict by which side a point falls on: $\text{sign}(\mathbf{w}^T\mathbf{x} + b)$
 
 ---
 
@@ -1073,35 +1071,13 @@ Source: [VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-s
 
 <img src="../assets/week9/svm-lines-v3.svg" class="figure" style="max-height:400px" alt="The same margin, with the three penguins that touch its dashed edges circled: one Adélie and two Gentoo.">
 
-- The points touching the margin; only they decide where the line goes
+- "Support vectors" are points touching the margin
+- they decide where the line goes
 - k-NN keeps every training point; an SVM keeps only these
 
 ---
 
-## Hard and Soft Margins: $C$ {.image-frame-slide}
 
-::: {.caption}
-Sources: Daumé, CIML [§7.7](http://ciml.info/dl/v0_99/ciml-v0_99-ch07.pdf); scikit-learn, ["RBF SVM parameters"](https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218), all 274 Adélie and Gentoo penguins from Week 8.
-:::
-
-:::: {.r-stack}
-
-::: {.fragment .fade-out fragment-index=1}
-<img src="../assets/week9/svm-soft-v0.svg" class="figure" style="max-height:400px" alt="All 274 Adélie and Gentoo penguins fit with C equals 100: a narrow margin, width 0.29 standard units, with 3 support vectors circled.">
-:::
-
-::: {.fragment fragment-index=1}
-<img src="../assets/week9/svm-soft-v1.svg" class="figure" style="max-height:400px" alt="The same penguins fit with C equals 0.01: a wide margin, width 2.12, with 116 penguins inside or on it circled as support vectors.">
-:::
-
-::::
-
-- Soft margin: points may sit inside the margin, for a price
-- Large $C$: narrow margin, fits training data closely; small $C$: wide margin
-
-# Kernels {.section-header}
-
----
 
 ## What if a does not work? {.image-frame-slide}
 
@@ -1150,13 +1126,23 @@ Based on [VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-
 
 ---
 
-## Common Kernels {.image-frame-slide}
+## Common Kernels {.image-frame-slide auto-animate=true}
 
 ::: {.caption}
 Sources: Bello, Lecture 13, slide 27 ("Kernel Trick"); scikit-learn user guide, [§1.4, "Kernel functions"](https://scikit-learn.org/stable/modules/svm.html). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218), Chinstrap vs. the rest; training accuracy above each panel.
 :::
 
-<img src="../assets/week9/kernel-types.svg" class="figure" style="flex-shrink:0" alt="Four panels of the Chinstrap-versus-rest penguins, each shaded by a different SVM kernel. Linear: one straight line, 88 percent. Polynomial, degree 3: a curved boundary around the Chinstraps, 97 percent. RBF: a closed pocket around the Chinstraps, 96 percent. Sigmoid: a tangled boundary that cuts through both groups, 75 percent.">
+<img data-id="kernel-types" src="../assets/week9/kernel-types.svg" class="figure" alt="Four panels of the Chinstrap-versus-rest penguins, each shaded by a different SVM kernel. Linear: one straight line, 88 percent. Polynomial, degree 3: a curved boundary around the Chinstraps, 97 percent. RBF: a closed pocket around the Chinstraps, 96 percent. Sigmoid: a tangled boundary that cuts through both groups, 75 percent.">
+
+---
+
+## Common Kernels {.image-frame-slide auto-animate=true}
+
+::: {.caption}
+Sources: Bello, Lecture 13, slide 27 ("Kernel Trick"); scikit-learn user guide, [§1.4, "Kernel functions"](https://scikit-learn.org/stable/modules/svm.html). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218), Chinstrap vs. the rest; training accuracy above each panel.
+:::
+
+<img data-id="kernel-types" src="../assets/week9/kernel-types.svg" class="figure" style="flex-shrink:0" alt="Four panels of the Chinstrap-versus-rest penguins, each shaded by a different SVM kernel. Linear: one straight line, 88 percent. Polynomial, degree 3: a curved boundary around the Chinstraps, 97 percent. RBF: a closed pocket around the Chinstraps, 96 percent. Sigmoid: a tangled boundary that cuts through both groups, 75 percent.">
 
 ::: {.dense}
 <!-- Raw HTML so each row can be a fragment; processing is off so Quarto keeps the row classes. -->
@@ -1261,7 +1247,7 @@ Show of hands before each reveal. Homework 10 (`kernel-needed`) uses these five 
 
 ---
 
-## $\gamma$: How Far Each Point Reaches {.image-frame-slide}
+## $\gamma$: Hyperparameter for SVMs {.image-frame-slide}
 
 ::: {.caption}
 Source: scikit-learn, ["RBF SVM parameters"](https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218); half the penguins train, half are held out.
@@ -1283,26 +1269,9 @@ Source: scikit-learn, ["RBF SVM parameters"](https://scikit-learn.org/stable/aut
 
 ::::
 
-- $\gamma$ sets how fast RBF similarity, $\exp(-\gamma \cdot \text{distance}^2)$, fades
 - Small $\gamma$: each penguin's influence reaches far → smooth boundary (underfit)
 - Large $\gamma$: influence stays local → islands around single penguins (overfit)
 - Tune $C$ and $\gamma$ on validation data, like $k$ and `max_depth`
-
----
-
-## SVMs on the Movie Reviews
-
-```python
-model = make_pipeline(StandardScaler(), LinearSVC())
-```
-
-- 64% test (tree: 51%)
-- Biggest weights: *not/no/never*, *horrible* (negative); *great*, *love* (positive)
-- Unlike the tree, it uses *horrible*
-
-::: {.notes}
-Scale first, as with k-NN: scikit-learn's user guide (§1.4) says SVMs "are not scale invariant." Negative vs. positive only: tree 76%, linear SVM 81%.
-:::
 
 ---
 
