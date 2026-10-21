@@ -22,6 +22,7 @@ docs/yard/
   build.sh                 # stages content + lecture notebooks, then builds
   content/
     welcome.ipynb          # starter notebook the menu link opens
+    movie-reviews.ipynb    # demo: decision tree for negative/meh/positive reviews (reads datasets/movie-reviews/)
   .venv/, _output/         # local only, gitignored
 ```
 
