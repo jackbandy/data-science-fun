@@ -21,6 +21,7 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
 - [illinois-prairie-path](illinois-prairie-path/) — Trail segment and mile post data for the Illinois Prairie Path and DuPage County bikeway network
 - [joke-retrieval](joke-retrieval/) — JokesCorpus archives from Mihalcea & Strapparava, CIKM 2008
 - [metra-lines-stations](metra-lines-stations/) — Metra line and station attributes
+- [movie-reviews](movie-reviews/) — 4,500 Amazon reviews of movies and TV shows, labelled negative, meh or positive from their star rating
 - [movies-from-imdb](movies-from-imdb/) — Movie datasets drawn from IMDb public data files
 - [musiclab-salganik-2006](musiclab-salganik-2006/) — Replication data for Salganik, Dodds & Watts, *Science* 2006 study on social influence and cultural markets
   - Raw data not included; download from the [Princeton Research Data Commons](https://datacommons.princeton.edu/discovery/catalog/doi-10-34770-y56c-ym90)
