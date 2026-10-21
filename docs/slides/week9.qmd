@@ -771,7 +771,7 @@ CS 251 splits no one: all 20 took it (it's the CS 418 prerequisite).
 ::::
 
 ::: {.caption}
-"Both have the same error rate!!! Which is 'progressing more' towards a lower error?" Elena Zheleva, CS 418 lecture slides, Feb. 19, 2026 (after Marine Carpuat).
+"Both have the same error rate!!! Which is 'progressing more' towards a lower error?" Elena Zheleva, CS 418 lecture slides, Feb. 19, 2026 (based on Marine Carpuat).
 :::
 
 ---
@@ -797,57 +797,562 @@ Take a picture of your worksheet, upload it in Canvas
 
 # That's All for Today, See You Wednesday! {.section-header .no-index}
 
-# Week 9, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop10-halsted-b.jpg" background-size="cover"}
+# Week 9, Day 2 {.course-title .photo-title .experimental-roofline-title data-state="photo-title" data-roofline="890 952 4032 786" data-roofline-image="4032 3024" data-roofline-inset="160" background-image="../assets/orange-line-stops-better/stop10-halsted-b.jpg" background-size="cover"}
 
-<h2>SVMs and Kernels</h2>
-
-Jack Bandy
-2026
+CS 418 · Week 9 · 🟠 Halsted 🟠
 
 ---
 
-## Map {.split}
+## Map for Week 9, Day 2 {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Week 9: Halsted
-- Day 2
-    - Support Vector Machines
-    - Kernels
+- k-NN Review
+- Decision Trees for Movie Reviews
+- Support Vector Machines
+- Kernels
+- Quiz
 :::
 
 ![](../assets/orange-line-map-stops/stop10-halsted.svg){.figure alt="Orange Line map with the Halsted stop marked, the Week 9 stop"}
 
 :::
 
+# k-NN Review {.section-header}
+
+---
+
+## Similarity as a Fraction {.image-frame-slide}
+
+
+<img src="../assets/week9/similarity-venn.svg" class="figure" style="height:350px; flex-shrink:0" alt="Jaccard and SMC drawn as fractions of Venn diagrams. Each diagram is two circles, a and b, inside a rectangle of all attributes. Jaccard: numerator shades the overlap N11; denominator shades both circles, N10 plus N11 plus N01. SMC: numerator shades the overlap and the space outside both circles, N11 plus N00; denominator shades the whole rectangle.">
+
+::: {.incremental}
+- Jaccard: shared 1s out of everything either one has
+- SMC: all agreements (shared 1s and shared 0s) out of everything
+- Does a shared 0 count?
+- TODO make this incremental reveal
+:::
+
+
+
+---
+
+## k-NN Basic Steps {.image-frame-slide}
+
+::: {.caption}
+Sources: Timbers et al., [*Data Science: A First Introduction*, §5.5](https://python.datasciencebook.ca/classification1.html); Bello, Lecture 13. Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218), Week 8's training penguins.
+:::
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week8/cls-penguins-knn-intuition-1-vote.svg" class="figure" style="height:330px; flex-shrink:0" alt="Penguin 1 now has lines to its 5 nearest training penguins inside a small dashed circle, all Gentoo: 5 of 5 Gentoo.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week8/cls-penguins-knn-intuition.svg" class="figure" style="height:330px; flex-shrink:0" alt="Penguin 2 now has lines to its 5 nearest training penguins inside a larger dashed circle that reaches into both clusters: 3 of 5 Gentoo. Penguin 1's 5 of 5 Gentoo vote is still shown below it.">
+:::
+
+::::
+
+- Choose a distance and $k$
+- find the $k$ nearest training points
+- Check the majority vote
+
+
+---
+
+## Choosing $k$ {.image-frame-slide}
+
+::: {.caption}
+Source: Timbers et al., [*Data Science: A First Introduction*, §6.6](https://python.datasciencebook.ca/classification2.html). Data: Week 8's 28 validation penguins.
+:::
+
+<img src="../assets/week8/cls-penguins-validation.svg" class="figure" style="height:330px; flex-shrink:0" alt="Three panels of bill length against bill depth, each shading the region k-nearest neighbors predicts as Adélie (gray) or Gentoo (orange), with the 28 validation penguins on top. k = 1: a jagged diagonal boundary, 28 of 28 correct. k = 15: a smoother diagonal boundary, 28 of 28 correct. k = 191: the whole plot is gray, every penguin predicted Adélie, 15 of 28 correct.">
+
+- In general, small $k$ overfits and large $k$ underfits
+    - $k = N$ will always...
+- Pick $k$ on validation data, never the test set
+
+
+
+# Decision Trees and Movie Reviews {.section-header}
+
+---
+
+## Decision Trees in One Slide
+
+::: {.caption}
+Source: Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)*, [ch. 1](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf), §1.3.
+:::
+
+- Each node asks about one feature; each leaf is a label
+- Tree grows greedily: "If I could only ask one question, what question would I ask?"
+- Best question as highest information gain
+- `max_depth`: too shallow underfits, too deep overfits
+
+---
+
+## Demo: Negative, Meh, or Positive?
+
+::: {.caption}
+Data: Hou et al., [Amazon Reviews 2023](https://amazon-reviews-2023.github.io/), `Movies_and_TV`; sample in [`datasets/movie-reviews`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/movie-reviews).
+:::
+
+- 4,500 Amazon movie and TV reviews, 1,500 per label
+- Labels from stars: 1–2 negative, 3 meh, 4–5 positive
+- Each review a vector (of 82 counts)
+    - word lists: *bad*, *horrible*, … *ok*, *but*, … *great*, *love*, …
+    - negations, length, ALL CAPS, `!`, `?`, `...`
+
+::: {.fragment}
+Provenance of the labels: each one comes from the reviewer's star rating, not from someone reading the review. Could some be wrong?
+:::
+
+::: {.notes}
+Worksheet checkpoint 3 asks this. Yes, some are wrong: per the dataset README, some 3-star reviews read as glowing, some 1-star reviews are jokes or mistakes, and some reviews are about the disc or the streaming service ("arrived scratched").
+:::
+
+
+---
+
+## Train the Tree
+
+- Depth 5: 55% train, 51% test
+    - guessing?
+- Root question: any *not / no / never*?
+    - no: mostly positive
+    - yes: mostly negative
+- Uses only 9 of the 82 clues
+
+::: {.notes}
+DecisionTreeClassifier(max_depth=5, min_samples_leaf=25). Root split: 1,769 training reviews without negation (49% positive), 1,831 with (45% negative). The 9 clues: not/no/never, but, !, great, love, length, waste, ok, okay.
+:::
+
+---
+
+## A Review, From Root to Leaf (1 of 3) {.split}
+
+::: {.split-content .golden-figure}
+
+::: {}
+> Absolutely LOVED it!!! Best movie of the year.
+
+- No negation → has `!` → short
+- Predicts positive
+:::
+
+<img src="../assets/week9/movie-path-loved.svg" class="figure" style="max-height:480px" alt="The review's path down the middle of the tree: has not, no, or never? no. Has an exclamation mark? yes. At least 26 words? no. At least 10 words? no. At least 5 words? yes. Predict positive. At each question, the branch not taken leads off to the side: 11 more leaves predicting negative, meh, or positive; 8 more leaves predicting meh or positive; 3 more leaves predicting positive; 2 more leaves predicting positive; a leaf predicting positive. This leaf is 1 of 26: 67 training reviews, 91% positive, 7% negative, 1% meh.">
+
+:::
+
+---
+
+## A Review, From Root to Leaf (2 of 3) {.split}
+
+::: {.split-content .golden-figure}
+
+::: {}
+> It was ok. Some good parts, but way too long...
+
+- No negation → no `!` → has *but* → short
+- Predicts meh
+:::
+
+<img src="../assets/week9/movie-path-ok.svg" class="figure" style="max-height:480px" alt="The review's path down the middle of the tree: has not, no, or never? no. Has an exclamation mark? no. Has but? yes. At least 21 words? no. At least 11 words? no. Predict meh. At each question, the branch not taken leads off to the side: 11 more leaves predicting negative, meh, or positive; 7 more leaves predicting positive; 4 more leaves predicting positive; 2 more leaves predicting meh; a leaf predicting meh. This leaf is 1 of 26: 43 training reviews, 86% meh, 12% negative, 2% positive.">
+
+:::
+
+---
+
+## A Review, From Root to Leaf (3 of 3) {.split}
+
+::: {.split-content .golden-figure}
+
+::: {}
+> Horrible. A total waste of two hours.
+
+- No negation → no `!` → no *but* → no *great* → no *love*
+- Predicts positive?!
+
+::: {.fragment}
+- The tree never asks about *horrible*
+:::
+:::
+
+<img src="../assets/week9/movie-path-horrible.svg" class="figure" style="max-height:480px" alt="The review's path down the middle of the tree: has not, no, or never? no. Has an exclamation mark? no. Has but? no. Has great? no. Has love? no. Predict positive. At each question, the branch not taken leads off to the side: 11 more leaves predicting negative, meh, or positive; 7 more leaves predicting positive; 4 more leaves predicting meh; 2 more leaves predicting positive; a leaf predicting positive. This leaf is 1 of 26: 913 training reviews, 38% positive, 34% meh, 28% negative.">
+
+:::
+
+::: {.notes}
+Few reviews use "horrible", so the greedy splits pick broader clues; "waste" is only asked on the negation side. Same lesson as Monday's CS 424 vs. CS 411 split.
+:::
+
+---
+
+## Try the Demo in the Python Yard {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+Worksheet checkpoint:
+
+- Open [`movie-reviews.ipynb`](https://dodatascience.fun/yard/notebooks/index.html?path=movie-reviews.ipynb)
+- Add three words to a list and rerun
+    - new root question?
+    - new test accuracy?
+- You can also try testing on your own review
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## Same Clues, Other Classifiers
+
+Test accuracy on the same 82 clues:
+
+- decision tree: 51%
+- $k$-NN ($k = 15$, standardized): 60%
+- linear SVM: 64%
+
+::: {.fragment}
+What is an SVM?
+:::
+
 # Support Vector Machines {.section-header}
 
 ---
 
-## Support Vector Machines
+## Which Line Would You Pick? {.image-frame-slide}
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+::: {.caption}
+Based on Bello, Lecture 13, Exercise 13.3, and [VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218), 28 of Week 8's penguins.
+:::
 
-::: {.dense}
-- **TK**
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/svm-lines-v0.svg" class="figure" style="max-height:420px" alt="28 penguins, bill length against bill depth: Adélie as gray circles at upper left, Gentoo as orange triangles at lower right, with an empty gap between them.">
 :::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/svm-lines-v1.svg" class="figure" style="max-height:420px" alt="Three lines, A, B, and C, each with every Gentoo on one side and every Adélie on the other. A runs close to the Gentoo; C is tilted; B runs through the middle of the gap.">
 :::
+
+::::
+
+::: {.notes}
+Homework 10 (`svm-pick-max-margin-line`) is this question.
+:::
+
+---
+
+## SVM Goal: Maximize the Margin {.image-frame-slide}
+
+::: {.caption}
+Sources: [VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html); Daumé, CIML [ch. 7](http://ciml.info/dl/v0_99/ciml-v0_99-ch07.pdf), §7.7. Axes are standardized and drawn at equal scale.
+:::
+
+<img src="../assets/week9/svm-lines-v2.svg" class="figure" style="max-height:400px" alt="Line B in orange with a gray band around it reaching the closest penguin on each side, edged by dashed lines. Distances to the closest penguin, in standard units: A 0.19, B 0.47, C 0.20.">
+
+- Margin: the empty band around the line; the SVM picks the widest
+- Predict by which side a point falls on: $\text{sign}(\mathbf{w}^T\mathbf{x} + b)$
+
+---
+
+## Support Vectors {.image-frame-slide}
+
+::: {.caption}
+Source: [VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html).
+:::
+
+<img src="../assets/week9/svm-lines-v3.svg" class="figure" style="max-height:400px" alt="The same margin, with the three penguins that touch its dashed edges circled: one Adélie and two Gentoo.">
+
+- The points touching the margin; only they decide where the line goes
+- k-NN keeps every training point; an SVM keeps only these
+
+---
+
+## Hard and Soft Margins: $C$ {.image-frame-slide}
+
+::: {.caption}
+Sources: Daumé, CIML [§7.7](http://ciml.info/dl/v0_99/ciml-v0_99-ch07.pdf); scikit-learn, ["RBF SVM parameters"](https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218), all 274 Adélie and Gentoo penguins from Week 8.
+:::
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/svm-soft-v0.svg" class="figure" style="max-height:400px" alt="All 274 Adélie and Gentoo penguins fit with C equals 100: a narrow margin, width 0.29 standard units, with 3 support vectors circled.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/svm-soft-v1.svg" class="figure" style="max-height:400px" alt="The same penguins fit with C equals 0.01: a wide margin, width 2.12, with 116 penguins inside or on it circled as support vectors.">
+:::
+
+::::
+
+- Soft margin: points may sit inside the margin, for a price
+- Large $C$: narrow margin, fits training data closely; small $C$: wide margin
 
 # Kernels {.section-header}
 
 ---
 
-## Kernels
+## What if a does not work? {.image-frame-slide}
 
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/kernel-lift-v0.svg" class="figure" style="max-height:420px" alt="Points on a number line from minus 4 to 4: circles at both ends, triangles in the middle. Dashed lines at minus 2.5 and 2.5 show that two cuts are needed.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/kernel-lift-v1.svg" class="figure" style="max-height:420px" alt="The same points lifted onto the parabola y equals x squared. The triangles sit low, the circles high, and an orange horizontal line at x squared equals 6.5 separates them.">
+:::
+
+::::
+
+- One feature: no single cut separates the classes
+
+---
+
+## Kernels {.image-frame-slide}
+
+::: {.caption}
+Based on [VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html); see also Daumé, CIML [ch. 11](http://ciml.info/dl/v0_99/ciml-v0_99-ch11.pdf). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218), all 342 measured penguins.
+:::
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/kernel-penguins-v0.svg" class="figure" style="max-height:400px" alt="All 342 measured penguins: Chinstrap as orange triangles at upper right, between the Adélie at upper left and the Gentoo at lower right, both gray circles.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/kernel-penguins-v1.svg" class="figure" style="max-height:400px" alt="A linear SVM's boundary: one straight diagonal line, with Gentoo on the Chinstrap side; 88 percent training accuracy.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/kernel-penguins-v2.svg" class="figure" style="max-height:400px" alt="An RBF kernel SVM's boundary: a closed curve around the Chinstraps; 96 percent training accuracy.">
+:::
+
+::::
+
+- Chinstraps sit between the other two species
+- no straight line to fence them off
+- Kernel trick: the benefit of new features without computing them; `SVC(kernel="rbf")`
+
+---
+
+## Common Kernels {.image-frame-slide}
+
+::: {.caption}
+Sources: Bello, Lecture 13, slide 27 ("Kernel Trick"); scikit-learn user guide, [§1.4, "Kernel functions"](https://scikit-learn.org/stable/modules/svm.html). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218), Chinstrap vs. the rest; training accuracy above each panel.
+:::
+
+<img src="../assets/week9/kernel-types.svg" class="figure" style="flex-shrink:0" alt="Four panels of the Chinstrap-versus-rest penguins, each shaded by a different SVM kernel. Linear: one straight line, 88 percent. Polynomial, degree 3: a curved boundary around the Chinstraps, 97 percent. RBF: a closed pocket around the Chinstraps, 96 percent. Sigmoid: a tangled boundary that cuts through both groups, 75 percent.">
 
 ::: {.dense}
-- **TK**
+<!-- Raw HTML so each row can be a fragment; processing is off so Quarto keeps the row classes. -->
+<table data-quarto-disable-processing="true">
+<thead><tr><th>Kernel</th><th><i>K</i>(<b>u</b>, <b>v</b>)</th><th>Boundary</th><th>scikit-learn</th></tr></thead>
+<tbody>
+<tr class="fragment"><td>linear</td><td><b>u</b><sup><i>T</i></sup><b>v</b></td><td>a straight line</td><td><code>SVC(kernel=&quot;linear&quot;)</code></td></tr>
+<tr class="fragment"><td>polynomial</td><td>(<i>γ</i> <b>u</b><sup><i>T</i></sup><b>v</b> + <i>r</i>)<sup><i>d</i></sup></td><td>curves of degree <i>d</i></td><td><code>SVC(kernel=&quot;poly&quot;, degree=3)</code></td></tr>
+<tr class="fragment"><td>RBF</td><td>exp(−<i>γ</i> ‖<b>u</b> − <b>v</b>‖<sup>2</sup>)</td><td>any shape; similarity drops with distance</td><td><code>SVC(kernel=&quot;rbf&quot;)</code>, the default</td></tr>
+<tr class="fragment"><td>sigmoid</td><td>tanh(<i>γ</i> <b>u</b><sup><i>T</i></sup><b>v</b> + <i>r</i>)</td><td>rarely the best choice</td><td><code>SVC(kernel=&quot;sigmoid&quot;)</code></td></tr>
+</tbody>
+</table>
 :::
+
+::: {.notes}
+The polynomial panel is degree 3 with coef0 = 1 (the r in the formula). RBF is scikit-learn's default and the usual first choice.
 :::
+
+---
+
+## Linear or Kernel? (1 of 5) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/kernel-shape-a-v0.svg" class="figure" style="max-height:440px" alt="Shape A: two separate clouds. Linear or kernel?">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/kernel-shape-a-v1.svg" class="figure" style="max-height:440px" alt="Shape A, answer: linear. A straight line separates the two clouds.">
+:::
+
+::::
+
+::: {.notes}
+Show of hands before each reveal. Homework 10 (`kernel-needed`) uses these five shape kinds.
+:::
+
+---
+
+## Linear or Kernel? (2 of 5) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/kernel-shape-b-v0.svg" class="figure" style="max-height:440px" alt="Shape B: a ring of circles around a ring of triangles. Linear or kernel?">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/kernel-shape-b-v1.svg" class="figure" style="max-height:440px" alt="Shape B, answer: kernel. A closed curve around the inner ring separates them.">
+:::
+
+::::
+
+---
+
+## Linear or Kernel? (3 of 5) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/kernel-shape-c-v0.svg" class="figure" style="max-height:440px" alt="Shape C: two long parallel bands. Linear or kernel?">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/kernel-shape-c-v1.svg" class="figure" style="max-height:440px" alt="Shape C, answer: linear. A straight line runs between the bands.">
+:::
+
+::::
+
+---
+
+## Linear or Kernel? (4 of 5) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/kernel-shape-d-v0.svg" class="figure" style="max-height:440px" alt="Shape D: XOR corners: triangles in two opposite corners, circles in the other two. Linear or kernel?">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/kernel-shape-d-v1.svg" class="figure" style="max-height:440px" alt="Shape D, answer: kernel. Curved boundaries split the four corners.">
+:::
+
+::::
+
+---
+
+## Linear or Kernel? (5 of 5) {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/kernel-shape-e-v0.svg" class="figure" style="max-height:440px" alt="Shape E: two interlocking moons. Linear or kernel?">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/week9/kernel-shape-e-v1.svg" class="figure" style="max-height:440px" alt="Shape E, answer: kernel. A curved boundary follows the gap between the moons.">
+:::
+
+::::
+
+---
+
+## $\gamma$: How Far Each Point Reaches {.image-frame-slide}
+
+::: {.caption}
+Source: scikit-learn, ["RBF SVM parameters"](https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html). Data: [Palmer Penguins](https://doi.org/10.5281/zenodo.3960218); half the penguins train, half are held out.
+:::
+
+:::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index=1}
+<img src="../assets/week9/svm-gamma-v0.svg" class="figure" style="height:290px; flex-shrink:0" alt="Chinstrap against the rest with gamma equals 0.05: a broad curve that misses some Chinstraps. Train 89 percent, test 90 percent.">
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+<img src="../assets/week9/svm-gamma-v1.svg" class="figure" style="height:290px; flex-shrink:0" alt="Gamma equals 1: a pocket around the Chinstraps. Train 98 percent, test 94 percent.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/week9/svm-gamma-v2.svg" class="figure" style="height:290px; flex-shrink:0" alt="Gamma equals 50: small islands around single penguins. Train 100 percent, test 85 percent.">
+:::
+
+::::
+
+- $\gamma$ sets how fast RBF similarity, $\exp(-\gamma \cdot \text{distance}^2)$, fades
+- Small $\gamma$: each penguin's influence reaches far → smooth boundary (underfit)
+- Large $\gamma$: influence stays local → islands around single penguins (overfit)
+- Tune $C$ and $\gamma$ on validation data, like $k$ and `max_depth`
+
+---
+
+## SVMs on the Movie Reviews
+
+```python
+model = make_pipeline(StandardScaler(), LinearSVC())
+```
+
+- 64% test (tree: 51%)
+- Biggest weights: *not/no/never*, *horrible* (negative); *great*, *love* (positive)
+- Unlike the tree, it uses *horrible*
+
+::: {.notes}
+Scale first, as with k-NN: scikit-learn's user guide (§1.4) says SVMs "are not scale invariant." Negative vs. positive only: tree 76%, linear SVM 81%.
+:::
+
+---
+
+## SVMs: Pros and Cons
+
+::: {.caption}
+Sources: [VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html); Bello, Lecture 13.
+:::
+
+- Pros: compact (support vectors only), fast predictions, kernels handle curved boundaries
+- Cons: slow to train on big data, sensitive to $C$ and $\gamma$, no probabilities
+
+# Wrap-Up {.section-header}
+
+---
+
+## Four Classifiers in Brief {#four-classifiers-in-brief-day-2}
+
+::: {.dense}
+<!-- Raw HTML so each row can be a fragment; processing is off so Quarto keeps the row classes. -->
+<table data-quarto-disable-processing="true">
+<thead><tr><th>Classifier</th><th>Boundary</th><th>Hyperparameters</th><th>Strength</th><th>Weakness</th></tr></thead>
+<tbody>
+<tr class="fragment"><td><i>k</i>-NN</td><td>any shape</td><td><i>k</i></td><td>no training; flexible</td><td>slow to predict; scale-sensitive</td></tr>
+<tr class="fragment"><td>Decision tree</td><td>rectilinear</td><td>max depth</td><td>interpretable</td><td>easy to overfit</td></tr>
+<tr class="fragment"><td>SVM</td><td>linear, or curved with a kernel</td><td><i>C</i>, kernel, <i>γ</i></td><td>maximum margin</td><td>slow to train</td></tr>
+<tr class="fragment"><td>Naive Bayes</td><td>follows the class distributions</td><td>(few)</td><td>probabilities</td><td>assumes independence</td></tr>
+</tbody>
+</table>
+:::
+
+Same `fit` / `predict` / `score` for all four.
+
+::: {.notes}
+From Week 8. Keep the Naive Bayes column: Homework 10's `classifier-identify-description` describes Naive Bayes one time in four.
+:::
+
+---
+
+## Upload your worksheet {#upload-worksheet-day-2}
+
+Take a picture of your worksheet, upload it in Canvas
+
+---
+
+## Quiz Time
+
+Week 9 Quiz: the last 30 minutes of class
+
+# That's All for Today, See You Monday! {.section-header .no-index}
 
 # Appendix: Entropy and Information Gain {.section-header}
 
@@ -856,7 +1361,7 @@ Jack Bandy
 ## Entropy: How Much Does a Split Help Distinguish Classes? {.smaller}
 
 ::: {.caption}
-Source: Gonzalo Bello Lander, CS 418 Lecture 12, "Classification (I)" (2026), slides 14–16. Figure after Sebastian Raschka, "[Why are we growing decision trees via entropy instead of the classification error?](https://sebastianraschka.com/faq/docs/decisiontree-error-vs-entropy.html)": "if we have 2 entropy values (left and right child node), the average will fall onto the straight, connecting line."
+Source: Gonzalo Bello Lander, CS 418 Lecture 12, "Classification (I)" (2026), slides 14–16. Figure based on Sebastian Raschka, "[Why are we growing decision trees via entropy instead of the classification error?](https://sebastianraschka.com/faq/docs/decisiontree-error-vs-entropy.html)": "if we have 2 entropy values (left and right child node), the average will fall onto the straight, connecting line."
 :::
 
 :::: {.columns}
@@ -1504,7 +2009,7 @@ Source: Gonzalo Bello Lander, CS 418 Lecture 12, "Classification (I)" (2026), sl
 ::::
 
 ::: {.caption}
-Synthetic, after CIML Fig. 3.4, where the test point "should be positive, but its NN is actually a negative point that's noisy."
+Synthetic, based on CIML Fig. 3.4, where the test point "should be positive, but its NN is actually a negative point that's noisy."
 :::
 
 ---
@@ -1544,7 +2049,7 @@ Synthetic, after CIML Fig. 3.4, where the test point "should be positive, but it
 <img src="../assets/week9/majority-tie-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Two candidate splits of the same 1,200 examples, 800 yes and 400 no. Feature 1 makes two children of 400 yes, 200 no each. Feature 2 makes children of 250 yes, 240 no and 550 yes, 160 no. Both have error 400 out of 1200; weighted entropy is 0.92 for Feature 1 and 0.86 for Feature 2.">
 
 ::: {.caption}
-Source: Elena Zheleva, CS 418 lecture slides, Feb. 19, 2026 (after Marine Carpuat). "Both have the same error rate!!! Which is 'progressing more' towards a lower error?"
+Source: Elena Zheleva, CS 418 lecture slides, Feb. 19, 2026 (based on Marine Carpuat). "Both have the same error rate!!! Which is 'progressing more' towards a lower error?"
 :::
 
 ---
@@ -1603,12 +2108,16 @@ A family of distances for continuous attributes, with $p$ attributes:
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
-5. Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)*, v0.99, [ch. 1](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf) ("Decision Trees"), [ch. 2](http://ciml.info/dl/v0_99/ciml-v0_99-ch02.pdf) ("Limits of Learning"), and [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf) ("Geometry and Nearest Neighbors").
+5. Hal Daumé III, *[A Course in Machine Learning](http://ciml.info/)*, v0.99, [ch. 1](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf) ("Decision Trees"), [ch. 2](http://ciml.info/dl/v0_99/ciml-v0_99-ch02.pdf) ("Limits of Learning"), [ch. 3](http://ciml.info/dl/v0_99/ciml-v0_99-ch03.pdf) ("Geometry and Nearest Neighbors"), [ch. 7](http://ciml.info/dl/v0_99/ciml-v0_99-ch07.pdf) ("Linear Models"), and [ch. 11](http://ciml.info/dl/v0_99/ciml-v0_99-ch11.pdf) ("Kernel Methods").
 6. Gonzalo Bello Lander, CS 418 Lecture 12 ("Classification (I): Basic Concepts & Decision Trees") and Lecture 13 ("Classification (II): More Classification Techniques"), 2026. The tax-cheating tree and Exercises 12.2–12.4 and 13.1 are from these slides.
-7. Elena Zheleva, CS 418 lecture slides, Feb. 19 and 24, 2026 (using materials by Marine Carpuat, Lise Getoor, and Brian Ziebart).
-8. Jake VanderPlas, *[Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)*, ["In-Depth: Decision Trees and Random Forests"](https://jakevdp.github.io/PythonDataScienceHandbook/05.08-random-forests.html), text CC BY-NC-ND.
+7. Elena Zheleva, CS 418 lecture slides, Feb. 19, 24, and 26 and Mar. 3, 2026 (using materials by Marine Carpuat, Lise Getoor, and Brian Ziebart).
+8. Jake VanderPlas, *[Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)*, ["In-Depth: Decision Trees and Random Forests"](https://jakevdp.github.io/PythonDataScienceHandbook/05.08-random-forests.html) and ["In-Depth: Support Vector Machines"](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html), text CC BY-NC-ND.
 9. Stephanie Yee and Tony Chu, ["A Visual Introduction to Machine Learning, Part 1"](https://r2d3.us/visual-intro-to-machine-learning-part-1/), R2D3.
 10. Sebastian Raschka, ["Why are we growing decision trees via entropy instead of the classification error?"](https://sebastianraschka.com/faq/docs/decisiontree-error-vs-entropy.html), Machine Learning FAQ.
 11. scikit-learn developers, [`DecisionTreeClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html) documentation, v1.8.
-12. Week 9 figures: [`make_week9_figures.py`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/week9/make_week9_figures.py); the class survey, birth months, point clouds, and study-hours students (Week 8's, plus a random day of month born), and practice-exam and seat splits are synthetic. The survey uses the same generator as the code demo.
+12. Week 9 figures: [`make_week9_figures.py`](https://github.com/jackbandy/data-science-fun/blob/main/docs/assets/week9/make_week9_figures.py); the class survey, birth months, point clouds, and study-hours students (Week 8's, plus a random day of month born), and practice-exam and seat splits are synthetic. The survey uses the same generator as the code demo. The Day 2 margin, $C$, kernel, and $\gamma$ figures use the Palmer Penguins; the one-feature lift and the five kernel shapes are synthetic; the movie-review paths come from the Python Yard demo's tree.
 13. scikit-learn developers, [`KNeighborsClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html) and [`plot_tree`](https://scikit-learn.org/stable/modules/generated/sklearn.tree.plot_tree.html) documentation.
+14. scikit-learn developers, ["RBF SVM parameters"](https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html) and user guide §1.4, ["Support Vector Machines"](https://scikit-learn.org/stable/modules/svm.html).
+15. Tiffany Timbers, Trevor Campbell, Melissa Lee, Joel Ostblom, and Lindsey Heagy, *[Data Science: A First Introduction (Python Edition)](https://python.datasciencebook.ca/)*, ch. 5 and 6.
+16. Movie reviews: Hou, Li, He, Yan, Chen, and McAuley, [Amazon Reviews 2023](https://amazon-reviews-2023.github.io/), `Movies_and_TV`; course sample in [`datasets/movie-reviews`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/movie-reviews).
+17. Penguins: Allison Horst, Alison Hill, and Kristen Gorman, [palmerpenguins](https://doi.org/10.5281/zenodo.3960218) (2020), CC0; data originally from Kristen B. Gorman, Tony D. Williams, and William R. Fraser, "Ecological Sexual Dimorphism and Environmental Variability within a Community of Antarctic Penguins (Genus *Pygoscelis*)," *PLoS ONE* 9(3): e90081 (2014), <https://doi.org/10.1371/journal.pone.0090081>.

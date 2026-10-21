@@ -15,7 +15,9 @@ Under the title line, two kinds of bullet:
 
   * Topics -- one per `{.section-header}` heading, linked to that slide. Those
     headings are already the deck's table of contents, so the deck source stays
-    the single place the wording is edited.
+    the single place the wording is edited. A "Day N" bullet sits among them
+    wherever a later class day's title slide (`# Week W, Day N {.course-title}`)
+    starts, so each day's material can be reached from the index.
   * A "More:" bullet holding the week's other downloads, so the title line is
     free to be nothing but a link to the slides. Always the PDF; then, for
     decks that run code, that code both on GitHub and as a raw download.
@@ -173,8 +175,9 @@ def has_class(attrs, name):
 # --------------------------------------------------------------------------
 
 def topics(source_text):
-    """[(text, anchor)] for the deck's indexable section headers."""
-    found, seen = [], {}
+    """[(text, anchor)] for the deck's indexable section headers, plus a "Day N"
+    entry where each later class day's title slide starts (Day 1 is the deck itself)."""
+    found, seen, days = [], {}, set()
     for _level, raw, attrs in headings(source_text):
         explicit = re.search(r'#([^\s}]+)', attrs)
         slug = explicit.group(1) if explicit else slugify(raw)
@@ -182,6 +185,11 @@ def topics(source_text):
         n = seen.get(slug, 0)
         seen[slug] = n + 1
         anchor = slug if n == 0 else f'{slug}-{n}'
+        day = re.fullmatch(r'Week \d+, Day (\d+)', strip_markup(raw))
+        # Week 8 has two Day 2 title slides in a row; the first is the one reached first.
+        if has_class(attrs, 'course-title') and day and int(day.group(1)) > 1 and day.group(1) not in days:
+            days.add(day.group(1))
+            found.append((f'Day {day.group(1)}', anchor))
         if has_class(attrs, 'section-header') and not has_class(attrs, 'no-index'):
             found.append((strip_markup(raw), anchor))
     return found

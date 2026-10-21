@@ -359,6 +359,11 @@ $code-color: $ink !default;
     text-align: center;
   }
 
+  // A caption directly under the slide title is the slide's source line, so it stays left, under the title.
+  .image-frame-slide h2 + .caption {
+    text-align: left;
+  }
+
   .eyebrow {
     display: inline-block;
     font-size: $eyebrow-size;
@@ -500,6 +505,8 @@ $code-color: $ink !default;
   // The two columns themselves in the golden ratio (φ : 1), rather than the
   // thing sitting in the second column.
   .split-content.golden-columns { grid-template-columns: 1.618fr 1fr; }
+  // The same ratio with the figure in the wider second column.
+  .split-content.golden-figure { grid-template-columns: 1fr 1.618fr; }
   // A split whose text column is a whole list rather than a few lines. .split
   // centers .split-content in the leftover row and .split-content centers each
   // column in itself, which turns a tall list into a block floating in the

@@ -37,12 +37,15 @@ extra_css:
     {%- else -%}
       {%- assign dot = "Week " | append: week.name -%}
     {%- endif -%}
+    {%- comment -%} Each class day links to its "Week N, Day D" title slide once deck N is built (the same check _layouts/schedule.html uses). {%- endcomment -%}
+    {%- assign deckpath = "/slides/week" | append: week.name | append: ".html" -%}
+    {%- assign deck = site.static_files | where: "path", deckpath | first -%}
     {%- for row in week.items %}
     <tr>
       {%- if forloop.first %}
       <th scope="row" rowspan="{{ week.items | size }}"><span class="schedule-week-dot" data-label="{{ dot | escape }}" aria-label="{{ dot | escape }}" tabindex="0">{{ week.name | escape }}</span></th>
       {%- endif %}
-      <td>{{ row["Class Day"] | escape }}<span class="schedule-day-date">({{ row["Date"] | date: "%b %-d" | replace: "Sep ", "Sept " }})</span></td>
+      <td>{% if deck and row["Topic"] != "n/a" %}<a href="{{ site.baseurl }}/slides/week{{ week.name }}.html#/week-{{ week.name }}-day-{{ forloop.index }}">{{ row["Class Day"] | escape }}</a>{% else %}{{ row["Class Day"] | escape }}{% endif %}<span class="schedule-day-date">({{ row["Date"] | date: "%b %-d" | replace: "Sep ", "Sept " }})</span></td>
       <td>{{ row["Topic"] | escape }}</td>
       <td>{{ row["Before Class"] | escape }}</td>
       <td>{{ row["In Class"] | escape }}</td>

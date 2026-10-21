@@ -236,9 +236,10 @@
 
 ## Week 9, Day 2 (2026-10-21)
 
-* Naive Bayes
+* Review: k-nearest neighbors and decision trees (movie-review demo)
 * Support vector machines
 * Kernels
+* **Week 9 Quiz (in class)**
 
 ### Sources
 
@@ -246,7 +247,6 @@
 * *Introduction to Statistical Learning*, [Chapter 9: Support Vector Machines](https://www.statlearning.com)
 * *Python Data Science Handbook*, [Support Vector Machines](https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html)
 * Andrew Ng, *Stanford CS229: Machine Learning* (Autumn 2018)
-	* [Lecture 5: GDA & Naive Bayes](https://www.youtube.com/watch?v=nt63k3bfXS0) (video, 79 min)
 	* [Lecture 6: Support Vector Machines](https://www.youtube.com/watch?v=lDwow4aOrtg) (video, 81 min)
 
 ## Week 10, Day 1 (2026-10-26)

@@ -5,8 +5,12 @@
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
+% Never break a word across lines, including at hyphens ("Sans-Serif").
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -15,15 +19,9 @@
 \usepackage{fancyhdr}
 \usepackage{mdframed}
 \usepackage{array}
-
-% ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a stub. The watermark marks the PDF as unfinished so
-% nobody mistakes a placeholder for the real thing. Delete this block once the
-% worksheet has real content.
-\usepackage{draftwatermark}
-\SetWatermarkText{IN-PROGRESS}
-\SetWatermarkScale{2.2}
-\SetWatermarkLightness{0.85}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{plotmarks} % triangle* and o marks for checkpoint 5
 
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -39,54 +37,192 @@
 \hypersetup{colorlinks=false, hidelinks}
 
 % ── Convenience environments ──────────────────────────────────────────────────
-\newenvironment{problem}[1]{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
-  \textbf{Problem #1.}
-}{%
-  \end{mdframed}\vspace{0.5em}
-}
-
-\newenvironment{hint}{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
-  \textit{Hint:}
-}{%
-  \end{mdframed}\vspace{0.3em}
-}
-
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
+% Usage: \blankspace{6cm} — blank area for hand-written work, no rules
+\newcommand{\blankspace}[1]{%
   \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
   \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
+  \end{minipage}
   \vspace{0.3em}
+}
+
+% Usage: \guidedopen{title}{guided content}{guided workspace height}{open-ended workspace height}
+% Left: a titled, structured prompt with its own blank workspace. Right: a fully blank workspace for open-ended exploration of the same topic (no prompt text), sized so the two columns land at roughly the same total height. Neither workspace is ruled.
+\newcommand{\guidedopen}[4]{%
+  \noindent\textbf{#1}\\[0.18em]
+  \noindent
+  \begin{minipage}[t]{0.52\textwidth}
+    #2
+    \blankspace{#3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \blankspace{#4}
+  \end{minipage}
+  \\[0.4em]
+}
+
+% Checkpoint 3 sits in a full-width block of this height; the back-page checkpoints set their own heights so they fill about three quarters of the page.
+\newlength{\cpheight}
+\setlength{\cpheight}{5.7cm}
+
+% Usage: \fixedblock[height]{content} — a full-width block exactly that tall (default \cpheight).
+\newcommand{\fixedblock}[2][\cpheight]{\noindent\begin{minipage}[t][#1][t]{\linewidth}#2\end{minipage}\par}
+
+% Usage: \wordrow{word} — one row of the demo table: a word and its space for the list it belongs in.
+\newcommand{\wordrow}{\small & \rule{0pt}{0.8cm} & & \\ \hline}
+
+% Usage: \vennbox{x}{y} — two circles (A, B) in a golden-ratio box with its lower-left corner at (x, y), inside a tikzpicture.
+\newcommand{\vennbox}[2]{%
+  \begin{scope}[shift={(#1,#2)}]
+    \draw[gray!70] (0,0) rectangle (5.83,3.6);
+    \draw (2.17,1.8) circle (1.3);
+    \draw (3.67,1.8) circle (1.3);
+    \node[font=\small] at (1.5,1.8) {A};
+    \node[font=\small] at (4.33,1.8) {B};
+  \end{scope}%
+}
+
+% Usage: \fractionvenn{name} — "name =" beside a fraction whose numerator and denominator are each an empty Venn box.
+\newcommand{\fractionvenn}[1]{%
+  \begin{tikzpicture}[scale=0.47, baseline=(bar.base)]
+    \node[anchor=east] (bar) at (-0.3,0) {#1 $=$};
+    \vennbox{0}{0.35}
+    \draw[line width=0.9pt] (-0.15,0) -- (5.98,0);
+    \vennbox{0}{-3.95}
+  \end{tikzpicture}%
+}
+
+% Usage: \shapepanel{letter}{triangle points}{circle points} (the letter is unused on the page; it keeps each panel matched to its slide) — one "linear or kernel?" panel with an L / K choice under it.
+\newcommand{\shapepanel}[3]{%
+  \begin{tikzpicture}
+    \draw[gray!70] (-1.47,-1.47) rectangle (1.47,1.47);
+    \draw plot[only marks, mark=triangle*, mark size=1.4pt] coordinates {#2};
+    \draw plot[only marks, mark=o, mark size=1.2pt] coordinates {#3};
+    \node[font=\small, anchor=north] at (0,-1.55) {L \quad / \quad K};
+  \end{tikzpicture}%
 }
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
 \noindent
 \begin{minipage}[t]{0.55\textwidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,18}} \\[0.3em]
+  {\LARGE \textbf{Worksheet \#\,18}} \\[0.18em]
   {\large \textit{Week 9, Day 2: Support vector machines; kernels}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
-\vspace{0.2em}
+\vspace{0.6em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.1em}
+
+\noindent\underline{\textbf{Guided checkpoints}}\\[0.2em]
+\noindent{\small For full credit, fill in the checkpoints. If you skip a checkpoint, you must include your own notes for full credit.}
+\vspace{0.8em}
+
+% ── 1. Jaccard and SMC in pictures ───────────────────────────────────────────
+\guidedopen{1. Jaccard and SMC, in Pictures}{
+\raggedright Shade the numerator's region in the top box and the denominator's region in the bottom box.
+
+\vspace{0.5em}
+\noindent\fractionvenn{Jaccard}\hfill\fractionvenn{SMC}
+
+\vspace{0.6em}
+Which region does SMC count that Jaccard ignores?
+}{0.1cm}{0.1cm}
+
+\vfill
+
+% ── 2. Teach the tree new words ──────────────────────────────────────────────
+\guidedopen{2. Teach the Tree New Words}{
+\raggedright Open the movie-reviews demo in the Python Yard (\texttt{movie-reviews.ipynb}). Add three words to the word lists, re-run, and record what changed.
+
+\vspace{0.5em}
+\noindent
+{\setlength{\tabcolsep}{3pt}%
+\begin{tabular}{|c|l|>{\centering\arraybackslash}p{2.9cm}|>{\centering\arraybackslash}p{1.7cm}|}
+  \hline
+  & \small Word added & \small Which list (neg. / meh / pos.) & \small New test accuracy \\ \hline
+  \small Start & \emph{(none yet)} & & \emph{51\%} \\ \hline
+  \wordrow
+  \wordrow
+  \wordrow
+\end{tabular}}
+
+\vspace{0.6em}
+New root question: \underline{\hspace{5cm}}
+}{0.1cm}{0.1cm}
+
+\vfill
+
+% ── 3. Is 51% good? ──────────────────────────────────────────────────────────
+\fixedblock{\guidedopen{3. Is 51\% Good?}{
+\raggedright There are three labels, and each has 1,500 reviews. What accuracy would you expect from guessing a label at random? With that in mind, is 51\% good?
+
+\vspace{0.4em}
+Where did each label come from? That is, what is the provenance of these labels? Could they be incorrect?
+}{0.1cm}{0.1cm}}
+
+\newpage
+
+% ── 4. SVM vs. SVC ───────────────────────────────────────────────────────────
+\fixedblock[0.16\textheight]{\guidedopen{4. SVM and SVC}{
+\raggedright What does SVM stand for?
+}{0.1cm}{0.1cm}}
+
+\vspace{0.05\textheight}
+
+% ── 5. Linear or kernel? ─────────────────────────────────────────────────────
+% Points are the same five sets as the slides' kernel-shape figures (make_week9_figures.py, shape_sets), scaled by 0.72.
+\fixedblock[0.27\textheight]{%
+\noindent\textbf{5. Linear or Kernel?}\\[0.18em]
+\noindent Each panel shows two classes, $\blacktriangle$ and $\circ$. Circle \textbf{L} if one straight line can separate them (a linear SVM is enough), or \textbf{K} if the SVM needs a kernel.
+
+\vspace{0.5em}
+\noindent
+  \shapepanel{A}{(0.45,0.15) (0.41,0.58) (0.57,0.39) (0.95,0.26) (0.32,0.39) (0.84,0.42) (0.59,0.29) (1.09,0.76) (0.68,0.34) (0.80,0.49) (0.15,0.33) (0.16,0.55) (0.47,0.56) (0.58,0.46) (0.77,0.08) (0.66,0.57) (0.75,0.68) (0.37,0.42) (0.62,0.84) (0.60,0.09) (0.58,0.37) (0.64,0.45) (0.93,0.50) (0.67,0.52) (0.67,0.23)}{(-0.79,-0.56) (-0.15,-0.16) (-0.89,-0.16) (-0.37,-0.55) (-0.43,-0.13) (-0.46,-0.29) (-1.15,-0.34) (-0.55,-0.51) (-0.89,-0.29) (-0.23,-0.39) (-0.58,-0.35) (-0.37,-0.22) (-0.50,-0.70) (-0.68,-0.49) (-0.55,-0.48) (-0.68,-0.57) (-0.82,-0.56) (-0.49,-0.21) (-0.81,-0.29) (-0.62,-0.13) (-0.72,-0.26) (-0.67,-0.75) (-0.81,-0.53) (-0.96,-0.59) (-0.63,-0.43)}
+  \hfill
+  \shapepanel{B}{(0.11,0.37) (-0.44,-0.04) (0.27,-0.33) (-0.40,-0.07) (0.24,0.28) (-0.21,-0.18) (0.28,0.17) (0.33,-0.01) (-0.35,0.09) (0.21,-0.26) (-0.34,-0.31) (0.31,-0.15) (-0.24,0.28) (0.01,-0.43) (0.13,-0.30) (0.36,-0.18) (-0.25,0.42) (-0.13,-0.37) (0.23,0.17) (-0.08,0.29) (-0.17,0.36) (0.02,0.38) (-0.22,-0.31) (-0.10,-0.32) (0.33,0.14) (0.15,0.31) (0.26,-0.09) (-0.21,0.12) (-0.37,-0.13) (-0.11,0.29)}{(0.99,0.05) (0.14,-1.00) (0.90,-0.41) (1.00,0.10) (0.69,-0.59) (-0.35,0.87) (-0.47,0.92) (-0.96,0.46) (0.92,-0.11) (-0.88,-0.53) (-0.73,0.67) (-1.01,0.23) (-0.97,-0.12) (0.82,0.47) (0.53,-0.89) (-0.60,-0.89) (0.24,0.98) (0.42,-0.93) (0.46,0.84) (0.66,0.72) (0.97,0.50) (-0.46,-0.80) (0.72,-0.81) (-0.32,-0.99) (0.14,1.01) (-0.77,0.62) (-0.62,-0.53) (-0.06,-0.96) (-0.07,1.00) (-0.97,0.03)}
+  \hfill
+  \shapepanel{C}{(1.21,0.05) (-0.08,-0.64) (1.11,-0.03) (1.31,0.18) (1.10,0.02) (0.62,-0.44) (-0.33,-0.73) (0.30,-0.48) (0.20,-0.50) (-0.71,-0.98) (0.76,-0.19) (1.04,-0.00) (1.21,0.15) (1.43,0.42) (1.22,0.07) (0.01,-0.65) (0.24,-0.43) (-0.37,-0.85) (-0.46,-0.90) (0.34,-0.49) (0.01,-0.75) (0.94,-0.22) (0.26,-0.37) (0.29,-0.45) (-0.37,-0.88)}{(0.35,0.90) (0.71,1.08) (0.63,0.95) (0.70,0.97) (-1.09,-0.01) (-0.89,0.07) (-0.59,0.32) (-0.80,0.21) (-0.25,0.62) (-0.91,0.04) (-0.34,0.41) (-0.51,0.26) (-0.81,0.09) (-0.76,0.06) (-1.38,-0.17) (-0.34,0.49) (-0.63,0.26) (-0.04,0.65) (-0.86,0.26) (-0.64,0.28) (-1.32,-0.16) (-0.58,0.28) (-0.17,0.45) (-0.07,0.57) (-1.35,-0.13)}
+  \hfill
+  \shapepanel{D}{(-0.59,-0.31) (-0.80,-0.72) (0.46,0.73) (0.37,0.61) (-0.50,-0.87) (-0.86,-0.40) (0.45,0.45) (-0.28,-1.01) (-0.44,-0.92) (0.49,0.76) (0.52,0.87) (-0.51,-0.39) (0.47,0.77) (0.36,0.44) (-0.70,-0.82) (-0.81,-0.55) (0.33,0.68) (-0.90,-0.43) (-0.66,-0.50) (-0.44,-0.65) (-0.34,-0.40) (-0.36,-0.54) (-0.81,-0.58) (0.36,0.49) (0.78,0.43) (-0.22,-0.53) (-0.52,-0.87) (-0.57,-0.31)}{(0.55,-0.57) (0.26,-0.24) (-0.88,0.82) (0.23,-0.90) (0.32,-0.70) (-0.43,0.83) (-0.58,0.52) (-0.82,0.66) (-0.97,0.69) (-0.30,0.78) (-0.88,0.60) (-0.67,0.85) (-0.27,0.60) (-0.84,0.74) (0.44,-0.66) (0.38,-0.98) (-0.30,0.63) (-0.55,0.99) (-0.96,0.95) (-0.38,0.71) (0.83,-0.59) (0.57,-0.97) (-0.59,0.59) (0.23,-0.34) (-0.90,0.39) (-0.98,0.32) (-0.87,0.87) (-0.25,0.72)}
+  \hfill
+  \shapepanel{E}{(1.26,-0.08) (-0.30,-0.19) (-0.38,0.02) (0.36,-0.60) (-0.33,-0.38) (-0.36,-0.08) (0.12,-0.62) (-0.39,0.18) (1.31,0.03) (-0.43,-0.13) (1.49,0.20) (1.21,-0.32) (0.78,-0.56) (1.18,-0.42) (0.57,-0.45) (1.09,-0.45) (0.94,-0.62) (0.27,-0.72) (-0.17,-0.56) (0.42,-0.61) (-0.21,-0.37) (1.28,-0.17) (-0.51,0.04) (0.53,-0.68) (-0.07,-0.55) (0.87,-0.62) (-0.00,-0.65) (1.36,-0.18) (0.63,-0.69) (1.45,0.17)}{(0.38,0.09) (-0.98,0.39) (-1.24,0.25) (-0.20,0.61) (-1.35,-0.11) (0.33,0.30) (0.17,0.41) (-1.23,0.12) (-0.08,0.62) (-0.41,0.67) (-1.30,0.06) (-0.55,0.73) (-0.66,0.65) (-1.11,0.29) (-0.63,0.72) (-1.35,-0.18) (-0.79,0.72) (-1.36,-0.08) (-0.29,0.62) (0.07,0.61) (-0.87,0.63) (0.46,-0.07) (-1.07,0.44) (0.50,-0.27) (0.44,0.14) (0.03,0.44) (0.11,0.34) (-1.15,0.27) (0.47,-0.13) (0.30,0.13)}
+%
+
+\vspace{0.6em}
+}
+
+\vspace{0.05\textheight}
+
+% ── 6. Strengths and weaknesses ──────────────────────────────────────────────
+\fixedblock[0.22\textheight]{%
+\noindent\textbf{6. Strengths and Weaknesses}\\[0.18em]
+\noindent
+{\setlength{\tabcolsep}{4pt}%
+% tabularx at \linewidth so this table spans the same width as the checkpoint 5 panels.
+\begin{tabularx}{\linewidth}{|l|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+  \hline
+  \small Classifier & \small One strength & \small One weakness \\ \hline
+  \small Decision tree & \rule{0pt}{0.8cm} & \\ \hline
+  \small $k$-NN & \rule{0pt}{0.8cm} & \\ \hline
+  \small Linear SVM  & \rule{0pt}{0.8cm} & \\ \hline
+\end{tabularx}}
+
+\vspace{0.4em}
+}
+
+% The last quarter of the page stays blank for notes.
 
 \end{document}

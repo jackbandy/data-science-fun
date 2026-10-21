@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Figures for the Week 9, Day 1 slides: k-nearest neighbors and decision trees.
+"""Figures for the Week 9 slides: k-nearest neighbors and decision trees (Day 1), support vector machines and kernels (Day 2).
 
 NOTICE: this file was substantially drafted by an LLM coding system and has not
 yet been reviewed. Check every figure against the slide it illustrates.
@@ -52,8 +52,10 @@ import numpy as np
 from matplotlib import font_manager
 from matplotlib.patches import Circle, FancyBboxPatch
 from matplotlib.path import Path as MPath
+from sklearn.datasets import make_circles, make_moons
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 OUT_DIR = Path(__file__).resolve().parent
@@ -1771,6 +1773,513 @@ def survey_depth_accuracy(step):
     ax.set_xlabel("max_depth")
     top_ylabel(ax, "accuracy")
     ax.yaxis.set_major_formatter(lambda v, _: f"{v:.0%}")
+    return fig
+
+
+# ------------------------------------------ movie-review tree paths (Day 2)
+
+MOVIE_NOTEBOOK = REPO_ROOT / "docs" / "yard" / "content" / "movie-reviews.ipynb"
+MOVIE_CSV = REPO_ROOT / "datasets" / "movie-reviews" / "reviews.csv"
+MOVIE_REVIEWS = {
+    "loved": "Absolutely LOVED it!!! Best movie of the year.",
+    "ok": "It was ok. Some good parts, but way too long...",
+    "horrible": "Horrible. A total waste of two hours.",
+}
+
+
+def movie_tree():
+    """The notebook's tree, rebuilt from its own word lists and make_features."""
+    import json
+    import re
+
+    import polars as pl
+    reviews = pl.read_csv(MOVIE_CSV)
+    ns = {"re": re, "pl": pl, "reviews": reviews}
+    for cell in json.loads(MOVIE_NOTEBOOK.read_text())["cells"]:
+        src = "".join(cell["source"])
+        if cell["cell_type"] == "code" and ("NEGATIVE_WORDS = [" in src or "def make_features" in src):
+            exec(src, ns)
+    X, y = ns["X"], ns["y"]
+    # Same split and settings as the notebook's "Train the tree" cell.
+    X_train, _, y_train, _ = train_test_split(X.to_numpy(), y.to_numpy(), test_size=0.2, random_state=418)
+    tree = DecisionTreeClassifier(max_depth=5, min_samples_leaf=25, random_state=418).fit(X_train, y_train)
+    return tree, list(X.columns), ns["make_features"]
+
+
+def movie_question(name, cut):
+    """A node as a yes/no question; features are counts, so "> cut" means "at least cut + 1"."""
+    if name == "length":
+        return f"at least {int(cut) + 1} words?"
+    thing = "not / no / never" if name == "not/no/never" else f'"{name}"'
+    return f"has {thing}?" if cut < 1 else f"{thing} {int(cut) + 1}+ times?"
+
+
+def subtree_leaves(t, node):
+    if t.children_left[node] == -1:
+        return [node]
+    return subtree_leaves(t, t.children_left[node]) + subtree_leaves(t, t.children_right[node])
+
+
+def side_box(ax, xy, lines, *, w=4.4, h=0.84):
+    """A branch the review does not take: a pale box with one or two lines of text."""
+    box = FancyBboxPatch((xy[0] - w / 2 + 0.12, xy[1] - h / 2 + 0.12), w - 0.24, h - 0.24,
+                         boxstyle="round,pad=0.12", facecolor=PAPER, edgecolor=QUIET,
+                         linewidth=1.8, zorder=3)
+    ax.add_patch(box)
+    ax.text(xy[0], xy[1], "\n".join(lines), ha="center", va="center", fontsize=16,
+            color=STEEL, linespacing=1.2, zorder=4)
+
+
+def movie_path(key):
+    """The review's root-to-leaf path down the middle, with the branch it skips at each question off to the side (no = left, yes = right)."""
+    import polars as pl
+    tree, names, make_features = movie_tree()
+    x = make_features(pl.DataFrame({"text": [MOVIE_REVIEWS[key]]})).to_numpy()[0]
+    t = tree.tree_
+    labels = tree.classes_
+    steps_, node = [], 0
+    while t.children_left[node] != -1:
+        f, cut = t.feature[node], t.threshold[node]
+        yes = x[f] > cut
+        taken = t.children_right[node] if yes else t.children_left[node]
+        skipped = t.children_left[node] if yes else t.children_right[node]
+        steps_.append((movie_question(names[f], cut), yes, skipped))
+        node = taken
+    fig, ax = new_fig(width=1000, height=700)
+    ax.set_xlim(-7.6, 7.6)
+    ax.set_ylim(-1.2, 6.5)
+    ax.axis("off")
+    ys = [6.0 - 1.18 * i for i in range(len(steps_) + 1)]
+    for i, (question, yes, skipped) in enumerate(steps_):
+        # The branch not taken: "no" goes left and "yes" goes right, as in the notebook's drawing.
+        side = -1 if yes else 1
+        off = (5.2 * side, ys[i + 1])
+        ax.plot([1.4 * side, off[0] - 1.5 * side], [ys[i] - 0.3, off[1] + 0.42], color=QUIET,
+                lw=2, zorder=2, solid_capstyle="round")
+        ax.text(2.5 * side, ys[i] - 0.42, "no" if yes else "yes", fontsize=17,
+                color=MUTED, ha="center", va="center",
+                bbox=dict(facecolor=PAPER, edgecolor="none", pad=1.0), zorder=4)
+        if t.children_left[skipped] == -1:
+            side_box(ax, off, [f"predict {labels[t.value[skipped][0].argmax()]}"])
+        else:
+            leaves = subtree_leaves(t, skipped)
+            preds = [labels[t.value[leaf][0].argmax()] for leaf in leaves]
+            kinds = ", ".join(c for c in ("negative", "meh", "positive") if c in preds)
+            side_box(ax, off, [f"{len(leaves)} more leaves:", kinds])
+        edge(ax, (0, ys[i]), (0, ys[i + 1]), "yes" if yes else "no", color=ORANGE, lw=4, size=17,
+             side="right" if yes else "left")
+        node_box(ax, (0, ys[i]), question, w=5.4, size=19, edge=ORANGE, lw=3)
+    shares = t.value[node][0] / t.value[node][0].sum()
+    order = np.argsort(-shares)
+    node_box(ax, (0, ys[-1]), f"predict {labels[order[0]]}", leaf=True, w=4.4, size=19,
+             fill=HIGHLIGHT, color=PAPER, edge=ORANGE, lw=4)
+    n_leaves = len(subtree_leaves(t, 0))
+    detail = ", ".join(f"{shares[i]:.0%} {labels[i]}" for i in order)
+    ax.text(0, ys[-1] - 0.5, f"1 of {n_leaves} leaves: {t.n_node_samples[node]} training reviews, {detail}",
+            ha="center", va="top", fontsize=17, color=STEEL)
+    return fig
+
+
+for _key in MOVIE_REVIEWS:
+    FIGURES[f"movie-path-{_key}"] = (lambda k=_key: movie_path(k))
+
+
+# ------------------------------------- similarity as Venn fractions (Day 2)
+
+VENN_W = 3.2  # golden-ratio "all attributes" rectangle
+VENN_R, VENN_DX = 0.66, 0.34
+
+
+def venn(ax, cx, cy, shade):
+    """Two circles (attributes where a = 1, where b = 1) in a golden rectangle.
+
+    shade: "inter" (N11), "union" (N11 + N10 + N01), "match" (N11 + N00), "all".
+    """
+    from matplotlib.patches import Rectangle
+    h = VENN_W / PHI
+    rect = Rectangle((cx - VENN_W / 2, cy - h / 2), VENN_W, h, facecolor=PAPER,
+                     edgecolor=INK, linewidth=1.6, zorder=1)
+    ax.add_patch(rect)
+    ca, cb = (cx - VENN_DX, cy), (cx + VENN_DX, cy)
+    if shade in ("match", "all"):
+        ax.add_patch(Rectangle(rect.get_xy(), VENN_W, h, facecolor=ORANGE, linewidth=0, zorder=2))
+    if shade in ("union", "all"):
+        for c in (ca, cb):
+            ax.add_patch(Circle(c, VENN_R, facecolor=ORANGE, linewidth=0, zorder=3))
+    if shade == "match":
+        for c in (ca, cb):
+            ax.add_patch(Circle(c, VENN_R, facecolor=PAPER, linewidth=0, zorder=3))
+    if shade in ("inter", "match"):
+        clip = Circle(cb, VENN_R, transform=ax.transData)
+        lens = Circle(ca, VENN_R, facecolor=ORANGE, linewidth=0, zorder=4)
+        ax.add_patch(lens)
+        lens.set_clip_path(clip)
+    for c, name, ha in ((ca, "a", "right"), (cb, "b", "left")):
+        ax.add_patch(Circle(c, VENN_R, fill=False, edgecolor=INK, linewidth=1.8, zorder=5))
+        ax.text(c[0] + (-1 if ha == "right" else 1) * 0.74 * VENN_R, cy + 0.74 * VENN_R, name,
+                ha=ha, va="bottom", fontsize=15, color=INK, zorder=6)
+    for x, y, label in ((cx, cy, "$N_{11}$"), (cx - VENN_DX - 0.34, cy, "$N_{10}$"),
+                        (cx + VENN_DX + 0.34, cy, "$N_{01}$"),
+                        (cx + VENN_W / 2 - 0.3, cy - h / 2 + 0.22, "$N_{00}$")):
+        ax.text(x, y, label, ha="center", va="center", fontsize=12, color=INK, zorder=6)
+
+
+@figure("similarity-venn")
+def similarity_venn():
+    fig, ax = new_fig(height=500)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    gap = 0.75  # numerator and denominator centers sit this far from the bar, plus half a rectangle
+    dy = VENN_W / PHI / 2 + gap / 2
+    for x0, name, top, bottom, formula in (
+            (0.0, "Jaccard", "inter", "union", r"$\frac{N_{11}}{N_{01} + N_{10} + N_{11}}$"),
+            (6.4, "SMC", "match", "all", r"$\frac{N_{00} + N_{11}}{N_{00} + N_{01} + N_{10} + N_{11}}$")):
+        cx = x0 + 3.0
+        ax.text(x0 + 1.15, 0, f"{name} =", ha="right", va="center", fontsize=22, color=INK)
+        venn(ax, cx, dy, top)
+        venn(ax, cx, -dy, bottom)
+        ax.plot([cx - VENN_W / 2 - 0.1, cx + VENN_W / 2 + 0.1], [0, 0], color=INK, lw=2.4)
+        ax.text(cx, -2 * dy - 0.25, formula, ha="center", va="top", fontsize=17, color=STEEL)
+    ax.set_xlim(-0.9, 11.2)
+    ax.set_ylim(-2 * dy - 1.25, 2 * dy + 0.3)
+    return fig
+
+
+# ------------------------------------------- support vector machines (Day 2)
+
+def line_segment(w, b, xlim, ylim, offset=0.0):
+    """Endpoints of w . x + b = offset clipped to the plot box."""
+    (x0, x1), (y0, y1) = xlim, ylim
+    pts = []
+    if abs(w[1]) > 1e-12:
+        for x in (x0, x1):
+            y = (offset - b - w[0] * x) / w[1]
+            if y0 <= y <= y1:
+                pts.append((x, y))
+    if abs(w[0]) > 1e-12:
+        for y in (y0, y1):
+            x = (offset - b - w[1] * y) / w[0]
+            if x0 <= x <= x1:
+                pts.append((x, y))
+    return np.array(sorted(set(pts))[:1] + sorted(set(pts))[-1:])
+
+
+def draw_line(ax, w, b, xlim, ylim, *, color=INK, lw=2.6, ls="-", offset=0.0, zorder=2):
+    seg = line_segment(w, b, xlim, ylim, offset)
+    ax.plot(seg[:, 0], seg[:, 1], color=color, lw=lw, ls=ls, zorder=zorder,
+            solid_capstyle="round")
+    return seg
+
+
+def margin_band(ax, w, b, xlim, ylim, *, color="#E6E6E2", zorder=1):
+    """Shade the strip between w . x + b = -1 and +1."""
+    xx, yy = np.meshgrid(np.linspace(*xlim, 500), np.linspace(*ylim, 500))
+    f = w[0] * xx + w[1] * yy + b
+    ax.contourf(xx, yy, (np.abs(f) <= 1).astype(float), levels=[0.5, 1.5],
+                colors=[color], zorder=zorder)
+
+
+def svm_margin(ax, model, xlim, ylim, *, line_color=INK):
+    """A fitted linear SVC: margin strip, dashed edges, solid boundary."""
+    w, b = model.coef_[0], model.intercept_[0]
+    margin_band(ax, w, b, xlim, ylim)
+    for side in (-1, 1):
+        draw_line(ax, w, b, xlim, ylim, color=STEEL, lw=1.6, ls=(0, (5, 4)), offset=side)
+    draw_line(ax, w, b, xlim, ylim, color=line_color)
+
+
+def gap(w, b, X):
+    """Distance from the line w . x + b = 0 to the closest point."""
+    return np.min(np.abs(X @ w + b)) / np.linalg.norm(w)
+
+
+def separates(w, b, X, y):
+    return np.all(np.sign(X @ w + b) == y)
+
+
+def line_label(ax, seg, text, *, color=INK, end="top", inset=0.3):
+    """Letter just inside the upper (or lower) end of a line segment."""
+    top, bottom = (seg[1], seg[0]) if seg[1][1] >= seg[0][1] else (seg[0], seg[1])
+    if end == "bottom":
+        top, bottom = bottom, top
+    d = (bottom - top) / np.linalg.norm(bottom - top)
+    x, y = top + inset * d
+    ax.text(x, y, text, fontsize=20, color=color, ha="center", va="center", zorder=8,
+            bbox=dict(boxstyle="circle,pad=0.25", facecolor=PAPER, edgecolor=color, lw=1.6))
+
+
+PENGUIN_CSV = REPO_ROOT / "datasets" / "classification-examples" / "penguins.csv"
+# Standardized bill length and depth, drawn at equal scale so a margin looks as wide as it is.
+PENG_LIM = ((-2.6, 3.4), (-2.5, 2.6))
+
+
+def penguins():
+    """Every penguin with both bill measurements: standardized X, species, and the mm mean and SD."""
+    import polars as pl
+    df = pl.read_csv(PENGUIN_CSV, null_values="NA").drop_nulls(["bill_length_mm", "bill_depth_mm"])
+    X = df.select("bill_length_mm", "bill_depth_mm").to_numpy()
+    mu, sd = X.mean(axis=0), X.std(axis=0)
+    return (X - mu) / sd, df["species"].to_numpy(), mu, sd
+
+
+def adelie_gentoo(n_each=None):
+    """Adélie (-1) and Gentoo (+1), as in Week 8; optionally a random n_each of each."""
+    Z, species, mu, sd = penguins()
+    idx = np.flatnonzero(np.isin(species, ["Adelie", "Gentoo"]))
+    if n_each:
+        # Seed 0 is the first whose sample of 14 + 14 leaves a visible gap (0.47 standard units) between the species.
+        rng = np.random.default_rng(0)
+        idx = np.r_[rng.choice(np.flatnonzero(species == "Adelie"), n_each, replace=False),
+                    rng.choice(np.flatnonzero(species == "Gentoo"), n_each, replace=False)]
+    return Z[idx], np.where(species[idx] == "Gentoo", 1, -1), mu, sd
+
+
+def chinstrap_vs_rest():
+    """Chinstrap (+1) against Adélie and Gentoo (-1): no straight line splits them."""
+    Z, species, mu, sd = penguins()
+    return Z, np.where(species == "Chinstrap", 1, -1), mu, sd
+
+
+def penguin_fig():
+    """The 1000 x 618 canvas with a plot area shaped like PENG_LIM, so standardized units are square."""
+    (x0, x1), (y0, y1) = PENG_LIM
+    top, bottom = 50, 64
+    h = round(WIDTH_PX / PHI) - top - bottom
+    side = (WIDTH_PX - h * (x1 - x0) / (y1 - y0)) / 2
+    return fixed_fig(side, side, top, bottom)
+
+
+def penguin_axes(ax, mu, sd):
+    """Standardized axes, labeled in millimeters."""
+    ax.set_xlim(*PENG_LIM[0])
+    ax.set_ylim(*PENG_LIM[1])
+    ax.set_aspect("equal")
+    tidy(ax, grid=None)
+    xt, yt = np.arange(35, 60, 5), np.arange(14, 22, 2)
+    ax.set_xticks((xt - mu[0]) / sd[0], [str(v) for v in xt])
+    ax.set_yticks((yt - mu[1]) / sd[1], [str(v) for v in yt])
+    ax.set_xlabel("Bill length (mm)")
+    ax.set_ylabel("Bill depth (mm)")
+
+
+def candidate_lines(X, y, svm):
+    """The SVM's line (B), a parallel line shifted toward the + class (A), and a
+    line tilted about the SVM line's center (C). All three separate the data."""
+    w, b = svm.coef_[0], svm.intercept_[0]
+    best = gap(w, b, X)
+    a_b = b - 0.6 * best * np.linalg.norm(w)  # shift toward +, keeping 40% of the gap
+    assert separates(w, a_b, X, y)
+    center = X.mean(axis=0) - (X.mean(axis=0) @ w + b) / (w @ w) * w
+    tilted = None
+    for deg in np.arange(1, 60, 0.5):
+        t = np.radians(deg)
+        wt = np.array([[np.cos(t), -np.sin(t)], [np.sin(t), np.cos(t)]]) @ w
+        bt = -wt @ center
+        if not separates(wt, bt, X, y) or gap(wt, bt, X) < 0.4 * best:
+            break
+        tilted = (wt, bt)
+    assert tilted is not None
+    return {"A": (w, a_b), "B": (w, b), "C": tilted}
+
+
+@steps("svm-lines", 4)
+def svm_lines(step):
+    X, y, mu, sd = adelie_gentoo(n_each=14)
+    svm = SVC(kernel="linear", C=1e6).fit(X, y)
+    lines = candidate_lines(X, y, svm)
+    fig, ax = penguin_fig()
+    penguin_axes(ax, mu, sd)
+    lim = PENG_LIM
+    if step == 0:
+        note(ax, f"{POS_GLYPH} Gentoo or {NEG_GLYPH} Adélie: where would you draw the boundary?")
+    if step == 1:
+        for name, (w, b) in lines.items():
+            seg = draw_line(ax, w, b, *lim, color=STEEL)
+            line_label(ax, seg, name, color=STEEL, end="bottom" if name == "A" else "top")
+        note(ax, "Lines A, B, and C all separate the two species")
+    if step >= 2:
+        for name in ("A", "C"):
+            w, b = lines[name]
+            seg = draw_line(ax, w, b, *lim, color=BORDER, lw=2)
+            line_label(ax, seg, name, color=QUIET, end="bottom" if name == "A" else "top")
+        svm_margin(ax, svm, *lim, line_color=ORANGE)
+        seg = line_segment(svm.coef_[0], svm.intercept_[0], *lim)
+        line_label(ax, seg, "B", color=ORANGE)
+    if step == 2:
+        gaps = {name: gap(w, b, X) for name, (w, b) in lines.items()}
+        note(ax, "Gap to the closest penguin: " + ", ".join(
+            f"{name} {gaps[name]:.2f}" for name in "ABC") + " (B is widest)")
+    if step == 3:
+        halo(ax, svm.support_vectors_, size=700)
+        note(ax, f"The {len(svm.support_vectors_)} circled penguins on the margin are the support vectors")
+    points(ax, X, y, size=150)
+    return fig
+
+
+@steps("svm-soft", 2)
+def svm_soft(step):
+    X, y, mu, sd = adelie_gentoo()
+    C = [100, 0.01][step]
+    svm = SVC(kernel="linear", C=C).fit(X, y)
+    fig, ax = penguin_fig()
+    penguin_axes(ax, mu, sd)
+    svm_margin(ax, svm, *PENG_LIM, line_color=ORANGE)
+    halo(ax, svm.support_vectors_, size=240)
+    points(ax, X, y, size=60)
+    width = 2 / np.linalg.norm(svm.coef_[0])
+    msg = {0: "large C, narrow margin", 1: "small C, wide margin"}[step]
+    note(ax, f"C = {C:g} ({msg}): width {width:.2f}, {len(svm.support_vectors_)} support vectors (circled)")
+    return fig
+
+
+# 1D: + in the middle, - on both ends (after Bello, Lecture 13, slide 26).
+LIFT_NEG = np.array([-4, -3.5, -3, 3, 3.5, 4.0])
+LIFT_POS = np.array([-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2.0])
+
+
+@steps("kernel-lift", 2)
+def kernel_lift(step):
+    fig, ax = fixed_fig(70, 40, 50, 70)
+    ax.set_xlim(-4.6, 4.6)
+    ax.set_ylim(-1.5, 17.5)
+    tidy(ax, grid=None, spines=("bottom",))
+    ax.set_yticks([])
+    ax.set_xticks(range(-4, 5))
+    ax.set_xlabel("$x$")
+    if step == 0:
+        neg_marks(ax, np.c_[LIFT_NEG, np.zeros(6)], size=200)
+        pos_marks(ax, np.c_[LIFT_POS, np.zeros(9)], size=200)
+        for x in (-2.5, 2.5):
+            ax.plot([x, x], [-1, 4], color=QUIET, lw=1.6, ls=(0, (4, 4)))
+        note(ax, f"One feature, x: no single cut puts every {POS_GLYPH} on one side")
+    else:
+        tidy(ax, grid="y", spines=("left", "bottom"))
+        ax.set_yticks([0, 4, 8, 12, 16])
+        ax.set_ylabel("$x^2$", rotation=0, labelpad=16)
+        xs = np.linspace(-4.3, 4.3, 200)
+        ax.plot(xs, xs**2, color=BORDER, lw=1.6, zorder=1)
+        neg_marks(ax, np.c_[LIFT_NEG, LIFT_NEG**2], size=200)
+        pos_marks(ax, np.c_[LIFT_POS, LIFT_POS**2], size=200)
+        ax.axhline(6.5, color=ORANGE, lw=2.6, zorder=2)
+        ax.text(4.5, 7.0, "$x^2 = 6.5$", color=ORANGE, fontsize=16, ha="right", va="bottom")
+        note(ax, "Add a second feature, $x^2$: now a straight line separates the classes")
+    return fig
+
+
+@steps("kernel-penguins", 3)
+def kernel_penguins(step):
+    X, y, mu, sd = chinstrap_vs_rest()
+    fig, ax = penguin_fig()
+    penguin_axes(ax, mu, sd)
+    if step == 0:
+        note(ax, f"{POS_GLYPH} Chinstrap vs. {NEG_GLYPH} Adélie and Gentoo")
+    else:
+        model = SVC(kernel="linear" if step == 1 else "rbf").fit(X, y)
+        shade(ax, model.predict, *PENG_LIM)
+        name = "Linear SVM" if step == 1 else "RBF kernel SVM"
+        note(ax, f"{name}: {model.score(X, y):.0%} training accuracy")
+    points(ax, X, y, size=60)
+    return fig
+
+
+# scikit-learn's four built-in kernels; coef0=1 gives poly the +1 of Bello's (u . v + 1)^p.
+KERNEL_TYPES = (("linear", dict(kernel="linear")),
+                ("polynomial", dict(kernel="poly", degree=3, coef0=1)),
+                ("RBF", dict(kernel="rbf")),
+                ("sigmoid", dict(kernel="sigmoid")))
+
+
+@figure("kernel-types")
+def kernel_types():
+    X, y, mu, sd = chinstrap_vs_rest()
+    (x0, x1), (y0, y1) = PENG_LIM
+    width, height = WIDTH_PX, 270
+    fig = plt.figure(figsize=(width / DPI, height / DPI), dpi=DPI)
+    fig.patch.set_facecolor(PAPER)
+    fig.fixed_layout = True
+    w = 0.235
+    h = w * width / height * (y1 - y0) / (x1 - x0)
+    for i, (name, kw) in enumerate(KERNEL_TYPES):
+        ax = fig.add_axes([0.01 + i * 0.25, 0.03, w, h])
+        ax.set_facecolor(PAPER)
+        plain_axes(ax, *PENG_LIM, xlabel="", ylabel="")
+        for side in ax.spines.values():
+            side.set_visible(True)
+            side.set_color(BORDER)
+        model = SVC(**kw).fit(X, y)
+        shade(ax, model.predict, *PENG_LIM, n=250)
+        points(ax, X, y, size=12)
+        ax.text(0.5, 1.04, f"{name}: {model.score(X, y):.0%}", transform=ax.transAxes,
+                ha="center", va="bottom", fontsize=16, color=INK)
+    return fig
+
+
+def shape_sets():
+    """Five two-class shapes for the 'linear or kernel?' round; True = linearly separable."""
+    rng = np.random.default_rng(418)
+    out = []
+    # A: two blobs
+    X = np.vstack([rng.normal((0.9, 0.6), 0.32, (25, 2)), rng.normal((-0.9, -0.6), 0.32, (25, 2))])
+    out.append(("A", X, np.r_[np.ones(25), -np.ones(25)], True))
+    # B: rings
+    Xr, yr = make_circles(60, factor=0.35, noise=0.06, random_state=2)
+    out.append(("B", Xr * 1.4, np.where(yr == 1, 1, -1), False))
+    # C: two long parallel bands
+    t = rng.uniform(-1.5, 1.5, 50)
+    off = np.r_[np.ones(25), -np.ones(25)]
+    X = np.c_[t + 0.5 * off, 0.55 * t - 0.6 * off + rng.normal(0, 0.12, 50)]
+    out.append(("C", X, off, True))
+    # D: XOR corners
+    sx = rng.choice([-1, 1], 56)
+    c = np.r_[np.ones(28), -np.ones(28)]
+    sy = np.where(c == 1, sx, -sx)
+    X = np.c_[sx * rng.uniform(0.3, 1.4, 56), sy * rng.uniform(0.3, 1.4, 56)]
+    out.append(("D", X, c, False))
+    # E: interlocking moons
+    Xm, ym = make_moons(60, noise=0.07, random_state=4)
+    out.append(("E", (Xm - (0.5, 0.25)) * 1.25, np.where(ym == 1, 1, -1), False))
+    for _, X, y, linear in out:
+        assert (SVC(kernel="linear", C=1e6).fit(X, y).score(X, y) == 1) == linear
+    return out
+
+
+def kernel_shape(name, step):
+    """One shape for the 'linear or kernel?' round: the points, then the answer."""
+    _, X, y, linear = next(shape for shape in shape_sets() if shape[0] == name)
+    fig, ax = fixed_fig(250, 250, 70, 48)
+    lim = ((-1.9, 1.9), (-1.9, 1.9))
+    plain_axes(ax, *lim, xlabel="", ylabel="")
+    for side in ax.spines.values():
+        side.set_visible(True)
+        side.set_color(BORDER)
+    if step == 1:
+        model = SVC(kernel="linear" if linear else "rbf", C=1e3, gamma="scale").fit(X, y)
+        shade(ax, model.predict, *lim)
+    points(ax, X, y, size=150)
+    label = f"{name}: linear or kernel?" if step == 0 else f"{name}: {'linear' if linear else 'kernel'}"
+    ax.text(0.5, 1.03, label, transform=ax.transAxes, ha="center", va="bottom", fontsize=22,
+            color=ORANGE if step == 1 and not linear else INK)
+    return fig
+
+
+for _name in "ABCDE":
+    for _step in (0, 1):
+        FIGURES[f"kernel-shape-{_name.lower()}-v{_step}"] = (lambda n=_name, k=_step: kernel_shape(n, k))
+
+
+@steps("svm-gamma", 3)
+def svm_gamma(step):
+    X, y, mu, sd = chinstrap_vs_rest()
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=0, stratify=y)
+    gamma = [0.05, 1, 50][step]
+    model = SVC(kernel="rbf", gamma=gamma, C=1).fit(X_train, y_train)
+    fig, ax = penguin_fig()
+    penguin_axes(ax, mu, sd)
+    shade(ax, model.predict, *PENG_LIM)
+    points(ax, X_train, y_train, size=60)
+    msg = {0: " (small)", 1: "", 2: " (large)"}[step]
+    note(ax, f"$\\gamma$ = {gamma:g}{msg}: train {model.score(X_train, y_train):.0%}, "
+             f"test {model.score(X_test, y_test):.0%}")
     return fig
 
 
