@@ -10,9 +10,9 @@ For in-class worksheets, the goal is to create a library of accessible, hand-wri
 
 ## Overview
 
-This repo holds the raw files (mostly markdown files) that are assembled and published automatically on every push to `main`. The goal is to make materials portable, accessible, and **easily editable**: edit a text file, commit, and push, then everything else happens automatically.
+This repo holds the raw files (mostly markdown files) that are assembled and published automatically on every push to `main`. The goal is to make materials portable, accessible, and **easily editable**: edit a flat text (.md, .qmd, .txt, etc.) file, commit, and push, then everything else happens automatically... in theory.
 
-| What | Edit this | Shows up at |
+| What | Edit this | View at |
 | --- | --- | --- |
 | Slides | `docs/slides/week*.qmd` | [/slides/](https://dodatascience.fun/slides/) |
 | Syllabus text | `syllabus_source/syllabus.md` | [/syllabus/](https://dodatascience.fun/syllabus/) |
@@ -30,7 +30,7 @@ The `sandbox/` folder is a quarantine zone for anything modified by an LLM. Some
 
 In some cases, I move things out of the `sandbox/` after editing and testing and verification. In practice, this means that LLMs may be adjusting or improving some workflows that would otherwise require lots of time/tedium (e.g. the syllabus build workflow and other GitHub action setups). This allows me to focus more on writing/thinking, planning, and teaching (at least that is the theory, and has mostly been my experience so far).
 
-I willingly take responsibility for what is in this repository, including those files which were modified by LLMs. Please contact me if you notice any issues - those are my fault.
+I willingly take responsibility for what is in this repository, including those files which were modified by LLMs. Any issues are my fault (you are welcome to contact me if you notice any 🙂).
 
 Files that were substantially modified by LLMs will say so in the header, e.g. `NOTICE: This file modified by an LLM coding system...` or something like that.
 
