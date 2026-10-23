@@ -87,6 +87,7 @@ CS 418 · Week 11 · 🟠 35th/Archer 🟠
 ```{python}
 #| echo: true
 #| fig-alt: "Dot plot of 100 synthetic movies, popularity versus rank, showing a few hugely popular hits on the left and a long tail of obscure movies on the right"
+#| tags: [slides-only]
 import numpy as np, polars as pl, seaborn as sns
 from matplotlib.ticker import EngFormatter
 views = np.sort(np.random.default_rng(418).lognormal(10, 2, 100))[::-1]
@@ -104,6 +105,7 @@ ax.yaxis.set_major_formatter(EngFormatter(sep=""))
 #| echo: true
 #| code-line-numbers: "7"
 #| fig-alt: "Dot plot of 100 synthetic movies, popularity versus rank, with a horizontal y-axis label for views"
+#| tags: [slides-only]
 import numpy as np, polars as pl, seaborn as sns
 from matplotlib.ticker import EngFormatter
 views = np.sort(np.random.default_rng(418).lognormal(10, 2, 100))[::-1]
@@ -121,6 +123,7 @@ ax.yaxis.set_major_formatter(EngFormatter(sep=""))
 ```{python}
 #| echo: true
 #| fig-alt: "Dot plot of 100 random IMDb movies sorted by vote count, showing a few standouts on the left and a long tail of barely-voted-on movies on the right"
+#| tags: [slides-only]
 imdb = pl.read_csv("../../datasets/movies-from-imdb/random.csv").sample(100, seed=418)
 imdb = imdb.sort("numVotes", descending=True).with_row_index("rank", offset=1)  # rank from 1, not 0
 ax = sns.scatterplot(imdb, x="rank", y="numVotes")
@@ -136,6 +139,7 @@ ax.yaxis.set_major_formatter(EngFormatter(sep=""))
 ```{python}
 #| echo: true
 #| fig-alt: "Dot plot of the 100 most-voted-on IMDb movies, showing that even among the most popular movies, a few mega-hits stand out above the rest"
+#| tags: [slides-only]
 imdb = pl.read_csv("../../datasets/movies-from-imdb/popular.csv").head(100)
 imdb = imdb.with_row_index("rank", offset=1)  # rank from 1, not 0
 ax = sns.scatterplot(imdb, x="rank", y="numVotes")
@@ -151,6 +155,7 @@ ax.yaxis.set_major_formatter(EngFormatter(sep=""))
 #| echo: true
 #| code-line-numbers: "4"
 #| fig-alt: "Dot plot of the 100 most-voted-on IMDb movies, with the y axis forced to start at zero"
+#| tags: [slides-only]
 imdb = pl.read_csv("../../datasets/movies-from-imdb/popular.csv").head(100)
 imdb = imdb.with_row_index("rank", offset=1)  # rank from 1, not 0
 ax = sns.scatterplot(imdb, x="rank", y="numVotes")

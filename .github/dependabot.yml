@@ -20,14 +20,4 @@ updates:
         patterns: ["*"]
         update-types: ["minor", "patch"]
 
-  # Python packages used to build the slides. Updates here can change how
-  # slides/charts actually look, so these come as separate PRs
-  - package-ecosystem: "pip"
-    directory: "/docs/slides"
-    schedule:
-      interval: "monthly"
-    commit-message:
-      prefix: "deps"
-    labels:
-      - "dependencies"
-    open-pull-requests-limit: 3
+  # No pip entry: the slides' Python packages are locked to the Python Yard's Pyodide release, so they move when docs/yard/requirements.txt is bumped and docs/slides/shared/lock_requirements.sh is re-run, not one package at a time.

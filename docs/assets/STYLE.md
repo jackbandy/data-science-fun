@@ -73,5 +73,6 @@ Defaults from `lifecycle/ds-lifecycle-v*.svg`:
 - **Folders by topic, not by week** — e.g. `p-value-visuals/`, `sampling-visuals/`, `coin-flip-worldviews/`, each with its own generator script and `SOURCES.md`, so a figure can move between decks without moving files
 - **Rounded-rect nodes** — `rx="6"`, 3px stroke, neutral fill, centered multi-line text
 - **Generated variant sets** — step figures come from a Python generator emitting numbered variants (`v0` plain, `v1…vN` each highlighting one step); keep the script as source of truth
+- **Run generators in the slides venv** — `docs/slides/.venv/bin/python3 make_….py` from the script's folder (`docs/slides/shared/build_all_quarto.sh` creates and syncs that venv from `requirements.lock`), so figures are drawn with the same matplotlib as the decks; the `python3 make_….py` lines in each `SOURCES.md` assume it
 - **Orange-line transit motif** — Chicago / CTA Orange Line is the recurring theme
 - **Direction chevrons on line traces** — travel-direction chevrons are identical mirrored marks (white, `stroke-width="9"`), centered on the line's stroke centerline (and on the loop axis where the trace loops); keep both arrows the same size and angle

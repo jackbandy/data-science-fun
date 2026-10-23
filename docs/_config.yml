@@ -86,6 +86,8 @@ exclude:
   - slides/shared/includes
   - slides/shared/__pycache__
   - slides/shared/requirements.txt
+  - slides/shared/requirements.lock
+  - slides/shared/pyodide-pins.txt
   - slides/shared/0-old-outline.md
   # Local Jekyll tooling, never part of the site
   - Gemfile

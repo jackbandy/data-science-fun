@@ -134,7 +134,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install uv
-          uv pip install --system -r docs/slides/shared/requirements.txt
+          uv pip install --system -r docs/slides/shared/requirements.lock
 
       # Cache the rendered book output
       - name: Restore Quarto book cache

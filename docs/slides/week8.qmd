@@ -23,10 +23,15 @@ matplotlib.use("Agg")
 
 ```{python}
 #| echo: false
+#| tags: [slides-only]
+from plotnine import *
+```
+
+```{python}
+#| echo: false
 # Shared setup for every figure in this deck.
 import numpy as np
 import polars as pl
-from plotnine import *
 
 ORANGE = "#f9461c"
 ```
@@ -533,6 +538,7 @@ print(f"r = {r:.3f}   slope = {theta_1:,.0f}   intercept = {theta_0:,.0f}")
 ```{python}
 #| echo: true
 #| fig-alt: "Scatter plot of about 24,800 Cook County single-family home sales, building square footage against sale price up to two million dollars, with the least squares line rising through the cloud from lower left to upper right; the points fan out above and below the line as homes get larger"
+#| tags: [slides-only]
 (ggplot(homes, aes("building_sqft", "sale_price"))
  + geom_point(color="#777777", alpha=0.08, size=0.8, raster=True)
  + geom_abline(intercept=theta_0, slope=theta_1, color=ORANGE, size=1.2)
@@ -1069,6 +1075,7 @@ Each example checks one criterion.
 ```{python}
 #| echo: true
 #| fig-alt: "Residual plot for the house price model: building square footage on the x-axis against residual, actual minus predicted price, on the y-axis, with a horizontal line at zero. The residuals spread out into a widening fan as square footage grows."
+#| tags: [slides-only]
 predicted = theta_0 + theta_1 * pl.col("building_sqft")
 homes = homes.with_columns((pl.col("sale_price") - predicted).alias("residual"))
 (ggplot(homes, aes("building_sqft", "residual"))
@@ -1117,6 +1124,7 @@ print(f"bedrooms only:   {theta[1]:+,.0f} per bedroom")
 ```{python}
 #| echo: false
 #| fig-alt: "Scatter plot of Cook County single-family home sales, number of bedrooms from 1 to 8 against sale price up to two million dollars, with the points jittered sideways into vertical bands at each bedroom count and an orange least squares line rising steeply from left to right"
+#| tags: [slides-only]
 (ggplot(homes, aes("bedrooms", "sale_price"))
  + geom_point(color="#777777", alpha=0.08, size=0.8, raster=True,
               position=position_jitter(width=0.2, height=0, random_state=418))

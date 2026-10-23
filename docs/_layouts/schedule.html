@@ -72,12 +72,14 @@ layout: default
   {%- endfor -%}
   </ul>
 
-  <p class="week-jump-label">Click to jump to week</p>
+  <p class="week-jump-label">Click to jump to week:</p>
   <div class="week-jump-wrap">
     <table class="week-jump">
       <tr>{% for week in weeks %}<td><a href="#week-{{ week.name }}">{{ week.name }}</a></td>{% endfor %}</tr>
     </table>
   </div>
+  {%- comment -%} The date has to come from the reader's browser, so js/schedule-today.js fills this in and unhides it. {%- endcomment -%}
+  <p class="week-jump-today" hidden><a href="#">Click here to jump to today, <span class="week-jump-today-date"></span></a></p>
 
   <div class="rail">
   {%- assign prevunit = "" -%}
@@ -105,7 +107,7 @@ layout: default
     <ul>
     {%- for row in week.items -%}
       {%- assign dayindex = forloop.index -%}
-      <li>{{ row["Date"] | date: "%A, %B %-d, %Y" }}
+      <li id="day-{{ row["Date"] | date: "%Y-%m-%d" }}">{{ row["Date"] | date: "%A, %B %-d, %Y" }}
         {%- comment -%} Worksheet files are named ...-weekWW-dayD.pdf, week zero-padded. {%- endcomment -%}
         {%- assign padded = week.name -%}
         {%- if week.name.size == 1 -%}{%- assign padded = "0" | append: week.name -%}{%- endif -%}
@@ -147,3 +149,4 @@ layout: default
   {%- endfor -%}
   </div>
 </div>
+<script src="{{ '/js/schedule-today.js' | relative_url }}"></script>

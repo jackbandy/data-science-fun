@@ -54,10 +54,12 @@ if [[ "${SKIP_VENV:-false}" == "true" ]]; then
   echo "[quarto] SKIP_VENV=true: using the already-active Python environment"
 elif command -v uv >/dev/null 2>&1; then
   VENV="$SLIDES_DIR/.venv"
-  if [[ -f "$SHARED_DIR/requirements.txt" ]]; then
-    echo "[quarto] Installing Python dependencies with uv..."
-    [[ -d "$VENV" ]] || uv venv --quiet "$VENV"
-    uv pip install --quiet --python "$VENV" -r "$SHARED_DIR/requirements.txt"
+  if [[ -f "$SHARED_DIR/requirements.lock" ]]; then
+    echo "[quarto] Syncing Python dependencies with uv..."
+    # The lock is resolved for Python 3.12, which CI also runs, so a venv on any other Python is rebuilt
+    [[ "$("$VENV/bin/python3" -c 'import sys; print(sys.version_info[:2])' 2>/dev/null)" == "(3, 12)" ]] || uv venv --quiet --clear --python 3.12 "$VENV"
+    # sync, not install: it also moves packages that already satisfy requirements.txt to their locked versions
+    uv pip sync --quiet --python "$VENV" "$SHARED_DIR/requirements.lock"
   fi
   export VIRTUAL_ENV="$VENV"
   export PATH="$VENV/bin:$PATH"

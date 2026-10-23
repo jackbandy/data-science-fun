@@ -109,7 +109,7 @@ Every build tool is installed by `.github/workflows/deploy-pages.yml` on each ru
 | Ruby | `>= 3.0, < 4.0` | Jekyll site build | `docs/Gemfile` |
 | Jekyll (via `github-pages` gem) | whatever `github-pages` resolves to | masthead/includes, `/schedule.html`, homepage table | `docs/Gemfile` |
 | Python | 3.12 | executing slide code chunks | `deploy-pages.yml`, `repo-checks.yml` |
-| Python packages | see file (several deliberate caps) | slide figures and models | `docs/slides/shared/requirements.txt` |
+| Python packages | exact, from the lock (shared libraries match the Python Yard) | slide figures and models | `docs/slides/shared/requirements.txt` → `requirements.lock` |
 | `uv` | latest | installs the Python packages | `deploy-pages.yml`, `shared/build_all_quarto.sh` |
 | Quarto | `release` (latest) | renders every deck and the mini-book | `deploy-pages.yml` |
 | R | `release` | **week 5 only** — it uses `engine: knitr` and shells out to `Rscript` | `deploy-pages.yml` |
@@ -123,14 +123,13 @@ Every build tool is installed by `.github/workflows/deploy-pages.yml` on each ru
 
 **Notes:**
 
-- The Python caps in `requirements.txt` are: `numpy<2.5`
-  (numba/arviz), `matplotlib<3.11` (arviz's `style.core` import), `arviz<1.3`. Lifting one
-  without reading its comment will break a slide render.
+- CI and `build_all_quarto.sh` both install `docs/slides/shared/requirements.lock`, and the figure scripts under `docs/assets/` run in the same `docs/slides/.venv` (see `docs/assets/STYLE.md`), so they all use the same versions. `shared/lock_requirements.sh` writes it from `requirements.txt`, with numpy, pandas, polars, matplotlib, scipy, statsmodels, scikit-learn, networkx, and pyarrow pinned (in `pyodide-pins.txt`) to the versions the Python Yard's Pyodide release ships, so lecture code and student notebooks see the same libraries. Re-run it after editing `requirements.txt` or bumping the Yard's `jupyterlite-pyodide-kernel` pin. Dependabot no longer bumps these packages for that reason.
+- The caps in `requirements.txt` are `numpy<2.6` (numba's own ceiling), `polars<2` (seaborn needs `DataFrame.__dataframe__`), `matplotlib<3.12`, `scikit-learn<2`, `lmdiag<0.5`, and `arviz<1.4`. Read a cap's comment before lifting it.
+- The Yard runs Python 3.14 in the browser and the slides run 3.12, and seaborn, plotnine, arviz, and pymc exist only on the slides side.
 - R is the odd one out. Quarto's setup action does not bundle it, and only week 5 needs it as of right now —
   `build_all_quarto.sh` *skips* any knitr deck when `Rscript` is missing rather than failing,
   so a local build without R produces one fewer deck.
-- Locally, `build_all_quarto.sh` makes its own `docs/slides/.venv` with `uv`. CI sets
-  `SKIP_VENV=true` and installs into the runner's Python instead.
+- Locally, `build_all_quarto.sh` syncs its own `docs/slides/.venv` (Python 3.12) to the lock with `uv`, rebuilding it if it is on another Python. CI sets `SKIP_VENV=true` and installs the lock into the runner's Python instead.
 
 </details>
 
@@ -159,6 +158,7 @@ I'm trying to avoid Google Slides, and the current markdown-based slide workflow
 - Each compiled deck produces an HTML file, a `_files/` support directory (CSS, JavaScript, other assets), and usually a PDF: HTML is required, PDF export is best-effort (non-blocking)
 - Jupyter-engine decks keep their executed notebook as `docs/slides/weekN.ipynb` - makes it easy to download and run the code
 	- **knitr**-engine decks (R + Python combos like Week 5) can't produce a notebook, so they link their `weekN.qmd` source instead
+	- The Python Yard bundles these notebooks too. A chunk marked `#| tags: [slides-only]` needs plotnine or seaborn (which Pyodide doesn't ship), or a result from a chunk that does; `docs/yard/slides_only.py` turns it into a text cell in the Yard's copy, and the downloadable notebook keeps it as code. Weeks 2, 4, 6, 8, and 11 have these, as a stopgap.
 - `shared/sync_slide_index.py` owns four regions of `docs/slides/index.html`, and pulls each from a different source. **Nothing it writes should ever be hand-edited** — `repo-checks.yml` re-runs the script and fails the build on any drift.
 	- **the topic bullets** ← the deck's own `{.section-header}` headings, one bullet each, deep-linked to that slide (add `.no-index` to a header to leave it off the list)
 	- **the "More:" bullet** ← the PDF, plus a notebook link if one exists, else the deck source

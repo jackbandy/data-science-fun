@@ -16,10 +16,15 @@ format:
 
 ```{python}
 #| echo: false
+#| tags: [slides-only]
+from plotnine import *
+```
+
+```{python}
+#| echo: false
 # Shared setup for the figure cells in this deck.
 import numpy as np
 import polars as pl
-from plotnine import *
 
 ORANGE = "#f9461c"
 DARK = "#c83214"
@@ -626,6 +631,7 @@ How would you summarize these salaries?
 ## Sneak Peek: Where Is the Middle? {.figure-slide}
 ```{python}
 #| echo: false
+#| tags: [slides-only]
 # Copied from the Week 4 deck: builds up the arithmetic vs. geometric mean number line.
 A, B = 10, 10_000
 AM = (A + B) / 2            # 5005
@@ -679,6 +685,7 @@ log_data = [(1, "10", ORANGE, 0), (4, "10,000", ORANGE, 0)]
 #| fig-width: 10
 #| fig-height: 3.4
 #| fig-alt: "A linear number line from 0 to 10,000 with two orange points, one at 10 near the far left and one at 10,000 at the right end"
+#| tags: [slides-only]
 number_line(lin_ticks, lin_labels, lin_data, "Two values on a linear scale", 10000)
 ```
 :::
@@ -689,6 +696,7 @@ number_line(lin_ticks, lin_labels, lin_data, "Two values on a linear scale", 100
 #| fig-width: 10
 #| fig-height: 3.4
 #| fig-alt: "The same linear number line with the arithmetic mean of 5,005 marked at the halfway point, far from both data values"
+#| tags: [slides-only]
 number_line(lin_ticks, lin_labels,
             lin_data + [(AM, "arithmetic mean\n5,005", DARK, 0)],
             "Arithmetic mean (the middle of the linear scale)", 10000)
@@ -701,6 +709,7 @@ number_line(lin_ticks, lin_labels,
 #| fig-width: 10
 #| fig-height: 3.4
 #| fig-alt: "The same linear number line with the geometric mean of about 316 marked close to the left end, and the arithmetic mean still at 5,005"
+#| tags: [slides-only]
 number_line(lin_ticks, lin_labels,
             lin_data + [(AM, "arithmetic mean\n5,005", DARK, 0),
                         (GM, "geometric mean\n≈ 316", TEAL, 1)],
@@ -714,6 +723,7 @@ number_line(lin_ticks, lin_labels,
 #| fig-width: 10
 #| fig-height: 3.4
 #| fig-alt: "The same two values redrawn on a logarithmic number line with ticks at 10, 100, 1,000 and 10,000; the geometric mean of about 316 now sits exactly halfway between the points, while the arithmetic mean of 5,005 sits far to the right"
+#| tags: [slides-only]
 number_line(log_ticks, log_labels,
             log_data + [(np.log10(AM), "arithmetic mean\n5,005", DARK, 1),
                         (np.log10(GM), "geometric mean\n≈ 316", TEAL, 0)],

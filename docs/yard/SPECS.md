@@ -17,4 +17,4 @@ The Python Yard is a Colab-style notebook for the site, reached from the More me
 - **Persistence:** edits are saved in the student's own browser storage only. Students download `.ipynb` files to keep their work, and the starter notebook says so.
 - **Performance:** the first visit downloads roughly 30+ MB of wheels (polars alone is about 18 MB). Later visits load from the browser cache.
 - **Browsers:** it must work in current Safari, Firefox and Chrome on desktop. On phones it only needs to load and run a cell.
-- **Upkeep:** pin both JupyterLite packages in one requirements file and bump them once per semester.
+- **Upkeep:** pin both JupyterLite packages in one requirements file and bump them once per semester. After a bump, run `docs/slides/shared/lock_requirements.sh` so the slides pin the new Pyodide's numpy, pandas, polars, matplotlib, scipy, statsmodels, scikit-learn, networkx, and pyarrow versions.

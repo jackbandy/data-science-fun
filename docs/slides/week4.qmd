@@ -19,10 +19,15 @@ format:
 
 ```{python}
 #| echo: false
+#| tags: [slides-only]
+from plotnine import *
+```
+
+```{python}
+#| echo: false
 # Shared setup for every figure in this deck.
 import numpy as np
 import polars as pl
-from plotnine import *
 
 ORANGE = "#f9461c"
 DARK = "#c83214"
@@ -1081,6 +1086,7 @@ Use information from the sample to draw conclusions about the population.
 #| fig-width: 5.3
 #| fig-height: 4.0
 #| fig-alt: "Five ages plotted as orange dots with a horizontal line at the mean of 28; a vertical segment runs from each dot down or up to that line, and a shaded band one standard deviation either side of the mean covers three of the five dots"
+#| tags: [slides-only]
 ages = np.array([24., 35., 32., 21., 28.])
 m = ages.mean()
 s = ages.std(ddof=1)
@@ -1117,6 +1123,7 @@ s = ages.std(ddof=1)
 #| fig-width: 10
 #| fig-height: 4.4
 #| fig-alt: "A single vertical box plot annotated with its parts: the box spanning Q1 to Q3 labelled as the interquartile range holding 50% of the data, the median line inside it, whiskers reaching the last points within 1.5 times the IQR, and three outlier dots above the upper whisker"
+#| tags: [slides-only]
 rng = np.random.default_rng(7)
 vals = np.concatenate([rng.normal(30, 11, 220), [70, 74, 79]])
 q1, med, q3 = np.percentile(vals, [25, 50, 75])
@@ -1162,6 +1169,7 @@ box = pl.DataFrame({"x": np.zeros(len(vals)), "v": vals})
 #| fig-width: 5.3
 #| fig-height: 4.0
 #| fig-alt: "A vertical box plot inside a shaded band running from Q1 minus 1.5 times the IQR to Q3 plus 1.5 times the IQR, with dashed lines marking both fences and five points outside them drawn as individual dots labelled as flagged outliers"
+#| tags: [slides-only]
 rng = np.random.default_rng(3)
 v = np.concatenate([rng.normal(50, 9, 150), [88, 92, 14]])
 q1, q3 = np.percentile(v, [25, 75])
@@ -1265,6 +1273,7 @@ def shape_plot(k):
 #| fig-width: 5.3
 #| fig-height: 4.6
 #| fig-alt: "Three empty panels labelled right-skewed, symmetric and left-skewed, sharing one x-axis"
+#| tags: [slides-only]
 shape_plot(0)
 ```
 :::
@@ -1275,6 +1284,7 @@ shape_plot(0)
 #| fig-width: 5.3
 #| fig-height: 4.6
 #| fig-alt: "Only the top panel is drawn: a right-skewed density with its long tail to the right, a dashed line at the mean sitting to the right of a solid line at the median"
+#| tags: [slides-only]
 shape_plot(1)
 ```
 :::
@@ -1285,6 +1295,7 @@ shape_plot(1)
 #| fig-width: 5.3
 #| fig-height: 4.6
 #| fig-alt: "The top two panels are drawn: the right-skewed density, and a symmetric density whose mean and median lines sit on top of each other"
+#| tags: [slides-only]
 shape_plot(2)
 ```
 :::
@@ -1295,6 +1306,7 @@ shape_plot(2)
 #| fig-width: 5.3
 #| fig-height: 4.6
 #| fig-alt: "All three panels are drawn: right-skewed, symmetric, and left-skewed, the last with its long tail to the left and the mean line to the left of the median"
+#| tags: [slides-only]
 shape_plot(3)
 ```
 :::
@@ -1388,6 +1400,7 @@ def cheb_plot(stage):
 #| fig-width: 5.6
 #| fig-height: 4.2
 #| fig-alt: "An empty plot frame with a count axis and no data drawn yet"
+#| tags: [slides-only]
 cheb_plot(0)
 ```
 :::
@@ -1398,6 +1411,7 @@ cheb_plot(0)
 #| fig-width: 5.6
 #| fig-height: 4.2
 #| fig-alt: "A grey histogram of a lumpy two-humped distribution with a long right tail, with no annotations yet"
+#| tags: [slides-only]
 cheb_plot(1)
 ```
 :::
@@ -1408,6 +1422,7 @@ cheb_plot(1)
 #| fig-width: 5.6
 #| fig-height: 4.2
 #| fig-alt: "The same grey histogram with a solid line at the mean, dashed lines two standard deviations either side of it, and a lightly shaded band between them"
+#| tags: [slides-only]
 cheb_plot(2)
 ```
 :::
@@ -1418,6 +1433,7 @@ cheb_plot(2)
 #| fig-width: 5.6
 #| fig-height: 4.2
 #| fig-alt: "The finished figure: bars inside the band are orange and labelled as at least 75 percent of the data, the bars in the right tail outside it are grey and labelled as at most 25 percent"
+#| tags: [slides-only]
 cheb_plot(3)
 ```
 :::
@@ -1508,6 +1524,7 @@ A useful trick / mental model for judging whether a value is unusually large or 
 
 ```{python}
 #| echo: false
+#| tags: [slides-only]
 # Setup for the Anscombe slides. The quartet ships with plotnine.
 from plotnine.data import anscombe_quartet
 
@@ -1599,6 +1616,7 @@ def anscombe_plot(name):
 ```{python}
 #| echo: false
 #| output: asis
+#| tags: [slides-only]
 stats_table("I")
 ```
 :::
@@ -1607,6 +1625,7 @@ stats_table("I")
 ```{python}
 #| echo: false
 #| fig-alt: "Scatter plot of Anscombe's first dataset: eleven points scattered loosely around an upward-sloping dashed line, the way ordinary noisy linear data looks"
+#| tags: [slides-only]
 anscombe_plot("I")
 ```
 :::
@@ -1626,6 +1645,7 @@ A slightly noisy but linear relationship.
 ```{python}
 #| echo: false
 #| output: asis
+#| tags: [slides-only]
 stats_table("I", "II")
 ```
 :::
@@ -1634,6 +1654,7 @@ stats_table("I", "II")
 ```{python}
 #| echo: false
 #| fig-alt: "Scatter plot of Anscombe's second dataset: eleven points tracing a smooth downward-opening curve that crosses the dashed straight line three times"
+#| tags: [slides-only]
 anscombe_plot("II")
 ```
 :::
@@ -1653,6 +1674,7 @@ A perfect curve. The relationship is exact and is not a line.
 ```{python}
 #| echo: false
 #| output: asis
+#| tags: [slides-only]
 stats_table("I", "II", "III")
 ```
 :::
@@ -1661,6 +1683,7 @@ stats_table("I", "II", "III")
 ```{python}
 #| echo: false
 #| fig-alt: "Scatter plot of Anscombe's third dataset: ten points lying exactly on a straight line, plus one far above it that pulls the dashed fitted line off the others"
+#| tags: [slides-only]
 anscombe_plot("III")
 ```
 :::
@@ -1682,6 +1705,7 @@ Ten points on a perfect line, and one outlier that drags the fit.
 ```{python}
 #| echo: false
 #| output: asis
+#| tags: [slides-only]
 stats_table("I", "II", "III", "IV")
 ```
 :::
@@ -1690,6 +1714,7 @@ stats_table("I", "II", "III", "IV")
 ```{python}
 #| echo: false
 #| fig-alt: "Scatter plot of Anscombe's fourth dataset: ten points stacked vertically at one x value and a single point far to the right, which alone determines the dashed fitted line"
+#| tags: [slides-only]
 anscombe_plot("IV")
 ```
 :::
@@ -1708,6 +1733,7 @@ Every $x$ is the same but one point that creates the slope.
 #| fig-width: 10
 #| fig-height: 4.2
 #| fig-alt: "The four Anscombe datasets in one row, each with the same dashed fitted line: noisy linear, a smooth curve, a line with one outlier, and a vertical stack with one distant point"
+#| tags: [slides-only]
 (ggplot(anscombe.with_columns(pl.col("dataset").cast(pl.Enum(ANSCOMBE_SETS))),
         aes("x", "y"))
  + geom_abline(intercept=3.0, slope=0.5, color="#565a5c", linetype="dashed", size=0.9)

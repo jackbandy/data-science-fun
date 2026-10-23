@@ -30,6 +30,8 @@ trap 'rm -rf "$STAGE"' EXIT
 cp -R "$YARD/content/." "$STAGE/"
 # The executed lecture notebooks, so File → Open… lists them next to welcome.ipynb.
 cp "$REPO"/docs/slides/week*.ipynb "$STAGE/"
+# Cells tagged slides-only need plotnine or seaborn, which Pyodide doesn't have, so the Yard shows them as text
+python3 "$YARD/slides_only.py" "$STAGE"/week*.ipynb
 # One notebook per PrairieLearn variant, opened from the question at notebooks/index.html?path=pl/athlete-endorsements/<seed>/athlete-endorsements.ipynb
 python3 "$YARD/pl/athlete-endorsements/make_notebooks.py" "$STAGE/pl/athlete-endorsements"
 

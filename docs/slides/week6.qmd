@@ -756,6 +756,7 @@ Time series can contextualize (almost) any arbitrary datum
 
 ```{python}
 #| echo: true
+#| tags: [slides-only]
 import polars as pl
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -773,6 +774,7 @@ airline.sample(5, seed=42).sort("Month")
 #| echo: true
 #| label: airline-line
 #| fig-alt: "Line plot of monthly international airline passengers from 1949 to 1960, showing an upward trend with repeating seasonal peaks each summer that grow larger over time"
+#| tags: [slides-only]
 airline = airline.with_columns(pl.col("Month").str.to_date("%Y-%m-%d"))
 ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"])
 ax.set_ylim(bottom=0)
@@ -804,6 +806,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| code-line-numbers: "2"
+#| tags: [slides-only]
 airline = airline.with_columns(
     pl.col("Passengers").rolling_mean(window_size=12).alias("trend")
 )
@@ -817,6 +820,7 @@ airline.sample(5, seed=42).sort("Month")
 ```{python}
 #| echo: true
 #| fig-alt: "Line plot of airline passengers with a smoothed 12-month rolling average overlaid as an orange line, making the underlying upward trend clearly visible through the seasonal noise"
+#| tags: [slides-only]
 ax = sns.lineplot(x=airline["Month"], y=airline["Passengers"], alpha=0.35, label="observed")
 trend_not_null = airline.filter(pl.col("trend").is_not_null())
 sns.lineplot(x=trend_not_null["Month"], y=trend_not_null["trend"], label="12-month avg", ax=ax)
@@ -901,6 +905,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| output: false
+#| tags: [slides-only]
 from statsmodels.tsa.seasonal import (
     seasonal_decompose)
 y = airline["Passengers"].to_numpy()
@@ -960,6 +965,7 @@ Plot the raw data and check if the peaks get taller.
 ```{python}
 #| echo: true
 #| code-line-numbers: "4"
+#| tags: [slides-only]
 from statsmodels.tsa.seasonal import seasonal_decompose
 
 values = airline["Passengers"].to_numpy().astype(float)
@@ -973,6 +979,7 @@ result = seasonal_decompose(values, model="multiplicative", period=12)
 ```{python}
 #| echo: true
 #| fig-alt: "Four-panel decomposition plot of airline passenger data showing observed, trend, seasonal, and residual components stacked vertically"
+#| tags: [slides-only]
 fig = result.plot()
 fig.set_size_inches(7, 4.3)
 fig.get_axes()[-1].set_xlabel("Month")
@@ -987,6 +994,7 @@ plt.tight_layout()
 #| echo: true
 #| code-line-numbers: "3"
 #| fig-alt: "Smooth upward-sloping line showing only the trend component extracted from airline passenger data, with missing values at both ends where the rolling average cannot be computed"
+#| tags: [slides-only]
 trend_df = pl.DataFrame({
     "Month": airline["Month"],
     "trend": pl.Series("trend", result.trend).fill_nan(None),
@@ -1006,6 +1014,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| output: false
+#| tags: [slides-only]
 seasonal_df = pl.DataFrame({
     "Month": airline["Month"],
     "seasonal": pl.Series("seasonal", result.seasonal),
@@ -1023,6 +1032,7 @@ We'll check to see if the seasonal factor stays **constant** over time (with a m
 ```{python}
 #| echo: true
 #| fig-alt: "Two side-by-side panels of the multiplicative seasonal component: the first two years on the left and the last two years on the right. Both show an identical repeating wave with summer peaks and winter troughs, illustrating that the seasonal factor is constant over time."
+#| tags: [slides-only]
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
 for df, ax, label in zip([first_two, last_two], axes, ["First 2 years", "Last 2 years"]):
     sns.lineplot(x=df["Month"], y=df["seasonal"], ax=ax)
@@ -1042,6 +1052,7 @@ plt.tight_layout()
 #| echo: true
 #| code-line-numbers: "3"
 #| fig-alt: "Residuals after removing trend and seasonality from airline data, showing mostly random noise hovering around 1.0 with a few small spikes"
+#| tags: [slides-only]
 resid_df = pl.DataFrame({
     "Month": airline["Month"],
     "resid": pl.Series("resid", result.resid).fill_nan(None),
@@ -1069,6 +1080,7 @@ plt.tight_layout()
 
 ```{python}
 #| echo: true
+#| tags: [slides-only]
 cta = pl.read_csv("../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv")
 uic = cta.filter(pl.col("stationname") == "UIC-Halsted")
 uic.sample(5, seed=42)
@@ -1081,6 +1093,7 @@ uic.sample(5, seed=42)
 ```{python}
 #| echo: true
 #| fig-alt: "Line plot of daily CTA ridership at UIC-Halsted station over the last 10 years, showing a sharp drop in 2020 during COVID and gradual recovery, with rapid short-term oscillations from weekly seasonality"
+#| tags: [slides-only]
 uic = (
     cta.filter(pl.col("stationname") == "UIC-Halsted")
     .with_columns(
@@ -1101,6 +1114,7 @@ plt.tight_layout()
 #| echo: true
 #| code-line-numbers: "1,2"
 #| fig-alt: "Line plot of daily CTA ridership at UIC-Halsted station colored in the CTA Blue Line color (#00A1DE)"
+#| tags: [slides-only]
 CTA_BLUE = "#00A1DE"
 ax = sns.lineplot(x=uic["date"], y=uic["rides"], linewidth=0.5, color=CTA_BLUE)
 ax.set_xlabel("Date")
@@ -1116,6 +1130,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| fig-alt: "Box plot of UIC-Halsted ridership by day of week, showing much higher ridership Monday through Friday and very low ridership on Saturdays and Sundays, confirming a strong commuter and student pattern"
+#| tags: [slides-only]
 day_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 uic_dow = uic.with_columns(pl.col("date").dt.strftime("%A").alias("day_name"))
 ax = sns.boxplot(x=uic_dow["day_name"], y=uic_dow["rides"], order=day_order, color=CTA_BLUE)
@@ -1132,6 +1147,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| fig-alt: "Four-panel decomposition of UIC-Halsted daily ridership using a 7-day period, revealing the long-term trend including the COVID crash in 2020 and a clear weekly seasonal pattern"
+#| tags: [slides-only]
 rides = uic["rides"].to_numpy().astype(float)
 cta_result = seasonal_decompose(rides, model="additive", period=7)
 fig = cta_result.plot()
@@ -1147,6 +1163,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| fig-alt: "Line plot of seasonally-adjusted UIC-Halsted ridership after subtracting the weekly seasonal component, showing a much smoother underlying trend with the COVID drop clearly visible"
+#| tags: [slides-only]
 deseasonalized = pl.DataFrame({
     "date": uic["date"],
     "rides": pl.Series("rides", cta_result.observed - cta_result.seasonal),
@@ -1166,6 +1183,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| fig-alt: "Box plot of UIC-Halsted ridership by month of the year, showing lower ridership in January, the summer months June through August, and December, tracking the UIC academic calendar."
+#| tags: [slides-only]
 month_order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 uic_month = uic.with_columns(pl.col("date").dt.strftime("%b").alias("month"))
@@ -1184,6 +1202,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| fig-alt: "Five-panel MSTL decomposition of UIC-Halsted daily ridership, separating the long-term trend, a 7-day weekly seasonal component, a 365-day annual seasonal component that tracks the academic calendar, and the residual noise."
+#| tags: [slides-only]
 from statsmodels.tsa.seasonal import MSTL
 
 mstl = MSTL(rides, periods=(7, 365)).fit()
@@ -1210,6 +1229,7 @@ plt.tight_layout()
 ```{python}
 #| echo: false
 #| fig-alt: "Five-panel MSTL decomposition of UIC-Halsted daily ridership, 2016 onward, each panel labeled on its y-axis: Observed, Trend, Weekly (7-day) seasonal, Annual (365-day) seasonal, and Residual."
+#| tags: [slides-only]
 panels = [
     ("Observed", mstl.observed),
     ("Trend", mstl.trend),
@@ -1236,6 +1256,7 @@ with plt.rc_context({"font.size": 13}):
 
 ```{python}
 #| echo: true
+#| tags: [slides-only]
 CTA_ORANGE = "#F9461C"
 wabash = (
     cta.filter(pl.col("stationname") == "Washington/Wabash")
@@ -1254,6 +1275,7 @@ wabash.sample(5, seed=42).sort("date")
 ```{python}
 #| echo: true
 #| fig-alt: "Line plot of daily ridership at the Washington/Wabash station colored in CTA Orange, beginning in late 2017 when the station opened, with the 2020 COVID drop and partial recovery."
+#| tags: [slides-only]
 ax = sns.lineplot(x=wabash["date"], y=wabash["rides"], linewidth=0.5, color=CTA_ORANGE)
 ax.set_xlabel("Date")
 ax.set_ylim(bottom=0)
@@ -1268,6 +1290,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| fig-alt: "Box plot of Washington/Wabash ridership by day of week. Weekdays are busiest, but Saturday and Sunday ridership stays relatively high compared to a student station, reflecting downtown shopping, tourism, and events."
+#| tags: [slides-only]
 wabash_dow = wabash.with_columns(pl.col("date").dt.strftime("%A").alias("day_name"))
 ax = sns.boxplot(x=wabash_dow["day_name"], y=wabash_dow["rides"], order=day_order, color=CTA_ORANGE)
 ax.set_xlabel("")
@@ -1283,6 +1306,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| fig-alt: "Two side-by-side day-of-week box plots. UIC-Halsted (blue) collapses on weekends, while Washington/Wabash (orange) keeps substantial weekend ridership, showing a flatter weekly profile for the downtown Loop station."
+#| tags: [slides-only]
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
 sns.boxplot(x=uic_dow["day_name"], y=uic_dow["rides"], order=day_order, color=CTA_BLUE, ax=axes[0])
 sns.boxplot(x=wabash_dow["day_name"], y=wabash_dow["rides"], order=day_order, color=CTA_ORANGE, ax=axes[1])
@@ -1299,6 +1323,7 @@ plt.tight_layout()
 ```{python}
 #| echo: true
 #| fig-alt: "Two side-by-side month-of-year box plots. UIC-Halsted (blue) shows pronounced dips in January, June through August, and December that track the academic calendar. Washington/Wabash (orange) shows a much flatter annual profile without summer lows."
+#| tags: [slides-only]
 wabash_month = wabash.with_columns(pl.col("date").dt.strftime("%b").alias("month"))
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.09), sharey=True)
 sns.boxplot(x=uic_month["month"], y=uic_month["rides"], order=month_order, color=CTA_BLUE, ax=axes[0])
@@ -1407,6 +1432,7 @@ Try to sit with your group (new spots this week!)
 ```{python}
 #| echo: true
 #| fig-alt: "Two line charts of UIC-Halsted rides per year. Left, 2023 to 2025 only, with the y-axis zoomed to the data: a steep climb titled 'Surging: up 37% since 2023'. Right, 2016 to 2025 with the y-axis from zero: a plateau near 1.7 million, a collapse to about half a million in 2020, and a partial recovery to 1.17 million, titled 'Still 32% below 2019'."
+#| tags: [slides-only]
 yearly = (uic.group_by(pl.col("date").dt.year().alias("year"))
           .agg(pl.col("rides").sum()).sort("year").filter(pl.col("year") <= 2025))
 recent = yearly.filter(pl.col("year") >= 2023)
@@ -1439,6 +1465,7 @@ Bergstrom & West, *Calling Bullshit*, ["Misleading Axes on Graphs"](https://www.
 ```{python}
 #| echo: false
 #| fig-alt: "Three charts of UIC-Halsted rides per year, each with a different axis. Left, bars for 2019 and 2025 on a y-axis starting at 1.1 million: the 2025 bar looks about a tenth as tall, though 2025 had 68% of 2019's rides. Middle, 2016 to 2025 on an upside-down y-axis: the 2020 collapse looks like a spike upward. Right, an x-axis with evenly spaced ticks for 2016, 2019, 2020, 2024, and 2025: the four-year recovery takes the same width as a single year."
+#| tags: [slides-only]
 fig, axes = plt.subplots(1, 3, figsize=(10, 2.6))
 two = yearly.filter(pl.col("year").is_in([2019, 2025]))
 axes[0].bar(two["year"].cast(pl.String), two["rides"], color=CTA_BLUE)
@@ -1469,6 +1496,7 @@ plt.tight_layout()
 ```{python}
 #| echo: false
 #| fig-alt: "UIC-Halsted rides in 2019 and 2021 drawn as pairs of circles. Left, area proportional to rides: the 2021 circle is a bit over half the width of the 2019 circle. Right, radius proportional to rides: the 2021 circle is under a third the width and looks about ten times smaller."
+#| tags: [slides-only]
 import numpy as np
 from matplotlib.patches import Circle
 big, small = yearly.filter(pl.col("year").is_in([2019, 2021]))["rides"].to_list()
@@ -1534,6 +1562,7 @@ Say we want to estimate how many people will go through the UIC-Halsted station 
 ```{python}
 #| echo: false
 #| fig-alt: "A simple directed acyclic graph with all root causes (UIC enrollment, month/term, weekday, holiday, weather, special event) pointing directly to Ridership."
+#| tags: [slides-only]
 import networkx as nx
 
 G_simple = nx.DiGraph()
@@ -1585,6 +1614,7 @@ Some causes work through **intermediate factors**.
 ```{python}
 #| echo: false
 #| fig-alt: "A directed acyclic graph with three columns: root causes on the left (UIC enrollment, month/term, weekday, holiday, weather, special event), two intermediary nodes in the middle (UIC student attendance and UIC staff on campus), and Ridership on the right. Arrows show which causes flow through which intermediary before reaching ridership."
+#| tags: [slides-only]
 import networkx as nx
 
 G = nx.DiGraph()
@@ -1666,6 +1696,7 @@ idata = xr.DataTree.from_dict({"posterior": xr.load_dataset("../../datasets/cta-
 ```{python}
 #| echo: false
 #| fig-alt: "Dot-and-interval plot of the posterior weekday effects on UIC-Halsted ridership. Weekdays sit well above zero and weekends well below, each shown with an 89% credible interval, so we see both the estimate and its uncertainty."
+#| tags: [slides-only]
 post = idata.posterior
 dow_s = post["dow_eff"].values.reshape(-1, 7)
 means = dow_s.mean(0); lo, hi = np.percentile(dow_s, [5.5, 94.5], 0)
@@ -1686,6 +1717,7 @@ Each posterior draw is one **plausible version of the world**, so one (weekday, 
 ```{python}
 #| echo: false
 #| output: false
+#| tags: [slides-only]
 intercept_s = post["intercept"].values.flatten()
 month_s     = post["month_eff"].values.reshape(-1, 12)
 sigma_s     = post["sigma"].values.flatten()
@@ -1714,6 +1746,7 @@ draws = pl.concat(frames)
 ```{python}
 #| echo: false
 #| fig-alt: "Violin plot of the posterior predictive UIC-Halsted ridership for three scenarios: a Tuesday in December, a Wednesday in September, and a Sunday in October. The September weekday distribution sits much higher than the December weekday and October weekend, each with visible spread."
+#| tags: [slides-only]
 ax = sns.violinplot(x=draws["scenario"], y=draws["rides"], color=CTA_BLUE, cut=0)
 ax.set_ylim(bottom=0); ax.set_xlabel(""); ax.set_ylabel("UIC-Halsted rides")
 plt.tight_layout()
@@ -1793,6 +1826,7 @@ Based on [*Nature* 432:147 (2004)](https://doi.org/10.1038/432147b), responding 
 #| fig-width: 5
 #| fig-height: 4
 #| fig-alt: "UIC-Halsted rides per year from 2016 to 2025 with a dashed straight line fit to 2021 through 2025 and extended from 2014 to 2040. The line crosses zero in 2016, a year that actually had about 1.7 million rides, and climbs past 3 million by 2040, well above any year on record."
+#| tags: [slides-only]
 rec = yearly.filter(pl.col("year") >= 2021)
 slope, intercept = np.polyfit(
     rec["year"], rec["rides"], 1)
@@ -2041,6 +2075,7 @@ A stationary series is defined by:
 ```{python}
 #| echo: true
 #| fig-alt: "Line plot of monthly airline passengers from 1949 to 1960, showing an upward trend with growing seasonal oscillations before differencing"
+#| tags: [slides-only]
 airline_diff = airline.with_columns(
     pl.col("Passengers").diff().alias("first_diff")
 ).drop_nulls()
@@ -2077,6 +2112,7 @@ This is called **first-order differencing** (difference order = 1).
 ```{python}
 #| echo: true
 #| fig-alt: "Two side-by-side panels: the original airline passenger series on the left with its upward trend and growing seasonal swings, and the first-order differenced series on the right oscillating around zero with no visible trend"
+#| tags: [slides-only]
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.09))
 sns.lineplot(x=airline["Month"], y=airline["Passengers"], ax=axes[0])
 axes[0].set_ylim(bottom=0); axes[0].set_title("Before: Original Series")
