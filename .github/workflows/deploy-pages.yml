@@ -38,7 +38,12 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Pinned off ubuntu-latest: it moved to Ubuntu 26 on 2026-10-19, and 26
+    # ships libxml2.so.16 (the soname bumped from .so.2 in libxml2 2.14). The
+    # R xml2 binary in the package cache links libxml2.so.2, so the slide
+    # render fails with "cannot open shared object file". Revert to a real fix
+    # once the RSPM binaries are rebuilt for 26.
+    runs-on: ubuntu-24.04
 
     steps:
       # Full commit history is needed for the changed-files diff below
@@ -525,7 +530,7 @@ jobs:
   deploy:
     needs: build
     if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     permissions:
       contents: read
