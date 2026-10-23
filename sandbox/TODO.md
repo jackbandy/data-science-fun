@@ -5,6 +5,72 @@
 
 ---
 
+## Slide spillover at 16:10 (October 22, 2026)
+
+Checked every slide of all 13 decks (1,018 slides) in headless Chrome at two 16:10 projector sizes, 1280×800 and 1920×1200, with all fragments shown, plus 1280×720 (16:9) as a baseline. Reveal scales the 1280×720 slide to fit and letterboxes it on 16:10, so **nothing spills only because of 16:10**: every problem below is also there at 16:9 unless noted. Most of the real ones are `.split` slides, which `autofit-after-body.html` skips on purpose (grid layout), so a long left column pushes the figure down and runs under the footer. Fix by trimming text, moving it to notes, or splitting the slide. The check scripts are in `sandbox/slide-spill-check/` (see its README); re-run them after edits. Hidden elements can cause false flags, so confirm a flag with `shoot.mjs` before editing.
+
+### Real spillover (text or figure under the footer or off the slide)
+
+- [ ] `week0.qmd`, slide 44 of 55, "Text + Figure": content runs 96 px past the slide edge, 14 px under the footer.
+- [ ] `week1.qmd`, slide 115 of 154, "Map": content runs 32 px past the slide edge, 20 px under the footer.
+- [ ] `week2.qmd`, slide 4 of 153, "Map for Week 2 (LaSalle/Van Buren)": content runs 28 px past the slide edge, 17 px under the footer.
+- [ ] `week5.qmd`, slide 81 of 148, "Map: Day 2": content runs 91 px past the slide edge, 10 px under the footer.
+- [ ] `week5.qmd`, slide 111 of 148, "Can we conclude that one causes the other?": content runs 76 px past the slide edge, 65 px under the footer. Confirmed by screenshot.
+- [ ] `week5.qmd`, slide 136 of 148, "Recreating the FIFA Chart: Polished": content runs 117 px past the slide edge, 117 px under the footer.
+- [ ] `week6.qmd`, slide 42 of 115, "Airline Passengers: What Do You Notice?": content runs 24 px past the slide edge, 36 px under the footer. (flagged at only one 16:10 size, so may be a timing artifact)
+- [ ] `week6.qmd`, slide 83 of 115, "A Bayesian Ridership Model": content runs 30 px past the slide edge, 15 px under the footer.
+- [ ] `week10.qmd`, slide 24 of 106, "Nested Clusters": content runs 242 px past the slide edge, 78 px under the footer.
+- [ ] `week10.qmd`, slide 34 of 106, "Choosing Eps": content runs 80 px past the slide edge, 78 px under the footer.
+- [ ] `week10.qmd`, slide 36 of 106, "Where Condos Sell": content runs 277 px past the slide edge, 84 px under the footer. Confirmed by screenshot.
+- [ ] `week10.qmd`, slide 67 of 106, "The Precision–Recall Tradeoff": content runs 49 px past the slide edge, 47 px under the footer.
+- [ ] `week10.qmd`, slide 78 of 106, "Silhouette Coefficient": content runs 283 px past the slide edge, 106 px under the footer. Confirmed by screenshot.
+- [ ] `week10.qmd`, slide 82 of 106, "When You Have the Answer Key": content runs 80 px past the slide edge, 78 px under the footer.
+- [ ] `week10.qmd`, slide 103 of 106, "Counting Sentiment Words": content runs 316 px past the slide edge, 123 px under the footer. Confirmed by screenshot.
+
+### Checked by screenshot, looks fine (false positives)
+
+- [x] `week4.qmd`, slide 72 of 80, "Anatomy: the Probability of B": flagged 196 px, but the screenshot looks fine; the flag is the hidden MathML copy of the equation.
+- [x] `week5.qmd`, slide 6 of 148, "The Datasaurus Dozen: Why Visualize?": flagged 200 px, but the screenshot looks fine; probably a hidden stacked image.
+
+### Minor (20 px or less) or possibly intentional
+
+- [ ] `week0.qmd`, slide 30 of 55, "Auto-Animate: Grow and Center": auto-animate demo; the growing element is meant to overflow mid-animation; check it reads as intended.
+- [ ] `week2.qmd`, slide 80 of 153, "Map for Week 2 (LaSalle/Van Buren)": body ends just past the slide edge or into the footer, 15 px.
+- [ ] `week2.qmd`, slide 98 of 153, "How “Wide-format” Dataframes Grow": the table runs off the right edge on purpose? (slide is about wide data growing); check it reads as intended.
+- [ ] `week5.qmd`, slide 7 of 148, "Map: Day 1": body ends just past the slide edge or into the footer, 18 px.
+- [ ] `week5.qmd`, slide 92 of 148, "The Same Four Numbers, One Scale": title sits slightly above the slide top (body is tall), 11 px.
+- [ ] `week5.qmd`, slide 93 of 148, "Or Plot the Quantity in Dispute": title sits slightly above the slide top (body is tall), 11 px.
+- [ ] `week5.qmd`, slide 95 of 148, "Grouped Bars": title sits slightly above the slide top (body is tall), 11 px.
+- [ ] `week5.qmd`, slide 97 of 148, "Same Numbers, Less Ink": title sits slightly above the slide top (body is tall), 8 px.
+- [ ] `week5.qmd`, slide 114 of 148, "Nearly 25,000 Points": title sits slightly above the slide top (body is tall), 11 px.
+- [ ] `week5.qmd`, slide 116 of 148, "Two Fixes for Overplotting": title sits slightly above the slide top (body is tall), 8 px.
+- [ ] `week5.qmd`, slide 117 of 148, "The Conditional Center": title sits slightly above the slide top (body is tall), 11 px.
+- [ ] `week10.qmd`, slide 49 of 106, "How Many Components?": body ends just past the slide edge or into the footer, 5 px.
+- [ ] `week10.qmd`, slide 53 of 106, "PCA on PCA: The Data": body ends just past the slide edge or into the footer, 17 px.
+- [ ] `week10.qmd`, slide 100 of 106, "Turning Reviews into Two Numbers": body ends just past the slide edge or into the footer, 5 px.
+
+### Probably fine: long code lines clipped inside a scrolling code block
+
+- [ ] `week2.qmd`, slide 74 of 153, "Why describe() Exists": a code line runs 44 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week3.qmd`, slide 19 of 28, "CSV": a code line runs 332 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week3.qmd`, slide 20 of 28, "TSV": a code line runs 490 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week5.qmd`, slide 41 of 148, "Setup: Chicago ‘L’ ridership, 2019": a code line runs 19 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week5.qmd`, slide 44 of 148, "Setup: Cook County home sales, 2025": a code line runs 69 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week5.qmd`, slide 137 of 148, "What do you think of this code? (Python)": a code line runs 526 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week5.qmd`, slide 143 of 148, "What do you think of this code? (R)": a code line runs 326 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week6.qmd`, slide 44 of 115, "Rolling Average": a code line runs 44 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week6.qmd`, slide 57 of 115, "Load UIC-Halsted Daily Ridership": a code line runs 19 px past the slide edge, hidden inside its scrolling code block. (not flagged at 16:9; flagged at only one 16:10 size, so may be a timing artifact)
+- [ ] `week6.qmd`, slide 60 of 115, "Weekday variation": a code line runs 6 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week6.qmd`, slide 62 of 115, "Period=7 Decomposition: What’s Still There?": a code line runs 120 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week6.qmd`, slide 63 of 115, "Monthly Variation(s) for UIC-Halsted Stop": a code line runs 44 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week6.qmd`, slide 69 of 115, "Washington/Wabash Daily Patterns": a code line runs 107 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week6.qmd`, slide 70 of 115, "Two Stations, Two Rhythms? (Daily)": a code line runs 196 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week6.qmd`, slide 71 of 115, "Two Stations, Two Rhythms? (Monthly)": a code line runs 234 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week6.qmd`, slide 84 of 115, "Posterior: Weekday Effects": a code line runs 196 px past the slide edge, hidden inside its scrolling code block.
+- [ ] `week8.qmd`, slide 12 of 42, "Setup: Cook County Home Sales, 2025": a code line runs 69 px past the slide edge, hidden inside its scrolling code block.
+
+---
+
 ## Social preview cards (August 16, 2026)
 
 Jekyll-rendered pages now carry the full Open Graph + Twitter Card set, icons, manifest and
