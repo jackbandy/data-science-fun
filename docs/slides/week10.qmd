@@ -202,9 +202,7 @@ DSFI calls SSE the total "WSSD" (within-cluster sum of squared distances).
 
 :::
 
-::: {.notes}
-Given two different sets of clusters, the one with the minimum SSE is preferred, since this means that the centroids are a better representation of the observations in each cluster.
-:::
+
 
 ---
 
@@ -270,9 +268,6 @@ Standardized bill length and flipper length, as in DSFI ch. 9.
 
 :::
 
-::: {.notes}
-Optional framing: the optimization method is a form of coordinate descent — fix centers m, optimize assignments r, then fix assignments r, optimize means m. Both steps can only lower SSE, which is why it stops (DSFI 9.5.2).
-:::
 
 ---
 
@@ -400,11 +395,6 @@ Same data, same $K = 3$, two random starts (2 of 200 random starts got stuck).
 
 :::
 
-::: {.notes}
-DSFI on the same data: "It looks like three clusters is the right choice for this data, since that is where the 'elbow' of the line is the most distinct."
-
-Optional: information criteria, BIC and AIC penalize high K. See the appendix.
-:::
 
 ---
 
@@ -433,9 +423,6 @@ Train lines are long and thin, not round.
 
 :::
 
-::: {.notes}
-Applicability to numeric and categorical attributes is left off on purpose: a centroid is a mean, and categories have no mean (k-modes is the categorical cousin).
-:::
 
 ---
 
@@ -596,9 +583,6 @@ Applicability to numeric and categorical attributes is left off on purpose: a ce
 
 :::
 
-::: {.notes}
-Average link is the most widely used measure (more robust against noise).
-:::
 
 ---
 
@@ -973,9 +957,6 @@ The answer key we never gave any algorithm: the actual lines, in CTA route color
 
 :::
 
-::: {.notes}
-Also: can be computationally expensive when the dataset is high-dimensional, and certain 'boundary' points could be assigned to different clusters depending on the order of visiting the nodes.
-:::
 
 ---
 
@@ -1457,9 +1438,6 @@ $$F_\beta = \frac{(1 + \beta^2) \cdot Pr \cdot Re}{\beta^2 \cdot Pr + Re}$$
 
 :::
 
-::: {.notes}
-TODO check the weighted F formula against the source slides (the PDF text extraction was garbled; the standard form has β² on precision in the denominator, as written here).
-:::
 
 ---
 
@@ -1822,9 +1800,7 @@ Compare Monday's station map: same stops, different "structure."
 - Chinstraps: cutoff 0.8 (precision) or 0.2 (recall)?
 - Each is a defensible answer to a different question
 
-::: {.notes}
-TODO: tie to the "Multiple Correct Models" section of Ethics ch. 4 once its text is written (it currently has only the two Michalski figures).
-:::
+
 :::
 
 ::: {.captioned-figure}
