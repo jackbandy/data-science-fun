@@ -117,7 +117,7 @@ Common uses of unsupervised learning:
 <img class="figure" src="../assets/birds/sandhill-cranes-three-groups.jpg" alt="Silhouettes of migrating sandhill cranes against a gold evening sky above a tree line, in three separate groups: a pair high at right, a tight knot of about six at left, and a line of three lower down.">
 
 ::: {.caption}
-Sandhill cranes migrating, Jasper-Pulaski Fish and Wildlife Area, Indiana, November 2017. Photo: David Wilson, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20171127_19_Sandhill_Crane_Migration,_Jasper_Pulaski_State_Wildlife_Area_-_Flickr_-_davidwilson1949.jpg); cropped, sky extended.
+Sandhill cranes migrating, Jasper-Pulaski Fish and Wildlife Area, November 2017. Photo by David Wilson, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20171127_19_Sandhill_Crane_Migration,_Jasper_Pulaski_State_Wildlife_Area_-_Flickr_-_davidwilson1949.jpg)
 :::
 :::
 
@@ -126,7 +126,7 @@ Sandhill cranes migrating, Jasper-Pulaski Fish and Wildlife Area, Indiana, Novem
 
 # Clustering {.section-header}
 
-## What Is Clustering? {.split}
+## Vocab: What Is Clustering? {.split}
 
 ::: {.split-content .golden-columns}
 
@@ -185,7 +185,7 @@ Preview: DBSCAN, later today.
 ::: {.split-content .golden-figure}
 
 ::: {.dense}
-- K-means clustering assigns observations to $K$ different clusters based on their proximity to the centroid of each cluster.
+- K-means clustering assigns observations to $K$ different clusters based on proximity to a "centroid"
 - Centroid: $c_i = \frac{1}{n_i} \sum_{x \in C_i} x$
 - The goal of K-means clustering is to minimize the sum of squared errors:
 
@@ -220,11 +220,11 @@ Algorithm for K-Means clustering:
 :::
 
 ::: {.fragment fragment-index=3}
-3. Recompute the centroid of each cluster.
+3. Recompute centroids
 :::
 
 ::: {.fragment fragment-index=4}
-4. Repeat 2–3 until centroids do not change (or the change is below some threshold).
+4. Repeat until centroids do not change (or change is below some threshold).
 :::
 :::
 
@@ -276,9 +276,11 @@ Standardized bill length and flipper length, as in DSFI ch. 9.
 ::: {.split-content}
 
 ::: {.dense}
-- It is guaranteed to converge, but not necessarily to a global optimum.
+- It is guaranteed to converge, but...
+    -  not necessarily to a global optimum
 - K-means optimization is NP-hard.
-- Time: $O(I \cdot n \cdot K)$ for $I$ iterations; $I$ is often small as most changes occur in the first few iterations.
+- Time: $O(I \cdot n \cdot K)$ for $I$ iterations
+    - $I$ is often small as most changes occur in the first few iterations.
 
 ::: {.fragment fragment-index=1}
 - "This looks like a relatively bad clustering of the data, but K-means cannot improve it." (DSFI)
@@ -317,7 +319,6 @@ Same data, same $K = 3$, two random starts (2 of 200 random starts got stuck).
 
 ::: {.fragment fragment-index=3}
 - It can select outliers as the initial centroids.
-- K-means++: pick with probability proportional to the square of its distance to its closest centroid.
 :::
 :::
 
@@ -361,7 +362,7 @@ Same data, same $K = 3$, two random starts (2 of 200 random starts got stuck).
 <img class="figure" src="../assets/clustering-visuals/scaling-penguins-v0.svg" alt="k-means with K equals 3 on raw bill length in millimeters and body mass in grams: the clusters are horizontal bands of body mass, mixing species. Adjusted Rand index 0.33.">
 
 ::: {.fragment fragment-index=1}
-<img class="figure" src="../assets/clustering-visuals/scaling-penguins-v1.svg" alt="The same two features standardized: the clusters follow both bill length and body mass and match the species better. Adjusted Rand index 0.75.">
+<img class="figure" src="../assets/clustering-visuals/scaling-penguins-v1.svg" alt="The same two features standardized, both axes in standard deviations from the mean, about minus 2 to 3: the clusters follow both bill length and body mass and match the species better. Adjusted Rand index 0.75.">
 :::
 :::::
 :::
@@ -403,21 +404,21 @@ Same data, same $K = 3$, two random starts (2 of 200 random starts got stuck).
 ::: {.split-content .golden-columns}
 
 ::: {.dense}
-Computationally efficient in terms of both time and space.
+Computationally efficient (time and space)
 
 Disadvantages:
 
 - Number of clusters $K$ must be specified in advance.
 - May detect suboptimal clusters.
 - Sensitive to outliers.
-- Has difficulty detecting clusters that have non-spherical shapes or widely different sizes or densities.
+-  difficulty detecting clusters that have non-spherical shapes or widely different sizes, densities.
 :::
 
 ::: {.captioned-figure}
 <img class="figure" src="../assets/clustering-visuals/l-kmeans.svg" alt="k-means with K equals 8 on the CTA stops: eight round blobs, each with an orange X centroid, that cut across the train lines instead of following them.">
 
 ::: {.caption}
-Train lines are long and thin, not round.
+Train lines are not round.
 :::
 :::
 
@@ -812,12 +813,37 @@ No $K$: very popular for geospatial applications.
 
 ---
 
-## Choosing Eps {.split}
+## Choosing Eps: Too Large, Too Small {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+- If $Eps$ is too large, then many observations may be assigned to the same cluster.
+
+::: {.fragment fragment-index=1}
+- If $Eps$ is too small, then many observations may be discarded or assigned to separate clusters.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/l-dbscan-v2.svg" alt="Eps 2.0 km: three clusters and 6 noise stations; one cluster covers most of the system.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/l-dbscan-v0.svg" alt="Eps 0.8 km: ten small clusters and 81 hollow noise stations.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Choosing Eps: The k-dist Curve {.split}
 
 ::: {.split-content .golden-figure}
 
 ::: {.dense}
-- If $Eps$ is too large, then many observations may be assigned to the same cluster. If $Eps$ is too small, then many observations may be discarded or assigned to separate clusters.
 - The basic approach to find $Eps$ involves measuring the average distance from each observation to its $k$th nearest neighbor ($k$-dist), where $k = MinPts$.
 - Look for where the sorted curve bends upward
 :::
@@ -899,7 +925,7 @@ With $MinPts = 3$ counting the station itself, the relevant distance is to the 2
 :::
 
 ::: {.fragment}
-<img src="../assets/clustering-visuals/condos-dbscan-v5.svg" class="figure" style="max-height:460px" alt="DBSCAN with Eps 1.0 km: 38 clusters county-wide, and 21 percent noise. One blue cluster, Near North Side and 13 more areas, 7,539 sales, covers most of the North Side and West Town. Also in color: Hyde Park and 4 more areas, 367 sales, in green, and Oak Park and 2 more areas, 301 sales, in pink.">
+<img src="../assets/clustering-visuals/condos-dbscan-v5.svg" class="figure" style="max-height:460px" alt="DBSCAN with Eps 1.0 km: 38 clusters county-wide, and 21 percent noise. One blue cluster, Near North Side and 13 more areas, 7,539 sales, covers most of the North Side and West Town. Also labeled: Hyde Park and 4 more areas, 367 sales, in green, and Oak Park and 2 more areas, 301 sales, in pink. Four smaller clusters on the northwest side of the map are labeled by name: Niles, 126 sales, in sky blue; O'Hare, 80 sales, in yellow; Jefferson Park, 68 sales, in black; and Elmwood Park, 120 sales, in vermilion, just north of Oak Park.">
 :::
 
 ::::

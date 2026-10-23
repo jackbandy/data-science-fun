@@ -18,8 +18,7 @@ Color carries one meaning throughout:
   * CTA route colors appear only on the one "ground truth" map of the lines,
     per the CTA developer branding guidelines quoted in STYLE.md.
   * The one exception to gray clusters is the condo-sales map: thousands of
-    dots hide shapes, so its three named clusters take Okabe-Ito hues (blue,
-    bluish green, reddish purple), with orange left out so it stays the accent.
+    dots hide shapes, so its three largest clusters take Okabe-Ito hues (blue, bluish green, reddish purple), with orange left out so it stays the accent. The last map (Eps = 1 km) also gives its four smaller clusters in view the rest of Okabe-Ito (sky blue, vermilion, yellow, black), each labeled.
 
 Canvases:
   * SPLIT (900 x 700) for the right column of a `.golden-figure` split slide;
@@ -464,11 +463,22 @@ def scaling_penguins(step):
     ari = adjusted_rand_score(species, lab)
     fig, ax = fixed_fig(SPLIT, 110, 50, 130, 80)
     tidy(ax, grid=None)
-    cluster_points(ax, X, lab)
-    ax.set_xlabel("Bill length (mm)")
-    ylabel_top(ax, "Body mass (g)")
-    ax.set_xlim(31, 61)
-    ax.set_ylim(2600, 6400)
+    if step == 0:
+        cluster_points(ax, X, lab)
+        ax.set_xlabel("Bill length (mm)")
+        ylabel_top(ax, "Body mass (g)")
+        ax.set_xlim(31, 61)
+        ax.set_ylim(2600, 6400)
+    else:
+        # plot what k-means saw: both axes in SDs from the mean, one unit the same length on each
+        cluster_points(ax, Zs, lab)
+        ax.set_xlabel("Bill length (SDs from mean)")
+        ylabel_top(ax, "Body mass (SDs from mean)")
+        ax.set_xlim(-2.6, 3.2)
+        ax.set_ylim(-2.2, 2.8)
+        ax.set_aspect("equal")
+        ax.set_xticks(range(-2, 4))
+        ax.set_yticks(range(-2, 3))
     msg = {0: "Raw units: grams swamp millimeters",
            1: "Standardized: both features count"}[step]
     note(ax, f"{msg}\n(agreement with species: ARI = {ari:.2f})")
@@ -847,6 +857,7 @@ CONDO_EPS = [None, 0.1, 0.2, 0.3, 0.5, 1.0]
 CONDO_LIM = ((-43, 46), (-50, 26))  # the whole county, for the establishing shot
 CONDO_ZOOM = ((-14, 28), (-13.5, 9))  # Rogers Park to Hyde Park, Oak Park in the west; labels sit in the lake
 CONDO_NAMED = ["#0072B2", "#009E73", "#CC79A7"]  # Okabe-Ito, for the 3 largest clusters
+CONDO_MORE = ["#56B4E9", "#D55E00", "#E6C700", INK]  # rest of Okabe-Ito (yellow darkened to show on white), for the other clusters on the last map
 
 
 @lru_cache(maxsize=None)
@@ -862,7 +873,8 @@ def condo_sales():
             .drop_nulls(["latitude", "longitude"]))
     lat, lon = df["latitude"].to_numpy(), df["longitude"].to_numpy()
     X = np.c_[(lon - lon.mean()) * 111.32 * np.cos(np.radians(lat.mean())), (lat - lat.mean()) * 110.57]
-    area = [a.title() if a else c.title() for a, c in zip(df["chicago_community_area"], df["city"])]
+    area = [a.title().replace("Ohare", "O'Hare") if a else c.title()  # the data spells it OHARE
+            for a, c in zip(df["chicago_community_area"], df["city"])]
     return X, np.array(area)
 
 
@@ -894,43 +906,55 @@ def condos_dbscan(step):
     lab = np.array([rank.get(c, -1) for c in lab])
     noise = lab < 0
     named = len(CONDO_NAMED)
-    # 14,000 dots: raster keeps the SVG small; text stays vector
-    ax.scatter(*X[noise].T, s=4, color=QUIET, alpha=0.35, lw=0, zorder=2, rasterized=True)
-    ax.scatter(*X[lab >= named].T, s=7, color=MUTED, lw=0, zorder=3, rasterized=True)
-    for k, color in enumerate(CONDO_NAMED):
-        ax.scatter(*X[lab == k].T, s=9, color=color, lw=0, zorder=4, rasterized=True)
-    # name the three biggest clusters; a label goes out in the lake (east) unless
-    # another named cluster lies east of it at that latitude, then inland (west)
     (lx0, lx1), (ly0, ly1) = lim
     inside = (X[:, 0] > lx0) & (X[:, 0] < lx1) & (X[:, 1] > ly0) & (X[:, 1] < ly1)
-    sides = {"east": [], "west": []}
-    for k, color in enumerate(CONDO_NAMED):
+    # on the last map few enough clusters are in view that each can take its own hue
+    extra = [k for k in np.unique(lab[inside]) if k >= named] if eps == CONDO_EPS[-1] else []
+    # 14,000 dots: raster keeps the SVG small; text stays vector
+    ax.scatter(*X[noise].T, s=4, color=QUIET, alpha=0.35, lw=0, zorder=2, rasterized=True)
+    ax.scatter(*X[(lab >= named) & ~np.isin(lab, extra)].T, s=7, color=MUTED, lw=0, zorder=3, rasterized=True)
+    for k, color in [*enumerate(CONDO_NAMED), *zip(extra, CONDO_MORE[:len(extra)], strict=True)]:
+        ax.scatter(*X[lab == k].T, s=9, color=color, lw=0, zorder=4, rasterized=True)
+
+    def label(k, others=True):
         names, counts = np.unique(area[lab == k], return_counts=True)
         big = counts >= 0.02 * counts.sum()  # areas with at least 2% of the cluster
         more = (f" + {big.sum() - 1} more area{'s' if big.sum() > 2 else ''}"
-                if big.sum() > 1 else "")
+                if others and big.sum() > 1 else "")
+        return f"{names[counts.argmax()]}{more}\n{(lab == k).sum():,} sales"
+
+    def anchor(seen):
+        # the visible member nearest the visible median: matplotlib drops
+        # an annotation whose anchor falls outside the axes
+        return seen[np.argmin(((seen - np.median(seen, axis=0)) ** 2).sum(1))]
+
+    def annotate(text, c, xy, color, **kw):
+        return ax.annotate(text, c, xytext=xy, fontsize=13, color=INK, zorder=7, va="center",
+                           multialignment="left", **kw,
+                           bbox=dict(boxstyle="round,pad=0.3", facecolor=PAPER, edgecolor=color, lw=1.5),
+                           arrowprops=dict(arrowstyle="-", color=color, lw=1.5, shrinkB=4))
+
+    # name the three biggest clusters; a label goes out in the lake (east) unless
+    # another named cluster lies east of it at that latitude, then inland (west)
+    sides = {"east": [], "west": []}
+    for k, color in enumerate(CONDO_NAMED):
         seen = X[(lab == k) & inside]
         if not len(seen):
             continue
-        # anchor on the visible member nearest the visible median: matplotlib drops
-        # an annotation whose anchor falls outside the axes
-        c = seen[np.argmin(((seen - np.median(seen, axis=0)) ** 2).sum(1))]
+        c = anchor(seen)
         other = (lab >= 0) & (lab < named) & (lab != k)
         east_blocked = np.any(other & (np.abs(X[:, 1] - c[1]) < 1) & (X[:, 0] > c[0]))
-        sides["west" if east_blocked else "east"].append(
-            (c, seen, color, f"{names[counts.argmax()]}{more}\n{(lab == k).sum():,} sales"))
+        sides["west" if east_blocked else "east"].append((c, seen, color, label(k)))
     renderer = fig.canvas.get_renderer()
     to_data = ax.transData.inverted()
+    taken = [(lx0, ly0, x0 + bar + pad, y0 + 3 * pad)]  # label boxes so far, in km; the scale bar first
     for side, spots in sides.items():
         spots.sort(key=lambda t: -t[0][1])  # north to south, at least 3 km apart
         y = np.inf
         for c, seen, color, text in spots:
             y = min(y - 3, c[1], ly1 - 1.5)
             x = 15 if side == "east" else seen[:, 0].min() - 3
-            ann = ax.annotate(text, c, xytext=(x, y), fontsize=13, color=INK, zorder=7, va="center",
-                              ha="left" if side == "east" else "right", multialignment="left",
-                              bbox=dict(boxstyle="round,pad=0.3", facecolor=PAPER, edgecolor=color, lw=1.5),
-                              arrowprops=dict(arrowstyle="-", color=color, lw=1.5, shrinkB=4))
+            ann = annotate(text, c, (x, y), color, ha="left" if side == "east" else "right")
             # a label that would run off the map slides back in; one pushed in
             # from the west edge drops below its cluster so it doesn't cover it
             # measure the text's size only (before drawing it reports no position;
@@ -945,8 +969,30 @@ def condos_dbscan(step):
                 y = min(y, seen[:, 1].min() - 2)
             y = max(y, ly0 + (by1 - by0) / 2 + 0.3)
             ann.set_position((x + dx, y))
+            left = x + dx - (0 if side == "east" else bx1 - bx0)
+            taken.append((left, y - (by1 - by0) / 2, left + bx1 - bx0, y + (by1 - by0) / 2))
+    # the other clusters crowd the west side, with no lake to hold their labels:
+    # each takes a short label in the open spot nearest its cluster, clear of every cluster's dots
+    dots = X[(lab >= 0) & inside]
+    for k, color in zip(extra, CONDO_MORE):
+        seen = X[(lab == k) & inside]
+        c = anchor(seen)
+        ann = annotate(label(k, others=False), c, c, color, ha="center")
+        box = matplotlib.text.Text.get_window_extent(ann, renderer)
+        (bx0, by0), (bx1, by1) = to_data.transform([(0, 0), (box.width, box.height)])
+        hw, hh = (bx1 - bx0) / 2 + 0.3, (by1 - by0) / 2 + 0.3
+        gx, gy = np.meshgrid(np.arange(lx0 + hw, lx1 - hw, 0.25), np.arange(ly0 + hh, ly1 - hh, 0.25))
+        gx, gy = gx.ravel(), gy.ravel()
+        free = ~np.any((np.abs(dots[:, 0] - gx[:, None]) < hw) & (np.abs(dots[:, 1] - gy[:, None]) < hh), axis=1)
+        for tx0, ty0, tx1, ty1 in taken:  # 0.3 more each side for the placed box's own padding
+            free &= (gx + hw < tx0 - 0.3) | (gx - hw > tx1 + 0.3) | (gy + hh < ty0 - 0.3) | (gy - hh > ty1 + 0.3)
+        gap = np.hypot(np.maximum(np.abs(gx - c[0]) - hw, 0), np.maximum(np.abs(gy - c[1]) - hh, 0))
+        best = np.flatnonzero(free)[np.argmin(gap[free])]
+        ann.set_position((gx[best], gy[best]))
+        taken.append((gx[best] - hw, gy[best] - hh, gx[best] + hw, gy[best] + hh))
+    shown = "on this map in color" if extra else "the 3 largest in color"
     note(ax, f"Eps = {eps} km, MinPts = {CONDO_MINPTS}\n{len(sizes)} clusters county-wide, "
-             f"the 3 largest in color; {noise.mean():.0%} of sales are noise (light)", size=16)
+             f"{shown}; {noise.mean():.0%} of sales are noise (light)", size=16)
     return fig
 
 
