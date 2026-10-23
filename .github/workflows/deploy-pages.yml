@@ -197,13 +197,27 @@ jobs:
           r-version: release
           use-public-rspm: true
 
+      # The cached library holds compiled binaries linked against the runner's
+      # system libraries (xml2 -> libxml2.so.2, for one), so a cache built on
+      # one Ubuntu release or R version is not safe to restore on another: the
+      # install step below sees the package as present and skips it, and the
+      # render then dies loading the .so. Scoping the key, restore-keys
+      # included, to the OS release and R version makes an image or R bump
+      # start from a cold cache instead.
+      - name: Identify R package platform
+        id: r-platform
+        if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
+        run: |
+          . /etc/os-release
+          echo "key=${ID}-${VERSION_ID}-r$(Rscript -e 'cat(as.character(getRversion()))')" >> "$GITHUB_OUTPUT"
+
       - name: Cache R packages
         if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: r-pkgs-${{ hashFiles('.github/workflows/deploy-pages.yml') }}
-          restore-keys: r-pkgs-
+          key: r-pkgs-${{ steps.r-platform.outputs.key }}-${{ hashFiles('.github/workflows/deploy-pages.yml') }}
+          restore-keys: r-pkgs-${{ steps.r-platform.outputs.key }}-
 
       - name: Install R dependencies
         if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
