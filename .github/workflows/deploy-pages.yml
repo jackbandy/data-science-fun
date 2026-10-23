@@ -41,8 +41,10 @@ jobs:
     # Pinned off ubuntu-latest: it moved to Ubuntu 26 on 2026-10-19, and 26
     # ships libxml2.so.16 (the soname bumped from .so.2 in libxml2 2.14). The
     # R xml2 binary in the package cache links libxml2.so.2, so the slide
-    # render fails with "cannot open shared object file". Revert to a real fix
-    # once the RSPM binaries are rebuilt for 26.
+    # render fails with "cannot open shared object file". The R cache key is
+    # now scoped per OS release (see "Identify R package platform"), so a
+    # stale 24.04 cache can no longer leak onto 26; revert this pin once the
+    # RSPM binaries are rebuilt for 26.
     runs-on: ubuntu-24.04
 
     steps:
@@ -202,13 +204,27 @@ jobs:
           r-version: release
           use-public-rspm: true
 
+      # The cached library holds compiled binaries linked against the runner's
+      # system libraries (xml2 -> libxml2.so.2, for one), so a cache built on
+      # one Ubuntu release or R version is not safe to restore on another: the
+      # install step below sees the package as present and skips it, and the
+      # render then dies loading the .so. Scoping the key, restore-keys
+      # included, to the OS release and R version makes an image or R bump
+      # start from a cold cache instead.
+      - name: Identify R package platform
+        id: r-platform
+        if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
+        run: |
+          . /etc/os-release
+          echo "key=${ID}-${VERSION_ID}-r$(Rscript -e 'cat(as.character(getRversion()))')" >> "$GITHUB_OUTPUT"
+
       - name: Cache R packages
         if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: r-pkgs-${{ hashFiles('.github/workflows/deploy-pages.yml') }}
-          restore-keys: r-pkgs-
+          key: r-pkgs-${{ steps.r-platform.outputs.key }}-${{ hashFiles('.github/workflows/deploy-pages.yml') }}
+          restore-keys: r-pkgs-${{ steps.r-platform.outputs.key }}-
 
       - name: Install R dependencies
         if: steps.slides-cache.outputs.cache-hit != 'true' && steps.changed.outputs.needs_r != 'false'
