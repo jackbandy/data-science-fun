@@ -252,21 +252,21 @@
 ## Week 10, Day 1 (2026-10-26)
 
 * Clustering
-* Principal component analysis
 
 ### Sources
 
 * *Data Science: A First Introduction*, [Chapter 9: Clustering](https://python.datasciencebook.ca/clustering.html)
 * *Mining of Massive Datasets*, [Chapter 7: Clustering](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF)
-* *Mining of Massive Datasets*, [Chapter 11: Dimensionality Reduction](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF)
-* *Python Data Science Handbook*, [Principal Component Analysis](https://jakevdp.github.io/PythonDataScienceHandbook/05.09-principal-component-analysis.html)
 
 ## Week 10, Day 2 (2026-10-28)
 
+* Principal component analysis
 * Model evaluation
 
 ### Sources
 
+* *Mining of Massive Datasets*, [Chapter 11: Dimensionality Reduction](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF)
+* *Python Data Science Handbook*, [Principal Component Analysis](https://jakevdp.github.io/PythonDataScienceHandbook/05.09-principal-component-analysis.html)
 * *Learning Data Science*, [Chapter 16: Model Selection](https://learningds.org/ch/16/ms_intro.html)
 * *Data Science: A First Introduction*, [Chapter 6: Classification II — Evaluation and Tuning](https://python.datasciencebook.ca/classification2.html)
 * *The Art of Data Science*, [Chapter 8: Inference vs. Prediction — Implications for Modeling Strategy](https://bookdown.org/rdpeng/artofdatascience/inference-vs-prediction-implications-for-modeling-strategy.html)

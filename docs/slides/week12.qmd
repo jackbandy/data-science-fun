@@ -4,7 +4,7 @@ format:
   revealjs:
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 12</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week12.html">dodatascience.fun/slides/week12</a></span>'
 nocite: |
-  @blondel2008, @fortunato2010, @newman2004, @prakash2010, @tong2010, @chakrabarti2012, @goel2016structural
+  @blondel2008, @fortunato2010, @newman2004, @prakash2010, @tong2010, @chakrabarti2012, @goel2016structural, @zachary1977
 ---
 
 # Week 12 Slide Deck {.course-title}
@@ -197,6 +197,69 @@ Community detection *(placeholder)*
 :::
 :::
 ::::
+
+---
+
+# A Friendship Network {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Zachary (1977): friendships in a university karate club that later split in two
+- No features: only who is friends with whom
+- Can clustering find the split before it happened?
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/karate-club-v0.svg" alt="Network drawing of 34 karate club members as gray dots joined by 78 friendship lines; two hubs are labeled Mr. Hi and Officer.">
+:::
+
+:::
+
+---
+
+# Friends as Coordinates {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Spectral clustering turns the network into coordinates: eigenvectors of the graph Laplacian
+- Members with many friends in common land close together
+
+::: {.fragment fragment-index=1}
+- Split at 0 on the first coordinate (the Fiedler vector): roughly, cut where few friendships cross
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack}
+<img class="figure" src="../assets/clustering-visuals/karate-embed-v0.svg" alt="The 34 members as gray dots, placed by the network's 2nd and 3rd Laplacian eigenvectors. Mr. Hi's side spreads out on the left; the officer's side lies in a tight line on the right.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/karate-embed-v1.svg" alt="An orange vertical line at 0 splits the members: 16 filled dots on the left, including Mr. Hi, and 18 hollow dots on the right, including the officer.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+# The Result {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Back on the network: shape = the side each member actually joined; fill = the clustering
+- 33 of 34 land on the side they joined
+- The one miss has friends on both sides (2 with Mr. Hi's group, 3 with the officer's)
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/karate-club-v1.svg" alt="The same network with shape showing the side each member joined (circles for Mr. Hi, squares for the officer) and fill showing the spectral clustering (filled or hollow). All members match except one hollow circle near the middle, ringed in orange.">
+:::
+
+:::
 
 ---
 

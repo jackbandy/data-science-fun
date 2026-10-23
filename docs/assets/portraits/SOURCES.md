@@ -293,6 +293,20 @@ Oil on canvas by Paulin Jean-Baptiste Guérin (1783–1855), posthumous portrait
 
 ---
 
+## Pete Crow-Armstrong — `pete-crow-armstrong.jpg` · `pete-crow-armstrong-batting.jpg` · `pete-crow-armstrong-batting-full.jpg`
+- Chicago Cubs center fielder; "PCA on PCA" running example (Week 10)
+
+`pete-crow-armstrong-batting.jpg`: Photo by Minda Haas Kuhlmann, August 8, 2023, batting for the Iowa Cubs at Werner Park. **CC BY 2.0.** Tight crop, golden rectangle.
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pete_Crow-Armstrong_(53104160703)_(cropped)-2.jpg)
+
+`pete-crow-armstrong-batting-full.jpg`: Same photo, golden-rectangle crop at full height so feet and bat are visible.
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pete_Crow-Armstrong_(53104160703).jpg)
+
+`pete-crow-armstrong.jpg`: Photo by Minda Haas Kuhlmann, March 29, 2024, fielding. **CC BY 2.0.**
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pete_Crow-Armstrong_2024_fielding.jpg)
+
+---
+
 ## Notes
 
 - "Public domain" covers pre-1928 photographs, U.S. government works, and images explicitly released into the public domain.

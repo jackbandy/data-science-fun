@@ -99,6 +99,8 @@ To give an idea of what this look like in practice, here are some examples of th
 * "draft a slide template based on the layout of week X, slide Y, and save it in week0"
 * "draft the alt-text for the figure in slide X"
 
+Note that a good portion of the code here (e.g. build scripts, figure generators, etc.) was drafted by LLM-based coding tools. You're welcome to it under the MIT License, but most of it is less-than-great code that was simply used as a means to an end, where my end goal was to create a specific element or demo or visual. See also the [Note on LLM use](https://github.com/jackbandy/data-science-fun#note-on-llm-use) in the README.
+
 Importantly, I take responsibility for everything in the repo, and I make a sincere effort to ensure that I can explain, modify, and/or fix things myself. I also deliberately avoid using LLMs for "writing" material (such as this FAQ answer).
 
 My ideas/opinions on this topic continue to evolve - I would love to hear your thoughts!

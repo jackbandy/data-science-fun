@@ -617,6 +617,31 @@ $code-color: $ink !default;
     overflow: hidden;
   }
 
+  // Peek stack: an .r-stack build-up whose layers each sit one step down and
+  // to the right of the layer before, so every step leaves an edge of the
+  // previous version showing. The same direction as the .photo-card zoom
+  // stacks (week 1, week 5), lighter, since these figures change a little per
+  // step rather than jumping scale. The stack is shifted back by half its
+  // spread so the deepest one stays centered, and reserves that half-spread
+  // below and (plus one step) above, so the first layer clears the title rule.
+  // Layers need an opaque card and an edge to read as separate sheets, so
+  // .figure-plain gets its frame back.
+  $peek-step-x: 12px;
+  $peek-step-y: 8px;
+  .r-stack.peek-stack {
+    img { border: $figure-border; box-shadow: $figure-shadow; background: $paper; }
+    @for $i from 2 through 10 {
+      > :nth-child(#{$i}) {
+        transform: translate(($i - 1) * $peek-step-x, ($i - 1) * $peek-step-y);
+      }
+      &:has(> :nth-child(#{$i}):last-child) {
+        transform: translate(-0.5 * ($i - 1) * $peek-step-x, -0.5 * ($i - 1) * $peek-step-y);
+        margin-top: 0.5 * ($i - 1) * $peek-step-y + $peek-step-y;
+        margin-bottom: 0.5 * ($i - 1) * $peek-step-y;
+      }
+    }
+  }
+
   // Side-by-side code (left) + figure (right) slide, 50/50 default split.
   .slides section.code-figure-side {
     @include full-height-slide(32px 64px 56px);

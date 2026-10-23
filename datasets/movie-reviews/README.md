@@ -11,9 +11,11 @@
   - `rating`: the star rating, 1–5
   - `text`: the review body, with its original capitalization and punctuation. HTML line breaks are turned into newlines. Review titles are left out because many are auto-filled ("Five Stars") and give the label away.
 - `collect.py`: the script that made `reviews.csv`. The source file is 8.4 GB, so it reads 10 byte ranges of 4 MB spread evenly through it, keeps reviews of at least 3 words and at most 2,000 characters, and samples 1,500 per label with seed 418. Rerun it with `python3 -I collect.py`.
+- `opinion-lexicon/`: Bing Liu's Opinion Lexicon, about 6,800 English sentiment words (`positive-words.txt`, 2,006 words; `negative-words.txt`, 4,783 words), one per line after a `;` comment header. Copied unchanged from the NLTK data mirror, with its `README.txt`. Used by the Week 10 "Counting Sentiment Words" slide.
 
 ## Caveats
 
+- The lexicon is general-purpose, not built for movies: *plot* and *funny* are on the negative list, and *like* is on the positive list.
 - Some reviews are about the product or the streaming service, not the movie ("Wouldn't let me watch the movie", "arrived scratched").
 - Star ratings are noisy: some 3-star reviews read as glowing, and some 1-star reviews are jokes or mistakes.
 - Reviews are sampled from parts of a file that is grouped by reviewer, so several reviews can come from the same person.
@@ -21,6 +23,7 @@
 ## Source
 
 - Hou, Li, He, Yan, Chen and McAuley, "Bridging Language and Items for Retrieval and Recommendation" (2024), Amazon Reviews 2023, `Movies_and_TV` category: https://amazon-reviews-2023.github.io/ and https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023
+- Opinion lexicon: Minqing Hu and Bing Liu, "Mining and Summarizing Customer Reviews," KDD 2004, https://doi.org/10.1145/1014052.1014073. "Opinion Lexicon by Bing Liu [http://www.cs.uic.edu/~liub] is licensed under CC BY 4.0 International." Source: https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html
 
 ## Disclaimers
 

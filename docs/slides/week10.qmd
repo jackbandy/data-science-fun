@@ -1,5 +1,9 @@
 ---
 title: "Week 10 (CS 418 @ UIC)"
+
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
 format:
   revealjs:
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 10</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week10.html">dodatascience.fun/slides/week10</a></span>'
@@ -7,34 +11,31 @@ format:
 
 # Week 10 Slide Deck {.course-title}
 
-## Clustering, PCA; Model Evaluation
+<h2>Clustering; PCA, Model Evaluation</h2>
 
 Jack Bandy
 2026
 
----
-
-# Week 10, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
+# Week 10, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop11-ashland-b.jpg" background-size="cover"}
 
 CS 418 · Week 10 · 🟠 Ashland 🟠
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop11-ashland-b.jpg" background-size="cover"}
 
 ---
 
-# Map {.split}
+## Map for Week 10, Day 1 {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Week 10: Ashland
-- Day 1
-    - Clustering
-    - Cluster Evaluation
-    - Hierarchical Clustering
-    - Principal Component Analysis (PCA)
+- Unsupervised Learning
+- Clustering
+- K-Means
+- Hierarchical Clustering
+- Density-Based Clustering
 :::
 
 ![](../assets/orange-line-map-stops/stop11-ashland.svg){.figure alt="Orange Line map with the Ashland stop marked, the Week 10 stop"}
@@ -43,216 +44,978 @@ CS 418 · Week 10 · 🟠 Ashland 🟠
 
 ---
 
+## Any questions? {#any-questions-day-1}
+
+- Homework 10 due today (11:59pm) in PrairieLearn
+- Wednesday: Coding Exercise 3 due;
+    - also project checkpoint: data documentation
+- Group Projects?
+- Other logistics?
+- (You can also stay after class for questions)
+
+---
+
+## The Data Science Lifecycle {.image-frame-slide}
+
+<img src="../assets/lifecycle/ds-lifecycle-v0.svg" alt="The data science lifecycle: ask a question, obtain data, understand the data, and understand the world, connected by arrows that loop back as well as forward, with 'reports, decisions, solutions' as an output.">
+
+# Unsupervised Learning {.section-header}
+
+## Supervised vs. Unsupervised {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Supervised: predict the value of a particular variable based on the values of other variables.
+    - The variable being predicted is called the target.
+
+::: {.fragment fragment-index=1}
+- Unsupervised: aim to identify patterns and relationships in the data
+    - There is no target variable.
+- No explicit feedback whether outputs are correct
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/penguins-labels-v0.svg" alt="The 342 Palmer Penguins, bill length against flipper length, each marked by species: Adélie steel circles at lower left, Chinstrap orange triangles at lower right, Gentoo ink squares at top.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/penguins-labels-v1.svg" alt="The same 342 penguins, all drawn as identical gray dots: no species labels. Three loose groups are still visible.">
+:::
+:::::
+
+::: {.caption}
+Palmer Penguins (Week 8 and 9), bill length vs. flipper length.
+:::
+:::
+
+:::
+
+---
+
+## What Is Unsupervised Learning For? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+Key utility:
+
+- Understand underlying structure of data
+- Compress data
+- Detect outliers
+- Facilitate other learning
+
+Common uses of unsupervised learning:
+
+- Clustering
+- Dimensionality reduction
+- Density estimation
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/birds/sandhill-cranes-three-groups.jpg" alt="Silhouettes of migrating sandhill cranes against a gold evening sky above a tree line, in three separate groups: a pair high at right, a tight knot of about six at left, and a line of three lower down.">
+
+::: {.caption}
+Sandhill cranes migrating, Jasper-Pulaski Fish and Wildlife Area, Indiana, November 2017. Photo: David Wilson, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20171127_19_Sandhill_Crane_Migration,_Jasper_Pulaski_State_Wildlife_Area_-_Flickr_-_davidwilson1949.jpg); cropped, sky extended.
+:::
+:::
+
+:::
+
 
 # Clustering {.section-header}
 
----
+## What Is Clustering? {.split}
 
-# What Is Clustering?
+::: {.split-content .golden-columns}
 
-**Unsupervised** learning — discover what is already there.
+::: {.dense}
+Cluster analysis: "observations within a group are similar to one another and different from observations in other groups"
 
-- No labels / ground truth
-- Group similar observations together
-- Use similarity / distance to make groups
-- Goals:
-	- high similarity within clusters (cohesion)
-	- low similarity between clusters (separation)
+- Find meaningful clusters
+    - groups of observations that share some common characteristics.
+- Find useful clusters
+    - groups of observations that can be used to summarize the data
 
----
+:::
 
-# Types of Clustering
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-stations-v0.svg" alt="Map of all 144 CTA stops as gray dots, with no line information. Dense rows of stations run north along the lakefront and west from downtown; the Orange Line's Ashland station is circled.">
 
-- **Complete vs. partial** — every observation belongs to a cluster, or some may not
-- **Non-overlapping vs. overlapping** — each observation belongs to one cluster, or potentially many
+::: {.caption}
+CTA stops, one point per stop, from `datasets/chicago-l-stations`.
+:::
+:::
 
-A **clustering** is a collection of clusters; different algorithms make different assumptions about these properties.
-
----
-
-# K-Means Clustering
-
-**Algorithm sketch:**
-
-1. Choose $k$ (number of clusters)
-2. Initialize $k$ centroids randomly
-3. Assign each point to the nearest centroid
-4. Recompute centroids as the mean of assigned points
-5. Repeat 3–4 until assignments stabilize
-
-_Sensitive to initialization; run multiple times and keep the best result._
+:::
 
 ---
 
-# Choosing K
+## Types of Clusterings {.split}
 
-- **Elbow method**
-- **Silhouette score**
-- **Domain knowledge**
-- ?
+::: {.split-content .golden-columns}
+
+::: {.dense}
+A clustering is a collection of clusters.
+
+- Complete (every observation belongs to a cluster) vs. partial (observations may not belong to any cluster).
+- Non-overlapping (observations belong to a single cluster) vs. overlapping (observations may belong to multiple clusters).
+
+::: {.fragment}
+- This map: partial and non-overlapping.
+    - Hollow stations belong to no cluster
+:::
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-dbscan-v1.svg" alt="The CTA stops clustered by DBSCAN with Eps 1.2 km: seven clusters of gray shapes along the dense corridors, and 32 hollow noise stations, including Ashland on the Orange Line.">
+
+::: {.caption}
+Preview: DBSCAN, later today.
+:::
+:::
+
+:::
+
+# K-Means {.section-header}
+
+## Centroids and SSE {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- K-means clustering assigns observations to $K$ different clusters based on their proximity to the centroid of each cluster.
+- Centroid: $c_i = \frac{1}{n_i} \sum_{x \in C_i} x$
+- The goal of K-means clustering is to minimize the sum of squared errors:
+
+$$SSE = \sum_{i=1}^{K} \sum_{x \in C_i} \text{dist}(x, c_i)^2$$
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v7.svg" alt="The penguins in three k-means clusters, circles at lower left, triangles at lower right, squares at top, with an orange X at each cluster's centroid. SSE equals 157.8.">
+
+::: {.caption}
+DSFI calls SSE the total "WSSD" (within-cluster sum of squared distances).
+:::
+:::
+
+:::
+
+::: {.notes}
+Given two different sets of clusters, the one with the minimum SSE is preferred, since this means that the centroids are a better representation of the observations in each cluster.
+:::
+
+---
+
+## The K-Means Algorithm {.split}
+
+::: {.split-content}
+
+::: {.dense}
+Algorithm for K-Means clustering:
+
+1. Select $K$ observations as the initial centroids
+
+::: {.fragment fragment-index=2}
+2. Assign each observation to the cluster of its 'closest' centroid.
+:::
+
+::: {.fragment fragment-index=3}
+3. Recompute the centroid of each cluster.
+:::
+
+::: {.fragment fragment-index=4}
+4. Repeat 2–3 until centroids do not change (or the change is below some threshold).
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v0.svg" alt="342 penguins as hollow gray circles, not yet assigned. K equals 3.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v1.svg" alt="Three orange X centroids placed on three random penguins, all near the top middle of the plot.">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v2.svg" alt="Iteration 1, assign: each penguin takes the shape of its nearest centroid. Because all three centroids start near the top, the lower-left penguins all join one cluster. SSE 934.7.">
+:::
+
+::: {.fragment fragment-index=3}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v3.svg" alt="Iteration 1, refit: dashed arrows show two centroids moving down toward the lower clusters. SSE 380.9.">
+:::
+
+::: {.fragment fragment-index=4}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v4.svg" alt="Iteration 2, assign: penguins switch to their new nearest centroids; three groups begin to form. SSE 271.7.">
+:::
+
+::: {.fragment fragment-index=5}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v5.svg" alt="Iteration 2, refit: centroids move a shorter distance. SSE 192.2.">
+:::
+
+::: {.fragment fragment-index=6}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v6.svg" alt="Iteration 3, assign: only a few penguins change clusters. SSE 170.4.">
+:::
+
+::: {.fragment fragment-index=7}
+<img class="figure" src="../assets/clustering-visuals/kmeans-penguins-v7.svg" alt="Converged: assignments stop changing. Three clusters with centroids at their centers. SSE 157.8.">
+:::
+:::::
+
+::: {.caption}
+Standardized bill length and flipper length, as in DSFI ch. 9.
+:::
+:::
+
+:::
+
+::: {.notes}
+Optional framing: the optimization method is a form of coordinate descent — fix centers m, optimize assignments r, then fix assignments r, optimize means m. Both steps can only lower SSE, which is why it stops (DSFI 9.5.2).
+:::
 
 ---
 
-# K-Means Limitations
+## Does It Always Work? {.split}
 
-- Assumes spherical clusters, roughly equal size
-- Sensitive to outliers
-	- centroid gets pulled
-- Must choose $k$ in advance
-- Poor for non-convex shapes
-	- DBSCAN, hierarchical clustering as alternatives
+::: {.split-content}
 
----
+::: {.dense}
+- It is guaranteed to converge, but not necessarily to a global optimum.
+- K-means optimization is NP-hard.
+- Time: $O(I \cdot n \cdot K)$ for $I$ iterations; $I$ is often small as most changes occur in the first few iterations.
 
-# K-Means Initialization
+::: {.fragment fragment-index=1}
+- "This looks like a relatively bad clustering of the data, but K-means cannot improve it." (DSFI)
+:::
+:::
 
-K-means is **sensitive to initialization**
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/kmeans-restarts-v1.svg" alt="Run B: the three penguin clusters, SSE 157.8.">
 
-**Furthest-First Heuristic (FFH):**
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/kmeans-restarts-v0.svg" alt="Run A, a different random start: the top group is split in two and the two lower groups are merged. SSE 206.1, a local optimum.">
+:::
+:::::
 
-1. Pick first centroid randomly from data points
-2. For each remaining centroid: pick the point that maximizes minimum distance to already-chosen centroids
+::: {.caption}
+Same data, same $K = 3$, two random starts (2 of 200 random starts got stuck).
+:::
+:::
 
-**K-means++:** randomized version of FFH — pick next centroid with probability proportional to its minimum distance from existing centroids.
-
----
-
-# Cluster Evaluation {.section-header}
-
----
-
-# Cohesion and Separation
-
-- **Cohesion** — how similar observations within a cluster are to each other
-- **Separation** — how distinct a cluster is from other clusters
-
-$$\text{cohesion}(C_i) = \frac{1}{|C_i|(|C_i|-1)/2} \sum_{x,y \in C_i} \text{proximity}(x, y)$$
-
-$$\text{separation}(C_i, C_j) = \frac{1}{|C_i||C_j|} \sum_{x \in C_i,\, y \in C_j} \text{proximity}(x, y)$$
-
-We want high cohesion and high separation.
+:::
 
 ---
 
-# Silhouette Coefficient
+## Choosing Initial Centroids {.split}
 
-Combines cohesion and separation into a single score per observation:
+::: {.split-content}
 
-$$s_i = \frac{b - a}{\max(a, b)}$$
+::: {.dense}
+- Randomly chosen initial centroids can produce poor results.
+- Restarts: perform multiple runs, then keep the set of clusters with the minimum SSE.
 
-- $a$ = average distance from point $i$ to all other points **in the same cluster**
-- $b$ = average distance from point $i$ to all points **in the nearest other cluster**
+::: {.fragment fragment-index=1}
+- Furthest-first: choose the observation that is farthest from any of the initial centroids already chosen.
+:::
 
-Range: $[-1, 1]$. Negative → misclassified; 0 → overlapping; positive and close to 1 → well-clustered.
+::: {.fragment fragment-index=3}
+- It can select outliers as the initial centroids.
+- K-means++: pick with probability proportional to the square of its distance to its closest centroid.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/ffh-penguins-v0.svg" alt="Hollow penguins with one orange X centroid near the middle.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/ffh-penguins-v1.svg" alt="A dashed arrow from the first centroid to the second, placed on the farthest penguin at the lower right.">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" src="../assets/clustering-visuals/ffh-penguins-v2.svg" alt="The third centroid lands on the farthest remaining penguin, a lone outlier at the far upper right.">
+:::
+:::::
+:::
+
+:::
+
+
 
 ---
+
+## Standardize First {.split}
+
+::: {.split-content}
+
+::: {.dense-smaller}
+- k-means uses distance, so units matter
+- Body mass is in grams (about 2,700–6,300); bill length in millimeters (about 32–60)
+- In raw units, one gram counts as much as one millimeter, so body mass decides almost everything
+
+::: {.fragment fragment-index=1}
+- Standardize each feature (mean 0, SD 1), as in DSFI: "We will begin by using a version of the data that we have standardized"
+- Agreement with species rises from 0.33 to 0.75 (adjusted Rand index, Wednesday)
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/scaling-penguins-v0.svg" alt="k-means with K equals 3 on raw bill length in millimeters and body mass in grams: the clusters are horizontal bands of body mass, mixing species. Adjusted Rand index 0.33.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/scaling-penguins-v1.svg" alt="The same two features standardized: the clusters follow both bill length and body mass and match the species better. Adjusted Rand index 0.75.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Choosing K {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Increasing k will always decrease the objective function. Should k = n? Balance compression with accuracy.
+
+::: {.fragment fragment-index=1}
+- The value of unsupervised metrics tends to improve until the correct number of clusters is found and then to degrade if the clusters continue to be split. This approach is known as the elbow method.
+- But: the elbow method does not always work well. More on Wednesday.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/elbow-penguins-v0.svg" alt="Total SSE against K from 1 to 9 for the penguins: 684 at K equals 1, then 247, 158, 119, and flattening to 53 at K equals 9.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/elbow-penguins-v1.svg" alt="The same curve with K equals 3 circled in orange and labeled the elbow. K equals 9 is lower still, at 53.">
+:::
+:::::
+:::
+
+:::
+
+::: {.notes}
+DSFI on the same data: "It looks like three clusters is the right choice for this data, since that is where the 'elbow' of the line is the most distinct."
+
+Optional: information criteria, BIC and AIC penalize high K. See the appendix.
+:::
+
+---
+
+## K-Means: Pros and Cons {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+Computationally efficient in terms of both time and space.
+
+Disadvantages:
+
+- Number of clusters $K$ must be specified in advance.
+- May detect suboptimal clusters.
+- Sensitive to outliers.
+- Has difficulty detecting clusters that have non-spherical shapes or widely different sizes or densities.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-kmeans.svg" alt="k-means with K equals 8 on the CTA stops: eight round blobs, each with an orange X centroid, that cut across the train lines instead of following them.">
+
+::: {.caption}
+Train lines are long and thin, not round.
+:::
+:::
+
+:::
+
+::: {.notes}
+Applicability to numeric and categorical attributes is left off on purpose: a centroid is a mean, and categories have no mean (k-modes is the categorical cousin).
+:::
+
+---
+
+## K-Medoids {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- The medoid of a cluster $C_i$ is the observation with the minimum average distance to all the observations in the cluster.
+- Unlike the centroid of a cluster $C_i$, the medoid will always be an observation in the cluster.
+
+::: {.fragment fragment-index=1}
+- K-medoids clustering is more robust to noise and outliers.
+- Cost: computing the medoid of a cluster is computationally expensive ($O(n^2)$ in the worst case).
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/kmedoids-v0.svg" alt="Seven points in a tight group and one outlier far to the right. The orange X centroid sits to the right of the group, pulled toward the outlier.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/kmedoids-v1.svg" alt="The same points with the medoid circled in orange: an actual point inside the tight group.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## K-Medoids, Step by Step {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/kmedoids-penguins-v0.svg" class="figure figure-plain" style="max-height:400px" alt="342 penguins as hollow gray circles, with three orange ringed medoids on the same three random penguins k-means started from, all near the top middle of the plot.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/kmedoids-penguins-v1.svg" class="figure figure-plain" style="max-height:400px" alt="Iteration 1, assign: each penguin takes the shape of its nearest medoid. Because all three medoids start near the top, the clusters cut across the lower groups. Total distance 479.8.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/kmedoids-penguins-v2.svg" class="figure figure-plain" style="max-height:400px" alt="Iteration 1, update: dashed arrows show two medoids jumping down to central penguins in the lower groups. Total distance 314.1.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/kmedoids-penguins-v3.svg" class="figure figure-plain" style="max-height:400px" alt="Iteration 2, assign: penguins switch to their new nearest medoids; three groups begin to form. Total distance 239.3.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/kmedoids-penguins-v4.svg" class="figure figure-plain" style="max-height:400px" alt="Iteration 2, update: each medoid moves a short distance to a more central penguin. Total distance 213.6.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/kmedoids-penguins-v5.svg" class="figure figure-plain" style="max-height:400px" alt="Iteration 3, assign: only a few penguins change clusters. Total distance 208.1.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/kmedoids-penguins-v6.svg" class="figure figure-plain" style="max-height:400px" alt="Iteration 3, update: the medoids shift slightly. Total distance 206.4.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/kmedoids-penguins-v7.svg" class="figure figure-plain" style="max-height:400px" alt="Converged: the medoids stop changing. Three clusters, each centered on a real penguin. Total distance 205.9.">
+:::
+
+::::
 
 # Hierarchical Clustering {.section-header}
 
----
+## Nested Clusters {.split}
 
-# Hierarchical Clustering
+::: {.split-content .golden-figure}
 
-Produces a **dendrogram** — a tree of nested clusters.
-
-Two approaches:
-
-- **Agglomerative (bottom-up):** start with each observation as its own cluster; merge the closest pair at each step until one cluster remains
-- **Divisive (top-down):** start with one cluster; split at each step until each observation is its own cluster
-
-Agglomerative is far more common in practice.
-
----
-
-# Agglomerative Linkage Methods
-
-How to define "closeness" between clusters:
-
-| Method | Distance between $C_i$ and $C_j$ |
-|--------|----------------------------------|
-| **Single link (MIN)** | min distance between any two points |
-| **Complete link (MAX)** | max distance between any two points |
-| **Average link** | mean distance across all pairs |
-
-TODO look into Ward's method
-
-Average link is most widely used (more robust to outliers than single/complete).
-
----
-
-# Principal Component Analysis (PCA) {.section-header}
-
----
-
-# What Is PCA?
-
-**Dimensionality reduction** — represent high-dimensional data in fewer dimensions, preserve as much variance as possible.
-
-- Find directions ("principal components") of maximum variance
-- Each PC is a linear combination of original features
-- PCs are orthogonal / uncorrelated
-
----
-
-
-# Why Use PCA?
-
-- Visualization (project to 2D/3D for plotting)
-- Noise reduction (drop low-variance components)
-- Speed up downstream models (fewer features)
-- Handle multicollinearity
-
-**Tradeoff:** interpretability — PCs are abstract combinations of original features.
-
----
-
-# Scree Plot
-
-Plot the **explained variance ratio** for each component. Helps decide how many PCs to keep.
-
-_[TODO: add scree plot example]_
-
----
-
-
-# PCA
-
-::: {.columns}
-::: {.column width="40%"}
-![Pete Crow-Armstrong, Chicago Cubs CF](../assets/portraits/pete-crow-armstrong.jpg){style="max-height:480px;border-radius:6px;"}
+::: {.dense}
+- Hierarchical clustering: find a set of nested clusters that can be organized as a tree (or dendrogram).
+- Agglomerative clustering starts with observations as individual clusters and merges the 'closest' pair of clusters at each step until there is a single cluster.
 :::
-::: {.column width="60%"}
-**#4 · CF · Chicago Cubs**
 
-
-- 2025 NL All-Star, Gold Glove winner
-- Hit for the cycle on June 15, 2026
-	- I was there!
-	- And I thought... PCA with PCA?
-
-_Photo: Minda Haas Kuhlmann, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/), via Wikimedia Commons_
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/agglomerative-steps-v5.svg" alt="Six numbered points joined by five merge lines, next to their finished dendrogram: points 1 and 2 merge first, low on the tree; the last merge joins everything near the top.">
 :::
+
 :::
 
 ---
 
-# Week 10, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop11-ashland-a.jpg" background-size="cover"}
+## Agglomerative Clustering, Step by Step {.image-frame-slide}
 
-<h2>Model Evaluation</h2>
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/agglomerative-steps-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Six numbered points, each its own cluster, and an empty dendrogram.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/agglomerative-steps-v1.svg" class="figure figure-plain" style="max-height:440px" alt="Points 1 and 2, the closest pair, are joined in orange; the dendrogram gets its first, lowest link.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/agglomerative-steps-v2.svg" class="figure figure-plain" style="max-height:440px" alt="The next closest pair, 4 and 5, are joined; a second low link appears.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/agglomerative-steps-v3.svg" class="figure figure-plain" style="max-height:440px" alt="Point 6 joins the cluster of 4 and 5.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/agglomerative-steps-v4.svg" class="figure figure-plain" style="max-height:440px" alt="Point 3 joins the cluster of 4, 5, and 6.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/agglomerative-steps-v5.svg" class="figure figure-plain" style="max-height:440px" alt="The last merge joins the cluster of 1 and 2 with everything else, at the top of the dendrogram.">
+:::
+
+::::
+
+---
+
+## Metrics: How Close Are Two Clusters? {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Single link (MIN): the minimum distance between any two points across the clusters.
+
+::: {.fragment fragment-index=1}
+- Complete link (MAX): the maximum distance.
+:::
+
+::: {.fragment fragment-index=2}
+- Average link: the average distance over all pairs of observations in the two clusters.
+:::
+
+::: {.fragment fragment-index=3}
+- Ward's: the increase in the squared error that results when the two clusters are merged.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/linkage-v0.svg" alt="Two small clusters, A with three circles and B with four squares. One orange line joins the closest pair: single link distance 2.3.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/linkage-v1.svg" alt="One orange line joins the farthest pair: complete link distance 5.5.">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" src="../assets/clustering-visuals/linkage-v2.svg" alt="Twelve thin orange lines join every pair across A and B: average link distance 3.9.">
+:::
+
+::: {.fragment fragment-index=3}
+<img class="figure" src="../assets/clustering-visuals/linkage-v3.svg" alt="Ward's method: each cluster's centroid, and the merged centroid between them with dashed lines to all seven points. Merging would add 24.9 to the SSE.">
+:::
+:::::
+:::
+
+:::
+
+::: {.notes}
+Average link is the most widely used measure (more robust against noise).
+:::
+
+---
+
+## Linkage Changes the Tree {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/dendrogram-penguins-v0.svg" class="figure figure-plain" style="max-height:330px" alt="Single-link dendrogram of 30 penguins, 10 per species, with species shapes under the leaves: long staircase chains where penguins join one at a time.">
+:::
+
+::: {.fragment fragment-index=1}
+<img src="../assets/clustering-visuals/dendrogram-penguins-v1.svg" class="figure figure-plain" style="max-height:330px" alt="Average-link dendrogram of the same 30 penguins: compact groups that mostly line up with the species.">
+:::
+
+::: {.fragment fragment-index=2}
+<img src="../assets/clustering-visuals/dendrogram-penguins-v2.svg" class="figure figure-plain" style="max-height:330px" alt="Ward's dendrogram of the same 30 penguins: three tall, even branches that mostly follow the species.">
+:::
+
+::::
+
+:::: {.r-stack .dense style="margin-top: 14px"}
+
+::: {.fragment .fade-out fragment-index=1}
+**Single link:** cluster distance = the *closest* pair. One near neighbor is enough to merge, so clusters grow a point at a time into long chains.
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+**Average link:** the average distance over *all* pairs. One close pair can't decide alone, so groups stay compact.
+:::
+
+::: {.fragment fragment-index=2}
+**Ward's:** merge the two clusters whose union adds the least squared error, "similar to the k-means objective" (scikit-learn), so groups come out even.
+:::
+
+::::
+
+
+
+---
+
+
+## Elbow Neighbor Exercise {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+TODO
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## Hierarchical Clustering: Pros and Cons
+
+::: {.dense}
+Advantages:
+
+- Returns hierarchy of clusters.
+- Can return clusters of different sizes.
+
+Disadvantages:
+
+- Computationally expensive (time and space).
+    - $O(n^2)$ space for the proximity matrix;
+    - $O(n^3)$ time (or $O(n^2 \log n)$ if using a heap)
+- Merging decisions are made locally and cannot be reversed.
+    - This may result in suboptimal clusterings, particularly when the data is noisy or high-dimensional.
+:::
+
+
+
+# Density-Based Clustering {.section-header}
+
+## DBSCAN, Step by Step: Who Is Crowded? {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/dbscan-walk-count-v0.svg" class="figure figure-plain" style="max-height:440px" alt="23 hollow points: a smile-shaped arc of 14 evenly spaced points, a tight group of 7 at upper right, and two loners. Rule: a point is crowded if its circle holds at least 4 points, counting itself.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-count-v1.svg" class="figure figure-plain" style="max-height:440px" alt="A shaded circle around a point at the bottom of the arc holds 5 points, so it is crowded.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-count-v2.svg" class="figure figure-plain" style="max-height:440px" alt="A circle around the arc's left tip holds only 3 points, so the tip is not crowded.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-count-v3.svg" class="figure figure-plain" style="max-height:440px" alt="A circle around the loner below the arc holds only itself, so it is not crowded.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-count-v4.svg" class="figure figure-plain" style="max-height:440px" alt="Every point checked: 18 crowded points are filled black, including all of the arc except its two tips and all of the group except one straggler; 5 points are hollow.">
+:::
+
+::::
+
+---
+
+## DBSCAN, Step by Step: Grow a Cluster {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/dbscan-walk-grow-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Step 1: start at a crowded point at the bottom of the arc; the 4 points in its circle join cluster 1, ringed in orange.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-grow-v1.svg" class="figure figure-plain" style="max-height:440px" alt="Step 2: each of those 4 crowded newcomers draws its own circle; 4 more points along the arc join.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-grow-v2.svg" class="figure figure-plain" style="max-height:440px" alt="Step 3: the newest crowded points draw circles; 4 more join, reaching the left tip.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-grow-v3.svg" class="figure figure-plain" style="max-height:440px" alt="Step 4: one more point joins, the right tip. The tips are not crowded, so they join but draw no circle.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-grow-v4.svg" class="figure figure-plain" style="max-height:440px" alt="Cluster 1 is done: all 14 arc points, following the curve. The two tips are labeled: in the cluster, but not crowded.">
+:::
+
+::::
+
+---
+
+## DBSCAN, Step by Step: Repeat, Then Noise {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/dbscan-walk-finish-v0.svg" class="figure figure-plain" style="max-height:440px" alt="A crowded point in the upper-right group, not yet reached, starts cluster 2; 5 points in its circle join, shown as squares.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-finish-v1.svg" class="figure figure-plain" style="max-height:440px" alt="Cluster 2 grows the same way to 7 points; its straggler joins but is not crowded.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/dbscan-walk-finish-v2.svg" class="figure figure-plain" style="max-height:440px" alt="The two loners were never reached by any cluster, so they are labeled noise. Result: 2 clusters and 2 noise points, with no K chosen in advance.">
+:::
+
+::::
+
+::: {.notes}
+- Next slide names the two knobs: the circle's radius is $Eps$, and "at least 4 points, counting itself" is $MinPts = 4$.
+- Crowded points are core points; the arc's tips and the group's straggler are border points; the loners are noise.
+- Contrast with k-means: no $K$, and the arc stays one cluster because it grows point to point instead of around a center.
+:::
+
+---
+
+## Core, Border, Noise {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+Density-based clustering aims to locate regions of high density that are separated from one another by regions of low density.
+
+::: {.fragment fragment-index=1}
+- Core: at least $MinPts$ observations within a distance of $Eps$.
+:::
+
+::: {.fragment fragment-index=2}
+- Border: not a core point but falls within the neighborhood of a core point.
+:::
+
+::: {.fragment fragment-index=3}
+- Noise: neither a core point nor a border point.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/dbscan-points-v0.svg" alt="Seven points: five in a tight group at left and two apart at right. Eps 1.0, MinPts 4.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/dbscan-points-v1.svg" alt="A shaded orange circle of radius Eps around a point in the middle of the group holds five points, so it is a core point.">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" src="../assets/clustering-visuals/dbscan-points-v2.svg" alt="A dashed circle around a point at the group's edge holds only three points, but it lies within Eps of the core point, so it is a border point.">
+:::
+
+::: {.fragment fragment-index=3}
+<img class="figure" src="../assets/clustering-visuals/dbscan-points-v3.svg" alt="A dashed circle around a point at the right holds only two points, and no core point is near: noise.">
+:::
+:::::
+
+::: {.caption}
+$MinPts$ counts the point itself here, as scikit-learn's `min_samples` does.
+:::
+:::
+
+:::
+
+---
+
+## DBSCAN {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+Algorithm for DBSCAN:
+
+1. Label all points as core, border, or noise points.
+2. Discard noise points.
+3. Put an edge between all core points within a distance of $Eps$ of each other.
+4. Assign each group of connected core points to a separate cluster.
+5. Assign each border point to one of the clusters of its associated core points.
+
+No $K$: very popular for geospatial applications.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-dbscan-v1.svg" alt="DBSCAN on the CTA stops with Eps 1.2 km and MinPts 3: seven clusters along the dense corridors and 32 hollow noise stations at the outer ends of lines.">
+:::
+
+:::
+
+---
+
+## Choosing Eps {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- If $Eps$ is too large, then many observations may be assigned to the same cluster. If $Eps$ is too small, then many observations may be discarded or assigned to separate clusters.
+- The basic approach to find $Eps$ involves measuring the average distance from each observation to its $k$th nearest neighbor ($k$-dist), where $k = MinPts$.
+- Look for where the sorted curve bends upward
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-kdist.svg" alt="Each station's distance to its 2nd-nearest other station, sorted: under 1 km for most of the first 80 stations, about 1.2 km near 100, then rising steeply past 2 km for the last 15. Dashed lines mark Eps 0.8, 1.2 (orange), and 2.0 km.">
+
+::: {.caption}
+With $MinPts = 3$ counting the station itself, the relevant distance is to the 2nd-nearest *other* station.
+:::
+:::
+
+:::
+
+---
+
+## Eps Values on CTA Example {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+- 0.8 km: 81 stations are noise
+- 1.2 km: dense corridors become clusters
+
+::: {.fragment fragment-index=1}
+- 2.0 km: nearly everything is one cluster
+:::
+
+::: {.fragment fragment-index=2}
+- Ashland (Orange Line) is noise at 0.8 and 1.2 km: its 2nd-nearest other station is 1.7 km away, vs. 0.9 km for a typical North Side station
+- DBSCAN has difficulty detecting clusters with different densities.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/l-dbscan-v0.svg" alt="Eps 0.8 km: ten small clusters and 81 hollow noise stations; Ashland is noise.">
+
+::: {.fragment fragment-index=0}
+<img class="figure" src="../assets/clustering-visuals/l-dbscan-v1.svg" alt="Eps 1.2 km: seven clusters and 32 noise stations; Ashland is still noise.">
+:::
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/l-dbscan-v2.svg" alt="Eps 2.0 km: three clusters and 6 noise stations; one cluster covers most of the system, and Ashland is in it.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## DBSCAN Parameters in Cook County Condo Sales {.image-frame-slide}
+
+::: {.caption}
+2025 condo sales from `datasets/cook-county-home-sales-2025` (Cook County Assessor), one unit per sale (`num_parcels_sale == 1`); DBSCAN with $MinPts = 40$.
+:::
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/condos-dbscan-v0.svg" class="figure" style="max-height:460px" alt="Map of 14,088 single-unit condo sales in Cook County in 2025 as small gray dots. They are densest in a band along the lakefront north of downtown, with scattered dots across the suburbs. An orange box marks the city from Rogers Park to Hyde Park and west to Oak Park, shown next.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/condos-dbscan-v1.svg" class="figure" style="max-height:460px" alt="Zoomed to the city. DBSCAN with Eps 0.1 km and MinPts 40: 11 clusters county-wide, and 96 percent of sales are light gray noise. The three largest clusters are tiny specks: Lake View, 78 sales, in blue, and two Near North Side clusters, 57 and 61 sales, in pink and green.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/condos-dbscan-v2.svg" class="figure" style="max-height:460px" alt="DBSCAN with Eps 0.2 km: 16 clusters county-wide, and 80 percent noise. Short lakefront clusters appear: Near North Side and 1 more area, 1,000 sales, in blue; Lake View and 1 more area, 532 sales, in green; Near North Side and 1 more area, 215 sales, in pink.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/condos-dbscan-v3.svg" class="figure" style="max-height:460px" alt="DBSCAN with Eps 0.3 km: 27 clusters county-wide, and 66 percent noise. The lakefront clusters grow: Near North Side and 2 more areas, 1,841 sales, in blue; Lake View and 2 more areas, 1,107 sales, in green; Edgewater, 356 sales, in pink. Smaller clusters are dark gray.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/condos-dbscan-v4.svg" class="figure" style="max-height:460px" alt="DBSCAN with Eps 0.5 km: 34 clusters county-wide, and 41 percent noise. The blue cluster has grown into one long lakefront cluster, Near North Side and 7 more areas, 4,953 sales, swallowing Lake View and Edgewater. Also in color: West Town and 1 more area, 628 sales, in green, and Rogers Park and 2 more areas, 349 sales, in pink.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/condos-dbscan-v5.svg" class="figure" style="max-height:460px" alt="DBSCAN with Eps 1.0 km: 38 clusters county-wide, and 21 percent noise. One blue cluster, Near North Side and 13 more areas, 7,539 sales, covers most of the North Side and West Town. Also in color: Hyde Park and 4 more areas, 367 sales, in green, and Oak Park and 2 more areas, 301 sales, in pink.">
+:::
+
+::::
+
+::: {.notes}
+- Bulk sales of many units at once are left out: one sale would be its own dense "cluster".
+- $MinPts = 40$: a core sale has at least 40 sales within $Eps$.
+- $Eps$ = 0.1 km: almost every sale (96%) is noise; the 11 clusters are tiny.
+- $Eps$ = 0.2 km: short stretches of the lakefront become clusters; 80% noise.
+- $Eps$ = 0.3 km: downtown, Lake View, and Edgewater are separate clusters; 66% of sales are noise.
+- $Eps$ = 0.5 km: the lakefront joins into one cluster of 4,953 sales; suburban clusters also appear (Evanston, Oak Park, Des Plaines, Schaumburg, ...), most of them off this zoomed map.
+- $Eps$ = 1.0 km: one cluster of 7,539 sales covers most of the North Side; only 21% noise.
+- As with the CTA stops, $Eps$ decides what counts as one "place".
+:::
+
+---
+
+## Elbow Neighbor Exercise {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+TODO
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## DBSCAN: Pros and Cons {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+Advantages:
+
+- Robust to noise and outliers because it discards noise points.
+- Can detect clusters of different shapes and sizes.
+
+Disadvantages:
+
+- Has difficulty detecting clusters with different densities.
+- Parameters $Eps$ and $MinPts$ must be specified in advance.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-stations-v1.svg" alt="The CTA stops in their official route colors, with stations served by several lines in white: the answer key that none of the clustering algorithms were given.">
+
+::: {.caption}
+The answer key we never gave any algorithm: the actual lines, in CTA route colors.
+:::
+:::
+
+:::
+
+::: {.notes}
+Also: can be computationally expensive when the dataset is high-dimensional, and certain 'boundary' points could be assigned to different clusters depending on the order of visiting the nodes.
+:::
+
+---
+
+## Which Technique When? {.image-frame-slide}
+
+<img src="../assets/clustering-visuals/cluster-shapes.svg" class="figure figure-plain" style="max-height:440px" alt="A grid of small scatter plots: four datasets (round blobs, two moons, nested rings, mixed density) by four methods (k-means, Ward's, single link, DBSCAN). k-means and Ward's split the moons and rings with straight cuts; single link and DBSCAN follow the moon and ring shapes; DBSCAN marks the sparse cloud in the mixed-density data as noise.">
+
+::: {.caption}
+Exercise 15.4: Which clustering technique will perform better for each dataset and why? After the scikit-learn ["Comparing different clustering algorithms on toy datasets"](https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html) figure.
+:::
+
+# Wrap-Up {.section-header}
+
+## Upload your worksheet {#upload-worksheet-day-1}
+
+Take a picture of your worksheet, upload it in Canvas
+
+# That's All for Today, See You Wednesday! {.section-header .no-index}
+
+# Week 10, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop11-ashland-b.jpg" background-size="cover"}
+
+<h2>PCA, Model Evaluation</h2>
 
 Jack Bandy
 2026
 
 ---
 
-# Map {.split}
+## Map for Week 10, Day 2 {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Week 10: Ashland
-- Day 2
-    - Model Evaluation
+- Principal Component Analysis
+- What Are We Evaluating?
+- Held-Out Data
+- Classification Metrics
+- Multiclass Classification
+- Evaluating Clusterings
+- The Model Is Not the World
 :::
 
 ![](../assets/orange-line-map-stops/stop11-ashland.svg){.figure alt="Orange Line map with the Ashland stop marked, the Week 10 stop"}
@@ -261,22 +1024,1194 @@ Jack Bandy
 
 ---
 
+## Any questions? {#any-questions-day-2}
 
-# Model Evaluation {.section-header}
+- Coding Exercise 3 is due today
+- Project checkpoint today: data documentation
+- Group Projects?
+- Other logistics?
+
+# Principal Component Analysis {.section-header}
+
+## Dimensionality Reduction {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+Goal: extract hidden lower-dimensional structure from high dimensional datasets.
+
+Why?
+
+- To visualize data more easily
+- To remove noise in data
+- To lower resource requirements for storing/processing data
+- To improve classification/clustering
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/pca-visuals/pca-penguins-v0.svg" alt="The 342 penguins as gray dots, standardized bill length against flipper length: the cloud stretches from lower left to upper right.">
+
+::: {.caption}
+Two measurements per penguin. Can one number do the job?
+:::
+:::
+
+:::
 
 ---
 
-# Model Evaluation
+## Principal Components {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Goal: find a small number of 'directions' in input space that explain variation in input data; re-represent data by projecting along those directions.
+- Important assumption: variation contains information.
+
+::: {.fragment fragment-index=1}
+- Principal components are orthogonal directions that capture most of the variance in the data.
+- Select M eigenvectors with the largest eigenvalues of the covariance matrix.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/pca-visuals/pca-penguins-v1.svg" alt="An orange arrow along the long direction of the penguin cloud, labeled PC1, 83 percent of the variance, and a shorter ink arrow at a right angle, labeled PC2, 17 percent.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/pca-visuals/pca-penguins-v2.svg" alt="Each penguin projected onto the PC1 line with a thin gray segment; the projected points sit on the orange line. One number per penguin keeps 83 percent of the variance.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## How Many Components? {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Now all four measurements: bill length, bill depth, flipper length, body mass (standardized)
+- "This can be determined by looking at the cumulative explained variance ratio as a function of the number of components" (PDSH)
+- A scree plot: bars for each component, a line for the running total
+- Two components keep 88% of the variance
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/pca-visuals/pca-scree.svg" alt="Bar chart of explained variance for four principal components: PC1 69 percent and PC2 19 percent in orange, PC3 9 percent and PC4 3 percent in gray. A line shows the running total: 69, 88, 97, and 100 percent.">
+:::
+
+:::
+
+---
+
+## What Do the Components Mean? {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- PDSH asks "what the reduced dimensions mean."
+- Each component is a weighted sum of *all* the original features
+- PC1: long flippers, heavy, long bill, shallow bill (roughly: "big penguin")
+- PC2: mostly bill depth and bill length
+- The tradeoff: fewer numbers, but each one is harder to name
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/pca-visuals/pca-loadings.svg" alt="Two bar charts of component weights. PC1: bill length +0.46, bill depth −0.40, flipper length +0.58, body mass +0.55. PC2: bill length +0.60, bill depth +0.80, flipper length 0.00, body mass +0.08.">
+:::
+
+:::
+
+---
+
+## Four Measurements, Two Numbers {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- "PCA is fundamentally a dimensionality reduction algorithm, but it can also be useful as a tool for visualization, for noise filtering, for feature extraction and engineering, and much more." (PDSH)
+- PCA never saw the species; the groups show up anyway
+
+::: {.fragment}
+- "PCA's main weakness is that it tends to be highly affected by outliers in the data." (PDSH)
+:::
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/pca-visuals/pca-species.svg" alt="All 342 penguins plotted on PC1 (69 percent) and PC2 (19 percent), marked by species: Gentoo squares form a separate group at right; Adélie circles and Chinstrap triangles overlap at left, with Chinstraps higher on PC2.">
+:::
+
+:::
+
+---
+
+## Meet Pete Crow-Armstrong {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+**#4, CF, Chicago Cubs**
+
+- PCA for short
+- 2025 NL All-Star, Gold Glove winner
+- Hit for the cycle on June 15, 2026
+    - I was there!
+    - And I thought... PCA with PCA?
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/portraits/pete-crow-armstrong-batting-full.jpg" alt="Pete Crow-Armstrong at the plate in an Iowa Cubs uniform, bat raised, waiting for a pitch.">
+
+::: {.caption}
+Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pete_Crow-Armstrong_(53104160703).jpg); cropped.
+:::
+:::
+
+:::
+
+---
+
+## PCA on PCA: The Data {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- 40 qualified MLB center fielders, 2026 (Baseball Savant)
+- 11 standardized stats:
+	- Discipline: K, whiff, chase, walk %
+	- Power: ISO, barrel %, hard-hit %
+	- Legs: sprint speed, steals
+	- Glove: OAA, arm strength
+- Can two numbers do the job?
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/pca-visuals/pca-cf-map-v0.svg" alt="40 gray dots, one per center fielder, plotted on PC1 (35 percent of variance) against PC2 (19 percent). The cloud is widest left to right.">
+:::
+
+:::
+
+---
+
+## How Many Components? (Again) {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Penguins: two components kept 88% of the variance
+- Center fielders: two components keep 55%
+- Real data is messier: no single "big player" direction
+- Still: each standardized stat is 1/11 ≈ 9% of the variance, so PC1 alone is worth about four stats
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/pca-visuals/pca-cf-scree.svg" alt="Bar chart of explained variance for eleven principal components: PC1 35 percent and PC2 19 percent in orange, PC3 13 percent, then smaller gray bars. The running-total line reaches 55 percent at PC2 and about 95 percent by PC7.">
+:::
+
+:::
+
+---
+
+## What Do the Components Mean? (Again) {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- PC1: strikeouts, whiffs, *and* power all go up together. Call it "swing big."
+- PC2: chasing goes up, walking goes down, plus speed and defense. Call it "chase and run."
+- The names are ours, not PCA's: PCA only gives the weights
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/pca-visuals/pca-cf-loadings.svg" alt="Two bar charts of component weights for 11 stats. PC1: strikeout +0.39, whiff +0.41, chase 0.00, walk +0.14, isolated power +0.36, barrel +0.44, hard-hit +0.43, sprint speed +0.20, stolen bases +0.21, outs above average +0.05, arm strength +0.25. PC2: strikeout −0.15, whiff +0.03, chase +0.60, walk −0.57, isolated power +0.12, barrel −0.06, hard-hit −0.05, sprint speed +0.29, stolen bases +0.31, outs above average +0.29, arm strength −0.04.">
+:::
+
+:::
+
+---
+
+## Where Is PCA in PCA-Space? {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Corners: Kwan (contact), Cruz (swing big), Trout (walks), Rafaela (chase and run)
+
+::: {.fragment fragment-index=1}
+- Crow-Armstrong: 2nd of 40 on PC1, 5th on PC2
+- Led all 40 in HR (45), steals (41), OAA (26), and ISO
+- An outlier, and PCA is "highly affected by outliers" (PDSH)
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack}
+<img class="figure" src="../assets/pca-visuals/pca-cf-map-v1.svg" alt="The 40 center fielders on PC1 and PC2, with directions named: left is more contact, right is more power and more strikeouts, up is chasing and running, down is walking. Labeled corners: Steven Kwan far left, Oneil Cruz far right, Mike Trout at the bottom, Ceddanne Rafaela at the top.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/pca-visuals/pca-cf-map-v2.svg" alt="The same map with Pete Crow-Armstrong as a large orange dot in the upper right: second of 40 on PC1 and high on PC2.">
+:::
+:::::
+:::
+
+:::
+
+# What Are We Evaluating? {.section-header}
+
+
+## Recall: Overfitting {.image-frame-slide}
+
+<img src="../assets/week8/overfit-abc-labeled.svg" class="figure figure-plain" style="max-height:420px" alt="Week 8's three panels of the same data: an underfit straight line, a reasonable curve, and an overfit curve that passes through every point.">
+
+::: {.caption}
+"Overfitting happens when the model follows the data too closely and picks up the variability in the random noise in the outcome." Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1. [review: Week 8]
+:::
+
+# Held-Out Data {.section-header}
+
+## Train and Test {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- "We often do not have the luxury of collecting additional data to assess a model, so instead we set aside a portion of our data, called the test set, to stand in for new data." (LDS)
+- "Typically, the test set consists of 10% to 25% of the data." (LDS)
+- "this division into two parts is often made at random, so the train and test sets are similar to each other." (LDS)
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/holdout-v0.svg" alt="A bar split into a light gray train set of 274 penguins and an ink test set of 68.">
+
+::: {.caption}
+Lau, Gonzalez, and Nolan, ["Train-Test Split"](https://learningds.org/ch/16/ms_train_test.html), *Learning Data Science*, §16.2.
+:::
+:::
+
+:::
+
+---
+
+## Cross-Validation {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- "The idea is to further divide the train set into separate parts where we fit the model on one part and evaluate it on another. This approach is called cross-validation." (LDS)
+- "Typically, we use 5 or 10 folds." (LDS)
+- "Combine the error in fitting each model across the folds, and choose the model with the smallest error." (LDS)
+- Then, once: score the chosen model on the test set [review: Week 9 code demo]
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/model-evaluation-visuals/holdout-v1.svg" alt="Below the train/test bar, round 1 of 5: the first fold of the train set is orange, validate; the other four are gray, fit.">
+
+::: {.fragment}
+<img class="figure" src="../assets/model-evaluation-visuals/holdout-v2.svg" alt="Round 2: the second fold is held out.">
+:::
+
+::: {.fragment}
+<img class="figure" src="../assets/model-evaluation-visuals/holdout-v3.svg" alt="Round 3: the third fold is held out.">
+:::
+
+::: {.fragment}
+<img class="figure" src="../assets/model-evaluation-visuals/holdout-v4.svg" alt="Round 4: the fourth fold is held out.">
+:::
+
+::: {.fragment}
+<img class="figure" src="../assets/model-evaluation-visuals/holdout-v5.svg" alt="Round 5: the fifth fold is held out. Every penguin in the train set has been held out exactly once; the test set stayed locked throughout.">
+:::
+:::::
+
+::: {.caption}
+Lau, Gonzalez, and Nolan, ["Cross-Validation"](https://learningds.org/ch/16/ms_cv.html), §16.3.
+:::
+:::
+
+:::
+
+# Classification Metrics {.section-header}
+
+## A Needle in a Haystack {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Sometimes training examples are drawn from an imbalanced distribution.
+- The 'needle in a haystack' problem: e.g., find fraudulent transactions in credit card histories.
+- Our haystack: Week 9's Chinstrap vs. the rest
+- Why is this a big problem for machine learning?
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/chinstrap-waffle.svg" alt="A grid of 342 marks: 68 orange triangles for Chinstraps and 274 gray circles for the others. Always guessing not Chinstrap is 80 percent accurate and finds zero Chinstraps.">
+:::
+
+:::
+
+---
+
+## Pitfalls of Accuracy {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Accuracy is not a good metric when some errors matter more than others.
+    - Given a medical record, predict whether a patient has cancer
+- Confusion matrix: true/false positives, true/false negatives [review: Week 9]
+
+::: {.fragment fragment-index=1}
+- "So even with an accuracy of 89%, the precision and recall of the classifier were both relatively low." "A recall of just 25% would likely be unacceptable!" (DSFI)
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/model-evaluation-visuals/confusion-chinstrap-v0.svg" alt="Confusion matrix for always guessing not Chinstrap: TP 0, FN 68, FP 0, TN 274. Accuracy 80 percent, precision undefined, recall 0 percent.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/model-evaluation-visuals/confusion-chinstrap-v1.svg" alt="Confusion matrix for a logistic regression with cutoff 0.5: TP 54, FN 14, FP 5, TN 269. Accuracy 94 percent, precision 92 percent, recall 79 percent.">
+:::
+:::::
+
+::: {.caption}
+Logistic regression on bill length and flipper length, 5-fold cross-validated predictions.
+:::
+:::
+
+:::
+
+---
+
+## Precision and Recall {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Precision: % positive predictions that are correct.
+$$\text{Precision} = \frac{TP}{TP + FP}$$
+- Recall: % positive true labels that are predicted.
+$$\text{Recall} = \frac{TP}{TP + FN}$$
+
+::: {.fragment}
+- Different ranking cutoff thresholds lead to different precision-recall tradeoffs.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/model-evaluation-visuals/pr-cutoff-v1.svg" alt="Penguins spread along the model's score from 0 to 1, Chinstrap triangles in the top row and others in the bottom row. Cutoff 0.5 shades everything to its right as predicted Chinstrap: 59 predicted, 54 correct. Precision 92 percent, recall 79 percent.">
+
+::: {.fragment}
+<img class="figure" src="../assets/model-evaluation-visuals/pr-cutoff-v0.svg" alt="Cutoff 0.8: 37 predicted Chinstrap, 36 correct. Precision 97 percent, recall 53 percent.">
+:::
+
+::: {.fragment}
+<img class="figure" src="../assets/model-evaluation-visuals/pr-cutoff-v2.svg" alt="Cutoff 0.2: 88 predicted Chinstrap, 65 correct. Precision 74 percent, recall 96 percent.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## The Precision–Recall Tradeoff {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Each cutoff gives one (recall, precision) point
+- High cutoff: few guesses, mostly right (high precision, low recall)
+- Low cutoff: many guesses, finds almost all (high recall, lower precision)
+- What to do if one class is more important than the other?
+    - Cancer screening? Spam filter? Searching for documents?
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/pr-curve.svg" alt="Precision against recall for every cutoff: precision stays near 1 until recall passes about 0.8, then drops. Cutoffs 0.8, 0.5, and 0.2 are marked from left to right.">
+:::
+
+:::
+
+---
+
+## F-Score {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- F-score: harmonic mean.
+$$F = \frac{2 \cdot Pr \cdot Re}{Pr + Re}$$
+- Weighted F-score: if precision is more important than recall.
+$$F_\beta = \frac{(1 + \beta^2) \cdot Pr \cdot Re}{\beta^2 \cdot Pr + Re}$$
+- Harmonic mean: one low score drags the whole thing down
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/f1-mean.svg" alt="With recall fixed at 0.9, the arithmetic mean of precision and recall (dashed gray) never falls below 0.45, while F1 (orange) falls to 0 as precision falls to 0.">
+:::
+
+:::
+
+::: {.notes}
+TODO check the weighted F formula against the source slides (the PDF text extraction was garbled; the standard form has β² on precision in the denominator, as written here).
+:::
+
+---
+
+## Fixing Imbalance {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Undersample the majority class; more computationally efficient.
+- Oversample the minority class; the base binary classifier might do better with more training examples.
+- Efficient implementations incorporate weight in the algorithm instead of explicitly duplicating data. You can use the imblearn Python library (e.g., the ADASYN algorithm).
+- Resample the training data only, never the test set
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/model-evaluation-visuals/resample-v0.svg" alt="Bars of training examples: 68 Chinstraps and 274 others.">
+
+::: {.fragment}
+<img class="figure" src="../assets/model-evaluation-visuals/resample-v1.svg" alt="Undersampling: keep 68 of the 274 others at random; the remaining 206 are set aside.">
+:::
+
+::: {.fragment}
+<img class="figure" src="../assets/model-evaluation-visuals/resample-v2.svg" alt="Oversampling: repeat Chinstraps up to 274, shown as hatched copies.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Elbow Neighbor Exercise {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+TODO
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+# Multiclass Classification {.section-header}
+
+## One vs. Rest, One vs. One {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/model-evaluation-visuals/ovr-ovo-v0.svg" class="figure figure-plain" style="max-height:420px" alt="One vs. rest: three panels of penguins, one per species. In each, that species is orange and the other two are gray.">
+:::
+
+::: {.fragment}
+<img src="../assets/model-evaluation-visuals/ovr-ovo-v1.svg" class="figure figure-plain" style="max-height:420px" alt="One vs. one: three panels, one per pair of species: Adélie vs. Chinstrap, Adélie vs. Gentoo, Chinstrap vs. Gentoo. The third species in each panel is hollow and unused.">
+:::
+
+::::
+
+::: {.caption}
+One versus rest: train K-many binary classifiers; classifier k predicts whether an example belongs to class k or not. One versus one: build classifiers for all pairs of classes; predict the class that has the most binary classifier 'votes'.
+:::
+
+---
+
+## Which Needs More Classifiers? {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+Which one requires more base classifiers?
+
+A) One-versus-rest (OVR)
+
+B) One-versus-one (OVO)
+
+::: {.fragment}
+- OVR: $K$ classifiers. OVO: $K(K-1)/2$.
+- OVR can lead to imbalanced datasets for each binary classifier.
+- Some models are multiclass already: straightforward with decision trees or KNN.
+:::
+:::
+
+::: {.fragment .captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/classifier-count.svg" alt="Binary classifiers needed against number of classes K from 2 to 10: one vs. rest grows linearly to 10; one vs. one grows to 45. At K equals 3, the penguins, both need 3.">
+:::
+
+:::
+
+---
+
+## A Three-Class Confusion Matrix {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Rows: true species; columns: predicted species
+- The diagonal is correct; everything else is a mistake, and *which* mistake
+- Chinstraps are the hardest: 9 of 68 missed
+- Precision and recall per class: treat each species as "positive" in turn
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/confusion-penguins.svg" alt="Three-by-three confusion matrix for an RBF SVM: Adélie 146 correct, 3 called Chinstrap, 2 called Gentoo; Chinstrap 59 correct, 6 called Adélie, 3 called Gentoo; Gentoo 122 correct, 1 called Chinstrap. 96 percent accurate.">
+
+::: {.caption}
+Week 9's RBF-kernel SVM, bill length and flipper length, 5-fold cross-validated.
+:::
+:::
+
+:::
+
+# Evaluating Clusterings {.section-header}
+
+## Why Evaluate a Clustering? {.split}
+
+::: {.split-content}
+
+::: {.dense}
+Cluster evaluation allows us to:
+
+- Evaluate how well a clustering structure fits the data.
+- Determine the correct number of clusters.
+- Compare two sets of clusters to determine which is better.
+
+::: {.fragment fragment-index=1}
+- Unsupervised (internal): "without any external information."
+- Supervised (external): matches some external structure (ground truth).
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/kmeans-restarts-v0.svg" alt="Monday's run A: a k-means local optimum on the penguins, SSE 206.1.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/kmeans-restarts-v1.svg" alt="Monday's run B: the better optimum, SSE 157.8.">
+:::
+:::::
+
+::: {.caption}
+Monday: two k-means runs. Which is better, and how would we know?
+:::
+:::
+
+:::
+
+---
+
+## Cohesion and Separation {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+Cohesion measures how similar the observations in a cluster are. Separation measures how distinct a cluster is from other clusters.
+
+$$\text{cohesion}(C_i) = \frac{1}{\frac{|C_i|(|C_i|-1)}{2}} \sum_{x, y \in C_i} \text{proximity}(x, y)$$
+
+::: {.fragment fragment-index=1}
+$$\text{separation}(C_i, C_j) = \frac{1}{|C_i||C_j|} \sum_{x \in C_i,\, y \in C_j} \text{proximity}(x, y)$$
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v0.svg" alt="Two clusters, A with four circles and B with four squares. Orange lines join all 6 pairs inside A; average distance 1.09.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v1.svg" alt="Orange lines join all 16 pairs between A and B; average distance 3.72.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Silhouette Coefficient {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+The silhouette coefficient measures the goodness of a cluster with respect to both cohesion and separation.
+
+$$s_i = \frac{b - a}{\max(a, b)}$$
+
+- $a$: the average distance between the $i$th observation and all other observations in the same cluster.
+- $b$: the average distance between the $i$th observation and all other observations in the closest cluster.
+- Between -1 and 1; a negative value indicates an incorrect clustering, and a value of 0 indicates overlapping clusters.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v2.svg" alt="One point in cluster A is circled. Solid lines to its own cluster average a equals 1.31; dashed orange lines to cluster B average b equals 3.23. s equals 0.59.">
+:::
+
+:::
+
+---
+
+## A Silhouette for Every Penguin {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- One bar per penguin, sorted within each k-means cluster
+- The silhouette coefficient of a cluster is given by the average silhouette coefficient of the observations in the cluster.
+- A few penguins near zero or below: they sit between two clusters
+- Mean over all penguins: 0.52
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/silhouette-penguins.svg" alt="Silhouette plot for k-means with K equals 3: three blocks of horizontal bars, one per cluster, sorted from about 0.7 down to near 0. A dashed orange line marks the mean, 0.52.">
+:::
+
+:::
+
+---
+
+## Back to Choosing K {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Monday: the SSE elbow said $K = 3$
+
+::: {.fragment fragment-index=1}
+- Silhouette says $K = 2$ (0.54), with $K = 3$ close behind (0.52)
+- The elbow method does not always work well. The definition of a cluster used by a clustering technique may differ from that of the cluster evaluation metric.
+- Which would you report? What else would you need to know?
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/choose-k-v0.svg" alt="Top panel: total SSE against K from 2 to 9, with the elbow at K equals 3 circled. Bottom panel empty.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/choose-k-v1.svg" alt="Bottom panel added: mean silhouette against K, highest at K equals 2 (0.54, circled), then 0.52 at K equals 3, falling to about 0.36 by K equals 9.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Elbow Neighbor Exercise {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+TODO
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## When You Have the Answer Key {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- A clustering can also be evaluated by comparing the predicted cluster labels against the true cluster labels of the observations (ground truth). This information can be tabulated in a contingency matrix.
+- Like a confusion matrix, with clusters in place of predicted classes
+- In practice, the ground truth is almost never available. The penguins are a rare exception.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/contingency-penguins.svg" alt="Contingency matrix of true species against k-means cluster: Adélie 146, 4, 1; Chinstrap 5, 59, 4; Gentoo 0, 1, 122. Adjusted Rand index 0.89.">
+:::
+
+:::
+
+---
+
+## Clusters vs. Classifier {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- k-means never saw a single label
+- The SVM was trained on 4/5 of the labels each fold
+- Both put 327 of 342 penguins (96%) in the "right" group
+
+::: {.fragment fragment-index=1}
+- On these two features, the species *are* the clusters
+- On the CTA stops, the lines were not
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/contingency-penguins.svg" alt="The k-means contingency matrix: 146, 59, and 122 on the diagonal.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/model-evaluation-visuals/confusion-penguins.svg" alt="The SVM confusion matrix: also 146, 59, and 122 on the diagonal, with slightly different mistakes.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## External Metrics {.smaller}
+
+::: {.dense}
+Classification-oriented:
+
+- Precision: measures the fraction of a cluster $C_i$ that consists of observations of a given class $k$.
+- Recall: measures the extent to which a cluster $C_i$ contains all observations of a given class $k$.
+- Entropy: measures the degree to which each cluster $C_i$ consists of observations of a single class $k$.
+
+Similarity-oriented, counting *pairs* of observations:
+
+- $\text{Jaccard} = \frac{N_{11}}{N_{01} + N_{10} + N_{11}}$, $\quad RI = \frac{N_{00} + N_{11}}{N_{00} + N_{01} + N_{10} + N_{11}}$
+- $N_{11}$ is the number of pairs of observations that belong to the same class and the same cluster.
+- The adjusted Rand index is a version of the Rand index corrected for chance. Random clusters will have an adjusted Rand index of 0.
+- Penguins, k-means: ARI = 0.89
+:::
+
+# The Model Is Not the World {.section-header}
+
+## A Map Is Not the Territory {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+> A map is not the territory it represents, but, if correct, it has a similar structure to the territory, which accounts for its usefulness
+
+Alfred Korzybski (1931), quoted in *Ethics in Data Science*, ch. 4
+
+- Clusters, components, and scores are maps too
+- A high silhouette or a high F-score says the map is tidy, not that it is the territory
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/orange-line-map-stops/stop11-ashland.svg" alt="Orange Line map with the Ashland stop marked, the Week 10 stop">
+
+::: {.caption}
+Compare Monday's station map: same stops, different "structure."
+:::
+:::
+
+:::
+
+---
+
+## Multiple Correct Models {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Penguins: $K = 2$ (silhouette) or $K = 3$ (elbow, species)?
+- CTA stops: compact neighborhoods (Ward's) or connected corridors (DBSCAN)?
+- Chinstraps: cutoff 0.8 (precision) or 0.2 (recall)?
+- Each is a defensible answer to a different question
+
+::: {.notes}
+TODO: tie to the "Multiple Correct Models" section of Ethics ch. 4 once its text is written (it currently has only the two Michalski figures).
+:::
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/michalski-trains/figure10-michalski-original-trains.png" alt="Michalski's original set of trains, going East and West, as reproduced in the V-LoL diagnostic dataset paper.">
+
+::: {.caption}
+Michalski's trains, from *Ethics in Data Science*, ch. 4 (Helff et al., 2023).
+:::
+:::
+
+:::
+
+# Wrap-Up {.section-header}
+
+## Upload your worksheet {#upload-worksheet-day-2}
+
+Take a picture of your worksheet, upload it in Canvas
+
+# That's All for Today, See You Monday! {.section-header .no-index}
+
+# Appendix: More Clustering {.section-header}
+
+## Soft Clustering
+
+::: {.dense}
+- Soft clustering: allow points to belong to multiple clusters.
+- For example: one cluster may have a responsibility of .7 for a data point and another may have a responsibility of .3.
+- Allows a cluster to use more information about the data in the refitting step.
+- An overlapping clustering.
+:::
 
 ::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
 [TODO]{.eyebrow .todo}
 
 ::: {.dense}
-- **TK**
+- **TK** figure: penguins between Adélie and Chinstrap with split responsibilities
 :::
 :::
 
 ---
+
+## Color Compression {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Each pixel uses 24 bits for its color: 0-255 per R/G/B.
+- Clustering 3-dim RGB vectors of pixels is used in image compression: store the cluster mean instead of RGB.
+- How many bits does it take to encode an image with 100 pixels where only their 2 clusters are encoded?
+- See PDSH, ["Example 2: k-means for color compression"](https://jakevdp.github.io/PythonDataScienceHandbook/05.11-k-means.html)
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack}
+<img class="figure" src="../assets/clustering-visuals/color-compression-v0.jpg" alt="The entrance to Ashland station on the Orange Line: a gray concrete and steel canopy, white tile walls, glass doors, and a red-orange Ashland sign.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/color-compression-v1.png" alt="The same photo recolored with 64 colors: nearly identical to the original. The palette strip below is mostly grays, with thin slivers of red and yellow.">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" src="../assets/clustering-visuals/color-compression-v2.png" alt="32 colors: still close to the original, with slight banding in the pale sky.">
+:::
+
+::: {.fragment fragment-index=3}
+<img class="figure" src="../assets/clustering-visuals/color-compression-v3.png" alt="16 colors: visible banding on the floor and ceiling; the red sign keeps its color.">
+:::
+
+::: {.fragment fragment-index=4}
+<img class="figure" src="../assets/clustering-visuals/color-compression-v4.png" alt="8 colors: flat patches of gray; the red sign survives as one small palette color.">
+:::
+
+::: {.fragment fragment-index=5}
+<img class="figure" src="../assets/clustering-visuals/color-compression-v5.png" alt="4 colors: four grays and browns; the sign is no longer red.">
+:::
+
+::: {.fragment fragment-index=6}
+<img class="figure" src="../assets/clustering-visuals/color-compression-v6.png" alt="2 colors: a dark gray and a light gray; the Ashland sign is readable only as light letters.">
+:::
+:::::
+
+::: {.caption}
+k-means on pixel colors in CIELAB. Photo: Pi.1415926535, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Entrance_to_Ashland_station,_December_2018.JPG), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) (recolored versions too).
+:::
+:::
+
+:::
+
+---
+
+## Color Compression, Again {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/color-compression-skyline-v0.jpg" class="figure figure-plain" style="max-height:380px" alt="The South Branch of the Chicago River from Park No. 571 in Bridgeport: blue sky, tall power-line towers, the downtown skyline, green trees, and the river.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v1.png" class="figure figure-plain" style="max-height:380px" alt="64 colors: nearly identical to the original; the palette strip is mostly sky blues.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v2.png" class="figure figure-plain" style="max-height:380px" alt="32 colors: still close to the original, with faint bands in the sky.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v3.png" class="figure figure-plain" style="max-height:380px" alt="16 colors: the sky shows distinct bands of blue.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v4.png" class="figure figure-plain" style="max-height:380px" alt="8 colors: the sky splits into flat bands of blue; trees turn near-black and the grass a single olive.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v5.png" class="figure figure-plain" style="max-height:380px" alt="4 colors: a deep blue upper sky; one pale blue shared by the lower sky and the river; near-black trees; olive grass.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v6.png" class="figure figure-plain" style="max-height:380px" alt="2 colors: a blue sky and river against a dark olive silhouette of towers, trees, and skyline.">
+:::
+
+::::
+
+::: {.caption}
+Photo: Warren LeMay, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:View_from_Chicago_River_at_Park_No._571,_Eleanor_Street,_Bridgeport,_Chicago,_IL_(54832903478).jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) (recolored versions too).
+:::
+
+---
+
+## Stations in Two Dimensions {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- New features: *when* people ride, not *where*
+- Two per station (2025 medians): typical weekday entries; Saturday ÷ weekday
+- Standardize, then k-means
+
+::: {.fragment fragment-index=1}
+- K = 4, including a weekend-heavy group: O'Hare, Addison, Chinatown, …
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack}
+<img class="figure" src="../assets/clustering-visuals/l-ridership-2d-v0.svg" alt="141 CTA stops as gray dots: typical weekday entries on a log scale from about 300 to 10,000, against Saturday-to-weekday ratio from about 0.2 to 1.6. Clark/Lake, Midway, O'Hare, Addison, and Kimball are labeled.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/l-ridership-2d-v1.svg" alt="The same stations in four k-means clusters with orange centroids: small stations on the left, weekday-heavy stations low on the right, busy-all-week stations in the middle, and a weekend-heavy group high on the right including Addison and O'Hare.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Add a Third Feature {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Third feature: busiest day ÷ typical day
+- Lifted into 3-D, a few stations from *different* clusters rise above the rest
+
+::: {.fragment fragment-index=1}
+- k-means again: the spiky stations form their own cluster
+- New features, new clusters
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack}
+<img class="figure" src="../assets/clustering-visuals/l-ridership-3d-v0.svg" alt="A 3-D scatter of the stations with busiest-day ratio as the vertical axis, keeping the four 2-D clusters. Most stations sit near the floor; a handful from three different clusters, including Addison, Sox-35th, and UIC-Halsted, rise high.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/l-ridership-3d-v1.svg" alt="The same 3-D scatter re-clustered with K = 4: the high, spiky stations now form one cluster of hollow diamonds with its own centroid.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## All Six Features {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+- Six features per station, from 2025 daily entries (medians):
+    - typical weekday (log scale)
+    - Saturday ÷ weekday; Sunday ÷ weekday
+    - summer ÷ winter weekday
+    - busiest day (99th percentile) ÷ typical day
+    - 2025 ÷ 2019 weekday
+- Standardized; k-means, K = 4. The cluster names are ours.
+- Left out: Damen-Lake (opened 2024); Lawrence and Berwyn (no entries until July 2025)
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-ridership-map.svg" alt="Map of the CTA stops, each marked by its ridership cluster: Loop commuter (34 stations, gray circles, concentrated downtown), busy all week (49, light triangles), neighborhood (51, black squares), and event and destination (7, hollow diamonds, including O'Hare). The clusters mix along every line rather than following them. Three stations are left out.">
+
+::: {.caption}
+CTA stop entries, daily totals, from `datasets/cta-ridership`.
+:::
+:::
+
+:::
+
+---
+
+## What Makes Each Cluster Different? {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Loop commuter: Saturday ≈ half a weekday
+- Event & destination (O'Hare, Addison, Sox-35th, Chinatown, …): busy weekends; busiest days ≈ 2.4× typical
+- Busy all week vs. neighborhood: mostly size
+
+::: {.fragment}
+- Midway lands with the Loop commuters; O'Hare doesn't. Why?
+:::
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-ridership-profiles.svg" alt="Dot plot of each cluster's median on the six standardized features. Event and destination stations are far above average on Saturday and Sunday ratios, summer-to-winter ratio, and busiest-day ratio. Loop commuters are about one standard deviation below average on both weekend ratios. Neighborhood stations are about one standard deviation below average in size.">
+:::
+
+:::
+
+---
+
+## Outliers Within a Cluster {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Spikiest stations (busiest day ÷ typical day): Addison 3.4, Sox-35th 3.1, UIC-Halsted 2.9, Harrison 2.9
+- Addison had 83 days at 2× its median or more; 81 of them fall between April and October
+
+::: {.fragment}
+- What might explain these spikes?
+- Why would UIC-Halsted be so spiky?
+:::
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/l-ridership-spikes.svg" alt="Daily entries in 2025, each divided by the station's own median day. Clark/Lake, in gray, follows a steady weekly rhythm between about 0.4 and 1.2. Addison, in orange, has repeated spikes of 2 to 4 times its median from late March to early October.">
+:::
+
+:::
+
+---
+
+## Turning Reviews into Two Numbers {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- TF-IDF: each review → 3,480 numbers, one per term; high if the review uses it, discounted if many reviews do
+- Truncated SVD (PCA's cousin for text): directions = weighted sums of all terms
+- Score = the review's numbers × the weights, added up
+- Direction 1 is mostly common words; we plot 2 and 3
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/reviews-directions.svg" alt="Two bar charts of term weights. Direction 2: love +0.75, love movie +0.36, movie +0.19, love love and love series +0.04; bad, like, and story −0.07, good −0.22, ok −0.35. Direction 3: ok +0.91, love +0.24, love movie +0.12, ok movie +0.08, movie +0.05; film −0.03, story −0.04, great −0.05, good movie −0.07, good −0.24.">
+:::
+
+:::
+
+---
+
+## Reviews in Two Dimensions {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Each dot: one review, placed by its scores on directions 2 and 3
+- A review with no heavily weighted words lands near (0, 0)
+
+::: {.fragment fragment-index=1}
+- k-means, K = 3: a "love" arm, an "ok" arm, one big blob
+:::
+
+::: {.fragment fragment-index=2}
+- The arms follow sentiment; the blob doesn't
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack}
+<img class="figure" src="../assets/clustering-visuals/reviews-2d-v0.svg" alt="4,500 reviews as small gray dots on two compressed text directions. Most sit in a dense blob near the origin, with one thin arm reaching right (words like love) and one reaching up-left (words like ok). Three real reviews are circled: I love this show, far right; It was OK a little far out, upper left; Julianne Moore did an fantastic job, in the blob.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/reviews-2d-v1.svg" alt="The same points in three k-means clusters with orange centroids: the right arm, the upper-left arm, and the central blob.">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" src="../assets/clustering-visuals/reviews-2d-v2.svg" alt="Each cluster labeled with its sentiment mix: the love arm, 191 reviews, is 81 percent positive; the ok arm, 67 reviews, is 91 percent meh; the blob, 4,242 reviews, is about one third each.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Clustering Reviews Without Labels {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/reviews-clusters-v0.svg" class="figure figure-plain" style="max-height:440px" alt="Table of six k-means clusters of 4,500 movie reviews with their top TF-IDF words: 1, love, love movie, series; 2, great, great movie, story; 3, good, good movie, pretty; 4, ok, dvd, season, watch, best (1,811 reviews); 5, like, film, just, really; 6, movie, watch, just, time, really.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/reviews-clusters-v1.svg" class="figure figure-plain" style="max-height:440px" alt="The same table with each cluster's sentiment mix revealed. Cluster 1 is 75 percent positive and cluster 2 is 65 percent positive, both highlighted; clusters 3 to 6 are mixed, with no sentiment above 43 percent.">
+:::
+
+::::
+
+::: {.caption}
+The result with all 100 compressed dimensions; k-means, K = 6. From `datasets/movie-reviews`. The labels were never used.
+:::
+
+---
+
+## Counting Sentiment Words {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- A simpler pair of numbers: how many positive words and how many negative words a review uses
+- Word lists from Hu and Liu (2004): 2,006 positive, 4,783 negative
+- No labels used, and no TF-IDF or SVD: just counting
+
+::: {.fragment fragment-index=1}
+- k-means, K = 3, on log(1 + count): mostly positive words, mostly negative words, lots of both
+:::
+
+::: {.fragment fragment-index=2}
+- The clusters lean toward a sentiment but never own one, and "meh" gets no cluster
+- The lists weren't built for movies: *plot* and *funny* count as negative, and *like* as positive
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack}
+<img class="figure" src="../assets/clustering-visuals/reviews-words-v0.svg" alt="4,500 reviews on a grid: positive-word count across, negative-word count up, both on a log scale from 0 to about 30. Dot area shows how many reviews share each pair of counts; the biggest dots are near zero. Three real reviews are circled: Great movie! Loved it!, 2 positive and 0 negative; Waste of time. Very boring, 0 positive and 2 negative; and an excerpt, Great action, great effects, fantastic acting, funny humor, from a review with 7 positive and 4 negative.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/reviews-words-v1.svg" alt="The same grid in three k-means clusters with orange centroids: circles along the bottom (positive words, almost no negative ones), squares along the left (few or no positive words), and triangles filling the upper right (many of both).">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" src="../assets/clustering-visuals/reviews-words-v2.svg" alt="Each cluster labeled with its sentiment mix: the positive-words cluster, 1,879 reviews, is 56 percent positive; the negative-words cluster, 1,416 reviews, is 51 percent negative; the many-of-both cluster, 1,205 reviews, is 41 percent negative, 39 percent meh, and 20 percent positive.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Information Criteria
+
+::: {.dense}
+- Use information criteria: the Bayes information criterion (BIC) and the Akaike information criterion (AIC).
+- Both add a penalty that grows with $K$, so more clusters must earn their keep
+:::
+
+---
+
+## Coordinate Descent
+
+::: {.dense}
+The optimization method is a form of coordinate descent (iterate between m and r):
+
+- Fix centers m, optimize assignments r (choose the cluster whose mean is closest).
+- Fix assignments r, optimize means m (average of assigned data points).
+
+"both the label update and the center update decrease total WSSD in each iteration" (DSFI), so k-means must stop.
+:::
 
 # Sources {.sources}
 
@@ -284,3 +2219,24 @@ Jack Bandy
 2. Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart.
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
+5. Elena Zheleva, CS 418 lecture slides, Mar. 10 and Mar. 19, 2026 (using materials by the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart).
+6. Gonzalo Bello Lander, CS 418 Lecture 14 ("Clustering (I): Basic Concepts & Hierarchical Clustering") and Lecture 15 ("Clustering (II): More Clustering Techniques"), 2026. Exercises 14.1, 14.2, 15.2, 15.3, and 15.4 are from these slides.
+7. Tiffany Timbers, Trevor Campbell, Melissa Lee, Joel Ostblom, and Lindsey Heagy, *[Data Science: A First Introduction (Python Edition)](https://python.datasciencebook.ca/)*, [ch. 6](https://python.datasciencebook.ca/classification2.html) and [ch. 9](https://python.datasciencebook.ca/clustering.html).
+8. Jake VanderPlas, *[Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)*, ["In Depth: Principal Component Analysis"](https://jakevdp.github.io/PythonDataScienceHandbook/05.09-principal-component-analysis.html) and ["In Depth: k-Means Clustering"](https://jakevdp.github.io/PythonDataScienceHandbook/05.11-k-means.html), text CC BY-NC-ND.
+9. Sam Lau, Joseph Gonzalez, and Deborah Nolan, *[Learning Data Science](https://learningds.org/)*, [ch. 16](https://learningds.org/ch/16/ms_intro.html) ("Model Selection").
+10. Roger D. Peng and Elizabeth Matsui, *[The Art of Data Science](https://bookdown.org/rdpeng/artofdatascience/)*, [ch. 8](https://bookdown.org/rdpeng/artofdatascience/inference-vs-prediction-implications-for-modeling-strategy.html).
+11. *Ethics in Data Science* (course mini-book), [ch. 4, "Ethics in Understanding"](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf); Alfred Korzybski, "A Non-Aristotelian System and Its Necessity for Rigour in Mathematics and Physics," Supplement III to *Science and Sanity* (1931).
+12. scikit-learn developers, ["Comparing different clustering algorithms on toy datasets"](https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html).
+13. Week 10 figures: [`clustering-visuals`](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/clustering-visuals), [`pca-visuals`](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/pca-visuals), and [`model-evaluation-visuals`](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/model-evaluation-visuals), each with its generator script and `SOURCES.md`.
+14. Penguins: Allison Horst, Alison Hill, and Kristen Gorman, [palmerpenguins](https://doi.org/10.5281/zenodo.3960218) (2020), CC0; data originally from Kristen B. Gorman, Tony D. Williams, and William R. Fraser, "Ecological Sexual Dimorphism and Environmental Variability within a Community of Antarctic Penguins (Genus *Pygoscelis*)," *PLoS ONE* 9(3): e90081 (2014), <https://doi.org/10.1371/journal.pone.0090081>.
+15. L stations: City of Chicago Data Portal, [CTA System Information: List of 'L' Stops](https://data.cityofchicago.org/Transportation/CTA-System-Information-List-of-L-Stops/8pix-ypme); course copy in [`datasets/chicago-l-stations`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/chicago-l-stations). Route colors per the [CTA Trademark Guidelines for Developers](https://www.transitchicago.com/developers/branding/).
+16. Michalski's trains: Ryszard S. Michalski, "Pattern Recognition as Rule-Guided Inductive Inference," *IEEE TPAMI* (1980); figure as reproduced in Lukas Helff et al., "V-LoL: A Diagnostic Dataset for Visual Logical Learning" (2023).
+17. Center fielders: [Baseball Savant](https://baseballsavant.mlb.com/) (MLB Advanced Media), 2026 Outs Above Average, custom batting, and arm strength leaderboards; course copy in [`datasets/mlb-center-fielders-2026`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/mlb-center-fielders-2026).
+18. CTA ridership: City of Chicago Data Portal, [CTA Ridership: 'L' Station Entries, Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f); course copy in [`datasets/cta-ridership`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/cta-ridership).
+19. Linkage definitions and comparison: scikit-learn developers, *User Guide*, ["Hierarchical clustering"](https://scikit-learn.org/stable/modules/clustering.html#hierarchical-clustering) (quoted on "Linkage Changes the Tree").
+20. Movie reviews: Yupeng Hou, Jiacheng Li, Xiangjun Fu, Zhankui He, An Yan, Xiusi Chen, and Julian McAuley, "Bridging Language and Items for Retrieval and Recommendation: Benchmarking LLMs as Semantic Encoders," [arXiv:2403.03952](https://arxiv.org/abs/2403.03952) (2024), [Amazon Reviews 2023](https://amazon-reviews-2023.github.io/); course sample in [`datasets/movie-reviews`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/movie-reviews).
+21. Sentiment word lists: Minqing Hu and Bing Liu, "Mining and Summarizing Customer Reviews," *Proceedings of the Tenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining* (KDD 2004): 168–177, <https://doi.org/10.1145/1014052.1014073>; [Opinion Lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html) by Bing Liu, CC BY 4.0; course copy in [`datasets/movie-reviews/opinion-lexicon`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/movie-reviews/opinion-lexicon).
+22. Ashland photo: Pi.1415926535, ["Entrance to Ashland station, December 2018"](https://commons.wikimedia.org/wiki/File:Entrance_to_Ashland_station,_December_2018.JPG), CC BY-SA 3.0, via Wikimedia Commons; the recolored versions on the Color Compression slide are also CC BY-SA 3.0.
+23. Skyline photo: Warren LeMay, ["View from Chicago River at Park No. 571, Eleanor Street, Bridgeport, Chicago, IL"](https://commons.wikimedia.org/wiki/File:View_from_Chicago_River_at_Park_No._571,_Eleanor_Street,_Bridgeport,_Chicago,_IL_(54832903478).jpg), CC BY-SA 4.0, via Wikimedia Commons; the recolored versions on "Color Compression, Again" are also CC BY-SA 4.0.
+24. Condo sales: Cook County Assessor's Office, [Assessor - Parcel Sales](https://datacatalog.cookcountyil.gov/Property-Taxation/Assessor-Parcel-Sales/wvhk-k5uv) and [Assessor - Parcel Universe](https://datacatalog.cookcountyil.gov/Property-Taxation/Assessor-Parcel-Universe/nj4t-kc8j), Cook County Open Data; course copy in [`datasets/cook-county-home-sales-2025`](https://github.com/jackbandy/data-science-fun/tree/main/datasets/cook-county-home-sales-2025).
+25. Crow-Armstrong photo: Minda Haas Kuhlmann, ["Pete Crow-Armstrong (53104160703)"](https://commons.wikimedia.org/wiki/File:Pete_Crow-Armstrong_(53104160703).jpg), CC BY 2.0, via Wikimedia Commons; cropped to a golden rectangle.

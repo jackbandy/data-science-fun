@@ -38,6 +38,7 @@ Files are at the highest available resolution from the source.
 
 ### 11. Ashland
 - **stop11-ashland-a.jpg** — [Wikimedia Commons: Entrance to Ashland station, December 2018.JPG](https://commons.wikimedia.org/wiki/File:Entrance_to_Ashland_station,_December_2018.JPG) — License: CC BY-SA 3.0 — Author: Pi.1415926535 — 5184×3888
+- **stop11-ashland-b.jpg** — [Wikimedia Commons: View from Chicago River at Park No. 571, Eleanor Street, Bridgeport, Chicago, IL (54832903478).jpg](https://commons.wikimedia.org/wiki/File:View_from_Chicago_River_at_Park_No._571,_Eleanor_Street,_Bridgeport,_Chicago,_IL_(54832903478).jpg) — License: CC BY-SA 4.0 — Author: Warren LeMay from Chicago, IL, United States — 4032×3024
 
 ### 12. 35th/Archer
 - **stop12-35th-archer-a.jpg** — [Wikimedia Commons: 35th Archer CTA.jpg](https://commons.wikimedia.org/wiki/File:35th_Archer_CTA.jpg) — License: CC BY-SA 2.0 — Author: Zol87 from Chicago, Illinois, USA — 2592×1944

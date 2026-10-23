@@ -51,6 +51,8 @@ Their purpose is to educate, so feel free to use them, remix them, teach with th
 
 **Code.** The website and other public-facing materials are CC BY-NC-SA, but Creative Commons says "We recommend against using Creative Commons licenses for software" ([CC FAQ](https://creativecommons.org/faq/)), so all the code in this repo is under the [MIT License](LICENSE) instead. That includes scripts, build tooling, workflows, and the code in slides, exercises, and notebooks. Third-party code keeps its own license.
 
+Note that a good portion of the code here (e.g. build scripts, figure generators, etc.) was drafted by LLM-based coding tools. You're welcome to it under the MIT License, but most of it is less-than-great code that was simply used as a means to an end, where my end goal was to create a specific element or demo or visual. See also the [Note on LLM use](#note-on-llm-use) above.
+
 ---
 
 # Technical details
