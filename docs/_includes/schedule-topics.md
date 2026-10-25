@@ -18,7 +18,7 @@
 ### Sources
 
 * *The Art of Data Science*, [Chapter 1: Data Analysis as Art](https://bookdown.org/rdpeng/artofdatascience/index.html)
-* *Ethics in Data Science* (course mini-book), [Chapter 1: Working Toward Wisdom](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* *Ethics in Data Science* (course mini-book), [Chapter 1: Working Toward Wisdom](/ethics-in-data-science/book/01-working-toward-wisdom.html)
 * *Computational and Inferential Thinking*, [Chapter 1: What is Data Science?](https://inferentialthinking.com/chapters/01/what-is-data-science)
 * *Learning Data Science*, [Chapter 1: The Data Science Lifecycle](https://learningds.org/ch/01/lifecycle_intro.html)
 * *The Art of Data Science*, [Chapter 2: Epicycles of Analysis](https://bookdown.org/rdpeng/artofdatascience/epicycles-of-analysis.html)
@@ -30,7 +30,7 @@
 ### Sources
 
 * *The Art of Data Science*, [Chapter 3: Stating and Refining the Question](https://bookdown.org/rdpeng/artofdatascience/chapter-question.html)
-* *Ethics in Data Science* (course mini-book), [Chapter 2: Ethics in Asking Questions](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* *Ethics in Data Science* (course mini-book), [Chapter 2: Ethics in Asking Questions](/ethics-in-data-science/book/02-ethics-in-asking-questions.html)
 * Leek & Peng (2015), ["What is the question?"](https://www.science.org/doi/abs/10.1126/science.aaa6146), *Science* 347(6228), 1314-1315
 * Cross & Roelofsen (2014), ["Questions"](https://plato.stanford.edu/entries/questions/), *Stanford Encyclopedia of Philosophy*
 
@@ -59,7 +59,7 @@
 * *Calling Bullshit*, [5.3: Big Data Hubris](https://www.youtube.com/watch?v=X0XqnAqvyIk) (video, 6 min)
 * *The Art of Data Science*, [Section 2.4: Collecting Information](https://bookdown.org/rdpeng/artofdatascience/collecting-information.html)
 * *Data Science: A First Introduction*, [Chapter 2: Reading in data locally and from the web](https://python.datasciencebook.ca/reading.html)
-* *Ethics in Data Science* (course mini-book), [Chapter 3: Ethics in Obtaining Data](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* *Ethics in Data Science* (course mini-book), [Chapter 3: Ethics in Obtaining Data](/ethics-in-data-science/book/03-ethics-in-obtaining-data.html)
 
 ## Week 3, Day 1 (2026-09-07)
 
@@ -256,7 +256,7 @@
 ### Sources
 
 * *Data Science: A First Introduction*, [Chapter 9: Clustering](https://python.datasciencebook.ca/clustering.html)
-* *Mining of Massive Datasets*, [Chapter 7: Clustering](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF)
+* *Mining of Massive Datasets*, [Chapter 7: Clustering](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/clustering/FB78426E9D8D22B74C5EFD7C2B68A91B)
 
 ## Week 10, Day 2 (2026-10-28)
 
@@ -265,12 +265,12 @@
 
 ### Sources
 
-* *Mining of Massive Datasets*, [Chapter 11: Dimensionality Reduction](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF)
+* *Mining of Massive Datasets*, [Chapter 11: Dimensionality Reduction](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/dimensionality-reduction/BE6D8234ACB467D98B0BA4899D1F5B4C)
 * *Python Data Science Handbook*, [Principal Component Analysis](https://jakevdp.github.io/PythonDataScienceHandbook/05.09-principal-component-analysis.html)
 * *Learning Data Science*, [Chapter 16: Model Selection](https://learningds.org/ch/16/ms_intro.html)
 * *Data Science: A First Introduction*, [Chapter 6: Classification II — Evaluation and Tuning](https://python.datasciencebook.ca/classification2.html)
 * *The Art of Data Science*, [Chapter 8: Inference vs. Prediction — Implications for Modeling Strategy](https://bookdown.org/rdpeng/artofdatascience/inference-vs-prediction-implications-for-modeling-strategy.html)
-* *Ethics in Data Science* (course mini-book), [Chapter 4: Ethics in Understanding](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* *Ethics in Data Science* (course mini-book), [Chapter 4: Ethics in Understanding](/ethics-in-data-science/book/04-ethics-in-understanding.html)
 
 ## Week 11, Day 1 (2026-11-02)
 
@@ -278,8 +278,8 @@
 
 ### Sources
 
-* *Mining of Massive Datasets*, [Chapter 9: Recommendation Systems](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF)
-* *Ethics in Data Science* (course mini-book), [Chapter 5: Ethics in Reporting, Decision-Making, and Problem-Solving](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* *Mining of Massive Datasets*, [Chapter 9: Recommendation Systems](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/recommendation-systems/8E2DDDAEFC644266620945386AB7DFDE)
+* *Ethics in Data Science* (course mini-book), [Chapter 5: Ethics in Reporting, Decision-Making, and Problem-Solving](/ethics-in-data-science/book/05-ethics-in-reporting-decisions-solutions.html)
 
 ## Week 11, Day 2 (2026-11-04)
 
@@ -298,7 +298,7 @@
 
 ### Sources
 
-* *Mining of Massive Datasets*, [Chapter 10: Mining Social-Network Graphs](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF)
+* *Mining of Massive Datasets*, [Chapter 10: Mining Social-Network Graphs](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/mining-socialnetwork-graphs/7389AA5812DBD9ACC0D7A618C27C5060)
 * *Learning Data Science*, [Chapter 7: Working with Relations Using SQL](https://learningds.org/ch/07/sql_intro.html)
 
 ## Week 12, Day 2 (2026-11-11)
@@ -308,8 +308,8 @@
 
 ### Sources
 
-* *Mining of Massive Datasets*, [Chapter 10: Mining Social-Network Graphs](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF) (continued)
-* *Mining of Massive Datasets*, [Chapter 5: Link Analysis](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/contents/A6C1ECBD2AEA28163377C998006215AF)
+* *Mining of Massive Datasets*, [Chapter 10: Mining Social-Network Graphs](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/mining-socialnetwork-graphs/7389AA5812DBD9ACC0D7A618C27C5060) (continued)
+* *Mining of Massive Datasets*, [Chapter 5: Link Analysis](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/link-analysis/5DFB9D0592441A72D05BB79E2C21912B)
 
 ## Week 13, Day 1 (2026-11-16)
 
@@ -330,7 +330,7 @@
 ### Sources
 
 * *The Art of Data Science*, [Chapter 10: Communication](https://bookdown.org/rdpeng/artofdatascience/chapter-communication.html)
-* *Ethics in Data Science* (course mini-book), [Chapter 5: Ethics in Reporting, Decision-Making, and Problem-Solving](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* *Ethics in Data Science* (course mini-book), [Chapter 5: Ethics in Reporting, Decision-Making, and Problem-Solving](/ethics-in-data-science/book/05-ethics-in-reporting-decisions-solutions.html)
 
 ## Week 14, Day 2 (2026-11-25)
 
@@ -352,4 +352,4 @@
 ### Sources
 
 * *Learning Data Science*, [Chapter 1: The Data Science Lifecycle](https://learningds.org/ch/01/lifecycle_intro.html) (revisited)
-* *Ethics in Data Science* (course mini-book), [Chapter 6: Conclusion](/ethics-in-data-science/book/Ethics-in-Data-Science.pdf)
+* *Ethics in Data Science* (course mini-book), [Chapter 6: Conclusion](/ethics-in-data-science/book/06-conclusions.html)
