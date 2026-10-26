@@ -4,7 +4,7 @@ Figures from:
 
 > Kaitlyn Zhou, Tom Wilson, Kate Starbird, and Emma S. Spiro. 2023. **Spotlight Tweets: A Lens for Exploring Attention Dynamics within Online Sensemaking During Crisis Events.** *ACM Trans. Soc. Comput.* 6, 1–2, Article 2 (June 2023), 33 pages.  
 > <https://doi.org/10.1145/3577213>  
-> [PDF](https://cs.stanford.edu/~katezhou/assets/publications/2023_spotlight_tweets/paper.pdf)
+> [PDF](https://par.nsf.gov/servlets/purl/10428072)
 
 ## Figures
 

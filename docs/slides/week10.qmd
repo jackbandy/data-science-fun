@@ -572,11 +572,11 @@ Train lines are not round.
 ::: {.dense}
 Worksheet checkpoints 4 and 5:
 
-- Partitional or hierarchical? Circle one for each task and say why.
+- Partitional or hierarchical? Circle one for each task.
 - Read the dendrogram:
     - Which two points are most similar?
-    - Cut it into 3 clusters.
-    - How many clusters does a cut at height 2.25 make?
+    - Cut it into 2 clusters.
+    - How many clusters does a cut at height 4 make?
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -666,24 +666,6 @@ Worksheet checkpoints 4 and 5:
 
 ---
 
-
-## Elbow Neighbor Exercise {.split}
-
-::: {.split-content .golden-columns}
-
-::: {.dense}
-Worksheet checkpoint 6:
-
-- Build the single-link dendrogram for A through E, one merge at a time.
-- Cut it into 2 clusters.
-- With complete link instead, which cluster does C join?
-:::
-
-<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
-
-:::
-
----
 
 ## Hierarchical Clustering: Pros and Cons
 
