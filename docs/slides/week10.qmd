@@ -124,6 +124,24 @@ Sandhill cranes migrating, Jasper-Pulaski Fish and Wildlife Area, November 2017.
 :::
 
 
+---
+
+## Elbow Neighbor Exercise {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+Worksheet checkpoint 1:
+
+- Circle S or U for each task.
+- If it's supervised, what is the target?
+- Which task could you argue either way?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
 # Clustering {.section-header}
 
 ## Vocab: What Is Clustering? {.split}
@@ -342,6 +360,7 @@ Same data, same $K = 3$, two random starts (2 of 200 random starts got stuck).
 
 ---
 
+
 ## Standardize First {.split}
 
 ::: {.split-content}
@@ -500,7 +519,9 @@ Train lines are not round.
 ::: {.split-content .golden-figure}
 
 ::: {.dense}
+- Partitional clustering (like k-means): divide the observations into one flat set of non-overlapping clusters.
 - Hierarchical clustering: find a set of nested clusters that can be organized as a tree (or dendrogram).
+    - Cut the tree at any height to get a partitional clustering.
 - Agglomerative clustering starts with observations as individual clusters and merges the 'closest' pair of clusters at each step until there is a single cluster.
 :::
 
@@ -541,6 +562,26 @@ Train lines are not round.
 :::
 
 ::::
+
+---
+
+## Elbow Neighbor Exercise {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+Worksheet checkpoints 4 and 5:
+
+- Partitional or hierarchical? Circle one for each task and say why.
+- Read the dendrogram:
+    - Which two points are most similar?
+    - Cut it into 3 clusters.
+    - How many clusters does a cut at height 2.25 make?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
 
 ---
 
@@ -631,7 +672,11 @@ Train lines are not round.
 ::: {.split-content .golden-columns}
 
 ::: {.dense}
-TODO
+Worksheet checkpoint 6:
+
+- Build the single-link dendrogram for A through E, one merge at a time.
+- Cut it into 2 clusters.
+- With complete link instead, which cluster does C join?
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
@@ -941,19 +986,6 @@ With $MinPts = 3$ counting the station itself, the relevant distance is to the 2
 - As with the CTA stops, $Eps$ decides what counts as one "place".
 :::
 
----
-
-## Elbow Neighbor Exercise {.split}
-
-::: {.split-content .golden-columns}
-
-::: {.dense}
-TODO
-:::
-
-<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
-
-:::
 
 ---
 
@@ -991,7 +1023,7 @@ The answer key we never gave any algorithm: the actual lines, in CTA route color
 <img src="../assets/clustering-visuals/cluster-shapes.svg" class="figure figure-plain" style="max-height:440px" alt="A grid of small scatter plots: four datasets (round blobs, two moons, nested rings, mixed density) by four methods (k-means, Ward's, single link, DBSCAN). k-means and Ward's split the moons and rings with straight cuts; single link and DBSCAN follow the moon and ring shapes; DBSCAN marks the sparse cloud in the mixed-density data as noise.">
 
 ::: {.caption}
-Exercise 15.4: Which clustering technique will perform better for each dataset and why? After the scikit-learn ["Comparing different clustering algorithms on toy datasets"](https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html) figure.
+Exercise 15.4: Which clustering technique will perform better for each dataset and why? Based on the scikit-learn ["Comparing different clustering algorithms on toy datasets"](https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html) figure.
 :::
 
 # Wrap-Up {.section-header}
