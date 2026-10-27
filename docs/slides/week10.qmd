@@ -1084,7 +1084,7 @@ Take a picture of your worksheet, upload it in Canvas
 
 # Week 10, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop11-ashland-b.jpg" background-size="cover"}
 
-<h2>PCA, Model Evaluation</h2>
+<h2>Cluster Evaluation, PCA, Model Evaluation</h2>
 
 Jack Bandy
 2026
@@ -1096,13 +1096,11 @@ Jack Bandy
 ::: {.split-content .narrow-aside}
 
 ::: {}
+- Evaluating Clusterings
 - Principal Component Analysis
-- What Are We Evaluating?
 - Held-Out Data
 - Classification Metrics
 - Multiclass Classification
-- Evaluating Clusterings
-- The Model Is Not the World
 :::
 
 ![](../assets/orange-line-map-stops/stop11-ashland.svg){.figure alt="Orange Line map with the Ashland stop marked, the Week 10 stop"}
@@ -1117,6 +1115,152 @@ Jack Bandy
 - Project checkpoint today: data documentation
 - Group Projects?
 - Other logistics?
+
+# Evaluating Clusterings {.section-header}
+
+## Why Evaluate a Clustering? {.split}
+
+::: {.split-content}
+
+::: {.dense}
+Cluster evaluation allows us to:
+
+- Evaluate how well a clustering structure fits the data.
+- Determine the correct number of clusters.
+- Compare two sets of clusters to determine which is better.
+
+::: {.fragment fragment-index=1}
+- Unsupervised (internal): "without any external information."
+- Supervised (external): matches some external structure (ground truth). Rarely available; see the appendix.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/kmeans-restarts-v0.svg" alt="Monday's run A: a k-means local optimum on the penguins, SSE 206.1.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/kmeans-restarts-v1.svg" alt="Monday's run B: the better optimum, SSE 157.8.">
+:::
+:::::
+
+::: {.caption}
+Monday: two k-means runs. Which is better, and how would we know?
+:::
+:::
+
+:::
+
+---
+
+## Cohesion and Separation {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+Cohesion measures how similar the observations in a cluster are. Separation measures how distinct a cluster is from other clusters.
+
+$$\text{cohesion}(C_i) = \frac{1}{\frac{|C_i|(|C_i|-1)}{2}} \sum_{x, y \in C_i} \text{proximity}(x, y)$$
+
+::: {.fragment fragment-index=1}
+$$\text{separation}(C_i, C_j) = \frac{1}{|C_i||C_j|} \sum_{x \in C_i,\, y \in C_j} \text{proximity}(x, y)$$
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v0.svg" alt="Two clusters, A with four circles and B with four squares. Orange lines join all 6 pairs inside A; average distance 1.09.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v1.svg" alt="Orange lines join all 16 pairs between A and B; average distance 3.72.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Silhouette Coefficient {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+The silhouette coefficient measures the goodness of a cluster with respect to both cohesion and separation.
+
+$$s_i = \frac{b - a}{\max(a, b)}$$
+
+- $a$: the average distance between the $i$th observation and all other observations in the same cluster.
+- $b$: the average distance between the $i$th observation and all other observations in the closest cluster.
+- Between -1 and 1; a negative value indicates an incorrect clustering, and a value of 0 indicates overlapping clusters.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v2.svg" alt="One point in cluster A is circled. Solid lines to its own cluster average a equals 1.31; dashed orange lines to cluster B average b equals 3.23. s equals 0.59.">
+:::
+
+:::
+
+---
+
+## A Silhouette for Every Penguin {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- One bar per penguin, sorted within each k-means cluster
+- The silhouette coefficient of a cluster is given by the average silhouette coefficient of the observations in the cluster.
+- A few penguins near zero or below: they sit between two clusters
+- Mean over all penguins: 0.52
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/silhouette-penguins.svg" alt="Silhouette plot for k-means with K equals 3: three blocks of horizontal bars, one per cluster, sorted from about 0.7 down to near 0. A dashed orange line marks the mean, 0.52.">
+:::
+
+:::
+
+---
+
+## Back to Choosing K {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Monday: the SSE elbow said $K = 3$
+
+::: {.fragment fragment-index=1}
+- Silhouette says $K = 2$ (0.54), with $K = 3$ close behind (0.52)
+- The elbow method does not always work well. The definition of a cluster used by a clustering technique may differ from that of the cluster evaluation metric.
+- Which would you report? What else would you need to know?
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/choose-k-v0.svg" alt="Top panel: total SSE against K from 2 to 9, with the elbow at K equals 3 circled. Bottom panel empty.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/choose-k-v1.svg" alt="Bottom panel added: mean silhouette against K, highest at K equals 2 (0.54, circled), then 0.52 at K equals 3, falling to about 0.36 by K equals 9.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Elbow Neighbor Exercise {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+TODO
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
 
 # Principal Component Analysis {.section-header}
 
@@ -1283,7 +1427,7 @@ Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann,
 
 ---
 
-## How Many Components? (Again) {.split}
+## How Many Components for Center Fielders? {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -1302,7 +1446,7 @@ Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann,
 
 ---
 
-## What Do the Components Mean? (Again) {.split}
+## What Do the Center-Fielder Components Mean? {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -1346,8 +1490,7 @@ Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann,
 
 :::
 
-# What Are We Evaluating? {.section-header}
-
+# Held-Out Data {.section-header}
 
 ## Recall: Overfitting {.image-frame-slide}
 
@@ -1357,7 +1500,7 @@ Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann,
 "Overfitting happens when the model follows the data too closely and picks up the variability in the random noise in the outcome." Lau, Gonzalez, and Nolan, ["Overfitting"](https://learningds.org/ch/16/ms_overfitting.html), *Learning Data Science*, §16.1. [review: Week 8]
 :::
 
-# Held-Out Data {.section-header}
+---
 
 ## Train and Test {.split}
 
@@ -1554,7 +1697,8 @@ $$F_\beta = \frac{(1 + \beta^2) \cdot Pr \cdot Re}{\beta^2 \cdot Pr + Re}$$
 ::: {.dense}
 - Undersample the majority class; more computationally efficient.
 - Oversample the minority class; the base binary classifier might do better with more training examples.
-- Efficient implementations incorporate weight in the algorithm instead of explicitly duplicating data. You can use the imblearn Python library (e.g., the ADASYN algorithm).
+- Efficient implementations incorporate weight in the algorithm instead of explicitly duplicating data (e.g., `class_weight="balanced"` in scikit-learn).
+- Oversampling can also synthesize new minority examples instead of copying them: SMOTE or ADASYN, in the imbalanced-learn (`imblearn`) library.
 - Resample the training data only, never the test set
 :::
 
@@ -1657,153 +1801,52 @@ Week 9's RBF-kernel SVM, bill length and flipper length, 5-fold cross-validated.
 
 :::
 
-# Evaluating Clusterings {.section-header}
+# Wrap-Up {.section-header}
 
-## Why Evaluate a Clustering? {.split}
-
-::: {.split-content}
-
-::: {.dense}
-Cluster evaluation allows us to:
-
-- Evaluate how well a clustering structure fits the data.
-- Determine the correct number of clusters.
-- Compare two sets of clusters to determine which is better.
-
-::: {.fragment fragment-index=1}
-- Unsupervised (internal): "without any external information."
-- Supervised (external): matches some external structure (ground truth).
-:::
-:::
-
-::: {.captioned-figure}
-::::: {.r-stack .peek-stack}
-<img class="figure" src="../assets/clustering-visuals/kmeans-restarts-v0.svg" alt="Monday's run A: a k-means local optimum on the penguins, SSE 206.1.">
-
-::: {.fragment fragment-index=1}
-<img class="figure" src="../assets/clustering-visuals/kmeans-restarts-v1.svg" alt="Monday's run B: the better optimum, SSE 157.8.">
-:::
-:::::
-
-::: {.caption}
-Monday: two k-means runs. Which is better, and how would we know?
-:::
-:::
-
-:::
-
----
-
-## Cohesion and Separation {.split}
-
-::: {.split-content .golden-figure}
-
-::: {.dense}
-Cohesion measures how similar the observations in a cluster are. Separation measures how distinct a cluster is from other clusters.
-
-$$\text{cohesion}(C_i) = \frac{1}{\frac{|C_i|(|C_i|-1)}{2}} \sum_{x, y \in C_i} \text{proximity}(x, y)$$
-
-::: {.fragment fragment-index=1}
-$$\text{separation}(C_i, C_j) = \frac{1}{|C_i||C_j|} \sum_{x \in C_i,\, y \in C_j} \text{proximity}(x, y)$$
-:::
-:::
-
-::: {.captioned-figure}
-::::: {.r-stack .peek-stack}
-<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v0.svg" alt="Two clusters, A with four circles and B with four squares. Orange lines join all 6 pairs inside A; average distance 1.09.">
-
-::: {.fragment fragment-index=1}
-<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v1.svg" alt="Orange lines join all 16 pairs between A and B; average distance 3.72.">
-:::
-:::::
-:::
-
-:::
-
----
-
-## Silhouette Coefficient {.split}
-
-::: {.split-content .golden-figure}
-
-::: {.dense}
-The silhouette coefficient measures the goodness of a cluster with respect to both cohesion and separation.
-
-$$s_i = \frac{b - a}{\max(a, b)}$$
-
-- $a$: the average distance between the $i$th observation and all other observations in the same cluster.
-- $b$: the average distance between the $i$th observation and all other observations in the closest cluster.
-- Between -1 and 1; a negative value indicates an incorrect clustering, and a value of 0 indicates overlapping clusters.
-:::
-
-::: {.captioned-figure}
-<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v2.svg" alt="One point in cluster A is circled. Solid lines to its own cluster average a equals 1.31; dashed orange lines to cluster B average b equals 3.23. s equals 0.59.">
-:::
-
-:::
-
----
-
-## A Silhouette for Every Penguin {.split}
-
-::: {.split-content .golden-figure}
-
-::: {.dense}
-- One bar per penguin, sorted within each k-means cluster
-- The silhouette coefficient of a cluster is given by the average silhouette coefficient of the observations in the cluster.
-- A few penguins near zero or below: they sit between two clusters
-- Mean over all penguins: 0.52
-:::
-
-::: {.captioned-figure}
-<img class="figure" src="../assets/clustering-visuals/silhouette-penguins.svg" alt="Silhouette plot for k-means with K equals 3: three blocks of horizontal bars, one per cluster, sorted from about 0.7 down to near 0. A dashed orange line marks the mean, 0.52.">
-:::
-
-:::
-
----
-
-## Back to Choosing K {.split}
-
-::: {.split-content}
-
-::: {.dense}
-- Monday: the SSE elbow said $K = 3$
-
-::: {.fragment fragment-index=1}
-- Silhouette says $K = 2$ (0.54), with $K = 3$ close behind (0.52)
-- The elbow method does not always work well. The definition of a cluster used by a clustering technique may differ from that of the cluster evaluation metric.
-- Which would you report? What else would you need to know?
-:::
-:::
-
-::: {.captioned-figure}
-::::: {.r-stack .peek-stack}
-<img class="figure" src="../assets/clustering-visuals/choose-k-v0.svg" alt="Top panel: total SSE against K from 2 to 9, with the elbow at K equals 3 circled. Bottom panel empty.">
-
-::: {.fragment fragment-index=1}
-<img class="figure" src="../assets/clustering-visuals/choose-k-v1.svg" alt="Bottom panel added: mean silhouette against K, highest at K equals 2 (0.54, circled), then 0.52 at K equals 3, falling to about 0.36 by K equals 9.">
-:::
-:::::
-:::
-
-:::
-
----
-
-## Elbow Neighbor Exercise {.split}
+## A Map Is Not the Territory {.split}
 
 ::: {.split-content .golden-columns}
 
 ::: {.dense}
-TODO
+> A map is not the territory it represents, but, if correct, it has a similar structure to the territory, which accounts for its usefulness
+
+Alfred Korzybski (1931), quoted in *Ethics in Data Science*, ch. 4
+
+- Clusters, components, and scores are maps too
+- A high silhouette or a high F-score says the map is tidy, not that it is the territory
 :::
 
-<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/orange-line-map-stops/stop11-ashland.svg" alt="Orange Line map with the Ashland stop marked, the Week 10 stop">
+
+::: {.fragment}
+<img class="figure" src="../assets/clustering-visuals/l-dbscan-v1.svg" alt="Monday's DBSCAN map, eps 1.2 km: seven clusters and 32 noise stations; Ashland is noise.">
+:::
+:::::
+
+::: {.caption}
+The CTA's map vs. Monday's DBSCAN map (eps 1.2 km): same stations, different "structure." Ashland is a stop on one and noise on the other.
+:::
+:::
 
 :::
 
 ---
+
+## Summary {#summary-day-2}
+
+TODO
+
+---
+
+## Upload your worksheet {#upload-worksheet-day-2}
+
+Take a picture of your worksheet, upload it in Canvas
+
+# That's All for Today, See You Monday! {.section-header .no-index}
+
+# Appendix: More Clustering {.section-header}
 
 ## When You Have the Answer Key {.split}
 
@@ -1819,6 +1862,25 @@ TODO
 <img class="figure" src="../assets/clustering-visuals/contingency-penguins.svg" alt="Contingency matrix of true species against k-means cluster: Adélie 146, 4, 1; Chinstrap 5, 59, 4; Gentoo 0, 1, 122. Adjusted Rand index 0.89.">
 :::
 
+:::
+
+---
+
+## External Metrics {.smaller}
+
+::: {.dense}
+Classification-oriented:
+
+- Precision: measures the fraction of a cluster $C_i$ that consists of observations of a given class $k$.
+- Recall: measures the extent to which a cluster $C_i$ contains all observations of a given class $k$.
+- Entropy: measures the degree to which each cluster $C_i$ consists of observations of a single class $k$.
+
+Similarity-oriented, counting *pairs* of observations:
+
+- $\text{Jaccard} = \frac{N_{11}}{N_{01} + N_{10} + N_{11}}$, $\quad RI = \frac{N_{00} + N_{11}}{N_{00} + N_{01} + N_{10} + N_{11}}$
+- $N_{11}$ is the number of pairs of observations that belong to the same class and the same cluster.
+- The adjusted Rand index is a version of the Rand index corrected for chance. Random clusters will have an adjusted Rand index of 0.
+- Penguins, k-means: ARI = 0.89
 :::
 
 ---
@@ -1851,83 +1913,6 @@ TODO
 :::
 
 ---
-
-## External Metrics {.smaller}
-
-::: {.dense}
-Classification-oriented:
-
-- Precision: measures the fraction of a cluster $C_i$ that consists of observations of a given class $k$.
-- Recall: measures the extent to which a cluster $C_i$ contains all observations of a given class $k$.
-- Entropy: measures the degree to which each cluster $C_i$ consists of observations of a single class $k$.
-
-Similarity-oriented, counting *pairs* of observations:
-
-- $\text{Jaccard} = \frac{N_{11}}{N_{01} + N_{10} + N_{11}}$, $\quad RI = \frac{N_{00} + N_{11}}{N_{00} + N_{01} + N_{10} + N_{11}}$
-- $N_{11}$ is the number of pairs of observations that belong to the same class and the same cluster.
-- The adjusted Rand index is a version of the Rand index corrected for chance. Random clusters will have an adjusted Rand index of 0.
-- Penguins, k-means: ARI = 0.89
-:::
-
-# The Model Is Not the World {.section-header}
-
-## A Map Is Not the Territory {.split}
-
-::: {.split-content .golden-columns}
-
-::: {.dense}
-> A map is not the territory it represents, but, if correct, it has a similar structure to the territory, which accounts for its usefulness
-
-Alfred Korzybski (1931), quoted in *Ethics in Data Science*, ch. 4
-
-- Clusters, components, and scores are maps too
-- A high silhouette or a high F-score says the map is tidy, not that it is the territory
-:::
-
-::: {.captioned-figure}
-<img class="figure" src="../assets/orange-line-map-stops/stop11-ashland.svg" alt="Orange Line map with the Ashland stop marked, the Week 10 stop">
-
-::: {.caption}
-Compare Monday's station map: same stops, different "structure."
-:::
-:::
-
-:::
-
----
-
-## Multiple Correct Models {.split}
-
-::: {.split-content .golden-figure}
-
-::: {.dense}
-- Penguins: $K = 2$ (silhouette) or $K = 3$ (elbow, species)?
-- CTA stops: compact neighborhoods (Ward's) or connected corridors (DBSCAN)?
-- Chinstraps: cutoff 0.8 (precision) or 0.2 (recall)?
-- Each is a defensible answer to a different question
-
-
-:::
-
-::: {.captioned-figure}
-<img class="figure" src="../assets/michalski-trains/figure10-michalski-original-trains.png" alt="Michalski's original set of trains, going East and West, as reproduced in the V-LoL diagnostic dataset paper.">
-
-::: {.caption}
-Michalski's trains, from *Ethics in Data Science*, ch. 4 (Helff et al., 2023).
-:::
-:::
-
-:::
-
-# Wrap-Up {.section-header}
-
-## Upload your worksheet {#upload-worksheet-day-2}
-
-Take a picture of your worksheet, upload it in Canvas
-
-# That's All for Today, See You Monday! {.section-header .no-index}
-
-# Appendix: More Clustering {.section-header}
 
 ## Soft Clustering
 
@@ -2293,6 +2278,31 @@ The optimization method is a form of coordinate descent (iterate between m and r
 - Fix assignments r, optimize means m (average of assigned data points).
 
 "both the label update and the center update decrease total WSSD in each iteration" (DSFI), so k-means must stop.
+:::
+
+---
+
+## Multiple Correct Models {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Penguins: $K = 2$ (silhouette) or $K = 3$ (elbow, species)?
+- CTA stops: compact neighborhoods (Ward's) or connected corridors (DBSCAN)?
+- Chinstraps: cutoff 0.8 (precision) or 0.2 (recall)?
+- Each is a defensible answer to a different question
+
+
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/michalski-trains/figure10-michalski-original-trains.png" alt="Michalski's original set of trains, going East and West, as reproduced in the V-LoL diagnostic dataset paper.">
+
+::: {.caption}
+Michalski's trains, from *Ethics in Data Science*, ch. 4 (Helff et al., 2023).
+:::
+:::
+
 :::
 
 # Sources {.sources}
