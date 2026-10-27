@@ -274,23 +274,21 @@
 
 ## Week 11, Day 1 (2026-11-02)
 
-* Recommendation systems
-
-### Sources
-
-* *Mining of Massive Datasets*, [Chapter 9: Recommendation Systems](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/recommendation-systems/8E2DDDAEFC644266620945386AB7DFDE)
-* *Ethics in Data Science* (course mini-book), [Chapter 5: Ethics in Reporting, Decision-Making, and Problem-Solving](/ethics-in-data-science/book/05-ethics-in-reporting-decisions-solutions.html)
+* **Group project work session (in class)**
 
 ## Week 11, Day 2 (2026-11-04)
 
+* Recommendation systems
 * A/B testing
 
 ### Sources
 
+* *Mining of Massive Datasets*, [Chapter 9: Recommendation Systems](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/recommendation-systems/8E2DDDAEFC644266620945386AB7DFDE)
 * *Learning Data Science*, [Chapter 3: Simulation and Data Design](https://learningds.org/ch/03/theory_intro.html) (continued)
 * *Computational and Inferential Thinking*, [Chapter 2: Causality and Experiments](https://inferentialthinking.com/chapters/02/causality-and-experiments)
 * *Computational and Inferential Thinking*, [Chapter 12: Comparing Two Samples](https://inferentialthinking.com/chapters/12/comparing-two-samples)
 * *Calling Bullshit*, [3.5: Common Causes](https://www.youtube.com/watch?v=5iVN13tbVNc) (video, 10 min)
+* *Ethics in Data Science* (course mini-book), [Chapter 5: Ethics in Reporting, Decision-Making, and Problem-Solving](/ethics-in-data-science/book/05-ethics-in-reporting-decisions-solutions.html)
 
 ## Week 12, Day 1 (2026-11-09)
 

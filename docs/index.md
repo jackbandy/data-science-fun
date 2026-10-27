@@ -44,7 +44,8 @@ extra_css:
       {%- endif %}
       <td>{{ row["Class Day"] | escape }}<span class="schedule-day-date">({{ row["Date"] | date: "%b %-d" | replace: "Sep ", "Sept " }})</span></td>
       <td>{{ row["Topic"] | escape }}</td>
-      <td>{{ row["Before Class"] | escape }}</td>
+      {%- comment -%} A Before Class cell can hold two due items ("Homework 8 Due; project checkpoint: EDA"), so each one gets its own line. {%- endcomment %}
+      <td>{{ row["Before Class"] | escape | replace: "; ", "<br>" }}</td>
       <td>{{ row["In Class"] | escape }}</td>
     </tr>
     {%- endfor -%}

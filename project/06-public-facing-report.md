@@ -1,7 +1,7 @@
 ---
 summary: TODO — one line describing this checkpoint.
 topic: TODO
-due: Wednesday, November 18
+due: Wednesday, November 25
 ai_policy: tk
 draft: true
 ---
