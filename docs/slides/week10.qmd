@@ -1866,6 +1866,20 @@ $$TNR = \frac{TN}{TN + FP}$$
 
 ---
 
+## Discuss with your elbow neighbor(s) {.split}
+
+::: {.split-content .golden-columns}
+
+::: {}
+Suppose you get a positive flu or COVID test. Which metric(s) would you want to know about the test?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
 ## ROC Curve {.split}
 
 ::: {.split-content}
@@ -1983,16 +1997,10 @@ Alfred Korzybski (1931), quoted in *Ethics in Data Science*, ch. 4
 :::
 
 ::: {.captioned-figure}
-::::: {.r-stack .peek-stack}
 <img class="figure" style="max-height:430px" src="../assets/orange-line-map-stops/stop11-ashland.svg" alt="Orange Line map with the Ashland stop marked, the Week 10 stop">
 
-::: {.fragment}
-<img class="figure" style="max-height:430px" src="../assets/clustering-visuals/l-dbscan-v1.svg" alt="Monday's DBSCAN map, eps 1.2 km: seven clusters and 32 noise stations; Ashland is noise.">
-:::
-:::::
-
 ::: {.caption}
-The CTA's map vs. Monday's DBSCAN map (eps 1.2 km): same stations, different "structure." Ashland is a stop on one and noise on the other.
+The CTA's Orange Line map, with Ashland marked as the Week 10 stop
 :::
 :::
 
@@ -2536,6 +2544,42 @@ B) One-versus-one (OVO)
 
 ::: {.captioned-figure}
 <img class="figure" src="../assets/model-evaluation-visuals/confusion-penguins.svg" alt="Three-by-three confusion matrix for an RBF SVM: Adélie 146 correct, 3 called Chinstrap, 2 called Gentoo; Chinstrap 59 correct, 6 called Adélie, 3 called Gentoo; Gentoo 122 correct, 1 called Chinstrap. 96 percent accurate.">
+
+::: {.caption}
+Week 9's RBF-kernel SVM, bill length and flipper length, 5-fold cross-validated.
+:::
+:::
+
+:::
+
+---
+
+## Precision, Recall, and AUC for K Classes {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Precision and recall are defined for two classes
+- With K classes: treat one class as "positive" and the rest as "negative," once per class
+
+::: {.fragment fragment-index=1}
+- Then average the K scores:
+    - Macro: plain mean, so a rare class counts as much as a common one
+    - Weighted: weighted by how many examples each class has
+    - Micro: pool the TP, FP, and FN counts first; with one label per example, this equals accuracy
+- AUC works the same way: one ROC curve per class (one vs. rest) or per pair (one vs. one), then average
+- In scikit-learn: `precision_score(y, yhat, average="macro")`, `roc_auc_score(y, probs, multi_class="ovr")`
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/model-evaluation-visuals/multiclass-metrics-v0.svg" alt="The three-species confusion matrix relabeled for Chinstrap as positive: the Chinstrap row and column are shaded. TP 59; FN 6 and 3 in the Chinstrap row; FP 3 and 1 in the Chinstrap column; the four other cells are TN. Precision 59 over 63, 94 percent; recall 59 over 68, 87 percent.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/model-evaluation-visuals/multiclass-metrics-v1.svg" alt="Precision and recall bars for each species: Adélie 96 and 97 percent, Chinstrap 94 and 87, Gentoo 96 and 99. Averages: macro 95 and 94, weighted 96 and 96, micro 96 and 96, which equals accuracy.">
+:::
+:::::
 
 ::: {.caption}
 Week 9's RBF-kernel SVM, bill length and flipper length, 5-fold cross-validated.

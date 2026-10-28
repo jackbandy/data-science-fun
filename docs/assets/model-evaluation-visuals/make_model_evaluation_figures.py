@@ -543,6 +543,55 @@ def classifier_count():
     return fig
 
 
+@steps("multiclass-metrics", 2)
+def multiclass_metrics(step):
+    """v0: Chinstrap vs. the rest, read off the three-species matrix. v1: every species in turn, then averaged."""
+    Z, species = penguins()
+    yhat = cross_val_predict(SVC(kernel="rbf"), Z, species, cv=CV)
+    M = np.array([[int(np.sum((species == a) & (yhat == b))) for b in SPECIES_ORDER]
+                  for a in SPECIES_ORDER])
+    names = [f"{SPECIES_STYLE[s][2]} {GLYPH[SPECIES_STYLE[s][0]]}" for s in SPECIES_ORDER]
+    prec, rec = np.diag(M) / M.sum(0), np.diag(M) / M.sum(1)
+    if step == 0:
+        k = SPECIES_ORDER.index("Chinstrap")
+
+        def role(i, j):
+            return "TP" if i == j == k else "FN" if i == k else "FP" if j == k else "TN"
+
+        R = np.array([[f"{role(i, j)}\n{M[i, j]}" for j in range(3)] for i in range(3)], dtype=object)
+        fig, ax = fixed_fig(SPLIT, 230, 40, 190, 150)
+        matrix(ax, R, names, [f"Pred.\n{n}" for n in names], big=22,
+               shade={(k, j) for j in range(3)} | {(i, k) for i in range(3)})
+        ax.text(-0.08, -0.1, "True ↓\nPredicted →", ha="right", va="bottom", fontsize=14, color=STEEL)
+        note(fig, "Chinstrap as “positive”: Adélie and Gentoo\nboth count as “negative”")
+        fig.text(0.03, 0.08, f"Precision {M[k, k]} / {M[:, k].sum()} = {prec[k]:.0%}     "
+                             f"Recall {M[k, k]} / {M[k].sum()} = {rec[k]:.0%}",
+                 fontsize=18, color=INK, ha="left", va="bottom")
+        return fig
+    n = M.sum(1)
+    acc = np.trace(M) / M.sum()
+    P = np.r_[prec, prec.mean(), (prec * n).sum() / n.sum(), acc]
+    R = np.r_[rec, rec.mean(), (rec * n).sum() / n.sum(), acc]
+    ys = np.r_[0, 1, 2, 3.5, 4.5, 5.5]
+    fig, ax = fixed_fig(SPLIT, 260, 80, 150, 40)
+    tidy(ax, grid=None, spines=())
+    ax.barh(ys - 0.19, P, height=0.36, color=INK)
+    ax.barh(ys + 0.19, R, height=0.36, color=QUIET)
+    for y, p, r in zip(ys, P, R):
+        ax.text(p + 0.015, y - 0.19, f"{p:.0%}", va="center", fontsize=14, color=INK)
+        ax.text(r + 0.015, y + 0.19, f"{r:.0%}", va="center", fontsize=14, color=STEEL)
+    ax.text(0.02, -0.19, "precision", va="center", fontsize=14, color=PAPER)
+    ax.text(0.02, 0.19, "recall", va="center", fontsize=14, color=INK)
+    ax.axhline(2.75, color=BORDER, lw=1.5)
+    ax.set_yticks(ys, names + ["Macro average", "Weighted average", "Micro average\n(= accuracy)"],
+                  fontsize=16, color=INK)
+    ax.set_xticks([])
+    ax.set_xlim(0, 1.12)
+    ax.set_ylim(5.9, -0.5)
+    note(fig, "Precision and recall for each species in turn,\nthen averaged three ways")
+    return fig
+
+
 def main(argv: list[str]) -> None:
     if FONT_PATH.exists():
         font_manager.fontManager.addfont(str(FONT_PATH))
