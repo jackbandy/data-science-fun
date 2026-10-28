@@ -318,13 +318,14 @@ def pca_cf_scree():
     return fig
 
 
-@figure("pca-cf-loadings")
-def pca_cf_loadings():
+@steps("pca-cf-loadings", 2)
+def pca_cf_loadings(step):
+    """v0: the weights alone. v1: our names for the components."""
     names, T, pca = center_fielders()
     W = pca.components_[:2]
     fig = plt.figure(figsize=(SPLIT[0] / DPI, SPLIT[1] / DPI), dpi=DPI)
     fig.patch.set_facecolor(PAPER)
-    titles = ["PC1: swing big", "PC2: chase and run, don't walk"]
+    titles = [["PC1", "PC2"], ["PC1: swing big", "PC2: chase and run, don't walk"]][step]
     for r, (w, title) in enumerate(zip(W, titles)):
         ax = fig.add_axes([0.3, 0.5 - 0.44 * r, 0.62, 0.36])
         tidy(ax, grid="x", spines=())

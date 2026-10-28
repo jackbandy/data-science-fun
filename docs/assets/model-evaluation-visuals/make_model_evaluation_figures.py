@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Model evaluation figures: held-out data, imbalance, confusion matrices,
-precision and recall, F-score, and multiclass strategies.
+precision and recall, F-score, sensitivity and specificity, ROC curves and AUC,
+and multiclass strategies.
 
 NOTICE: this file was substantially drafted by an LLM coding system and has not
 yet been reviewed. Check every figure against the slide it illustrates.
@@ -43,8 +44,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import polars as pl
 from matplotlib import font_manager
-from matplotlib.patches import FancyBboxPatch, Rectangle
+from matplotlib.patches import Ellipse, FancyBboxPatch, Rectangle
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 from sklearn.svm import SVC
 
@@ -268,14 +270,15 @@ def resample(step):
 
 # --------------------------------------------------------- confusion matrices
 
-def matrix(ax, M, rows, cols, *, diag=True, big=26):
+def matrix(ax, M, rows, cols, *, diag=True, big=26, shade=None):
+    """`shade`, a set of (row, col) cells, tints those cells instead of the diagonal."""
     n, m = M.shape
     ax.set_xlim(0, m)
     ax.set_ylim(n, 0)
     bare(ax)
     for i in range(n):
         for j in range(m):
-            good = (i == j) if diag else False
+            good = (i, j) in shade if shade is not None else (i == j) if diag else False
             ax.add_patch(Rectangle((j, i), 1, 1, facecolor=ORANGE_TINT if good else SOFT_GRAY,
                                    edgecolor=PAPER, lw=4))
             ax.text(j + 0.5, i + 0.5, M[i, j] if isinstance(M[i, j], str) else str(M[i, j]),
@@ -390,6 +393,99 @@ def f1_mean():
     ax.set_xlabel("Precision")
     ylabel_top(ax, f"Combined score, with recall fixed at {r}")
     note(fig, "F₁ stays low unless both precision and recall are high")
+    return fig
+
+
+# --------------------------------------- sensitivity, specificity, and ROC
+
+@steps("cell-rates", 2)
+def cell_rates(step):
+    """Cutoff 0.5, one true-class row at a time: shade the denominator, circle the numerator."""
+    p, y = chinstrap_scores()
+    tp, fn, fp, tn = counts(y, (p >= 0.5).astype(int))
+    M = np.array([[f"TP\n{tp}", f"FN\n{fn}"], [f"FP\n{fp}", f"TN\n{tn}"]], dtype=object)
+    fig, ax = fixed_fig(SPLIT, 280, 50, 190, 150)
+    matrix(ax, M, [f"True {POS} Chinstrap", f"True {NEG} other"],
+           [f"Predicted {POS}", f"Predicted {NEG}"], big=24, shade={(step, 0), (step, 1)})
+    ax.add_patch(Ellipse((step + 0.5, step + 0.5), 0.62, 0.78, facecolor="none", edgecolor=ORANGE, lw=3.5))
+    if step == 0:
+        note(fig, f"Sensitivity = recall = true positive rate\nTP / (TP + FN) = {tp} / {tp + fn} = {tp / (tp + fn):.0%}")
+        foot = "Shaded: the denominator.  Circled: the numerator."
+    else:
+        note(fig, f"Specificity = true negative rate\nTN / (TN + FP) = {tn} / {tn + fp} = {tn / (tn + fp):.0%}")
+        foot = f"False positive rate = 1 − specificity = {fp} / {tn + fp} = {fp / (tn + fp):.0%}"
+    fig.text(0.03, 0.08, foot, fontsize=18, color=INK, ha="left", va="bottom")
+    return fig
+
+
+def roc_points(p, y):
+    """(false positive rate, true positive rate) at every cutoff, from (0, 0) to (1, 1)."""
+    F, T = [], []
+    for t in np.r_[np.inf, np.unique(p)[::-1]]:
+        tp, fn, fp, tn = counts(y, (p >= t).astype(int))
+        F.append(fp / (fp + tn))
+        T.append(tp / (tp + fn))
+    return np.array(F), np.array(T)
+
+
+def roc_axes(ax):
+    tidy(ax, grid="both")
+    ax.plot([0, 1], [0, 1], color=QUIET, lw=2, ls="--")
+    ax.set_xlim(0, 1.02)
+    ax.set_ylim(0, 1.05)
+    ax.set_xlabel("False positive rate: 1 − specificity")
+    ylabel_top(ax, "True positive rate: recall, sensitivity")
+
+
+def diagonal_label(ax, text):
+    ax.text(0.62, 0.56, text, fontsize=15, color=STEEL, rotation=45, rotation_mode="anchor",
+            transform_rotates_text=True, ha="center", va="bottom")
+
+
+@figure("roc-curve")
+def roc_curve_fig():
+    p, y = chinstrap_scores()
+    F, T = roc_points(p, y)
+    fig, ax = fixed_fig(SPLIT, 110, 60, 110, 80)
+    roc_axes(ax)
+    diagonal_label(ax, "random guessing")
+    ax.plot(F, T, color=STEEL, lw=2.5)
+    for t, xy in zip(CUTOFFS, [(0.2, 0.42), (0.24, 0.66), (0.28, 0.86)]):
+        tp, fn, fp, tn = counts(y, (p >= t).astype(int))
+        pt = (fp / (fp + tn), tp / (tp + fn))
+        ax.scatter(*pt, s=180, color=ORANGE, edgecolor=INK, lw=1.2, zorder=4)
+        ax.annotate(f"cutoff {t}", xy=pt, xytext=xy, fontsize=15, color=INK, va="center",
+                    arrowprops=dict(arrowstyle="-", color=INK, lw=1.2))
+    note(fig, "Lower the cutoff: move up and to the right")
+    return fig
+
+
+@steps("roc-compare", 2)
+def roc_compare(step):
+    """L1: bill and flipper length (the running model). L2: bill length alone."""
+    p, y = chinstrap_scores()
+    Z, _ = penguins()
+    q = cross_val_predict(LogisticRegression(), Z[:, [0]], y, cv=CV, method="predict_proba")[:, 1]
+    (F1, T1), (F2, T2) = roc_points(p, y), roc_points(q, y)
+    fig, ax = fixed_fig(SPLIT, 110, 60, 110, 80)
+    roc_axes(ax)
+    auc1, auc2 = roc_auc_score(y, p), roc_auc_score(y, q)
+    key = [(ORANGE, 3.5, "-", "L₁: bill + flipper length" + (f", AUC = {auc1:.2f}" if step else "")),
+           (STEEL, 2.5, "-", "L₂: bill length only" + (f", AUC = {auc2:.2f}" if step else "")),
+           (QUIET, 2, "--", "random guessing" + (", AUC = 0.5" if step else ""))]
+    if step == 1:
+        ax.fill_between(F1, T1, color=ORANGE_TINT, zorder=0)
+        ax.plot([0, 0, 1], [0, 1, 1], color=INK, lw=2, ls=":", zorder=5)
+        key.append((INK, 2, ":", "perfect, AUC = 1"))
+    ax.plot(F2, T2, color=STEEL, lw=2.5)
+    ax.plot(F1, T1, color=ORANGE, lw=3.5)
+    # Legend in the empty corner below the diagonal.
+    for r, (color, lw, ls, label) in enumerate(key):
+        yy = 0.34 - 0.08 * r
+        ax.plot([0.4, 0.47], [yy, yy], color=color, lw=lw, ls=ls)
+        ax.text(0.49, yy, label, fontsize=16, color=INK, va="center")
+    note(fig, "Which classifier is better, L₁ or L₂?" if step == 0
+         else "Better: the AUC (area under the curve) closer to 1")
     return fig
 
 

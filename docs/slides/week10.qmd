@@ -1100,7 +1100,6 @@ Jack Bandy
 - Principal Component Analysis
 - Held-Out Data
 - Classification Metrics
-- Multiclass Classification
 :::
 
 ![](../assets/orange-line-map-stops/stop11-ashland.svg){.figure alt="Orange Line map with the Ashland stop marked, the Week 10 stop"}
@@ -1118,6 +1117,54 @@ Jack Bandy
 
 # Evaluating Clusterings {.section-header}
 
+## Which Clustering Is Better? {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/which-better-blobs-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Example 1: the same 150 points in three round groups, clustered twice with K equals 3. Clustering A splits the lower-left group in two and lumps the other two groups together. Clustering B gives each group its own cluster.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/which-better-blobs-v1.svg" class="figure figure-plain" style="max-height:420px" alt="The same two clusterings with each cluster's mean marked. Clustering A: SSE 1,178. Clustering B: SSE 260, the lower.">
+:::
+
+::::
+
+---
+
+## Which Clustering Is Better? {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/which-better-penguins-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Example 2: the 342 penguins, standardized bill length against flipper length, clustered twice with K equals 3. Both find a lower-left, a lower-right, and an upper group; the border between the two lower groups differs slightly.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/which-better-penguins-v1.svg" class="figure figure-plain" style="max-height:420px" alt="The same two clusterings with each cluster's mean marked. Clustering A: SSE 158, the lower. Clustering B: SSE 159.">
+:::
+
+::::
+
+---
+
+## Which Clustering Is Better? {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/which-better-stripes-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Example 3: 150 points in three long horizontal stripes, clustered twice with K equals 3. Clustering A cuts across the stripes into left, middle, and right chunks. Clustering B gives each stripe its own cluster.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/which-better-stripes-v1.svg" class="figure figure-plain" style="max-height:420px" alt="The same two clusterings with each cluster's mean marked. Clustering A, which cuts across the stripes: SSE 371, the lower. Clustering B, one cluster per stripe: SSE 699.">
+:::
+
+::::
+
+---
+
 ## Why Evaluate a Clustering? {.split}
 
 ::: {.split-content}
@@ -1125,9 +1172,9 @@ Jack Bandy
 ::: {.dense}
 Cluster evaluation allows us to:
 
-- Evaluate how well a clustering structure fits the data.
-- Determine the correct number of clusters.
-- Compare two sets of clusters to determine which is better.
+- Measure how well a clustering structure fits data.
+- Determine the "correct" number of clusters.
+- Compare two sets of clusters ("clusterings") to determine which is better.
 
 ::: {.fragment fragment-index=1}
 - Unsupervised (internal): "without any external information."
@@ -1181,72 +1228,67 @@ $$\text{separation}(C_i, C_j) = \frac{1}{|C_i||C_j|} \sum_{x \in C_i,\, y \in C_
 
 ---
 
-## Silhouette Coefficient {.split}
+## Cohesion? Separation? {.image-frame-slide}
 
-::: {.split-content .golden-figure}
+:::: {.r-stack .peek-stack}
 
-::: {.dense}
-The silhouette coefficient measures the goodness of a cluster with respect to both cohesion and separation.
-
-$$s_i = \frac{b - a}{\max(a, b)}$$
-
-- $a$: the average distance between the $i$th observation and all other observations in the same cluster.
-- $b$: the average distance between the $i$th observation and all other observations in the closest cluster.
-- Between -1 and 1; a negative value indicates an incorrect clustering, and a value of 0 indicates overlapping clusters.
+::: {}
+<img src="../assets/clustering-visuals/coh-sep-high-high-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Two clusters, gray circles and black squares. Each is a tight clump, and the clumps are far apart.">
 :::
 
-::: {.captioned-figure}
-<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v2.svg" alt="One point in cluster A is circled. Solid lines to its own cluster average a equals 1.31; dashed orange lines to cluster B average b equals 3.23. s equals 0.59.">
+::: {.fragment}
+<img src="../assets/clustering-visuals/coh-sep-high-high-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Labeled: high cohesion, high separation. Each cluster is tight, and the clusters are far apart.">
 :::
 
-:::
+::::
 
 ---
 
-## A Silhouette for Every Penguin {.split}
+## Cohesion? Separation? {.image-frame-slide}
 
-::: {.split-content .golden-figure}
+:::: {.r-stack .peek-stack}
 
-::: {.dense}
-- One bar per penguin, sorted within each k-means cluster
-- The silhouette coefficient of a cluster is given by the average silhouette coefficient of the observations in the cluster.
-- A few penguins near zero or below: they sit between two clusters
-- Mean over all penguins: 0.52
+::: {}
+<img src="../assets/clustering-visuals/coh-sep-low-low-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Two clusters, gray circles and black squares. Each is spread out, and the two overlap in the middle.">
 :::
 
-::: {.captioned-figure}
-<img class="figure" src="../assets/clustering-visuals/silhouette-penguins.svg" alt="Silhouette plot for k-means with K equals 3: three blocks of horizontal bars, one per cluster, sorted from about 0.7 down to near 0. A dashed orange line marks the mean, 0.52.">
+::: {.fragment}
+<img src="../assets/clustering-visuals/coh-sep-low-low-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Labeled: low cohesion, low separation. Each cluster is spread out, and the clusters overlap.">
 :::
 
-:::
+::::
 
 ---
 
-## Back to Choosing K {.split}
+## Cohesion? Separation? {.image-frame-slide}
 
-::: {.split-content}
+:::: {.r-stack .peek-stack}
 
-::: {.dense}
-- Monday: the SSE elbow said $K = 3$
-
-::: {.fragment fragment-index=1}
-- Silhouette says $K = 2$ (0.54), with $K = 3$ close behind (0.52)
-- The elbow method does not always work well. The definition of a cluster used by a clustering technique may differ from that of the cluster evaluation metric.
-- Which would you report? What else would you need to know?
-:::
+::: {}
+<img src="../assets/clustering-visuals/coh-sep-high-low-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Two clusters, gray circles and black squares. Each is a tight clump, and the clumps nearly touch.">
 :::
 
-::: {.captioned-figure}
-::::: {.r-stack .peek-stack}
-<img class="figure" src="../assets/clustering-visuals/choose-k-v0.svg" alt="Top panel: total SSE against K from 2 to 9, with the elbow at K equals 3 circled. Bottom panel empty.">
-
-::: {.fragment fragment-index=1}
-<img class="figure" src="../assets/clustering-visuals/choose-k-v1.svg" alt="Bottom panel added: mean silhouette against K, highest at K equals 2 (0.54, circled), then 0.52 at K equals 3, falling to about 0.36 by K equals 9.">
-:::
-:::::
+::: {.fragment}
+<img src="../assets/clustering-visuals/coh-sep-high-low-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Labeled: high cohesion, low separation. Each cluster is tight, but the clusters sit close together.">
 :::
 
+::::
+
+---
+
+## Cohesion? Separation? {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/coh-sep-low-high-v0.svg" class="figure figure-plain" style="max-height:420px" alt="Two clusters, gray circles and black squares. Each is spread out, but the two are far apart.">
 :::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/coh-sep-low-high-v1.svg" class="figure figure-plain" style="max-height:420px" alt="Labeled: low cohesion, high separation. Each cluster is spread out, but the clusters are far apart.">
+:::
+
+::::
 
 ---
 
@@ -1255,11 +1297,104 @@ $$s_i = \frac{b - a}{\max(a, b)}$$
 ::: {.split-content .golden-columns}
 
 ::: {.dense}
-TODO
+Worksheet checkpoint:
+
+- Sketch two clusters with high cohesion and high separation.
+- Then sketch two with low cohesion and low separation.
+- Discuss any questions / clarifications you have about clustering
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
+:::
+
+---
+
+## Color Compression {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Each pixel uses 24 bits for its color: 0-255 per R/G/B.
+- Clustering 3-dim RGB vectors of pixels is used in image compression!
+    - Store cluster mean instead of full RGB
+- See PDSH, ["Example 2: k-means for color compression"](https://jakevdp.github.io/PythonDataScienceHandbook/05.11-k-means.html)
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack}
+<img class="figure" style="max-height:455px" src="../assets/clustering-visuals/color-compression-v0.jpg" alt="The entrance to Ashland station on the Orange Line: a gray concrete and steel canopy, white tile walls, glass doors, and a red-orange Ashland sign.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" style="max-height:455px" src="../assets/clustering-visuals/color-compression-v1.png" alt="The same photo recolored with 64 colors: nearly identical to the original. The palette strip below is mostly grays, with thin slivers of red and yellow.">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" style="max-height:455px" src="../assets/clustering-visuals/color-compression-v2.png" alt="32 colors: still close to the original, with slight banding in the pale sky.">
+:::
+
+::: {.fragment fragment-index=3}
+<img class="figure" style="max-height:455px" src="../assets/clustering-visuals/color-compression-v3.png" alt="16 colors: visible banding on the floor and ceiling; the red sign keeps its color.">
+:::
+
+::: {.fragment fragment-index=4}
+<img class="figure" style="max-height:455px" src="../assets/clustering-visuals/color-compression-v4.png" alt="8 colors: flat patches of gray; the red sign survives as one small palette color.">
+:::
+
+::: {.fragment fragment-index=5}
+<img class="figure" style="max-height:455px" src="../assets/clustering-visuals/color-compression-v5.png" alt="4 colors: four grays and browns; the sign is no longer red.">
+:::
+
+::: {.fragment fragment-index=6}
+<img class="figure" style="max-height:455px" src="../assets/clustering-visuals/color-compression-v6.png" alt="2 colors: a dark gray and a light gray; the Ashland sign is readable only as light letters.">
+:::
+:::::
+
+::: {.caption}
+k-means on pixel colors in CIELAB. Photo: Pi.1415926535, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Entrance_to_Ashland_station,_December_2018.JPG), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) (recolored versions too).
+:::
+:::
+
+:::
+
+---
+
+## Color Compression, Again {.image-frame-slide}
+
+:::: {.r-stack}
+
+::: {}
+<img src="../assets/clustering-visuals/color-compression-skyline-v0.jpg" class="figure figure-plain" style="max-height:500px" alt="The South Branch of the Chicago River from Park No. 571 in Bridgeport: blue sky, tall power-line towers, the downtown skyline, green trees, and the river.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v1.png" class="figure figure-plain" style="max-height:500px" alt="64 colors: nearly identical to the original; the palette strip is mostly sky blues.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v2.png" class="figure figure-plain" style="max-height:500px" alt="32 colors: still close to the original, with faint bands in the sky.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v3.png" class="figure figure-plain" style="max-height:500px" alt="16 colors: the sky shows distinct bands of blue.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v4.png" class="figure figure-plain" style="max-height:500px" alt="8 colors: the sky splits into flat bands of blue; trees turn near-black and the grass a single olive.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v5.png" class="figure figure-plain" style="max-height:500px" alt="4 colors: a deep blue upper sky; one pale blue shared by the lower sky and the river; near-black trees; olive grass.">
+:::
+
+::: {.fragment}
+<img src="../assets/clustering-visuals/color-compression-skyline-v6.png" class="figure figure-plain" style="max-height:500px" alt="2 colors: a blue sky and river against a dark olive silhouette of towers, trees, and skyline.">
+:::
+
+::::
+
+::: {.caption style="position: absolute; left: 64px; right: 64px; bottom: 60px;"}
+Photo: Warren LeMay, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:View_from_Chicago_River_at_Park_No._571,_Eleanor_Street,_Bridgeport,_Chicago,_IL_(54832903478).jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) (recolored versions too).
 :::
 
 # Principal Component Analysis {.section-header}
@@ -1273,10 +1408,10 @@ Goal: extract hidden lower-dimensional structure from high dimensional datasets.
 
 Why?
 
-- To visualize data more easily
-- To remove noise in data
-- To lower resource requirements for storing/processing data
-- To improve classification/clustering
+- visualize more easily
+- remove noise
+- lower resource requirements for storing/processing
+- improve classification/clustering
 :::
 
 ::: {.captioned-figure}
@@ -1296,12 +1431,13 @@ Two measurements per penguin. Can one number do the job?
 ::: {.split-content}
 
 ::: {.dense}
-- Goal: find a small number of 'directions' in input space that explain variation in input data; re-represent data by projecting along those directions.
+- Goal: find a small number of 'directions' in input space that explain variation in input data
+    - re-represent data by projecting along those directions.
 - Important assumption: variation contains information.
 
 ::: {.fragment fragment-index=1}
 - Principal components are orthogonal directions that capture most of the variance in the data.
-- Select M eigenvectors with the largest eigenvalues of the covariance matrix.
+- Select M eigenvectors with the largest eigenvalues of the covariance matrix (or just use a library 🙂)
 :::
 :::
 
@@ -1321,7 +1457,7 @@ Two measurements per penguin. Can one number do the job?
 
 ## How Many Components? {.split}
 
-::: {.split-content .golden-figure}
+::: {.split-content}
 
 ::: {.dense}
 - Now all four measurements: bill length, bill depth, flipper length, body mass (standardized)
@@ -1333,6 +1469,23 @@ Two measurements per penguin. Can one number do the job?
 ::: {.captioned-figure}
 <img class="figure" src="../assets/pca-visuals/pca-scree.svg" alt="Bar chart of explained variance for four principal components: PC1 69 percent and PC2 19 percent in orange, PC3 9 percent and PC4 3 percent in gray. A line shows the running total: 69, 88, 97, and 100 percent.">
 :::
+
+:::
+
+---
+
+## Elbow Neighbor Exercise {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+Worksheet checkpoint:
+
+- PC1 is a weighted sum of all four standardized penguin measurements. Using its weights, give PC1 a name.
+- Who came up with that name, you or PCA?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
 
 :::
 
@@ -1358,7 +1511,7 @@ Two measurements per penguin. Can one number do the job?
 
 ---
 
-## Four Measurements, Two Numbers {.split}
+## Four Measurements in Two Numbers {.split}
 
 ::: {.split-content}
 
@@ -1384,8 +1537,7 @@ Two measurements per penguin. Can one number do the job?
 ::: {.split-content .golden-columns}
 
 ::: {.dense}
-**#4, CF, Chicago Cubs**
-
+- **#4, CF, Chicago Cubs**
 - PCA for short
 - 2025 NL All-Star, Gold Glove winner
 - Hit for the cycle on June 15, 2026
@@ -1407,7 +1559,7 @@ Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann,
 
 ## PCA on PCA: The Data {.split}
 
-::: {.split-content .golden-figure}
+::: {.split-content}
 
 ::: {.dense}
 - 40 qualified MLB center fielders, 2026 (Baseball Savant)
@@ -1416,7 +1568,6 @@ Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann,
 	- Power: ISO, barrel %, hard-hit %
 	- Legs: sprint speed, steals
 	- Glove: OAA, arm strength
-- Can two numbers do the job?
 :::
 
 ::: {.captioned-figure}
@@ -1451,13 +1602,30 @@ Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann,
 ::: {.split-content .golden-figure}
 
 ::: {.dense}
+- PC1: strikeouts, whiffs, *and* power all go up together.
+- PC2: chasing goes up, walking goes down, plus speed and defense.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/pca-visuals/pca-cf-loadings-v0.svg" alt="Two bar charts of component weights for 11 stats, titled PC1 and PC2. PC1: strikeout +0.39, whiff +0.41, chase 0.00, walk +0.14, isolated power +0.36, barrel +0.44, hard-hit +0.43, sprint speed +0.20, stolen bases +0.21, outs above average +0.05, arm strength +0.25. PC2: strikeout −0.15, whiff +0.03, chase +0.60, walk −0.57, isolated power +0.12, barrel −0.06, hard-hit −0.05, sprint speed +0.29, stolen bases +0.31, outs above average +0.29, arm strength −0.04.">
+:::
+
+:::
+
+---
+
+## What Do the Center-Fielder Components Mean? {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
 - PC1: strikeouts, whiffs, *and* power all go up together. Call it "swing big."
 - PC2: chasing goes up, walking goes down, plus speed and defense. Call it "chase and run."
 - The names are ours, not PCA's: PCA only gives the weights
 :::
 
 ::: {.captioned-figure}
-<img class="figure" src="../assets/pca-visuals/pca-cf-loadings.svg" alt="Two bar charts of component weights for 11 stats. PC1: strikeout +0.39, whiff +0.41, chase 0.00, walk +0.14, isolated power +0.36, barrel +0.44, hard-hit +0.43, sprint speed +0.20, stolen bases +0.21, outs above average +0.05, arm strength +0.25. PC2: strikeout −0.15, whiff +0.03, chase +0.60, walk −0.57, isolated power +0.12, barrel −0.06, hard-hit −0.05, sprint speed +0.29, stolen bases +0.31, outs above average +0.29, arm strength −0.04.">
+<img class="figure" src="../assets/pca-visuals/pca-cf-loadings-v1.svg" alt="The same two bar charts, now titled PC1: swing big, and PC2: chase and run, don't walk. PC1: strikeout +0.39, whiff +0.41, chase 0.00, walk +0.14, isolated power +0.36, barrel +0.44, hard-hit +0.43, sprint speed +0.20, stolen bases +0.21, outs above average +0.05, arm strength +0.25. PC2: strikeout −0.15, whiff +0.03, chase +0.60, walk −0.57, isolated power +0.12, barrel −0.06, hard-hit −0.05, sprint speed +0.29, stolen bases +0.31, outs above average +0.29, arm strength −0.04.">
 :::
 
 :::
@@ -1504,7 +1672,7 @@ Pete Crow-Armstrong batting for the Iowa Cubs, 2023. Photo: Minda Haas Kuhlmann,
 
 ## Train and Test {.split}
 
-::: {.split-content .golden-figure}
+::: {.split-content}
 
 ::: {.dense}
 - "We often do not have the luxury of collecting additional data to assess a model, so instead we set aside a portion of our data, called the test set, to stand in for new data." (LDS)
@@ -1537,22 +1705,22 @@ Lau, Gonzalez, and Nolan, ["Train-Test Split"](https://learningds.org/ch/16/ms_t
 
 ::: {.captioned-figure}
 ::::: {.r-stack .peek-stack}
-<img class="figure" src="../assets/model-evaluation-visuals/holdout-v1.svg" alt="Below the train/test bar, round 1 of 5: the first fold of the train set is orange, validate; the other four are gray, fit.">
+<img class="figure" style="max-height:410px" src="../assets/model-evaluation-visuals/holdout-v1.svg" alt="Below the train/test bar, round 1 of 5: the first fold of the train set is orange, validate; the other four are gray, fit.">
 
 ::: {.fragment}
-<img class="figure" src="../assets/model-evaluation-visuals/holdout-v2.svg" alt="Round 2: the second fold is held out.">
+<img class="figure" style="max-height:410px" src="../assets/model-evaluation-visuals/holdout-v2.svg" alt="Round 2: the second fold is held out.">
 :::
 
 ::: {.fragment}
-<img class="figure" src="../assets/model-evaluation-visuals/holdout-v3.svg" alt="Round 3: the third fold is held out.">
+<img class="figure" style="max-height:410px" src="../assets/model-evaluation-visuals/holdout-v3.svg" alt="Round 3: the third fold is held out.">
 :::
 
 ::: {.fragment}
-<img class="figure" src="../assets/model-evaluation-visuals/holdout-v4.svg" alt="Round 4: the fourth fold is held out.">
+<img class="figure" style="max-height:410px" src="../assets/model-evaluation-visuals/holdout-v4.svg" alt="Round 4: the fourth fold is held out.">
 :::
 
 ::: {.fragment}
-<img class="figure" src="../assets/model-evaluation-visuals/holdout-v5.svg" alt="Round 5: the fifth fold is held out. Every penguin in the train set has been held out exactly once; the test set stayed locked throughout.">
+<img class="figure" style="max-height:410px" src="../assets/model-evaluation-visuals/holdout-v5.svg" alt="Round 5: the fifth fold is held out. Every penguin in the train set has been held out exactly once; the test set stayed locked throughout.">
 :::
 :::::
 
@@ -1651,7 +1819,7 @@ $$\text{Recall} = \frac{TP}{TP + FN}$$
 
 ## The Precision–Recall Tradeoff {.split}
 
-::: {.split-content .golden-figure}
+::: {.split-content}
 
 ::: {.dense}
 - Each cutoff gives one (recall, precision) point
@@ -1669,36 +1837,92 @@ $$\text{Recall} = \frac{TP}{TP + FN}$$
 
 ---
 
-## F-Score {.split}
+## Sensitivity and Specificity {.split}
 
-::: {.split-content .golden-figure}
+::: {.split-content}
 
 ::: {.dense}
-- F-score: harmonic mean.
-$$F = \frac{2 \cdot Pr \cdot Re}{Pr + Re}$$
-- Weighted F-score: if precision is more important than recall.
-$$F_\beta = \frac{(1 + \beta^2) \cdot Pr \cdot Re}{\beta^2 \cdot Pr + Re}$$
-- Harmonic mean: one low score drags the whole thing down
+- The true positive rate (TPR), also known as sensitivity or recall, is the fraction of positive observations classified correctly.
+$$TPR = \frac{TP}{TP + FN}$$
+
+::: {.fragment fragment-index=1}
+- The true negative rate (TNR), also known as specificity, is the fraction of negative observations classified correctly.
+$$TNR = \frac{TN}{TN + FP}$$
+- False positive rate: $FPR = 1 - TNR$
+:::
 :::
 
 ::: {.captioned-figure}
-<img class="figure" src="../assets/model-evaluation-visuals/f1-mean.svg" alt="With recall fixed at 0.9, the arithmetic mean of precision and recall (dashed gray) never falls below 0.45, while F1 (orange) falls to 0 as precision falls to 0.">
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/model-evaluation-visuals/cell-rates-v0.svg" alt="The cutoff-0.5 confusion matrix with the true-Chinstrap row shaded and TP circled: sensitivity, recall, or true positive rate, TP over TP plus FN, 54 over 68, 79 percent.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/model-evaluation-visuals/cell-rates-v1.svg" alt="The same matrix with the true-other row shaded and TN circled: specificity, or true negative rate, TN over TN plus FP, 269 over 274, 98 percent. False positive rate is 1 minus specificity, 5 over 274, 2 percent.">
+:::
+:::::
 :::
 
 :::
-
 
 ---
 
-## Fixing Imbalance {.split}
+## ROC Curve {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- The Receiver Operating Characteristic (ROC) curve is a plot of the true positive rate (or sensitivity) over the false positive rate (or 1 – specificity) that represents the trade-off between true positives and true negatives.
+- Each cutoff gives one (FPR, TPR) point
+- A cutoff above every score predicts nothing positive: (0, 0). A cutoff of 0 predicts everything positive: (1, 1).
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/roc-curve.svg" alt="True positive rate against false positive rate for every cutoff of the Chinstrap model. The curve climbs almost straight up the left edge, then runs along the top. Cutoffs 0.8, 0.5, and 0.2 are marked near the top-left corner. A dashed diagonal marks random guessing.">
+
+::: {.caption}
+Same model and cross-validated scores as the precision–recall curve.
+:::
+:::
+
+:::
+
+---
+
+## Area Under the ROC Curve {.split}
+
+::: {.split-content}
+
+::: {.dense}
+Which classifier is better? $L_1$ or $L_2$?
+
+::: {.fragment fragment-index=1}
+- The Area Under the ROC Curve (AUC) is commonly used to measure the performance of classifiers in the presence of imbalanced data.
+- A classifier is considered to be better if its corresponding AUC is closer to 1.
+- Perfect: AUC = 1. Random guessing, the diagonal: AUC = 0.5.
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/model-evaluation-visuals/roc-compare-v0.svg" alt="Two ROC curves for finding Chinstraps. L1, bill and flipper length, in orange, hugs the top-left corner. L2, bill length only, in gray, bows less. A dashed diagonal marks random guessing.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/model-evaluation-visuals/roc-compare-v1.svg" alt="The same curves with the area under L1 shaded. L1 AUC 0.98; L2 AUC 0.83; random guessing AUC 0.5; a dotted perfect classifier runs up the left edge and across the top, AUC 1.">
+:::
+:::::
+:::
+
+:::
+
+---
+
+## Fixing Imbalance: Resampling {.split}
 
 ::: {.split-content}
 
 ::: {.dense}
 - Undersample the majority class; more computationally efficient.
 - Oversample the minority class; the base binary classifier might do better with more training examples.
-- Efficient implementations incorporate weight in the algorithm instead of explicitly duplicating data (e.g., `class_weight="balanced"` in scikit-learn).
-- Oversampling can also synthesize new minority examples instead of copying them: SMOTE or ADASYN, in the imbalanced-learn (`imblearn`) library.
 - Resample the training data only, never the test set
 :::
 
@@ -1720,84 +1944,26 @@ $$F_\beta = \frac{(1 + \beta^2) \cdot Pr \cdot Re}{\beta^2 \cdot Pr + Re}$$
 
 ---
 
+## Fixing Imbalance: Weights and New Examples
+
+- Efficient implementations incorporate weight in the algorithm instead of explicitly duplicating data (e.g., `class_weight="balanced"` in scikit-learn).
+- Oversampling can also synthesize new minority examples instead of copying them: SMOTE or ADASYN, in the imbalanced-learn (`imblearn`) library.
+
+---
+
 ## Elbow Neighbor Exercise {.split}
 
 ::: {.split-content .golden-columns}
 
 ::: {.dense}
-TODO
+Worksheet checkpoint:
+
+- Precision, recall, specificity: write the denominator's cells, then circle the numerator's.
+- Which cell is ignored by both precision and recall? What else is recall called?
+- ROC and precision–recall: label the axes, then sketch a perfect classifier, random guessing, and a "typical" classifier.
 :::
 
 <iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
-
-:::
-
-# Multiclass Classification {.section-header}
-
-## One vs. Rest, One vs. One {.image-frame-slide}
-
-:::: {.r-stack .peek-stack}
-
-::: {}
-<img src="../assets/model-evaluation-visuals/ovr-ovo-v0.svg" class="figure figure-plain" style="max-height:420px" alt="One vs. rest: three panels of penguins, one per species. In each, that species is orange and the other two are gray.">
-:::
-
-::: {.fragment}
-<img src="../assets/model-evaluation-visuals/ovr-ovo-v1.svg" class="figure figure-plain" style="max-height:420px" alt="One vs. one: three panels, one per pair of species: Adélie vs. Chinstrap, Adélie vs. Gentoo, Chinstrap vs. Gentoo. The third species in each panel is hollow and unused.">
-:::
-
-::::
-
-::: {.caption}
-One versus rest: train K-many binary classifiers; classifier k predicts whether an example belongs to class k or not. One versus one: build classifiers for all pairs of classes; predict the class that has the most binary classifier 'votes'.
-:::
-
----
-
-## Which Needs More Classifiers? {.split}
-
-::: {.split-content .golden-figure}
-
-::: {.dense}
-Which one requires more base classifiers?
-
-A) One-versus-rest (OVR)
-
-B) One-versus-one (OVO)
-
-::: {.fragment}
-- OVR: $K$ classifiers. OVO: $K(K-1)/2$.
-- OVR can lead to imbalanced datasets for each binary classifier.
-- Some models are multiclass already: straightforward with decision trees or KNN.
-:::
-:::
-
-::: {.fragment .captioned-figure}
-<img class="figure" src="../assets/model-evaluation-visuals/classifier-count.svg" alt="Binary classifiers needed against number of classes K from 2 to 10: one vs. rest grows linearly to 10; one vs. one grows to 45. At K equals 3, the penguins, both need 3.">
-:::
-
-:::
-
----
-
-## A Three-Class Confusion Matrix {.split}
-
-::: {.split-content .golden-figure}
-
-::: {.dense}
-- Rows: true species; columns: predicted species
-- The diagonal is correct; everything else is a mistake, and *which* mistake
-- Chinstraps are the hardest: 9 of 68 missed
-- Precision and recall per class: treat each species as "positive" in turn
-:::
-
-::: {.captioned-figure}
-<img class="figure" src="../assets/model-evaluation-visuals/confusion-penguins.svg" alt="Three-by-three confusion matrix for an RBF SVM: Adélie 146 correct, 3 called Chinstrap, 2 called Gentoo; Chinstrap 59 correct, 6 called Adélie, 3 called Gentoo; Gentoo 122 correct, 1 called Chinstrap. 96 percent accurate.">
-
-::: {.caption}
-Week 9's RBF-kernel SVM, bill length and flipper length, 5-fold cross-validated.
-:::
-:::
 
 :::
 
@@ -1813,15 +1979,15 @@ Week 9's RBF-kernel SVM, bill length and flipper length, 5-fold cross-validated.
 Alfred Korzybski (1931), quoted in *Ethics in Data Science*, ch. 4
 
 - Clusters, components, and scores are maps too
-- A high silhouette or a high F-score says the map is tidy, not that it is the territory
+- A low SSE or a high AUC says the map is tidy, not that it is the territory
 :::
 
 ::: {.captioned-figure}
 ::::: {.r-stack .peek-stack}
-<img class="figure" src="../assets/orange-line-map-stops/stop11-ashland.svg" alt="Orange Line map with the Ashland stop marked, the Week 10 stop">
+<img class="figure" style="max-height:430px" src="../assets/orange-line-map-stops/stop11-ashland.svg" alt="Orange Line map with the Ashland stop marked, the Week 10 stop">
 
 ::: {.fragment}
-<img class="figure" src="../assets/clustering-visuals/l-dbscan-v1.svg" alt="Monday's DBSCAN map, eps 1.2 km: seven clusters and 32 noise stations; Ashland is noise.">
+<img class="figure" style="max-height:430px" src="../assets/clustering-visuals/l-dbscan-v1.svg" alt="Monday's DBSCAN map, eps 1.2 km: seven clusters and 32 noise stations; Ashland is noise.">
 :::
 :::::
 
@@ -1836,7 +2002,11 @@ The CTA's map vs. Monday's DBSCAN map (eps 1.2 km): same stations, different "st
 
 ## Summary {#summary-day-2}
 
-TODO
+- Evaluating clusterings: SSE, cohesion, and separation. The lowest SSE is not always the clustering we would pick.
+- Color compression: k-means on pixel colors; K is the number of colors kept
+- PCA: a few orthogonal directions that keep most of the variance; the names are ours
+- Held-out data: cross-validation to choose a model, the test set once at the end
+- Classification metrics: accuracy misleads on imbalanced data; use precision, recall, specificity, ROC, and AUC
 
 ---
 
@@ -1847,6 +2017,75 @@ Take a picture of your worksheet, upload it in Canvas
 # That's All for Today, See You Monday! {.section-header .no-index}
 
 # Appendix: More Clustering {.section-header}
+
+## Silhouette Coefficient {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+The silhouette coefficient measures the goodness of a cluster with respect to both cohesion and separation.
+
+$$s_i = \frac{b - a}{\max(a, b)}$$
+
+- $a$: the average distance between the $i$th observation and all other observations in the same cluster.
+- $b$: the average distance between the $i$th observation and all other observations in the closest cluster.
+- Between -1 and 1; a negative value indicates an incorrect clustering, and a value of 0 indicates overlapping clusters.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/cohesion-separation-v2.svg" alt="One point in cluster A is circled. Solid lines to its own cluster average a equals 1.31; dashed orange lines to cluster B average b equals 3.23. s equals 0.59.">
+:::
+
+:::
+
+---
+
+## A Silhouette for Every Penguin {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- One bar per penguin, sorted within each k-means cluster
+- The silhouette coefficient of a cluster is given by the average silhouette coefficient of the observations in the cluster.
+- A few penguins near zero or below: they sit between two clusters
+- Mean over all penguins: 0.52
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/clustering-visuals/silhouette-penguins.svg" alt="Silhouette plot for k-means with K equals 3: three blocks of horizontal bars, one per cluster, sorted from about 0.7 down to near 0. A dashed orange line marks the mean, 0.52.">
+:::
+
+:::
+
+---
+
+## Back to Choosing K {.split}
+
+::: {.split-content}
+
+::: {.dense}
+- Monday: the SSE elbow said $K = 3$
+
+::: {.fragment fragment-index=1}
+- Silhouette says $K = 2$ (0.54), with $K = 3$ close behind (0.52)
+- The elbow method does not always work well. The definition of a cluster used by a clustering technique may differ from that of the cluster evaluation metric.
+- Which would you report? What else would you need to know?
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/clustering-visuals/choose-k-v0.svg" alt="Top panel: total SSE against K from 2 to 9, with the elbow at K equals 3 circled. Bottom panel empty.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/clustering-visuals/choose-k-v1.svg" alt="Bottom panel added: mean silhouette against K, highest at K equals 2 (0.54, circled), then 0.52 at K equals 3, falling to about 0.36 by K equals 9.">
+:::
+:::::
+:::
+
+:::
+
+---
 
 ## When You Have the Answer Key {.split}
 
@@ -1929,95 +2168,6 @@ Similarity-oriented, counting *pairs* of observations:
 ::: {.dense}
 - **TK** figure: penguins between Adélie and Chinstrap with split responsibilities
 :::
-:::
-
----
-
-## Color Compression {.split}
-
-::: {.split-content}
-
-::: {.dense}
-- Each pixel uses 24 bits for its color: 0-255 per R/G/B.
-- Clustering 3-dim RGB vectors of pixels is used in image compression: store the cluster mean instead of RGB.
-- How many bits does it take to encode an image with 100 pixels where only their 2 clusters are encoded?
-- See PDSH, ["Example 2: k-means for color compression"](https://jakevdp.github.io/PythonDataScienceHandbook/05.11-k-means.html)
-:::
-
-::: {.captioned-figure}
-::::: {.r-stack}
-<img class="figure" src="../assets/clustering-visuals/color-compression-v0.jpg" alt="The entrance to Ashland station on the Orange Line: a gray concrete and steel canopy, white tile walls, glass doors, and a red-orange Ashland sign.">
-
-::: {.fragment fragment-index=1}
-<img class="figure" src="../assets/clustering-visuals/color-compression-v1.png" alt="The same photo recolored with 64 colors: nearly identical to the original. The palette strip below is mostly grays, with thin slivers of red and yellow.">
-:::
-
-::: {.fragment fragment-index=2}
-<img class="figure" src="../assets/clustering-visuals/color-compression-v2.png" alt="32 colors: still close to the original, with slight banding in the pale sky.">
-:::
-
-::: {.fragment fragment-index=3}
-<img class="figure" src="../assets/clustering-visuals/color-compression-v3.png" alt="16 colors: visible banding on the floor and ceiling; the red sign keeps its color.">
-:::
-
-::: {.fragment fragment-index=4}
-<img class="figure" src="../assets/clustering-visuals/color-compression-v4.png" alt="8 colors: flat patches of gray; the red sign survives as one small palette color.">
-:::
-
-::: {.fragment fragment-index=5}
-<img class="figure" src="../assets/clustering-visuals/color-compression-v5.png" alt="4 colors: four grays and browns; the sign is no longer red.">
-:::
-
-::: {.fragment fragment-index=6}
-<img class="figure" src="../assets/clustering-visuals/color-compression-v6.png" alt="2 colors: a dark gray and a light gray; the Ashland sign is readable only as light letters.">
-:::
-:::::
-
-::: {.caption}
-k-means on pixel colors in CIELAB. Photo: Pi.1415926535, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Entrance_to_Ashland_station,_December_2018.JPG), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) (recolored versions too).
-:::
-:::
-
-:::
-
----
-
-## Color Compression, Again {.image-frame-slide}
-
-:::: {.r-stack .peek-stack}
-
-::: {}
-<img src="../assets/clustering-visuals/color-compression-skyline-v0.jpg" class="figure figure-plain" style="max-height:380px" alt="The South Branch of the Chicago River from Park No. 571 in Bridgeport: blue sky, tall power-line towers, the downtown skyline, green trees, and the river.">
-:::
-
-::: {.fragment}
-<img src="../assets/clustering-visuals/color-compression-skyline-v1.png" class="figure figure-plain" style="max-height:380px" alt="64 colors: nearly identical to the original; the palette strip is mostly sky blues.">
-:::
-
-::: {.fragment}
-<img src="../assets/clustering-visuals/color-compression-skyline-v2.png" class="figure figure-plain" style="max-height:380px" alt="32 colors: still close to the original, with faint bands in the sky.">
-:::
-
-::: {.fragment}
-<img src="../assets/clustering-visuals/color-compression-skyline-v3.png" class="figure figure-plain" style="max-height:380px" alt="16 colors: the sky shows distinct bands of blue.">
-:::
-
-::: {.fragment}
-<img src="../assets/clustering-visuals/color-compression-skyline-v4.png" class="figure figure-plain" style="max-height:380px" alt="8 colors: the sky splits into flat bands of blue; trees turn near-black and the grass a single olive.">
-:::
-
-::: {.fragment}
-<img src="../assets/clustering-visuals/color-compression-skyline-v5.png" class="figure figure-plain" style="max-height:380px" alt="4 colors: a deep blue upper sky; one pale blue shared by the lower sky and the river; near-black trees; olive grass.">
-:::
-
-::: {.fragment}
-<img src="../assets/clustering-visuals/color-compression-skyline-v6.png" class="figure figure-plain" style="max-height:380px" alt="2 colors: a blue sky and river against a dark olive silhouette of towers, trees, and skyline.">
-:::
-
-::::
-
-::: {.caption}
-Photo: Warren LeMay, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:View_from_Chicago_River_at_Park_No._571,_Eleanor_Street,_Bridgeport,_Chicago,_IL_(54832903478).jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) (recolored versions too).
 :::
 
 ---
@@ -2305,6 +2455,95 @@ Michalski's trains, from *Ethics in Data Science*, ch. 4 (Helff et al., 2023).
 
 :::
 
+# Appendix: More Classification Metrics {.section-header}
+
+## F-Score {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- F-score: harmonic mean.
+$$F = \frac{2 \cdot Pr \cdot Re}{Pr + Re}$$
+- Weighted F-score: if precision is more important than recall.
+$$F_\beta = \frac{(1 + \beta^2) \cdot Pr \cdot Re}{\beta^2 \cdot Pr + Re}$$
+- Harmonic mean: one low score drags the whole thing down
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/f1-mean.svg" alt="With recall fixed at 0.9, the arithmetic mean of precision and recall (dashed gray) never falls below 0.45, while F1 (orange) falls to 0 as precision falls to 0.">
+:::
+
+:::
+
+# Appendix: Multiclass Classification {.section-header}
+
+## One vs. Rest, One vs. One {.image-frame-slide}
+
+:::: {.r-stack .peek-stack}
+
+::: {}
+<img src="../assets/model-evaluation-visuals/ovr-ovo-v0.svg" class="figure figure-plain" style="max-height:420px" alt="One vs. rest: three panels of penguins, one per species. In each, that species is orange and the other two are gray.">
+:::
+
+::: {.fragment}
+<img src="../assets/model-evaluation-visuals/ovr-ovo-v1.svg" class="figure figure-plain" style="max-height:420px" alt="One vs. one: three panels, one per pair of species: Adélie vs. Chinstrap, Adélie vs. Gentoo, Chinstrap vs. Gentoo. The third species in each panel is hollow and unused.">
+:::
+
+::::
+
+::: {.caption}
+One versus rest: train K-many binary classifiers; classifier k predicts whether an example belongs to class k or not. One versus one: build classifiers for all pairs of classes; predict the class that has the most binary classifier 'votes'.
+:::
+
+---
+
+## Which Needs More Classifiers? {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+Which one requires more base classifiers?
+
+A) One-versus-rest (OVR)
+
+B) One-versus-one (OVO)
+
+::: {.fragment}
+- OVR: $K$ classifiers. OVO: $K(K-1)/2$.
+- OVR can lead to imbalanced datasets for each binary classifier.
+- Some models are multiclass already: straightforward with decision trees or KNN.
+:::
+:::
+
+::: {.fragment .captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/classifier-count.svg" alt="Binary classifiers needed against number of classes K from 2 to 10: one vs. rest grows linearly to 10; one vs. one grows to 45. At K equals 3, the penguins, both need 3.">
+:::
+
+:::
+
+---
+
+## A Three-Class Confusion Matrix {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- Rows: true species; columns: predicted species
+- The diagonal is correct; everything else is a mistake, and *which* mistake
+- Chinstraps are the hardest: 9 of 68 missed
+- Precision and recall per class: treat each species as "positive" in turn
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/model-evaluation-visuals/confusion-penguins.svg" alt="Three-by-three confusion matrix for an RBF SVM: Adélie 146 correct, 3 called Chinstrap, 2 called Gentoo; Chinstrap 59 correct, 6 called Adélie, 3 called Gentoo; Gentoo 122 correct, 1 called Chinstrap. 96 percent accurate.">
+
+::: {.caption}
+Week 9's RBF-kernel SVM, bill length and flipper length, 5-fold cross-validated.
+:::
+:::
+
+:::
+
 # Sources {.sources}
 
 1. GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week10.qmd>.
@@ -2312,7 +2551,7 @@ Michalski's trains, from *Ethics in Data Science*, ch. 4 (Helff et al., 2023).
 3. Slide deck built with [Quarto](https://quarto.org/) revealjs.
 4. Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
 5. Elena Zheleva, CS 418 lecture slides, Mar. 10 and Mar. 19, 2026 (using materials by the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart).
-6. Gonzalo Bello Lander, CS 418 Lecture 14 ("Clustering (I): Basic Concepts & Hierarchical Clustering") and Lecture 15 ("Clustering (II): More Clustering Techniques"), 2026. Exercises 14.1, 14.2, 15.2, 15.3, and 15.4 are from these slides.
+6. Gonzalo Bello Lander, CS 418 Lecture 14 ("Clustering (I): Basic Concepts & Hierarchical Clustering") and Lecture 15 ("Clustering (II): More Clustering Techniques"), 2026. Exercises 14.1, 14.2, 15.2, 15.3, and 15.4 are from these slides. Sensitivity, specificity, ROC, and AUC follow his Bonus Lecture, "Classification (III): Ensemble Methods and the Class Imbalance Problem" (Mar. 4, 2026).
 7. Tiffany Timbers, Trevor Campbell, Melissa Lee, Joel Ostblom, and Lindsey Heagy, *[Data Science: A First Introduction (Python Edition)](https://python.datasciencebook.ca/)*, [ch. 6](https://python.datasciencebook.ca/classification2.html) and [ch. 9](https://python.datasciencebook.ca/clustering.html).
 8. Jake VanderPlas, *[Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)*, ["In Depth: Principal Component Analysis"](https://jakevdp.github.io/PythonDataScienceHandbook/05.09-principal-component-analysis.html) and ["In Depth: k-Means Clustering"](https://jakevdp.github.io/PythonDataScienceHandbook/05.11-k-means.html), text CC BY-NC-ND.
 9. Sam Lau, Joseph Gonzalez, and Deborah Nolan, *[Learning Data Science](https://learningds.org/)*, [ch. 16](https://learningds.org/ch/16/ms_intro.html) ("Model Selection").

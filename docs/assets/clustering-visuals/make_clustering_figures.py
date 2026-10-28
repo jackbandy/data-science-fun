@@ -54,7 +54,7 @@ from __future__ import annotations
 import html
 import re
 import sys
-from functools import lru_cache
+from functools import lru_cache, partial
 from pathlib import Path
 
 import matplotlib
@@ -1229,9 +1229,122 @@ def cluster_shapes():
     return fig
 
 
+# ------------------------------------------------- which clustering is better?
+
+def by_x(lab, X):
+    """Relabel clusters left to right by mean x, so cluster shapes are stable."""
+    order = np.argsort([X[lab == k, 0].mean() for k in range(lab.max() + 1)])
+    return np.argsort(order)[lab]
+
+
+def match_labels(lab, ref):
+    """Relabel `lab` so each cluster takes the id of the `ref` cluster it overlaps most."""
+    k = ref.max() + 1
+    overlap = np.array([[np.sum((lab == i) & (ref == j)) for j in range(k)] for i in range(k)])
+    rows, cols = linear_sum_assignment(-overlap)
+    relabel = dict(zip(rows, cols))
+    return np.array([relabel[c] for c in lab])
+
+
+def which_better(step, X, lab_a, lab_b, headline, *, pad=0.6, size=60, unit=""):
+    """Two K = 3 clusterings of the same points, side by side; v1 reveals each one's SSE."""
+    labs = [lab_a, lab_b]
+    Cs = [np.array([X[lab == k].mean(axis=0) for k in range(3)]) for lab in labs]
+    sses = [sse(X, C, lab) for C, lab in zip(Cs, labs)]
+    lo, hi = X.min(0) - pad, X.max(0) + pad
+    W, H = GOLDEN
+    top, bottom, gap = 130, 80, 70
+    h = H - top - bottom
+    w = h * (hi[0] - lo[0]) / (hi[1] - lo[1])
+    if w > (W - 3 * gap) / 2:  # too wide: shrink height instead
+        w = (W - 3 * gap) / 2
+        h = w * (hi[1] - lo[1]) / (hi[0] - lo[0])
+    left, y0 = (W - 2 * w - gap) / 2, bottom + (H - top - bottom - h) / 2
+    fig = plt.figure(figsize=(W / DPI, H / DPI), dpi=DPI)
+    fig.patch.set_facecolor(PAPER)
+    fig.fixed_layout = True
+    for i, name in enumerate("AB"):
+        ax = fig.add_axes([(left + i * (w + gap)) / W, y0 / H, w / W, h / H])
+        bare(ax)
+        ax.set_facecolor(SOFT_GRAY)
+        ax.set_xlim(lo[0], hi[0])
+        ax.set_ylim(lo[1], hi[1])
+        cluster_points(ax, X, labs[i], size=size)
+        ax.text(0, 1.02, f"Clustering {name}", transform=ax.transAxes, fontsize=19, color=INK,
+                ha="left", va="bottom")
+        if step == 1:
+            centroids(ax, Cs[i], size=size * 4)
+            lower = sses[i] == min(sses)
+            ax.text(0.5, -0.03, f"SSE = {sses[i]:,.0f}{unit}" + ("  (lower)" if lower else ""),
+                    transform=ax.transAxes, fontsize=20, color=ORANGE if lower else STEEL,
+                    ha="center", va="top")
+    note(fig.axes[0], headline)
+    if step == 1:
+        note(fig.axes[0], "SSE: squared distance from each point to its cluster's mean (×), summed",
+             y=0.925, size=15, color=STEEL)
+    return fig
+
+
+@steps("which-better-blobs", 2)
+def which_better_blobs(step):
+    X, _ = make_blobs(n_samples=150, centers=[(-4, -2), (0, 3), (4, -2)], cluster_std=1.0,
+                      random_state=418)
+    a = by_x(KMeans(3, init="random", n_init=1, random_state=2).fit_predict(X), X)  # seed 2 gets stuck
+    b = match_labels(KMeans(3, n_init=10, random_state=0).fit_predict(X), a)
+    return which_better(step, X, a, b, "Example 1: 150 points, K = 3 both times")
+
+
+@steps("which-better-penguins", 2)
+def which_better_penguins(step):
+    Z, *_ = penguins()
+    a = by_x(KMeans(3, n_init=10, random_state=0).fit_predict(Z), Z)
+    b = match_labels(AgglomerativeClustering(3, linkage="ward").fit_predict(Z), a)
+    return which_better(step, Z, a, b, f"Example 2: {len(Z)} penguins (bill and flipper length, "
+                        "standardized), K = 3 both times", pad=0.3, size=34)
+
+
+@steps("which-better-stripes", 2)
+def which_better_stripes(step):
+    rng = np.random.default_rng(418)
+    X = np.vstack([np.c_[rng.uniform(0, 8, 50), rng.normal(y, 0.15, 50)] for y in (0, 2, 4)])
+    a = by_x(KMeans(3, n_init=10, random_state=0).fit_predict(X), X)
+    b = np.repeat([0, 1, 2], 50)  # one cluster per stripe
+    return which_better(step, X, a, b, "Example 3: 150 points, K = 3 both times", size=50)
+
+
+# --------------------------------------------- four cohesion/separation cases
+
+# name: (spread of each cluster, distance between centers, label, plain-words reading)
+COH_SEP = {
+    "high-high": (0.45, 7.0, "High cohesion, high separation", "Each cluster is tight, and the clusters are far apart"),
+    "low-low": (1.2, 2.2, "Low cohesion, low separation", "Each cluster is spread out, and the clusters overlap"),
+    "high-low": (0.45, 2.2, "High cohesion, low separation", "Each cluster is tight, but the clusters sit close together"),
+    "low-high": (1.2, 7.0, "Low cohesion, high separation", "Each cluster is spread out, but the clusters are far apart"),
+}
+
+
+def coh_sep(step, key):
+    """v0: two clusters alone. v1: name the case. Same 2 x 25 draws every time, scaled and moved."""
+    sd, gap, label, reading = COH_SEP[key]
+    base = np.random.default_rng(418).standard_normal((2, 25, 2))
+    A, B = base[0] * sd + (-gap / 2, 0), base[1] * sd + (gap / 2, 0)
+    fig, ax = equal_fig(GOLDEN, (-7.5, 7.5), (-3.6, 3.6), top=120, bottom=30)
+    bare(ax)
+    ax.scatter(A[:, 0], A[:, 1], s=150, marker="o", color=STEEL, edgecolor=PAPER, zorder=4)
+    ax.scatter(B[:, 0], B[:, 1], s=150, marker="s", color=INK, edgecolor=PAPER, zorder=4)
+    if step == 1:
+        note(ax, label, size=22)
+        note(ax, reading, y=0.915, size=17, color=STEEL)
+    return fig
+
+
+for _key in COH_SEP:
+    steps(f"coh-sep-{_key}", 2)(partial(coh_sep, key=_key))
+
+
 # ---------------------------------------------------------- cluster evaluation
 
-CE_A = np.array([(1.0, 1.4), (1.7, 2.3), (2.1, 1.1), (1.3, 2.4)])
+CE_A =np.array([(1.0, 1.4), (1.7, 2.3), (2.1, 1.1), (1.3, 2.4)])
 CE_B = np.array([(4.6, 1.6), (5.4, 2.4), (5.6, 1.0), (4.9, 2.9)])
 
 
