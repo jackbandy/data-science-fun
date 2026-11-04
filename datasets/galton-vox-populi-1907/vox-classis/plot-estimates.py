@@ -36,6 +36,28 @@ GRID = "#e1e0d9"
 # (the swarm band spans +/-0.4). Seeded so the PNGs are reproducible.
 JITTER_SD = 0.01
 RNG = np.random.default_rng(1907)
+# Provisional-turnout model: sd of the remaining-vote estimate, as a fraction of it (chosen by the instructor; no published error rate was found).
+REMAINING_SD = 0.25
+ACTUAL_Y = 0.65  # y position of the range row, below the swarm band (the y-axis is inverted)
+
+
+def turnout_range(n_draws=1_000_000):
+    """Provisional 2026 Illinois VEP turnout from results.csv: (counted + remaining governor votes) x ballots-per-governor-vote ratio / VEP.
+    Remaining ~ Normal(estimate, REMAINING_SD * estimate) clipped at 0; ratio ~ Uniform between the 2022 and 2018 values. Extremes are counted votes only (low) and twice the remaining estimate at the larger ratio (high)."""
+    r = pd.read_csv(HERE / "results.csv").set_index(["year", "measure"])["value"]
+    vep = r[2026, "il_voting_eligible_population"]
+    counted = r[2026, "il_governor_votes_counted"]
+    remaining = r[2026, "il_governor_votes_remaining_est"]
+    ratios = sorted([r[2022, "il_total_ballots_counted"] / r[2022, "il_governor_votes_total"], r[2018, "il_total_ballots_counted"] / r[2018, "il_vote_for_highest_office"]])
+    rng = np.random.default_rng(2026)  # own generator, so the swarm jitter in the other PNGs is unchanged
+    draws = np.clip(rng.normal(remaining, REMAINING_SD * remaining, n_draws), 0, None)
+    turnout = 100 * (counted + draws) * rng.uniform(*ratios, n_draws) / vep
+    return {
+        "extremes": (100 * counted / vep, 100 * (counted + 2 * remaining) * ratios[1] / vep),
+        "p95": tuple(np.percentile(turnout, [2.5, 97.5])),
+        "p50": tuple(np.percentile(turnout, [25, 75])),
+        "center": np.median(turnout),
+    }
 
 
 def jitter_without_overlap(ax, coll):
@@ -72,7 +94,7 @@ def short_number(x, unit=""):
     return f"{x:.3g}{unit}"
 
 
-def plot(csv_name, xlabel, unit, n_drop):
+def plot(csv_name, xlabel, unit, n_drop, actual=None, out_name=None):
     all_values = pd.read_csv(HERE / csv_name).iloc[:, 0].dropna()
     dropped = all_values.nlargest(n_drop)
     values = all_values.drop(dropped.index)
@@ -90,18 +112,29 @@ def plot(csv_name, xlabel, unit, n_drop):
     sns.swarmplot(x=values, ax=ax, color=SERIES, size=5, linewidth=0.75, edgecolor=SURFACE)
     # Seaborn packs the swarm into +/-0.4 data units; trim the y-limits so that band
     # fills the plot height, and let dots at the axis ends draw past the edge.
-    ax.set_ylim(0.42, -0.42)
+    ax.set_ylim(0.42 if actual is None else ACTUAL_Y + 0.2, -0.42)
     for coll in ax.collections:
         coll.set_clip_on(False)
 
-    ax.axvline(median, color=INK_2, linewidth=1, zorder=0)
-    ax.annotate(f"median {short_number(median, unit)}", xy=(median, 1), xycoords=("data", "axes fraction"),
-                xytext=(0, 4), textcoords="offset points", ha="center", va="bottom", color=INK_2, fontsize=10)
+    if actual is None:
+        ax.axvline(median, color=INK_2, linewidth=1, zorder=0)
+        ax.annotate(f"median {short_number(median, unit)}", xy=(median, 1), xycoords=("data", "axes fraction"),
+                    xytext=(0, 4), textcoords="offset points", ha="center", va="bottom", color=INK_2, fontsize=10)
+    else:
+        ax.plot([median, median], [-0.42, 0.35], color=INK_2, linewidth=1, zorder=0)  # a Line2D, since the jitter pass below treats every collection as dots
+        ax.annotate(f"class median {short_number(median, unit)} (n = {len(all_values)})", xy=(median, 1), xycoords=("data", "axes fraction"),
+                    xytext=(0, 4), textcoords="offset points", ha="center", va="bottom", color=INK_2, fontsize=10)
+        for (x0, x1), lw in ((actual["extremes"], 1), (actual["p95"], 4), (actual["p50"], 9)):
+            ax.plot([x0, x1], [ACTUAL_Y, ACTUAL_Y], color=INK, linewidth=lw, solid_capstyle="butt", clip_on=False)
+        ax.annotate(f"actual turnout, provisional: {actual['center']:.1f}%", xy=(actual["center"], ACTUAL_Y), xytext=(0, 9),
+                    textcoords="offset points", ha="center", va="bottom", color=INK, fontsize=10)
+        ax.annotate(f"full range {actual['extremes'][0]:.1f}–{actual['extremes'][1]:.1f}%, thick 95% interval, thickest 50%",
+                    xy=(actual["center"], ACTUAL_Y), xytext=(0, -9), textcoords="offset points", ha="center", va="top", color=INK_2, fontsize=8.5)
 
     ax.set_xlim(lo, hi)
     ax.set_xticks(np.arange(lo, hi + step / 2, step))
     ax.xaxis.set_major_formatter(FuncFormatter(lambda x, _: short_number(x, unit)))
-    ax.set_xlabel(f"{xlabel} (n = {len(all_values)})", color=INK, fontsize=11)
+    ax.set_xlabel(xlabel if actual else f"{xlabel} (n = {len(all_values)})", color=INK, fontsize=11)
 
     ax.grid(axis="x", color=GRID, linewidth=1)
     ax.set_axisbelow(True)
@@ -110,7 +143,7 @@ def plot(csv_name, xlabel, unit, n_drop):
         ax.spines[side].set_visible(False)
     ax.spines["bottom"].set_color(MUTED)
 
-    out = HERE / csv_name.replace(".csv", ".png")
+    out = HERE / (out_name or csv_name.replace(".csv", ".png"))
     fig.tight_layout()
     # Seaborn lays out the swarm at draw time, so draw once, then swap its draw hook
     # back for matplotlib's and add noise to the settled y positions.
@@ -126,3 +159,6 @@ def plot(csv_name, xlabel, unit, n_drop):
 if __name__ == "__main__":
     for args in PLOTS:
         plot(*args)
+    actual = turnout_range()
+    print("provisional turnout:", {k: np.round(v, 2) for k, v in actual.items()})
+    plot(*PLOTS[0], actual=actual, out_name="illinois-voter-turnout-estimates-and-actual-2026.png")

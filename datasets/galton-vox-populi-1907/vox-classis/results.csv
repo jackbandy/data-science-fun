@@ -1,0 +1,24 @@
+year,measure,value,unit,as_of,source_url,note
+2026,il_voting_eligible_population,9308092,people,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,UF Election Lab v0.1 VEP = VAP*(1-NONCITIZEN_PCT) - INELIGIBLE_FELONS_TOTAL
+2026,il_voting_age_population,10171209,people,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,Census Vintage 2025 extrapolated to Nov. 1 2026
+2026,il_noncitizen_pct,8.20,percent,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,
+2026,il_ineligible_felons,29078,people,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,prison only; probation and parole are 0
+2026,il_total_ballots_counted,,ballots,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,blank in v0.1 (documented as TBD)
+2026,il_governor_votes_counted,3904937,votes,2026-11-04 09:39 ET,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,"NBC total row; ""90.8% expected votes in"""
+2026,il_governor_expected_vote_in_pct,90.8,percent,2026-11-04 09:39 ET,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,
+2026,il_governor_votes_remaining_est,395000,votes,2026-11-04 09:39 ET,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,"""Est. remaining 395,000"""
+2026,il_governor_votes_pritzker,2335631,votes,2026-11-04 03:21 CT,https://en.wikipedia.org/wiki/2026_Illinois_gubernatorial_election,91% reporting
+2026,il_governor_votes_bailey,1438609,votes,2026-11-04 03:21 CT,https://en.wikipedia.org/wiki/2026_Illinois_gubernatorial_election,91% reporting
+2026,il_mail_ballots_returned,710896,ballots,2026-11-03 11:03 CT,https://www.cbsnews.com/chicago/live-updates/illinois-midterm-election-results-2026-live/,CBS citing the Illinois State Board of Elections
+2026,il_early_in_person_votes,1107058,ballots,2026-11-03 11:03 CT,https://www.cbsnews.com/chicago/live-updates/illinois-midterm-election-results-2026-live/,CBS citing the Illinois State Board of Elections
+2026,il_grace_period_votes,15414,ballots,2026-11-03 11:03 CT,https://www.cbsnews.com/chicago/live-updates/illinois-midterm-election-results-2026-live/,CBS citing the Illinois State Board of Elections
+2026,il_turnout_counted_so_far_pct,41.95,percent,2026-11-04 09:39 ET,,derived: il_governor_votes_counted / il_voting_eligible_population
+2026,il_turnout_with_remaining_pct,46.20,percent,2026-11-04 09:39 ET,,derived: (il_governor_votes_counted + il_governor_votes_remaining_est) / il_voting_eligible_population
+2022,il_total_ballots_counted,4144125,ballots,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2022G_v1.2.csv,UF Election Lab v1.2
+2022,il_voting_eligible_population,9019092,people,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2022G_v1.2.csv,UF Election Lab v1.2
+2022,il_vep_turnout_pct,45.95,percent,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2022G_v1.2.csv,UF Election Lab v1.2
+2022,il_governor_votes_total,4104636,votes,final,https://en.wikipedia.org/wiki/2022_Illinois_gubernatorial_election,results table Total votes
+2018,il_total_ballots_counted,4635541,ballots,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2018G_v1.0.csv,UF Election Lab v1.0
+2018,il_vote_for_highest_office,4570842,votes,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2018G_v1.0.csv,UF Election Lab v1.0 (Wikipedia's governor total is 4547657)
+2018,il_voting_eligible_population,9179441,people,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2018G_v1.0.csv,UF Election Lab v1.0
+2018,il_vep_turnout_pct,50.50,percent,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2018G_v1.0.csv,UF Election Lab v1.0
