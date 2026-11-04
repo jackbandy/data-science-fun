@@ -110,8 +110,9 @@ If we are successful, by the end of the semester, you will have proficiency in t
 - Linear regression and classification
 - Decision trees, support vector machines, and kernels
 - Clustering, principal component analysis, and model evaluation
-- Recommendation systems and A/B testing
-- Network analysis, graphs, relationships, and network measures
+- Recommendation systems
+- Network analysis, graphs, community detection, diffusion, and immunization
+- A/B testing
 
 ## [Course Texts and Materials]{.underline}
 

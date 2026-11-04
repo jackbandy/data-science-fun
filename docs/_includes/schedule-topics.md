@@ -279,22 +279,20 @@
 ## Week 11, Day 2 (2026-11-04)
 
 * Recommendation systems
-* A/B testing
 * **Week 11 Quiz (in SELE 2254)** on [PrairieTest](https://us.prairietest.com)
 	* [How to get there](/sele.html)
 
 ### Sources
 
 * *Mining of Massive Datasets*, [Chapter 9: Recommendation Systems](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/recommendation-systems/8E2DDDAEFC644266620945386AB7DFDE)
-* *Learning Data Science*, [Chapter 3: Simulation and Data Design](https://learningds.org/ch/03/theory_intro.html) (continued)
-* *Computational and Inferential Thinking*, [Chapter 2: Causality and Experiments](https://inferentialthinking.com/chapters/02/causality-and-experiments)
-* *Computational and Inferential Thinking*, [Chapter 12: Comparing Two Samples](https://inferentialthinking.com/chapters/12/comparing-two-samples)
-* *Calling Bullshit*, [3.5: Common Causes](https://www.youtube.com/watch?v=5iVN13tbVNc) (video, 10 min)
 * *Ethics in Data Science* (course mini-book), [Chapter 5: Ethics in Reporting, Decision-Making, and Problem-Solving](/ethics-in-data-science/book/05-ethics-in-reporting-decisions-solutions.html)
 
 ## Week 12, Day 1 (2026-11-09)
 
-* Network analysis
+* Graphs and relationships
+* Community detection
+* Network diffusion
+* Virus propagation
 
 ### Sources
 
@@ -303,13 +301,11 @@
 
 ## Week 12, Day 2 (2026-11-11)
 
-* Graphs
-* Network measures
+* Network immunization
 
 ### Sources
 
-* *Mining of Massive Datasets*, [Chapter 10: Mining Social-Network Graphs](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/mining-socialnetwork-graphs/7389AA5812DBD9ACC0D7A618C27C5060) (continued)
-* *Mining of Massive Datasets*, [Chapter 5: Link Analysis](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/link-analysis/5DFB9D0592441A72D05BB79E2C21912B)
+* Tong et al., "[On the Vulnerability of Large Graphs](https://doi.org/10.1109/ICDM.2010.54)," *ICDM* (2010)
 
 ## Week 13, Day 1 (2026-11-16)
 
@@ -321,7 +317,14 @@
 
 ## Week 13, Day 2 (2026-11-18)
 
-* TBD (margin)
+* A/B testing (flex day)
+
+### Sources
+
+* *Learning Data Science*, [Chapter 3: Simulation and Data Design](https://learningds.org/ch/03/theory_intro.html) (continued)
+* *Computational and Inferential Thinking*, [Chapter 2: Causality and Experiments](https://inferentialthinking.com/chapters/02/causality-and-experiments)
+* *Computational and Inferential Thinking*, [Chapter 12: Comparing Two Samples](https://inferentialthinking.com/chapters/12/comparing-two-samples)
+* *Calling Bullshit*, [3.5: Common Causes](https://www.youtube.com/watch?v=5iVN13tbVNc) (video, 10 min)
 
 ## Week 14, Day 1 (2026-11-23)
 

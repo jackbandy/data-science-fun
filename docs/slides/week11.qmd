@@ -11,14 +11,14 @@ format:
 
 # Week 11 Slide Deck {.course-title}
 
-## Recommendation Systems; A/B Testing
+## Recommendation Systems
 
 Jack Bandy
 2026
 
 ---
 
-# Week 11, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" background-size="cover"}
+# Week 11, Day 2 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" background-size="cover"}
 
 CS 418 · Week 11 · 🟠 35th/Archer 🟠
 
@@ -34,7 +34,7 @@ CS 418 · Week 11 · 🟠 35th/Archer 🟠
 
 ::: {}
 - Week 11: 35th/Archer
-- Day 1
+- Day 2 (Monday was project work)
     - Examples of Recommender Systems
     - How Do Recommender Systems Work?
 :::
@@ -195,48 +195,6 @@ For every (user, video) pair, YouTube can record a **utility**:
 | **Dev**     |     |     | 85% | 70% |     |
 
 Consider utility as **watch percentage** (blank = never clicked/watched)
-
----
-
-# Week 11, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop12-35th-archer-a.jpg" background-size="cover"}
-
-<h2>A/B Testing</h2>
-
-Jack Bandy
-2026
-
----
-
-# Map {.split}
-
-::: {.split-content .narrow-aside}
-
-::: {}
-- Week 11: 35th/Archer
-- Day 2
-    - A/B Testing
-:::
-
-![](../assets/orange-line-map-stops/stop12-35th-archer.svg){.figure alt="Orange Line map with the 35th/Archer stop marked, the Week 11 stop"}
-
-:::
-
----
-
-
-# A/B Testing {.section-header}
-
----
-
-# A/B Testing
-
-::: {style="border:3px dashed #f9461c; border-radius:12px; padding:0.8em 1em; margin-top:0.4em;"}
-[TODO]{.eyebrow .todo}
-
-::: {.dense}
-- **TK**
-:::
-:::
 
 ---
 
