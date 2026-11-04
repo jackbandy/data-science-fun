@@ -41,6 +41,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout downloads ~900 MB of files, which took 15s on most runs and up to 4.5 minutes on others. With .git restored from the cache, checkout fetches only what changed since. The key rolls over weekly, and an exact hit skips the save, so only the first run of each week uploads a new copy.
+      - name: Pick the weekly git cache key
+        id: git-cache-key
+        run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      # Must stay before checkout: post steps run in reverse order, so the save happens after checkout's post step has removed its credentials from .git/config.
+      - name: Restore git objects cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .git
+          key: git-${{ steps.git-cache-key.outputs.week }}
+          restore-keys: git-
+
       # Full commit history is needed for the changed-files diff below
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -123,19 +136,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Set up Quarto (latest release)
-        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
-        with:
-          version: release
-
-      - name: Log Quarto version
-        run: quarto --version
-
-      - name: Install Python dependencies
-        run: |
-          pip install uv
-          uv pip install --system -r docs/slides/shared/requirements.lock
-
       # Cache the rendered book output
       - name: Restore Quarto book cache
         id: book-cache
@@ -144,10 +144,6 @@ jobs:
           path: docs/ethics-in-data-science/book
           key: book-${{ hashFiles('docs/ethics-in-data-science/**') }}
           restore-keys: book-
-
-      - name: Render Quarto book
-        if: steps.changed.outputs.build_book == 'true' || steps.book-cache.outputs.cache-hit != 'true'
-        run: quarto render docs/ethics-in-data-science
 
       # Cache the rendered slide outputs ONLY (deck HTML, support files, libs).
 
@@ -177,6 +173,66 @@ jobs:
           restore-keys: |
             slides-v2-
             slides-
+
+      # Exporting all 13 decks takes ~2.5 minutes, so only the decks that need a PDF get one. Two things put a deck on that list:
+      #
+      #   1. Its source changed on this push (steps.changed.outputs.render_slides).
+      #   2. It has no PDF on disk. The cache above carries PDFs between runs, but a cold cache, a restore-keys partial hit, or a cache written by a PR run (where PDF export is skipped) all leave some or all of them missing. Checking the filesystem covers every one of those without having to reason about which happened.
+      #
+      # This runs before Quarto, Node, and Chromium are set up so each of them can be skipped when the list is empty. An empty list means every PDF is already present and current, so the export is skipped outright — RENDER_SLIDES="" would mean "all decks" to the build script, which is the opposite of what we want here. Skipped on PRs, which leaves the list empty there too.
+      - name: List slide PDFs to export
+        id: pdfs
+        if: github.event_name != 'pull_request'
+        env:
+          CHANGED_SLIDES: ${{ steps.changed.outputs.render_slides }}
+          SLIDES_CACHE_HIT: ${{ steps.slides-cache.outputs.cache-hit }}
+        run: |
+          cd docs/slides
+
+          # An empty CHANGED_SLIDES is ambiguous on its own: the detect step writes it both for "a shared input changed, so rebuild everything" and for "no slide source changed at all". The slides cache tells the two apart. Its key covers exactly the files the detect step looks at, so an exact hit can only mean nothing slide-related changed — which is also why the HTML render step below can get away with testing the cache alone.
+          if [[ -z "${CHANGED_SLIDES// }" && "$SLIDES_CACHE_HIT" != "true" ]]; then
+            NEEDED=$(ls week*.qmd week*.md 2>/dev/null | tr '\n' ' ')
+          else
+            NEEDED="$CHANGED_SLIDES"
+            for src in week*.qmd week*.md; do
+              [[ -e "$src" ]] || continue
+              base="${src%.*}"
+              if [[ ! -f "$base.pdf" ]]; then
+                NEEDED="$NEEDED $src"
+              fi
+            done
+          fi
+
+          # Collapse duplicates (a changed deck with no PDF is listed twice).
+          NEEDED=$(echo "$NEEDED" | tr ' ' '\n' | grep -v '^$' | sort -u | tr '\n' ' ' | sed 's/ *$//')
+
+          if [[ -z "$NEEDED" ]]; then
+            echo "Every slide PDF is present and up to date; skipping export."
+          else
+            echo "PDFs to export: $NEEDED"
+          fi
+          echo "needed=$NEEDED" >> "$GITHUB_OUTPUT"
+
+      # Quarto costs 10-16s to set up and most pushes render nothing, so it is only installed when one of the three steps that call it will run: the book render, the HTML slide render, or the PDF export (build_all_quarto.sh exits if quarto is missing, even with SKIP_HTML).
+      - name: Set up Quarto (latest release)
+        id: quarto
+        if: steps.changed.outputs.build_book == 'true' || steps.book-cache.outputs.cache-hit != 'true' || steps.slides-cache.outputs.cache-hit != 'true' || steps.pdfs.outputs.needed != ''
+        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
+        with:
+          version: release
+
+      - name: Log Quarto version
+        if: steps.quarto.outcome == 'success'
+        run: quarto --version
+
+      - name: Install Python dependencies
+        run: |
+          pip install uv
+          uv pip install --system -r docs/slides/shared/requirements.lock
+
+      - name: Render Quarto book
+        if: steps.changed.outputs.build_book == 'true' || steps.book-cache.outputs.cache-hit != 'true'
+        run: quarto render docs/ethics-in-data-science
 
       # week5.qmd uses `engine: knitr`, which shells out to Rscript. Quarto's
       # setup action does not bundle R, so it must be installed separately.
@@ -234,12 +290,9 @@ jobs:
           cd docs/slides
           bash shared/build_all_quarto.sh
 
-      # PDF export is a bonus - it needs a headless browser plus Node >=22 
-      # The steps below are non-blocking: if the browser, Node, or any deck's export fails,
-      # continue-on-error lets the HTML-only deploy proceed.
-      # Skipped on PRs.
+      # PDF export is a bonus: it needs a headless browser plus Node >=22. These steps are non-blocking (if the browser, Node, or any deck's export fails, continue-on-error lets the HTML-only deploy proceed) and only run when "List slide PDFs to export" found something to export, which is never on PRs.
       - name: Set up Node (>=22 for global WebSocket)
-        if: github.event_name != 'pull_request'
+        if: steps.pdfs.outputs.needed != ''
         continue-on-error: true
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -247,66 +300,22 @@ jobs:
 
       - name: Set up Chromium for slide PDF export
         id: setup-chrome
-        if: github.event_name != 'pull_request'
+        if: steps.pdfs.outputs.needed != ''
         continue-on-error: true
         uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2.2.0
 
-      # Exporting all 13 decks takes ~2.5 minutes, so only the decks that need
-      # a PDF get one. Two things put a deck on that list:
-      #
-      #   1. Its source changed on this push (steps.changed.outputs.render_slides).
-      #   2. It has no PDF on disk. The cache above carries PDFs between runs,
-      #      but a cold cache, a restore-keys partial hit, or a cache written by
-      #      a PR run (where this step is skipped) all leave some or all of them
-      #      missing. Checking the filesystem covers every one of those without
-      #      having to reason about which happened.
-      #
-      # An empty list means every PDF is already present and current, so the
-      # export is skipped outright — RENDER_SLIDES="" would mean "all decks" to
-      # the build script, which is the opposite of what we want here.
       - name: Render slide PDFs (bonus — non-blocking)
-        if: github.event_name != 'pull_request'
+        if: steps.pdfs.outputs.needed != ''
         continue-on-error: true
         env:
           BUILD_PDFS: "true"
           SKIP_HTML: "true"
           SKIP_VENV: "true"
           CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}
-          CHANGED_SLIDES: ${{ steps.changed.outputs.render_slides }}
-          SLIDES_CACHE_HIT: ${{ steps.slides-cache.outputs.cache-hit }}
+          RENDER_SLIDES: ${{ steps.pdfs.outputs.needed }}
         run: |
           cd docs/slides
-
-          # An empty CHANGED_SLIDES is ambiguous on its own: the detect step
-          # writes it both for "a shared input changed, so rebuild everything"
-          # and for "no slide source changed at all". The slides cache tells
-          # the two apart. Its key covers exactly the files the detect step
-          # looks at, so an exact hit can only mean nothing slide-related
-          # changed — which is also why the HTML render step above can get away
-          # with testing the cache alone.
-          if [[ -z "${CHANGED_SLIDES// }" && "$SLIDES_CACHE_HIT" != "true" ]]; then
-            NEEDED=$(ls week*.qmd week*.md 2>/dev/null | tr '\n' ' ')
-          else
-            NEEDED="$CHANGED_SLIDES"
-            for src in week*.qmd week*.md; do
-              [[ -e "$src" ]] || continue
-              base="${src%.*}"
-              if [[ ! -f "$base.pdf" ]]; then
-                NEEDED="$NEEDED $src"
-              fi
-            done
-          fi
-
-          # Collapse duplicates (a changed deck with no PDF is listed twice).
-          NEEDED=$(echo "$NEEDED" | tr ' ' '\n' | grep -v '^$' | sort -u | tr '\n' ' ')
-
-          if [[ -z "${NEEDED// }" ]]; then
-            echo "Every slide PDF is present and up to date; skipping export."
-            exit 0
-          fi
-
-          echo "Exporting PDFs for: $NEEDED"
-          RENDER_SLIDES="$NEEDED" bash shared/build_all_quarto.sh
+          bash shared/build_all_quarto.sh
 
       # The generated regions of docs/slides/index.html are rewritten here, not
       # taken from the commit. build_all_quarto.sh already runs this script, but
