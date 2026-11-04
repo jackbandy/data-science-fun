@@ -281,6 +281,7 @@
 * Recommendation systems
 * A/B testing
 * **Week 11 Quiz (in SELE 2254)** on [PrairieTest](https://us.prairietest.com)
+	* [How to get there](/sele.html)
 
 ### Sources
 

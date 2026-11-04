@@ -1,0 +1,10 @@
+/* Every photo on the SELE directions page renders at the same size, whatever its pixel dimensions. */
+.container img {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 3 / 4;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+}
