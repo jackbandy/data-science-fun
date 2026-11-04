@@ -22,6 +22,15 @@
 \usepackage{mdframed}
 \usepackage{array}
 
+% ── Draft watermark ───────────────────────────────────────────────────────────
+% This worksheet is still a draft. The watermark marks the PDF as unfinished so
+% nobody mistakes a placeholder for the real thing. Delete this block once the
+% worksheet has been reviewed.
+\usepackage{draftwatermark}
+\SetWatermarkText{IN-PROGRESS}
+\SetWatermarkScale{2.2}
+\SetWatermarkLightness{0.85}
+
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
 \fancyhf{}
@@ -121,38 +130,37 @@ One problem with it:
 
 \newpage
 
-% ── 4. What the data reveals ─────────────────────────────────────────────────
-\guidedopen{4. What the Data Reveals}{
-Write down one finding about how neighborhood infrastructure money gets spent, and the evidence behind it.
+% ── 4. The lifecycle ─────────────────────────────────────────────────────────
+% ds-lifecycle.pdf is docs/assets/lifecycle/ds-lifecycle-v0.svg (the figure in the Week 1, 2, and 10 decks) converted with `rsvg-convert -f pdf`. It spans both columns so its labels stay legible.
+\noindent\textbf{4. The Data Science Lifecycle}\\[0.18em]
+\noindent Pick one step of the data science lifecycle from Week 1. How did it show up in Ward Wise?
 
-\vspace{0.5em}
-Finding:
-\vspace{1.4cm}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{ds-lifecycle.pdf}
+\end{center}
 
-Evidence:
-}{1.4cm}{4.6cm}
+\noindent
+\begin{minipage}[t]{0.485\textwidth}
+  Step: \underline{\hspace{4.0cm}}
+  \blankspace{2.6cm}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \blankspace{3.2cm}
+\end{minipage}
+\\[0.4em]
 
 \vfill
 
-% ── 5. The lifecycle ─────────────────────────────────────────────────────────
-\guidedopen{5. The Data Science Lifecycle}{
-Pick one step of the data science lifecycle from Week 1. How did it show up in Ward Wise?
-
-\vspace{0.5em}
-Step: \underline{\hspace{4.0cm}}
-}{2.6cm}{4.0cm}
-
-\vfill
-
-% ── 6. Your neighborhood ─────────────────────────────────────────────────────
-\guidedopen{6. Your Neighborhood}{
+% ── 5. Your neighborhood ─────────────────────────────────────────────────────
+\guidedopen{5. Your Neighborhood}{
 Write one question about your own neighborhood that you could ask with this data.
 }{2.0cm}{3.0cm}
 
 \vfill
 
-% ── 7. A question for Sean ───────────────────────────────────────────────────
-\guidedopen{7. A Question for Sean}{
+% ── 6. A question for Sean ───────────────────────────────────────────────────
+\guidedopen{6. A Question for Sean}{
 Write one question you asked, or would like to ask, Sean.
 }{1.6cm}{2.6cm}
 
