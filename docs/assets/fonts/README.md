@@ -3,7 +3,9 @@
 Self-hosted fonts used by the slide theme (`docs/slides/shared/theme/uic-orange-reveal.scss`),
 the site CSS (`docs/css/`), and the figure generators under `docs/assets/`.
 
-- **Big Shoulders** (`big-shoulders/BigShoulders.woff2`): downloaded from the upstream XO Type Co repository: https://github.com/xotypeco/big_shoulders. Additional non-Google references: https://bigshoulders.me/ and https://design.chicago.gov/typography/. Copyright 2019 The Big Shoulders Project Authors, licensed under the SIL Open Font License (`big-shoulders/OFL.txt`). Used as the slide/heading face.
+- **Big Shoulders** (`big-shoulders/BigShoulders.woff2`): downloaded from the upstream XO Type Co repository: https://github.com/xotypeco/big_shoulders. Additional non-Google references: https://bigshoulders.me/ and https://design.chicago.gov/typography/. Copyright 2019 The Big Shoulders Project Authors, licensed under the SIL Open Font License (`big-shoulders/OFL.txt`). Used as the slide/heading face. Two formats:
+	- `BigShoulders.woff2` for the web slides and site CSS
+	- `BigShoulders-Bold.ttf` (static Bold, v2.002 per its name table, copied from a local install of the family) for figure generators that render with matplotlib, e.g. `chicago-votes/make_chicago_votes.py`
 - **Libre Franklin** (`libre-franklin/`): downloaded from the upstream Impallari Type repository: https://github.com/impallari/Libre-Franklin. Used as the self-hosted OFL fallback for the slide body's ITC Franklin Gothic stack because ITC Franklin Gothic itself is a commercial typeface and no permissive redistribution source was identified. Licensed under the SIL Open Font License 1.1 (`libre-franklin/OFL.txt`). Two formats:
 	- `LibreFranklin.woff2` for the web slides and site CSS
 	- `LibreFranklin-Regular.ttf` (static Regular, v3.000, from `fonts/TTF/` upstream) for figure generators that render with matplotlib — matplotlib cannot decode woff2 without brotli.
