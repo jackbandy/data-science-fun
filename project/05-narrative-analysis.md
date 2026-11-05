@@ -1,7 +1,7 @@
 ---
 summary: Start turning your analysis into a story (with findings, evidence, and limits)
 topic: Telling the story
-due: Wednesday, November 11
+due: Sunday, November 15
 ai_policy: yellow-over-red
 draft: false
 ---
