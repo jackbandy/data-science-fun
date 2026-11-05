@@ -57,7 +57,7 @@ Five points available (one for each of the five prompts above):
 
 ## AI/LLM policy
 
-**Yellow over red. Proceed with caution on the main route.**
+**Yellow over red. Proceed with caution on the main route, prepared to stop at the next signal.**
 
 🟡 You may use AI/LLM-based tools to search for candidate datasets, and for the mechanics of getting a file into a dataframe, e.g. reading an API's documentation, working out the right `read_csv` arguments for an awkward file, browsing the web for relevant datasets, etc.
 

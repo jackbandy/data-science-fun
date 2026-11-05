@@ -40,7 +40,7 @@ TODO — file, format, and where it goes (Canvas).
 
 ## AI/LLM policy
 
-**Yellow over red — proceed with caution on the main route.**
+**Yellow over red. Proceed with caution on the main route, prepared to stop at the next signal.**
 
 🟡 You may use AI/LLM-based tools to search the web for studies and/or projects that pique your interest. For example, Google Scholar has a chatbot designed to surface relevant research studies: [scholar.google.com/scholar_labs](https://scholar.google.com/scholar_labs/search?hl=en). Use caution when working with these tools, and verify your sources.
 

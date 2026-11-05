@@ -59,7 +59,7 @@ Six points available (one for each step above):
 
 ## AI/LLM policy
 
-**Yellow over red. Proceed with caution on the main route. Stop ahead.**
+**Yellow over red. Proceed with caution on the main route, prepared to stop at the next signal.**
 
 🟡 You may use AI/LLM-based tools for the mechanics of plotting and data handling. For example, looking up the right polars or plotting functions, parsing columns, augmenting columns, fixing axis labels, etc.
 

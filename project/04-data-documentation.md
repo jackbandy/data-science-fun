@@ -89,7 +89,7 @@ Six points available (one for each step above):
 
 ## AI/LLM policy
 
-**Yellow over red. Proceed with caution on the main route.**
+**Yellow over red. Proceed with caution on the main route, prepared to stop at the next signal.**
 
 🟡 You may use AI/LLM-based tools to help locate a publisher's documentation, license, or methodology page, and for the mechanics of formatting, e.g. turning your notes into a markdown table.
 
