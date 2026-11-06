@@ -225,6 +225,14 @@ Learning DS Textbook:
   * stationarity
 * Classification
 
+## Related courses: CS 516 (Responsible Data Science and Algorithmic Fairness)
+* [CS 516 Spring 2025 syllabus (PDF), Abolfazl Asudeh](https://asudeh.github.io/teaching/archive/cs516spring25/Asudeh-CS516-Spring-2025.pdf)
+* [CS 516 Spring 2025 course page](https://www.cs.uic.edu/~asudeh/teaching/archive/cs516spring25/)
+* [CS 516 Fall 2025 course page (on Saeid Tizpaz-Niari's site)](https://tizpaz.github.io/teaching/CS516-Fall2025.html)
+* [CS 594 Fall 2020 syllabus (PDF), the earlier special-topics version](https://asudeh.github.io/teaching/archive/cs594fall20/CS594_Syllabus_Fall20.pdf)
+* [Abolfazl Asudeh, UIC CS profile](https://cs.uic.edu/profiles/asudeh/)
+* [*Fairness and Machine Learning* (Barocas, Hardt & Narayanan), the free textbook](https://fairmlbook.org/)
+
 ## Etc.
 
 Birthday effect - are people [more likely to die on their birthday](https://pudding.cool/2025/04/birthday-effect/)
