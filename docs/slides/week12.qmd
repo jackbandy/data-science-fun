@@ -4,7 +4,7 @@ format:
   revealjs:
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 12</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week12.html">dodatascience.fun/slides/week12</a></span>'
 nocite: |
-  @blondel2008, @fortunato2010, @newman2004, @prakash2010, @tong2010, @chakrabarti2012, @goel2016structural, @zachary1977
+  @blondel2008, @fortunato2010, @newman2004, @prakash2010, @tong2010, @chakrabarti2012, @goel2016structural, @zachary1977, @leskovec2020mmds, @barabasi2016, @girvan2002, @granovetter1973, @euler1741
 ---
 
 # Week 12 Slide Deck {.course-title}
@@ -34,9 +34,8 @@ CS 418 · Week 12 · 🟠 Western 🟠
 - Week 12: Western
 - Day 1
     - Graphs and Relationships
-    - Community Detection
-    - Network Diffusion
-    - Virus Propagation
+    - Example: Chicago Bulls
+    - Networks in Your Projects
 :::
 
 ![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
@@ -172,6 +171,259 @@ Graph types *(placeholder)*
 ::::
 
 ---
+
+# Example: Chicago Bulls {.section-header}
+
+---
+
+# Bulls Players, 2002–2014 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network/bulls-network-v0.svg" alt="147 gray dots, one per player on a Chicago Bulls roster from January 2002 through 2013-14, with no lines yet. Caption: each dot is a player.">
+
+---
+
+# Bulls Players, 2002–2014 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network/bulls-network-v1.svg" alt="The same 147 dots joined by 1,859 thin gray lines, one for every pair of players on the roster for at least one game together. Every line looks the same, whether the pair shared 1 game or hundreds.">
+
+---
+
+# Bulls Players, 2002–2014 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network/bulls-network-v2.svg" alt="The same network with line width and darkness set by games together, from 1 to 581; a few thick, dark lines stand out among many faint ones.">
+
+---
+
+# Bulls Players, 2002–2014 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network/bulls-network-v3.svg" alt="The weighted network colored by four Louvain communities, each labeled with its era and top players: 2001-02 to 2003-04 (Chandler, Curry, Robinson); 2004-05 to 2008-09 (Hinrich, Deng, Gordon); 2009-10 (Miller, Hunter, Salmons); 2010-11 to 2013-14 (Noah, Gibson, Rose).">
+
+---
+
+# Community 1: 2001-02 to 2003-04 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network/bulls-community-1.svg" alt="Close-up of community 1 (2001-02 to 2003-04): headshots of 16 of its 36 players with the most games on the roster, joined by lines weighted by games together. Players include Tyson Chandler, Eddy Curry, Eddie Robinson, Jamal Crawford.">
+
+---
+
+# Community 2: 2004-05 to 2008-09 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network/bulls-community-2.svg" alt="Close-up of community 2 (2004-05 to 2008-09): headshots of 16 of its 50 players with the most games on the roster, joined by lines weighted by games together. Players include Kirk Hinrich, Luol Deng, Ben Gordon, Andres Nocioni.">
+
+---
+
+# Community 3: 2009-10 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network/bulls-community-3.svg" alt="Close-up of community 3 (2009-10): headshots of 15 of its 15 players with the most games on the roster, joined by lines weighted by games together. Players include Brad Miller, Lindsey Hunter, John Salmons, Jerome James.">
+
+---
+
+# Community 4: 2010-11 to 2013-14 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network/bulls-community-4.svg" alt="Close-up of community 4 (2010-11 to 2013-14): headshots of 16 of its 46 players with the most games on the roster, joined by lines weighted by games together. Players include Joakim Noah, Taj Gibson, Derrick Rose, Carlos Boozer.">
+
+---
+
+# Bulls Players, 1996–2023 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-network-v0.svg" alt="234 gray dots, one per player who played for the Chicago Bulls from 1996-97 to 2022-23 (2012-13 missing), with no lines yet.">
+
+---
+
+# Bulls Players, 1996–2023 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-network-v1.svg" alt="The same 234 dots joined by 2,618 thin gray lines, one for every pair who played in at least one game together, all drawn the same.">
+
+---
+
+# Bulls Players, 1996–2023 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-network-v2.svg" alt="The same network with line width and darkness set by games played together, from 1 to 348.">
+
+---
+
+# Bulls Players, 1996–2023 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-network-v3.svg" alt="The weighted network colored by five Louvain communities, each labeled with its era and top players: 1996-97 to 1998-99 (Brown, Kukoc, Harper); 1999-00 to 2003-04 (Chandler, Curry, Crawford); 2004-05 to 2008-09 (Hinrich, Deng, Gordon); 2009-10 to 2015-16 (Noah, Gibson, Rose); 2016-17 to 2022-23 (LaVine, Felicio, White).">
+
+---
+
+# Community 1: 1996-97 to 1998-99 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-community-1.svg" alt="Close-up of community 1 (1996-97 to 1998-99): 20 of its 27 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Randy Brown, Toni Kukoc, Ron Harper, Michael Jordan, Scottie Pippen.">
+
+---
+
+# Community 2: 1999-00 to 2003-04 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-community-2.svg" alt="Close-up of community 2 (1999-00 to 2003-04): 20 of its 49 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Tyson Chandler, Eddy Curry, Jamal Crawford, Fred Hoiberg.">
+
+---
+
+# Community 3: 2004-05 to 2008-09 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-community-3.svg" alt="Close-up of community 3 (2004-05 to 2008-09): 20 of its 39 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Kirk Hinrich, Luol Deng, Ben Gordon, Andres Nocioni.">
+
+---
+
+# Community 4: 2009-10 to 2015-16 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-community-4.svg" alt="Close-up of community 4 (2009-10 to 2015-16): 20 of its 45 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Joakim Noah, Taj Gibson, Derrick Rose, Jimmy Butler.">
+
+---
+
+# Community 5: 2016-17 to 2022-23 {.image-frame-slide}
+
+<img class="figure" src="../assets/bulls-players-network-extended/bulls-community-5.svg" alt="Close-up of community 5 (2016-17 to 2022-23): 20 of its 74 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Zach LaVine, Cristiano Felicio, Coby White, Denzel Valentine.">
+
+---
+
+# Networks in Your Projects {.section-header}
+
+---
+
+# UFC Fight Analysis {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- **Node:** fighters
+- **Edge:** a fight (arrow: winner → loser)
+- **RQ:** What fighter and fight traits go with winning UFC fights?
+- **Analysis:**
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/network-visuals/project-ufc.svg" alt="Toy network of 8 fighters labeled A to H joined by 12 arrows, each pointing from a fight's winner to its loser. The arrow from A to B is orange and labeled 'A beat B'.">
+:::
+
+:::
+
+---
+
+# Football (Soccer) {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- **Node:** national teams
+- **Edge:** matches played (width = how many)
+- **RQ:** How does playing at home affect team performance and match outcomes?
+- **Analysis:**
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/network-visuals/project-soccer.svg" alt="Toy network of 12 national teams in three tight clusters labeled Europe, South America, and Africa. Thick lines join teams within a region and thin lines cross between regions; one thick orange line in Europe is labeled 'played 8 times'.">
+:::
+
+:::
+
+---
+
+# Football (NFL) {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- **Node:** players (passers and receivers)
+- **Edge:** pass targets (width = how many)
+- **RQ:** How much does a receiver's separation relate to receiving yards?
+- **Analysis:**
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/network-visuals/project-nfl.svg" alt="Toy network of one team's passing game: two quarterback squares, QB1 and QB2, send arrows to receiver circles WR1, WR2, WR3, TE, and RB. Arrow width is the number of targets; QB1's thick orange arrow to WR1 is labeled '140 targets'.">
+:::
+
+:::
+
+---
+
+# Economic Trajectories {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- **Node:** reviewers and restaurants
+- **Edge:** a review
+- **RQ:** Which restaurant traits (ratings, review volume, nearby competitors) predict closure?
+- **Analysis:**
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/network-visuals/project-yelp.svg" alt="Toy two-column network: 7 reviewer dots on the left joined by lines to 4 restaurant squares, R1 to R4, on the right. R3 is a hollow square labeled 'closed'. One orange line from a reviewer to R1 is labeled 'one review'.">
+:::
+
+:::
+
+---
+
+# Flock Research {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- **Node:** police agencies and surveillance technologies
+- **Edge:** an agency uses a technology
+- **RQ:** Do agencies that use license-plate readers (ALPR) also use other surveillance tech?
+- **Analysis:**
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/network-visuals/project-flock.svg" alt="Toy two-column network: 6 agency circles, A to F, joined by lines to 5 technology squares: ALPR, face recognition, drones, gunshot detection, and body cameras. The orange line from B to ALPR is labeled 'B uses ALPR'.">
+:::
+
+:::
+
+---
+
+# Fake News on Social Media {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- **Node:** articles and tweets
+- **Edge:** a tweet shares an article (or retweets a tweet)
+- **RQ:** Does fake news get shared more than real news on social media?
+- **Analysis:**
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/network-visuals/project-fakenews.svg" alt="Two toy sharing trees, each rooted at an article square. The fake article's tree has a long chain four levels deep; the real article's tree is wide and shallow. An orange edge deep in the fake tree is labeled 'a retweet of a retweet'.">
+:::
+
+:::
+
+---
+
+# Week 12, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
+
+<h2>Network Immunization</h2>
+
+Jack Bandy
+2026
+
+---
+
+# Map {.split}
+
+::: {.split-content .narrow-aside}
+
+::: {}
+- Week 12: Western
+- Day 2
+    - Community Detection
+    - Network Diffusion
+    - Virus Propagation
+    - Network Immunization
+:::
+
+![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
+
+:::
+
+---
+
 
 # Community Detection {.section-header}
 
@@ -637,32 +889,6 @@ Epidemic threshold visualization *(placeholder)*
 ::::
 
 ---
-
-# Week 12, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
-
-<h2>Network Immunization</h2>
-
-Jack Bandy
-2026
-
----
-
-# Map {.split}
-
-::: {.split-content .narrow-aside}
-
-::: {}
-- Week 12: Western
-- Day 2
-    - Network Immunization
-:::
-
-![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
-
-:::
-
----
-
 
 # Network Immunization {.section-header}
 

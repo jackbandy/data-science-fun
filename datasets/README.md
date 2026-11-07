@@ -4,6 +4,7 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
 
 ### Datasets
 
+- [bulls-players-nbadb](bulls-players-nbadb/) — every Chicago Bulls player in each game's play-by-play, 1996–97 to 2022–23 (no 2012–13 regular season), extracted from the nbadb NBA database (CC BY-SA 4.0)
 - [chicago-air-quality](chicago-air-quality/) — every PM2.5 and NO2 measurement from the 283-sensor Open Air Chicago network during July 2026
 - [chicago-l-stations](chicago-l-stations/) — CTA L stop records with station names, service flags, and location data
 - [chicago-maps](chicago-maps/) — Chicago city and ward boundaries, water polygons, and ward-level ACS household income, as plain GeoJSON and CSV
@@ -28,6 +29,8 @@ Many of these are from the [Chicago Data Portal](https://data.cityofchicago.org/
   - Raw data not included; download from the [Princeton Research Data Commons](https://datacommons.princeton.edu/discovery/catalog/doi-10-34770-y56c-ym90)
 - [national-parks-info](national-parks-info/) — The 63 U.S. national parks
 - [resume-audit-bertrand-mullainathan](resume-audit-bertrand-mullainathan/) — Replication data for Bertrand & Mullainathan, *AER* 2004 field experiment on racial discrimination in hiring
+- [shared-success-sports](shared-success-sports/) — Derived data for Mukherjee et al., *Nature Human Behaviour* 2019 study of prior shared success in NBA, EPL, MLB, IPL and Dota 2 teams
+  - Not included; clone from the authors' [GitHub repository](https://github.com/smukherjee0305/Skills_Shared_Success_Sports) (no license)
 - [us-presidential-elections](us-presidential-elections/) — Popular vote totals and shares for every U.S. presidential candidate, 1824–2024, from the Berkeley Data 100 course notes
 - [world-inequality-database](world-inequality-database/) — Pre-tax national income share time series for 9 countries, from the World Inequality Database
 

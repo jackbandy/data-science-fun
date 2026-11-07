@@ -309,6 +309,29 @@ Unlike the other works in this folder, this file is a **copyrighted commercial p
 
 ---
 
+## Cheryl Warrick (Copyrighted — used under fair use)
+
+Warrick (b. 1956) is a living artist, and this work is licensed for prints through Wild Apple, so it is **not** public domain or openly licensed. The file is the largest copy the print seller serves publicly (900 px wide), included for illustration and commentary in a non-commercial course slide deck. It should not be reused outside that context without separate permission.
+
+### Warrick Files
+
+1. **warrick_mid_century_ii.jpg**
+   - Title: Mid Century II (also listed as "Mid Century Colorful Circles")
+   - Artist: Cheryl Warrick
+   - Dimensions: 900 × 602 pixels (179 KB)
+   - Source: [Wild Apple Prints](https://wildappleprints.com/featured/mid-century-ii-cheryl-warrick.html) (image file: `images.imagerenderer.com/images/artworkimages/mediumlarge/2/mid-century-ii-cheryl-warrick.jpg`)
+   - License: Copyrighted (Cheryl Warrick / Wild Apple); used here under fair use for non-commercial educational purposes
+
+2. **warrick_mid_century_ii_large.jpg**
+   - Title: Mid Century II
+   - Artist: Cheryl Warrick
+   - Dimensions: 1187 × 794 pixels
+   - Source: [Overstock, iCanvas "Mid Century II" by Cheryl Warrick Canvas Print](https://www.overstock.com/Home-Garden/iCanvas-Mid-Century-II-by-Cheryl-Warrick-Canvas-Print/15124330/product.html) (product photo `ak1.ostkcdn.com/images/products/is/images/direct/7252383ee6698987b81f2403f9b0817a8895ba5c/…`, 1500 × 1500)
+   - Processing: the product photo shows the canvas at an angle; the front face was perspective-corrected to a flat rectangle at the artwork's 3:2 ratio. Because the canvas is gallery-wrapped, roughly 5% of each edge (including the signature, bottom right) is cut off; use the 900 px file above when the full composition matters.
+   - License: Copyrighted (Cheryl Warrick / Wild Apple); used here under fair use for non-commercial educational purposes
+
+---
+
 ## Usage Notes
 
 - **Kandinsky**: All files are in the public domain and may be freely reused, modified, and distributed without restriction.
