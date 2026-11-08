@@ -33,13 +33,38 @@ CS 418 · Week 12 · 🟠 Western 🟠
 ::: {}
 - Week 12: Western
 - Day 1
-    - Graphs and Relationships
+    - Review: nodes, edges, centrality
+    - Vocab for Graphs / Networks
     - Example: Chicago Bulls
-    - Networks in Your Projects
+    - Graphs in your projects
 :::
 
 ![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
 
+:::
+
+---
+
+# What do you see? {.image-frame-slide}
+
+::: {style="position:relative; flex:0 0 auto; width:798px; height:432px; margin:0.2em auto 1.1em;"}
+
+<img class="photo-card" src="../assets/network-visuals/warrick-mid-century-v0.svg" alt="Black dots scattered on white, every dot the same size, with no lines between them" style="position:absolute; top:0px; left:0px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/network-visuals/warrick-mid-century-v1.svg" alt="The same dots, now in different sizes: a few large dots stand out among many small ones" style="position:absolute; top:23.4px; left:57.6px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/network-visuals/warrick-mid-century-v2.svg" alt="The sized dots joined by straight black lines, every line the same width" style="position:absolute; top:46.8px; left:115.2px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/network-visuals/warrick-mid-century-v3.svg" alt="The same lines at different widths: a few thick bars stand out among thin lines" style="position:absolute; top:70.2px; left:172.8px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/network-visuals/warrick-mid-century-v4.svg" alt="The dots and lines over colored watercolor blobs, one blob under each dot" style="position:absolute; top:93.6px; left:230.4px; width:510px; height:315px;">
+
+<img class="fragment photo-card" src="../assets/art/warrick_mid_century_ii_large.jpg" alt="Cheryl Warrick's painting Mid Century II: black ink dots joined by ink lines, each dot on a soft wash of color" style="position:absolute; top:117px; left:288px; width:510px; height:315px;">
+
+:::
+
+::: {.caption}
+Cheryl Warrick, *Mid Century II*. See [GitHub](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/art) for sources.
 :::
 
 ---
@@ -169,6 +194,16 @@ Graph types *(placeholder)*
 :::
 :::
 ::::
+
+---
+
+# More Vocabulary
+
+- In-degree
+- Out-degree
+- Density
+- Clique
+- Reading an adjacency matrix
 
 ---
 

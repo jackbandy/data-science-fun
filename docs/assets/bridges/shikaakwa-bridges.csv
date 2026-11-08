@@ -1,0 +1,15 @@
+id,bridge,crosses,from,to,lat,lon,osm_way,counted,notes
+1,North Ave,North Branch,W,N,41.91079,-87.65682,1281243523,yes,crosses just north of where the canal splits off
+2,Cherry Ave,North Branch Canal,N,G,41.91032,-87.65548,236127718,yes,1902 rail swing bridge; bike/pedestrian path since 2008-09 restoration
+3,Division St,North Branch,W,G,41.90353,-87.65741,24231479,yes,
+4,Division St,North Branch Canal,G,N,41.90362,-87.64951,24372006,yes,
+5,Halsted St,North Branch Canal,G,N,41.90199,-87.64800,31798304,yes,
+6,Halsted St,North Branch,G,W,41.89799,-87.64783,24231504,yes,"closed in v5 to make every degree even; CDOT lists Halsted St from Ancona St to the river as fully closed (est. completion Dec 2026)"
+7,Chicago Ave,North Branch,W,N,41.89646,-87.64420,47304031,yes,"closed for reconstruction (CDOT est. completion Spring 2027); counted here as part of the normal network"
+8,Grand Ave,North Branch,W,N,41.89142,-87.64112,23891758,yes,
+9,Kinzie St,North Branch,W,N,41.88906,-87.63949,23810300,yes,
+10,Franklin–Orleans St,Main Stem,N,L,41.88736,-87.63594,659567054,yes,
+11,Lake St,South Branch,W,L,41.88573,-87.63772,23810301,yes,"road deck closed for renovation (OSM opening_date 2028-01-31); Green/Pink Line 'L' rides the upper deck"
+,Kinzie St railroad bridge,North Branch,W,N,41.88856,-87.63918,992404361,no,disused C&NW rail bridge; not walkable
+,Ohio St feeder ramp,North Branch,W,N,41.89245,-87.64196,1013537658,no,expressway ramp; no sidewalk
+,Wells St,Main Stem,N,L,41.88755,-87.63412,548930513,no,just east of the map frame
