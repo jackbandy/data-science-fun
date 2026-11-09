@@ -257,6 +257,12 @@ https://correlatesofwar.org
 
 * "extras" page with a list of all the extra stuff
 * Check overflow on slide templates (i.e. spilling into footer).
+	* 2026-11-09 check of the live decks at 1280 × 720 found content running into the footer band (week 12 is fixed; the PDF's 10% print margin hides all of these):
+	* Week 7: 15 list slides, worst "Descriptive vs. Inferential Statistics" (~190px over), "Many Tests, One Fluke" (~130px), "Which Sequence Is Random?" and "Is p < .05 Still Useful?" (~95px)
+	* Week 10: 13 slides, worst "Precision, Recall, and AUC for K Classes" (~670px over), "Silhouette Coefficient" (~330px), "Nested Clusters" (~210px), "Counting Sentiment Words" and "When You Have the Answer Key" (~125–145px)
+	* Week 8: "Squared Loss vs. Absolute Loss" and "Underfitting and Overfitting" (~15px), three figure slides (~3px), and the code block on "Setup: Cook County Home Sales, 2025" runs ~130px past the right edge
+	* Week 1: "Syllabus Overview" and "Random Roll Call" (~3px)
+	* PDF only: the References & Credits title sits flush against the top of the page
 * Test slides at 16:10 (the classroom projector is 16:10) - check decks at that aspect ratio (letterboxing, footer position, slides that fill the full height).
 * clean up ipynb headers
 * "ideas" website page with list of studies

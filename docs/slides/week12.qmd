@@ -1,5 +1,9 @@
 ---
 title: "Week 12 (CS 418 @ UIC)"
+
+# Overrides slide-level: 1 in _quarto.yml. `#` headings become section dividers
+# that group the `##` slides beneath them into the navigation menu (press M).
+slide-level: 2
 format:
   revealjs:
     footer: '<img src="../assets/branding/uic-black-logo.svg" alt="UIC logo"> <img src="../assets/branding/cc-by-nc-sa-small.svg" alt="CC BY-NC-SA"> <span class="footer-text">CS 418, Intro to Data Science, Week 12</span><span class="footer-text"><a href="https://dodatascience.fun/slides/week12.html">dodatascience.fun/slides/week12</a></span>'
@@ -7,36 +11,31 @@ nocite: |
   @blondel2008, @fortunato2010, @newman2004, @prakash2010, @tong2010, @chakrabarti2012, @goel2016structural, @zachary1977, @leskovec2020mmds, @barabasi2016, @girvan2002, @granovetter1973, @euler1741
 ---
 
-# Week 12 Slide Deck {.course-title}
 
-## Intro to Network Analysis
-
-Jack Bandy
-2026
-
----
 
 # Week 12, Day 1 {.course-title .photo-title data-state="photo-title" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
 
-CS 418 · Week 12 · 🟠 Western 🟠
+<h2>Intro to Network Analysis</h2>
+
+CS 418, Week 12 🟧 Western 🟧
+
+Jack Bandy, 2026
 
 ---
 
-# {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
+## {.photo-only data-state="photo-only" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
 
 ---
 
-# Map {.split}
+## Map for Week 12, Day 1 (Western) {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Week 12: Western
-- Day 1
-    - Review: nodes, edges, centrality
-    - Vocab for Graphs / Networks
-    - Example: Chicago Bulls
-    - Graphs in your projects
+- Review: nodes, edges, centrality
+- Vocab for Graphs / Networks
+- Example: Chicago Bulls
+- Graphs in your projects
 :::
 
 ![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
@@ -45,21 +44,31 @@ CS 418 · Week 12 · 🟠 Western 🟠
 
 ---
 
-# Presentation Days {.smaller}
+## Checking in
+
+- Project checkpoint 5 (narrative analysis) due Sunday, November 15
+- Group presentations start Monday, November 23
+- Any other logistical questions?
+- Initial thoughts on computer-based testing facility?
+
+---
+
+
+## Presentation Days {.smaller}
 
 | Mon, Nov 23 | Mon, Nov 30 | Wed, Dec 2 |
 |---|---|---|
 | 🔭1️⃣ Flock Group One | 🎣 "Phishing Phor Phun" | 💸 "Economic Trajectories" Group |
 | 🏈 Football Group | 🎰 UFC Fight Analysis Group | 🔭2️⃣ Flock Group Two |
 | 🤖📝 "Ed with Ed ⚕️ AI" | 🏥 "Socioeconomic Health Disparities" | 🏆 "Personal Exercise and Fitness Analytics" |
-| 🕸️ "Social Media and Society" Group | ⚖️ "Everybody Votes" (Comparing Democracies) | 🏎️ F1 Group |
+| 🕸️ "Social Media and Society"  | ⚖️ "Everybody Votes" (Comparing Democracies) | 🏎️ F1 Group |
 | ⚽️ Futbol Group | 🚦 Chicago Traffic Analytics Group | 🪾 "Family Backgrounds and Outcomes" |
 
 ---
 
-# What do you see? {.image-frame-slide}
+## What do you see? {.image-frame-slide}
 
-::: {style="position:relative; flex:0 0 auto; width:980px; height:510px; margin:0.2em auto 1.1em;"}
+::: {style="position:relative; flex:0 0 auto; width:980px; height:510px; margin:0.2em auto 0.6em;"}
 
 <img class="photo-card" src="../assets/art/warrick_mid_century_ii_large.jpg" alt="Cheryl Warrick's painting Mid Century II: black ink dots joined by ink lines, each dot on a soft wash of color" style="position:absolute; top:0px; left:0px; width:680px; height:420px;">
 
@@ -79,14 +88,12 @@ CS 418 · Week 12 · 🟠 Western 🟠
 Cheryl Warrick, *Mid Century II*. See [GitHub](https://github.com/jackbandy/data-science-fun/tree/main/docs/assets/art) for sources.
 :::
 
----
 
 
 # Graphs and Relationships {.section-header}
 
----
 
-# Euler, 1741 {.image-frame-slide}
+## Early Network Theory: Euler, 1741 {.image-frame-slide}
 
 ::: {.r-stack .peek-stack}
 <img class="figure fragment fade-out" data-fragment-index="1" src="../assets/bridges/euler-1741-plate-color.jpg" alt="Euler's engraved plate, Tab. VIII of the Commentarii, with three river maps: Fig. 1 the Königsberg river with seven bridges a to g between land masses A, B, C, D; Fig. 2 a single river crossed by six bridges; Fig. 3 a larger river system with two islands and fifteen bridges.">
@@ -100,10 +107,10 @@ Cheryl Warrick, *Mid Century II*. See [GitHub](https://github.com/jackbandy/data
 
 ---
 
-# Bridges of Königsberg {.image-frame-slide}
+## Bridges of Königsberg (Early Network Theory) {.image-frame-slide}
 
 ::: {.r-stack .peek-stack}
-<img class="figure" src="../assets/bridges/konigsberg-v0.svg" alt="Schematic map of the Pregel River after Euler's 1736 Figure 1: two branches circle an island and a cross channel joins them, with no bridges drawn yet.">
+<img class="figure" src="../assets/bridges/konigsberg-v0.svg" alt="Schematic map of the Pregel River after Euler's 1741 Figure 1: two branches circle an island and a cross channel joins them, with no bridges drawn yet.">
 
 <img class="fragment figure" src="../assets/bridges/konigsberg-v1.svg" alt="The same map with Euler's seven bridges, a to g, and the four land masses lettered: K Kneiphof, V Vorstadt, A Altstadt, L Lomse.">
 
@@ -120,18 +127,18 @@ Worksheet checkpoint 1: draw the graph and fill in its adjacency matrix.
 
 ---
 
-# Bridges of Shikaakwa {.image-frame-slide}
+## Bridges of Shikaakwa {.image-frame-slide}
 
 ::: {.r-stack .peek-stack}
-<img class="figure" src="../assets/bridges/shikaakwa-v1.svg" alt="Map of the Chicago River around Goose Island and Wolf Point with 11 walkable bridges numbered and listed in a key, from North Ave (1) to Lake St (11), and the question: can you walk across every bridge exactly once?">
+<img class="figure" src="../assets/bridges/shikaakwa-v1.svg" alt="Map of the Chicago River around Goose Island and Wolf Point with 11 walkable bridges lettered a to k and listed in a key, from North Ave (a) to Lake St (k), and the question: can you walk across every bridge exactly once?">
 
 <img class="fragment figure" src="../assets/bridges/shikaakwa-v2.svg" alt="The map faded, with nodes for the four land masses (West Side, North Side, Goose Island, Loop) and an edge through each bridge.">
 
-<img class="fragment figure" src="../assets/bridges/shikaakwa-v3.svg" alt="The graph beside the faded map: four nodes and 11 edges, each edge numbered by its bridge.">
+<img class="fragment figure" src="../assets/bridges/shikaakwa-v3.svg" alt="The graph beside the faded map: four nodes and 11 edges, each edge labeled with its bridge's letter.">
 
 <img class="fragment figure" src="../assets/bridges/shikaakwa-v4.svg" alt="The graph with degrees: West Side 7, North Side 8, Goose Island 5, Loop 2. The two odd land masses, West Side and Goose Island, are orange: a walk can cross every bridge once, but only from one to the other.">
 
-<img class="fragment figure" src="../assets/bridges/shikaakwa-v5.svg" alt="The same graph with the Halsted St bridge over the North Branch (6) closed and dashed. Degrees become West Side 6, North Side 8, Goose Island 4, Loop 2: every land mass is even, so one walk can cross every bridge once and end where it started.">
+<img class="fragment figure" src="../assets/bridges/shikaakwa-v5.svg" alt="The same graph with the Halsted St bridge over the North Branch (f) closed and dashed. Degrees become West Side 6, North Side 8, Goose Island 4, Loop 2: every land mass is even, so one walk can cross every bridge once and end where it started.">
 :::
 
 ::: {.caption}
@@ -140,12 +147,12 @@ Worksheet checkpoint 2: draw the graph and fill in its adjacency matrix.
 
 ---
 
-# Euler's Rule {.split}
+## Euler's Rule {.split}
 
 ::: {.split-content .golden-columns}
 
 ::: {.dense}
-Can one walk cross every bridge exactly once?:
+Could you walk cross every bridge exactly once?
 
 - "If there are more than two areas to which an odd number of bridges lead, then such a journey is impossible."
 - if the number of bridges is odd for exactly two areas, then the journey is possible (if it starts in either of these areas)
@@ -153,7 +160,7 @@ Can one walk cross every bridge exactly once?:
 :::
 
 ::: {.captioned-figure}
-<img class="figure" src="../assets/bridges/shikaakwa-portrait.svg" alt="Portrait map of the Chicago River around Goose Island and Wolf Point, with the 11 walkable bridges numbered 1 to 11 and the land masses labeled Goose Island, North Side, West Side, and Loop.">
+<img class="figure" src="../assets/bridges/shikaakwa-portrait.svg" alt="Portrait map of the Chicago River around Goose Island and Wolf Point, with the 11 walkable bridges lettered a to k and the land masses labeled Goose Island, North Side, West Side, and Loop.">
 
 ::: {.caption}
 Shikaakwa: Goose Island (5 bridges) and West Side (7) are odd, so start at either. Königsberg: 4 odd, impossible. Worksheet checkpoint 2. Quotes from @euler1741, §20, trans. Biggs, Lloyd & Wilson (1976).
@@ -164,7 +171,47 @@ Shikaakwa: Goose Island (5 bridges) and West Side (7) are odd, so start at eithe
 
 ---
 
-# Vocab: Nodes, Edges, Degree {.split}
+## Vocab: Graph and Network
+
+::: {.columns .compare-columns}
+
+::: {.column}
+[GRAPH]{.eyebrow}
+
+"A [graph]{.term} is a representation of a set of objects and the relationships between them."
+
+::: {.caption}
+Gonzalo Bello, CS 418 Lecture 20
+:::
+
+"A [graph]{.term} is a way of specifying relationships among a collection of items. A graph consists of a set of objects, called nodes, with certain pairs of these objects connected by links called edges."
+
+::: {.caption}
+@easley2010, §2.1
+:::
+:::
+
+::: {.column}
+[NETWORK]{.eyebrow}
+
+"In the most basic sense, a [network]{.term} is any collection of objects in which some pairs of these objects are connected by links."
+
+::: {.caption}
+@easley2010, §1.1
+:::
+
+"A [network]{.term} is a catalog of a system's components often called nodes or vertices and the direct interactions between them, called links or edges"
+
+::: {.caption}
+@barabasi2016graph, §2.2
+:::
+:::
+
+:::
+
+---
+
+## Vocab: Nodes, Edges, Degree {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -188,7 +235,7 @@ Based on @leskovec2020mmds, Fig. 10.1, with a self-loop added at C.
 
 ---
 
-# Vocab: Directed and Weighted {.split}
+## Vocab: Directed and Weighted {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -211,13 +258,14 @@ Toy example.
 
 ---
 
-# Vocab: Complete Bipartite Graphs {.split}
+## Vocab: Complete Bipartite Graphs {.split}
 
 ::: {.split-content .golden-figure}
 
 ::: {.dense}
 - Bipartite: two groups of nodes, with edges only between groups
-- Complete bipartite $K_{s,t}$: all possible edges between pairs of nodes chosen one from each group (s nodes in first group, t nodes in second group), and no edges between nodes of the same group
+- Complete bipartite $K_{s,t}$: all possible edges between pairs of nodes chosen one from each group ($s$ nodes in first group, $t$ nodes in second group)
+    - no edges between nodes of the same group
 :::
 
 ::: {.captioned-figure}
@@ -236,7 +284,7 @@ Quotes from @leskovec2020mmds, Sec. 10.9.
 
 ---
 
-# Vocab Check-in with Elbow Neighbors {.split}
+## Vocab Check-in with Elbow Neighbors {.split}
 
 ::: {.split-content .golden-columns}
 
@@ -245,6 +293,7 @@ Worksheet checkpoints:
 
 - 3: Check vocab entries.
 - 4: Draw the complete bipartite graph $K_{2,3}$.
+- Let me know any questions you have
 :::
 
 
@@ -254,14 +303,13 @@ Worksheet checkpoints:
 
 ---
 
-# Triadic Closure {.split}
+## Triadic Closure {.split}
 
 ::: {.split-content .golden-figure}
 
 ::: {.dense}
 - Locality: "if entity A is related to both B and C, then there is a higher probability than average that B and C are related."
 - Triadic closure: two nodes that share a neighbor are more likely to gain an edge between them
-- Worksheet checkpoint 5: which missing edge is most likely to form next?
 :::
 
 ::: {.captioned-figure}
@@ -272,129 +320,105 @@ Worksheet checkpoints:
 :::::
 
 ::: {.caption}
-Toy example. Quote from @leskovec2020mmds, Sec. 10.1.1.
+Worksheet checkpoint 5: which missing edge is most likely to form next? Toy example. Quote from @leskovec2020mmds, Sec. 10.1.1.
 :::
 :::
 
 :::
 
----
 
 # Example: Chicago Bulls {.section-header}
 
----
 
-# Bulls Players, 2002–2014 {.image-frame-slide}
+## Bulls Players, 2002–2014 {.image-frame-slide}
 
+::: {.r-stack .peek-stack}
 <img class="figure" src="../assets/bulls-players-network/bulls-network-v0.svg" alt="147 gray dots, one per player on a Chicago Bulls roster from January 2002 through 2013-14, with no lines yet. Caption: each dot is a player.">
 
----
+<img class="fragment figure" data-fragment-index="1" src="../assets/bulls-players-network/bulls-network-v1.svg" alt="The same 147 dots joined by 1,859 thin gray lines, one for every pair of players on the roster for at least one game together. Every line looks the same, whether the pair shared 1 game or hundreds.">
 
-# Bulls Players, 2002–2014 {.image-frame-slide}
+<img class="fragment figure" data-fragment-index="2" src="../assets/bulls-players-network/bulls-network-v2.svg" alt="The same network with line width and darkness set by games together, from 1 to 581; a few thick, dark lines stand out among many faint ones.">
 
-<img class="figure" src="../assets/bulls-players-network/bulls-network-v1.svg" alt="The same 147 dots joined by 1,859 thin gray lines, one for every pair of players on the roster for at least one game together. Every line looks the same, whether the pair shared 1 game or hundreds.">
+<img class="fragment figure" data-fragment-index="3" src="../assets/bulls-players-network/bulls-network-v3.svg" alt="The weighted network colored by four Louvain communities, each labeled with its era and top players: 2001-02 to 2003-04 (Tyson Chandler, Eddy Curry, Eddie Robinson); 2004-05 to 2008-09 (Kirk Hinrich, Luol Deng, Ben Gordon); 2009-10 (Brad Miller, Lindsey Hunter, John Salmons); 2010-11 to 2013-14 (Joakim Noah, Taj Gibson, Derrick Rose).">
+:::
 
----
-
-# Bulls Players, 2002–2014 {.image-frame-slide}
-
-<img class="figure" src="../assets/bulls-players-network/bulls-network-v2.svg" alt="The same network with line width and darkness set by games together, from 1 to 581; a few thick, dark lines stand out among many faint ones.">
-
----
-
-# Bulls Players, 2002–2014 {.image-frame-slide}
-
-<img class="figure" src="../assets/bulls-players-network/bulls-network-v3.svg" alt="The weighted network colored by four Louvain communities, each labeled with its era and top players: 2001-02 to 2003-04 (Tyson Chandler, Eddy Curry, Eddie Robinson); 2004-05 to 2008-09 (Kirk Hinrich, Luol Deng, Ben Gordon); 2009-10 (Brad Miller, Lindsey Hunter, John Salmons); 2010-11 to 2013-14 (Joakim Noah, Taj Gibson, Derrick Rose).">
-
-::: {.caption}
+::: {.caption .fragment data-fragment-index="3"}
 Communities found with the Louvain algorithm. More on community detection on Day 2.
 :::
 
 ---
 
-# Community 1: 2001-02 to 2003-04 {.image-frame-slide}
+## Community 1: 2001-02 to 2003-04 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network/bulls-community-1.svg" alt="Close-up of community 1 (2001-02 to 2003-04): headshots of 16 of its 36 players with the most games on the roster, joined by lines weighted by games together. Players include Tyson Chandler, Eddy Curry, Eddie Robinson, Jamal Crawford.">
 
 ---
 
-# Community 2: 2004-05 to 2008-09 {.image-frame-slide}
+## Community 2: 2004-05 to 2008-09 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network/bulls-community-2.svg" alt="Close-up of community 2 (2004-05 to 2008-09): headshots of 16 of its 50 players with the most games on the roster, joined by lines weighted by games together. Players include Kirk Hinrich, Luol Deng, Ben Gordon, Andres Nocioni.">
 
 ---
 
-# Community 3: 2009-10 {.image-frame-slide}
+## Community 3: 2009-10 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network/bulls-community-3.svg" alt="Close-up of community 3 (2009-10): headshots of 15 of its 15 players with the most games on the roster, joined by lines weighted by games together. Players include Brad Miller, Lindsey Hunter, John Salmons, Jerome James.">
 
 ---
 
-# Community 4: 2010-11 to 2013-14 {.image-frame-slide}
+## Community 4: 2010-11 to 2013-14 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network/bulls-community-4.svg" alt="Close-up of community 4 (2010-11 to 2013-14): headshots of 16 of its 46 players with the most games on the roster, joined by lines weighted by games together. Players include Joakim Noah, Taj Gibson, Derrick Rose, Carlos Boozer.">
 
 ---
 
-# Bulls Players, 1996–2023 {.image-frame-slide}
+## Bulls Players, 1996–2023 {.image-frame-slide}
 
+::: {.r-stack .peek-stack}
 <img class="figure" src="../assets/bulls-players-network-extended/bulls-network-v0.svg" alt="234 gray dots, one per player who played for the Chicago Bulls from 1996-97 to 2022-23 (2012-13 missing), with no lines yet.">
 
----
+<img class="fragment figure" src="../assets/bulls-players-network-extended/bulls-network-v1.svg" alt="The same 234 dots joined by 2,618 thin gray lines, one for every pair who played in at least one game together, all drawn the same.">
 
-# Bulls Players, 1996–2023 {.image-frame-slide}
+<img class="fragment figure" src="../assets/bulls-players-network-extended/bulls-network-v2.svg" alt="The same network with line width and darkness set by games played together, from 1 to 348.">
 
-<img class="figure" src="../assets/bulls-players-network-extended/bulls-network-v1.svg" alt="The same 234 dots joined by 2,618 thin gray lines, one for every pair who played in at least one game together, all drawn the same.">
-
----
-
-# Bulls Players, 1996–2023 {.image-frame-slide}
-
-<img class="figure" src="../assets/bulls-players-network-extended/bulls-network-v2.svg" alt="The same network with line width and darkness set by games played together, from 1 to 348.">
+<img class="fragment figure" src="../assets/bulls-players-network-extended/bulls-network-v3.svg" alt="The weighted network colored by five Louvain communities, each labeled with its era and top players: 1996-97 to 1998-99 (Brown, Kukoc, Harper); 1999-00 to 2003-04 (Chandler, Curry, Crawford); 2004-05 to 2008-09 (Hinrich, Deng, Gordon); 2009-10 to 2015-16 (Noah, Gibson, Rose); 2016-17 to 2022-23 (LaVine, Felicio, White).">
+:::
 
 ---
 
-# Bulls Players, 1996–2023 {.image-frame-slide}
-
-<img class="figure" src="../assets/bulls-players-network-extended/bulls-network-v3.svg" alt="The weighted network colored by five Louvain communities, each labeled with its era and top players: 1996-97 to 1998-99 (Brown, Kukoc, Harper); 1999-00 to 2003-04 (Chandler, Curry, Crawford); 2004-05 to 2008-09 (Hinrich, Deng, Gordon); 2009-10 to 2015-16 (Noah, Gibson, Rose); 2016-17 to 2022-23 (LaVine, Felicio, White).">
-
----
-
-# Community 1: 1996-97 to 1998-99 {.image-frame-slide}
+## Community 1: 1996-97 to 1998-99 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network-extended/bulls-community-1.svg" alt="Close-up of community 1 (1996-97 to 1998-99): 20 of its 27 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Randy Brown, Toni Kukoc, Ron Harper, Michael Jordan, Scottie Pippen.">
 
 ---
 
-# Community 2: 1999-00 to 2003-04 {.image-frame-slide}
+## Community 2: 1999-00 to 2003-04 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network-extended/bulls-community-2.svg" alt="Close-up of community 2 (1999-00 to 2003-04): 20 of its 49 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Tyson Chandler, Eddy Curry, Jamal Crawford, Fred Hoiberg.">
 
 ---
 
-# Community 3: 2004-05 to 2008-09 {.image-frame-slide}
+## Community 3: 2004-05 to 2008-09 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network-extended/bulls-community-3.svg" alt="Close-up of community 3 (2004-05 to 2008-09): 20 of its 39 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Kirk Hinrich, Luol Deng, Ben Gordon, Andres Nocioni.">
 
 ---
 
-# Community 4: 2009-10 to 2015-16 {.image-frame-slide}
+## Community 4: 2009-10 to 2015-16 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network-extended/bulls-community-4.svg" alt="Close-up of community 4 (2009-10 to 2015-16): 20 of its 45 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Joakim Noah, Taj Gibson, Derrick Rose, Jimmy Butler.">
 
 ---
 
-# Community 5: 2016-17 to 2022-23 {.image-frame-slide}
+## Community 5: 2016-17 to 2022-23 {.image-frame-slide}
 
 <img class="figure" src="../assets/bulls-players-network-extended/bulls-community-5.svg" alt="Close-up of community 5 (2016-17 to 2022-23): 20 of its 74 players with the most Bulls games as dots sized by games, joined by lines weighted by games together. Players include Zach LaVine, Cristiano Felicio, Coby White, Denzel Valentine.">
 
----
 
 # Networks in Your Projects {.section-header}
 
----
 
-# UFC Fight Analysis {.split}
+## UFC Fight Analysis {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -413,7 +437,7 @@ Communities found with the Louvain algorithm. More on community detection on Day
 
 ---
 
-# Football (Soccer) {.split}
+## Football (Soccer) {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -432,7 +456,7 @@ Communities found with the Louvain algorithm. More on community detection on Day
 
 ---
 
-# Football (NFL) {.split}
+## Football (NFL) {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -451,7 +475,7 @@ Communities found with the Louvain algorithm. More on community detection on Day
 
 ---
 
-# Economic Trajectories {.split}
+## Economic Trajectories {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -470,7 +494,7 @@ Communities found with the Louvain algorithm. More on community detection on Day
 
 ---
 
-# Flock Research {.split}
+## Flock Research {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -489,7 +513,7 @@ Communities found with the Louvain algorithm. More on community detection on Day
 
 ---
 
-# Fake News on Social Media {.split}
+## Fake News on Social Media {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -508,7 +532,7 @@ Communities found with the Louvain algorithm. More on community detection on Day
 
 ---
 
-# Your Project as a Network {.split}
+## Your Project as a Network {.split}
 
 ::: {.split-content .golden-columns}
 
@@ -517,6 +541,8 @@ Worksheet checkpoint 6:
 
 - Draw a graph from your project's data or concepts.
 - What is a node? What does an edge mean?
+- Ideas for analyses?
+- Other questions?
 :::
 
 
@@ -526,7 +552,7 @@ Worksheet checkpoint 6:
 
 ---
 
-# Any questions? {#any-questions-day-1}
+## Any questions? {#any-questions-day-1}
 
 - Project checkpoint 5 (narrative analysis) due Sunday, November 15
 - Group presentations start Monday, November 23
@@ -536,51 +562,46 @@ Worksheet checkpoint 6:
 
 ---
 
-# Upload your worksheet {#upload-worksheet-day-1}
+## Upload your worksheet {#upload-worksheet-day-1}
 
 Take a picture of your worksheet, upload it in Canvas
 
----
 
 # That's All for Today, See You Wednesday! {.section-header .no-index}
 
 
----
 
 # Week 12, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
 
-<h2>Network Immunization</h2>
+<h2>Networks Continued</h2>
 
-Jack Bandy
-2026
+CS 418, Week 12 🟧 Western 🟧
+
+Jack Bandy, 2026
 
 ---
 
-# Map {.split}
+## Map for Week 12, Day 2 (Western) {.split}
 
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Week 12: Western
-- Day 2
-    - Community Detection
-    - Network Diffusion
-    - Virus Propagation
-    - Network Immunization
+- Community Detection
+- Network Diffusion
+- Virus Propagation
+- Network Immunization
 :::
 
 ![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
 
 :::
 
----
 
 
 # Community Detection {.section-header}
 
----
 
-# Community Detection
+## Community Detection
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -603,7 +624,7 @@ Community detection *(placeholder)*
 
 ---
 
-# Vocab: Communities and Cliques {.split}
+## Vocab: Communities and Cliques {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -625,7 +646,7 @@ Quotes from @leskovec2020mmds, Sec. 10.9.
 
 ---
 
-# A Friendship Network {.split}
+## A Friendship Network {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -643,7 +664,7 @@ Quotes from @leskovec2020mmds, Sec. 10.9.
 
 ---
 
-# Vocab: Adjacency and Degree Matrices {.split}
+## Vocab: Adjacency and Degree Matrices {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -664,7 +685,7 @@ Based on @leskovec2020mmds, Figs. 10.13 and 10.14.
 
 ---
 
-# Friends as Coordinates {.split}
+## Friends as Coordinates {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -691,7 +712,7 @@ Based on @leskovec2020mmds, Figs. 10.13 and 10.14.
 
 ---
 
-# The Result {.split}
+## The Result {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -709,7 +730,7 @@ Based on @leskovec2020mmds, Figs. 10.13 and 10.14.
 
 ---
 
-# Goodness Metrics
+## Goodness Metrics
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -734,7 +755,7 @@ Modularity concept *(placeholder)*
 
 ---
 
-# Modularity
+## Modularity
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -761,7 +782,7 @@ Modularity visualization *(placeholder)*
 
 ---
 
-# Louvain Method
+## Louvain Method
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -785,7 +806,7 @@ Community detection *(placeholder)*
 
 ---
 
-# Vocab: Overlapping Communities {.split}
+## Vocab: Overlapping Communities {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -804,13 +825,11 @@ Based on @leskovec2020mmds, Fig. 10.19; quotes from Sec. 10.9.
 
 :::
 
----
 
 # Network Diffusion {.section-header}
 
----
 
-# Network Diffusion
+## Network Diffusion
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -835,7 +854,7 @@ Simple network *(placeholder)*
 
 ---
 
-# Vocab: Neighborhoods {.split}
+## Vocab: Neighborhoods {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -864,7 +883,7 @@ Based on @leskovec2020mmds, Example 10.26; quotes from Sec. 10.9.
 
 ---
 
-# Vocab: Transitive Closure {.split}
+## Vocab: Transitive Closure {.split}
 
 ::: {.split-content .golden-figure}
 
@@ -890,7 +909,7 @@ Quotes from @leskovec2020mmds, Sec. 10.9.
 
 ---
 
-# Broadcast vs. Viral
+## Broadcast vs. Viral
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -913,7 +932,7 @@ Broadcast (shallow) vs. viral (deep) diffusion trees *(placeholder)*
 
 ---
 
-# Structural Virality
+## Structural Virality
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -939,7 +958,7 @@ Diffusion tree with pairwise distances *(placeholder)*
 
 ---
 
-# What Spreads Online?
+## What Spreads Online?
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -960,13 +979,11 @@ Distribution of cascade sizes and structural virality *(placeholder)*
 :::
 ::::
 
----
 
 # Virus Propagation {.section-header}
 
----
 
-# Virus Propagation Models
+## Virus Propagation Models
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -990,7 +1007,7 @@ SIS model *(placeholder)*
 
 ---
 
-# $SIS$ Model
+## $SIS$ Model
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1014,7 +1031,7 @@ SIS model diagram *(placeholder)*
 
 ---
 
-# $SIR$ Model
+## $SIR$ Model
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1038,7 +1055,7 @@ SIR model diagram *(placeholder)*
 
 ---
 
-# $SIRS$ Model
+## $SIRS$ Model
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1061,7 +1078,7 @@ SIRS model diagram *(placeholder)*
 
 ---
 
-# $SEIV$ Model
+## $SEIV$ Model
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1085,7 +1102,7 @@ SEIV model diagram *(placeholder)*
 
 ---
 
-# Epidemic Threshold
+## Epidemic Threshold
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1110,7 +1127,7 @@ Epidemic threshold *(placeholder)*
 
 ---
 
-# Network Connectivity
+## Network Connectivity
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1133,7 +1150,7 @@ Network connectivity examples *(placeholder)*
 
 ---
 
-# Effective Strength
+## Effective Strength
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1158,13 +1175,11 @@ Epidemic threshold visualization *(placeholder)*
 :::
 ::::
 
----
 
 # Network Immunization {.section-header}
 
----
 
-# Immunization Problem
+## Immunization Problem
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1191,7 +1206,7 @@ Network connectivity *(placeholder)*
 
 ---
 
-# NetShield Algorithm
+## NetShield Algorithm
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1216,7 +1231,6 @@ Community detection showing key nodes *(placeholder)*
 :::
 ::::
 
----
 
 
 
@@ -1228,6 +1242,7 @@ Community detection showing key nodes *(placeholder)*
 ::: {.credits}
 - GitHub source: <https://github.com/jackbandy/data-science-fun/blob/main/docs/slides/week12.qmd>.
 - Slides developed using materials from [Elena Zheleva](https://www.cs.uic.edu/~elena/) and [Gonzalo Bello Lander](https://cs.uic.edu/profiles/gonzalo-bello/), the Berkeley DS 100 team, Marine Carpuat, and Brian Ziebart. Network analysis content heavily adapted from Gonzalo Bello's **CS 418 - Lecture Slides 20 - Network Analysis.pdf**.
+- Euler dates: the [Euler Archive](https://scholarlycommons.pacific.edu/euler-works/53/) lists the Königsberg paper (E53) as written in 1735; it appears in the *Commentarii* volume for 1736, printed in 1741, so the slides cite it as Euler (1741).
 - Slide deck built with [Quarto](https://quarto.org/) revealjs.
 - Title font is Big Shoulders; Body font is [Libre Franklin](https://en.wikipedia.org/wiki/Franklin_Gothic#Libre_Franklin).
 :::

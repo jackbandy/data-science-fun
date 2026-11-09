@@ -400,7 +400,7 @@ def shared_friends(a, b):
 
 def triadic_figure(show):
     fig, ax = canvas("Which missing edge is most likely to form next?",
-                     "Dashed = a missing edge, labeled with the friends its two ends share"
+                     "Dashed = a missing edge"
                      if show else "A toy friendship graph (worksheet checkpoint 5)")
     for a, b in TRIAD_EDGES:
         edge(ax, TRIAD_POS, a, b, lw=2.0, color=QUIET)

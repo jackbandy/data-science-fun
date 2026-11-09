@@ -13,7 +13,7 @@ an r-stack:
   konigsberg-v3.svg  the bare multigraph, with its adjacency matrix on the left
   konigsberg-v4.svg  + degrees (the matrix's row sums); odd ones in orange
 
-  shikaakwa-v1.svg   Goose Island + Wolf Point stretch of the Chicago River with its walkable bridges, numbered, with a key; grey 'L' on Lake St
+  shikaakwa-v1.svg   Goose Island + Wolf Point stretch of the Chicago River with its walkable bridges, lettered a-k as Euler lettered his, with a key; grey 'L' on Lake St
   shikaakwa-v2.svg   + nodes and edges over the faded map
   shikaakwa-v3.svg   + the multigraph beside the faded map
   shikaakwa-v4.svg   + degrees; odd-degree land masses in orange
@@ -256,8 +256,8 @@ K_GRAPH = {"A": (600, 135), "K": (600, 320), "L": (860, 320), "V": (600, 505)}
 # offsets put c left of d and a left of b, as in Euler's figure
 K_OFFSETS = {"a": 46, "b": -46, "c": -46, "d": 46, "e": 0, "f": 0, "g": 0}
 K_QUOTE = ("\u201c\u2026whether anyone could arrange a route in such a way that he would "
-           "cross each bridge once and only once.\u201d \u2014 Euler (1736)")
-K_CREDIT = "based on Euler (1736), Fig. 1; quote trans. Biggs, Lloyd & Wilson (1976)"
+           "cross each bridge once and only once.\u201d \u2014 Euler (1741)")
+K_CREDIT = "based on Euler (1741), Fig. 1; quote trans. Biggs, Lloyd & Wilson (1976)"
 
 # adjacency matrix, left of the graph
 CELL = 40
@@ -445,14 +445,13 @@ S_LAND = {  # node letter: (name, lat, lon of node / label)
 }
 S_GRAPH = {"G": (500, 175), "N": (740, 265), "W": (500, 405), "L": (740, 440)}
 PANEL_X = 470                           # right-hand panel: title, prompt, caption
-S_CLOSED = "6"                          # Halsted St over the North Branch, closed in v5
+S_CLOSED = "f"                          # Halsted St over the North Branch, closed in v5
 LAKE_ST_LAT = 41.88568                  # Green/Pink Line 'L' runs along Lake St
 KEY_X, KEY_Y = 820, 150
 S_CREDIT = "Map data © OpenStreetMap contributors (ODbL)"
 
-# which side of the river each bridge's number goes on (+1 / -1 along the bridge)
-S_LABEL_SIDE = {"1": +1, "2": -1, "3": -1, "4": +1, "5": +1, "6": -1, "7": +1,
-                "8": +1, "9": +1, "10": -1, "11": +1}
+# which side of the river each bridge's letter goes on (+1 / -1 along the bridge)
+S_LABEL_SIDE = {"a": +1, "b": -1, "c": -1, "d": +1, "e": +1, "f": -1, "g": +1, "h": +1, "i": +1, "j": -1, "k": +1}
 
 
 def s_bridges():
