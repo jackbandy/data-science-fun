@@ -9,10 +9,10 @@
 TK: terms used throughout the book, with definitions and pointers to relevant chapter(s).
 
 [Access frame]{#access-frame}
-: "the collection of elements that are accessible to you for measurement and observation." Ideally the access frame and the [target population](#target-population) consist of the same elements, but a frame can leave out some members of the population and include units outside it. See also [coverage gap](#coverage-gap). [Source: @lau_learning_2023, sec. 2.2]
+: "the collection of elements that are accessible to you for measurement and observation." Ideally the access frame and the [target population](#target-population) consist of the same elements. See also [coverage gap](#coverage-gap). [Source: @lau_learning_2023, sec. 2.2]
 
 Accuracy
-: The fraction of observations a classifier labels correctly: $\frac{TP + TN}{TP + FP + TN + FN}$. Accuracy can mislead when some errors matter more than others; see [precision](#precision) and [recall](#recall). [Source: [Week 9 Slides](../../slides/week9.html); [Week 10 Slides](../../slides/week10.html)]
+: The fraction of observations a classifier labels correctly: $\frac{TP + TN}{TP + FP + TN + FN}$. Accuracy can mislead when some error types matter more; see [precision](#precision) and [recall](#recall). [Source: [Week 9 Slides](../../slides/week9.html); [Week 10 Slides](../../slides/week10.html)]
 
 Adjacency matrix
 : A matrix that describes a [graph](#graph): "The entry in row $i$ and column $j$ is 1 if there is an edge between nodes $i$ and $j$, and 0 otherwise." [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
@@ -28,19 +28,16 @@ Bayes' theorem
 : A rule relating a conditional probability to its reverse: $P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$. [Source: [Week 2 Slides](../../slides/week2.html)]
 
 Bipartite graph
-: A [graph](#graph) with two groups of nodes and edges only between the groups. It is the $k = 2$ case of a $k$-partite graph, which "consists of $k$ disjoint sets of nodes, with no edges between nodes of the same set." See also [complete bipartite graph](#complete-bipartite). [Source: @leskovec_social_network_graphs_2020, sec. 10.1.4]
+: A [graph](#graph) with two groups of nodes, and edges only between the groups. It is the $k = 2$ case of a $k$-partite graph, which "consists of $k$ disjoint sets of nodes, with no edges between nodes of the same set." See also [complete bipartite graph](#complete-bipartite). [Source: @leskovec_social_network_graphs_2020, sec. 10.1.4]
 
 Campbell's Law
-: The notion that social indicator metrics often become corrupt and unreliable when used for high-stakes decision-making. Examples include standardized test scores (Campbell's example), mortality scorecards for surgeons [@dranove_report_cards_2003], and sales quotas tied to compensation [@cfpb_wells_fargo_consent_order_2016]. See @sec-campbells-law. [Source: @campbell1979assessing]
+: The notion that social indicator metrics often become corrupt and unreliable when used for high-stakes social decision-making. Examples include standardized test scores (Campbell's example), mortality scorecards for surgeons [@dranove_report_cards_2003], and sales quotas tied to compensation [@cfpb_wells_fargo_consent_order_2016]. See @sec-campbells-law. [Source: @campbell1979assessing]
 
 Causation without pattern
 : Occasions when one-time causes and effects cannot be replicated, e.g. the meteor which caused the dinosaur extinction. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Clique
-: "a set of nodes with edges between any two of them," e.g. three friends who all know one another. [Source: @leskovec_social_network_graphs_2020, sec. 10.3.1]
-
-[Cluster analysis]{#cluster-analysis}
-: Grouping observations so that observations within a group are similar to one another and different from observations in other groups. An example of [unsupervised learning](#unsupervised-learning). See also [cohesion](#cohesion) and [separation](#separation). [Source: [Week 10 Slides](../../slides/week10.html)]
+: "a set of nodes with edges between any two of them," e.g. five friends who all know one another. [Source: @leskovec_social_network_graphs_2020, sec. 10.3.1]
 
 [Cohesion]{#cohesion}
 : How similar the observations within a cluster are to one another. [Source: [Week 10 Slides](../../slides/week10.html)]
@@ -81,9 +78,6 @@ Data Science
 Data science lifecycle
 : The stages of a data science project. @lau_learning_2023 divide it into four stages: "Ask a Question, Obtain Data, Understand the Data, and Understand the World." This book adds a fifth stage for reports, decisions, and solutions; see the [Preface](index.md). [Source: @lau_learning_2023, sec. 1.1]
 
-Data science Venn diagram
-: Drew Conway's diagram that places data science at the intersection of hacking skills, math and statistics knowledge, and substantive expertise. See @fig-data-science-venn. [Source: @conway_venn_2010]
-
 Data triangulation
 : TK
 
@@ -103,16 +97,13 @@ Degree matrix
 : A tree diagram of the nested clusters found by [hierarchical clustering](#hierarchical-clustering). Cutting the tree at any height gives a [partitional clustering](#partitional-clustering). [Source: [Week 10 Slides](../../slides/week10.html)]
 
 Density
-: The fraction of possible edges that are present in a graph: edges present divided by pairs of nodes. [Source: [Week 12 Slides](../../slides/week12.html)]
+: The fraction of possible edges that are present in a graph, that is, the number of edges present divided by the total number of possible edges. [Source: [Week 12 Slides](../../slides/week12.html)]
 
 Descriptive statistics
 : Statistics that summarize real data (e.g. through measures of center, spread, and position)
 
 [Designed data]{#designed-data}
 : Data collected for your question, e.g. through surveys, sensors, experiments, or instruments you control. Contrast with [found data](#found-data). [Source: [Week 2 Slides](../../slides/week2.html)]
-
-Diameter
-: For a connected graph, "the smallest $d$ for which the neighborhood of radius $d$ for any starting node includes the entire graph." See [neighborhood of radius $d$](#neighborhood). [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
 
 DIKW pyramid
 : The data-information-knowledge-wisdom hierarchy, which stacks data, information, knowledge, and wisdom as successive layers. See @fig-dikw-pyramid. [Source: @rowley_wisdom_2007]
@@ -130,7 +121,7 @@ Documentation debt
 : TK
 
 Edge
-: A connection joining two nodes in a [graph](#graph). [Source: [Week 12 Slides](../../slides/week12.html)]
+: A connection joining two nodes in a [graph](#graph).
 
 Efficient cause
 : TK — the source of change or rest, e.g. for a bronze statue, the art of bronze-casting. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
@@ -146,7 +137,7 @@ More than pleasure or satisfaction or a specific state of feeling.
 "human good turns out to be activity of soul in accordance with virtue" [@aristotle_nicomachean_ethics, *Nicomachean Ethics* I.7, 1097b–1098a]. 
 
 Event
-: A subset of the sample space $S$, i.e. a set of one or more outcomes we care about, e.g. heads on the first of 14 coin flips. [Source: [Week 2 Slides](../../slides/week2.html)]
+: A subset of the sample space $S$, i.e. a set of one or more outcomes we care about, e.g. heads on the first of 14 coin flips. 
 
 Experiment
 : A procedure or process with more than one possible outcome.
@@ -154,12 +145,11 @@ Experiment
 Final cause
 : TK — a thing's purpose or end, what it is good for. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
 
-
 Formal cause
 : TK — a thing's real-world essence. E.g. for a bronze statue, the actual shape of the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
 
 [Found data]{#found-data}
-: Data that someone else collected, such as logs, scrapes, or administrative records. Found data are cheap, but they may answer a different question than yours. Contrast with [designed data](#designed-data). [Source: [Week 2 Slides](../../slides/week2.html)]
+: Data that someone else collected, such as logs, scrapes, or administrative records. Found data are cheap, but they may answer a different question. Contrast with [designed data](#designed-data).
 
 Goodhart's Law
 : The notion that a measure can stop being a helpful measure when it becomes a target. E.g. see @sec-college-rankings: acceptance rates, student-teacher ratios, and reported SAT scores can all be moved directly once they are ranked on (but may or may not improve the actual school quality). See @sec-goodharts-law. [Source: @goodhart1984problems]
@@ -168,40 +158,40 @@ Granularity
 : What each record in a dataset represents, e.g. one tap-in, one station-day, or one line-month. @lau_learning_2023 "use the term granularity to describe what each row in the table represents." Two tables need the same granularity before they can be merged. [Source: @lau_learning_2023, sec. 8.6; [Week 3 Slides](../../slides/week3.html)]
 
 [Graph]{#graph}
-: A set of nodes (vertices) $V$ and a set of edges $E$, each edge joining two nodes, written $G = (V, E)$. [Source: [Week 12 Slides](../../slides/week12.html)]
+: A set of nodes (vertices) $V$ and a set of edges $E$, each edge joining two nodes, written $G = (V, E)$.
 
 Ground truth
-: The correct label for each observation, recorded by someone who checked, e.g. the species recorded for each penguin at Palmer Station. [Source: [Week 8 Slides](../../slides/week8.html)]
+: The correct label for each observation, recorded by someone who checked, e.g. the species recorded for each penguin at Palmer Station.
 
 [Hierarchical clustering]{#hierarchical-clustering}
-: Clustering that finds a set of nested clusters, which can be drawn as a tree (a [dendrogram](#dendrogram)). Contrast with [partitional clustering](#partitional-clustering). [Source: [Week 10 Slides](../../slides/week10.html)]
+: Clustering that finds a set of nested clusters, which can be drawn as a tree (a [dendrogram](#dendrogram)). Contrast with [partitional clustering](#partitional-clustering).
 
 [In-degree]{#in-degree}
-: In a [directed graph](#directed-graph), the number of edges pointing into a node. [Source: [Week 12 Slides](../../slides/week12.html)]
+: In a [directed graph](#directed-graph), the number of edges pointing into a node.
 
 Inferential statistics
-: Statistics that use a sample to conclude something about the population it was drawn from, e.g. through hypothesis testing and confidence intervals. [Source: [Week 2 Slides](../../slides/week2.html)]
+: Statistics that use a sample to conclude something about the population it was drawn from, e.g. through hypothesis testing and confidence intervals.
 
 Information
 : TK
 
 Intercept
-: In simple linear regression, $\hat{y} = \theta_0 + \theta_1 x$, the intercept $\theta_0$ is the predicted value of $y$ when $x$ is zero. [Source: [Week 8 Slides](../../slides/week8.html)]
+: In simple linear regression, $\hat{y} = \theta_0 + \theta_1 x$, the intercept $\theta_0$ is the predicted value of $y$ when $x$ is zero.
 
 [Jaccard similarity]{#jaccard}
-: A similarity score for binary features: $\frac{N_{11}}{N_{01} + N_{10} + N_{11}}$, where $N_{11}$ counts attributes where both $a$ and $b$ are 1 and $N_{10}$, $N_{01}$ count the attributes where they disagree. Attributes where both are 0 ($N_{00}$) do not count. Compare the [simple matching coefficient](#smc). [Source: [Week 9 Slides](../../slides/week9.html)]
+: A similarity score for binary features: $\frac{N_{11}}{N_{01} + N_{10} + N_{11}}$, where $N_{11}$ counts attributes where both $a$ and $b$ are 1 and $N_{10}$, $N_{01}$ count the attributes where they disagree. Attributes where both are 0 ($N_{00}$) do not count. Compare the [simple matching coefficient](#smc). 
 
 Knowledge
 : TK
 
 [Long format]{#long-format}
-: A table layout with one row per measurement, using key and value columns (e.g. `id`, `year`, `value`). In Polars, `df.unpivot()` turns [wide format](#wide-format) into long format. [Source: [Week 3 Slides](../../slides/week3.html)]
+: A table layout with one row per measurement, using key and value columns (e.g. `id`, `year`, `value`). In Polars, `df.unpivot()` turns [wide format](#wide-format) into long format.
 
 Material cause
 : What a thing is made of. E.g. for a bronze statue, the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
 
 Multimodal
-: Describes a distribution with multiple modes (peaks). [Source: [Week 5 Slides](../../slides/week5.html)]
+: Describes a distribution with multiple modes (peaks).
 
 Multiple necessary conditions
 : Describes when several conditions are required for a given outcome (which one counts as "the" cause?). E.g. a fire needs heat, fuel, and oxygen.
@@ -213,13 +203,13 @@ Mutual knowledge
 : "The neighborhood of radius $d$ for a node $v$ in a directed or undirected graph is the set of nodes reachable from $v$ along paths of length at most $d$." [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
 
 Node
-: One of the entities in a [graph](#graph), also called a vertex. [Source: [Week 12 Slides](../../slides/week12.html)]
+: One of the entities in a [graph](#graph), also called a vertex.
 
 Null hypothesis ($H_0$)
-: The hypothesis assumed true unless the evidence says otherwise. [Source: [Week 2 Slides](../../slides/week2.html)]
+: The hypothesis assumed true unless the evidence says otherwise.
 
 [Out-degree]{#out-degree}
-: In a [directed graph](#directed-graph), the number of edges pointing out of a node. [Source: [Week 12 Slides](../../slides/week12.html)]
+: In a [directed graph](#directed-graph), the number of edges pointing out of a node.
 
 Outcome
 : A single possible result of an experiment.
@@ -229,16 +219,16 @@ Overdetermination
 : Describes situations in which two sufficient causes may occur at once, e.g. two people each empty a full bucket of water onto a campfire.
 
 [Overlapping communities]{#overlapping-communities}
-: Communities that share members. In social networks, "Typically, individuals are members of several communities." Some community detection algorithms (e.g. the Louvain algorithm) still put each node in exactly one community. [Source: @leskovec_social_network_graphs_2020, sec. 10.9; [Week 12 Slides](../../slides/week12.html)]
+: Communities that share members. In social networks, "Typically, individuals are members of several communities." Some community detection algorithms (e.g. the Louvain algorithm) still put each node in exactly one community. [Source: @leskovec_social_network_graphs_2020, sec. 10.9)]
 
 $p$-value
-: The probability of seeing evidence at least as extreme as the observed evidence, if the null hypothesis $H_0$ were true. A result is statistically significant when its $p$-value falls below the significance level $\alpha$. [Source: [Week 2 Slides](../../slides/week2.html)]
+: The probability of seeing evidence at least as extreme as the observed evidence, if the null hypothesis $H_0$ were true. A result is often considered "statistically significant" when its $p$-value falls below the significance level $\alpha$.
 
 [Partitional clustering]{#partitional-clustering}
-: Clustering that divides the observations into one flat set of non-overlapping clusters, as k-means does. Contrast with [hierarchical clustering](#hierarchical-clustering). [Source: [Week 10 Slides](../../slides/week10.html)]
+: Clustering that divides the observations into one flat set of non-overlapping clusters, as k-means does. Contrast with [hierarchical clustering](#hierarchical-clustering).
 
 Pasteur's quadrant
-: Donald Stokes's 2×2 grid that classifies research by two questions: is it a quest for fundamental understanding, and does it consider use? Pasteur's quadrant (yes to both) is use-inspired basic research; Bohr's quadrant is pure basic research, and Edison's is pure applied research. [Source: @stokes_pasteurs_quadrant_1997; [Week 1 Slides](../../slides/week1.html)]
+: Donald Stokes's 2×2 grid that classifies research by two questions: is it a quest for fundamental understanding, and does it consider use? Pasteur's quadrant (yes to both) is use-inspired basic research; Bohr's quadrant is pure basic research, and Edison's is pure applied research.
 
 Percentile
 : One of 100 equal divisions of a dataset; i.e. $n$% of the data is at or below the $n$th percentile.
@@ -247,32 +237,32 @@ Population
 : The entire group that a statistical sample is drawn from and used to make inferences about. See also [target population](#target-population).
 
 [Precision]{#precision}
-: The fraction of positive predictions that are correct: $\frac{TP}{TP + FP}$. [Source: [Week 9 Slides](../../slides/week9.html); [Week 10 Slides](../../slides/week10.html)]
+: The fraction of positive predictions that are correct: $\frac{TP}{TP + FP}$.
 
 [Predictor variable]{#predictor-variable}
-: The variable used to predict the [response](#response-variable) in a regression, also called the explanatory variable. @lau_learning_2023 recommend avoiding the independent/dependent names, noting that many such name pairs "connote a causal relationship." [Source: @lau_learning_2023, sec. 15.1; [Week 8 Slides](../../slides/week8.html)]
+: The variable used to predict the [response](#response-variable) in a regression, also called the explanatory variable. @lau_learning_2023 recommend avoiding the independent/dependent names, noting that many such name pairs "connote a causal relationship." [Source: @lau_learning_2023, sec. 15.1]
 
 Presupposition
 : A background claim that must be true in order for a question to have a meaningful answer. [Source: @sep-questions]
 
 Provenance
-: Tracing data through the lifecycle, back to where each value came from. See "Licensing and provenance" in [Chapter 3](03-ethics-in-obtaining-data.md). [Source: [Week 1 Slides](../../slides/week1.html); @buneman_why_and_where_2001]
+: Tracing data through the lifecycle, back to where each value came from. See "Licensing and provenance" in [Chapter 3](03-ethics-in-obtaining-data.md). [Source:  @buneman_why_and_where_2001]
 
 Proxy
 : TK [@barocas_selbst_big_data_disparate_impact_2016]
 
 Quartile
-: One of four equal divisions of a dataset — $Q_1$ (25th percentile), $Q_2$ (50th, the median), and $Q_3$ (75th percentile). [Source: [Week 2 Slides](../../slides/week2.html)]
+: One of four equal divisions of a dataset — $Q_1$ (25th percentile), $Q_2$ (50th, the median), and $Q_3$ (75th percentile).
 
 
 Reachable
 : "A node $v$ can reach node $u$ if $u$ is in the neighborhood of $v$ for some radius." See [transitive closure](#transitive-closure). [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
 
 [Recall]{#recall}
-: The fraction of positive observations that are classified correctly: $\frac{TP}{TP + FN}$. Also called sensitivity or the true positive rate. [Source: [Week 9 Slides](../../slides/week9.html); [Week 10 Slides](../../slides/week10.html)]
+: The fraction of positive observations that are classified correctly: $\frac{TP}{TP + FN}$. Also called sensitivity or the true positive rate.
 
 [Response variable]{#response-variable}
-: The variable being modeled or predicted in a regression, also called the outcome. See [predictor variable](#predictor-variable). [Source: [Week 8 Slides](../../slides/week8.html)]
+: The variable being modeled or predicted in a regression, also called the outcome. See [predictor variable](#predictor-variable).
 
 [Sample]{#sample}
 : The actual data at hand, as opposed to the population it is drawn from. @lau_learning_2023 define it as "the subset of units taken from the access frame to observe and measure." [Source: @lau_learning_2023, sec. 2.2]
@@ -281,50 +271,50 @@ Sample space
 : The set of all possible outcomes of an experiment. (TODO - add garden of forking data explanation)
 
 [Sampling gap]{#sampling-gap}
-: The part of the [access frame](#access-frame) that could be reached but was not measured. See also [coverage gap](#coverage-gap). [Source: [Week 2 Slides](../../slides/week2.html)]
+: The part of the [access frame](#access-frame) that could be reached but was not measured. See also [coverage gap](#coverage-gap).
 
 [Self-loop]{#self-loop}
-: An edge from a node to itself. A self-loop adds 2 to its node's degree. [Source: [Week 12 Slides](../../slides/week12.html)]
+: An edge from a node to itself. A self-loop adds 2 to its node's degree.
 
 Sensitive information
 : TK [@nissenbaum_privacy_contextual_integrity_2004]
 
 [Separation]{#separation}
-: How distinct a cluster is from other clusters. [Source: [Week 10 Slides](../../slides/week10.html)]
+: How distinct a cluster is from other clusters.
 
 Significance level ($\alpha$)
 : The threshold, typically 0.05, below which a p-value is considered statistically significant.
 
 [Simple matching coefficient (SMC)]{#smc}
-: A similarity score for binary features that counts agreements of both kinds: $\frac{N_{00} + N_{11}}{N_{00} + N_{01} + N_{10} + N_{11}}$. Compare [Jaccard similarity](#jaccard), which leaves out $N_{00}$. [Source: [Week 9 Slides](../../slides/week9.html)]
+: A similarity score for binary features that counts agreements of both kinds: $\frac{N_{00} + N_{11}}{N_{00} + N_{01} + N_{10} + N_{11}}$. Compare [Jaccard similarity](#jaccard), which leaves out $N_{00}$.
 
 Situated knowledge
 : TK [@dignazio_klein_data_feminism_2020]
 
 Skewed
-: Describes a distribution where one tail is longer than the other (right-skewed or left-skewed). [Source: [Week 5 Slides](../../slides/week5.html)]
+: Describes a distribution where one tail is longer than the other (right-skewed or left-skewed).
 
 Slope
-: In simple linear regression, $\hat{y} = \theta_0 + \theta_1 x$, the slope $\theta_1$ is how much the predicted value of $y$ changes for every one-unit increase in $x$. [Source: [Week 8 Slides](../../slides/week8.html)]
+: In simple linear regression, $\hat{y} = \theta_0 + \theta_1 x$, the slope $\theta_1$ is how much the predicted value of $y$ changes for every one-unit increase in $x$.
 
 Specificity
-: The fraction of negative observations classified correctly: $\frac{TN}{TN + FP}$. Also called the true negative rate. [Source: [Week 10 Slides](../../slides/week10.html)]
+: The fraction of negative observations classified correctly: $\frac{TN}{TN + FP}$. Also called the true negative rate.
 
 Spurious regularities
 : Used to describe when things consistently occur together without one causing the other, e.g. rooster crows every morning before sunrise. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 
 Statistically significant
-: Describes a result whose p-value falls below the significance level. [Source: [Week 2 Slides](../../slides/week2.html)]
+: Describes a result whose p-value falls below the significance level.
 
 Statistics
 : Learning from data under uncertainty. (TODO- cross-reference)
 
 [Supervised learning]{#supervised-learning}
-: Predicting the value of a particular variable (the target) based on the values of other variables. Contrast with [unsupervised learning](#unsupervised-learning). [Source: [Week 10 Slides](../../slides/week10.html)]
+: Predicting the value of a particular variable (the target) based on the values of other variables. Contrast with [unsupervised learning](#unsupervised-learning).
 
 Symmetric
-: Describes a distribution that looks the same on the left and right sides. [Source: [Week 5 Slides](../../slides/week5.html)]
+: Describes a distribution that looks the same on the left and right sides.
 
 [Target population]{#target-population}
 : "the collection of elements comprising the population that you ultimately intend to describe and draw conclusions about." See also [access frame](#access-frame) and [sample](#sample). [Source: @lau_learning_2023, sec. 2.2]
@@ -339,10 +329,10 @@ Teleology
 : The "end," "goal," or "completion" toward which a thing is directed (root of *teleology*). Another name for the "final cause," the fourth of [Aristotle's four causes](#four-causes): "in the sense of end or 'that for the sake of which' a thing is done, e.g. health is the cause of walking about" [@aristotle_physics, *Physics* II.3, 194b].
 
 Testing set
-: Labeled observations held back from training and used only to measure how well a model predicts new data. See also [training set](#training-set). [Source: [Week 8 Slides](../../slides/week8.html)]
+: Labeled observations held back from training and used only to measure how well a model predicts new data. See also [training set](#training-set).
 
 Tidy data
-: Data arranged so that "1. Each variable forms a column. 2. Each observation forms a row. 3. Each type of observational unit forms a table." [Source: @wickham_tidy_data_2014; [Week 3 Slides](../../slides/week3.html)]
+: Data arranged so that "1. Each variable forms a column. 2. Each observation forms a row. 3. Each type of observational unit forms a table." [Source: @wickham_tidy_data_2014]
 
 [Training set]{#training-set}
 : Labeled observations that a model learns from. [Source: [Week 8 Slides](../../slides/week8.html)]
@@ -351,25 +341,25 @@ Tidy data
 : "The transitive closure of a graph is the set of pairs of nodes $(v, u)$ such that $v$ can reach $u$." It "can have a number of facts equal to the square of the number of nodes of a graph." [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
 
 Triadic closure
-: The tendency for two nodes that share a neighbor to gain an edge between them, e.g. two people with a mutual friend becoming friends. It reflects the locality of social networks: "if entity A is related to both B and C, then there is a higher probability than average that B and C are related." [Source: [Week 12 Slides](../../slides/week12.html); @leskovec_social_network_graphs_2020, sec. 10.1.1]
+: The tendency for two nodes that share a neighbor to gain an edge between them, e.g. two people with a mutual friend becoming friends. [Source: @leskovec_social_network_graphs_2020, sec. 10.1.1]
 
 Type I error
-: Rejecting $H_0$ when it is true: a false positive, with probability $\alpha$. E.g. calling a fair coin biased. [Source: [Week 2 Slides](../../slides/week2.html)]
+: Rejecting $H_0$ when it is true: a false positive, with probability $\alpha$. E.g. calling a fair coin biased, or thinking there is a wolf when there's actually no wolf.
 
 Type II error
-: Failing to reject $H_0$ when it is false: a false negative, with probability $\beta$. E.g. missing a coin that is biased. [Source: [Week 2 Slides](../../slides/week2.html)]
+: Failing to reject $H_0$ when it is false: a false negative, with probability $\beta$. E.g. missing a coin that is biased, or thinking there is no wolf when there actually is a wolf. 
 
 Unimodal
-: Describes a distribution with a single mode (peak). [Source: [Week 5 Slides](../../slides/week5.html)]
+: Describes a distribution with a single mode (peak).
 
 [Unsupervised learning]{#unsupervised-learning}
-: Learning that aims to identify patterns and relationships in data, with no target variable and no explicit feedback about whether outputs are correct. [Cluster analysis](#cluster-analysis) is one example. [Source: [Week 10 Slides](../../slides/week10.html)]
+: Learning that aims to identify patterns and relationships in data, with no target variable and no explicit feedback about whether outputs are correct. [Cluster analysis](#cluster-analysis) is one example.
 
 Weighted graph
-: A [graph](#graph) in which each edge carries a number. [Source: [Week 12 Slides](../../slides/week12.html)]
+: A [graph](#graph) in which each edge carries a number.
 
 [Wide format]{#wide-format}
-: A table layout that spreads repeated measurements across columns, e.g. one column per year. In Polars, `df.pivot()` turns [long format](#long-format) into wide format. [Source: [Week 3 Slides](../../slides/week3.html)]
+: A table layout that spreads repeated measurements across columns, e.g. one column per year. In Polars, `df.pivot()` turns [long format](#long-format) into wide format.
 
 Wisdom
 : TK
