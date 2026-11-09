@@ -313,7 +313,7 @@ def main_frames(G, info):
 
 
 def community_labels(ax, pos, info):
-    """A boxed label on each community's cluster: its era and three most-rostered players.
+    """A boxed label on each community's cluster: its era and three most-rostered players, full names.
 
     Placed at the median of the members' positions (robust to a few outlying
     players), with a white fill so it reads over the edges and a border in
@@ -321,8 +321,8 @@ def community_labels(ax, pos, info):
     """
     for c in info:
         x, y = np.median([pos[p] for p in c["members"]], axis=0)
-        names = ", ".join(display_name(p).split()[-1] for p in c["top"][:3])
-        ax.text(x, y, f"{c['era']}\n{names}", ha="center", va="center", ma="center",
+        names = "\n".join(display_name(p) for p in c["top"][:3])
+        ax.text(x, y, f"{c['era']}\n{names}", ha="center", va="center", ma="left",
                 fontsize=12, color=INK, zorder=6, linespacing=1.3,
                 bbox=dict(boxstyle="square,pad=0.45", facecolor=PAPER, edgecolor=c["color"],
                           lw=2.5 * PT))
@@ -345,7 +345,7 @@ def closeup(G, appearances, c, k):
     R = 34                                       # headshot radius, px
     box = (40 + R, 70 + R, W - 40 - R, H - 50 - R)
     # room for the photo plus its name label underneath
-    pos = spread(fit(spring(S, 500), box), box, dx=2 * R + 40, dy=2 * R + 26)
+    pos = spread(fit(spring(S, 500), box), box, dx=2 * R + 62, dy=2 * R + 26)
     fig, ax = canvas()
     draw_edges(ax, S, pos, weighted=True)
     for p in players:
@@ -360,7 +360,7 @@ def closeup(G, appearances, c, k):
             ax.add_patch(Circle((x, y), R, facecolor="#EEEEEE", edgecolor="none", zorder=3))
             ax.text(x, y, initials(name), ha="center", va="center", fontsize=16, color=INK, zorder=4)
         ax.add_patch(Circle((x, y), R, facecolor="none", edgecolor=c["color"], lw=3 * PT, zorder=4))
-        ax.text(x, y + R + 4, name.split()[-1], ha="center", va="top", fontsize=11, color=INK, zorder=5,
+        ax.text(x, y + R + 4, name, ha="center", va="top", fontsize=11, color=INK, zorder=5,
                 bbox=dict(boxstyle="round,pad=0.15", facecolor=PAPER, edgecolor="none", alpha=0.8))
     ax.text(24, 30, CLOSEUP_TITLE.format(k=k, era=c["era"]), ha="left", va="baseline",
             fontsize=18, color=c["color"])

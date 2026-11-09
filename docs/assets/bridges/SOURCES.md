@@ -18,6 +18,16 @@ The English quote on every frame and the bridge-to-land assignments come from th
 
 > "in the Königsberg problem, there were odd numbers attached to the letters A, B, C and D"
 
+## Euler's original (`euler-1741-*`)
+
+`euler-1741-E053.pdf` is the full scan of E53 from the [Euler Archive](https://scholarlycommons.pacific.edu/cgi/viewcontent.cgi?article=1052&context=euler-works) (University of the Pacific Scholarly Commons; the first PDF page is the archive's cover sheet). The two PNGs are that PDF's embedded page scans, extracted losslessly with `pdfimages` at their native 200 dpi. `euler-1741-plate.png` is PDF page 3, the fold-out plate "Comment. Acad. Sc. Tom VIII. Tab. VIII. p. 128" with Figs. 1–3. In this copy someone has handwritten the German bridge names beside Euler's letters in Fig. 1. `euler-1741-p136.png` is printed page 136 (PDF page 11): the bridge-count table for Königsberg (A 5, B 3, C 3, D 3) and the start of §15 on Fig. 3.
+
+`euler-1741-plate-color.jpg` is the same plate from a different physical copy of volume 8: the American Museum of Natural History Library copy, scanned in color at 300 ppi for the Biodiversity Heritage Library ([Internet Archive `commentariiacade08impe`](https://archive.org/details/commentariiacade08impe), marked "NOT_IN_COPYRIGHT"). It is the 2179 × 2020 page image of PDF page 186 ([page view](https://archive.org/details/commentariiacade08impe/page/n185/mode/1up)), downloaded 2026-11-09 from `https://archive.org/download/commentariiacade08impe/page/n185.jpg`. This copy has no handwritten bridge names. In that scan the article itself is PDF pages 154–166, and the fold-out plate is bound later, at PDF pages 185–186.
+
+`euler-1741-fig1-color.jpg` is Fig. 1 alone, cropped from `euler-1741-plate-color.jpg` with `magick euler-1741-plate-color.jpg -crop 1620x728+240+120 +repage -quality 92 euler-1741-fig1-color.jpg`. The top edge sits just below the plate header, so a speck of the "p" in "p. 128" shows at the top right.
+
+Both color images are on the Week 12, Day 1 slide "Euler, 1741": the full plate, then Fig. 1 alone.
+
 ## Shikaakwa (`shikaakwa-v1` … `v5`)
 
 **Name.** From George Ironstrack, ["What does the word Chicago mean? (FAQ)"](https://aacimotaatiiyankwi.org/2013/08/01/what-does-the-word-chicago-mean-faq/), *Aacimotaatiiyankwi* (Myaamia Center blog), August 1, 2013:
@@ -33,6 +43,8 @@ The FAQ cites Michael McCafferty, "A Fresh Look at the Place Name Chicago," *Jou
 - *Cherry Ave (2).* Quinn Kasal, ["The past, present, and future of the Cherry Avenue bike and pedestrian bridge"](https://chi.streetsblog.org/2020/11/16/the-past-present-and-future-of-the-cherry-avenue-bike-ped-bridge/), *Streetsblog Chicago*, Nov. 16, 2020: "it's currently a bike/ped-only facility; and it may become a transitway as part of the Lincoln Yards development."
 - *Halsted St (6), Chicago Ave (7).* CDOT, ["Chicago Avenue Bridge and Halsted Street Viaduct"](https://www.chicago.gov/city/en/depts/cdot/supp_info/chicago-avenue-bridge-and-halsted-street-viaduct-.html) (fetched 2026-11-08): "Halsted Street is fully closed in both directions to all traffic." Project area includes "Halsted Street from Ancona Street to the Chicago River". Timeline: "Estimated Completion: Halsted Street: December 2026 Chicago Avenue Bridge: Spring 2027". The figures count both bridges as part of the normal network. Closing 6 in v5 is a modeling choice that makes every degree even; it doesn't depict the current closure.
 - *Lake St (11).* OSM tags the road deck as under construction with `opening_date=2028-01-31`, citing a WGN report on a three-year renovation (not independently checked). The Green and Pink Line 'L' runs on the upper deck. It's drawn as a grey track, a nod to the course's transit motif, and it isn't a walking route.
+
+**Portrait** (`shikaakwa-portrait`). The v1 map alone, with no key or graph, on a 453 × 733 golden-ratio portrait canvas, drawn by the same map code. It's on the Week 12, Day 1 slide "Euler's Rule".
 
 **Degrees** (computed by the script, not typed): v4 has W 7, N 8, G 5, L 2. Two odd land masses means an open walk exists from Goose Island to the West Side (or the reverse), but no closed one. v5 closes Halsted St (6), giving W 6, N 8, G 4, L 2. Every land mass is even, so a closed walk exists.
 

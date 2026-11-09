@@ -7,7 +7,7 @@ yet been thoroughly reviewed.
 Two parallel sets, each sharing one 1000 x 618 canvas so the frames line up in
 an r-stack:
 
-  konigsberg-v0.svg  the river and land, no bridges (redrawn after Euler's Fig. 1)
+  konigsberg-v0.svg  the river and land, no bridges (based on Euler's Fig. 1)
   konigsberg-v1.svg  + the seven bridges (Euler's a-g); land masses lettered by name
   konigsberg-v2.svg  + a node on each land mass, edges through the bridges; map faded
   konigsberg-v3.svg  the bare multigraph, with its adjacency matrix on the left
@@ -18,6 +18,7 @@ an r-stack:
   shikaakwa-v3.svg   + the multigraph beside the faded map
   shikaakwa-v4.svg   + degrees; odd-degree land masses in orange
   shikaakwa-v5.svg   one bridge closed (Halsted St over the North Branch) -> all even
+  shikaakwa-portrait.svg  the v1 map alone (no key or graph) on a golden-ratio portrait canvas
 
 Data:
   * Königsberg: the layout copies Euler's Fig. 1, hand-placed and schematic. Bridges
@@ -256,7 +257,7 @@ K_GRAPH = {"A": (600, 135), "K": (600, 320), "L": (860, 320), "V": (600, 505)}
 K_OFFSETS = {"a": 46, "b": -46, "c": -46, "d": 46, "e": 0, "f": 0, "g": 0}
 K_QUOTE = ("\u201c\u2026whether anyone could arrange a route in such a way that he would "
            "cross each bridge once and only once.\u201d \u2014 Euler (1736)")
-K_CREDIT = "redrawn after Euler (1736), Fig. 1; quote trans. Biggs, Lloyd & Wilson (1976)"
+K_CREDIT = "based on Euler (1736), Fig. 1; quote trans. Biggs, Lloyd & Wilson (1976)"
 
 # adjacency matrix, left of the graph
 CELL = 40
@@ -644,9 +645,30 @@ def make_shikaakwa():
         save(fig, f"shikaakwa-{step}")
 
 
+def make_shikaakwa_portrait():
+    """The v1 map on its own, title above and credit below, on a golden-ratio portrait canvas."""
+    plt.rcParams["svg.fonttype"] = "path"
+    pw = round(MAP_W + 2 * MAP_X)
+    ph = round(pw * PHI)
+    dy = 100 - MAP_Y                    # push the map down to leave room for the title
+    fig = plt.figure(figsize=(pw / DPI, ph / DPI), dpi=DPI, facecolor=PAPER)
+    ax = fig.add_axes((0, 0, 1, 1))
+    ax.set_xlim(0, pw)
+    ax.set_ylim(ph - dy, -dy)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    text(ax, MAP_X, 50 - dy, "The Bridges of Shikaakwa", color=INK, title=True, va="baseline")
+    text(ax, MAP_X, 78 - dy, "Goose Island and Wolf Point on the Chicago River", color=MUTED,
+         va="baseline")
+    s_map(ax)
+    text(ax, pw - MAP_X, ph - dy - 12, S_CREDIT, color=MUTED, ha="right", va="baseline")
+    save(fig, "shikaakwa-portrait")
+
+
 def main():
     make_konigsberg()
     make_shikaakwa()
+    make_shikaakwa_portrait()
 
 
 if __name__ == "__main__":

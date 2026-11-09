@@ -290,24 +290,23 @@
 ## Week 12, Day 1 (2026-11-09)
 
 * Graphs and relationships
-* Community detection
-* Network diffusion
-* Virus propagation
 
 ### Sources
 
 * *Mining of Massive Datasets*, [Chapter 10: Mining Social-Network Graphs](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/mining-socialnetwork-graphs/7389AA5812DBD9ACC0D7A618C27C5060)
-* *Learning Data Science*, [Chapter 7: Working with Relations Using SQL](https://learningds.org/ch/07/sql_intro.html)
 * *Network Science* (Barabási), [Chapter 9: Communities](https://networksciencebook.com/chapter/9)
 * Girvan & Newman (2002), ["Community structure in social and biological networks"](https://doi.org/10.1073/pnas.122653799), *PNAS* 99(12), 7821-7826
 * Granovetter (1973), ["The Strength of Weak Ties"](https://doi.org/10.1086/225469), *American Journal of Sociology* 78(6), 1360-1380
 * Banerjee, Chandrasekhar, Duflo & Jackson (2019), ["Using Gossips to Spread Information: Theory and Evidence from Two Randomized Controlled Trials"](https://doi.org/10.1093/restud/rdz008), *The Review of Economic Studies* 86(6), 2453-2490
 * Wilder et al. (2021), ["Clinical Trial of an AI-Augmented Intervention for HIV Prevention in Youth Experiencing Homelessness"](https://doi.org/10.1609/aaai.v35i17.17754), *Proceedings of the AAAI Conference on Artificial Intelligence* 35(17), 14948-14956
-* Mukherjee, Huang, Neidhardt, Uzzi & Contractor (2019), ["Prior shared success predicts victory in team competitions"](https://www.kellogg.northwestern.edu/academics-research/research/detail/2019/prior-shared-success-predicts-victory-in-team-competitions/), *Nature Human Behaviour* 3(1), 74-81, <https://doi.org/10.1038/s41562-018-0460-y>
+* Mukherjee, Huang, Neidhardt, Uzzi & Contractor (2019), ["Prior shared success predicts victory in team competitions"](https://www.nature.com/articles/s41562-018-0460-y), *Nature Human Behaviour* 3(1), 74-81, <https://doi.org/10.1038/s41562-018-0460-y>
 * Euler (1736), ["Solutio problematis ad geometriam situs pertinentis"](https://scholarlycommons.pacific.edu/euler-works/53/) (the Königsberg bridges paper; published 1741 in *Commentarii academiae scientiarum Petropolitanae* 8, 128-140); video explainer: Dr. Trefor Bazett, ["Euler Paths & the 7 Bridges of Konigsberg"](https://youtu.be/dSK5jTEe-AM?si=z8a-t2AINlz0d-4f)
 
 ## Week 12, Day 2 (2026-11-11)
 
+* Community detection
+* Network diffusion
+* Virus propagation
 * Network immunization
 
 ### Sources

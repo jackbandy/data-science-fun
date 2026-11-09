@@ -36,7 +36,7 @@ The player-per-match files are the natural starting point for a network exercise
 
 - Paper: https://doi.org/10.1038/s41562-018-0460-y
 - Data and code: https://github.com/smukherjee0305/Skills_Shared_Success_Sports
-- Kellogg summary page: https://www.kellogg.northwestern.edu/academics-research/research/detail/2019/prior-shared-success-predicts-victory-in-team-competitions/
+- Nature article page: https://www.nature.com/articles/s41562-018-0460-y
 
 ## Disclaimers
 

@@ -5,8 +5,13 @@
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+% The wide right margin is the open-ended notes column, half of the 7.2in between the outer margins less a 0.3in gutter; the header and title block span both.
+\usepackage[margin=0.65in, right=4.4in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
+% Never break a word across lines, including at hyphens ("Sans-Serif").
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -15,6 +20,8 @@
 \usepackage{fancyhdr}
 \usepackage{mdframed}
 \usepackage{array}
+\usepackage{tabularx}
+\usepackage{tikz}
 
 % ── Draft watermark ───────────────────────────────────────────────────────────
 % This worksheet is still a stub. The watermark marks the PDF as unfinished so
@@ -28,6 +35,7 @@
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
 \fancyhf{}
+\fancyhfoffset[R]{3.75in}
 \lhead{\textbf{CS 418: Intro to Data Science}}
 \rhead{UIC, Fall 2026}
 \cfoot{\thepage}
@@ -39,54 +47,69 @@
 \hypersetup{colorlinks=false, hidelinks}
 
 % ── Convenience environments ──────────────────────────────────────────────────
-\newenvironment{problem}[1]{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
-  \textbf{Problem #1.}
-}{%
-  \end{mdframed}\vspace{0.5em}
-}
+% Usage: \fixedblock[height]{content} — a full-width block exactly that tall.
+\newcommand{\fixedblock}[2][5.7cm]{\noindent\begin{minipage}[t][#1][t]{\linewidth}\raggedright #2\end{minipage}\par}
 
-\newenvironment{hint}{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
-  \textit{Hint:}
-}{%
-  \end{mdframed}\vspace{0.3em}
-}
-
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
-  \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
-  \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
-  \vspace{0.3em}
-}
+% Usage: \vocabrow{term} — one row of checkpoint 1's one-column vocab table: the term in bold with blank space below it for the definition.
+\newcommand{\vocabrow}[1]{\small \textbf{#1}\rule[-1.5em]{0pt}{0.1pt}}
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
-\noindent
-\begin{minipage}[t]{0.55\textwidth}
+% Spans the notes column too, through the column headings; \makebox lets it run 3.75in past \textwidth without an overfull warning.
+\noindent\makebox[\textwidth][l]{\begin{minipage}[t]{\dimexpr\textwidth+3.75in\relax}
+\vspace{0pt}
+\begin{minipage}[t]{0.55\linewidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,24}} \\[0.3em]
+  {\LARGE \textbf{Worksheet \#\,24}} \\[0.18em]
   {\large \textit{Week 12, Day 2: Network immunization}}
 \end{minipage}
 \hfill
-\begin{minipage}[t]{0.40\textwidth}
+\begin{minipage}[t]{0.40\linewidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
-\vspace{0.2em}
+\vspace{0.6em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.1em}
+
+\noindent
+\begin{minipage}[t]{3.45in}
+  \noindent\underline{\textbf{Guided checkpoints}}\\[0.2em]
+  \noindent{\small For full credit, fill in the checkpoints. If you skip a checkpoint, include your own notes for full credit.}
+\end{minipage}%
+\hspace{0.3in}%
+\begin{minipage}[t]{3.45in}
+  \noindent\underline{\textbf{Open-ended notes}}\\[0.2em]
+\end{minipage}
+\end{minipage}}
+
+\vspace{0.8em}
+
+% ── 1. Vocab ─────────────────────────────────────────────────────────────────
+% Key: definitions from the Day 2 vocab slides (MMDS Ch. 10; quotes mostly from the summary, Sec. 10.9), in deck order.
+\fixedblock[0.36\textheight]{%
+\noindent\textbf{1. Vocab}\\[0.18em]
+\noindent Write a short definition and/or example for each.
+
+\vspace{0.5em}
+\noindent
+{\renewcommand{\arraystretch}{1.15}%
+\begin{tabular}{|l|}
+  \hline
+  \vocabrow{Community; clique}\\ \hline
+  \vocabrow{Adjacency matrix}\\ \hline
+  \vocabrow{Degree matrix}\\ \hline
+  \vocabrow{Overlapping communities}\\ \hline
+  \vocabrow{Neighborhood of radius $r$; diameter}\\ \hline
+  \vocabrow{Transitive closure}\\ \hline
+\end{tabular}}
+}
 
 \end{document}
