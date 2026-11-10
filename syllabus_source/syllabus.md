@@ -164,6 +164,7 @@ In order to provide a final letter grade at the end of the class, I will use the
 | &nbsp;&nbsp;&nbsp;*One per class* | |
 | **In-Class Quizzes** | **20%** |
 | &nbsp;&nbsp;&nbsp;*Every other week, seven total* | |
+| &nbsp;&nbsp;&nbsp;*Lowest score dropped* | |
 | **Group Project** | **20%** |
 | &nbsp;&nbsp;&nbsp;*Question memo* | |
 | &nbsp;&nbsp;&nbsp;*Data acquisition* | |
@@ -197,7 +198,7 @@ Instructions for every graded exercise will be posted before the work is due, us
 Unless an exercise says otherwise:
 
 - **In-class worksheets** are completed in class, and submitted in canvas via picture.
-- **In-class quizzes** are taken during class on your laptop.
+- **In-class quizzes** are taken during class on your laptop. Your lowest quiz score is dropped.
 - **PrairieLearn homeworks** are submitted in PrairieLearn by the posted due date. There are unlimited retakes.
 - **Coding exercises** and **group project milestones** are submitted in Canvas by the posted due date.
 
