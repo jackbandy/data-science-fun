@@ -85,3 +85,25 @@ figure region. The PDF's figures are TikZ/pgfplots output (vector); `pdfimages`
 only recovers a single embedded raster, so the SVG route is the only way to keep
 them sharp at slide resolution. Previews were rendered with `rsvg-convert`.
 
+
+## Galton, "Vox Populi"
+
+- Francis Galton
+- *Nature* 75(1949), 450–451 (7 March 1907) — [doi:10.1038/075450a0](https://doi.org/10.1038/075450a0)
+- BibTeX key in `docs/slides/shared/references.bib`: `galton1907`
+- Public domain (published 1907).
+
+### Files
+
+1. **galton-nature-1907-p450.png** — page 450, rendered at 150 dpi with `pdftoppm -f 1 -l 1 -r 150` from the scan at <https://galton.org/essays/1900-1911/galton-1907-vox-populi.pdf>; not otherwise modified. The left column's top half is the end of an unrelated article. (Drafted by an LLM coding system and has not yet been reviewed.)
+
+## Granovetter, "The Strength of Weak Ties"
+
+- Mark S. Granovetter (Johns Hopkins University)
+- *American Journal of Sociology* 78(6), 1360–1380 (May 1973) — [doi:10.1086/225469](https://doi.org/10.1086/225469)
+- BibTeX key in `docs/slides/shared/references.bib`: `granovetter1973`
+- © 1973 University of Chicago Press; first page shown in class for commentary.
+
+### Files
+
+1. **granovetter-ajs-1973-p1360.png** — first page of the article (page 1360), rendered at 150 dpi with `pdftoppm -f 2 -l 2 -r 150` (PDF page 1 is a JSTOR cover sheet) from the copy at <https://snap.stanford.edu/class/cs224w-readings/granovetter73weakties.pdf>; not otherwise modified. (Drafted by an LLM coding system and has not yet been reviewed.)

@@ -191,7 +191,7 @@ def entries_by_line() -> pl.DataFrame:
             .select(pl.col("MAP_ID").alias("station_id"), "line")
         )
         daily = pl.read_csv(
-            DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20260527.csv",
+            DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20261111.csv",
             ignore_errors=True,
         ).with_columns(pl.col("rides").cast(pl.Utf8).str.replace_all(",", "").cast(pl.Int64))
         weekday = (
@@ -1727,7 +1727,7 @@ def _station_points() -> pl.DataFrame:
             .drop_nulls(["lat", "lon"])
         )
         daily = pl.read_csv(
-            DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20260527.csv",
+            DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20261111.csv",
             ignore_errors=True,
         ).with_columns(pl.col("rides").cast(pl.Utf8).str.replace_all(",", "").cast(pl.Int64))
         weekday = (

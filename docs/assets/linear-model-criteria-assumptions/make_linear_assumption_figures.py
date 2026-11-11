@@ -403,7 +403,7 @@ def cta_station_averages(year: int) -> pl.DataFrame:
 
 
 def _cta_station_averages(year: int) -> pl.DataFrame:
-    return (pl.scan_csv(DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20260527.csv",
+    return (pl.scan_csv(DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20261111.csv",
                         schema_overrides={"rides": pl.Utf8})
             .with_columns(pl.col("date").str.to_date("%m/%d/%Y"),
                           pl.col("rides").str.replace_all(",", "").cast(pl.Float64))

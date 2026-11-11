@@ -107,26 +107,37 @@ def save(fig, name):
     print(f"  wrote {out.relative_to(REPO_ROOT)}")
 
 
-@figure("vox-populi")
-def vox_populi():
+def draw_vox_populi(show_actual):
     """Galton's 787 ox-weight guesses (synthetic reconstruction from his published quantiles)."""
     guesses = pl.read_csv(DATASETS / "galton-vox-populi-1907" / "vox-populi-synthetic.csv")["estimate"].to_numpy()
     fig, ax = new_fig()
     ax.hist(guesses, bins=np.arange(880, 1540, 20), color=QUIET, zorder=3)
     top = ax.get_ylim()[1]
-    ax.axvline(1198, color=INK, linewidth=2, zorder=4)
+    if show_actual:
+        ax.axvline(1198, color=INK, linewidth=2, zorder=4)
     ax.axvline(np.median(guesses), color=ORANGE, linewidth=2, linestyle=(0, (4, 3)), zorder=4)
-    ax.text(1188, top * 0.97, "actual\n1,198 lb", color=INK, fontsize=14, ha="right", va="top")
+    if show_actual:
+        ax.text(1188, top * 0.97, "actual\n1,198 lb", color=INK, fontsize=14, ha="right", va="top")
     ax.text(1217, top * 0.97, f"median guess\n{np.median(guesses):,.0f} lb", color=ORANGE_DARK, fontsize=14, va="top")
     ax.set(xlabel="Guessed dressed weight of the ox (lb)", ylabel="Guesses")
     tidy(ax)
     return fig
 
 
+@figure("vox-populi-guesses")
+def vox_populi_guesses():
+    return draw_vox_populi(show_actual=False)
+
+
+@figure("vox-populi")
+def vox_populi():
+    return draw_vox_populi(show_actual=True)
+
+
 @figure("adams-wabash-weekdays")
 def adams_wabash_weekdays():
     """Weekday entries at Adams/Wabash in 2025, the answer key for the Fermi estimate."""
-    df = pl.read_csv(DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20260527.csv", infer_schema_length=0)
+    df = pl.read_csv(DATASETS / "cta-ridership" / "Station_Entries_-_Daily_Totals_20261111.csv", infer_schema_length=0)
     rides = df.filter((pl.col("station_id") == "40680") & (pl.col("daytype") == "W") & pl.col("date").str.ends_with("/2025"))["rides"].str.replace_all(",", "").cast(pl.Int64).to_numpy()
     fig, ax = new_fig()
     ax.hist(rides, bins=25, color=QUIET, zorder=3)

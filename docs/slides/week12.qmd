@@ -571,13 +571,17 @@ Take a picture of your worksheet, upload it in Canvas
 
 
 
-# Week 12, Day 2 {.course-title .photo-title data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
+# Week 12, Day 2 {.course-title .photo-title .title-aside data-state="photo-title photo-title-zoom" background-image="../assets/orange-line-stops-better/stop13-western-c.jpg" background-size="cover"}
 
 <h2>Networks Continued</h2>
+
+<h2>You are invited to move toward the front of the room!</h2>
 
 CS 418, Week 12 🟧 Western 🟧
 
 Jack Bandy, 2026
+
+![](../assets/art/LCC_C001_front-v10-seat-dots-fading.gif){.nostretch alt="Animated floor plan of UIC Lecture Center C001 with an orange dot on most seats, fading toward the back; every dot moves up one row toward the front while the front row's dots stay in place"}
 
 ---
 
@@ -586,10 +590,12 @@ Jack Bandy, 2026
 ::: {.split-content .narrow-aside}
 
 ::: {}
-- Community Detection
-- Network Diffusion
-- Virus Propagation
-- Network Immunization
+- What is an estimate?
+- What is a model?
+- What is slop?
+- What is a network?
+- What is a community?
+- What is a weak tie?
 :::
 
 ![](../assets/orange-line-map-stops/stop13-western.svg){.figure alt="Orange Line map with the Western stop marked, the Week 12 stop"}
@@ -598,7 +604,413 @@ Jack Bandy, 2026
 
 
 
-# Community Detection {.section-header}
+# Final Exam Options {.section-header}
+
+
+
+# What Is an Estimate? {.section-header}
+
+
+## Illinois Voter Turnout {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- "Estimate the Illinois voter turnout rate for the general election on Tuesday, November 3, 2026." (Homework 8)
+- 66 estimates, class median 49.6%
+
+::: {.fragment fragment-index=1}
+- Provisional actual: 46.4%
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/estimation-visuals/vox-classis-turnout.svg" alt="Swarm plot of 66 estimates of Illinois voter turnout on November 3, 2026, one orange dot per estimate on an axis from 20% to 100%. Most dots cluster between about 43% and 56%, with a few as high as 70% and one at 100%. A vertical line marks the median, 49.6%.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/estimation-visuals/vox-classis-turnout-actual.svg" alt="The same turnout estimates and class median, 49.6%, now with the provisional actual turnout, 46.4%, marked below the dots as a short interval spanning 44.4% to 47.9%.">
+:::
+:::::
+
+::: {.caption}
+Provisional actual: NBC governor vote count (November 4, 2026) and UF Election Lab voting-eligible population. See [GitHub](https://github.com/jackbandy/data-science-fun/tree/main/datasets/galton-vox-populi-1907/vox-classis) for sources.
+:::
+:::
+
+:::
+
+---
+
+## UIC-Halsted Boardings {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- "Estimate the number of boardings at the CTA UIC-Halsted Blue Line station on Tuesday, August 25, 2026, the second day of instruction for the UIC fall semester." (Homework 8)
+- 65 estimates, class median 5.64k
+
+::: {.fragment fragment-index=1}
+- Actual: 6,469 rides
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/estimation-visuals/vox-classis-uic-halsted.svg" alt="Swarm plot of 65 estimates of boardings at the CTA UIC-Halsted station on August 25, 2026, one orange dot per estimate on an axis from 0 to 20k. Dots spread from near 0 to about 8.5k, with a dense cluster near 6.5k to 7k and two dots near 14k and 16.5k. A vertical line marks the median, 5.64k.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/estimation-visuals/vox-classis-uic-halsted-actual.svg" alt="The same boardings estimates and class median, 5.64k, now with the actual value, 6,469 rides, marked below the dots as a black diamond.">
+:::
+:::::
+
+::: {.caption}
+Not shown: one estimate of 731,135. Actual from CTA 'L' Station Entries, Daily Totals (City of Chicago Data Portal). See [GitHub](https://github.com/jackbandy/data-science-fun/tree/main/datasets/galton-vox-populi-1907/vox-classis) for sources.
+:::
+:::
+
+:::
+
+---
+
+## Vox Populi: Guessing an Ox {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- 787 guesses of an ox's dressed weight, Plymouth, England [@galton1907]
+- Median guess: 1,207 lb
+
+::: {.fragment fragment-index=1}
+- Actual: 1,198 lb
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/estimation-visuals/vox-populi-guesses.svg" alt="Histogram of 787 guesses of the ox's weight, from about 900 to 1,500 pounds, peaked near 1,200. A dashed orange line marks the median guess, 1,207 pounds.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/estimation-visuals/vox-populi.svg" alt="The same histogram of guesses, now with a black line at the actual weight, 1,198 pounds, just left of the dashed orange median line at 1,207 pounds.">
+:::
+:::::
+
+::: {.caption}
+Based on @galton1907; individual guesses are a synthetic reconstruction from Galton's published percentiles. Same figure as Week 7.
+:::
+:::
+
+:::
+
+---
+
+## Vox Populi (Galton, 1907) {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+- Francis Galton, "Vox Populi," *Nature*, March 7, 1907 [@galton1907]
+- Weight-judging competition at the West of England Fat Stock and Poultry Exhibition
+    - tickets cost "6*d.*" each (?)
+- 787 usable cards with weight estimates
+- "the middlemost estimate expresses the *vox populi*": 1,207 lb
+- actual measured weight was 1198 lb.
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/paper-figures/galton-nature-1907-p450.png" alt="Scanned page 450 of Nature, March 7, 1907. The left column ends a weather report and begins the article Vox Populi; the right column has a table of the distribution of 787 estimates of an ox's dressed weight by percentile, followed by a hand-drawn diagram comparing the observed estimates to a normal curve.">
+
+::: {.caption}
+@galton1907, p. 450. Public domain scan via [galton.org](https://galton.org/essays/1900-1911/galton-1907-vox-populi.pdf).
+:::
+:::
+
+:::
+
+
+
+# What Is a Model? {.section-header}
+
+
+## On Your Own: What Is a Model? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+On your own (worksheet checkpoint 2):
+
+- How would you explain to friends/family?
+- Which examples have stuck with you?
+- Do you have plans to use modeling in your project?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## With Your Elbow Neighbors: What Is a Model? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+With your elbow neighbor(s) (worksheet checkpoint 2):
+
+- Compare and discuss definitions
+- Is "class median" a model?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+
+
+# What Is Slop? {.section-header}
+
+
+## On Your Own: What Is Slop? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+On your own (worksheet checkpoint 3):
+
+- What makes something slop?
+- Where have you seen slop recently?
+
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## With Your Elbow Neighbors: What Is Slop? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+With your elbow neighbor(s) (worksheet checkpoint 3):
+
+- Compare and discuss definitions
+- Any slop in your projects?
+- Ideas for slop policies?
+
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+
+
+# What Is a Network? {.section-header}
+
+
+## On Your Own: What Is a Network? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+On your own (worksheet checkpoint 4):
+
+- How would you explain to friends/family?
+- What is a network you participate in?
+- What are the nodes/edges in that network?
+
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## With Your Elbow Neighbors: What Is a Network? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+With your elbow neighbor(s) (worksheet checkpoint 4):
+
+- Compare and discuss definitions
+- Examples?
+
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+
+
+# What Is a Community? {.section-header}
+
+
+## On Your Own: What Is a Community? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+On your own (worksheet checkpoint 5):
+
+- What is a community?
+- How is a community different from a network?
+
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+---
+
+## With Your Elbow Neighbors: What Is a Community? {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+With your elbow neighbor(s) (worksheet checkpoint 5):
+
+- Compare and discuss definitions
+- How is a community different from a network?
+:::
+
+<iframe src="https://dodatascience.fun/timer/" title="CTA-style countdown timer" loading="lazy" style="width: 100%; height: 420px; display: block; border: 1px solid #999; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border-radius: 3px;"></iframe>
+
+:::
+
+
+
+# What Is a Weak Tie? {.section-header}
+
+
+## The Strength of Weak Ties (Granovetter, 1973) {.split}
+
+::: {.split-content .golden-columns}
+
+::: {.dense}
+- Mark S. Granovetter, Johns Hopkins University, in the *American Journal of Sociology*, May 1973 [@granovetter1973]
+- "the degree of overlap of two individuals' friendship networks varies directly with the strength of their tie to one another"
+- weak ties
+- "Emphasis on weak ties lends itself to discussion of relations *between* groups"
+:::
+
+::: {.captioned-figure}
+<img class="figure" src="../assets/paper-figures/granovetter-ajs-1973-p1360.png" alt="First page of The Strength of Weak Ties by Mark S. Granovetter, Johns Hopkins University: an indented abstract, three paragraphs of introduction, and a footnote thanking Harrison White and others, with the page footer 1360, AJS Volume 78 Number 6.">
+
+::: {.caption}
+@granovetter1973, p. 1360.
+:::
+:::
+
+:::
+
+---
+
+## The Forbidden Triad {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- "the triad which is most *unlikely* to occur ... is that in which A and B are strongly linked, A has a strong tie to some friend C, but the tie between C and B is absent"
+
+::: {.fragment fragment-index=1}
+- triadic closure: "the B-C tie is always present (whether weak or strong), given the other two strong ties."
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/network-visuals/weak-ties-v0.svg" alt="Three people, A, B, and C. Solid lines show strong ties from A to B and from A to C; there is no line between B and C.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/network-visuals/weak-ties-v1.svg" alt="The same triad with a dashed orange line now joining B and C, labeled weak or strong, but present. B and C are orange.">
+:::
+:::::
+
+::: {.caption}
+Based on @granovetter1973, Fig. 1. Quotes from p. 1363.
+:::
+:::
+
+:::
+
+---
+
+## Local Bridges {.split}
+
+::: {.split-content .golden-figure}
+
+::: {.dense}
+- WiCS and ACM: close friends (strong ties) inside each club
+
+::: {.fragment fragment-index=1}
+- Acquaintances (weak ties) in each club
+:::
+
+::: {.fragment fragment-index=2}
+- weak tie (E–I) joins them
+:::
+
+::: {.fragment fragment-index=3}
+- A second weak tie (A–B)
+- "those which are local bridges create more, and shorter, paths"
+- "only weak ties may be local bridges"
+:::
+:::
+
+::: {.captioned-figure}
+::::: {.r-stack .peek-stack}
+<img class="figure" src="../assets/network-visuals/weak-ties-v2.svg" alt="Two shaded ovals labeled WiCS (left: A, C, D, E, F) and ACM (right: B, G, H, I, J), each holding five members joined by solid strong ties. No line crosses between the ovals. Caption: close friends cluster inside each club; no path connects WiCS and ACM.">
+
+::: {.fragment fragment-index=1}
+<img class="figure" src="../assets/network-visuals/weak-ties-v3.svg" alt="The same two clubs with dashed gray weak ties added inside each oval: E-C, E-A, C-D, F-A in WiCS and I-J, B-H in ACM. Still no line crosses between the ovals.">
+:::
+
+::: {.fragment fragment-index=2}
+<img class="figure" src="../assets/network-visuals/weak-ties-v4.svg" alt="The same clubs with one dashed orange weak tie from E in WiCS to I in ACM across the top; E and I are orange. Caption: a WiCS member is now 2.60 steps from an ACM member, on average.">
+:::
+
+::: {.fragment fragment-index=3}
+<img class="figure" src="../assets/network-visuals/weak-ties-v5.svg" alt="The same clubs with a second dashed orange weak tie, from A in WiCS to B in ACM across the middle; A, B, E, and I are orange. Caption: the average distance drops from 2.60 to 2.32 steps, and without A-B, A to B takes 3 steps through E and I, so A-B is a local bridge.">
+:::
+:::::
+
+::: {.caption}
+Based on @granovetter1973, Fig. 2a, relabeled as two student organizations with hypothetical members. Quotes from p. 1365.
+:::
+:::
+
+:::
+
+---
+
+## Any questions? {#any-questions-day-2}
+
+- Project checkpoint 5 (narrative analysis) due Monday, November 16
+- Group presentations start Monday, November 23
+- Week 13 quiz will be in testing facility
+    - Next Wednesday (November 18)
+- Group Projects?
+- Other logistics?
+- (You can also stay after class for questions)
+
+---
+
+## Upload your worksheet {#upload-worksheet-day-2}
+
+Take a picture of your worksheet, upload it in Canvas
+
+
+# That's All for Today, See You Monday! {.section-header .no-index}
+
+
+
+# Appendix: Community Detection {.section-header}
 
 
 ## Community Detection
@@ -826,7 +1238,7 @@ Based on @leskovec2020mmds, Fig. 10.19; quotes from Sec. 10.9.
 :::
 
 
-# Network Diffusion {.section-header}
+# Appendix: Network Diffusion {.section-header}
 
 
 ## Network Diffusion
@@ -980,7 +1392,7 @@ Distribution of cascade sizes and structural virality *(placeholder)*
 ::::
 
 
-# Virus Propagation {.section-header}
+# Appendix: Virus Propagation {.section-header}
 
 
 ## Virus Propagation Models
@@ -1176,7 +1588,7 @@ Epidemic threshold visualization *(placeholder)*
 ::::
 
 
-# Network Immunization {.section-header}
+# Appendix: Network Immunization {.section-header}
 
 
 ## Immunization Problem

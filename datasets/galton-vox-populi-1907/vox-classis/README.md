@@ -35,9 +35,17 @@ Each dot is one student's estimate. The vertical line marks the median, the stat
 
 ## Actual values
 
-- **Turnout:** TBD. Ballots counted divided by voting-eligible population, as reported by the [University of Florida Election Lab](https://election.lab.ufl.edu/voter-turnout/).
-- **UIC-Halsted:** TBD. The `rides` figure for `station_id` 40350 in [CTA - Ridership - 'L' Station Entries - Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f/about_data). Historical data is in [`../../cta-ridership/`](../../cta-ridership/).
-- **CTA rail:** TBD. The `rail_boardings` figure in [CTA - Ridership - Daily Boarding Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-Daily-Boarding-Totals/6iiy-9s97/about_data). September 7, 2026 was Labor Day, which the prompt did not mention.
+- **Turnout:** TBD. Ballots counted divided by voting-eligible population, as reported by the [University of Florida Election Lab](https://election.lab.ufl.edu/voter-turnout/). Provisional estimate: 46.4% (95% interval 45.7–47.1%), from NBC's count of governor votes as of November 4, 2026 (96.9% of expected votes in) and UF Election Lab v0.2's voting-eligible population. Sources and the model are in `results.csv` and `turnout_range()` in `plot-estimates.py`.
+
+![Swarm plot of Illinois voter turnout estimates with the provisional actual turnout range below it](illinois-voter-turnout-estimates-and-actual-2026.png)
+
+- **UIC-Halsted:** 6,469 rides. The `rides` figure for `station_id` 40350 in [CTA - Ridership - 'L' Station Entries - Daily Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/5neh-572f/about_data) ([this row](https://data.cityofchicago.org/resource/5neh-572f.json?station_id=40350&date=2026-08-25T00:00:00.000)); the dataset's rows were last updated October 28, 2026. Historical data is in [`../../cta-ridership/`](../../cta-ridership/).
+
+![Swarm plot of UIC-Halsted boardings estimates with the actual value, 6,469 rides, marked below it](uic-halsted-boardings-estimates-and-actual-2026.png)
+
+*Not shown: one estimate of 731,135 boardings. The median and n include it.*
+
+- **CTA rail:** TBD. The `rail_boardings` figure in [CTA - Ridership - Daily Boarding Totals](https://data.cityofchicago.org/Transportation/CTA-Ridership-Daily-Boarding-Totals/6iiy-9s97/about_data). As of November 11, 2026 the dataset runs through August 31, 2026. September 7, 2026 was Labor Day, which the prompt did not mention.
 
 ## Disclaimers
 

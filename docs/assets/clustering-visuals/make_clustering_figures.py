@@ -1487,7 +1487,7 @@ def contingency_penguins():
 
 # ------------------------------------------- appendix: L stations by ridership
 
-CTA_DAILY_CSV = REPO_ROOT / "datasets" / "cta-ridership" / "Station_Entries_-_Daily_Totals_20260527.csv"
+CTA_DAILY_CSV = REPO_ROOT / "datasets" / "cta-ridership" / "Station_Entries_-_Daily_Totals_20261111.csv"
 RIDER_FEATURES = ["size", "sat_r", "sun_r", "season", "spike", "recov"]
 RIDER_NAMES = ["Size: typical weekday (log)", "Saturday ÷ weekday", "Sunday ÷ weekday",
                "Summer ÷ winter weekday", "Busiest day ÷ typical day", "2025 ÷ 2019 weekday"]

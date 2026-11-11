@@ -14,7 +14,7 @@ import pymc as pm
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "uic_halsted_posterior.nc"
 
-cta = pl.read_csv(HERE / "Station_Entries_-_Daily_Totals_20260527.csv")
+cta = pl.read_csv(HERE / "Station_Entries_-_Daily_Totals_20261111.csv")
 uic = (
     cta.filter(pl.col("stationname") == "UIC-Halsted")
     .with_columns(

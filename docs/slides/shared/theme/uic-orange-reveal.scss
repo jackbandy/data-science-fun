@@ -430,6 +430,13 @@ $code-color: $ink !default;
     p { font-size: 1rem; color: $muted; margin-top: 32px; }
   }
 
+  // .title-aside: a title slide with one image pinned to the right half.
+  section.course-title.title-aside {
+    padding-right: 560px;
+    min-height: 590px; // in the PDF layout the section is only as tall as its text; this keeps the image below the top rule
+    img { position: absolute; right: 48px; top: 50%; transform: translateY(-50%); height: 520px; margin: 0; opacity: 0.9; }
+  }
+
   .image-slide {
     display: flex !important;
     flex-direction: column;
@@ -957,6 +964,19 @@ html.reveal-print {
 
     // Station line and author line read as one two-line subtitle.
     p + p { margin-top: 0.25em; }
+  }
+
+  // With an image on the right, the photo gets a dark scrim behind the text that fades out before the image, and the text gets heavier shadows.
+  // The scrim sits on Reveal's background element (which carries the slide's classes), so it covers the whole slide instead of stopping at the section's edges.
+  .backgrounds .slide-background.photo-title.title-aside::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.31) 0%, rgba(0, 0, 0, 0.25) 40%, rgba(0, 0, 0, 0) 58%);
+  }
+  .slides .course-title.photo-title.title-aside {
+    h1 { text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85); }
+    h2, p { text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9); }
   }
 
   .photo-only {

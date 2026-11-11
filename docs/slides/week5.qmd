@@ -1048,7 +1048,7 @@ Are stations that are busy on weekdays also busy on Saturdays?
 
 ```{python}
 #| echo: true
-cta = pl.read_csv("../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20260527.csv",
+cta = pl.read_csv("../../datasets/cta-ridership/Station_Entries_-_Daily_Totals_20261111.csv",
                   ignore_errors=True)
 cta = cta.with_columns(pl.col("rides").str.replace_all(",", "").cast(pl.Int64))
 by_day = (cta.filter(pl.col("date").str.ends_with("2019"))

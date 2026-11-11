@@ -124,12 +124,17 @@ def plot(csv_name, xlabel, unit, n_drop, actual=None, out_name=None):
         ax.plot([median, median], [-0.42, 0.35], color=INK_2, linewidth=1, zorder=0)  # a Line2D, since the jitter pass below treats every collection as dots
         ax.annotate(f"class median {short_number(median, unit)} (n = {len(all_values)})", xy=(median, 1), xycoords=("data", "axes fraction"),
                     xytext=(0, 4), textcoords="offset points", ha="center", va="bottom", color=INK_2, fontsize=10)
-        for (x0, x1), lw in ((actual["extremes"], 1), (actual["p95"], 4), (actual["p50"], 9)):
-            ax.plot([x0, x1], [ACTUAL_Y, ACTUAL_Y], color=INK, linewidth=lw, solid_capstyle="butt", clip_on=False)
-        ax.annotate(f"actual turnout, provisional: {actual['center']:.1f}%", xy=(actual["center"], ACTUAL_Y), xytext=(0, 9),
-                    textcoords="offset points", ha="center", va="bottom", color=INK, fontsize=10)
-        ax.annotate(f"full range {actual['extremes'][0]:.1f}–{actual['extremes'][1]:.1f}%, thick 95% interval, thickest 50%",
-                    xy=(actual["center"], ACTUAL_Y), xytext=(0, -9), textcoords="offset points", ha="center", va="top", color=INK_2, fontsize=8.5)
+        if "value" in actual:
+            ax.plot([actual["value"]], [ACTUAL_Y], marker="D", markersize=7, color=INK, clip_on=False)
+            ax.annotate(actual["label"], xy=(actual["value"], ACTUAL_Y), xytext=(0, 9),
+                        textcoords="offset points", ha="center", va="bottom", color=INK, fontsize=10)
+        else:
+            for (x0, x1), lw in ((actual["extremes"], 1), (actual["p95"], 4), (actual["p50"], 9)):
+                ax.plot([x0, x1], [ACTUAL_Y, ACTUAL_Y], color=INK, linewidth=lw, solid_capstyle="butt", clip_on=False)
+            ax.annotate(f"actual turnout, provisional: {actual['center']:.1f}%", xy=(actual["center"], ACTUAL_Y), xytext=(0, 9),
+                        textcoords="offset points", ha="center", va="bottom", color=INK, fontsize=10)
+            ax.annotate(f"full range {actual['extremes'][0]:.1f}–{actual['extremes'][1]:.1f}%, thick 95% interval, thickest 50%",
+                        xy=(actual["center"], ACTUAL_Y), xytext=(0, -9), textcoords="offset points", ha="center", va="top", color=INK_2, fontsize=8.5)
 
     ax.set_xlim(lo, hi)
     ax.set_xticks(np.arange(lo, hi + step / 2, step))
@@ -162,3 +167,5 @@ if __name__ == "__main__":
     actual = turnout_range()
     print("provisional turnout:", {k: np.round(v, 2) for k, v in actual.items()})
     plot(*PLOTS[0], actual=actual, out_name="illinois-voter-turnout-estimates-and-actual-2026.png")
+    rides = pd.read_csv(HERE / "results.csv").set_index(["year", "measure"])["value"][2026, "uic_halsted_rides_2026_08_25"]
+    plot(*PLOTS[1], actual={"value": rides, "label": f"actual: {rides:,.0f} rides"}, out_name="uic-halsted-boardings-estimates-and-actual-2026.png")

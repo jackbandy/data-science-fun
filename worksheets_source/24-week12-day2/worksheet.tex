@@ -23,22 +23,12 @@
 \usepackage{tabularx}
 \usepackage{tikz}
 
-% ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a stub. The watermark marks the PDF as unfinished so
-% nobody mistakes a placeholder for the real thing. Delete this block once the
-% worksheet has real content.
-\usepackage{draftwatermark}
-\SetWatermarkText{IN-PROGRESS}
-\SetWatermarkScale{2.2}
-\SetWatermarkLightness{0.85}
-
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhfoffset[R]{3.75in}
 \lhead{\textbf{CS 418: Intro to Data Science}}
 \rhead{UIC, Fall 2026}
-\cfoot{\thepage}
 \renewcommand{\headrulewidth}{1pt}
 \setlength{\headheight}{12pt}
 \setlength{\headsep}{0.4cm}
@@ -49,9 +39,6 @@
 % ── Convenience environments ──────────────────────────────────────────────────
 % Usage: \fixedblock[height]{content} — a full-width block exactly that tall.
 \newcommand{\fixedblock}[2][5.7cm]{\noindent\begin{minipage}[t][#1][t]{\linewidth}\raggedright #2\end{minipage}\par}
-
-% Usage: \vocabrow{term} — one row of checkpoint 1's one-column vocab table: the term in bold with blank space below it for the definition.
-\newcommand{\vocabrow}[1]{\small \textbf{#1}\rule[-1.5em]{0pt}{0.1pt}}
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
@@ -64,7 +51,7 @@
 \begin{minipage}[t]{0.55\linewidth}
   \vspace{0pt}
   {\LARGE \textbf{Worksheet \#\,24}} \\[0.18em]
-  {\large \textit{Week 12, Day 2: Network immunization}}
+  {\large \textit{Week 12, Day 2: Networks continued}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\linewidth}
@@ -92,24 +79,44 @@
 
 \vspace{0.8em}
 
-% ── 1. Vocab ─────────────────────────────────────────────────────────────────
-% Key: definitions from the Day 2 vocab slides (MMDS Ch. 10; quotes mostly from the summary, Sec. 10.9), in deck order.
-\fixedblock[0.36\textheight]{%
-\noindent\textbf{1. Vocab}\\[0.18em]
-\noindent Write a short definition and/or example for each.
+% ── 1. What is an estimate? ─────────────────────────────────────────────────
+% Key: a best guess at an unknown quantity from data or judgment, checked later against the actual value. Class medians: turnout 49.6\% (provisional actual 46.4\%), UIC-Halsted 5.64k (actual 6,469 rides); Galton (1907): median guess 1,207 lb, actual 1,198 lb.
+\fixedblock[0.255\textheight]{%
+\noindent\textbf{1. What is an estimate?}}
 
-\vspace{0.5em}
-\noindent
-{\renewcommand{\arraystretch}{1.15}%
-\begin{tabular}{|l|}
-  \hline
-  \vocabrow{Community; clique}\\ \hline
-  \vocabrow{Adjacency matrix}\\ \hline
-  \vocabrow{Degree matrix}\\ \hline
-  \vocabrow{Overlapping communities}\\ \hline
-  \vocabrow{Neighborhood of radius $r$; diameter}\\ \hline
-  \vocabrow{Transitive closure}\\ \hline
-\end{tabular}}
-}
+\vfill
+
+% ── 2. What is a model? ─────────────────────────────────────────────────────
+% Key: TODO, the slides are a section title only so far.
+\fixedblock[0.255\textheight]{%
+\noindent\textbf{2. What is a model?}}
+
+\vfill
+
+% ── 3. What is slop? ────────────────────────────────────────────────────────
+% Key: TODO, the slides are a section title only so far.
+\fixedblock[0.255\textheight]{%
+\noindent\textbf{3. What is slop?}}
+
+\newpage
+
+% ── 4. What is a network? ───────────────────────────────────────────────────
+% Key: TODO, the slides are a section title only so far; Day 1 vocab (graph, nodes, edges) applies.
+\fixedblock[0.31\textheight]{%
+\noindent\textbf{4. What is a network?}}
+
+\vfill
+
+% ── 5. What is a community? ─────────────────────────────────────────────────
+% Key: TODO, the slides are a section title only so far.
+\fixedblock[0.31\textheight]{%
+\noindent\textbf{5. What is a community?}}
+
+\vfill
+
+% ── 6. What is a weak tie? ──────────────────────────────────────────────────
+% Key: Granovetter (1973, p. 1361): "the strength of a tie is a (probably linear) combination of the amount of time, the emotional intensity, the intimacy (mutual confiding), and the reciprocal services which characterize the tie"; weak ties link otherwise separate groups (p. 1360), and "the degree of overlap of two individuals' friendship networks varies directly with the strength of their tie to one another."
+\fixedblock[0.31\textheight]{%
+\noindent\textbf{6. What is a weak tie?}}
 
 \end{document}

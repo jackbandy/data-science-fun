@@ -1,19 +1,26 @@
 year,measure,value,unit,as_of,source_url,note
-2026,il_voting_eligible_population,9308092,people,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,UF Election Lab v0.1 VEP = VAP*(1-NONCITIZEN_PCT) - INELIGIBLE_FELONS_TOTAL
-2026,il_voting_age_population,10171209,people,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,Census Vintage 2025 extrapolated to Nov. 1 2026
-2026,il_noncitizen_pct,8.20,percent,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,
-2026,il_ineligible_felons,29078,people,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,prison only; probation and parole are 0
-2026,il_total_ballots_counted,,ballots,2026-11-01,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.1.csv,blank in v0.1 (documented as TBD)
-2026,il_governor_votes_counted,3904937,votes,2026-11-04 09:39 ET,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,"NBC total row; ""90.8% expected votes in"""
-2026,il_governor_expected_vote_in_pct,90.8,percent,2026-11-04 09:39 ET,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,
-2026,il_governor_votes_remaining_est,395000,votes,2026-11-04 09:39 ET,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,"""Est. remaining 395,000"""
-2026,il_governor_votes_pritzker,2335631,votes,2026-11-04 03:21 CT,https://en.wikipedia.org/wiki/2026_Illinois_gubernatorial_election,91% reporting
-2026,il_governor_votes_bailey,1438609,votes,2026-11-04 03:21 CT,https://en.wikipedia.org/wiki/2026_Illinois_gubernatorial_election,91% reporting
+2026,il_voting_eligible_population,9308092,people,2026-11-07 02:35 UTC,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.2.csv,UF Election Lab v0.2 (unchanged from v0.1) VEP = VAP*(1-NONCITIZEN_PCT) - INELIGIBLE_FELONS_TOTAL
+2026,il_voting_age_population,10171209,people,2026-11-07 02:35 UTC,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.2.csv,Census Vintage 2025 extrapolated to Nov. 1 2026
+2026,il_noncitizen_pct,8.20,percent,2026-11-07 02:35 UTC,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.2.csv,
+2026,il_ineligible_felons,29078,people,2026-11-07 02:35 UTC,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.2.csv,prison only; probation and parole are 0
+2026,il_total_ballots_counted,4300000,ballots,2026-11-07 02:35 UTC,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2026G_v0.2.csv,"UF v0.2 SOURCE ""Initial Estimate"" (VEP turnout 46.20%); equals NBC 2026-11-04 09:39 ET counted + remaining, rounded; blank in v0.1"
+2026,il_governor_votes_counted,4136819,votes,2026-11-04 21:23 UTC,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,"NBC total row; ""96.9% expected votes in""; page updatedAtUtc unchanged as of 2026-11-11; earlier snapshot 2026-11-04 09:39 ET was 3904937 at 90.8%"
+2026,il_governor_expected_vote_in_pct,96.9,percent,2026-11-04 21:23 UTC,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,
+2026,il_governor_votes_remaining_est,131000,votes,2026-11-04 21:23 UTC,https://www.nbcnews.com/politics/2026-elections/illinois-governor-results,"""Est. remaining 131,000""; earlier snapshot 2026-11-04 09:39 ET was 395000"
+2026,il_governor_votes_pritzker,2458101,votes,2026-11-09 01:50 UTC,https://en.wikipedia.org/wiki/2026_Illinois_gubernatorial_election,"Wikipedia revision timestamp; infobox ""reporting = 96""; results table cites no source"
+2026,il_governor_votes_bailey,1495629,votes,2026-11-09 01:50 UTC,https://en.wikipedia.org/wiki/2026_Illinois_gubernatorial_election,"Wikipedia revision timestamp; infobox ""reporting = 96""; results table cites no source"
+2026,il_governor_votes_corbett,137448,votes,2026-11-09 01:50 UTC,https://en.wikipedia.org/wiki/2026_Illinois_gubernatorial_election,"Wikipedia revision timestamp; infobox ""reporting = 96""; results table cites no source"
+2026,il_governor_votes_wikipedia_total,4091178,votes,2026-11-09 01:50 UTC,https://en.wikipedia.org/wiki/2026_Illinois_gubernatorial_election,results table Total votes; below the NBC count above so not used in the estimate
+2026,suburban_cook_uncounted_total,75311,ballots,2026-11-10 08:30 CT,https://www.cookcountyclerkil.gov/elections/november-3-2026-ballot-counting-data,Cook County Clerk (suburban Cook only; excludes Chicago) posting under 10 ILCS 5/1-9.2; 89847 on 11/04
+2026,suburban_cook_vbm_sent_not_returned,74947,ballots,2026-11-10 08:30 CT,https://www.cookcountyclerkil.gov/elections/november-3-2026-ballot-counting-data,"""Vote by Mail - Sent but not returned""; most will never be returned"
+2026,suburban_cook_vbm_returned_not_counted,346,ballots,2026-11-10 08:30 CT,https://www.cookcountyclerkil.gov/elections/november-3-2026-ballot-counting-data,"""Vote by Mail - Returned not counted"""
+2026,suburban_cook_provisional_uncounted,9,ballots,2026-11-10 08:30 CT,https://www.cookcountyclerkil.gov/elections/november-3-2026-ballot-counting-data,"""Uncounted Provisional""; 493 on 11/04"
 2026,il_mail_ballots_returned,710896,ballots,2026-11-03 11:03 CT,https://www.cbsnews.com/chicago/live-updates/illinois-midterm-election-results-2026-live/,CBS citing the Illinois State Board of Elections
 2026,il_early_in_person_votes,1107058,ballots,2026-11-03 11:03 CT,https://www.cbsnews.com/chicago/live-updates/illinois-midterm-election-results-2026-live/,CBS citing the Illinois State Board of Elections
 2026,il_grace_period_votes,15414,ballots,2026-11-03 11:03 CT,https://www.cbsnews.com/chicago/live-updates/illinois-midterm-election-results-2026-live/,CBS citing the Illinois State Board of Elections
-2026,il_turnout_counted_so_far_pct,41.95,percent,2026-11-04 09:39 ET,,derived: il_governor_votes_counted / il_voting_eligible_population
-2026,il_turnout_with_remaining_pct,46.20,percent,2026-11-04 09:39 ET,,derived: (il_governor_votes_counted + il_governor_votes_remaining_est) / il_voting_eligible_population
+2026,il_turnout_counted_so_far_pct,44.44,percent,2026-11-04 21:23 UTC,,derived: il_governor_votes_counted / il_voting_eligible_population
+2026,il_turnout_with_remaining_pct,45.85,percent,2026-11-04 21:23 UTC,,derived: (il_governor_votes_counted + il_governor_votes_remaining_est) / il_voting_eligible_population
+2026,uic_halsted_rides_2026_08_25,6469,rides,2026-10-28,https://data.cityofchicago.org/resource/5neh-572f.json?station_id=40350&date=2026-08-25T00:00:00.000,"CTA 'L' Station Entries - Daily Totals (5neh-572f) rides for station_id 40350; as_of is the dataset's rowsUpdatedAt"
 2022,il_total_ballots_counted,4144125,ballots,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2022G_v1.2.csv,UF Election Lab v1.2
 2022,il_voting_eligible_population,9019092,people,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2022G_v1.2.csv,UF Election Lab v1.2
 2022,il_vep_turnout_pct,45.95,percent,final,https://election.lab.ufl.edu/data-downloads/turnoutdata/Turnout_2022G_v1.2.csv,UF Election Lab v1.2
