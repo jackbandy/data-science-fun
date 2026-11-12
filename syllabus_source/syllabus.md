@@ -129,6 +129,7 @@ Also, if access to a suitable computer or internet connection presents a challen
 - [*Learning Data Science*](https://learningds.org/intro.html) by Sam Lau, Joey Gonzalez, and Deb Nolan
 - [*Data Science: A First Introduction with Python*](https://python.datasciencebook.ca/) by Tiffany Timbers, Trevor Campbell, Melissa Lee, Joel Ostblom, and Lindsey Heagy
 - [*The Art of Data Science*](https://bookdown.org/rdpeng/artofdatascience/) by Roger D. Peng and Elizabeth Matsui
+- [*Principles of Data Science*](https://openstax.org/books/principles-data-science/) by Shaun V. Ault, Soohyun Nam Liao, and Larry Musolino
 
 Readings from these texts will be listed alongside the weekly schedule. If obtaining any course material presents a challenge for any reason, please tell me as soon as possible.
 

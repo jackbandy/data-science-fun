@@ -8,7 +8,7 @@
 
 <!-- A day with no section here falls back to its Topic cell in schedule.csv, so this file can be filled in a day at a time. Slide decks and worksheets are linked automatically from the week number, not from here. -->
 
-<!-- Sources lean on four texts, in order of preference: Learning Data Science (learningds.org), The Art of Data Science (bookdown.org/rdpeng/artofdatascience), Data Science: A First Introduction (python.datasciencebook.ca), and this course's own Ethics in Data Science mini-book. -->
+<!-- Sources lean on five texts, in order of preference: Learning Data Science (learningds.org), The Art of Data Science (bookdown.org/rdpeng/artofdatascience), Data Science: A First Introduction (python.datasciencebook.ca), Principles of Data Science (openstax.org), and this course's own Ethics in Data Science mini-book. -->
 
 ## Week 1, Day 1 (2026-08-24)
 
@@ -21,6 +21,7 @@
 * *Ethics in Data Science* (course mini-book), [Chapter 1: Working Toward Wisdom](/ethics-in-data-science/book/01-working-toward-wisdom.html)
 * *Computational and Inferential Thinking*, [Chapter 1: What is Data Science?](https://inferentialthinking.com/chapters/01/what-is-data-science)
 * *Learning Data Science*, [Chapter 1: The Data Science Lifecycle](https://learningds.org/ch/01/lifecycle_intro.html)
+* *Principles of Data Science*, [Section 1.1: What Is Data Science?](https://openstax.org/books/principles-data-science/pages/1-1-what-is-data-science)
 * *The Art of Data Science*, [Chapter 2: Epicycles of Analysis](https://bookdown.org/rdpeng/artofdatascience/epicycles-of-analysis.html)
 
 ## Week 1, Day 2 (2026-08-26)
@@ -59,6 +60,7 @@
 * *Calling Bullshit*, [5.3: Big Data Hubris](https://www.youtube.com/watch?v=X0XqnAqvyIk) (video, 6 min)
 * *The Art of Data Science*, [Section 2.4: Collecting Information](https://bookdown.org/rdpeng/artofdatascience/collecting-information.html)
 * *Data Science: A First Introduction*, [Chapter 2: Reading in data locally and from the web](https://python.datasciencebook.ca/reading.html)
+* *Principles of Data Science*, [Section 2.1: Overview of Data Collection Methods](https://openstax.org/books/principles-data-science/pages/2-1-overview-of-data-collection-methods)
 * *Ethics in Data Science* (course mini-book), [Chapter 3: Ethics in Obtaining Data](/ethics-in-data-science/book/03-ethics-in-obtaining-data.html)
 
 ## Week 3, Day 1 (2026-09-07)
@@ -76,6 +78,7 @@
 * *Learning Data Science*, [Chapter 9: Wrangling Dataframes](https://learningds.org/ch/09/wrangling_intro.html)
 * *Data Science: A First Introduction*, [Chapter 3: Cleaning and Wrangling Data](https://python.datasciencebook.ca/wrangling.html)
 * *Learning Data Science*, [Chapter 14: Data Exchange](https://learningds.org/ch/14/web_intro.html)
+* *Principles of Data Science*, [Section 2.4: Data Cleaning and Preprocessing](https://openstax.org/books/principles-data-science/pages/2-4-data-cleaning-and-preprocessing)
 
 ## Week 4, Day 1 (2026-09-14)
 
@@ -95,6 +98,7 @@
 ### Sources
 
 * *Learning Data Science*, [Chapter 4: Modeling with Summary Statistics](https://learningds.org/ch/04/modeling_intro.html)
+* *Principles of Data Science*, [Section 3.1: Measures of Center](https://openstax.org/books/principles-data-science/pages/3-1-measures-of-center)
 * *Computational and Inferential Thinking*, [Chapter 14: Why the Mean Matters](https://inferentialthinking.com/chapters/14/why-the-mean-matters)
 	* [Section 14.2: The Rough Size of Deviations from Average](https://inferentialthinking.com/chapters/14/2/variability/#the-rough-size-of-deviations-from-average) (standard deviation as typical distance)
 	* [Section 14.2: Standard Units](https://inferentialthinking.com/chapters/14/2/variability/#standard-units) (standardizing, z-scores)
@@ -118,6 +122,7 @@
 
 * *Learning Data Science*, [Chapter 11: Data Visualization](https://learningds.org/ch/11/viz_intro.html)
 * *Data Science: A First Introduction*, [Chapter 4: Effective Data Visualization](https://python.datasciencebook.ca/viz.html)
+* *Principles of Data Science*, [Section 9.1: Encoding Univariate Data](https://openstax.org/books/principles-data-science/pages/9-1-encoding-univariate-data)
 * *Fundamentals of Data Visualization*, [Chapter 2: Visualizing Data — Mapping Data onto Aesthetics](https://clauswilke.com/dataviz/aesthetic-mapping.html)
 
 ## Week 5, Day 2 (2026-09-23)
@@ -168,6 +173,7 @@
 ### Sources
 
 * *The Art of Data Science*, [Chapter 6: Inference — A Primer](https://bookdown.org/rdpeng/artofdatascience/chapter-inference.html)
+* *Principles of Data Science*, [Section 4.2: Hypothesis Testing](https://openstax.org/books/principles-data-science/pages/4-2-hypothesis-testing)
 * *Data Science: A First Introduction*, [Chapter 10: Statistical Inference](https://python.datasciencebook.ca/inference.html)
 * *Learning Data Science*, [Chapter 17: Theory for Inference and Prediction](https://learningds.org/ch/17/inf_pred_gen_intro.html)
 * *Computational and Inferential Thinking*, [Chapter 11: Testing Hypotheses](https://inferentialthinking.com/chapters/11/testing-hypotheses)
@@ -198,6 +204,7 @@
 * *Learning Data Science*, [Chapter 15: Linear Models](https://learningds.org/ch/15/linear_intro.html)
 * *Learning Data Science*, [Chapter 16: Model Selection](https://learningds.org/ch/16/ms_intro.html)
 * *Data Science: A First Introduction*, [Chapter 8: Regression II — Linear Regression](https://python.datasciencebook.ca/regression2.html)
+* *Principles of Data Science*, [Section 4.3: Correlation and Linear Regression Analysis](https://openstax.org/books/principles-data-science/pages/4-3-correlation-and-linear-regression-analysis)
 * *The Art of Data Science*, [Chapter 7: Formal Modeling](https://bookdown.org/rdpeng/artofdatascience/chapter-formal.html)
 * *Data 100 Course Notes* (UC Berkeley), [Modeling & SLR](https://ds100.org/course-notes/modeling-slr)
 * *Introduction to Modern Statistics*, [Chapter 24: Inference for Linear Regression with a Single Predictor](https://openintro-ims.netlify.app/inf-model-slr.html)
@@ -223,6 +230,7 @@
 ### Sources
 
 * *Data Science: A First Introduction*, [Chapter 5: Classification I — Training and Predicting](https://python.datasciencebook.ca/classification1.html) (continued)
+* *Principles of Data Science*, [Section 6.4: Decision Trees](https://openstax.org/books/principles-data-science/pages/6-4-decision-trees)
 * *A Course in Machine Learning*, [Chapter 1: Decision Trees](http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf)
 * *Introduction to Statistical Learning*, [Chapter 8: Tree-Based Methods](https://www.statlearning.com)
 * *Python Data Science Handbook*, [Decision Trees and Random Forests](https://jakevdp.github.io/PythonDataScienceHandbook/05.08-random-forests.html)
@@ -256,6 +264,7 @@
 ### Sources
 
 * *Data Science: A First Introduction*, [Chapter 9: Clustering](https://python.datasciencebook.ca/clustering.html)
+* *Principles of Data Science*, [Section 6.2: Classification Using Machine Learning](https://openstax.org/books/principles-data-science/pages/6-2-classification-using-machine-learning)
 * *Mining of Massive Datasets*, [Chapter 7: Clustering](https://www.cambridge.org/core/books/abs/mining-of-massive-datasets/clustering/FB78426E9D8D22B74C5EFD7C2B68A91B)
 
 ## Week 10, Day 2 (2026-10-28)
