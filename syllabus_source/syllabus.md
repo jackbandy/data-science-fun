@@ -211,11 +211,17 @@ Grades in Canvas are kept current throughout the semester, so you can check wher
 
 Around the midpoint of the semester I will also do a check-in: if your grade suggests you are at risk of not passing, I will email you directly so we have time to intervene. You are always welcome to come to drop-in hours to ask about your grade.
 
-**Final Exams**
+**Final Exam**
 
-The final exam will be administered in PrairieLearn and is worth 9% of your grade. Most of the final exam questions will be "variants" of the same questions you will have already seen in homework and quizzes throughout the semester. This means that steady work on the homework and quizzes is excellent preparation for the final.
+The final exam is worth 9% of your grade.
 
-Scheduling follows the registrar's [schedule of final exams and exam policies](https://registrar.uic.edu/current_students/calendars/final_exam_schedule.html).
+Our final exam will take place on **Monday, December 7th, 2026, at 9am**. We have Lecture Center C1 reserved from 8am-10am; however, the final will only be one hour, and students voted (in class on November 11) to take the exam from 9am-10am. Scheduling follows the registrar's [schedule of final exams](https://apps.registrar.uic.edu/current_students/calendars/final-exams.php) and [exam policies](https://registrar.uic.edu/current_students/calendars/final_exam_schedule.html).
+
+You are allowed **one reference sheet** for the final exam. It can contain anything you wish, but it must fit on a single page of printer paper (8.5in x 11in), front and back.
+
+The final exam will use questions from PrairieLearn. Approximately 80% of the questions will be variants of questions you have seen on homeworks and quizzes, while the remaining 20% will be applications of the same concepts.
+
+Please email me ([jxb@uic.edu](mailto:jxb@uic.edu)) with any questions or concerns.
 
 ## [Policy for Missed or Late Work]{.underline}
 

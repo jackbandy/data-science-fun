@@ -56,4 +56,16 @@ extra_css:
 <div id="schedule-tooltip" aria-hidden="true"></div>
 <script src="{{ '/js/schedule-tooltip.js' | relative_url }}"></script>
 
+## Final Exam Details
+
+**CS 418 – 44033** (3:30 PM, MW)
+
+Our final exam will take place on **Monday, December 7th, 2026, at 9am**. We have Lecture Center C1 reserved from 8am-10am; however, the final will only be one hour, and students voted (in class on November 11) to take the exam from 9am-10am. Scheduling follows the registrar's [schedule of final exams](https://apps.registrar.uic.edu/current_students/calendars/final-exams.php) and [exam policies](https://registrar.uic.edu/current_students/calendars/final_exam_schedule.html).
+
+You are allowed **one reference sheet** for the final exam. It can contain anything you wish, but it must fit on a single page of printer paper (8.5in x 11in), front and back.
+
+The final exam will use questions from PrairieLearn. Approximately 80% of the questions will be variants of questions you have seen on homeworks and quizzes, while the remaining 20% will be applications of the same concepts.
+
+Please email [jxb@uic.edu](mailto:jxb@uic.edu) with any questions or concerns.
+
 ## Full Schedule
