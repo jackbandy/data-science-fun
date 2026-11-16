@@ -331,7 +331,7 @@
 
 [**Sean MacMullan**](https://github.com/smacmullan) is an Avondale-based civic technologist whose work uses tech to connect neighbors and drive civic engagement. He'll present [**Ward Wise**](https://www.wardwisechicago.org/), a project from [Chi Hack Night](https://chihacknight.org/) which aims to demystify how Chicago spends money on neighborhood infrastructure. Learn who decides which cracks and potholes get filled, and see how real-world data can reveal their priorities.
 
-A [previous version of presentation](https://docs.google.com/presentation/d/182FkgVvSTL65wpT4vInJGkrL6LoFIGdp4Q7W_g48x1E/edit?usp=sharing) from Chi Hack Night, May 2024.
+[Slides from Sean's Ward Wise presentation](https://docs.google.com/presentation/d/1Tcnw51QDFLAk-AzoaBWzJl04XbvFu_yb1X_2FEK5fHc/edit?usp=sharing).
 </details>
 
 ## Week 13, Day 2 (2026-11-18)
