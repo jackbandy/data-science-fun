@@ -48,6 +48,11 @@ Files are at the highest available resolution from the source.
 
 ### 14. Kedzie
 - **stop14-kedzie-b.jpg** — [Wikimedia Commons: 20040428 29 CTA Orange Line Kedzie Station (7518020040).jpg](https://commons.wikimedia.org/wiki/File:20040428_29_CTA_Orange_Line_Kedzie_Station_(7518020040).jpg) — License: CC BY 2.0 — Author: David Wilson from Oak Park, Illinois, USA — 2560×1920
+- **stop14-kedzie-c.jpg** — [Wikimedia Commons: Kedzie CTA Orange Line.jpg](https://commons.wikimedia.org/wiki/File:Kedzie_CTA_Orange_Line.jpg) — License: CC BY-SA 2.0 — Author: Zol87 — station name sign on the platform, 2011 — 4000×3000
+- **stop14-kedzie-d.jpg** — [Wikimedia Commons: Platform at Kedzie (Orange), looking east.jpg](https://commons.wikimedia.org/wiki/File:Platform_at_Kedzie_(Orange),_looking_east.jpg) — License: CC BY-SA 2.0 — Author: Jacob G. — platform looking east (inbound), 2021 — 4608×3456
+- **stop14-kedzie-e.jpg** — [Flickr: 20161022 20 47th St. @ Troy St.](https://www.flickr.com/photos/32693718@N07/41404071040/) — License: CC BY 2.0 — Author: David Wilson — Nicky's hamburgers, about 0.3 mi north of the station by the photo's geotag, 2016 — 2816×2112
+- **stop14-kedzie-f.jpg** — [Flickr: 20161022 19 47th St. @ Sawyer Ave.](https://www.flickr.com/photos/32693718@N07/29342634698/) — License: CC BY 2.0 — Author: David Wilson — Aztecas auto repair, about 0.3 mi north of the station by the photo's geotag, 2016 — 2816×2112
+- **stop14-kedzie-g.jpg** — [Flickr: 20161022 21 47th St. @ Richmond St.](https://www.flickr.com/photos/32693718@N07/29342633768/) — License: CC BY 2.0 — Author: David Wilson — Town & Country Liquor Mart, about 0.4 mi northeast of the station by the photo's geotag, 2016 — 2816×2112
 
 ### 15. Pulaski
 - **stop15-pulaski-a.jpg** — [Wikimedia Commons: Platform at Pulaski (Orange), looking northeast.jpg](https://commons.wikimedia.org/wiki/File:Platform_at_Pulaski_(Orange),_looking_northeast.jpg) — License: CC BY-SA 2.0 — Author: Jacob G. — 4608×3456

@@ -1,7 +1,5 @@
 % CS 418: Intro to Data Science — Worksheet 25 (25-week13-day1)
 % Week 13, Monday 2026-11-16
-% NOTICE: This worksheet was drafted by an LLM coding system from the
-% instructor's choice of checkpoints. It is maintained, reviewed, and vetted by humans.
 % Compile with: latexmk -pdf worksheet.tex
 
 \documentclass[11pt]{article}
@@ -21,15 +19,6 @@
 \usepackage{fancyhdr}
 \usepackage{mdframed}
 \usepackage{array}
-
-% ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a draft. The watermark marks the PDF as unfinished so
-% nobody mistakes a placeholder for the real thing. Delete this block once the
-% worksheet has been reviewed.
-\usepackage{draftwatermark}
-\SetWatermarkText{IN-PROGRESS}
-\SetWatermarkScale{2.2}
-\SetWatermarkLightness{0.85}
 
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -90,80 +79,100 @@
   Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{0.6em}
+\vspace{0.5em}
 \noindent\rule{\linewidth}{0.6pt}
-\vspace{0.1em}
+\vspace{0.15em}
+\vspace{0.45em}
 
-\noindent\underline{\textbf{Guided checkpoints}}\\[0.2em]
-\noindent{\small For full credit, fill in the checkpoints. If you skip a checkpoint, you must include your own notes for full credit.}
-\vspace{0.8em}
+\noindent
+\begin{minipage}[t]{0.485\textwidth}
+  \underline{\textbf{Guided checkpoints}}\\[0.2em]
+  {\small Fill in the checkpoints. If you skip one, include your own notes in the right column.}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \underline{\textbf{Open-ended notes}}\\[0.2em]
+\end{minipage}
+\vspace{0.5em}
 
-% ── 1. The question ──────────────────────────────────────────────────────────
-\guidedopen{1. The Question}{
-What question is Ward Wise trying to answer? Write it as one sentence.
-}{2.0cm}{3.0cm}
+% ── 1. Why care ──────────────────────────────────────────────────────────────
+\guidedopen{1. What are you curious about?}{
+Write two questions for Sean here. They can be related to any topic from the presentation.
+}{1.3cm}{2.2cm}
 
 \vfill
 
-% ── 2. Who decides? ──────────────────────────────────────────────────────────
-\guidedopen{2. Who Decides?}{
-Who decides which cracks and potholes get filled? Write down the people or offices involved, and how the decision gets made.
-}{3.2cm}{4.6cm}
+% ── 2. Menu money ────────────────────────────────────────────────────────────
+\guidedopen{2. ``Menu Money''}{
+Each of Chicago's 50 wards gets this budget for neighborhood infrastructure.
+
+\vspace{0.3em}
+Who decides how it is spent?
+\vspace{1.0cm}
+
+How much does each ward get a year?
+\vspace{0.8cm}
+
+Examples of what it pays for:
+}{0.8cm}{3.6cm}
 
 \vfill
 
 % ── 3. The data ──────────────────────────────────────────────────────────────
-\guidedopen{3. The Data}{
-What data does Ward Wise use?
+% Key: the aldermanic menu program books from the Chicago Capital Improvement Archive (slide 49); five fields, Ward, Year, Item, Location, Cost (slide 38); 46k projects across $1.26 billion (slide 39); one row is one line item from one ward's menu in one year; location arrives as free text in half a dozen formats, so it has to be geocoded before it can be mapped (slides 43 to 45).
+\guidedopen{3. Data!}{
+Ward Wise scraped data out of city PDFs.
 
-\vspace{0.5em}
-Where it comes from:
-\vspace{1.2cm}
+\vspace{0.35em}
+Where the PDFs come from:
+\vspace{1.0cm}
 
-One row represents:
-\vspace{1.2cm}
+The fields in one row:
+\vspace{1.0cm}
 
-One problem with it:
-}{1.2cm}{5.2cm}
+One issue with the locations:
+}{1.4cm}{4.6cm}
 
 \vfill
 
 \newpage
 
-% ── 4. The lifecycle ─────────────────────────────────────────────────────────
+% ── 4. Geocoding ─────────────────────────────────────────────────────────────
+% Key: 74TH ST & PRINCETON AVE and 74TH ST & HARVARD AVE (slide 45), which step 4 joins into a line with shapely (slide 43).
+\guidedopen{4. Parsing!}{
+Consider a location field which reads:
+
+\vspace{0.25em}
+{\small\texttt{"ON W 74TH ST\\FROM S PRINCETON AVE\\TO S HARVARD AVE"}}
+
+\vspace{0.4em}
+Which two intersections should the parser pull out?
+}{1.6cm}{3.4cm}
+
+\vfill
+
+% ── 5. Your ward ─────────────────────────────────────────────────────────────
+% Key: answers vary. Look the ward up at chicago.councilmatic.org/council-members (slide 21).
+\guidedopen{5. Your Ward}{
+Look up your ward and alder at
+
+\vspace{0.2em}
+\url{chicago.councilmatic.org/council-members}
+
+\vspace{0.4em}
+Ward \underline{\hspace{1.6cm}} \quad Alder \underline{\hspace{3.1cm}}
+
+\vspace{0.35em}
+(If you live outside the city, look up the ward/alder for an address near UIC)}{2.2cm}{3.2cm}
+
+\vfill
+
+% ── 6. The lifecycle ─────────────────────────────────────────────────────────
 % ds-lifecycle.pdf is docs/assets/lifecycle/ds-lifecycle-v0.svg (the figure in the Week 1, 2, and 10 decks) converted with `rsvg-convert -f pdf`. It spans both columns so its labels stay legible.
-\noindent\textbf{4. The Data Science Lifecycle}\\[0.18em]
-\noindent Pick one step of the data science lifecycle from Week 1. How did it show up in Ward Wise?
+\noindent\textbf{6. The Data Science Lifecycle}\\[0.18em]
+\noindent There was extra space, so here's the data science lifecycle. Make sure you know it for the final!
 
 \begin{center}
-\includegraphics[width=0.75\textwidth]{ds-lifecycle.pdf}
+\includegraphics[width=\textwidth]{ds-lifecycle.pdf}
 \end{center}
-
-\noindent
-\begin{minipage}[t]{0.485\textwidth}
-  Step: \underline{\hspace{4.0cm}}
-  \blankspace{2.6cm}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.485\textwidth}
-  \blankspace{3.2cm}
-\end{minipage}
-\\[0.4em]
-
-\vfill
-
-% ── 5. Your neighborhood ─────────────────────────────────────────────────────
-\guidedopen{5. Your Neighborhood}{
-Write one question about your own neighborhood that you could ask with this data.
-}{2.0cm}{3.0cm}
-
-\vfill
-
-% ── 6. A question for Sean ───────────────────────────────────────────────────
-\guidedopen{6. A Question for Sean}{
-Write one question you asked, or would like to ask, Sean.
-}{1.6cm}{2.6cm}
-
-\vfill
 
 \end{document}

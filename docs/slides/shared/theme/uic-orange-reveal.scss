@@ -437,6 +437,18 @@ $code-color: $ink !default;
     img { position: absolute; right: 48px; top: 50%; transform: translateY(-50%); height: 520px; margin: 0; opacity: 0.9; }
   }
 
+  // .title-top: the text sits at the top of the slide and the orange rule moves under it, so the lower part of the photo stays clear.
+  .slides section.course-title.title-top {
+    top: 0 !important;
+    justify-content: flex-start;
+    border-top: none;
+    // The rule is the last child's border because a pseudo-element on the section does not show up in the PDF layout.
+    > :last-child { margin-bottom: 0; padding-bottom: 28px; border-bottom: $title-rule solid $orange; }
+    > p:has(> img) { margin-top: 0; }
+  }
+  // The PDF layout drops the section's padding, so the top offset stands in for it.
+  html.reveal-print & .slides section.course-title.title-top { top: 48px !important; }
+
   .image-slide {
     display: flex !important;
     flex-direction: column;

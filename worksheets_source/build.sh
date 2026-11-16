@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compiles worksheet.tex files and copies PDFs to docs/worksheets/.
+# Compiles worksheet.tex files and copies each PDF to docs/worksheets/ and into its own source folder as <folder_name>.pdf.
 # Run from anywhere in the repo: ./worksheets_source/build.sh [folder_name]
 # With no argument, builds all worksheets. With a folder name (e.g. 02-week01-day2),
 # builds just that one.
@@ -56,6 +56,8 @@ for tex_file in "${TEX_FILES[@]}"; do
     mkdir -p "$PDF_OUT"
     cp worksheet.pdf "$PDF_OUT/$pdf_name"
     echo "  Copied to $PDF_OUT/$pdf_name"
+    cp worksheet.pdf "$tex_dir/$pdf_name"
+    echo "  Copied to $tex_dir/$pdf_name"
 
     latexmk -C worksheet.tex &>/dev/null
     echo "  Cleared auxiliary files"
