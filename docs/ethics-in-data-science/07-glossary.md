@@ -1,18 +1,17 @@
-# Glossary
+# Sociotechnical Glossary for Data Science
 
 **[← Back to Course Homepage](../../index.html)**
 
 ## Key Terms
 
-⬜ *Section Status: early development. Some entries are still placeholders.*
+⬜ *Section Status: early development. Many entries are still placeholders or in-progress.*
 
-TK: terms used throughout the book, with definitions and pointers to relevant chapter(s).
 
 [Access frame]{#access-frame}
 : "the collection of elements that are accessible to you for measurement and observation." Ideally the access frame and the [target population](#target-population) consist of the same elements. See also [coverage gap](#coverage-gap). [Source: @lau_learning_2023, sec. 2.2]
 
 Accuracy
-: The fraction of observations a classifier labels correctly: $\frac{TP + TN}{TP + FP + TN + FN}$. Accuracy can mislead when some error types matter more; see [precision](#precision) and [recall](#recall). [Source: [Week 9 Slides](../../slides/week9.html); [Week 10 Slides](../../slides/week10.html)]
+: The fraction of observations a classifier labels correctly: $\frac{TP + TN}{TP + FP + TN + FN}$. Accuracy can mislead when some error types matter more than others; see [precision](#precision) and [recall](#recall).
 
 Adjacency matrix
 : A matrix that describes a [graph](#graph): "The entry in row $i$ and column $j$ is 1 if there is an edge between nodes $i$ and $j$, and 0 otherwise." [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
@@ -23,9 +22,8 @@ Alternative hypothesis ($H_a$)
 [Aristotle's four causes]{#four-causes}
 : TK — four different ways that one thing can explain another thing: the *material cause*, *formal cause*, *efficient cause*, and *final cause* [Source: @sep-aristotle-causality]
 
-
 Bayes' theorem
-: A rule relating a conditional probability to its reverse: $P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$. [Source: [Week 2 Slides](../../slides/week2.html)]
+: A rule relating a conditional probability to its reverse: $P(A \mid B) = \frac{P(B \mid A)\,P(A)}{P(B)}$.
 
 Bipartite graph
 : A [graph](#graph) with two groups of nodes, and edges only between the groups. It is the $k = 2$ case of a $k$-partite graph, which "consists of $k$ disjoint sets of nodes, with no edges between nodes of the same set." See also [complete bipartite graph](#complete-bipartite). [Source: @leskovec_social_network_graphs_2020, sec. 10.1.4]
@@ -34,13 +32,13 @@ Campbell's Law
 : The notion that social indicator metrics often become corrupt and unreliable when used for high-stakes social decision-making. Examples include standardized test scores (Campbell's example), mortality scorecards for surgeons [@dranove_report_cards_2003], and sales quotas tied to compensation [@cfpb_wells_fargo_consent_order_2016]. See @sec-campbells-law. [Source: @campbell1979assessing]
 
 Causation without pattern
-: Occasions when one-time causes and effects cannot be replicated, e.g. the meteor which caused the dinosaur extinction. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
+: Occasions when one-time causes and effects cannot be replicated, e.g. the meteor which caused the dinosaur extinction. Similarly, one can claim that communication issues caused the Space Shuttle *Challenger* disaster: the decision to launch was made despite known issues and concerns about rubber O-ring performance in cold temperatures. However, this specific event only happened one time, and we have no patterns or repetitions with which to perform more extensive causal analysis (although Nathan Fielder might have ideas). See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
 
 Clique
 : "a set of nodes with edges between any two of them," e.g. five friends who all know one another. [Source: @leskovec_social_network_graphs_2020, sec. 10.3.1]
 
 [Cohesion]{#cohesion}
-: How similar the observations within a cluster are to one another. [Source: [Week 10 Slides](../../slides/week10.html)]
+: How similar the observations within a cluster are to one another.
 
 Common causes
 : Cases in which an underlying third factor is driving two effects, e.g. summer weather, ice cream sales, drownings. See @sec-statistical-worldviews. [Source: @sep-causation-regularity]
@@ -52,7 +50,7 @@ Community
 : A small set of nodes in a graph with "a much higher density of edges than the average density." Communities often overlap; see [overlapping communities](#overlapping-communities). [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
 
 Complementary events
-: Two events where one occurs if and only if the other does not, e.g. heads and tails on a single coin flip. [Source: [Week 2 Slides](../../slides/week2.html)]
+: Two events where one occurs if and only if the other does not, e.g. heads and tails on a single coin flip.
 
 [Complete bipartite graph ($K_{s,t}$)]{#complete-bipartite}
 : A graph that "has two groups of nodes, all possible edges between pairs of nodes chosen one from each group, and no edges between nodes of the same group." $K_{s,t}$ has $s$ nodes in one group and $t$ in the other. [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
@@ -64,10 +62,13 @@ Consent
 : Permission that is freely given, reversible, informed, enthusiastic, and specific. [Source: @lee_building_consentful_2017]
 
 Covariate
-: A variable used to help predict an outcome, e.g. enrollment, weekday, holiday, or weather when predicting daily transit ridership. @lau_learning_2023 list "response and covariate" as one of several name pairs for an outcome and its predictor. [Source: [Week 6 Slides](../../slides/week6.html); @lau_learning_2023, sec. 15.1]
+: A variable used to help predict an outcome, e.g. weekday, holiday, or weather when predicting daily transit ridership. @lau_learning_2023 list "response and covariate" as one of several name pairs for an outcome and its predictor. [Source: @lau_learning_2023, sec. 15.1]
 
 [Coverage gap]{#coverage-gap}
-: The part of the [target population](#target-population) that the [access frame](#access-frame) cannot reach. See also [sampling gap](#sampling-gap). [Source: [Week 2 Slides](../../slides/week2.html)]
+: The part of the [target population](#target-population) that the [access frame](#access-frame) cannot reach. See also [sampling gap](#sampling-gap).
+
+[Cross-validation]{#cross-validation}
+: A method for choosing a model that repeatedly splits the [training set](#training-set), fitting a model on one part and evaluating it on the held-out part. In $k$-fold cross-validation, the training set is divided into $k$ folds of roughly equal size; each fold in turn acts as a [validation set](#validation-set). Typically 5 or 10 folds are used. [Source: @lau_learning_2023, sec. 16.3]
 
 Data
 : Multiple datum.
@@ -88,22 +89,22 @@ Datum
 : A single data point, such as a number or symbol.
 
 Degree
-: The number of edges at a node. A [self-loop](#self-loop) adds 2 to its node's degree. See also [in-degree](#in-degree) and [out-degree](#out-degree). [Source: [Week 12 Slides](../../slides/week12.html)]
+: The number of edges at a node. A [self-loop](#self-loop) adds 2 to its node's degree. See also [in-degree](#in-degree) and [out-degree](#out-degree).
 
 Degree matrix
 : "The degree matrix for a graph has $d$ in the $i$th diagonal entry if $d$ is the degree of the $i$th node. Off the diagonal, all entries are 0." [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
 
 [Dendrogram]{#dendrogram}
-: A tree diagram of the nested clusters found by [hierarchical clustering](#hierarchical-clustering). Cutting the tree at any height gives a [partitional clustering](#partitional-clustering). [Source: [Week 10 Slides](../../slides/week10.html)]
+: A tree diagram of the nested clusters found by [hierarchical clustering](#hierarchical-clustering). Cutting the tree at any height gives a [partitional clustering](#partitional-clustering).
 
 Density
-: The fraction of possible edges that are present in a graph, that is, the number of edges present divided by the total number of possible edges. [Source: [Week 12 Slides](../../slides/week12.html)]
+: The fraction of possible edges that are present in a graph, that is, the number of edges present divided by the total number of possible edges.
 
 Descriptive statistics
 : Statistics that summarize real data (e.g. through measures of center, spread, and position)
 
 [Designed data]{#designed-data}
-: Data collected for your question, e.g. through surveys, sensors, experiments, or instruments you control. Contrast with [found data](#found-data). [Source: [Week 2 Slides](../../slides/week2.html)]
+: Data collected specifically to address your own research question(s), e.g. through surveys, sensors, experiments, or instruments you control. Contrast with [found data](#found-data).
 
 DIKW pyramid
 : The data-information-knowledge-wisdom hierarchy, which stacks data, information, knowledge, and wisdom as successive layers. See @fig-dikw-pyramid. [Source: @rowley_wisdom_2007]
@@ -129,6 +130,9 @@ Efficient cause
 Ethics
 : Acting well in the world. [Source: @burton_computing_2023]
 
+[Extrinsic good]{#extrinsic-good}
+: Something good for the sake of something else to which it is related, not for its own sake; derivatively good. An *instrumental good* is the common special case in which the relation is a means to an end. Contrast [intrinsic good](#intrinsic-good). [Source: @sep-intrinsic-extrinsic-value]
+
 Eudaimonia
 : TK
 Often translated "happiness" or "flourishing"
@@ -149,13 +153,13 @@ Formal cause
 : TK — a thing's real-world essence. E.g. for a bronze statue, the actual shape of the bronze. One of [Aristotle's four causes](#four-causes). [Source: @sep-aristotle-causality]
 
 [Found data]{#found-data}
-: Data that someone else collected, such as logs, scrapes, or administrative records. Found data are cheap, but they may answer a different question. Contrast with [designed data](#designed-data).
+: Data that someone else collected, such as logs, scrapes, or administrative records. Found data are cheap and often easier to use, but they may address a different research question than your own. Contrast with [designed data](#designed-data).
 
 Goodhart's Law
 : The notion that a measure can stop being a helpful measure when it becomes a target. E.g. see @sec-college-rankings: acceptance rates, student-teacher ratios, and reported SAT scores can all be moved directly once they are ranked on (but may or may not improve the actual school quality). See @sec-goodharts-law. [Source: @goodhart1984problems]
 
 Granularity
-: What each record in a dataset represents, e.g. one tap-in, one station-day, or one line-month. @lau_learning_2023 "use the term granularity to describe what each row in the table represents." Two tables need the same granularity before they can be merged. [Source: @lau_learning_2023, sec. 8.6; [Week 3 Slides](../../slides/week3.html)]
+: What each record in a dataset represents, e.g. one tap-in, one station-day, or one line-month. @lau_learning_2023 "use the term granularity to describe what each row in the table represents." Two tables need the same granularity before they can be merged. [Source: @lau_learning_2023, sec. 8.6;]
 
 [Graph]{#graph}
 : A set of nodes (vertices) $V$ and a set of edges $E$, each edge joining two nodes, written $G = (V, E)$.
@@ -178,6 +182,9 @@ Information
 Intercept
 : In simple linear regression, $\hat{y} = \theta_0 + \theta_1 x$, the intercept $\theta_0$ is the predicted value of $y$ when $x$ is zero.
 
+[Intrinsic good]{#intrinsic-good}
+: Something good in its own right, "for its own sake," and not for the sake of something else to which it is related; nonderivatively good. Contrast [extrinsic good](#extrinsic-good). [Source: @sep-intrinsic-extrinsic-value]
+
 [Jaccard similarity]{#jaccard}
 : A similarity score for binary features: $\frac{N_{11}}{N_{01} + N_{10} + N_{11}}$, where $N_{11}$ counts attributes where both $a$ and $b$ are 1 and $N_{10}$, $N_{01}$ count the attributes where they disagree. Attributes where both are 0 ($N_{00}$) do not count. Compare the [simple matching coefficient](#smc). 
 
@@ -199,6 +206,9 @@ Multiple necessary conditions
 Mutual knowledge
 : A proposition is mutual knowledge among people when each person knows that proposition. Often conflated with common knowledge. [Source: @sep-common-knowledge]
 
+[Negative right]{#negative-right}
+: A right that entitles its holder to non-interference, obligating others not to act in certain ways, e.g. a right against assault. Contrast [positive right](#positive-right). [Source: @sep-rights]
+
 [Neighborhood of radius $d$]{#neighborhood}
 : "The neighborhood of radius $d$ for a node $v$ in a directed or undirected graph is the set of nodes reachable from $v$ along paths of length at most $d$." [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
 
@@ -208,6 +218,9 @@ Node
 Null hypothesis ($H_0$)
 : The hypothesis assumed true unless the evidence says otherwise.
 
+[Obligation]{#obligation}
+: A moral requirement to perform or refrain from some action. In the Hohfeldian analysis, an obligation (duty) is the correlative of a [right](#right): A has a claim-right that B $\phi$ just when B has an obligation to A to $\phi$. See [positive right](#positive-right) and [negative right](#negative-right). [Source: @sep-rights]
+
 [Out-degree]{#out-degree}
 : In a [directed graph](#directed-graph), the number of edges pointing out of a node.
 
@@ -216,7 +229,7 @@ Outcome
 
 
 Overdetermination
-: Describes situations in which two sufficient causes may occur at once, e.g. two people each empty a full bucket of water onto a campfire.
+: Describes situations in which two sufficient causes may occur at once, e.g. two people each empty a full bucket of water onto a small campfire.
 
 [Overlapping communities]{#overlapping-communities}
 : Communities that share members. In social networks, "Typically, individuals are members of several communities." Some community detection algorithms (e.g. the Louvain algorithm) still put each node in exactly one community. [Source: @leskovec_social_network_graphs_2020, sec. 10.9)]
@@ -235,6 +248,9 @@ Percentile
 
 Population
 : The entire group that a statistical sample is drawn from and used to make inferences about. See also [target population](#target-population).
+
+[Positive right]{#positive-right}
+: A right that entitles its holder to the provision of some good or service, obligating others to do something for them, e.g. a right to welfare assistance. Contrast [negative right](#negative-right). [Source: @sep-rights]
 
 [Precision]{#precision}
 : The fraction of positive predictions that are correct: $\frac{TP}{TP + FP}$.
@@ -263,6 +279,9 @@ Reachable
 
 [Response variable]{#response-variable}
 : The variable being modeled or predicted in a regression, also called the outcome. See [predictor variable](#predictor-variable).
+
+[Right]{#right}
+: An entitlement, e.g. "entitlements (not) to perform certain actions, or (not) to be in certain states; or entitlements that others (not) perform certain actions or (not) be in certain states." A right corresponds to an [obligation](#obligation) in others. See [positive right](#positive-right) and [negative right](#negative-right). [Source: @sep-rights]
 
 [Sample]{#sample}
 : The actual data at hand, as opposed to the population it is drawn from. @lau_learning_2023 define it as "the subset of units taken from the access frame to observe and measure." [Source: @lau_learning_2023, sec. 2.2]
@@ -328,14 +347,14 @@ Teleology
 [Telos]{#telos}
 : The "end," "goal," or "completion" toward which a thing is directed (root of *teleology*). Another name for the "final cause," the fourth of [Aristotle's four causes](#four-causes): "in the sense of end or 'that for the sake of which' a thing is done, e.g. health is the cause of walking about" [@aristotle_physics, *Physics* II.3, 194b].
 
-Testing set
-: Labeled observations held back from training and used only to measure how well a model predicts new data. See also [training set](#training-set).
+[Testing set]{#testing-set}
+: Observations held back from training and used only once, after a model is chosen, to assess how well it predicts new data. @lau_learning_2023: "The test data provides an assessment of the prediction error for new observations. It is crucial to use the test set only once, after we have committed to a model." See also [training set](#training-set) and [validation set](#validation-set). [Source: @lau_learning_2023, sec. 16.2]
 
 Tidy data
 : Data arranged so that "1. Each variable forms a column. 2. Each observation forms a row. 3. Each type of observational unit forms a table." [Source: @wickham_tidy_data_2014]
 
 [Training set]{#training-set}
-: Labeled observations that a model learns from. [Source: [Week 8 Slides](../../slides/week8.html)]
+: The observations used to fit a model. In a train-test split, @lau_learning_2023 set aside a portion of the data as the [testing set](#testing-set) to stand in for new data, and use the remainder to build the model. See also [cross-validation](#cross-validation). [Source: @lau_learning_2023, sec. 16.2]
 
 [Transitive closure]{#transitive-closure}
 : "The transitive closure of a graph is the set of pairs of nodes $(v, u)$ such that $v$ can reach $u$." It "can have a number of facts equal to the square of the number of nodes of a graph." [Source: @leskovec_social_network_graphs_2020, sec. 10.9]
@@ -355,8 +374,14 @@ Unimodal
 [Unsupervised learning]{#unsupervised-learning}
 : Learning that aims to identify patterns and relationships in data, with no target variable and no explicit feedback about whether outputs are correct. [Cluster analysis](#cluster-analysis) is one example.
 
+[Validation set]{#validation-set}
+: Observations held back from training and used to select among candidate models or settings, such as a polynomial's degree, rather than to fit the model or to make a final assessment. In [cross-validation](#cross-validation), each held-out fold plays the role of a validation set. @lau_learning_2023 describe tools that "break the data into training and validation sets and find the model that has the lowest average validation error across the folds." Contrast with the [testing set](#testing-set), reserved for a single final assessment. [Source: @lau_learning_2023, sec. 16.3]
+
 Weighted graph
 : A [graph](#graph) in which each edge carries a number.
+
+[Well-being]{#well-being}
+: How well a person's life is going for that person: "what is non-instrumentally or ultimately good for a person," the goods that make their life worth living. Also called prudential value or welfare. See [intrinsic good](#intrinsic-good). [Source: @sep-well-being]
 
 [Wide format]{#wide-format}
 : A table layout that spreads repeated measurements across columns, e.g. one column per year. In Polars, `df.pivot()` turns [long format](#long-format) into wide format.
@@ -369,6 +394,9 @@ Worldview
 
 
 ## Defining Data Science {#sec-defining-data-science}
+
+
+[TODO develop rough draft.]
 
 One of the dilemmas I encountered when first working on this course was settling on a basic definition: _what exactly is data science?_ I have compiled some key reference points here, in case they may be useful to others.
 
