@@ -5,8 +5,12 @@
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
+% Never break a word across lines, including at hyphens ("Sans-Serif").
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -15,15 +19,7 @@
 \usepackage{fancyhdr}
 \usepackage{mdframed}
 \usepackage{array}
-
-% ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a stub. The watermark marks the PDF as unfinished so
-% nobody mistakes a placeholder for the real thing. Delete this block once the
-% worksheet has real content.
-\usepackage{draftwatermark}
-\SetWatermarkText{IN-PROGRESS}
-\SetWatermarkScale{2.2}
-\SetWatermarkLightness{0.85}
+\usepackage{multicol}
 
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -38,55 +34,85 @@
 % ── Hyperlinks ────────────────────────────────────────────────────────────────
 \hypersetup{colorlinks=false, hidelinks}
 
-% ── Convenience environments ──────────────────────────────────────────────────
-\newenvironment{problem}[1]{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
-  \textbf{Problem #1.}
-}{%
-  \end{mdframed}\vspace{0.5em}
-}
-
-\newenvironment{hint}{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
-  \textit{Hint:}
-}{%
-  \end{mdframed}\vspace{0.3em}
-}
-
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
-  \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
-  \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
-  \vspace{0.3em}
-}
-
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
 \noindent
 \begin{minipage}[t]{0.55\textwidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,26}} \\[0.3em]
-  {\large \textit{Week 13, Day 2: A/B testing}}
+  {\LARGE \textbf{Worksheet \#\,26}} \\[0.18em]
+  {\large \textit{Week 13, Day 2: Data visualizations ``in the wild''}} \\[0.18em]
+  {\small Asynchronous (Canvas discussion)}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
-\vspace{0.2em}
+\vspace{0.5em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.3em}
+
+Choose a data visualization that you have encountered recently - it can be from a news article, television, TikTok, Instagram, Snapchat, or some other media channel. For this worksheet, you will:
+
+\begin{enumerate}[itemsep=0.1em, topsep=0.3em]
+  \item Choose a visualization
+  \item Write a brief ``review'' of the visualization you chose
+  \item Review another visualization in the thread
+\end{enumerate}
+
+\vspace{0.3em}
+For your ``reviews,'' include at least two strengths of the visualization (i.e.\ two things it communicates effectively), and at least two aspects you might change (these can be improvements or just ``remixes'').
+
+\vspace{0.3em}
+If you don't have a visualization in mind and you want to explore options, you might peruse the following websites:
+
+\begin{itemize}[itemsep=0.1em, topsep=0.3em]
+  \item The Pudding: \url{https://pudding.cool}
+  \item r/DataIsBeautiful: \url{https://www.reddit.com/r/dataisbeautiful/}
+  \item Our World in Data: \url{https://ourworldindata.org}
+  \item Information is Beautiful: \url{https://informationisbeautiful.net}
+  \item Pew Research Center: \url{https://www.pewresearch.org}
+  \item ProPublica: \url{https://www.propublica.org}
+  \item The Guardian datablog: \url{https://www.theguardian.com/news/datablog}
+  \item FlowingData: \url{https://flowingdata.com}
+\end{itemize}
+
+\vspace{2.2em}
+Please use the squishy fleshy bloody organ inside your skull for this exercise, and resist the urge to have an AI/LLM write the review.
+
+\vspace{2.2em}
+It's near the end of the semester and we've all seen enough slop at this point.
+
+\vspace{2.2em}
+Your classmates will appreciate seeing an interesting visualization and getting to read real, meaningful, human language about it.
+
+\vspace{2.2em}
+Your review doesn't need to be eloquent, it just needs to be your own words!
+
+\vspace{2.2em}
+If you have any questions, please email me (\href{mailto:jxb@uic.edu}{jxb@uic.edu})
+
+\newpage
+
+% ── Example review ───────────────────────────────────────────────────────────
+% flock-cameras.png is multiple_urban_areas_have_thousands_of_flock_cameras.png from the Pew short read linked below.
+\noindent{\large\textbf{Example Review}}\\[0.1em]
+\noindent\textit{by Prof.\ Bandy}
+
+\begin{center}
+\includegraphics[width=0.85\textwidth]{flock-cameras.png}
+\end{center}
+
+This is a visualization I saw from Pew Research (link: \url{https://www.pewresearch.org/short-reads/2026/11/09/what-we-know-and-dont-know-about-flocks-license-plate-cameras/}). I thought it did a nice job showing that Flock Cameras tend to be concentrated in urban areas, since most of the big spikes are labeled with cities. Also, the spike is a nice way to leverage area/location, since a heat map would make it more difficult to see some of the differences - the spikes remind me of some of the maps with blue/red arrows from the midterm elections.
+
+\vspace{0.5em}
+I wish I could see a bar graph of the same data with a county-by-county breakdown, because it's still difficult to compare Atlanta and Chicago, for example. I am also curious about ``flock cameras per capita,'' i.e.\ adjusting for population in each county (I think one of the group projects is looking at this). So a bar graph with the top ten counties in terms of \texttt{(flock cameras / total population)} would be interesting. Also there are multiple spikes near Atlanta which I would want to see broken out.
 
 \end{document}
