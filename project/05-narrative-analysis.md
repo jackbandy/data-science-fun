@@ -14,7 +14,7 @@ A narrative analysis is the argument at the center of your project. Ideally, it 
 
 For now, think of your audience as a skeptical classmate who knows data science, but did not work on your project, and they think their project is stronger than your project.
 
-(The public-facing report (due November 25) and your presentation will retell this same story for a general audience)
+(The public-facing report (due December 11, the end of finals week) and your presentation will retell this same story for a general audience)
 
 As Claus Wilke puts it in [*Fundamentals of Data Visualization*](https://clauswilke.com/dataviz/telling-a-story.html), the goal is "telling a story and making a point." A notebook full of plots will not make a point. For this checkpoint, you must choose which results matter, put them in an order that answers your research questions, and say how sure you are (and why).
 

@@ -26,7 +26,7 @@ layout: default
     <div><dt>Due</dt><dd>{{ page.due }}</dd></div>
     <div><dt>AI/LLM use</dt>
       <dd>
-        <a href="{{ signal.faq }}">{{ signal.label }}</a> &mdash; {{ signal.meaning }}
+        <a href="{{ signal.faq }}">{{ signal.label }}</a>: {{ signal.meaning }}
         {% if signal.image %}<img class="signal-badge" src="{{ signal.image }}" alt="">{% endif %}</dd></div>
   </dl>
 

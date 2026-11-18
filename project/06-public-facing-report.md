@@ -1,14 +1,14 @@
 ---
-summary: TODO — one line describing this checkpoint.
+summary: TODO: one line describing this checkpoint.
 topic: TODO
-due: Wednesday, November 25
+due: Friday, December 11 (end of finals week)
 ai_policy: tk
 draft: true
 ---
 
 # Checkpoint Six: Public-Facing Report
 
-TODO — one or two sentences framing the checkpoint: what the group is doing at this point in the project, and how it feeds the final report.
+TODO: one or two sentences framing the checkpoint: what the group is doing at this point in the project, and how it feeds the final report.
 
 ## What you'll do
 
@@ -18,7 +18,7 @@ TODO — one or two sentences framing the checkpoint: what the group is doing at
 
 ## What to submit
 
-TODO — one submission per group, to Canvas. Format and length.
+TODO: one submission per group, to Canvas. Format and length.
 
 ## Rubric
 
@@ -30,7 +30,7 @@ Two points available:
 
 ## AI/LLM policy
 
-TODO — set the `ai_policy` frontmatter key above to `double-red`, `yellow-over-red`, or `double-yellow`, then say what that means here. The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).
+TODO: set the `ai_policy` frontmatter key above to `double-red`, `yellow-over-red`, or `double-yellow`, then say what that means here. The three phases are in the [syllabus](/syllabus/) and the [FAQ](/faq.html#double-red-no-aillm-based-tools).
 
 ## Sources
 

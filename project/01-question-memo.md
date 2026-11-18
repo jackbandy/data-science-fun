@@ -36,7 +36,7 @@ Please spend some time on this to really consider what you are interested in. Yo
 
 ## What to submit
 
-TODO — file, format, and where it goes (Canvas).
+TODO: file, format, and where it goes (Canvas).
 
 ## AI/LLM policy
 
