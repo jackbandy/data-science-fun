@@ -348,6 +348,11 @@
 ## Week 14, Day 1 (2026-11-23)
 
 * Project presentations
+	* 🔭1️⃣ Flock Group One
+	* 🏈 Football Group
+	* 🤖📝 "Ed with Ed ⚕️ AI"
+	* 🕸️ "Social Media and Society"
+	* ⚽️ Futbol Group
 
 ### Sources
 
@@ -361,6 +366,11 @@
 ## Week 15, Day 1 (2026-11-30)
 
 * Project presentations
+	* 🎣 "Phishing Phor Phun"
+	* 🎰 UFC Fight Analysis Group
+	* 🏥 "Socioeconomic Health Disparities"
+	* ⚖️ "Everybody Votes" (Comparing Democracies)
+	* 🚦 Chicago Traffic Analytics Group
 
 ### Sources
 
@@ -370,6 +380,11 @@
 ## Week 15, Day 2 (2026-12-02)
 
 * Project presentations
+	* 💸 "Economic Trajectories" Group
+	* 🔭2️⃣ Flock Group Two
+	* 🏆 "Personal Exercise and Fitness Analytics"
+	* 🏎️ F1 Group
+	* 🪾 "Family Backgrounds and Outcomes"
 
 ### Sources
 
