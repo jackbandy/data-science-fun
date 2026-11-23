@@ -67,6 +67,7 @@ Files are named `stopNN-<stop-area>-<subject>.jpg`.
 
 ### 15. Pulaski
 - **stop15-pulaski-garfield-ridge-archer-ave.jpg** — [Wikimedia Commons: Aerial view of Archer Avenue in Garfield Ridge, September 2023.JPG](https://commons.wikimedia.org/wiki/File:Aerial_view_of_Archer_Avenue_in_Garfield_Ridge,_September_2023.JPG) — License: CC BY-SA 4.0 — Author: Pi.1415926535
+- **stop15-pulaski-platform.jpg** — [Wikimedia Commons: Platform at Pulaski (Orange), looking northeast.jpg](https://commons.wikimedia.org/wiki/File:Platform_at_Pulaski_(Orange),_looking_northeast.jpg) — License: CC BY-SA 2.0 — Author: Jacob G. — Orange Line Pulaski platform looking northeast (inbound), August 2021; 4608×3456 px
 
 ### 16. Midway
 - **stop16-midway-rara-avis-3.jpg** — [Flickr: Rara Avis (Art in Midway Airport, Chicago)](https://www.flickr.com/photos/florador/31765086835) — License: CC BY-NC 2.0 — Author: florador — *Rara Avis* (2001) by Susannah Helmick & Stuart Schechter, vertical view

@@ -56,6 +56,7 @@ Files are at the highest available resolution from the source.
 
 ### 15. Pulaski
 - **stop15-pulaski-a.jpg** — [Wikimedia Commons: Platform at Pulaski (Orange), looking northeast.jpg](https://commons.wikimedia.org/wiki/File:Platform_at_Pulaski_(Orange),_looking_northeast.jpg) — License: CC BY-SA 2.0 — Author: Jacob G. — 4608×3456
+- **stop15-pulaski-b.jpg** — [Wikimedia Commons: 20040428 33 CTA Orange Line Pulaski Rd. station (7518020716).jpg](https://commons.wikimedia.org/wiki/File:20040428_33_CTA_Orange_Line_Pulaski_Rd._station_(7518020716).jpg) (originally [Flickr](https://www.flickr.com/photos/davidwilson1949/7518020716/)) — License: CC BY 2.0 — Author: David Wilson — aerial from a plane approaching Midway, April 28, 2004 — 2560×1920
 
 ### 16. Midway
 - **stop16-midway-d.jpg** — [Wikimedia Commons: Chicago Midway Airport Aerial (50561587736).jpg](https://commons.wikimedia.org/wiki/File:Chicago_Midway_Airport_Aerial_(50561587736).jpg) — License: CC BY-SA 2.0 — Author: formulanone — aerial view, 2016 — 3600×2400

@@ -15,7 +15,8 @@
 // Experimental roofline title. A slide with class experimental-roofline-title and data-roofline="x1 y1 x2 y2" (photo pixels, against data-roofline-image="width height") gets an orange line drawn along that edge of its background photo, running 5% past both edges of the frame, with the h1 sitting on the line and the h2 and each p stacked below it. The SVG lives in the slide's background element and uses preserveAspectRatio slice, the SVG twin of background-size: cover, so the line stays on the roof at any window shape and in print.
 (() => {
   const NS = "http://www.w3.org/2000/svg";
-  // Sizes in photo pixels; the 4032x3024 Halsted photo shows ~2268 px of height in a 16:9 window, so 3.15 px ≈ 1 slide px.
+  // Sizes in photo pixels for a 4032-wide photo (the Halsted one shows ~2268 px of height in a 16:9 window, so 3.15 px ≈ 1 slide px); narrower photos scale them by width / REFERENCE_WIDTH so the title stays the same size on the slide.
+  const REFERENCE_WIDTH = 4032;
   const STROKE = 36;
   const TITLE_SIZE = 270;
   const TOPIC_SIZE = 96;
@@ -35,11 +36,11 @@
     return node;
   }
 
-  function shadowDefs() {
+  function shadowDefs(s) {
     const defs = el("defs", {});
     for (const [id, layers] of Object.entries(SHADOWS)) {
       const filter = el("filter", { id, x: "-20%", y: "-100%", width: "140%", height: "300%" });
-      for (const [dy, blur, opacity] of layers) filter.appendChild(el("feDropShadow", { dx: 0, dy, stdDeviation: blur, "flood-color": "#000", "flood-opacity": opacity }));
+      for (const [dy, blur, opacity] of layers) filter.appendChild(el("feDropShadow", { dx: 0, dy: dy * s, stdDeviation: blur * s, "flood-color": "#000", "flood-opacity": opacity }));
       defs.appendChild(filter);
     }
     return defs;
@@ -51,23 +52,24 @@
     const [x1, y1, x2, y2] = slide.dataset.roofline.split(/\s+/).map(Number);
     const [w, h] = slide.dataset.rooflineImage.split(/\s+/).map(Number);
     const inset = Number(slide.dataset.rooflineInset || 0);
+    const s = w / REFERENCE_WIDTH;
     const radians = Math.atan2(y2 - y1, x2 - x1);
     // Distance along the roofline from (x1, y1) to where it crosses photo column x.
     const along = (x) => (x - x1) / Math.cos(radians);
 
     const svg = el("svg", { class: "roofline-title-overlay", viewBox: `0 0 ${w} ${h}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true" });
-    svg.appendChild(shadowDefs());
+    svg.appendChild(shadowDefs(s));
     const group = el("g", { transform: `translate(${x1} ${y1}) rotate(${radians * 180 / Math.PI})` });
-    group.appendChild(el("line", { x1: along(-OVERHANG * w), y1: 0, x2: along((1 + OVERHANG) * w), y2: 0, "stroke-width": STROKE }));
+    group.appendChild(el("line", { x1: along(-OVERHANG * w), y1: 0, x2: along((1 + OVERHANG) * w), y2: 0, "stroke-width": STROKE * s }));
 
-    const title = el("text", { class: "roofline-title-main", x: inset, y: -(STROKE / 2 + GAP), "font-size": TITLE_SIZE });
+    const title = el("text", { class: "roofline-title-main", x: inset, y: -(STROKE / 2 + GAP) * s, "font-size": TITLE_SIZE * s });
     title.textContent = slide.querySelector("h1").textContent.trim();
     group.appendChild(title);
 
-    let y = STROKE / 2 + GAP;
+    let y = (STROKE / 2 + GAP) * s;
     for (const node of slide.querySelectorAll(":scope > h2, :scope > p")) {
       const isTopic = node.tagName === "H2";
-      const size = isTopic ? TOPIC_SIZE : SUB_SIZE;
+      const size = (isTopic ? TOPIC_SIZE : SUB_SIZE) * s;
       const sub = el("text", { class: isTopic ? "roofline-title-sub roofline-title-topic" : "roofline-title-sub", x: inset, y, "font-size": size, "dominant-baseline": "hanging" });
       sub.textContent = node.textContent.trim();
       group.appendChild(sub);

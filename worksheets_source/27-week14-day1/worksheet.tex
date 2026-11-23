@@ -5,8 +5,12 @@
 \documentclass[11pt]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=1in, headheight=14pt]{geometry}
+\usepackage[margin=0.65in, headheight=14pt]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{ragged2e}
+% Never break a word across lines, including at hyphens ("Sans-Serif").
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -15,15 +19,7 @@
 \usepackage{fancyhdr}
 \usepackage{mdframed}
 \usepackage{array}
-
-% ── Draft watermark ───────────────────────────────────────────────────────────
-% This worksheet is still a stub. The watermark marks the PDF as unfinished so
-% nobody mistakes a placeholder for the real thing. Delete this block once the
-% worksheet has real content.
-\usepackage{draftwatermark}
-\SetWatermarkText{IN-PROGRESS}
-\SetWatermarkScale{2.2}
-\SetWatermarkLightness{0.85}
+\usepackage{dictsym} % \dsmedical is the ⚕ in the Ed with Ed AI group name; the font draws it tilted, so it is rotated upright
 
 % ── Page style ────────────────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -39,54 +35,94 @@
 \hypersetup{colorlinks=false, hidelinks}
 
 % ── Convenience environments ──────────────────────────────────────────────────
-\newenvironment{problem}[1]{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=black, linewidth=1pt]
-  \textbf{Problem #1.}
-}{%
-  \end{mdframed}\vspace{0.5em}
-}
-
-\newenvironment{hint}{%
-  \begin{mdframed}[backgroundcolor=white, linecolor=gray, linewidth=0.5pt]
-  \textit{Hint:}
-}{%
-  \end{mdframed}\vspace{0.3em}
-}
-
-% Usage: \workspace{6cm}  — blank area for hand-written work
-\newcommand{\workspace}[1]{%
+% Usage: \blankspace{6cm} — blank area for hand-written work, no rules
+\newcommand{\blankspace}[1]{%
   \vspace{0.3em}
-  \noindent\rule{\linewidth}{0.4pt}\\[-0.3em]
   \begin{minipage}[t][#1][t]{\linewidth}
-  \end{minipage}\\
-  \noindent\rule{\linewidth}{0.4pt}
+  \end{minipage}
   \vspace{0.3em}
+}
+
+% Usage: \talk{number}{group name}{height of the finding blank}{height of the question blank}
+% One presentation: a heading, then the two prompts the audience fills in while the group talks.
+\newcommand{\talk}[4]{%
+  \par\noindent\textbf{#1. #2}\par
+  \vspace{0.3em}\noindent\textit{Notable finding(s) from this presentation:}\par
+  \blankspace{#3}\par
+  \vspace{0.4em}
+  \noindent\textit{Question(s) I have for this group:}\par
+  \blankspace{#4}\par
 }
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\RaggedRight
 
 % ── Title block: topic left, info box right ───────────────────────────────────
 \noindent
 \begin{minipage}[t]{0.55\textwidth}
   \vspace{0pt}
-  {\LARGE \textbf{Worksheet \#\,27}} \\[0.3em]
+  {\LARGE \textbf{Worksheet \#\,27}} \\[0.18em]
   {\large \textit{Week 14, Day 1: Project Presentations}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.40\textwidth}
   \vspace{0pt}
-  \begin{mdframed}[linecolor=black, linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
-    \small
-    \vspace{0.4cm}
-    Name: \underline{\hspace{4.5cm}} \\[1em]
-    NetID: \underline{\hspace{4.3cm}} \\[1em]
-    Date: \underline{\hspace{4.4cm}} \\
-  \end{mdframed}
+  \small
+  Name: \underline{\hspace{4.5cm}} \\[0.35em]
+  NetID: \underline{\hspace{4.3cm}} \\[0.35em]
+  Date: \underline{\hspace{4.4cm}} \\
 \end{minipage}
 
-\vspace{1em}
-\noindent\rule{\linewidth}{1pt}
-\vspace{0.2em}
+\vspace{0.5em}
+\noindent\rule{\linewidth}{0.6pt}
+\vspace{0.3em}
+
+For each group presenting today, note at least one finding that stood out to you, and at least one question you have for the group.
+
+\vspace{0.6em}
+
+% Foci come from each group's own research questions in ~/GitHub/418-group-projects.
+% ── 1. Flock Group One ───────────────────────────────────────────────────────
+\talk{1}{Flock Group One (Traffic Violations)}{2.0cm}{1.3cm}
+
+\vspace{0.8cm}
+
+% ── 2. Football Group ────────────────────────────────────────────────────────
+\talk{2}{Football Group (Rushing, Passing, and Fourth Downs)}{2.0cm}{1.3cm}
+
+\vspace{0.8cm}
+
+% ── 3. Ed with Ed AI ─────────────────────────────────────────────────────────
+\talk{3}{``Ed with Ed \makebox[0.5em]{\rotatebox[origin=c]{35}{\dsmedical}} AI'' Group (AI and Academic Performance)}{2.0cm}{1.3cm}
+
+\newpage
+
+% ── 4. Social Media and Society ──────────────────────────────────────────────
+\talk{4}{``Social Media and Society'' Group (Fake News Sharing)}{2.0cm}{1.3cm}
+
+\vspace{0.8cm}
+
+% ── 5. Futbol Group ──────────────────────────────────────────────────────────
+\talk{5}{Futbol Group (Home-Field Advantage)}{2.0cm}{1.3cm}
+
+\vspace{0.8cm}
+
+% ── 6. Ranking ───────────────────────────────────────────────────────────────
+% The sixth section is a ranking, not a discussion prompt: three numbered blanks, no ties.
+\noindent\textbf{6. Rank the day's top three presentations}\\[0.25em]
+\textit{Write the group name next to each rank (1 = best).}
+
+\vspace{1.1em}
+\noindent\textbf{1.}\par
+\blankspace{0.9cm}
+
+\vspace{0.6em}
+\noindent\textbf{2.}\par
+\blankspace{0.9cm}
+
+\vspace{0.6em}
+\noindent\textbf{3.}\par
+\blankspace{0.9cm}
 
 \end{document}
